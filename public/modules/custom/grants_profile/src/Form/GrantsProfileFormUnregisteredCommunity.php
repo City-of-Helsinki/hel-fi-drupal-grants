@@ -179,7 +179,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $tokenData = $this->helsinkiProfiiliUserData->getUserData();
       $timestamp = time();
 
-      if ($tokenData && isset($tokenData['exp']) && $tokenData['exp'] < $timestamp) {
+      if ($tokenData->exp !== NULL && $tokenData->exp < $timestamp) {
         $this->helsinkiProfiiliUserData->refreshTokens();
       }
 

@@ -8,6 +8,7 @@ use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\JsonSchemaValidator
@@ -33,7 +34,7 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $mockUserInfoService->method('getGrantsProfileContent')->willReturn(new GrantsProfile($testData['grants_profile_array']));
     $mockUserInfoService->method('getGrantsProfileAttachments')->willReturn($this->getBankFile());
     $mockUserInfoService->method('getApplicantTypeId')->willReturn(2);
-    $mockUserInfoService->method('getUserData')->willReturn($testData['user']);
+    $mockUserInfoService->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($testData['user']));
     $mockUserInfoService->method('getSelectedCompany')->willReturn($testData['company']);
     $mockUserInfoService->method('getUserProfileData')->willReturn($testData['user_profile']);
     $settingsService = $this->container->get(FormSettingsServiceInterface::class);

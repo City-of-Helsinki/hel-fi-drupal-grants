@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 /**
  * Avus2 integration.
  */
-final class Avus2Integration {
+class Avus2Integration {
 
   /**
    * The endpoint.

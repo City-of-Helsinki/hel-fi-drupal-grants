@@ -139,7 +139,7 @@
         "ui:options": {
           "hideNameFromPrint": true,
           "tooltipLabel": "members_fieldset.legend",
-          "tooltipButtonLabel": "cmembers_fieldset.legend",
+          "tooltipButtonLabel": "members_fieldset.legend",
           "tooltipText": "members_fieldset.description"
         },
         "members_applicant_person_global": {

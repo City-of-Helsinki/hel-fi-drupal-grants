@@ -15,8 +15,9 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Drupal\helfi_helsinki_profiili\ProfileDataException;
+use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use GuzzleHttp\Exception\GuzzleException;
@@ -211,14 +212,14 @@ class ApplicationInitService {
     }
 
     // If no userprofile data, we need to hardcode these values.
-    if ($userProfileData == NULL || $userData == NULL) {
+    if ($userProfileData == NULL) {
       throw new ApplicationException('No profile data found for user.');
     }
     else {
       $senderDetails['sender_firstname'] = $data["verifiedPersonalInformation"]["firstName"];
       $senderDetails['sender_lastname'] = $data["verifiedPersonalInformation"]["lastName"];
       $senderDetails['sender_person_id'] = $data["verifiedPersonalInformation"]["nationalIdentificationNumber"];
-      $senderDetails['sender_user_id'] = $userData["sub"];
+      $senderDetails['sender_user_id'] = $userData->sub;
       $senderDetails['sender_email'] = $data["primaryEmail"]["email"];
     }
 
@@ -309,7 +310,7 @@ class ApplicationInitService {
   }
 
   /**
-   * Method to initialise application document in ATV. Create & save.
+   * Method to initialize application document in ATV. Create & save.
    *
    * If data is given, use that data to copy things to new application.
    *
@@ -325,8 +326,8 @@ class ApplicationInitService {
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\ProfileDataException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\helfi_helsinki_profiili\ProfiiliException
    * @throws \Drupal\grants_profile\GrantsProfileException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
@@ -335,8 +336,8 @@ class ApplicationInitService {
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
     $userProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
 
-    if ($userData == NULL || $webform == NULL) {
-      throw new ProfileDataException('No Helsinki profile data found');
+    if ($webform == NULL) {
+      throw new ProfiiliException('No Helsinki profile data found');
     }
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
@@ -376,7 +377,10 @@ class ApplicationInitService {
     $typeData = $this->applicationDataService->webformToTypedData($submissionData);
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData, $submissionObject, $submissionData);
     $atvDocument->setContent($appDocumentContent);
-    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+1 years'))->format('Y-m-d'));
+
+    // #UHF-12794 draft delete after 1month after application period is over.
+    $settings = $webform->getThirdPartySettings('grants_metadata');
+    $this->setDeleteAfter($settings, $atvDocument);
     $newDocument = $this->atvService->postDocument($atvDocument);
 
     if ($copy) {
@@ -390,6 +394,26 @@ class ApplicationInitService {
   }
 
   /**
+   * Set delete after.
+   *
+   * @param mixed[] $settings
+   *   The webform settings.
+   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
+   *   The atv document.
+   */
+  public function setDeleteAfter(array $settings, AtvDocument $atvDocument): void {
+    $endDate = strtotime($settings['applicationClose']);
+    $isContinuous = $settings['applicationContinuous'];
+
+    $deleteAfter = new \DateTimeImmutable("+1 years");
+    if (!$isContinuous && $endDate) {
+      $date = date('Y-m-d', $endDate);
+      $deleteAfter = (new \DateTimeImmutable($date))->add(new \DateInterval("P1M"));
+    }
+    $atvDocument->setDeleteAfter($deleteAfter->format('Y-m-d'));
+  }
+
+  /**
    * Set initial submission data.
    *
    * @param \Drupal\webform\Entity\Webform $webform
@@ -398,7 +422,7 @@ class ApplicationInitService {
    *   Selected company data.
    * @param array $companyData
    *   Company data.
-   * @param array $userData
+   * @param \Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser $userData
    *   User data.
    * @param array $userProfileData
    *   User profile data.
@@ -412,7 +436,7 @@ class ApplicationInitService {
     Webform $webform,
     array $selectedCompany,
     array $companyData,
-    array $userData,
+    HelsinkiProfiiliUser $userData,
     array $userProfileData,
     array $submissionData,
   ): array {
@@ -435,7 +459,7 @@ class ApplicationInitService {
    *   Selected company data.
    * @param array $companyData
    *   Company data.
-   * @param array $userData
+   * @param \Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser $userData
    *   User data.
    * @param array $userProfileData
    *   User profile data.
@@ -443,7 +467,7 @@ class ApplicationInitService {
    * @return array
    *   Hakijan tiedot.
    */
-  private function getHakijanTiedot($selectedCompany, $companyData, $userData, $userProfileData): array {
+  private function getHakijanTiedot($selectedCompany, $companyData, HelsinkiProfiiliUser $userData, $userProfileData): array {
     return match ($selectedCompany["type"]) {
       'registered_community' => [
         'applicantType' => $selectedCompany["type"],
@@ -460,10 +484,10 @@ class ApplicationInitService {
         'applicantType' => $selectedCompany["type"],
         'applicant_type' => $selectedCompany["type"],
         'communityOfficialName' => $companyData["companyName"],
-        'firstname' => $userData["given_name"],
-        'lastname' => $userData["family_name"],
+        'firstname' => $userData->given_name,
+        'lastname' => $userData->family_name,
         'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
-        'email' => $userData["email"],
+        'email' => $userData->email,
         'street' => $companyData["addresses"][0]["street"],
         'city' => $companyData["addresses"][0]["city"],
         'postCode' => $companyData["addresses"][0]["postCode"],
@@ -472,10 +496,10 @@ class ApplicationInitService {
       'private_person' => [
         'applicantType' => $selectedCompany["type"],
         'applicant_type' => $selectedCompany["type"],
-        'firstname' => $userData["given_name"],
-        'lastname' => $userData["family_name"],
+        'firstname' => $userData->given_name,
+        'lastname' => $userData->family_name,
         'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"] ?? '',
-        'email' => $userData["email"],
+        'email' => $userData->email,
         'street' => $companyData["addresses"][0]["street"] ?? '',
         'city' => $companyData["addresses"][0]["city"] ?? '',
         'postCode' => $companyData["addresses"][0]["postCode"] ?? '',
@@ -589,7 +613,7 @@ class ApplicationInitService {
    *   Selected company data.
    * @param string $webform_id
    *   Webform ID.
-   * @param array $userData
+   * @param \Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser $userData
    *   User data.
    * @param bool $copy
    *   Is this a copy operation.
@@ -601,7 +625,7 @@ class ApplicationInitService {
     array $submissionData,
     array $selectedCompany,
     string $webform_id,
-    array $userData,
+    HelsinkiProfiiliUser $userData,
     bool $copy,
   ): AtvDocument {
     $webform = Webform::load($webform_id);
@@ -611,7 +635,7 @@ class ApplicationInitService {
     $atvDocument->setStatus($this->applicationStatusService->getApplicationStatuses()['DRAFT']);
     $atvDocument->setType($submissionData['application_type']);
     $atvDocument->setService(getenv('ATV_SERVICE'));
-    $atvDocument->setUserId($userData['sub']);
+    $atvDocument->setUserId($userData->sub);
     $atvDocument->setTosFunctionId(getenv('ATV_TOS_FUNCTION_ID'));
     $atvDocument->setTosRecordId(getenv('ATV_TOS_RECORD_ID'));
     if ($submissionData['applicant_type'] == 'registered_community') {

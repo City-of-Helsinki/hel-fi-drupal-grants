@@ -12,7 +12,7 @@ use Drupal\helfi_atv\AtvDocument;
 /**
  * Mapping related logic.
  */
-final class JsonMapperService {
+class JsonMapperService {
 
   /**
    * The mapper.
@@ -308,7 +308,7 @@ final class JsonMapperService {
 
     return [
       'form_data' => $formData,
-      'user' => $this->userInformationService->getUserData(),
+      'user' => (array) $this->userInformationService->getUserData(),
       'company' => $this->userInformationService->getSelectedCompany(),
       'user_profile' => $this->userInformationService->getUserProfileData(),
       'grants_profile_array' => $grantsProfile->toArray(),

@@ -371,7 +371,7 @@
     "custom_handler": "income",
     "data": {
       "ID": "tulot_field_0",
-      "label": "Kuvausta tulosta tähän",
+      "label": "Tulo",
       "value": "",
       "valueType": "double"
     }
@@ -385,14 +385,14 @@
     }
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
-    "#tip": "The income component values",
+    "#tip": "The cost component values",
     "datasource": "form_data",
     "source": "budget_step.expenditure_section.expenditure_rows",
     "mapping_type": "custom",
     "custom_handler": "income",
     "data": {
       "ID": "menot_field_0",
-      "label": "Kuvausta menosta tähän",
+      "label": "Meno",
       "value": "",
       "valueType": "double"
     }

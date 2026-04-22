@@ -10,7 +10,9 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_helsinki_profiili\DTO\AuthenticationLevel;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Drupal\webform\WebformSubmissionInterface;
 use Drupal\webform\WebformSubmissionStorage;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -218,9 +220,16 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     if (!in_array('helsinkiprofiili', $userRoles)) {
       return;
     }
-    $userAuthLevel = $this->helsinkiProfiiliUserData->getAuthenticationLevel();
     // Load things only with strong authentication.
-    if ($userAuthLevel !== 'strong') {
+    try {
+      $authLevel = $this->helsinkiProfiiliUserData->getUserData()->loa;
+    }
+    catch (ProfiiliException) {
+      return;
+    }
+
+    // @Fixme Why only strong? Smartcard authentication is not supported?
+    if ($authLevel !== AuthenticationLevel::Strong) {
       return;
     }
     /** @var \Drupal\webform\Entity\WebformSubmission $submission */

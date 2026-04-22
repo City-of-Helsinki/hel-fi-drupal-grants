@@ -117,7 +117,7 @@ export const TextInput = ({
         required={required}
         style={{ maxWidth: getMaxWidth() }}
         tooltip={getTooltip(uiSchema)}
-        value={value || ''}
+        value={value ?? ''}
       />
     );
   }

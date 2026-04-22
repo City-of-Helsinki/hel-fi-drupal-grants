@@ -285,7 +285,7 @@ final class ApplicationController extends ControllerBase {
     }
 
     try {
-      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception) {
       throw new NotFoundHttpException();
@@ -408,7 +408,7 @@ final class ApplicationController extends ControllerBase {
    *   The response.
    */
   public function uploadFile(string $application_number, Request $request): JsonResponse {
-    $sub = $this->userInformationService->getUserData()['sub'];
+    $sub = $this->userInformationService->getUserData()->sub;
     $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
     $businessId = $grants_profile_data->getBusinessId() ?? '';
 
@@ -675,7 +675,7 @@ final class ApplicationController extends ControllerBase {
     }
 
     try {
-      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Throwable) {
       throw new NotFoundHttpException();

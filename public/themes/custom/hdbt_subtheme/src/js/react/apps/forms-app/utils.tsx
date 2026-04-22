@@ -6,7 +6,6 @@
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import type { FormStep } from './store';
 import { communitySettings } from './formConstants';
-import { type ReactNode } from 'react';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { Tooltip } from 'hds-react';
 

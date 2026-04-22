@@ -15,6 +15,9 @@ $config['openid_connect.client.tunnistamoadmin']['settings']['client_id'] = gete
 $config['openid_connect.client.tunnistamoadmin']['settings']['client_secret'] = getenv('TUNNISTAMOADMIN_CLIENT_SECRET');
 $config['openid_connect.client.tunnistamoadmin']['settings']['client_scopes'] = getenv('TUNNISTAMOADMIN_CLIENT_SCOPES');
 
+$config['helfi_helsinki_profiili.settings']['tunnistamo_environment_url'] = getenv('TUNNISTAMO_ENVIRONMENT_URL');
+$config['helfi_helsinki_profiili.settings']['userinfo_profile_endpoint'] = getenv('USERINFO_PROFILE_ENDPOINT');
+
 $settings['error_page']['template_dir'] = '../error_templates';
 
 // Level of Assurance <-> Drupal roles mapping.

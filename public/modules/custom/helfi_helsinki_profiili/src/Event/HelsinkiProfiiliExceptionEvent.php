@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\helfi_helsinki_profiili\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
@@ -9,25 +11,14 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class HelsinkiProfiiliExceptionEvent extends Event {
 
-  const EVENT_ID = 'helfi_helfinki_profiili.exception';
-
-  /**
-   * Construct a new event.
-   *
-   * @param \Exception $exception
-   *   The exception.
-   */
   public function __construct(
-    private \Exception $exception,
+    private readonly \Throwable $exception,
   ) {}
 
   /**
    * Get the exception.
-   *
-   * @return \Exception
-   *   The exception.
    */
-  public function getException() {
+  public function getException(): \Throwable {
     return $this->exception;
   }
 

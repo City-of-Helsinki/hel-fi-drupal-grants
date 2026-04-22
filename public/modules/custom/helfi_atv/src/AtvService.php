@@ -9,6 +9,7 @@ use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\file\FileRepositoryInterface;
@@ -27,7 +28,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 /**
  * Communicate with ATV.
  */
-class AtvService {
+class AtvService implements AtvServiceInterface {
 
   /**
    * Headers for requests.
@@ -122,32 +123,17 @@ class AtvService {
 
   /**
    * Constructs an AtvService object.
-   *
-   * @param \GuzzleHttp\ClientInterface $httpClient
-   *   The HTTP client.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   Logger factory.
-   * @param \Drupal\file\FileRepositoryInterface $fileRepository
-   *   Access to filesystem.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-   *   Helsinkiprofiili.
-   * @param \Psr\EventDispatcher\EventDispatcherInterface $eventDispatcher
-   *   Event dispatcher.
-   * @param \Drupal\Core\File\FileSystemInterface $fileSystem
-   *   File system.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Config factory.
    */
   public function __construct(
     protected ClientInterface $httpClient,
     #[Autowire(service: 'logger.channel.helfi_atv')]
     protected LoggerInterface $logger,
     protected FileRepositoryInterface $fileRepository,
-    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     protected EventDispatcherInterface $eventDispatcher,
     protected FileSystemInterface $fileSystem,
     ConfigFactoryInterface $configFactory,
+    protected AccountProxyInterface $currentUser,
   ) {
     $this->baseUrl = getenv('ATV_BASE_URL');
     $this->atvVersion = getenv('ATV_VERSION');
@@ -211,7 +197,7 @@ class AtvService {
 
     // Here we figure out if user has HP user or ADMIN, and if user has admin
     // role but no user role then we use apikey for authenticating user.
-    $userRoles = $this->helsinkiProfiiliUserData->getCurrentUserRoles();
+    $userRoles = $this->currentUser->getRoles();
 
     $config = $this->config;
     $rolesConfig = $config->get('roles');
@@ -307,13 +293,7 @@ class AtvService {
   }
 
   /**
-   * Create new ATVDocument.
-   *
-   * @param array $values
-   *   Values for data.
-   *
-   * @return \Drupal\helfi_atv\AtvDocument
-   *   Data in object struct.
+   * {@inheritDoc}
    */
   public function createDocument(array $values): AtvDocument {
     return AtvDocument::create($values);
@@ -353,19 +333,7 @@ class AtvService {
   }
 
   /**
-   * Search documents with given arguments.
-   *
-   * @param array $searchParams
-   *   Search params.
-   * @param bool $refetch
-   *   Force refetch from ATV.
-   *
-   * @return array
-   *   Data
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * {@inheritDoc}
    */
   public function searchDocuments(array $searchParams, bool $refetch = FALSE): array {
     $cache = $searchParams;
@@ -406,22 +374,7 @@ class AtvService {
   }
 
   /**
-   * Get metadata for user's documents.
-   *
-   * If transaction id is given, then use that as a filter. If no value is
-   * given, then get metadata of all user's documents.
-   *
-   * @param string $sub
-   *   User id whose documents are fetched.
-   * @param string $transaction_id
-   *   Transaction id from document.
-   *
-   * @return array
-   *   User documents' public data
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * {@inheritDoc}
    */
   public function getUserDocuments(string $sub, string $transaction_id = ''): array {
     $params = [];
@@ -450,7 +403,6 @@ class AtvService {
    *   Built url
    */
   private function buildUrl(string $endpoint, array $params = []): string {
-
     // It seems that something adds ending slash on platta
     // this will make sure theres only one slash.
     if (str_ends_with($this->baseUrl, '/')) {
@@ -504,19 +456,7 @@ class AtvService {
   }
 
   /**
-   * Fetch single document with id.
-   *
-   * @param string $id
-   *   Document id.
-   * @param bool $refetch
-   *   Force refetch.
-   *
-   * @return \Drupal\helfi_atv\AtvDocument
-   *   Document from ATV.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * {@inheritDoc}
    */
   public function getDocument(string $id, bool $refetch = FALSE): AtvDocument {
     if (($this->useCache && $refetch === FALSE) && $this->isCached($id)) {
@@ -543,18 +483,7 @@ class AtvService {
   }
 
   /**
-   * Check if documents are found with given Trasaction ID.
-   *
-   * @param string $id
-   *   Transaction id.
-   *
-   * @return bool
-   *   Boolean if found.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \Drupal\helfi_atv\AtvUnexpectedResponseException
-   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * {@inheritDoc}
    */
   public function checkDocumentExistsByTransactionId(string $id) {
     $response = $this->doRequest(
@@ -629,20 +558,9 @@ class AtvService {
   }
 
   /**
-   * Save new document.
-   *
-   * @param \Drupal\helfi_atv\AtvDocument $document
-   *   Document to be saved.
-   *
-   * @return \Drupal\helfi_atv\AtvDocument
-   *   POSTed document.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * {@inheritDoc}
    */
   public function postDocument(AtvDocument $document): AtvDocument {
-
     $formData = $this->arrayToFormData($document->toArray());
 
     $opts = [
@@ -661,19 +579,7 @@ class AtvService {
   }
 
   /**
-   * Run PATCH query in ATV.
-   *
-   * @param string $id
-   *   Document id to be patched.
-   * @param array $dataArray
-   *   Document data to update.
-   *
-   * @return bool|\Drupal\helfi_atv\AtvDocument|null
-   *   Boolean or updated data.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * {@inheritDoc}
    */
   public function patchDocument(string $id, array $dataArray): bool|AtvDocument|null {
     $patchUrl = 'documents/' . $id;
@@ -707,17 +613,7 @@ class AtvService {
   }
 
   /**
-   * Get single attachment.
-   *
-   * @param string $url
-   *   Url for single attachment file.
-   *
-   * @return bool|\Drupal\file\FileInterface
-   *   File or false if failed.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * {@inheritDoc}
    */
   public function getAttachment(string $url): bool|FileInterface {
     $file = $this->doRequest(
@@ -732,18 +628,7 @@ class AtvService {
   }
 
   /**
-   * Delete document from ATV.
-   *
-   * @param \Drupal\helfi_atv\AtvDocument $document
-   *   Document to be deleted.
-   *
-   * @return array|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
-   *   If deletion succeeed.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * {@inheritDoc}
    */
   public function deleteDocument(AtvDocument $document) {
     $urlBits = 'documents/' . $document->getId();
@@ -759,22 +644,9 @@ class AtvService {
   }
 
   /**
-   * Delete document attachment from ATV.
-   *
-   * @param string $documentId
-   *   ID of document.
-   * @param string $attachmentId
-   *   ID of attachment.
-   *
-   * @return array|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
-   *   If removal succeeed.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * {@inheritDoc}
    */
   public function deleteAttachment(string $documentId, string $attachmentId): AtvDocument|bool|array|FileInterface {
-
     $url = 'documents/' . $documentId . '/attachments/' . $attachmentId;
 
     return $this->doRequest(
@@ -787,19 +659,7 @@ class AtvService {
   }
 
   /**
-   * Delete document attachment from ATV.
-   *
-   * @param string $attachmentUrl
-   *   Url of an attachment.
-   *
-   * @return array|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
-   *   If removal succeeed.
-   *
-   * @throws \Drupal\helfi_atv\AtvAuthFailedException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * {@inheritDoc}
    */
   public function deleteAttachmentByUrl(string $attachmentUrl): AtvDocument|bool|array|FileInterface {
     return $this->doRequest(
@@ -812,17 +672,7 @@ class AtvService {
   }
 
   /**
-   * Delete document attachment from ATV via intagration Id.
-   *
-   * @param string $integrationId
-   *   Full URI of the attachment.
-   *
-   * @return array|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
-   *   If removal succeeed.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * {@inheritDoc}
    */
   public function deleteAttachmentViaIntegrationId(string $integrationId): AtvDocument|bool|array|FileInterface {
     // Check URL generation.
@@ -836,27 +686,9 @@ class AtvService {
   }
 
   /**
-   * Upload single attachment.
-   *
-   * File has to be saved to managed files for easier processing. Make sure file
-   * is deleted after since this method does not delete.
-   *
-   * @param string $documentId
-   *   Id of the document for this attachment.
-   * @param string $filename
-   *   Filename of the attachment.
-   * @param \Drupal\file\Entity\File $file
-   *   File to be uploaded.
-   *
-   * @return mixed
-   *   Did upload succeed?
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * {@inheritDoc}
    */
   public function uploadAttachment(string $documentId, string $filename, File $file): mixed {
-
     try {
       $this->setAuthHeaders();
     }

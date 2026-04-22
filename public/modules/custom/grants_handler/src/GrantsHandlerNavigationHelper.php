@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
@@ -20,62 +21,22 @@ class GrantsHandlerNavigationHelper {
   /**
    * Name of the table where log entries are stored.
    */
-  protected const TABLE = 'grants_handler_log';
+  protected const string TABLE = 'grants_handler_log';
 
   /**
    * Name of the error operation.
    */
-  public const ERROR_OPERATION = 'errors';
+  public const string ERROR_OPERATION = 'errors';
 
   /**
    * Name of the page visited operation.
    */
-  protected const PAGE_VISITED_OPERATION = 'page visited';
+  protected const string PAGE_VISITED_OPERATION = 'page visited';
 
   /**
    * Name of the navigation handler.
    */
-  protected const HANDLER_ID = 'grants_handler_navigation';
-
-  /**
-   * The database service.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected Connection $database;
-
-  /**
-   * The time service.
-   */
-  protected readonly TimeInterface $timeInterface;
-
-  /**
-   * The messenger service.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected MessengerInterface $messenger;
-
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * The form builder service.
-   *
-   * @var \Drupal\Core\Form\FormBuilderInterface
-   */
-  protected FormBuilderInterface $formBuilder;
-
-  /**
-   * Access to profile data.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
+  protected const string HANDLER_ID = 'grants_handler_navigation';
 
   /**
    * DB result cache.
@@ -84,25 +45,15 @@ class GrantsHandlerNavigationHelper {
    */
   protected array $cache;
 
-  /**
-   * AutosaveHelper constructor.
-   */
   public function __construct(
-    Connection $datababse,
-    MessengerInterface $messenger,
-    EntityTypeManagerInterface $entity_type_manager,
-    FormBuilderInterface $form_builder,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    TimeInterface $timeInterface,
+    protected Connection $database,
+    protected MessengerInterface $messenger,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected FormBuilderInterface $formBuilder,
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    protected TimeInterface $timeInterface,
+    protected AccountProxyInterface $currentUser,
   ) {
-
-    $this->timeInterface = $timeInterface;
-    $this->database = $datababse;
-    $this->messenger = $messenger;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->formBuilder = $form_builder;
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-
     $this->cache = [];
   }
 
@@ -324,8 +275,8 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::PAGE_VISITED_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
-        'user_uuid' => $userData['sub'] ?? '',
+        'uid' => $this->currentUser->id(),
+        'user_uuid' => $userData->sub,
         'data' => $page,
         'page' => $page,
         'timestamp' => (string) $this->timeInterface->getRequestTime(),
@@ -373,8 +324,7 @@ class GrantsHandlerNavigationHelper {
    *
    * @throws \Exception
    */
-  public function logErrors(WebformSubmissionInterface $webformSubmission, array $errors, string $page) {
-
+  public function logErrors(WebformSubmissionInterface $webformSubmission, array $errors, string $page): void {
     $wfId = $webformSubmission->id();
     // Get out from here if the submission hasn't been saved yet.
     if ($wfId == NULL) {
@@ -394,8 +344,8 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::ERROR_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
-        'user_uuid' => $userData['sub'] ?? '',
+        'uid' => $this->currentUser->id(),
+        'user_uuid' => $userData->sub,
         'data' => serialize($errors),
         'page' => $page,
         'timestamp' => (string) $this->timeInterface->getRequestTime(),
