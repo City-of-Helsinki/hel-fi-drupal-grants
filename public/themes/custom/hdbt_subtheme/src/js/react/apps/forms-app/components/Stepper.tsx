@@ -45,7 +45,6 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
   const submitState = useAtomValue(getSubmitStatusAtom);
   const transformedSteps = transformSteps(steps, submitState, errorPageIndices);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: @todo UHF-12501
   useEffect(() => {
     if (!divRef?.current) {
       return;
