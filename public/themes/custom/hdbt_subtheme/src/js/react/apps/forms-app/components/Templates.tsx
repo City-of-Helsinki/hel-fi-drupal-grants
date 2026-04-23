@@ -67,7 +67,7 @@ export const ArrayFieldTemplate = ({
         // biome-ignore lint/correctness/useJsxKeyInIterable: Item contains key already
         <ArrayFieldItemTemplate {...item} />
       ))}
-      {canAdd && !isEmptyPreview && (
+      {canAdd && (
         <Button onClick={onAddClick} theme={secondaryButtonTheme} type='button' iconStart={<IconPlus />}>
           {addText ? (addText as ReactNode & string) : Drupal.t('Add')}
         </Button>
@@ -148,7 +148,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   const { _isSection, _step, description, title } = schema;
   const steps = useAtomValue(formStepsAtom);
   const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
-  const [stepIndex, { id: stepId, label: stepLabel }] = useAtomValue(getCurrentStepAtom);
+  const [stepIndex, { id: stepId }] = useAtomValue(getCurrentStepAtom);
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (idSchema.$id === 'root') {
@@ -196,7 +196,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
         </div>
         {stepId === 'applicant_info' && !isEmptyPreview && (
           <section className='prh-content-block'>
-            <h3 className='prh-content-block__title'>{stepLabel}</h3>
+            <h3 className='prh-content-block__title'>{title}</h3>
             <p>
               {Drupal.t(
                 'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
