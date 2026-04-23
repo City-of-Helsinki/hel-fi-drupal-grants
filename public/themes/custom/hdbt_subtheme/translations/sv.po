@@ -430,8 +430,8 @@ msgid "Field is required"
 msgstr "Fält är obligatoriskt"
 
 msgctxt "Grants application: Validation"
-msgid "@field field is required."
-msgstr "Fält @field är obligatoriskt."
+msgid "!field field is required."
+msgstr "Fält !field är obligatoriskt."
 
 msgctxt "Grants application: Draft"
 msgid "Save as draft"
