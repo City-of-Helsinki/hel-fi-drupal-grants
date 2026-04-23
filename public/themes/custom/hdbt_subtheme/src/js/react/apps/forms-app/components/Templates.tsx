@@ -166,10 +166,12 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     return null;
   }
 
-  if ((_step && _step === stepId) || (isEmptyPreview && !_isSection)) {
+  if ((_step && _step === stepId) || (isEmptyPreview && !!_step && !_isSection)) {
+    const stepEntry = isEmptyPreview ? steps && [...steps.entries()].find(([, s]) => s.id === _step) : undefined;
+    const stepNumber = stepEntry ? stepEntry[0] + 1 : undefined;
     return (
       <>
-        {title && <h2 className='grants-form__page-title'>{title}</h2>}
+        {title && <h2 className='grants-form__page-title'>{stepNumber ? `${stepNumber}. ${title}` : title}</h2>}
         <div className='grants-form__notification-container'>
           {stepIndex === 0 && !isEmptyPreview && (
             <Notification
