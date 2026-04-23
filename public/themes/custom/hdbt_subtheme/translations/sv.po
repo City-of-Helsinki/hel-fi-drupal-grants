@@ -591,3 +591,7 @@ msgstr "Nästa"
 
 msgid "Are you sure you want to log out?"
 msgstr "Är du säker på att du vill logga ut?"
+
+msgctxt "Grants application: Preview"
+msgid "Community for which the grant is being applied for"
+msgstr "Samfund för vilket understödet ansöks"

@@ -641,3 +641,7 @@ msgstr "Seuraava"
 
 msgid "Are you sure you want to log out?"
 msgstr "Haluatko varmasti kirjautua ulos?"
+
+msgctxt "Grants application: Preview"
+msgid "Community for which the grant is being applied for"
+msgstr "Yhteisö, jolle haetaan avustusta"

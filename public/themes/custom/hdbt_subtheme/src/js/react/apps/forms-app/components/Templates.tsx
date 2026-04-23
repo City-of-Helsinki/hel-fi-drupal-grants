@@ -13,7 +13,7 @@ import type { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
 import { formStepsAtom, getCurrentStepAtom, isEmptyPreviewAtom, shouldRenderPreviewAtom } from '../store';
-import { ApplicantInfo } from './ApplicantInfo';
+import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import { getTooltip } from '../utils';
 import type { UiSchema } from '../types/UiSchema';
@@ -81,11 +81,13 @@ const PreviewStep = ({
   properties,
   uiSchema,
   stepNumber,
+  stepId,
 }: {
   title?: string;
   properties: ObjectFieldTemplatePropertyType[];
   uiSchema: UiSchema;
   stepNumber?: number;
+  stepId?: string;
 }) => {
   const printableName = uiSchema?.['ui:options']?.printableName;
   const headingText = printableName || title?.toString();
@@ -95,6 +97,7 @@ const PreviewStep = ({
     return (
       <div className='hdbt-react-form__preview-accordion-item hdbt-react-form__preview-accordion-item--print'>
         <h3>{heading}</h3>
+        {stepId === 'applicant_info' && <PreviewApplicantInfo />}
         {properties.map((field) => field.content)}
       </div>
     );
@@ -114,6 +117,7 @@ const PreviewStep = ({
         '--border-color': ' var(--color-black-20)',
       }}
     >
+      {stepId === 'applicant_info' && <PreviewApplicantInfo />}
       {properties.map((field) => field.content)}
     </Accordion>
   );
@@ -159,7 +163,15 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   if (_step && shouldRenderPreview) {
     const stepEntry = steps && [...steps.entries()].find(([, s]) => s.id === _step);
     const stepNumber = stepEntry ? stepEntry[0] + 1 : undefined;
-    return <PreviewStep title={title} properties={properties} uiSchema={uiSchema || {}} stepNumber={stepNumber} />;
+    return (
+      <PreviewStep
+        title={title}
+        properties={properties}
+        uiSchema={uiSchema || {}}
+        stepNumber={stepNumber}
+        stepId={_step}
+      />
+    );
   }
 
   if (_step && _step !== stepId && !isEmptyPreview) {
