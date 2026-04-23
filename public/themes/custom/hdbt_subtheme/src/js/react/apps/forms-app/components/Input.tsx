@@ -48,7 +48,7 @@ export const PreviewInput = ({
 );
 
 export const sanitizeNumericInput = (value: string, allowPhone = false): string => {
-  const pattern = allowPhone ? /[^0-9 ,+()]/g : /[^0-9 ,]/g;
+  const pattern = allowPhone ? /[^0-9 +()]/g : /[^0-9 ,]/g;
   const normalized = allowPhone ? value : value.replace('.', ',');
   return normalized.replace(pattern, '').replace(/ {2,}/g, ' ');
 };
