@@ -185,15 +185,11 @@ export const RJSFFormContainer = ({
       return [];
     }
 
-    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null' && (error as any).name !== 'if');
+    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null' && error.name !== 'if');
 
     // Expand section-level required errors to field-level errors so fields inside
     // conditionally-required allOf/then sections display red borders when absent.
-    const expandedErrors = expandConditionalRequiredErrors(
-      prefilteredErrors,
-      schema,
-      (formRef.current as any)?.state?.formData,
-    );
+    const expandedErrors = expandConditionalRequiredErrors(prefilteredErrors, schema, formRef.current?.state?.formData);
 
     const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(expandedErrors, steps));
     setErrors(errorsToShow);

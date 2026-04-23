@@ -54,7 +54,7 @@ const resolveFieldSchema = (rootSchema: RJSFSchema, path: string[]): any => {
 
   const [stepId, ...rest] = path;
   const stepProp = rootSchema.properties?.[stepId] as any;
-  const refName = stepProp?.['$ref']?.replace('#/definitions/', '');
+  const refName = stepProp?.$ref?.replace('#/definitions/', '');
   const stepDef = (refName ? (rootSchema.definitions as any)?.[refName] : stepProp) as any;
 
   if (!stepDef) return null;
