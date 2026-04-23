@@ -221,7 +221,7 @@ export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError
     return;
   }
 
-  _set(errorsAtom, (state) => [...state, ...keyErrorsByStep(errors, steps)]);
+  _set(errorsAtom, (state) => [...state, ...keyErrorsByStep(errors, steps)].sort(([a], [b]) => a - b));
 });
 export const getErrorPageIndicesAtom = atom((_get) => {
   const errors = _get(errorsAtom);

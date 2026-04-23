@@ -134,7 +134,7 @@ export const TextInput = ({
       onBlur={() => null}
       onChange={(event: ChangeEvent<HTMLInputElement>) => {
         const value = phone ? sanitizeNumericInput(event.target.value, true) : event.target.value;
-        onChange(value);
+        onChange(value === '' ? undefined : value);
       }}
       onFocus={() => null}
       required={required}
@@ -191,10 +191,14 @@ export const TextArea = ({
         hideLabel={false}
         invalid={Boolean(rawErrors?.length)}
         onBlur={() => null}
-        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
+        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+          const val = event.target.value;
+          onChange(val === '' ? undefined : val);
+        }}
         onFocus={() => null}
         tooltip={getTooltip(uiSchema)}
-        {...{ id, label, maxLength, name, required, value }}
+        value={value ?? ''}
+        {...{ id, label, maxLength, name, required }}
       />
     </>
   );

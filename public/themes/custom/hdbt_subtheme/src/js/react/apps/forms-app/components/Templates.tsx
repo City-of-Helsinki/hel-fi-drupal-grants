@@ -216,6 +216,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   }
 
   if (_isSection) {
+    const visibleProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+    if (!visibleProperties.length) {
+      return null;
+    }
+
     return (
       <section className='hdbt-form--section'>
         <h3 className='hdbt-form--section__title'>{title}</h3>
@@ -259,6 +264,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     (child) => typeof child === 'object' && child !== null && (child as any)['misc:required'],
   );
 
+  const visibleFieldsetProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+  if (!visibleFieldsetProperties.length) {
+    return null;
+  }
+
   return (
     <Fieldset
       heading={hasRequiredChild ? `${title} *` : title || ''}
@@ -289,6 +299,23 @@ export const FieldTemplate = (props: FieldTemplateProps) => {
   if (shouldRenderPreview && (schema as any)._isSection) {
     const allNull = Object.values((schema.properties || {}) as Record<string, any>).every((p) => p.type === 'null');
     if (allNull) return null;
+  }
+
+  // Don't render wrappers for inactive conditional sections.
+  // Sections whose allOf/then condition is not met have only empty placeholder objects
+  // in their base schema (e.g. project_measures_wrapper: {type:object, default:{}}),
+  // which have no sub-properties and would render as nothing.
+  if (!shouldRenderPreview && (schema as any)._isSection) {
+    const sectionProps = Object.values((schema.properties || {}) as Record<string, any>);
+    const hasVisibleContent = sectionProps.some((p: any) => {
+      if (p.type === 'null') return false;
+      if (p.type === 'object') {
+        const sub = p.properties as Record<string, any> | undefined;
+        return !!sub && Object.values(sub).some((s: any) => s?.type !== 'null');
+      }
+      return true; // string, integer, number, boolean, array — always renderable
+    });
+    if (!hasVisibleContent) return null;
   }
 
   return <DefaultFieldTemplate {...props} />;
