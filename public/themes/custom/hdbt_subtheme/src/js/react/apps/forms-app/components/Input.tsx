@@ -264,6 +264,14 @@ export const SelectWidget = ({
 
 export const AddressSelect = (props: WidgetProps) => {
   const addresses = useAtomValue(getAddressesAtom);
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+
+  if (shouldRenderPreview) {
+    const full = addresses?.find((a) => a.street === props.value);
+    const displayValue = full ? [full.street, full.postCode, full.city].filter(Boolean).join(', ') : props.value;
+    return <PreviewInput value={displayValue} label={props.label} uiSchema={props.uiSchema} />;
+  }
+
   const options = addresses?.length
     ? Object.assign(addresses.map(({ street }) => ({ label: street, value: street })))
     : [];
