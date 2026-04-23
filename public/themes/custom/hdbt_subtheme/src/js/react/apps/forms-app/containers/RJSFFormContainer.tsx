@@ -8,7 +8,7 @@ import type {
 } from '@rjsf/utils';
 import { useAtomValue, useSetAtom, type WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import { useDebounceCallback } from 'usehooks-ts';
+import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import Form, { getDefaultRegistry, type IChangeEvent } from '@rjsf/core';
 import type { ReactNode, FormEvent } from 'react';
 import { createRef, useCallback, useEffect, useState } from 'react';

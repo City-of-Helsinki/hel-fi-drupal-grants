@@ -10,7 +10,7 @@ import {
   RadioButton,
   Select,
 } from 'hds-react';
-import { DateTime } from 'luxon';
+import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,6 @@ import {
   isReadOnlyAtom,
   shouldRenderPreviewAtom,
 } from '../store';
-import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
 
 export const PreviewInput = ({
   value,
@@ -413,20 +412,20 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
-  let date: DateTime | undefined;
   const handleChange = (_dateStr: string, dateObject: Date) => {
     try {
-      date = DateTime.fromJSDate(dateObject);
+      onChange(toLocalISO(dateObject).slice(0, 10));
     } catch (_error) {
       return;
     }
-
-    onChange(date?.toISODate());
   };
 
   let formattedValue: string | undefined;
   try {
-    formattedValue = value ? DateTime.fromISO(value).toFormat(HDS_DATE_FORMAT) : undefined;
+    if (value) {
+      const [year, month, day] = (value as string).split('-').map(Number);
+      formattedValue = formatHDSDate(new Date(year, month - 1, day));
+    }
   } catch (_error) {
     formattedValue = undefined;
   }
