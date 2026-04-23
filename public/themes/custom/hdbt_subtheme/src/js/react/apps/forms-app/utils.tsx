@@ -385,7 +385,7 @@ export const getSubventionSum = (formData: any, subventionFields: string[]) =>
 
     if (values?.length) {
       Object.entries(values).forEach(([, curr]) => {
-        const amount = Number(curr[1].value);
+        const amount = Number(String(curr[1].value).replace(',', '.'));
 
         if (!Number.isNaN(amount)) {
           total += amount;
