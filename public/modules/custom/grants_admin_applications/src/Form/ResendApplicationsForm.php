@@ -402,8 +402,20 @@ class ResendApplicationsForm extends AtvFormBase {
           return;
         }
 
-        $this->messenger()
-          ->addError('Resending react-application is currently disabled.');
+        $status = $atvDoc->getStatus();
+        if (!in_array($status, ['RECEIVED', 'PREPARING'])) {
+          $this->messenger()->addError($this->t(
+            'Application cannot be resent. Status must be RECEIVED or PREPARING, current status: @status',
+            ['@status' => $status],
+            self::$tOpts
+          ));
+          return;
+        }
+
+        $this->logApplicationResendInit($applicationId);
+        $this->attachmentFixerService->fixAttachmentsOnApplication($atvDoc);
+        $this->sendApplicationToIntegrations($atvDoc, $applicationId);
+        $formState->setRebuild();
         return;
       }
 
