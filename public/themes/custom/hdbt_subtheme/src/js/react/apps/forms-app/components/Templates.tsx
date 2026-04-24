@@ -8,7 +8,7 @@ import type {
   ObjectFieldTemplateProps,
 } from '@rjsf/utils';
 import { getDefaultRegistry } from '@rjsf/core';
-import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus } from 'hds-react';
+import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus, type AccordionTheme } from 'hds-react';
 import type { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
@@ -119,9 +119,14 @@ const PreviewStep = ({
       headingLevel={3}
       initiallyOpen
       language={drupalSettings.path.currentLanguage || 'fi'}
-      theme={{
-        '--border-color': ' var(--color-black-20)',
-      }}
+      theme={
+        {
+          '--border-color': ' var(--color-black-20)',
+          '--color-hover': 'var(--header-color)',
+          '--color-focus': 'var(--header-color)',
+          '--header-outline-color-focus': 'var(--header-color)',
+        } as AccordionTheme
+      }
     >
       {stepId === 'applicant_info' && <PreviewApplicantInfo />}
       {properties.map((field) => field.content)}
