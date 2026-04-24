@@ -11630,31 +11630,6 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/src/ResilientLoggerTasks.php
 
 		-
-			message: "#^Cannot access offset 'created_at' on array\\|object\\|false\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSource.php
-
-		-
-			message: "#^Cannot access offset 'is_sent' on array\\|object\\|false\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSource.php
-
-		-
-			message: "#^Cannot access offset 'message' on array\\|object\\|false\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSource.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_audit_log\\\\Sources\\\\HelfiAuditLogSource\\:\\:create\\(\\) has parameter \\$context with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSource.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_audit_log\\\\Sources\\\\HelfiAuditLogSource\\:\\:getDocument\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 3
-			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSource.php
-
-		-
 			message: "#^Access to an undefined property Drupal\\\\helfi_audit_log_test\\\\AuditLogServiceTest\\:\\:\\$message\\.$#"
 			count: 2
 			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php

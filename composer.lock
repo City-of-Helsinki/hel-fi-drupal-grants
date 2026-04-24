@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "14392170bdfad479ed92a44e52a2fd0c",
+    "content-hash": "df3f78641c659647405b52e9487db065",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -740,29 +740,29 @@
         },
         {
             "name": "city-of-helsinki/php-resilient-logger",
-            "version": "1.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/php-resilient-logger.git",
-                "reference": "2381e03f7ead1181860fed4d2373442d37d89d33"
+                "reference": "642456f43c644fb659943da65c9a74be1efe0988"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/php-resilient-logger/zipball/2381e03f7ead1181860fed4d2373442d37d89d33",
-                "reference": "2381e03f7ead1181860fed4d2373442d37d89d33",
+                "url": "https://api.github.com/repos/City-of-Helsinki/php-resilient-logger/zipball/642456f43c644fb659943da65c9a74be1efe0988",
+                "reference": "642456f43c644fb659943da65c9a74be1efe0988",
                 "shasum": ""
             },
             "require": {
-                "elasticsearch/elasticsearch": "^8",
-                "monolog/monolog": "^3.9",
-                "php": "^8.1"
+                "elasticsearch/elasticsearch": "^8.0",
+                "monolog/monolog": "^2.0 || ^3.0",
+                "php": ">=8.1",
+                "sebastian/diff": "^5.0 || ^6.0 || ^7.0"
             },
             "require-dev": {
                 "behat/mink": "^1.12",
-                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
                 "phpspec/prophecy": "^1.20",
                 "phpspec/prophecy-phpunit": "^2.3",
-                "phpunit/phpunit": "^10.5"
+                "phpunit/phpunit": "^10.5 || ^11.5"
             },
             "type": "library",
             "autoload": {
@@ -780,10 +780,10 @@
             ],
             "description": "PHP resilient logger for monolog",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/php-resilient-logger/tree/1.0.0",
+                "source": "https://github.com/City-of-Helsinki/php-resilient-logger/tree/2.0.1",
                 "issues": "https://github.com/City-of-Helsinki/php-resilient-logger/issues"
             },
-            "time": "2025-12-10T14:15:58+00:00"
+            "time": "2026-04-28T07:24:42+00:00"
         },
         {
             "name": "codementality/flysystem-stream-wrapper",
