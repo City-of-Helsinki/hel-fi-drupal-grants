@@ -49,7 +49,7 @@ class ApplicationService {
   public function createDraft(string $form_identifier, string|null $original_application_number = NULL): array {
     try {
       $entity = $this->getSubmissionEntity(
-        $this->userInformationService->getUserData()['sub'],
+        $this->userInformationService->getUserData()->sub,
         $original_application_number,
         $this->userInformationService->getGrantsProfileContent()->getBusinessId(),
       );
@@ -58,7 +58,7 @@ class ApplicationService {
       $this->logger->error('Unable to fetch application to copy: @message', [
         '@message' => $e->getMessage(),
         'application_number' => $original_application_number,
-        'user_id' => $this->userInformationService->getUserData()['sub'],
+        'user_id' => $this->userInformationService->getUserData()->sub,
       ]);
 
       throw $e;
@@ -105,7 +105,7 @@ class ApplicationService {
       $application_type,
       $application_title,
       $langcode,
-      $user_data['sub'],
+      $user_data->sub,
       $selected_company['identifier'],
       FALSE,
       $selected_company,
@@ -130,7 +130,7 @@ class ApplicationService {
     ApplicationSubmission::create([
       'document_id' => $document->getId(),
       'business_id' => $grants_profile_data->getBusinessId(),
-      'sub' => $user_data['sub'],
+      'sub' => $user_data->sub,
       'langcode' => $langcode,
       'draft' => TRUE,
       'application_type_id' => $application_type_id,

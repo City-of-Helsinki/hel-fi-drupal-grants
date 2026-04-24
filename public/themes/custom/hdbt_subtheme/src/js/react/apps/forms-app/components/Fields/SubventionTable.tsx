@@ -3,6 +3,7 @@
 import type { FieldProps } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
 import { Notification, NumberInput, Fieldset } from 'hds-react';
+import type { ComponentPropsWithRef } from 'react';
 
 import { isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
 import { formatErrors } from '../../utils';
@@ -102,29 +103,31 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
 
             return (
               <NumberInput
-                className='form-group field field-integer'
-                data-subvention-id={itemId}
-                disabled={isReadOnly}
-                id={key}
                 key={key}
-                label={label}
-                min={0}
-                onChange={handleChange}
-                onFocus={(event: FocusEvent<HTMLInputElement>) => {
-                  if (event.target.value === '0') {
-                    event.target.select();
-                  }
-                }}
-                onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
-                  if (event.key === 'e' || event.key === 'E') {
-                    event.preventDefault();
-                  }
-                }}
-                onWheel={(event: WheelEvent<HTMLInputElement>) => {
-                  event.currentTarget.blur();
-                }}
-                value={keyedData[itemId] ? Number(keyedData[itemId]) : ''}
-                unit='€'
+                {...({
+                  className: 'form-group field field-integer',
+                  'data-subvention-id': itemId,
+                  disabled: isReadOnly,
+                  id: key,
+                  label,
+                  min: 0,
+                  onChange: handleChange,
+                  onFocus: (event: FocusEvent<HTMLInputElement>) => {
+                    if (event.target.value === '0') {
+                      event.target.select();
+                    }
+                  },
+                  onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
+                    if (event.key === 'e' || event.key === 'E') {
+                      event.preventDefault();
+                    }
+                  },
+                  onWheel: (event: WheelEvent<HTMLInputElement>) => {
+                    event.currentTarget.blur();
+                  },
+                  value: keyedData[itemId] ? Number(keyedData[itemId]) : '',
+                  unit: '€',
+                } as unknown as Omit<ComponentPropsWithRef<typeof NumberInput>, 'key'>)}
               />
             );
           })}

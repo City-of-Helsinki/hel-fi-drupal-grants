@@ -139,10 +139,6 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 404);
     }
 
-    if (!$settings->isApplicationOpen()) {
-      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
-    }
-
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
@@ -155,7 +151,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -170,6 +166,10 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    if (!$settings->isApplicationOpen() && $document->getStatus() === 'DRAFT') {
+      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
+    }
+
     // Side document bc.
     if ($sideDocumentId = $submission->getSideDocumentId()) {
       $sideDocument = $this->atvService->getDocumentById($sideDocumentId);
@@ -181,7 +181,7 @@ final class DraftApplication extends ResourceBase {
         $sideDocument = $this->atvService->createSideDocument(
           'application_type',
           $settings->getApplicationName(),
-          $user_information['sub'],
+          $user_information->sub,
           $selected_company,
           $document->getId(),
           $selected_company['type']
@@ -284,7 +284,7 @@ final class DraftApplication extends ResourceBase {
       $application_type,
       $application_title,
       $langcode,
-      $user_data['sub'],
+      $user_data->sub,
       $selected_company['identifier'],
       FALSE,
       $selected_company,
@@ -316,7 +316,7 @@ final class DraftApplication extends ResourceBase {
     $sideDocument = $this->atvService->createSideDocument(
       $application_type,
       $application_title,
-      $user_data['sub'],
+      $user_data->sub,
       $selected_company,
       $document->getId(),
     );
@@ -334,7 +334,7 @@ final class DraftApplication extends ResourceBase {
     $submission = ApplicationSubmission::create([
       'document_id' => $document->getId(),
       'business_id' => $grants_profile_data->getBusinessId(),
-      'sub' => $user_data['sub'],
+      'sub' => $user_data->sub,
       'langcode' => $langcode,
       'draft' => TRUE,
       'application_type_id' => $application_type_id,
@@ -417,7 +417,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $submission = $this->getSubmissionEntity(
-        $this->userInformationService->getUserData()['sub'],
+        $this->userInformationService->getUserData()->sub,
         $application_number,
         $grants_profile_data->getBusinessId(),
       );

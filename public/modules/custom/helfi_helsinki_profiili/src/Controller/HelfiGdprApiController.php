@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace Drupal\helfi_gdpr_api\Controller;
+namespace Drupal\helfi_helsinki_profiili\Controller;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Access\AccessResultAllowed;
-use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\EntityBase;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Language\ContextProvider\CurrentLanguageContext;
+use Drupal\helfi_api_base\Environment\EnvironmentEnum;
+use Drupal\helfi_api_base\Environment\EnvironmentResolverInterface;
 use Drupal\helfi_atv\AtvAuthFailedException;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_helsinki_profiili\Helper\JwtHelper;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\user\Entity\User;
-use Drupal\user\UserStorageInterface;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -38,175 +38,53 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class HelfiGdprApiController extends ControllerBase {
 
   /**
-   * Profiili data access.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
-
-  /**
-   * Request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $request;
-
-  /**
    * User jwt token decoded.
    *
-   * @var array
+   * @phpstan-var array<mixed>
    */
   protected array $jwtData;
 
   /**
    * User jwt token string.
-   *
-   * @var string
    */
   protected string $jwtToken;
 
   /**
-   * Access to ATV.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Http client.
-   *
-   * @var \GuzzleHttp\ClientInterface
-   */
-  protected ClientInterface $httpClient;
-
-  /**
-   * Translator for texts.
-   *
-   * @var \Drupal\Core\Language\ContextProvider\CurrentLanguageContext
-   */
-  protected CurrentLanguageContext $currentLanguageContext;
-
-  /**
-   * Db connection.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected Connection $connection;
-
-  /**
    * Audience configuration from db.
    *
-   * @var array|mixed|null
+   * @phpstan-var array{service_name: string, audience_host: string}
    */
   protected array $audienceConfig;
 
-  /**
-   * Entitytype manager for users.
-   *
-   * @var \Drupal\user\UserStorageInterface
-   */
-  protected UserStorageInterface $userStorage;
-
-  /**
-   * DEbug or not?
-   *
-   * @var bool
-   */
-  protected bool $debug;
-
-  /**
-   * Is debug on?
-   *
-   * @return bool
-   *   Debug on / off?
-   */
-  public function isDebug(): bool {
-    return $this->debug;
-  }
-
-  /**
-   * Set debug value.
-   *
-   * @param bool $debug
-   *   True / False?
-   */
-  public function setDebug(bool $debug): void {
-    $this->debug = $debug;
-  }
-
-  /**
-   * CompanyController constructor.
-   *
-   * @param \Symfony\Component\HttpFoundation\RequestStack $request
-   *   Request.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-   *   Helsinki profile data access.
-   * @param \Drupal\helfi_atv\AtvService $atvService
-   *   Atv access.
-   * @param \GuzzleHttp\ClientInterface $httpClient
-   *   HTTP client.
-   * @param \Drupal\Core\Language\ContextProvider\CurrentLanguageContext $currentLanguageContext
-   *   Language.
-   * @param \Drupal\Core\Database\Connection $connection
-   *   Database.
-   * @param Drupal\user\UserStorageInterface $userStorage
-   *   User storage.
-   */
   public function __construct(
-    RequestStack $request,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    AtvService $atvService,
-    ClientInterface $httpClient,
-    CurrentLanguageContext $currentLanguageContext,
-    Connection $connection,
-    UserStorageInterface $userStorage,
+    protected RequestStack $request,
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    protected AtvService $atvService,
+    protected ClientInterface $httpClient,
+    #[Autowire(service: 'language.current_language_context')]
+    protected CurrentLanguageContext $currentLanguageContext,
+    protected Connection $connection,
+    private readonly EnvironmentResolverInterface $environmentResolver,
   ) {
-    $this->request = $request;
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-    $this->atvService = $atvService;
-    $this->httpClient = $httpClient;
-    $this->currentLanguageContext = $currentLanguageContext;
-    $this->connection = $connection;
-    $this->userStorage = $userStorage;
+    // @todo Fail if these variables are not set.
+    $serviceName = getenv('GDPR_API_AUD_SERVICE') ?: '';
+    $audienceHost = getenv('GDPR_API_AUD_HOST') ?: '';
 
-    $this->audienceConfig = [
-      'service_name' => getenv('GDPR_API_AUD_SERVICE'),
-      'audience_host' => getenv('GDPR_API_AUD_HOST'),
-    ];
-
-    $this->setDebug(getenv('DEBUG') == 'true' || getenv('DEBUG') == TRUE);
+    $this->audienceConfig = ['service_name' => $serviceName, 'audience_host' => $audienceHost];
     $this->parseJwt();
-
-    $this->debug('Audience config: @config', ['@config' => Json::encode($this->audienceConfig)]);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('request_stack'),
-      $container->get('helfi_helsinki_profiili.userdata'),
-      $container->get('helfi_atv.atv_service'),
-      $container->get('http_client'),
-      $container->get('language.current_language_context'),
-      $container->get('database'),
-      $container->get('entity_type.manager')->getStorage('user'),
-    );
   }
 
   /**
    * Checks access for this controller.
    */
-  public function access($userId): AccessResultForbidden|AccessResultAllowed {
+  public function access(string $userId): AccessResultInterface {
 
     $deniedReason = NULL;
     $decoded = NULL;
 
     try {
-      $this->debug('GDPR Api access called. JWT token: @token', ['@token' => $this->jwtToken], TRUE);
       $decoded = $this->helsinkiProfiiliUserData->verifyJwtToken($this->jwtToken);
-      $this->debug('GDPR Api access called. JWT token contents: @token', ['@token' => Json::encode($decoded)], TRUE);
+      $this->log('GDPR Api access called. JWT token contents: @token', ['@token' => Json::encode($decoded)]);
     }
     catch (\InvalidArgumentException $e) {
       $deniedReason = $e->getMessage();
@@ -256,60 +134,46 @@ class HelfiGdprApiController extends ControllerBase {
     $expectedAudience = $this->audienceConfig['service_name'];
 
     if ($decoded['sub'] !== $userId) {
-      $this->debug(
+      $this->log(
         'GDPR Api access failed: User ID mismatch - JWT value: @jwt Endpoint value: @endpoint',
         [
           '@jwt' => $decoded['sub'],
           '@endpoint' => $userId,
         ],
-        TRUE
       );
       return AccessResult::forbidden('User ID mismatch');
     }
 
     // If audience does not match, forbid access.
     if ($audience != $expectedAudience) {
-      $this->debug(
+      $this->log(
         'Access DENIED. Reason: @reason. JWT token: @token',
         [
           '@token' => $this->jwtToken,
           '@reason' => 'Audience mismatch',
         ],
-        TRUE
       );
       return AccessResult::forbidden('Audience mismatch');
     }
 
-    $hostkey = '';
-    if ($this->request->getCurrentRequest()->getMethod() == 'GET') {
-      $hostkey = 'gdprquery';
-    }
-    if ($this->request->getCurrentRequest()->getMethod() == 'DELETE') {
-      $hostkey = 'gdprdelete';
-    }
+    $hostkey = match ($this->request->getCurrentRequest()->getMethod()) {
+      'GET' => 'gdprquery',
+      'DELETE' => 'gdprdelete',
+      default => throw new BadRequestException('Unsupported method: ' . $this->request->getCurrentRequest()->getMethod()),
+    };
 
     if (in_array($hostkey, $decoded['authorization']->permissions[0]->scopes)) {
-      $this->debug(
+      $this->log(
         'Local access GRANTED. Reason: @reason. JWT token: @token',
         [
           '@token' => $this->jwtToken,
           '@reason' => 'All match..',
         ],
-        TRUE
       );
       return AccessResult::allowed();
     }
-    else {
-      $deniedReason = 'Scope mismatch';
-    }
 
-    // We should never reach here, but just return forbidden access.
-    if ($deniedReason != NULL) {
-      return AccessResult::forbidden($deniedReason);
-    }
-    else {
-      return AccessResult::forbidden('Generic token parse error');
-    }
+    return AccessResult::forbidden('Scope mismatch');
   }
 
   /**
@@ -318,7 +182,7 @@ class HelfiGdprApiController extends ControllerBase {
    * @param string $userId
    *   User id.
    *
-   * @return \Drupal\Component\Serialization\JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   JSONresponse.
    *
    * @throws \Drupal\helfi_atv\AtvAuthFailedException
@@ -357,8 +221,7 @@ class HelfiGdprApiController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   JsonResponse.
    */
-  public function delete($userId): JsonResponse {
-
+  public function delete(string $userId): JsonResponse {
     try {
       // Try to load user via openid / tunnistamo id.
       $authuid = $this->connection->select('authmap', 'am')
@@ -371,9 +234,10 @@ class HelfiGdprApiController extends ControllerBase {
 
       if ($authuid) {
         // Try to load & delete user.
-        $user = $this->userStorage->load($authuid->uid);
-        $user?->delete();
-        // phpcs:enable
+        $this->entityTypeManager()
+          ->getStorage('user')
+          ->load($authuid->uid)
+          ?->delete();
       }
 
       $this->atvService->deleteGdprData($this->jwtData['sub'], $this->jwtToken);
@@ -383,14 +247,11 @@ class HelfiGdprApiController extends ControllerBase {
     catch (AtvDocumentNotFoundException $e) {
       $statusCode = 404;
     }
-    catch (AtvFailedToConnectException $e) {
+    catch (AtvFailedToConnectException | GuzzleException $e) {
       $statusCode = 500;
     }
     catch (TokenExpiredException $e) {
       $statusCode = 401;
-    }
-    catch (GuzzleException $e) {
-      $statusCode = 500;
     }
     catch (EntityStorageException $e) {
       $statusCode = 204;
@@ -400,13 +261,12 @@ class HelfiGdprApiController extends ControllerBase {
     }
 
     return new JsonResponse(NULL, $statusCode);
-
   }
 
   /**
    * Parse jwt token data from token in request.
    */
-  public function parseJwt(): void {
+  private function parseJwt(): void {
 
     $currentRequest = $this->request->getCurrentRequest();
 
@@ -417,7 +277,7 @@ class HelfiGdprApiController extends ControllerBase {
     }
 
     $jwtToken = str_replace('Bearer ', '', $authHeader);
-    $tokenData = $this->helsinkiProfiiliUserData->parseToken($jwtToken);
+    $tokenData = JwtHelper::parseToken($jwtToken);
     $this->jwtData = $tokenData;
     $this->jwtToken = $jwtToken;
   }
@@ -425,7 +285,7 @@ class HelfiGdprApiController extends ControllerBase {
   /**
    * Get user GDPR data from ATV api.
    *
-   * @return array
+   * @return array<mixed>
    *   User's GDPR data
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -434,7 +294,7 @@ class HelfiGdprApiController extends ControllerBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\helfi_atv\AtvAuthFailedException
    */
-  public function getData(): array {
+  private function getData(): array {
 
     $data = [];
 
@@ -509,6 +369,7 @@ class HelfiGdprApiController extends ControllerBase {
 
     // Get data.
     $gdprData = $this->atvService->getGdprData($this->jwtData['sub'], $this->jwtToken);
+    /** @var array<mixed> $gdprData */
     if ($gdprData["total_deletable"] == 0 && $gdprData["total_undeletable"] == 0) {
       return [];
     }
@@ -623,56 +484,45 @@ class HelfiGdprApiController extends ControllerBase {
   /**
    * Get user from database.
    *
-   * @return \Drupal\Core\Entity\EntityBase|EntityInterface|User|null
+   * @return \Drupal\user\Entity\User|null
    *   User or some other types.
    */
-  public function getUser(): User|EntityBase|EntityInterface|null {
-    $query = $this->connection->select('users', 'u',);
+  private function getUser(): User|null {
+    $query = $this->connection->select('users', 'u');
     $query->join('authmap', 'am', 'am.uid = u.uid');
-    $query
+    $res = $query
       ->fields('u', ['uid'])
-      ->condition('am.authname', $this->jwtData['sub']);
-    $res = $query->execute()->fetchObject();
+      ->condition('am.authname', $this->jwtData['sub'])
+      ->execute()
+      ->fetchObject();
 
-    $user = $this->userStorage->load($res->uid);
+    $user = $this->entityTypeManager()
+      ->getStorage('user')
+      ->load($res->uid);
+
+    assert(!$user || $user instanceof User);
+
     return $user;
   }
 
   /**
-   * Print to debug stream.
+   * Logs messages.
    *
    * @param string $msg
    *   Message.
-   * @param array $options
+   * @param array<mixed> $options
    *   Options.
-   * @param bool $sensitive
-   *   Does the debug msg contain sensitive information?
-   *   These will be removed in production environments.
    */
-  private function debug(string $msg, array $options = [], $sensitive = FALSE) {
-    if ($sensitive && $this->isProduction()) {
-      $sensitiveValues = ['@jwt', '@token'];
-      foreach ($sensitiveValues as $sensitiveValue) {
-        if (isset($options[$sensitiveValue])) {
-          $options[$sensitiveValue] = '<redacted>';
-        }
+  private function log(string $msg, array $options = []): void {
+    if ($this->environmentResolver->getActiveEnvironmentName() === EnvironmentEnum::Prod->value) {
+
+      // Hide sensitive values in production environment.
+      if (isset($options['@token'])) {
+        $options['@token'] = '<redacted>';
       }
     }
 
-    if ($this->isDebug()) {
-      $this->getLogger('helf_gdpr_api')->debug($msg, $options);
-    }
-  }
-
-  /**
-   * Check if current environment is production.
-   *
-   * @return bool
-   *   Returns true if the environment is production.
-   */
-  private function isProduction(): bool {
-    $appEnv = getenv('APP_ENV');
-    return in_array($appEnv, ['production', 'PRODUCTION', 'prod', 'PROD']);
+    $this->getLogger('helf_gdpr_api')->info($msg, $options);
   }
 
 }

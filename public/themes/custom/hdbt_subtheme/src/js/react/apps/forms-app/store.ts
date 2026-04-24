@@ -1,7 +1,6 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import { atom } from 'jotai';
-import { DateTime } from 'luxon';
 import type { ReactNode } from 'react';
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 
@@ -110,8 +109,8 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
 
     const parsedItem = JSON.parse(sessionItem);
     const { timestamp: sessionTimeStamp, data: sessionData } = parsedItem;
-    const sessionTime = DateTime.fromMillis(Number(sessionTimeStamp) * 1000);
-    const serverTime = timestamp ? DateTime.fromMillis(Number(timestamp) * 1000) : null;
+    const sessionTime = new Date(Number(sessionTimeStamp) * 1000);
+    const serverTime = timestamp ? new Date(Number(timestamp) * 1000) : null;
 
     if (serverTime && sessionTime < serverTime) {
       return initialValue;
@@ -133,9 +132,9 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
   return derivedAtom;
 };
 export const formDataAtomRef = atom<any>(null);
-export const formStateAtom = atom<FormState | undefined>();
-export const formConfigAtom = atom<FormConfig | undefined>();
-export const formStepsAtom = atom<Map<number, FormStep> | undefined>();
+export const formStateAtom = atom<FormState | undefined>(undefined);
+export const formConfigAtom = atom<FormConfig | undefined>(undefined);
+export const formStepsAtom = atom<Map<number, FormStep> | undefined>(undefined);
 export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
   const {
@@ -153,6 +152,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     grantsProfile,
     ...rest,
     actingYears,
+    settings: settings as { [key: string]: string },
     requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
     submitState: status || SubmitStates.DRAFT,
     subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
@@ -215,7 +215,7 @@ export const setStepAtom = atom(null, (_get, _set, index: number) => {
     throw new Error(`Index ${index} does not exist in defined steps for the form.`);
   }
 
-  _set(formStateAtom, (_state) => ({
+  _set(formStateAtom, () => ({
     ...currentState,
     reachedStep: currentState?.reachedStep > index ? currentState?.reachedStep : index,
     currentStep: [index, step],
@@ -235,7 +235,7 @@ export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError
     return;
   }
 
-  _set(errorsAtom, (state) => [...state, ...keyErrorsByStep(errors, steps)]);
+  _set(errorsAtom, (state) => [...state, ...keyErrorsByStep(errors, steps)].sort(([a], [b]) => a - b));
 });
 export const getErrorPageIndicesAtom = atom((_get) => {
   const errors = _get(errorsAtom);
@@ -270,7 +270,7 @@ export const getSubmitStatusAtom = atom((_get) => {
 export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: string) => {
   const formConfig = _get(getFormConfigAtom);
 
-  _set(formConfigAtom, (state) => ({ ...formConfig, submitState }));
+  _set(formConfigAtom, () => ({ ...formConfig, submitState }));
 });
 export const getSchemasAtom = atom((_get) => {
   const { schema, uiSchema } = _get(getFormConfigAtom);
@@ -331,7 +331,7 @@ export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumbe
     window.history.replaceState(null, '', currentUrl.toString());
   }
 
-  _set(formConfigAtom, (state) => ({ ...formConfig, applicationNumber }));
+  _set(formConfigAtom, () => ({ ...formConfig, applicationNumber }));
 });
 export type SystemNotification = {
   children: string | ReactNode;
@@ -374,7 +374,7 @@ type avus2Data = {
     timeCreated: string;
   }>;
 };
-export const avus2DataAtom = atom<avus2Data | null>();
+export const avus2DataAtom = atom<avus2Data | null>(null);
 export const shouldRenderPreviewAtom = atom((_get) => {
   const { currentStep } = _get(getFormStateAtom);
 

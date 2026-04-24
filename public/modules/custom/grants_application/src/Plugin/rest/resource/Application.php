@@ -141,10 +141,6 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    if (!$settings->isApplicationOpen()) {
-      return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
-    }
-
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
@@ -157,7 +153,7 @@ final class Application extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -179,7 +175,7 @@ final class Application extends ResourceBase {
           $sideDocument = $this->atvService->createSideDocument(
             'application_type',
             $settings->getApplicationName(),
-            $user_information['sub'],
+            $user_information->sub,
             $selected_company,
             $document->getId(),
             $selected_company['type']
@@ -209,6 +205,10 @@ final class Application extends ResourceBase {
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
+    }
+
+    if (!$settings->isApplicationOpen() && $document->getStatus() === 'DRAFT') {
+      return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
     }
 
     $changeTime = new DrupalDateTime($document->getUpdatedAt());
@@ -291,7 +291,7 @@ final class Application extends ResourceBase {
 
     try {
       $submission = $this->getSubmissionEntity(
-        $this->userInformationService->getUserData()['sub'],
+        $this->userInformationService->getUserData()->sub,
         $application_number,
         $grants_profile_data->getBusinessId(),
       );
@@ -542,7 +542,7 @@ final class Application extends ResourceBase {
 
     try {
       $submission = $this->getSubmissionEntity(
-        $this->userInformationService->getUserData()['sub'],
+        $this->userInformationService->getUserData()->sub,
         $application_number,
         $grants_profile_data->getBusinessId(),
       );

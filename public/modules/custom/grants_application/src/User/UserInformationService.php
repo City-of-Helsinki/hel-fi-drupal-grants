@@ -6,6 +6,7 @@ namespace Drupal\grants_application\User;
 
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -91,15 +92,20 @@ class UserInformationService {
   }
 
   /**
-   * Get the user data.
+   * Get the user data parsed from the ID token.
    *
-   * @todo Figure out what this actually is
-   * and document it here.
+   * User data is the payload of the JWT token returned
+   * by helsinki profiili on login. The JWT token is stored
+   * in the session, so users should not be able to modify
+   * it on their own.
    *
-   * @return array
+   * @return \Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser
    *   The user data.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\ProfiiliException
+   *   If parsing the JWT token fails.
    */
-  public function getUserData(): array {
+  public function getUserData(): HelsinkiProfiiliUser {
     return $this->helfiHelsinkiProfiiliUserdata->getUserData();
   }
 
@@ -127,7 +133,7 @@ class UserInformationService {
    * @return array
    *   The applicant information.
    */
-  public function getApplicantInformation(array $selectedCompany, array $companyData, array $userData, array $userProfileData): array {
+  public function getApplicantInformation(array $selectedCompany, array $companyData, HelsinkiProfiiliUser $userData, array $userProfileData): array {
     return match ($selectedCompany["type"]) {
       'registered_community' => [
         'applicantType' => $selectedCompany["type"],
@@ -144,10 +150,10 @@ class UserInformationService {
         'applicantType' => $selectedCompany["type"],
         'applicant_type' => $selectedCompany["type"],
         'communityOfficialName' => $companyData["companyName"],
-        'firstname' => $userData["given_name"],
-        'lastname' => $userData["family_name"],
+        'firstname' => $userData->given_name,
+        'lastname' => $userData->family_name,
         'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
-        'email' => $userData["email"],
+        'email' => $userData->email,
         'street' => $companyData["addresses"][0]["street"],
         'city' => $companyData["addresses"][0]["city"],
         'postCode' => $companyData["addresses"][0]["postCode"],
@@ -156,10 +162,10 @@ class UserInformationService {
       'private_person' => [
         'applicantType' => $selectedCompany["type"],
         'applicant_type' => $selectedCompany["type"],
-        'firstname' => $userData["given_name"],
-        'lastname' => $userData["family_name"],
+        'firstname' => $userData->given_name,
+        'lastname' => $userData->family_name,
         'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"] ?? '',
-        'email' => $userData["email"],
+        'email' => $userData->email,
         'street' => $companyData["addresses"][0]["street"] ?? '',
         'city' => $companyData["addresses"][0]["city"] ?? '',
         'postCode' => $companyData["addresses"][0]["postCode"] ?? '',

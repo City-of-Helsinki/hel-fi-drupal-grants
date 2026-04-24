@@ -70,8 +70,8 @@ msgstr "Virhe tallentaessa lomaketta. Yritäthän hetken kuluttua uudelleen"
 msgid "Something went wrong"
 msgstr "Jokin meni pieleen"
 
-msgid "The application is not currently open"
-msgstr "Hakemus ei ole avoinna tällä hetkellä"
+msgid "The application is not currently open."
+msgstr "Hakemus ei ole avoinna tällä hetkellä."
 
 msgid "Unable to fetch your user information. Please try again in a moment"
 msgstr "Virhe noudettaessa käyttäjätietoja. Yritäthän hetken kuluttua uudelleen"

@@ -7,6 +7,7 @@ import type { FieldProps, UiSchema } from '@rjsf/utils';
 import { Checkbox, FileInput as HDSFileInput, TextInput } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
+import type { ChangeEvent, ComponentPropsWithRef } from 'react';
 
 import { formConfigAtom, getApplicationNumberAtom, pushNotificationAtom, shouldRenderPreviewAtom } from '../store';
 import { formatErrors } from '../utils';
@@ -68,11 +69,11 @@ const filesFromATVData = (value?: ATVFile): File[] => {
  * Add 'misc:multiple': 'true' to uiSchema to enable the feature.
  */
 const multipleFilesFromATVData = (value?: { files: ATVFile[]; description: string } | []): any => {
-  if (!value?.files?.length) {
+  if (Array.isArray(value) || !value?.files?.length) {
     return [];
   }
 
-  return value?.files?.map((file: ATVFile) => {
+  return value.files.map((file: ATVFile) => {
     const data = new Uint8Array(file.size);
     const f = new File([data], file.fileName);
     return f;
@@ -238,7 +239,7 @@ export const FileInput = ({
       result = await uploadFiles(name, applicationNumber, token, files, fileType);
     } catch (error) {
       pushNotification({
-        children: <div>{error.message}</div>,
+        children: <div>{error instanceof Error ? error.message : String(error)}</div>,
         label: t('file_upload_failed.title'),
         type: 'error',
       });
@@ -316,13 +317,15 @@ export const FileInput = ({
 
   const descriptionElement = (
     <TextInput
-      disabled={readonly}
-      id={`${name}-description`}
-      label={t('file_description.title')}
-      onChange={(e) => {
-        onChange({ ...formData, description: e.target.value });
-      }}
-      value={formData?.description || ''}
+      {...({
+        disabled: readonly,
+        id: `${name}-description`,
+        label: t('file_description.title'),
+        onChange: (e: ChangeEvent<HTMLInputElement>) => {
+          onChange({ ...formData, description: e.target.value });
+        },
+        value: formData?.description || '',
+      } as ComponentPropsWithRef<typeof TextInput>)}
     />
   );
 
@@ -343,7 +346,7 @@ export const FileInput = ({
         disabled={readonly || Boolean(defaultValue.length)}
         id={`${name}-delivered-later`}
         label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
-        onChange={(e) => {
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
           onChange({
             ...formData,
             isDeliveredLater: e.target.checked,
@@ -358,7 +361,7 @@ export const FileInput = ({
         disabled={readonly || Boolean(defaultValue.length)}
         id={`${name}-included-in-other-file`}
         label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
-        onChange={(e) => {
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
           onChange({
             ...formData,
             isIncludedInOtherFile: e.target.checked,

@@ -1,0 +1,17 @@
+# GDPR Api data GET
+helfi_gdpr_api.endpoint_get:
+  path: '/helfi-gdpr-api/endpoint/{userId}'
+  methods: ['GET']
+  defaults:
+    _controller: '\Drupal\helfi_helsinki_profiili\Controller\HelfiGdprApiController::get'
+  requirements:
+    _custom_access: '\Drupal\helfi_helsinki_profiili\Controller\HelfiGdprApiController::access'
+
+# GDPR Api data DELETE
+helfi_gdpr_api.endpoint_delete:
+  path: '/helfi-gdpr-api/endpoint/{userId}'
+  methods: ['DELETE']
+  defaults:
+    _controller: '\Drupal\helfi_helsinki_profiili\Controller\HelfiGdprApiController::delete'
+  requirements:
+    _custom_access: '\Drupal\helfi_helsinki_profiili\Controller\HelfiGdprApiController::access'

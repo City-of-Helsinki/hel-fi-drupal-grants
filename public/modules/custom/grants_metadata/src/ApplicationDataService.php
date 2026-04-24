@@ -82,7 +82,7 @@ final class ApplicationDataService {
     $userData = $this->helsinkiProfiiliUserData->getUserData();
 
     // If no userprofile data, we cannot proceed.
-    if (!$userProfileData || !$userData) {
+    if (!$userProfileData) {
       throw new ApplicationException('No profile data found for user.');
     }
 
@@ -98,7 +98,7 @@ final class ApplicationDataService {
     $senderDetails['sender_firstname'] = $data["verifiedPersonalInformation"]["firstName"];
     $senderDetails['sender_lastname'] = $data["verifiedPersonalInformation"]["lastName"];
     $senderDetails['sender_person_id'] = $data["verifiedPersonalInformation"]["nationalIdentificationNumber"];
-    $senderDetails['sender_user_id'] = $userData["sub"];
+    $senderDetails['sender_user_id'] = $userData->sub;
     $senderDetails['sender_email'] = $data["primaryEmail"]["email"];
 
     return $senderDetails;

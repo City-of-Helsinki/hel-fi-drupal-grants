@@ -20,6 +20,7 @@ use Drupal\grants_events\EventsService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Client as HttpClient;
@@ -333,7 +334,7 @@ final class ApplicationUploaderService {
    *   A webform submission entity.
    * @param string $applicationNumber
    *   The page to log.
-   * @param array $userData
+   * @param \Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser $userData
    *   User data.
    * @param string $saveId
    *   Submission save id.
@@ -348,12 +349,9 @@ final class ApplicationUploaderService {
   public function logSubmissionSaveid(
     ?WebformSubmissionInterface $webform_submission,
     string $applicationNumber,
-    array $userData,
+    HelsinkiProfiiliUser $userData,
     string $saveId = '',
   ): string {
-    if (!$userData) {
-      throw new \Exception('User data is required');
-    }
 
     if (empty($saveId)) {
       $saveId = Uuid::uuid4()->toString();
@@ -373,7 +371,7 @@ final class ApplicationUploaderService {
       'application_number' => $applicationNumber,
       'saveid' => $saveId,
       'uid' => $this->currentUser->id(),
-      'user_uuid' => $userData['sub'] ?? '',
+      'user_uuid' => $userData->sub,
       'timestamp' => (string) (new Time())->getRequestTime(),
     ];
 

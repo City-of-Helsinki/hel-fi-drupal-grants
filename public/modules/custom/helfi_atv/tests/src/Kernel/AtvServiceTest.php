@@ -8,13 +8,14 @@ use Drupal\helfi_atv\AtvAuthFailedException;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests AtvService class.
- *
- * @covers \Drupal\helfi_atv\AtvService
- * @group helfi_atv
  */
+#[Group('helfi_atv')]
+#[RunTestsInSeparateProcesses]
 class AtvServiceTest extends AtvKernelTestBase {
 
   /**

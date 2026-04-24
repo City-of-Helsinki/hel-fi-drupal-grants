@@ -345,7 +345,7 @@ class ApplicantInfoService {
         // Add contact person from user data.
         [
           'ID' => 'contactPerson',
-          'value' => $helsinkiProfile["name"] ?? '',
+          'value' => $helsinkiProfile->name,
           'valueType' => 'string',
           'label' => 'Yhteyshenkilö',
         ],
@@ -374,7 +374,7 @@ class ApplicantInfoService {
         ],
         [
           'ID' => 'email',
-          'value' => $helsinkiProfile["email"],
+          'value' => $helsinkiProfile->email,
           'valueType' => 'string',
           'label' => 'Sähköpostiosoite',
         ]);
