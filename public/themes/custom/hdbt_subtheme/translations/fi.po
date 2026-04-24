@@ -642,6 +642,62 @@ msgstr "Seuraava"
 msgid "Are you sure you want to log out?"
 msgstr "Haluatko varmasti kirjautua ulos?"
 
-msgctxt "Grants application: Preview"
+msgctxt "Grants application"
 msgid "Community for which the grant is being applied for"
 msgstr "Yhteisö, jolle haetaan avustusta"
+
+msgctxt "Grants application"
+msgid "Applicant details"
+msgstr "Haetut tiedot"
+
+msgctxt "Grants application"
+msgid "Name of association"
+msgstr "Yhteisön nimi"
+
+msgctxt "Grants application"
+msgid "Business ID"
+msgstr "Y-tunnus"
+
+msgctxt "Grants application"
+msgid "Date of registration"
+msgstr "Rekisteröitymispäivä"
+
+msgctxt "Grants application"
+msgid "Municipality where the association is based (domicile)"
+msgstr "Kotipaikka"
+
+msgctxt "Grants application"
+msgid "Abbreviated name"
+msgstr "Yhteisön lyhenne"
+
+msgctxt "Grants application"
+msgid "Year of establishment"
+msgstr "Perustamisvuosi"
+
+msgctxt "Grants application"
+msgid "Website address"
+msgstr "Verkkosivujen osoite"
+
+msgctxt "Grants application"
+msgid "First name"
+msgstr "Etunimi"
+
+msgctxt "Grants application"
+msgid "Last name"
+msgstr "Sukunimi"
+
+msgctxt "Grants application"
+msgid "Social security number"
+msgstr "Henkilötunnus"
+
+msgctxt "Grants application"
+msgid "Email"
+msgstr "Sähköposti"
+
+msgctxt "Grants application"
+msgid "Address"
+msgstr "Osoite"
+
+msgctxt "Grants application"
+msgid "Phone number"
+msgstr "Puhelinnumero"
