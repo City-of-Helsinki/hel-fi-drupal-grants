@@ -24,6 +24,7 @@ import {
   getAddressesAtom,
   getOfficialsAtom,
   getProfileAtom,
+  isEmptyPreviewAtom,
   isReadOnlyAtom,
   shouldRenderPreviewAtom,
 } from '../store';
@@ -66,6 +67,7 @@ export const TextInput = ({
   value,
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
   const isNumberInput = schema.type === 'number' || schema.type === 'integer';
   const phone = uiSchema?.['misc:phone'] ?? false;
 
@@ -93,7 +95,7 @@ export const TextInput = ({
   if (isNumberInput) {
     return (
       <NumberInput
-        disabled={readonly}
+        disabled={readonly || isReadOnly}
         errorText={formatErrors(rawErrors)}
         hideLabel={false}
         id={id}
@@ -125,7 +127,7 @@ export const TextInput = ({
   return (
     <HDSTextInput
       errorText={formatErrors(rawErrors)}
-      disabled={readonly}
+      disabled={readonly || isReadOnly}
       hideLabel={false}
       id={id}
       invalid={Boolean(rawErrors?.length)}
@@ -159,6 +161,7 @@ export const TextArea = ({
 }: WidgetProps) => {
   const readGrantsProfile = useAtomCallback(useCallback((get) => get(getProfileAtom), []));
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   const getDefaultValue = () => {
     if (!uiSchema?.['misc:profilePrefill']) {
@@ -185,7 +188,7 @@ export const TextArea = ({
     <>
       {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
       <HDSTextArea
-        disabled={readonly}
+        disabled={readonly || isReadOnly}
         errorText={formatErrors(rawErrors)}
         helperText={`${value?.length || 0}/${maxLength}`}
         hideLabel={false}
@@ -221,6 +224,7 @@ export const SelectWidget = ({
 }: SelectWidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
@@ -229,7 +233,7 @@ export const SelectWidget = ({
   return (
     <Select
       className='hdbt-form--select'
-      disabled={readonly}
+      disabled={readonly || isReadOnly}
       id={id}
       invalid={Boolean(rawErrors?.length)}
       multiSelect={multiple}
@@ -370,6 +374,7 @@ export const RadioWidget = ({
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
+  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
   if (shouldRenderPreview) {
     const selectedLabel = options?.enumOptions?.find((opt) => opt.value === value)?.label ?? value;
@@ -394,7 +399,7 @@ export const RadioWidget = ({
           return (
             <RadioButton
               checked={option.value === value}
-              disabled={isReadOnly}
+              disabled={isReadOnly && !isEmptyPreview}
               id={optionId}
               key={optionId}
               label={option.label}
