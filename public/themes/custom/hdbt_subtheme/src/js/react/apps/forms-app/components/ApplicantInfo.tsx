@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { getFormConfigAtom } from '../store';
+import { getApplicantTypeAtom, getFormConfigAtom } from '../store';
 
 const InfoField = ({ label, value }: { label: string; value: string | number | undefined }) => (
   <div className='prh-content-block__item'>
@@ -65,10 +65,11 @@ const PreviewField = ({ label, value }: { label: string; value: string | number 
 
 export const PreviewApplicantInfo = () => {
   const { grantsProfile } = useAtomValue(getFormConfigAtom);
+  const applicantType = useAtomValue(getApplicantTypeAtom);
 
-  const isPrivatePerson = !grantsProfile.companyName;
-  const isUnregisteredCommunity = !isPrivatePerson && !grantsProfile.registrationDate;
-  const isRegisteredCommunity = !isPrivatePerson && !isUnregisteredCommunity;
+  const isPrivatePerson = applicantType === 'private_person';
+  const isUnregisteredCommunity = applicantType === 'unregistered_community';
+  const isRegisteredCommunity = applicantType === 'registered_community';
 
   const sectionTitle = isRegisteredCommunity
     ? Drupal.t('Community for which the grant is being applied for', {}, { context: 'Grants application' })

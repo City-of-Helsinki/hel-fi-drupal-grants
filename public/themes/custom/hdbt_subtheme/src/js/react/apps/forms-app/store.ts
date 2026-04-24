@@ -241,6 +241,12 @@ export const getProfileAtom = atom((_get) => {
 
   return grantsProfile;
 });
+export const getApplicantTypeAtom = atom((_get) => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+  if (!grantsProfile.companyName) return 'private_person' as const;
+  if (!grantsProfile.registrationDate) return 'unregistered_community' as const;
+  return 'registered_community' as const;
+});
 export const getAddressesAtom = atom((_get) => {
   const { grantsProfile } = _get(getFormConfigAtom);
 

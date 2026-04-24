@@ -12,7 +12,13 @@ import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus } from '
 import type { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
-import { formStepsAtom, getCurrentStepAtom, isEmptyPreviewAtom, shouldRenderPreviewAtom } from '../store';
+import {
+  formStepsAtom,
+  getApplicantTypeAtom,
+  getCurrentStepAtom,
+  isEmptyPreviewAtom,
+  shouldRenderPreviewAtom,
+} from '../store';
 import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import { getTooltip } from '../utils';
@@ -154,6 +160,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
   const [stepIndex, { id: stepId, label: stepLabel }] = useAtomValue(getCurrentStepAtom);
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const applicantType = useAtomValue(getApplicantTypeAtom);
+  const prhBlockTitle =
+    applicantType === 'registered_community'
+      ? Drupal.t('Community for which the grant is being applied for', {}, { context: 'Grants application' })
+      : Drupal.t('Applicant details', {}, { context: 'Grants application' });
 
   if (idSchema.$id === 'root') {
     const className = shouldRenderPreview ? 'hdbt-form__preview form-wrapper' : 'form-wrapper';
@@ -206,7 +217,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
         </div>
         {stepId === 'applicant_info' && !isEmptyPreview && (
           <section className='prh-content-block'>
-            <h3 className='prh-content-block__title'>{stepLabel}</h3>
+            <h3 className='prh-content-block__title'>{prhBlockTitle}</h3>
             <p>
               {Drupal.t(
                 'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
