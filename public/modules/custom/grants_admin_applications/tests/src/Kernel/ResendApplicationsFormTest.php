@@ -62,7 +62,7 @@ class ResendApplicationsFormTest extends KernelTestBase {
   /**
    * Build the form with mocked dependencies.
    *
-   * sendApplicationToIntegrations is overridden in the testable subclass so
+   * SendApplicationToIntegrations is overridden in the testable subclass so
    * we do not need to mock the database, HTTP client or events service.
    *
    * @param array $entities
@@ -167,6 +167,11 @@ class ResendApplicationsFormTest extends KernelTestBase {
  */
 class ResendApplicationsFormTestable extends ResendApplicationsForm {
 
+  /**
+   * Whether sendApplicationToIntegrations was called.
+   *
+   * @var bool
+   */
   public bool $sendToIntegrationsCalled = FALSE;
 
   /**
