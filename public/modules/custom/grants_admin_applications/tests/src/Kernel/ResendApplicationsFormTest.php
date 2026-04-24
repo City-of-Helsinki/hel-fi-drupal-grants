@@ -65,9 +65,9 @@ class ResendApplicationsFormTest extends KernelTestBase {
    * SendApplicationToIntegrations is overridden in the testable subclass so
    * we do not need to mock the database, HTTP client or events service.
    *
-   * @param array $entities
+   * @param array<mixed> $entities
    *   Return value for application_submission storage loadByProperties().
-   * @param array $atvDocuments
+   * @param array<\Drupal\helfi_atv\AtvDocument> $atvDocuments
    *   Return value for AtvService::searchDocuments().
    */
   private function buildForm(array $entities, array $atvDocuments): ResendApplicationsFormTestable {
