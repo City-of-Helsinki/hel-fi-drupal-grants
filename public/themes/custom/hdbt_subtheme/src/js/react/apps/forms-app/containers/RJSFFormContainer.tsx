@@ -53,6 +53,7 @@ import { TextParagraph } from '../components/Fields/TextParagraph';
 import { localizeErrors } from '../localizeErrors';
 import { Notification, NotificationSize } from 'hds-react';
 import type { RJSFFormData } from '../types/RJSFFormData';
+import { ActingYear } from '../components/Fields/ActingYear';
 
 const widgets: RegistryWidgetsType = {
   address: AddressSelect,
@@ -315,6 +316,7 @@ export const RJSFFormContainer = ({
           customValidate={customValidate}
           fields={{
             ...getDefaultRegistry().fields,
+            actingYear: ActingYear,
             atvFile: FileInput,
             subventionTable: SubventionTable,
             subventionSum: SubventionSum,
