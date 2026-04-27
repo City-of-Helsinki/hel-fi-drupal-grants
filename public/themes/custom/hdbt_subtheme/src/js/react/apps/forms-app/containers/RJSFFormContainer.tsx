@@ -335,7 +335,7 @@ export const RJSFFormContainer = ({
               submitData(data.formData);
             }
           }}
-          readonly={readOnly}
+          readonly={readOnly && !isEmptyPreview}
           ref={formRef}
           schema={schema}
           showErrorList={false}
