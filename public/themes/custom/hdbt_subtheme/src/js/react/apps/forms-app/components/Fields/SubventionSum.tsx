@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 
 import { formDataAtomRef, getSubventionFieldsAtom, shouldRenderPreviewAtom } from '../../store';
 import { getSubventionSum } from '../../utils';
-import { PreviewInput } from '../Input';
+import { PreviewInput, sanitizeNumericInput } from '../Input';
 
 export const SubventionSum = ({ idSchema, name, onChange, schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
@@ -27,9 +27,11 @@ export const SubventionSum = ({ idSchema, name, onChange, schema, uiSchema }: Fi
     }
   }, [sum, onChange]);
 
+  const formattedSum = sanitizeNumericInput(sum.toString());
+
   if (shouldRenderPreview) {
-    return <PreviewInput label={schema?.title} value={sum.toString()} uiSchema={uiSchema} />;
+    return <PreviewInput label={schema?.title} value={formattedSum} uiSchema={uiSchema} />;
   }
 
-  return <TextInput disabled id={idSchema.$id} label={schema?.title} name={name} value={sum.toString()} />;
+  return <TextInput disabled id={idSchema.$id} label={schema?.title} name={name} value={formattedSum} />;
 };
