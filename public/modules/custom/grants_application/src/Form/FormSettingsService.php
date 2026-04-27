@@ -93,7 +93,6 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     }
 
     // Load application metadata if available and set it to settings.
-    // BUGI!
     $storage = $this->entityTypeManager->getStorage('application_metadata');
     $matches = $storage->loadByProperties(['form_identifier' => $identifier]);
     $application_metadata = reset($matches);
