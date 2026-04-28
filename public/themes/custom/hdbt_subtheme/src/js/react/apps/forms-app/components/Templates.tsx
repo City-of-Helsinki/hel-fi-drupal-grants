@@ -29,7 +29,6 @@ export const ArrayFieldTemplate = ({
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const { description } = schema;
   const { ArrayFieldItemTemplate } = registry.templates;
-  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
   if (shouldRenderPreview) {
     const hideName = uiSchema?.['ui:options']?.hideNameFromPrint;

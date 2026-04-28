@@ -167,8 +167,11 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    if (!$settings->isApplicationOpen() && $document->getStatus() === 'DRAFT') {
-      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
+    $isOpen = $settings->isApplicationOpen();
+    $status = $document->getStatus();
+
+    if (!$isOpen && !in_array($status, ['RECEIVED', 'PREPARING'])) {
+      return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
     }
 
     // Side document bc.

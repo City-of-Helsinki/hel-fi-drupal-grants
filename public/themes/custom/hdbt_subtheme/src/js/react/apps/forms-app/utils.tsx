@@ -54,7 +54,7 @@ const resolveFieldSchema = (rootSchema: RJSFSchema, path: string[]): any => {
 
   const [stepId, ...rest] = path;
   const stepProp = rootSchema.properties?.[stepId] as any;
-  const refName = stepProp?.['$ref']?.replace('#/definitions/', '');
+  const refName = stepProp?.$ref?.replace('#/definitions/', '');
   const stepDef = (refName ? (rootSchema.definitions as any)?.[refName] : stepProp) as any;
 
   if (!stepDef) return null;
@@ -385,7 +385,7 @@ export const getSubventionSum = (formData: any, subventionFields: string[]) =>
 
     if (values?.length) {
       Object.entries(values).forEach(([, curr]) => {
-        const amount = Number(curr[1].value);
+        const amount = Number(String(curr[1].value).replace(',', '.'));
 
         if (!Number.isNaN(amount)) {
           total += amount;

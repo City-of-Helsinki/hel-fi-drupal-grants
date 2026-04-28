@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FocusEvent, type WheelEvent, useCallback, useEffect } from 'react';
+import { type ChangeEvent, type FocusEvent, useCallback, useEffect } from 'react';
 import {
   Checkbox,
   DateInput,
@@ -6,7 +6,6 @@ import {
   TextArea as HDSTextArea,
   TextInput as HDSTextInput,
   Notification,
-  NumberInput,
   RadioButton,
   Select,
 } from 'hds-react';
@@ -49,9 +48,10 @@ export const PreviewInput = ({
   </>
 );
 
-const sanitizeNumericInput = (value: string, allowPhone = false): string => {
-  const pattern = allowPhone ? /[^0-9 ,+()]/g : /[^0-9 ,]/g;
-  return value.replace(pattern, '').replace(/ {2,}/g, ' ');
+export const sanitizeNumericInput = (value: string, allowPhone = false): string => {
+  const pattern = allowPhone ? /[^0-9 +()]/g : /[^0-9 ,]/g;
+  const normalized = allowPhone ? value : value.replace('.', ',');
+  return normalized.replace(pattern, '').replace(/ {2,}/g, ' ');
 };
 
 export const TextInput = ({
@@ -94,14 +94,14 @@ export const TextInput = ({
 
   if (isNumberInput) {
     return (
-      <NumberInput
-        disabled={readonly || isReadOnly}
+      <HDSTextInput
+        disabled={readonly}
         errorText={formatErrors(rawErrors)}
         hideLabel={false}
         id={id}
+        inputMode={schema.type === 'integer' ? 'numeric' : 'decimal'}
         invalid={Boolean(rawErrors?.length)}
         label={label}
-        min={0}
         name={name}
         onBlur={() => null}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -112,9 +112,6 @@ export const TextInput = ({
           if (event.target.value === '0') {
             event.target.select();
           }
-        }}
-        onWheel={(event: WheelEvent<HTMLInputElement>) => {
-          event.currentTarget.blur();
         }}
         required={required}
         style={{ maxWidth: getMaxWidth() }}
