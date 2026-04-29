@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "14392170bdfad479ed92a44e52a2fd0c",
+    "content-hash": "82bbdfcb68fad437d668ff13ce2cfce5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5071,16 +5071,16 @@
         },
         {
             "name": "drupal/hdbt",
-            "version": "6.16.70",
+            "version": "6.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt.git",
-                "reference": "b30aa236a9a992b9f53adfb0bd72e25fcb0c7d94"
+                "reference": "2dec708474d0468c03b8f4c4e4cc829f3c15b5cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/b30aa236a9a992b9f53adfb0bd72e25fcb0c7d94",
-                "reference": "b30aa236a9a992b9f53adfb0bd72e25fcb0c7d94",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/2dec708474d0468c03b8f4c4e4cc829f3c15b5cc",
+                "reference": "2dec708474d0468c03b8f4c4e4cc829f3c15b5cc",
                 "shasum": ""
             },
             "require": {
@@ -5099,10 +5099,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.16.70",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.17.0",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt/issues"
             },
-            "time": "2026-04-21T07:27:59+00:00"
+            "time": "2026-04-22T12:51:29+00:00"
         },
         {
             "name": "drupal/hdbt_admin",
@@ -5373,6 +5373,40 @@
                 "issues": "https://github.com/City-of-Helsinki/drupal-tools/issues"
             },
             "time": "2026-02-28T06:56:13+00:00"
+        },
+        {
+            "name": "drupal/helfi_navigation",
+            "version": "2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-navigation.git",
+                "reference": "0e56667c0a39477f3d9dc80c693ef72b89bf29d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-navigation/zipball/0e56667c0a39477f3d9dc80c693ef72b89bf29d2",
+                "reference": "0e56667c0a39477f3d9dc80c693ef72b89bf29d2",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/helfi_api_base": "*",
+                "drupal/menu_block_current_language": "^2.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "drupal/coder": "^8.3"
+            },
+            "type": "drupal-module",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Helfi - Navigation",
+            "support": {
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-navigation/tree/2.3.1",
+                "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-navigation/issues"
+            },
+            "time": "2026-01-19T10:40:27+00:00"
         },
         {
             "name": "drupal/helfi_platform_config",
@@ -8923,17 +8957,17 @@
         },
         {
             "name": "drupal/twig_tweak",
-            "version": "3.4.1",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/twig_tweak.git",
-                "reference": "3.4.1"
+                "reference": "3.4.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/twig_tweak-3.4.1.zip",
-                "reference": "3.4.1",
-                "shasum": "ceaa5ea8f357ce8827c728f22871265f0f7cd74f"
+                "url": "https://ftp.drupal.org/files/projects/twig_tweak-3.4.2.zip",
+                "reference": "3.4.2",
+                "shasum": "c31272a550c05981ca21b1eacc37abfe62cf2598"
             },
             "require": {
                 "drupal/core": "^10.3 || ^11.0",
@@ -8947,8 +8981,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.4.1",
-                    "datestamp": "1748530577",
+                    "version": "3.4.2",
+                    "datestamp": "1776781834",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"

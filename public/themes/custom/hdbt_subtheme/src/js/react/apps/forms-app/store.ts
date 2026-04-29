@@ -1,7 +1,6 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import { atom } from 'jotai';
-import { DateTime } from 'luxon';
 import type { ReactNode } from 'react';
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 
@@ -12,16 +11,25 @@ import { getUrlParts } from './testutils/Helpers';
 export type FormStep = { id: string; label: string };
 
 type GrantsProfile = {
-  companyNameShort: string;
-  companyName: string;
-  companyHome: string;
-  companyHomePage: string;
-  companyStatus: string;
-  companyStatusSpecial: string;
-  businessPurpose: string;
-  foundingYear: string;
-  registrationDate: string;
-  officials: Array<any>;
+  // Community fields
+  companyNameShort?: string;
+  companyName?: string;
+  companyHome?: string;
+  companyHomePage?: string;
+  companyStatus?: string;
+  companyStatusSpecial?: string;
+  businessPurpose?: string;
+  foundingYear?: string;
+  registrationDate?: string;
+  officials?: Array<any>;
+  businessId?: string;
+  // Private person fields
+  firstName?: string;
+  lastName?: string;
+  socialSecurityNumber?: string;
+  email?: string;
+  phone_number?: string;
+  // Shared
   addresses: Array<{ address_id: string; street: string; postCode: string; city: string; country: string }>;
   bankAccounts: Array<{
     bankAccount: string;
@@ -30,7 +38,6 @@ type GrantsProfile = {
     ownerName?: string;
     ownerSsn?: string;
   }>;
-  businessId: string;
 };
 
 export type FormState = { currentStep: [number, FormStep]; reachedStep: number };
@@ -106,8 +113,8 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
 
     const parsedItem = JSON.parse(sessionItem);
     const { timestamp: sessionTimeStamp, data: sessionData } = parsedItem;
-    const sessionTime = DateTime.fromMillis(Number(sessionTimeStamp) * 1000);
-    const serverTime = timestamp ? DateTime.fromMillis(Number(timestamp) * 1000) : null;
+    const sessionTime = new Date(Number(sessionTimeStamp) * 1000);
+    const serverTime = timestamp ? new Date(Number(timestamp) * 1000) : null;
 
     if (serverTime && sessionTime < serverTime) {
       return initialValue;
@@ -222,7 +229,7 @@ export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError
     return;
   }
 
-  _set(errorsAtom, (state) => [...state, ...keyErrorsByStep(errors, steps)]);
+  _set(errorsAtom, (state) => [...state, ...keyErrorsByStep(errors, steps)].sort(([a], [b]) => a - b));
 });
 export const getErrorPageIndicesAtom = atom((_get) => {
   const errors = _get(errorsAtom);
@@ -233,6 +240,12 @@ export const getProfileAtom = atom((_get) => {
   const { grantsProfile } = _get(getFormConfigAtom);
 
   return grantsProfile;
+});
+export const getApplicantTypeAtom = atom((_get) => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+  if (!grantsProfile.companyName) return 'private_person' as const;
+  if (!grantsProfile.registrationDate) return 'unregistered_community' as const;
+  return 'registered_community' as const;
 });
 export const getAddressesAtom = atom((_get) => {
   const { grantsProfile } = _get(getFormConfigAtom);

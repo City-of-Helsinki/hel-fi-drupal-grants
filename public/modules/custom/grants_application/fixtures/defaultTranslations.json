@@ -57,7 +57,7 @@
     },
     "applicant_info.title": {
       "en": "Applicant details",
-      "fi": "Yhteisö, jolle haetaan avustusta",
+      "fi": "Hakijan tiedot",
       "sv": "Den sökandes uppgifter"
     },
     "applied_benefits.title": {
@@ -719,6 +719,11 @@
       "en": "Small grant",
       "fi": "Pienavustus",
       "sv": "Litet understöd"
+    },
+    "subventions.52.title": {
+      "en": "Special grant for sports 2",
+      "fi": "Liikunnan erityisavustus 2",
+      "sv": "Specialunderstöd för idrott 2"
     },
     "subventions.56.title": {
       "en": "Special grant for sports 3",

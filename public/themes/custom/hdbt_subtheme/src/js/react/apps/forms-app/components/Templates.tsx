@@ -8,12 +8,18 @@ import type {
   ObjectFieldTemplateProps,
 } from '@rjsf/utils';
 import { getDefaultRegistry } from '@rjsf/core';
-import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus } from 'hds-react';
+import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus, type AccordionTheme } from 'hds-react';
 import type { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
-import { formStepsAtom, getCurrentStepAtom, isEmptyPreviewAtom, shouldRenderPreviewAtom } from '../store';
-import { ApplicantInfo } from './ApplicantInfo';
+import {
+  formStepsAtom,
+  getApplicantTypeAtom,
+  getCurrentStepAtom,
+  isEmptyPreviewAtom,
+  shouldRenderPreviewAtom,
+} from '../store';
+import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import { getTooltip } from '../utils';
 import type { UiSchema } from '../types/UiSchema';
@@ -67,7 +73,7 @@ export const ArrayFieldTemplate = ({
         // biome-ignore lint/correctness/useJsxKeyInIterable: Item contains key already
         <ArrayFieldItemTemplate {...item} />
       ))}
-      {canAdd && !isEmptyPreview && (
+      {canAdd && (
         <Button onClick={onAddClick} theme={secondaryButtonTheme} type='button' iconStart={<IconPlus />}>
           {addText ? (addText as ReactNode & string) : Drupal.t('Add')}
         </Button>
@@ -81,11 +87,13 @@ const PreviewStep = ({
   properties,
   uiSchema,
   stepNumber,
+  stepId,
 }: {
   title?: string;
   properties: ObjectFieldTemplatePropertyType[];
   uiSchema: UiSchema;
   stepNumber?: number;
+  stepId?: string;
 }) => {
   const printableName = uiSchema?.['ui:options']?.printableName;
   const headingText = printableName || title?.toString();
@@ -95,6 +103,7 @@ const PreviewStep = ({
     return (
       <div className='hdbt-react-form__preview-accordion-item hdbt-react-form__preview-accordion-item--print'>
         <h3>{heading}</h3>
+        {stepId === 'applicant_info' && <PreviewApplicantInfo />}
         {properties.map((field) => field.content)}
       </div>
     );
@@ -110,10 +119,16 @@ const PreviewStep = ({
       headingLevel={3}
       initiallyOpen
       language={drupalSettings.path.currentLanguage || 'fi'}
-      theme={{
-        '--border-color': ' var(--color-black-20)',
-      }}
+      theme={
+        {
+          '--border-color': ' var(--color-black-20)',
+          '--color-hover': 'var(--header-color)',
+          '--color-focus': 'var(--header-color)',
+          '--header-outline-color-focus': 'var(--header-color)',
+        } as AccordionTheme
+      }
     >
+      {stepId === 'applicant_info' && <PreviewApplicantInfo />}
       {properties.map((field) => field.content)}
     </Accordion>
   );
@@ -148,8 +163,13 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   const { _isSection, _step, description, title } = schema;
   const steps = useAtomValue(formStepsAtom);
   const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
-  const [stepIndex, { id: stepId, label: stepLabel }] = useAtomValue(getCurrentStepAtom);
+  const [stepIndex, { id: stepId }] = useAtomValue(getCurrentStepAtom);
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const applicantType = useAtomValue(getApplicantTypeAtom);
+  const prhBlockTitle =
+    applicantType === 'registered_community'
+      ? Drupal.t('Community for which the grant is being applied for', {}, { context: 'Grants application' })
+      : Drupal.t('Applicant details', {}, { context: 'Grants application' });
 
   if (idSchema.$id === 'root') {
     const className = shouldRenderPreview ? 'hdbt-form__preview form-wrapper' : 'form-wrapper';
@@ -159,17 +179,27 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   if (_step && shouldRenderPreview) {
     const stepEntry = steps && [...steps.entries()].find(([, s]) => s.id === _step);
     const stepNumber = stepEntry ? stepEntry[0] + 1 : undefined;
-    return <PreviewStep title={title} properties={properties} uiSchema={uiSchema || {}} stepNumber={stepNumber} />;
+    return (
+      <PreviewStep
+        title={title}
+        properties={properties}
+        uiSchema={uiSchema || {}}
+        stepNumber={stepNumber}
+        stepId={_step}
+      />
+    );
   }
 
   if (_step && _step !== stepId && !isEmptyPreview) {
     return null;
   }
 
-  if ((_step && _step === stepId) || (isEmptyPreview && !_isSection)) {
+  if ((_step && _step === stepId) || (isEmptyPreview && !!_step && !_isSection)) {
+    const stepEntry = isEmptyPreview ? steps && [...steps.entries()].find(([, s]) => s.id === _step) : undefined;
+    const stepNumber = stepEntry ? stepEntry[0] + 1 : undefined;
     return (
       <>
-        {title && <h2 className='grants-form__page-title'>{title}</h2>}
+        {title && <h2 className='grants-form__page-title'>{stepNumber ? `${stepNumber}. ${title}` : title}</h2>}
         <div className='grants-form__notification-container'>
           {stepIndex === 0 && !isEmptyPreview && (
             <Notification
@@ -194,7 +224,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
         </div>
         {stepId === 'applicant_info' && !isEmptyPreview && (
           <section className='prh-content-block'>
-            <h3 className='prh-content-block__title'>{stepLabel}</h3>
+            <h3 className='prh-content-block__title'>{prhBlockTitle}</h3>
             <p>
               {Drupal.t(
                 'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
@@ -216,6 +246,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   }
 
   if (_isSection) {
+    const visibleProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+    if (!visibleProperties.length) {
+      return null;
+    }
+
     return (
       <section className='hdbt-form--section'>
         <h3 className='hdbt-form--section__title'>{title}</h3>
@@ -259,6 +294,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     (child) => typeof child === 'object' && child !== null && (child as any)['misc:required'],
   );
 
+  const visibleFieldsetProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+  if (!visibleFieldsetProperties.length) {
+    return null;
+  }
+
   return (
     <Fieldset
       heading={hasRequiredChild ? `${title} *` : title || ''}
@@ -289,6 +329,23 @@ export const FieldTemplate = (props: FieldTemplateProps) => {
   if (shouldRenderPreview && (schema as any)._isSection) {
     const allNull = Object.values((schema.properties || {}) as Record<string, any>).every((p) => p.type === 'null');
     if (allNull) return null;
+  }
+
+  // Don't render wrappers for inactive conditional sections.
+  // Sections whose allOf/then condition is not met have only empty placeholder objects
+  // in their base schema (e.g. project_measures_wrapper: {type:object, default:{}}),
+  // which have no sub-properties and would render as nothing.
+  if (!shouldRenderPreview && (schema as any)._isSection) {
+    const sectionProps = Object.values((schema.properties || {}) as Record<string, any>);
+    const hasVisibleContent = sectionProps.some((p: any) => {
+      if (p.type === 'null') return false;
+      if (p.type === 'object') {
+        const sub = p.properties as Record<string, any> | undefined;
+        return !!sub && Object.values(sub).some((s: any) => s?.type !== 'null');
+      }
+      return true; // string, integer, number, boolean, array — always renderable
+    });
+    if (!hasVisibleContent) return null;
   }
 
   return <DefaultFieldTemplate {...props} />;

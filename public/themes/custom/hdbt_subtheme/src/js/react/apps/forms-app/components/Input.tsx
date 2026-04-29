@@ -10,7 +10,7 @@ import {
   RadioButton,
   Select,
 } from 'hds-react';
-import { DateTime } from 'luxon';
+import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -24,10 +24,10 @@ import {
   getAddressesAtom,
   getOfficialsAtom,
   getProfileAtom,
+  isEmptyPreviewAtom,
   isReadOnlyAtom,
   shouldRenderPreviewAtom,
 } from '../store';
-import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
 
 export const PreviewInput = ({
   value,
@@ -67,6 +67,7 @@ export const TextInput = ({
   value,
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
   const isNumberInput = schema.type === 'number' || schema.type === 'integer';
   const phone = uiSchema?.['misc:phone'] ?? false;
 
@@ -94,7 +95,7 @@ export const TextInput = ({
   if (isNumberInput) {
     return (
       <NumberInput
-        disabled={readonly}
+        disabled={readonly || isReadOnly}
         errorText={formatErrors(rawErrors)}
         hideLabel={false}
         id={id}
@@ -126,7 +127,7 @@ export const TextInput = ({
   return (
     <HDSTextInput
       errorText={formatErrors(rawErrors)}
-      disabled={readonly}
+      disabled={readonly || isReadOnly}
       hideLabel={false}
       id={id}
       invalid={Boolean(rawErrors?.length)}
@@ -135,7 +136,7 @@ export const TextInput = ({
       onBlur={() => null}
       onChange={(event: ChangeEvent<HTMLInputElement>) => {
         const value = phone ? sanitizeNumericInput(event.target.value, true) : event.target.value;
-        onChange(value);
+        onChange(value === '' ? undefined : value);
       }}
       onFocus={() => null}
       required={required}
@@ -160,6 +161,7 @@ export const TextArea = ({
 }: WidgetProps) => {
   const readGrantsProfile = useAtomCallback(useCallback((get) => get(getProfileAtom), []));
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   const getDefaultValue = () => {
     if (!uiSchema?.['misc:profilePrefill']) {
@@ -186,16 +188,20 @@ export const TextArea = ({
     <>
       {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
       <HDSTextArea
-        disabled={readonly}
+        disabled={readonly || isReadOnly}
         errorText={formatErrors(rawErrors)}
         helperText={`${value?.length || 0}/${maxLength}`}
         hideLabel={false}
         invalid={Boolean(rawErrors?.length)}
         onBlur={() => null}
-        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
+        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+          const val = event.target.value;
+          onChange(val === '' ? undefined : val);
+        }}
         onFocus={() => null}
         tooltip={getTooltip(uiSchema)}
-        {...{ id, label, maxLength, name, required, value }}
+        value={value ?? ''}
+        {...{ id, label, maxLength, name, required }}
       />
     </>
   );
@@ -218,6 +224,7 @@ export const SelectWidget = ({
 }: SelectWidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
@@ -226,7 +233,7 @@ export const SelectWidget = ({
   return (
     <Select
       className='hdbt-form--select'
-      disabled={readonly}
+      disabled={readonly || isReadOnly}
       id={id}
       invalid={Boolean(rawErrors?.length)}
       multiSelect={multiple}
@@ -261,6 +268,14 @@ export const SelectWidget = ({
 
 export const AddressSelect = (props: WidgetProps) => {
   const addresses = useAtomValue(getAddressesAtom);
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+
+  if (shouldRenderPreview) {
+    const full = addresses?.find((a) => a.street === props.value);
+    const displayValue = full ? [full.street, full.postCode, full.city].filter(Boolean).join(', ') : props.value;
+    return <PreviewInput value={displayValue} label={props.label} uiSchema={props.uiSchema} />;
+  }
+
   const options = addresses?.length
     ? Object.assign(addresses.map(({ street }) => ({ label: street, value: street })))
     : [];
@@ -359,6 +374,7 @@ export const RadioWidget = ({
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
+  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
   if (shouldRenderPreview) {
     const selectedLabel = options?.enumOptions?.find((opt) => opt.value === value)?.label ?? value;
@@ -383,7 +399,7 @@ export const RadioWidget = ({
           return (
             <RadioButton
               checked={option.value === value}
-              disabled={isReadOnly}
+              disabled={isReadOnly && !isEmptyPreview}
               id={optionId}
               key={optionId}
               label={option.label}
@@ -409,20 +425,20 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
-  let date: DateTime | undefined;
   const handleChange = (_dateStr: string, dateObject: Date) => {
     try {
-      date = DateTime.fromJSDate(dateObject);
+      onChange(toLocalISO(dateObject).slice(0, 10));
     } catch (_error) {
       return;
     }
-
-    onChange(date?.toISODate());
   };
 
   let formattedValue: string | undefined;
   try {
-    formattedValue = value ? DateTime.fromISO(value).toFormat(HDS_DATE_FORMAT) : undefined;
+    if (value) {
+      const [year, month, day] = (value as string).split('-').map(Number);
+      formattedValue = formatHDSDate(new Date(year, month - 1, day));
+    }
   } catch (_error) {
     formattedValue = undefined;
   }

@@ -94,7 +94,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
 
     // Load application metadata if available and set it to settings.
     $storage = $this->entityTypeManager->getStorage('application_metadata');
-    $matches = $storage->loadByProperties(['application_type_id' => $form_type_id]);
+    $matches = $storage->loadByProperties(['form_identifier' => $identifier]);
     $application_metadata = reset($matches);
 
     /** @var \Drupal\grants_application\Entity\ApplicationMetadata $application_metadata */
@@ -122,10 +122,14 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       throw new \InvalidArgumentException(sprintf('Unknown form type id: %s', $form_identifier));
     }
 
-    $id = $form_type['id'];
-    $formIdentifier = $form_type['form_identifier'];
+    try {
+      $settings = $this->getFormSettings($form_type['id'], $form_type['form_identifier']);
+    }
+    catch (\Exception $e) {
+      throw $e;
+    }
 
-    return $this->getFormSettings($id, $formIdentifier);
+    return $settings;
   }
 
   /**
