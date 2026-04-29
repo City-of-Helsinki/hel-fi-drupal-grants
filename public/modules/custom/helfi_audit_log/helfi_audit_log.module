@@ -13,7 +13,7 @@ use Drupal\helfi_audit_log\ResilientLoggerTasks;
  *
  * Add methods here to be executed via cron.
  */
-function helfi_audit_log_cron() {
+function helfi_audit_log_cron(): void {
   /*
    * Don't even try to run during install.
    * Settings are not parsed and it will throw exception.
