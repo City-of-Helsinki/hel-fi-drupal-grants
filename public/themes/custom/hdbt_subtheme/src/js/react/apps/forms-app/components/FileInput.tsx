@@ -8,7 +8,13 @@ import { Checkbox, FileInput as HDSFileInput, TextInput } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 
-import { formConfigAtom, getApplicationNumberAtom, pushNotificationAtom, shouldRenderPreviewAtom } from '../store';
+import {
+  formConfigAtom,
+  getApplicationNumberAtom,
+  isEmptyPreviewAtom,
+  pushNotificationAtom,
+  shouldRenderPreviewAtom,
+} from '../store';
 import { formatErrors } from '../utils';
 import { PreviewInput } from './Input';
 import { useState } from 'react';
@@ -94,6 +100,7 @@ export const FileInput = ({
   const [refreshKey, setRefreshKey] = useState(0);
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
   const applicationNumber = useAtomValue(getApplicationNumberAtom);
   const { token } = useAtomValue(formConfigAtom)!;
   const pushNotification = useSetAtom(pushNotificationAtom);
@@ -275,7 +282,7 @@ export const FileInput = ({
     <HDSFileInput
       accept={accept}
       defaultValue={defaultValue}
-      disabled={readonly}
+      disabled={readonly || isEmptyPreview}
       dragAndDrop
       errorText={formatErrors(rawErrors)}
       hideLabel={false}
@@ -296,7 +303,7 @@ export const FileInput = ({
     <HDSFileInput
       accept={accept}
       defaultValue={defaultValue}
-      disabled={readonly}
+      disabled={readonly || isEmptyPreview}
       dragAndDrop
       errorText={formatErrors(rawErrors)}
       hideLabel={false}
@@ -316,7 +323,7 @@ export const FileInput = ({
 
   const descriptionElement = (
     <TextInput
-      disabled={readonly}
+      disabled={readonly || isEmptyPreview}
       id={`${name}-description`}
       label={t('file_description.title')}
       onChange={(e) => {
@@ -340,7 +347,7 @@ export const FileInput = ({
       {inputElement}
       <Checkbox
         checked={isDeliveredLater || false}
-        disabled={readonly || Boolean(defaultValue.length)}
+        disabled={readonly || isEmptyPreview || Boolean(defaultValue.length)}
         id={`${name}-delivered-later`}
         label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
@@ -355,7 +362,7 @@ export const FileInput = ({
       />
       <Checkbox
         checked={isIncludedInOtherFile || false}
-        disabled={readonly || Boolean(defaultValue.length)}
+        disabled={readonly || isEmptyPreview || Boolean(defaultValue.length)}
         id={`${name}-included-in-other-file`}
         label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
         onChange={(e) => {

@@ -11,16 +11,25 @@ import { getUrlParts } from './testutils/Helpers';
 export type FormStep = { id: string; label: string };
 
 type GrantsProfile = {
-  companyNameShort: string;
-  companyName: string;
-  companyHome: string;
-  companyHomePage: string;
-  companyStatus: string;
-  companyStatusSpecial: string;
-  businessPurpose: string;
-  foundingYear: string;
-  registrationDate: string;
-  officials: Array<any>;
+  // Community fields
+  companyNameShort?: string;
+  companyName?: string;
+  companyHome?: string;
+  companyHomePage?: string;
+  companyStatus?: string;
+  companyStatusSpecial?: string;
+  businessPurpose?: string;
+  foundingYear?: string;
+  registrationDate?: string;
+  officials?: Array<any>;
+  businessId?: string;
+  // Private person fields
+  firstName?: string;
+  lastName?: string;
+  socialSecurityNumber?: string;
+  email?: string;
+  phone_number?: string;
+  // Shared
   addresses: Array<{ address_id: string; street: string; postCode: string; city: string; country: string }>;
   bankAccounts: Array<{
     bankAccount: string;
@@ -29,7 +38,6 @@ type GrantsProfile = {
     ownerName?: string;
     ownerSsn?: string;
   }>;
-  businessId: string;
 };
 
 export type FormState = { currentStep: [number, FormStep]; reachedStep: number };
@@ -232,6 +240,12 @@ export const getProfileAtom = atom((_get) => {
   const { grantsProfile } = _get(getFormConfigAtom);
 
   return grantsProfile;
+});
+export const getApplicantTypeAtom = atom((_get) => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+  if (!grantsProfile.companyName) return 'private_person' as const;
+  if (!grantsProfile.registrationDate) return 'unregistered_community' as const;
+  return 'registered_community' as const;
 });
 export const getAddressesAtom = atom((_get) => {
   const { grantsProfile } = _get(getFormConfigAtom);
