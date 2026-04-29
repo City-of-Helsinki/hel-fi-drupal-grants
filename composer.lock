@@ -740,16 +740,16 @@
         },
         {
             "name": "city-of-helsinki/php-resilient-logger",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/php-resilient-logger.git",
-                "reference": "642456f43c644fb659943da65c9a74be1efe0988"
+                "reference": "213d4106f372b3c43ea757e29c88829618ebea59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/php-resilient-logger/zipball/642456f43c644fb659943da65c9a74be1efe0988",
-                "reference": "642456f43c644fb659943da65c9a74be1efe0988",
+                "url": "https://api.github.com/repos/City-of-Helsinki/php-resilient-logger/zipball/213d4106f372b3c43ea757e29c88829618ebea59",
+                "reference": "213d4106f372b3c43ea757e29c88829618ebea59",
                 "shasum": ""
             },
             "require": {
@@ -780,10 +780,10 @@
             ],
             "description": "PHP resilient logger for monolog",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/php-resilient-logger/tree/2.0.1",
+                "source": "https://github.com/City-of-Helsinki/php-resilient-logger/tree/2.0.2",
                 "issues": "https://github.com/City-of-Helsinki/php-resilient-logger/issues"
             },
-            "time": "2026-04-28T07:24:42+00:00"
+            "time": "2026-04-29T10:25:15+00:00"
         },
         {
             "name": "codementality/flysystem-stream-wrapper",

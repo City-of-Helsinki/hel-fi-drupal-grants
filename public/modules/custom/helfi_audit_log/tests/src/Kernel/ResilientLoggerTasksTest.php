@@ -10,11 +10,10 @@ use Drupal\helfi_audit_log\ResilientLoggerTasks;
 use Drupal\helfi_audit_log\Sources\HelfiAuditLogSource;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
-use Elastic\Elasticsearch\ClientBuilder;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
-use ResilientLogger\ResilientLogger;
+use Psr\Http\Client\ClientInterface;
 use ResilientLogger\Targets\ElasticsearchLogTarget;
 
 /**
@@ -42,44 +41,14 @@ class ResilientLoggerTasksTest extends KernelTestBase {
     parent::setUp();
 
     $this->installSchema('helfi_audit_log', ['helfi_audit_logs']);
-
-    // Configure resilient_logger to mirror all.settings.php.
-    new Settings(Settings::getAll() + [
-      'resilient_logger' => [
-        'sources' => [
-          ['class' => HelfiAuditLogSource::class],
-        ],
-        'targets' => [
-          [
-            'class' => ElasticsearchLogTarget::class,
-            'es_url' => 'https://fake-es:9200',
-            'es_username' => 'user',
-            'es_password' => 'pass',
-            'es_index' => 'audit-test',
-            'required' => TRUE,
-          ],
-        ],
-        'environment' => 'test',
-        'origin' => 'helfi-audit-log-test',
-        'store_old_entries_days' => self::RETENTION_DAYS,
-      ],
-    ]);
   }
 
   /**
    * Test that handleSubmitUnsentEntries ships rows to Elasticsearch.
    */
   public function testHandleSubmitUnsentEntriesShipsToElasticsearch(): void {
-    $this->container->get(AuditLogServiceInterface::class)->logOperation([
-      'operation' => 'TEST_OP',
-      'status' => 'OK',
-      'actor' => ['role' => 'TEST'],
-      'target' => ['id' => '42'],
-      'date_time' => gmdate('c'),
-    ], 'DRUPAL');
-
     $history = [];
-    $this->swapElasticsearchClient($history, [
+    $guzzle = $this->createMockHistoryMiddlewareHttpClient($history, [
       new GuzzleResponse(201, [
         'Content-Type' => 'application/json',
         'X-Elastic-Product' => 'Elasticsearch',
@@ -89,6 +58,15 @@ class ResilientLoggerTasksTest extends KernelTestBase {
         'result' => 'created',
       ], flags: JSON_THROW_ON_ERROR)),
     ]);
+    $this->configureResilientLogger($guzzle);
+
+    $this->container->get(AuditLogServiceInterface::class)->logOperation([
+      'operation' => 'TEST_OP',
+      'status' => 'OK',
+      'actor' => ['role' => 'TEST'],
+      'target' => ['id' => '42'],
+      'date_time' => gmdate('c'),
+    ], 'DRUPAL');
 
     $this->container->get(ResilientLoggerTasks::class)
       ->handleSubmitUnsentEntries(time());
@@ -118,6 +96,8 @@ class ResilientLoggerTasksTest extends KernelTestBase {
    * Test that handleClearSentEntries deletes old sent rows.
    */
   public function testHandleClearSentEntriesRespectsRetentionWindow(): void {
+    $this->configureResilientLogger();
+
     $now = time();
     $oldTs = gmdate('Y-m-d H:i:s', $now - (self::RETENTION_DAYS * 2 * 86400));
     $newTs = gmdate('Y-m-d H:i:s', $now);
@@ -148,27 +128,32 @@ class ResilientLoggerTasksTest extends KernelTestBase {
   }
 
   /**
-   * Mock the Elasticsearch HTTP transport on the configured target.
-   *
-   * @param array<mixed> $history
-   *   Captured by Middleware::history; populated with each PSR-7 request.
-   * @param \Psr\Http\Message\ResponseInterface[] $responses
-   *   PSR-7 responses.
+   * Configure resilient logger, optionally with a mocked client.
    */
-  private function swapElasticsearchClient(array &$history, array $responses): void {
-    $guzzle = $this->createMockHistoryMiddlewareHttpClient($history, $responses);
-    $fakeEs = ClientBuilder::create()
-      ->setHosts(['https://fake-es:9200'])
-      ->setBasicAuthentication('user', 'pass')
-      ->setHttpClient($guzzle)
-      ->build();
+  private function configureResilientLogger(?ClientInterface $httpClient = NULL): void {
+    $target = [
+      'class' => ElasticsearchLogTarget::class,
+      'es_url' => 'https://fake-es:9200',
+      'es_username' => 'user',
+      'es_password' => 'pass',
+      'es_index' => 'audit-test',
+      'required' => TRUE,
+    ];
+    if ($httpClient !== NULL) {
+      $target['http_client'] = $httpClient;
+    }
 
-    $logger = $this->container->get(ResilientLogger::class);
-    [$target] = $logger->getTargets();
-    $this->assertInstanceOf(ElasticsearchLogTarget::class, $target);
-
-    (new \ReflectionProperty(ElasticsearchLogTarget::class, 'client'))
-      ->setValue($target, $fakeEs);
+    new Settings(Settings::getAll() + [
+      'resilient_logger' => [
+        'sources' => [
+          ['class' => HelfiAuditLogSource::class],
+        ],
+        'targets' => [$target],
+        'environment' => 'test',
+        'origin' => 'helfi-audit-log-test',
+        'store_old_entries_days' => self::RETENTION_DAYS,
+      ],
+    ]);
   }
 
   /**
