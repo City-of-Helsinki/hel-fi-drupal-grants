@@ -24,14 +24,17 @@ const AUTH_FILE_PATH = '.auth/user.json';
  *   or selecting an existing one.
  */
 const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
-  // Before selecting the role, make an attempt to accept the cookies.
-  await page.goto("/fi");
-  await acceptCookies(page);
-  // There might be a survey dialog open, look for it and skip it.
-  await hideDialog(page);
+  const existingCookies = await page.context().cookies();
+  const hasSession = existingCookies.some(c => c.name.startsWith('SSESS'));
 
-  // Check login state and login.
-  await checkLoginStateAndLogin(page);
+  if (!hasSession) {
+    // Full login flow only when no session exists.
+    await page.goto("/fi");
+    await acceptCookies(page);
+    await hideDialog(page);
+    await checkLoginStateAndLogin(page);
+  }
+
   await page.goto("/fi/asiointirooli-valtuutus");
   await logCurrentUrl(page);
 
