@@ -37,10 +37,6 @@ export async function executeFormFlow(
   const FORM_URL = `/fi/application/new/${FORM_ID}`;
   const FORM_JSON = `/fi/application/preview/${FORM_ID}`;
 
-  test.afterAll(async () => {
-    await page.close();
-  });
-
   // Log in and select the role before opening the form.
   await checkLoginStateAndLogin(page);
   await selectRole(page, FORM_ROLE);
