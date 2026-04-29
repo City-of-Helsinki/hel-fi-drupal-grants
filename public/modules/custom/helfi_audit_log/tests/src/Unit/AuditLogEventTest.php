@@ -10,18 +10,12 @@ use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests AuditLogEvent object.
- *
- * @coversDefaultClass \Drupal\helfi_audit_log\Event\AuditLogEvent
  */
 #[Group('helfi_audit_log')]
 class AuditLogEventTest extends UnitTestCase {
 
   /**
-   * @covers ::__construct
-   * @covers ::getOrigin
-   * @covers ::getMessage
-   * @covers ::isValid
-   * @covers \Drupal\helfi_audit_log\Event\AuditLogEvent::__construct
+   * Test that event can be created.
    */
   public function testCreateEvent() : void {
     $event = new AuditLogEvent(['message']);
@@ -31,10 +25,7 @@ class AuditLogEventTest extends UnitTestCase {
   }
 
   /**
-   * @covers ::__construct
-   * @covers ::getOrigin
-   * @covers ::setOrigin
-   * @covers \Drupal\helfi_audit_log\Event\AuditLogEvent::__construct
+   * Test that event origin can be modified.
    */
   public function testModifyEventOrigin() : void {
     $event = new AuditLogEvent(['message']);
@@ -44,10 +35,7 @@ class AuditLogEventTest extends UnitTestCase {
   }
 
   /**
-   * @covers ::__construct
-   * @covers ::getMessage
-   * @covers ::setMessage
-   * @covers \Drupal\helfi_audit_log\Event\AuditLogEvent::__construct
+   * Test that event message can be modified.
    */
   public function testModifyEventMessage() : void {
     $event = new AuditLogEvent(['message']);
@@ -67,10 +55,7 @@ class AuditLogEventTest extends UnitTestCase {
   }
 
   /**
-   * @covers ::__construct
-   * @covers ::setValid
-   * @covers ::isValid
-   * @covers \Drupal\helfi_audit_log\Event\AuditLogEvent::__construct
+   * Test that event validity can be modified.
    */
   public function testModifyEventValidity() : void {
     $event = new AuditLogEvent(['message']);
