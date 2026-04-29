@@ -5,8 +5,8 @@ import { useAtomValue } from 'jotai';
 import { useEffect, useRef } from 'react';
 
 import { formDataAtomRef, getSubventionFieldsAtom, shouldRenderPreviewAtom } from '../../store';
-import { getSubventionSum } from '../../utils';
-import { PreviewInput, sanitizeNumericInput } from '../Input';
+import { getSubventionSum, sanitizeNumericInput } from '../../utils';
+import { PreviewInput } from '../Input';
 
 export const SubventionSum = ({ idSchema, name, onChange, schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);

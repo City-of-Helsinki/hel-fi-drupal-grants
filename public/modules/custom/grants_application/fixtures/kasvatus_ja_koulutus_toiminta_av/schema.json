@@ -387,7 +387,7 @@
             },
             "customer_sales": {
               "format": "decimal-number",
-              "title": "custintegeromer_sales.title",
+              "title": "customer_sales.title",
               "type": "string"
             },
             "donations": {

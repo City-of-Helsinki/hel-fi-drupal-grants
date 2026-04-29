@@ -426,3 +426,26 @@ export const getTooltip = (uiSchema: UiSchema | undefined) => {
     </Tooltip>
   );
 };
+
+export const sanitizeNumericInput = (
+  value: string,
+  type: 'integer' | 'decimal-number' | 'phone' = 'integer',
+): string => {
+  let pattern: RegExp;
+
+  switch (type) {
+    case 'integer':
+      pattern = /[^0-9]/g;
+      break;
+    case 'decimal-number':
+      pattern = /[^0-9,]/g;
+      break;
+    case 'phone':
+      pattern = /[^0-9 +()]/g;
+      break;
+    default:
+      pattern = /[^0-9,]/g;
+  }
+
+  return value.replace(pattern, '').replace(/ {2,}/g, ' ');
+};

@@ -354,7 +354,12 @@ export const RJSFFormContainer = ({
           transformErrors={transformErrors}
           uiSchema={{ ...uiSchema, 'ui:globalOptions': { label: false } }}
           validator={customizeValidator(
-            { ajvOptionsOverrides: { allErrors: true, coerceTypes: false } },
+            {
+              ajvOptionsOverrides: { allErrors: true, coerceTypes: false },
+              customFormats: {
+                'decimal-number': /^-?[0-9]+(,[0-9]+)?$/,
+              },
+            },
             localizeErrors,
           )}
           widgets={widgets}
