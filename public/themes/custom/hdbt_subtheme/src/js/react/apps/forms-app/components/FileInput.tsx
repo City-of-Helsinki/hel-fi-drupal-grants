@@ -283,7 +283,7 @@ export const FileInput = ({
       accept={accept}
       defaultValue={defaultValue}
       disabled={readonly || isEmptyPreview}
-      dragAndDrop
+      dragAndDrop={false}
       errorText={formatErrors(rawErrors)}
       hideLabel={false}
       id={id || ''}
@@ -304,7 +304,7 @@ export const FileInput = ({
       accept={accept}
       defaultValue={defaultValue}
       disabled={readonly || isEmptyPreview}
-      dragAndDrop
+      dragAndDrop={false}
       errorText={formatErrors(rawErrors)}
       hideLabel={false}
       id={id || ''}
