@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\helfi_audit_log\Unit;
 
 use Drupal\helfi_audit_log\Event\AuditLogEvent;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests AuditLogEvent object.
  *
  * @coversDefaultClass \Drupal\helfi_audit_log\Event\AuditLogEvent
- * @group helfi_audit_log
  */
+#[Group('helfi_audit_log')]
 class AuditLogEventTest extends UnitTestCase {
 
   /**

@@ -110,7 +110,7 @@ class ResilientLoggerTasks {
 
     if ($shouldClearSent) {
       $this->logger->info("Clearing sent entries");
-      $this->service->submitUnsentEntries();
+      $this->service->clearSentEntries();
       $this->state->set(self::STATE_KEY_PREV_CLEAR, $currentTime);
     }
   }
