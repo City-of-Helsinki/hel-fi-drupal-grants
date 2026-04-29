@@ -10,7 +10,7 @@ import { checkLoginStateAndLogin, Role, selectRole} from "../auth_helpers";
 import {
   captureApplicationNumber,
   waitForFormLoad
-} from "./utils";
+} from './utils';
 
 /**
  * Runs the full form flow.
