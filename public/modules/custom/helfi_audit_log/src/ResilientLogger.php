@@ -17,10 +17,10 @@ class ResilientLogger extends ResilientLoggerBase {
   /**
    * Create from settings.
    */
-  public static function createFromSettings(Settings $settings): self {
+  public static function createFromSettings(Settings $settings): ResilientLoggerBase {
     /** @var ResilientLoggerOptions $options */
     $options = $settings->get('resilient_logger', []);
-    return self::create($options);
+    return ResilientLoggerBase::create($options);
   }
 
 }
