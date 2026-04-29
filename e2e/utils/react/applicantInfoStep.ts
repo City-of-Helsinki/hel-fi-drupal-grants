@@ -5,6 +5,7 @@ import { createTranslator } from './utils';
 import { type FilledFields } from './formFieldVerifier';
 import type { FormPreviewResponse } from './schemaFetcher';
 import { getFakeEmailAddress } from '../field_helpers';
+import { selectFirstDropdownOption } from "./fieldFillers";
 
 /**
  * Handle a text field.
@@ -66,15 +67,7 @@ async function handleDropdownField(
   filledFields?: FilledFields,
 ): Promise<string | undefined> {
   if (fill) {
-    await fieldDOM.locator(`#${fieldId}-main-button`).click();
-    const firstOption = fieldDOM.locator('[role="option"]').first();
-    await expect(firstOption).toBeVisible();
-    const optionText = (await firstOption.textContent()) ?? '';
-    await firstOption.click();
-    await page.keyboard.press('Escape');
-    await expect(page.locator(`#${fieldId}-main-button`)).toHaveAttribute('aria-expanded', 'false');
-    await expect(page.locator(`#${fieldId}-error`)).not.toBeVisible();
-    return optionText.trim();
+    return await selectFirstDropdownOption(page, fieldDOM, fieldId);
   }
   await expect(page.locator(`#${fieldId}-main-button`)).toContainText(filledFields!.get(fieldId)!);
 }
@@ -218,13 +211,13 @@ export const verifyApplicantInfoStepFieldTranslations = (
  * @param filledFields
  *   The map to store or read filled values from.
  */
-export const fillApplicantInfoStep = (
+export async function fillApplicantInfoStep(
   page: Page,
   formData: Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>,
   language = 'fi',
   fill = false,
   filledFields?: FilledFields,
-) => {
+) {
   const tree = buildFormTree(formData as any);
   const t = createTranslator(formData as FormPreviewResponse, language);
   const sections = tree['applicant_info'];
