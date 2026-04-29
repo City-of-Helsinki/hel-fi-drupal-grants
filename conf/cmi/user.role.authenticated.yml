@@ -18,8 +18,8 @@ dependencies:
     - node
     - paragraphs
     - raven
-    - system
     - rest
+    - system
 _core:
   default_config_hash: 83Nuup-6oYkkdAsvg3nrR2pBOgtTXEV1JrzpCCLkYLM
 id: authenticated
@@ -31,6 +31,7 @@ permissions:
   - 'delete own address content'
   - 'delete own files'
   - 'edit own address content'
+  - 'restful get helfi_global_mobile_menu'
   - 'send javascript errors to sentry'
   - 'send performance traces to sentry'
   - 'use text format full_html'
@@ -47,4 +48,3 @@ permissions:
   - 'view tpr_service'
   - 'view tpr_unit'
   - 'view unpublished paragraphs'
-  - 'restful get helfi_global_mobile_menu'
