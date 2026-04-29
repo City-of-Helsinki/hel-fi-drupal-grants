@@ -11625,11 +11625,6 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/src/ResilientLoggerTasks.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_audit_log\\\\Sources\\\\HelfiAuditLogSourceEntry\\:\\:getDocument\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 3
-			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSourceEntry.php
-
-		-
 			message: "#^PHPDoc type array of property Drupal\\\\Tests\\\\helfi_audit_log\\\\Kernel\\\\AuditLogServiceTest\\:\\:\\$modules is not covariant with PHPDoc type array\\<string\\> of overridden property Drupal\\\\KernelTests\\\\KernelTestBase\\:\\:\\$modules\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
