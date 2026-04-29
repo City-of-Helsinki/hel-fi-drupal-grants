@@ -11520,11 +11520,6 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/helfi_audit_log.install
 
 		-
-			message: "#^Function helfi_audit_log_cron\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/helfi_audit_log.module
-
-		-
 			message: "#^Method Drupal\\\\helfi_audit_log\\\\AuditLogService\\:\\:dispatchEvent\\(\\) has parameter \\$message with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/src/AuditLogService.php
@@ -11630,39 +11625,9 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/src/ResilientLoggerTasks.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\helfi_audit_log_test\\\\AuditLogServiceTest\\:\\:\\$message\\.$#"
-			count: 2
-			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php
-
-		-
-			message: "#^Access to an undefined property Drupal\\\\helfi_audit_log_test\\\\AuditLogServiceTest\\:\\:\\$origin\\.$#"
-			count: 2
-			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_audit_log_test\\\\AuditLogServiceTest\\:\\:getValues\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_audit_log_test\\\\AuditLogServiceTest\\:\\:logOperation\\(\\) has parameter \\$message with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php
-
-		-
-			message: "#^Call to an undefined method Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface\\:\\:getValues\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_audit_log\\\\Kernel\\\\AuditLogServiceTest\\:\\:alter\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_audit_log\\\\Kernel\\\\AuditLogServiceTest\\:\\:testDatabaseWrite\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
+			message: "#^Method Drupal\\\\helfi_audit_log\\\\Sources\\\\HelfiAuditLogSourceEntry\\:\\:getDocument\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 3
+			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSourceEntry.php
 
 		-
 			message: "#^PHPDoc type array of property Drupal\\\\Tests\\\\helfi_audit_log\\\\Kernel\\\\AuditLogServiceTest\\:\\:\\$modules is not covariant with PHPDoc type array\\<string\\> of overridden property Drupal\\\\KernelTests\\\\KernelTestBase\\:\\:\\$modules\\.$#"
