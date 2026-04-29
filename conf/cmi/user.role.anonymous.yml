@@ -2,16 +2,16 @@ uuid: e28c46eb-0d46-4eb9-840b-5c3f3621de92
 langcode: en
 status: true
 dependencies:
+  config:
+    - rest.resource.helfi_global_mobile_menu
   module:
     - external_entities
     - helfi_api_base
     - helfi_tpr
     - media
     - raven
-    - system
     - rest
-  config:
-    - rest.resource.helfi_global_mobile_menu
+    - system
 _core:
   default_config_hash: EDyVdaROG6pYzyEct43c01Wq4gpATszrk-qR6gqnQ84
 id: anonymous
@@ -21,6 +21,7 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access debug api'
+  - 'restful get helfi_global_mobile_menu'
   - 'send javascript errors to sentry'
   - 'send performance traces to sentry'
   - 'view helfi_announcements external entity'
@@ -33,4 +34,3 @@ permissions:
   - 'view remote entities'
   - 'view tpr_service'
   - 'view tpr_unit'
-  - 'restful get helfi_global_mobile_menu'
