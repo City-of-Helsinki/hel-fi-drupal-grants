@@ -143,16 +143,16 @@ async function handleOfficialField(
  * @param language
  *   The language code to verify. Defaults to 'fi'.
  */
-export const verifyApplicantInfoStepFieldTranslations = (
+export async function verifyApplicantInfoStepFieldTranslations(
   page: Page,
   formData: Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>,
   language = 'fi',
-) => {
+) {
   const tree = buildFormTree(formData as any);
   const t = createTranslator(formData as FormPreviewResponse, language);
   const sections = tree['applicant_info'];
 
-  test.step(`Verify step: ${t('applicant_info.title')}`, async () => {
+  await test.step(`Verify step: ${t('applicant_info.title')}`, async () => {
     // Go through each section and verify its title and field labels.
     for (const [sectionIndex, [section, fields]] of Object.entries(sections).entries()) {
       const sectionTitle = t(`${section}.title`);
@@ -222,7 +222,7 @@ export async function fillApplicantInfoStep(
   const t = createTranslator(formData as FormPreviewResponse, language);
   const sections = tree['applicant_info'];
 
-  test.step(`Fill step: ${t('applicant_info.title')}`, async () => {
+  await test.step(`Fill step: ${t('applicant_info.title')}`, async () => {
     // Go through each section, verify its title, then fill its fields.
     for (const [sectionIndex, [section, fields]] of Object.entries(sections).entries()) {
       const sectionTitle = t(`${section}.title`);
