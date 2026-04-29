@@ -26,7 +26,7 @@
           "tooltipLabel": "start_subvention_applied.title",
           "tooltipButtonLabel": "start_subvention_applied.title",
           "tooltipText": "start_subvention_applied.description"
-        } 
+        }
       }
     },
     "other_compensations_section": {
@@ -275,7 +275,7 @@
           "misc:file-type": 0,
           "misc:variant": "simple",
           "misc:multiple": "true",
-          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help",
           "ui:field": "atvFile"
         }
       }
