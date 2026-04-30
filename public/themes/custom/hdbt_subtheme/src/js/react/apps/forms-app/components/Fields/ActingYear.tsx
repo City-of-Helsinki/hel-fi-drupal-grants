@@ -10,5 +10,7 @@ export const ActingYear = () => {
     return null;
   }
 
-  return <Select options={yearOptions} />;
+  const options = (yearOptions ?? []).map((year) => ({ label: year, value: year }));
+
+  return <Select options={options} />;
 };

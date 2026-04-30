@@ -2,7 +2,7 @@
   "orienteering_maps_step": {
     "acting_year_section": {
       "acting_year": {
-        "ui:widget": "actingYear"
+        "ui:field": "actingYear"
       }
     },
     "orienteering_subvention": {
