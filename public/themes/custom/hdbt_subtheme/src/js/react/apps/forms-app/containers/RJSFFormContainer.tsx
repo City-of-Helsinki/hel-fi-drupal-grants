@@ -217,7 +217,10 @@ export const RJSFFormContainer = ({
         | { addError: (msg: string) => void }
         | undefined;
       const hasValues = values
-        ? Object.entries(values).reduce((acc, [, curr]) => acc || Number(curr[1].value) > 0, false)
+        ? Object.entries(values).reduce(
+            (acc, [, curr]) => acc || (curr?.[1]?.value?.toString().trim().length ?? 0) > 0,
+            false,
+          )
         : false;
 
       if (_field && !hasValues) {
