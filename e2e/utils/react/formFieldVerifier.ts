@@ -152,8 +152,9 @@ async function handleField(
         'xpath=ancestor::div[contains(@class,"hdbt-form--fileinput")][1]//input[@type="file"]'
       );
       await fileInput.setInputFiles(path.join(__dirname, '../data/attachments/07_muu_liite.pdf'));
+      await expect(page.locator('.hdbt-form--fileinput').filter({ hasText: '07_muu_liite.pdf' })).toBeVisible();
       const description = faker.lorem.sentence();
-      await page.fill(`#${field.fieldName}-description`, description);
+      await page.locator(`#${field.fieldName}-description`).pressSequentially(description);
       filledFields?.set(`${field.fieldName}-description`, description);
     }
     // When verifying, check the description still holds the value
@@ -506,8 +507,6 @@ export async function fillFormFields(
         if (!stepTitle) throw new Error(`No translation found for ${step}.title`);
         await expect(page.locator('button[aria-current="step"] p')).toContainText(stepTitle);
       });
-
-      // @TODO Tarvii katsoo "attachment" filun nimi.
 
       // The applicant info step has its own fill logic.
       if (step === 'applicant_info') {
