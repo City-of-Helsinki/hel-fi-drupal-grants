@@ -21,7 +21,7 @@ import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 import { SubmitStates } from '../enum/SubmitStates';
 
-type ATVFile = { description?: string; fileId: number; fileName: string; fileType: string; href: string; size: number };
+type ATVFile = { fileId: number; fileName: string; fileType: string; href: string; size: number };
 
 type PersistedFile = ATVFile & {
   integrationID: string;
@@ -73,7 +73,7 @@ const filesFromATVData = (value?: ATVFile): File[] => {
  *
  * Add 'misc:multiple': 'true' to uiSchema to enable the feature.
  */
-const multipleFilesFromATVData = (value?: { files: ATVFile[]; description: string } | []): any => {
+const multipleFilesFromATVData = (value?: { files: ATVFile[] } | []): any => {
   if (!value?.files?.length) {
     return [];
   }
@@ -129,9 +129,6 @@ export const FileInput = ({
     return (
       <>
         <PreviewInput value={previewValue} label={label} uiSchema={uiSchema} />
-        {isSimple && (
-          <PreviewInput value={formData?.description} label={t('file_description.title')} uiSchema={undefined} />
-        )}
       </>
     );
   }
@@ -203,12 +200,8 @@ export const FileInput = ({
   /**
    * Upload/delete handler for a file upload field accepting multiple file uploads.
    */
-  const handleMultiple = async (
-    files: File[],
-    existingData: { files: PersistedFile[]; description: string } | undefined,
-  ) => {
+  const handleMultiple = async (files: File[], existingData: { files: PersistedFile[] } | undefined) => {
     const existingFileCount = existingData?.files?.length ?? 0;
-    const description = existingData?.description || '';
 
     // Remove a file from rjsf-data.
     if (existingFileCount > files?.length) {
@@ -261,7 +254,6 @@ export const FileInput = ({
     const { href: integrationID, ...rest } = result;
     const newFile = {
       integrationID,
-      description,
       isDeliveredLater: false,
       isIncludedInOtherFile: false,
       isNewAttachment: true,
@@ -275,7 +267,7 @@ export const FileInput = ({
     });
     allFiles.push(newFile);
 
-    onChange({ files: allFiles, description });
+    onChange({ files: allFiles });
   };
 
   const inputElement = multipleFiles ? (
@@ -321,23 +313,10 @@ export const FileInput = ({
     />
   );
 
-  const descriptionElement = (
-    <TextInput
-      disabled={readonly || isEmptyPreview}
-      id={`${name}-description`}
-      label={t('file_description.title')}
-      onChange={(e) => {
-        onChange({ ...formData, description: e.target.value });
-      }}
-      value={formData?.description || ''}
-    />
-  );
-
   if (uiSchema?.['misc:variant'] === 'simple') {
     return (
       <div className='hdbt-form--fileinput' key={refreshKey}>
         {inputElement}
-        {descriptionElement}
       </div>
     );
   }
