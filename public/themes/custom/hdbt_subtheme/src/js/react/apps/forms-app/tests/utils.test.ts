@@ -1,5 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import { addApplicantInfoStep, getIndicesWithErrors, isValidFormResponse, keyErrorsByStep } from '../utils';
+import {
+  addApplicantInfoStep,
+  getIndicesWithErrors,
+  getSubventionSum,
+  isValidFormResponse,
+  keyErrorsByStep,
+} from '../utils';
 import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
 import { communitySettings } from '../formConstants';
 
@@ -19,6 +25,92 @@ describe('Utils.ts', () => {
   // @todo implement actual test once this function is actually implemented
   test('isValidFormResponse', () => {
     expect(isValidFormResponse({})).toEqual([true, undefined]);
+  });
+
+  describe('getSubventionSum', () => {
+    test('returns "0" when no subvention fields are provided', () => {
+      expect(getSubventionSum({}, [])).toBe('0');
+    });
+
+    test('returns "0" when form data has no matching fields', () => {
+      expect(getSubventionSum({}, ['.step1.subventionTable'])).toBe('0');
+    });
+
+    test('returns "0" when matching field has no entries', () => {
+      expect(getSubventionSum({ step1: { subventionTable: [] } }, ['.step1.subventionTable'])).toBe('0');
+    });
+
+    test('sums integer values from a single table', () => {
+      const formData = {
+        step1: {
+          subventionTable: [
+            ['key1', { value: '100' }],
+            ['key2', { value: '200' }],
+          ],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'])).toBe('300');
+    });
+
+    test('sums decimal values using comma as separator', () => {
+      const formData = {
+        step1: {
+          subventionTable: [
+            ['key1', { value: '100,50' }],
+            ['key2', { value: '50,25' }],
+          ],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'])).toBe('150,75');
+    });
+
+    test('aggregates values across multiple fields', () => {
+      const formData = {
+        step1: {
+          tableA: [['key1', { value: '100' }]],
+          tableB: [['key2', { value: '250' }]],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.tableA', '.step1.tableB'])).toBe('350');
+    });
+
+    test('ignores entries where value is not a number', () => {
+      const formData = {
+        step1: {
+          subventionTable: [
+            ['key1', { value: '200' }],
+            ['key2', { value: 'not-a-number' }],
+          ],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'])).toBe('200');
+    });
+
+    test('handles a single entry', () => {
+      const formData = {
+        step1: { subventionTable: [['key1', { value: '42' }]] },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'])).toBe('42');
+    });
+
+    test('returns an integer result without trailing comma when sum is whole', () => {
+      const formData = {
+        step1: {
+          subventionTable: [
+            ['key1', { value: '1,50' }],
+            ['key2', { value: '0,50' }],
+          ],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'])).toBe('2');
+    });
+
+    test('handles zero values', () => {
+      const formData = {
+        step1: { subventionTable: [['key1', { value: '0' }]] },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'])).toBe('0');
+    });
   });
 
   test('addApplicantInfoStep', () => {

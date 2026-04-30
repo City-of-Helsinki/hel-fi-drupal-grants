@@ -34,23 +34,21 @@ export class InvalidSchemaBoundary extends Component<{ children: React.ReactNode
     const { errorStack } = this.state;
     const { children } = this.props;
 
-    const formatSchemaErrors = () => {
-      const [, errors] = errorStack!.split('schema is invalid:');
+    if (errorStack) {
+      const [, errors] = errorStack.split('schema is invalid:');
 
       return (
-        <div>
-          <h3>Invalid schema</h3>
-          <ul>
-            {errors.split(',').map((error: string, index: number) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
+        <div style={{ backgroundColor: 'salmon', padding: '28px' }}>
+          <div>
+            <h3>Invalid schema</h3>
+            <ul>
+              {errors.split(',').map((error: string, index: number) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       );
-    };
-
-    if (errorStack) {
-      return <div style={{ backgroundColor: 'salmon', padding: '28px' }}>{formatSchemaErrors()}</div>;
     }
 
     return children;

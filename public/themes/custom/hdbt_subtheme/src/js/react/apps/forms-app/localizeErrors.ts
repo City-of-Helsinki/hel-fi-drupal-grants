@@ -81,17 +81,24 @@ const formatRequiredError = (error: ErrorObject) => {
  * @return {string} - Translated error message indicating the required field.
  */
 const formatPatternError = (error: ErrorObject) => {
-  const { data } = error;
+  const {
+    data,
+    params: { format },
+  } = error;
 
   if (!data || data === '') {
     return formatRequiredError(error);
   }
 
-  return Drupal.t(
-    'The email address @mail is not valid. Use the format user@example.com.',
-    { '@mail': data },
-    { context: 'Grants application: Validation' },
-  );
+  if (format === 'email') {
+    return Drupal.t(
+      'The email address @mail is not valid. Use the format user@example.com.',
+      { '@mail': data },
+      { context: 'Grants application: Validation' },
+    );
+  }
+
+  return Drupal.t('Value is of incorrect type.', {}, { context: 'Grants application: Validation' });
 };
 
 /**

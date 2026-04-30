@@ -21,6 +21,29 @@
               "tooltipButtonLabel": "map_name.title",
               "tooltipText": "map_name.description"
             }
+          },
+          "size": {
+            "ui:options": {
+              "format": "decimal-number"
+            }
+          }
+        },
+        "additionalItems": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          },
+          "map_name": {
+            "ui:widget": "textarea",
+            "ui:options": {
+              "tooltipLabel": "map_name.title",
+              "tooltipButtonLabel": "map_name.title",
+              "tooltipText": "map_name.description"
+            }
+          },
+          "size": {
+            "ui:options": {
+              "format": "decimal-number"
+            }
           }
         }
       }

@@ -29,10 +29,10 @@
       "orienteering_maps": [
         {
           "map_name": "Kartan nimi",
-          "size": 20,
-          "voluntary_hours": 123,
-          "cost": 123,
-          "other_compensations": 123
+          "size": "20",
+          "voluntary_hours": "123",
+          "cost": "123",
+          "other_compensations": "123"
         }
       ]
     }
