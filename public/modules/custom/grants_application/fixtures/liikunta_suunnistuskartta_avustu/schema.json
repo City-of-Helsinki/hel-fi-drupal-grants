@@ -37,20 +37,24 @@
                       "minLength": 1
                     },
                     "size": {
+                      "format": "decimal-number",
                       "title": "size.title",
-                      "type": "integer"
+                      "type": "string"
                     },
                     "voluntary_hours": {
+                      "format": "decimal-number",
                       "title": "voluntary_hours.title",
-                      "type": "integer"
+                      "type": "string"
                     },
                     "cost": {
+                      "format": "decimal-number",
                       "title": "cost.title",
-                      "type": "integer"
+                      "type": "string"
                     },
                     "other_compensations": {
+                      "format": "decimal-number",
                       "title": "other_compensations.title",
-                      "type": "integer"
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -68,20 +72,24 @@
                     "minLength": 1
                   },
                   "size": {
+                    "format": "decimal-number",
                     "title": "size.title",
-                    "type": "integer"
+                    "type": "string"
                   },
                   "voluntary_hours": {
+                    "format": "decimal-number",
                     "title": "voluntary_hours.title",
                     "type": "string"
                   },
                   "cost": {
+                    "format": "decimal-number",
                     "title": "cost.title",
-                    "type": "integer"
+                    "type": "string"
                   },
                   "other_compensations": {
+                    "format": "decimal-number",
                     "title": "other_compensations.title",
-                    "type": "integer"
+                    "type": "string"
                   }
                 },
                 "required": [

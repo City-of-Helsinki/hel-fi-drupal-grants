@@ -22,8 +22,9 @@
           "type": "string"
         },
         "other_compensation_amount": {
+          "format": "decimal-number",
           "title": "other_compensation_amount.title",
-          "type": "integer"
+          "type": "string"
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
@@ -60,8 +61,9 @@
           "type": "string"
         },
         "other_applied_compensation_amount": {
+          "format": "decimal-number",
           "title": "other_applied_compensation_amount.title",
-          "type": "integer"
+          "type": "string"
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
@@ -86,8 +88,9 @@
           "type": "string"
         },
         "income_row_amount": {
+          "format": "decimal-number",
           "title": "income_row_amount.title",
-          "type": "integer"
+          "type": "string"
         }
       },
       "required": [
@@ -105,8 +108,9 @@
           "type": "string"
         },
         "expenditure_row_amount": {
+          "format": "decimal-number",
           "title": "expenditure_row_amount.title",
-          "type": "integer"
+          "type": "string"
         }
       },
       "required": [
@@ -315,8 +319,9 @@
                     "type": "object",
                     "properties": {
                       "requested_amount_first_year": {
+                        "format": "decimal-number",
                         "title": "requested_amount_first_year.title",
-                        "type": "number"
+                        "type": "string"
                       }
                     },
                     "required": ["requested_amount_first_year"]
@@ -343,12 +348,14 @@
                     "type": "object",
                     "properties": {
                       "requested_amount_first_year": {
+                        "format": "decimal-number",
                         "title": "requested_amount_first_year.title",
-                        "type": "number"
+                        "type": "string"
                       },
                       "requested_amount_second_year": {
+                        "format": "decimal-number",
                         "title": "requested_amount_second_year.title",
-                        "type": "number"
+                        "type": "string"
                       }
                     },
                     "required": ["requested_amount_first_year", "requested_amount_second_year"]
@@ -434,7 +441,7 @@
                   },
                   "estimate_basis": { "title": "estimate_basis.title", "type": "string" },
                   "hours_by_postal_area": { "title": "hours_by_postal_area.title", "type": "string" },
-                  "session_cost_report": { "title": "session_cost_report.title", "type": "integer" },
+                  "session_cost_report": { "format": "decimal-number", "title": "session_cost_report.title", "type": "string" },
                   "activities_description": { "title": "activities_description.title", "type": "string" },
                   "financial_changes": { "title": "financial_changes.title", "type": "string" },
                   "activity_changes": { "title": "activity_changes.title", "type": "string" },
@@ -607,8 +614,9 @@
               "default": "general"
             },
             "applied_benefits": {
+              "format": "decimal-number",
               "title": "applied_benefits.title",
-              "type": "number"
+              "type": "string"
             },
             "income_rows": {
               "type": "array",

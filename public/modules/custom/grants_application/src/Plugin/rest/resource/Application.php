@@ -207,7 +207,10 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
-    if (!$settings->isApplicationOpen() && $document->getStatus() === 'DRAFT') {
+    $isOpen = $settings->isApplicationOpen();
+    $status = $document->getStatus();
+
+    if (!$isOpen && !in_array($status, ['RECEIVED', 'PREPARING'])) {
       return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
     }
 
