@@ -365,12 +365,12 @@ export default defineConfig({
     },
     {
       name: 'forms-77-unregistered',
-      testMatch: '/forms/unregistered_community_62.ts',
+      testMatch: '/forms/unregistered_community_77.ts',
       dependencies: ['profile-unregistered_community']
     },
     {
       name: 'forms-77-registered',
-      testMatch: '/forms/registered_community_62.ts',
+      testMatch: '/forms/registered_community_77.ts',
       dependencies: ['profile-registered_community']
     },
   ],
