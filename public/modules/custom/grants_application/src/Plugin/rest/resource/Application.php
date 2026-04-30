@@ -398,7 +398,7 @@ final class Application extends ResourceBase {
         'HANDLER_ATT_OK',
         $application_number,
         "Attachment uploaded for the IBAN: $bankAccountNumber.",
-        $save_id
+        $bankFile['filename'],
       );
       $this->eventsService->addNewEventForApplication($document, $event);
     }
