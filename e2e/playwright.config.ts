@@ -345,7 +345,7 @@ export default defineConfig({
     },
     {
       name: 'forms-76',
-      testMatch: /forms\/.*_64\.ts$/,
+      testMatch: /forms\/.*_76\.ts$/,
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
     {
