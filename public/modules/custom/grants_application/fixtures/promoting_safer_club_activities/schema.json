@@ -304,11 +304,11 @@
                 },
                 "active_participants_under_20": {
                   "title": "active_participants_under_20.title",
-                  "type": "string"
+                  "type": "integer"
                 },
                 "active_participants_local": {
                   "title": "active_participants_local.title",
-                  "type": "string"
+                  "type": "integer"
                 }
               },
               "required": [
