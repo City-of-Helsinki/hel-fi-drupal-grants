@@ -77,3 +77,9 @@ We've added some custom keys to ui:options.
 
 All custom widgets can be found in `Input.tsx`.
 Basically all we're doing here is overriding default inputs with HDS components, with some minor adjustments for select fields that use data from Suomi.fi integration.
+
+### Formats
+
+Custom AJV formats enable declaring additional formats for data. See `RJSFormContainer.tsx` for examples.
+
+One custom format has been defined for decimal numbers. It allows using decimal numbers with comma-separation. Use it by adding `format: decimal-number` to the appropriate `schema.json`

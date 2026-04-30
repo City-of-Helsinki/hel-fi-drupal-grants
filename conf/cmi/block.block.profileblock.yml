@@ -9,7 +9,7 @@ dependencies:
 id: profileblock
 theme: hdbt_subtheme
 region: header_branding
-weight: -10
+weight: -12
 provider: null
 plugin: profile_block
 settings:

@@ -9,8 +9,9 @@
           "type": "string"
         },
         "income_row_amount": {
+          "format": "decimal-number",
           "title": "income_row_amount.title",
-          "type": "integer"
+          "type": "string"
         }
       },
       "required": [
@@ -27,8 +28,9 @@
           "type": "string"
         },
         "expenditure_row_amount": {
+          "format": "decimal-number",
           "title": "expenditure_row_amount.title",
-          "type": "integer"
+          "type": "string"
         }
       },
       "required": [
@@ -58,8 +60,9 @@
           "type": "string"
         },
         "other_compensation_amount": {
+          "format": "decimal-number",
           "title": "other_compensation_amount.title",
-          "type": "integer"
+          "type": "string"
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
@@ -96,8 +99,9 @@
           "type": "string"
         },
         "other_applied_compensation_amount": {
+          "format": "decimal-number",
           "title": "other_applied_compensation_amount.title",
-          "type": "integer"
+          "type": "string"
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
@@ -289,8 +293,9 @@
               "type": "string"
             },
             "self_financing_amount": {
+              "format": "decimal-number",
               "title": "self_financing_amount.title",
-              "type": "integer"
+              "type": "string"
             },
             "income_rows": {
               "type": "array",

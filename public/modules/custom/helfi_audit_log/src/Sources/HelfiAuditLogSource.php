@@ -6,7 +6,7 @@ namespace Drupal\helfi_audit_log\Sources;
 
 use Drupal\Core\Database\Database;
 use ResilientLogger\Sources\AbstractLogSource;
-use ResilientLogger\Utils\Helpers;
+use ResilientLogger\Sources\AbstractLogSourceEntry;
 
 /**
  * Implements audit logging source.
@@ -18,133 +18,42 @@ use ResilientLogger\Utils\Helpers;
  */
 class HelfiAuditLogSource implements AbstractLogSource {
   private const TABLE_NAME = 'helfi_audit_logs';
-  private const KNOWN_KEYS = [
-    'actor',
-    'date_time',
-    'operation',
-    'target',
-    'status',
-    'origin',
-  ];
 
   /**
-   * Log source id.
-   */
-  private int $id;
-
-  /**
-   * Logger configuration.
+   * Constructs new HelfiAuditLogSource.
    *
-   * @var LogSourceConfig
+   * @param LogSourceConfig $config
+   *   Configuration and environment information passed during initialization.
    */
-  private static array $config;
-
-  public function __construct(int $id) {
-    $this->id = $id;
-  }
+  public function __construct(private array $config) {}
 
   /**
-   * {@inheritdoc}
-   */
-  public function getId(): int {
-    return $this->id;
-  }
-
-  /**
-   * {@inheritdoc}
+   * Creates new entry for this given source.
    *
-   * @return AuditLogDocument
-   *   The document.
+   * @param int $level
+   *   Log level.
+   * @param mixed $message
+   *   Message.
+   * @param array<string, mixed> $context
+   *   Extra context.
+   *
+   * @return never
+   *   Unsupported operation.
+   *
+   * @throws \LogicException
+   *   Thrown logic exception, operation is not supported.
    */
-  public function getDocument(): array {
-    $result = Database::getConnection()
-      ->select(self::TABLE_NAME, 'h')
-      ->fields('h')
-      ->condition('id', $this->id)
-      ->execute()
-      ->fetch(\PDO::FETCH_ASSOC);
-
-    $timestamp = strtotime($result['created_at']);
-    $createdAt = (new \DateTimeImmutable('@' . $timestamp))
-      ->setTimezone(new \DateTimeZone('UTC'));
-
-    $message = json_decode($result['message'], TRUE);
-    $data = array_intersect_key(
-          $message["audit_event"],
-          array_flip(self::KNOWN_KEYS)
-      );
-
-    $extra = array_diff_key(
-          $message["audit_event"],
-          array_flip(self::KNOWN_KEYS)
-      );
-
-    return [
-      "@timestamp" => $createdAt,
-      "audit_event" => [
-        "actor" => Helpers::valueAsArray($data["actor"]),
-        "date_time" => $data["date_time"],
-        "operation" => $data["operation"],
-        "origin" => self::$config["origin"],
-        "target" => Helpers::valueAsArray($data["target"]),
-        "environment" => self::$config["environment"],
-        "message" => $data["status"],
-        "level" => 0,
-        "extra" => array_merge($extra, [
-          "status" => $data["status"],
-          "source_pk" => $this->id,
-          "original_origin" => $data["origin"],
-        ]),
-      ],
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function isSent(): bool {
-    $result = Database::getConnection()
-      ->select(self::TABLE_NAME, 'h')
-      ->fields('h', ['is_sent'])
-      ->condition('id', $this->id)
-      ->execute()
-      ->fetch(\PDO::FETCH_ASSOC);
-
-    return (bool) $result['is_sent'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function markSent(): void {
-    Database::getConnection()
-      ->update(self::TABLE_NAME)
-      ->fields(['is_sent' => 1])
-      ->condition('id', $this->id)
-      ->execute();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function configure(mixed $config): void {
-    self::$config = $config;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(int $level, mixed $message, array $context = []): AbstractLogSource {
+  public function create(int $level, mixed $message, array $context = []): AbstractLogSourceEntry {
     throw new \LogicException(sprintf('%s does not support create().', static::class));
   }
 
   /**
    * {@inheritdoc}
    *
-   * @return \Generator<AbstractLogSource>
+   * @return \Generator<AbstractLogSourceEntry>
    *   Generator of unsent entries.
    */
-  public static function getUnsentEntries(int $chunkSize): \Generator {
+  public function getUnsentEntries(int $chunkSize): \Generator {
     $results = Database::getConnection()
       ->select(self::TABLE_NAME, 'h')
       ->fields('h', ['id'])
@@ -155,14 +64,14 @@ class HelfiAuditLogSource implements AbstractLogSource {
       ->fetchAll(\PDO::FETCH_ASSOC);
 
     foreach ($results as $result) {
-      yield new HelfiAuditLogSource(intval($result['id']));
+      yield new HelfiAuditLogSourceEntry(intval($result['id']), $this->config);
     }
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function clearSentEntries(int $daysToKeep): void {
+  public function clearSentEntries(int $daysToKeep): void {
     $olderThan = gmdate('Y-m-d H:i:s', time() - ($daysToKeep * 86400));
     Database::getConnection()
       ->delete(self::TABLE_NAME)
