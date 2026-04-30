@@ -17,7 +17,7 @@ import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-import { formatErrors, getTooltip, sanitizeNumericInput } from '../utils';
+import { formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
 import {
   getAccountsAtom,
   getAddressesAtom,
@@ -102,6 +102,7 @@ export const TextInput = ({
         onBlur={() => null}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           const sanitized = sanitizeNumericInput(event.target.value, sanitizationType);
+          if (numberIsTooLarge(sanitized)) return;
           onChange(sanitized === '' ? undefined : sanitized);
         }}
         onFocus={(event: FocusEvent<HTMLInputElement>) => {

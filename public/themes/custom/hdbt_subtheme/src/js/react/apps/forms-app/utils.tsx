@@ -450,3 +450,8 @@ export const sanitizeNumericInput = (
 
   return value.replace(pattern, '').replace(/ {2,}/g, ' ');
 };
+
+export const numberIsTooLarge = (value: string): boolean => {
+  const numericValue = Number(value.replace(',', '.'));
+  return Math.abs(numericValue) >= 1e21;
+};

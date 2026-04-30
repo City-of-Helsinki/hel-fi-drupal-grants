@@ -19,7 +19,7 @@ export const SubventionSum = ({ idSchema, name, onChange, schema, uiSchema }: Fi
     fields.map((field) => `.${field}`),
   );
 
-  const prevSumRef = useRef<number | null>(null);
+  const prevSumRef = useRef<string>('0');
   useEffect(() => {
     if (prevSumRef.current !== sum) {
       prevSumRef.current = sum;

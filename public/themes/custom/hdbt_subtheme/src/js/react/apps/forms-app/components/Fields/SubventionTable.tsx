@@ -5,7 +5,7 @@ import { useAtomValue } from 'jotai';
 import { Notification, TextInput, Fieldset } from 'hds-react';
 
 import { isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
-import { formatErrors, sanitizeNumericInput } from '../../utils';
+import { formatErrors, numberIsTooLarge, sanitizeNumericInput } from '../../utils';
 import type { FocusEvent } from 'react';
 
 type SubventionOption = { id: string; label: string };
@@ -51,6 +51,9 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { dataset, value } = event.target;
+
+    if (numberIsTooLarge(value)) return;
+
     const subventionId = dataset.subventionId as string;
     const numericValue = sanitizeNumericInput(value, 'decimal-number');
     const data = formData && Array.isArray(formData) ? [...formData] : [];
