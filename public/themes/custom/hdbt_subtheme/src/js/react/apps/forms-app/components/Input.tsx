@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FocusEvent, type WheelEvent, useCallback, useEffect } from 'react';
+import { type ChangeEvent, type FocusEvent, useCallback, useEffect } from 'react';
 import {
   Checkbox,
   DateInput,
@@ -6,7 +6,6 @@ import {
   TextArea as HDSTextArea,
   TextInput as HDSTextInput,
   Notification,
-  NumberInput,
   RadioButton,
   Select,
 } from 'hds-react';
@@ -18,7 +17,7 @@ import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-import { formatErrors, getTooltip } from '../utils';
+import { formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
 import {
   getAccountsAtom,
   getAddressesAtom,
@@ -49,11 +48,6 @@ export const PreviewInput = ({
   </>
 );
 
-const sanitizeNumericInput = (value: string, allowPhone = false): string => {
-  const pattern = allowPhone ? /[^0-9 ,+()]/g : /[^0-9 ,]/g;
-  return value.replace(pattern, '').replace(/ {2,}/g, ' ');
-};
-
 export const TextInput = ({
   id,
   label,
@@ -68,7 +62,7 @@ export const TextInput = ({
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
-  const isNumberInput = schema.type === 'number' || schema.type === 'integer';
+  const isNumberInput = schema.type === 'number' || schema.type === 'integer' || schema.format === 'decimal-number';
   const phone = uiSchema?.['misc:phone'] ?? false;
 
   if (shouldRenderPreview) {
@@ -93,28 +87,28 @@ export const TextInput = ({
   };
 
   if (isNumberInput) {
+    const sanitizationType = schema.type === 'integer' ? 'integer' : 'decimal-number';
+
     return (
-      <NumberInput
+      <HDSTextInput
         disabled={readonly || isReadOnly}
         errorText={formatErrors(rawErrors)}
         hideLabel={false}
         id={id}
+        inputMode={schema.type === 'integer' ? 'numeric' : 'decimal'}
         invalid={Boolean(rawErrors?.length)}
         label={label}
-        min={0}
         name={name}
         onBlur={() => null}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          const sanitized = sanitizeNumericInput(event.target.value);
+          const sanitized = sanitizeNumericInput(event.target.value, sanitizationType);
+          if (numberIsTooLarge(sanitized)) return;
           onChange(sanitized === '' ? undefined : sanitized);
         }}
         onFocus={(event: FocusEvent<HTMLInputElement>) => {
           if (event.target.value === '0') {
             event.target.select();
           }
-        }}
-        onWheel={(event: WheelEvent<HTMLInputElement>) => {
-          event.currentTarget.blur();
         }}
         required={required}
         style={{ maxWidth: getMaxWidth() }}
@@ -135,7 +129,7 @@ export const TextInput = ({
       name={name}
       onBlur={() => null}
       onChange={(event: ChangeEvent<HTMLInputElement>) => {
-        const value = phone ? sanitizeNumericInput(event.target.value, true) : event.target.value;
+        const value = phone ? sanitizeNumericInput(event.target.value, 'phone') : event.target.value;
         onChange(value === '' ? undefined : value);
       }}
       onFocus={() => null}
