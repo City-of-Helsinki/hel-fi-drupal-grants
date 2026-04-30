@@ -27,7 +27,7 @@ export const SubventionSum = ({ idSchema, name, onChange, schema, uiSchema }: Fi
     }
   }, [sum, onChange]);
 
-  const formattedSum = sanitizeNumericInput(sum.toString());
+  const formattedSum = sanitizeNumericInput(sum.toString(), 'decimal-number');
 
   if (shouldRenderPreview) {
     return <PreviewInput label={schema?.title} value={formattedSum} uiSchema={uiSchema} />;

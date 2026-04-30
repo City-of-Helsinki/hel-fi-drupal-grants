@@ -382,19 +382,20 @@ export const formatErrors = (rawErrors: string[] | undefined) => {
 export const getSubventionSum = (formData: any, subventionFields: string[]) =>
   subventionFields.reduce((total, field) => {
     const values = getNestedSchemaProperty(formData, field);
+    let totalNumericValue = Number(String(total).replace(',', '.'));
 
     if (values?.length) {
       Object.entries(values).forEach(([, curr]) => {
         const amount = Number(String(curr[1].value).replace(',', '.'));
 
         if (!Number.isNaN(amount)) {
-          total += amount;
+          totalNumericValue += amount;
         }
       });
     }
 
-    return total;
-  }, 0);
+    return totalNumericValue.toString().replace('.', ',');
+  }, '0');
 
 /**
  * Check if the form is in draft mode.
