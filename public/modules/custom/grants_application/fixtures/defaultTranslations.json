@@ -561,9 +561,9 @@
       "sv": "Övriga understöd som ansökts för samma ändamål"
     },
     "other_attachment_fieldset.title": {
-      "en": "Other attachment",
-      "fi": "Muu liite",
-      "sv": "Annan bilaga"
+      "en": "Other attachments",
+      "fi": "Muut liitteet",
+      "sv": "Annan bilagar"
     },
     "other_attachment_fieldset_multiple_files.ui_help": {
       "en": "Allowed types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
