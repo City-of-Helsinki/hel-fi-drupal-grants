@@ -107,6 +107,13 @@ export default defineConfig({
       testMatch: '/public/*',
       dependencies: ['setup']
     },
+    /* React forms. */
+    {
+      name: 'forms-70',
+      testMatch: '/forms/70_promoting_safer_club_activities/*',
+      dependencies: ['profile-registered_community'],
+    },
+    /* Webforms. */
     /* Form 29 tests. */
     {
       name: 'forms-29',
