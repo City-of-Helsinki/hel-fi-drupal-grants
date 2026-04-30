@@ -24,6 +24,7 @@ export type StepField = {
   title: string;
   descriptionKey?: string;
   description?: string;
+  format?: string;
   type: string;
   widget?: string;
   required: boolean;
@@ -165,6 +166,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       title: translate(fieldSchema?.title) ?? fieldName,
       descriptionKey: fieldSchema?.description,
       description: translate(fieldSchema?.description),
+      format: fieldSchema?.format,
       type: fieldSchema?.type ?? 'string',
       widget: fieldUiSchema?.['ui:widget'] ?? fieldUiSchema?.['ui:field'],
       required,

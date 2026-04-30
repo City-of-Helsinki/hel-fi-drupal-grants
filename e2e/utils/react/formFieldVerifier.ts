@@ -117,7 +117,8 @@ async function handleField(
       // Fill each amount input with a random number.
       if (shouldFill) {
         const fieldValue = faker.number.int({ min: 1, max: 99999 }).toString();
-        await page.fill(`#${optionId}`, fieldValue);
+        const decimal = faker.number.int({ min: 10, max: 99 }).toString();
+        await page.fill(`#${optionId}`, `${fieldValue},${decimal}`);
         filledFields?.set(optionId, fieldValue);
       }
     }
@@ -211,9 +212,15 @@ async function handleField(
         value = faker.number.int({ min: 1980, max: 2020 }).toString();
         await page.fill(`#${fieldId}`, value);
       }
-      // Amount fields get a random number.
-      else if (field.fieldName.endsWith('_amount') || field.type === 'integer' || field.type === 'number') {
+      // Amount fields get a random number with decimals.
+      else if (field?.format === 'decimal-number') {
+        const decimal = faker.number.int({ min: 10, max: 99 }).toString();
         value = faker.number.int({ min: 1, max: 99999 }).toString();
+        await page.fill(`#${fieldId}`, `${value},${decimal}`);
+      }
+      // Integer and number fields get a random whole number.
+      else if (field.type === 'integer' || field.type === 'number') {
+        value = faker.number.int({ min: 1, max: 999 }).toString();
         await page.fill(`#${fieldId}`, value);
       }
       // Everything else gets random filler text.
