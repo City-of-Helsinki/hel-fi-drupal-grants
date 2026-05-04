@@ -216,7 +216,7 @@ final class FormSettings {
   /**
    * Get the acting years for the form.
    *
-   * @return array
+   * @return int[]
    *   The acting years.
    */
   public function getActingYears(): array {
