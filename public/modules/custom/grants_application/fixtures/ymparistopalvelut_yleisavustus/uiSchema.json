@@ -9,8 +9,8 @@
       "purpose": {
         "ui:widget": "textarea",
         "ui:options": {
-          "tooltipLabel": "purpose.title",
-          "tooltipButtonLabel": "purpose.title",
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
           "tooltipText": "purpose.description"
         }
       }
