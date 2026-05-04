@@ -86,17 +86,27 @@ async function handleField(
     triggeredConditions.add(field.conditionField);
   }
 
-  // This field belongs to a repeatable list, like "Applied grants".
+  // The current field belongs to a repeatable list, like "Applied grants".
   if (field.isArrayItem && field.arrayField && !addedArrays.has(field.arrayField)) {
-    // Find and remove any empty list item that was auto-added by the
-    // form, since it would cause errors if left unfilled.
-    const emptyItem = page.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
-    if (await emptyItem.count() > 0) {
+    const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
+    const fieldElement = page.locator(`#${fieldId}`);
+
+    // Get the current scope by searching the ".field-array" element.
+    const arrayContainer = await fieldElement.count() > 0
+      ? fieldElement.locator('xpath=ancestor::div[contains(@class,"field-array")][1]')
+      : page.locator('.field-array').filter({
+          has: page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }),
+        }).first();
+
+    // Remove auto-added empty rows left over from the error-gathering pass.
+    let emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
+    while (await emptyItem.count() > 0) {
+      logger('Found empty list item, removing it.');
       await emptyItem.getByRole('button', { name: /Remove|Poista|Ta bort/i }).click();
+      emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
     }
 
-    // Click "Add" to create a new list item to fill in.
-    const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
+    // Click "Add" to create a fresh list item to fill in.
     await page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).first().click();
     addedArrays.add(field.arrayField);
     if (field.groupDescriptionKey) {
@@ -126,7 +136,7 @@ async function handleField(
   }
 
   // Handle the radio buttons by selecting "Yes", to expand the extra
-  // questions.
+  // questions. Note! This might clash with conditional fields.
   if (field.widget === 'radio') {
     await expect(page.locator(`#${fieldId}_true`)).toBeVisible();
     await expect(page.locator(`#${fieldId}_false`)).toBeVisible();
@@ -485,15 +495,12 @@ export async function fillFormFields(
   const tree = buildFormTree(formData as any);
   const filledFields:FilledFields = options.filledFields ?? new Map();
 
-  let missingInputs = {};
-
   // Submit the empty form first to trigger all required field errors.
   // This lets us verify that every required field shows an error message.
   await test.step('Gather form errors', async () => {
     if (!options.formURL) throw new Error(`The form URL is missing.`);
     await page.goto(options.formURL);
     await gatherRequiredFieldWarnings(page);
-    missingInputs = page.locator('[class*="notification_hds-notification--error__"] li');
     await assertMissingInputsVisible(page);
   });
 

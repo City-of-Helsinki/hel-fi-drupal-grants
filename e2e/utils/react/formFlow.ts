@@ -6,7 +6,7 @@ import {
   verifyFormFieldTranslations
 } from './formFieldVerifier';
 import { craftSchema } from './schemaFetcher';
-import { checkLoginStateAndLogin, Role, selectRole} from "../auth_helpers";
+import { Role, selectRole} from "../auth_helpers";
 import {
   captureApplicationNumber,
   waitForFormLoad
@@ -38,7 +38,6 @@ export async function executeFormFlow(
   const FORM_JSON = `/fi/application/preview/${FORM_ID}`;
 
   // Log in and select the role before opening the form.
-  await checkLoginStateAndLogin(page);
   await selectRole(page, FORM_ROLE);
   await page.goto(FORM_URL);
 
