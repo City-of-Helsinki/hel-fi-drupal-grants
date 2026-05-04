@@ -15,16 +15,7 @@ describe('FormActions.tsx tests', () => {
         [formStepsAtom, testSteps],
       ]}
     >
-      <FormActions
-        saveDraft={() => {
-          const result: Promise<boolean> = new Promise((resolve) => {
-            resolve(true);
-          });
-
-          return result;
-        }}
-        validatePartialForm={() => undefined}
-      />
+      <FormActions saveDraft={() => Promise.resolve()} validatePartialForm={() => undefined} />
     </TestProvider>,
   );
 

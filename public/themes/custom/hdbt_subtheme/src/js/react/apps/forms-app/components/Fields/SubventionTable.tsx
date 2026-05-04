@@ -2,11 +2,12 @@
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import type { FieldProps } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
+import type { ComponentPropsWithRef } from 'react';
 import { Notification, TextInput, Fieldset } from 'hds-react';
 
+import type { FocusEvent } from 'react';
 import { isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
 import { formatErrors, numberIsTooLarge, sanitizeNumericInput } from '../../utils';
-import type { FocusEvent } from 'react';
 
 type SubventionOption = { id: string; label: string };
 
@@ -91,20 +92,22 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
 
             return (
               <TextInput
-                className='form-group field field-integer'
-                data-subvention-id={itemId}
-                disabled={isReadOnly}
-                id={key}
-                inputMode='decimal'
                 key={key}
-                label={`${label} (€)`}
-                onChange={handleChange}
-                onFocus={(event: FocusEvent<HTMLInputElement>) => {
-                  if (event.target.value === '0') {
-                    event.target.select();
-                  }
-                }}
-                value={keyedData[itemId] ?? ''}
+                {...({
+                  className: 'form-group field field-integer',
+                  'data-subvention-id': itemId,
+                  disabled: isReadOnly,
+                  id: key,
+                  inputMode: 'decimal',
+                  label: `${label} (€)`,
+                  onChange: handleChange,
+                  onFocus: (event: FocusEvent<HTMLInputElement>) => {
+                    if (event.target.value === '0') {
+                      event.target.select();
+                    }
+                  },
+                  value: keyedData[itemId] ?? '',
+                } as unknown as Omit<ComponentPropsWithRef<typeof TextInput>, 'key'>)}
               />
             );
           })}

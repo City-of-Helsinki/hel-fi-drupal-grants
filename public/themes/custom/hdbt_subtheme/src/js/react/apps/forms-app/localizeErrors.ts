@@ -136,7 +136,7 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
   }
 
   errors.forEach((error) => {
-    let outMessage: string | null | undefined;
+    let outMessage: string | undefined;
 
     switch (error.keyword) {
       case 'format': {

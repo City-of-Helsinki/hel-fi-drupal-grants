@@ -84,7 +84,7 @@ const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
   const objectPaths = Array.from(getDanglingArrayPaths(formData));
 
   objectPaths.forEach((path) => {
-    const schemaDefinition = schema?.definitions && getNestedSchemaProperty(schema.definitions, path, true);
+    const schemaDefinition = schema?.definitions && getNestedSchemaProperty(schema.definitions, path);
 
     if (schemaDefinition && schemaDefinition.type === 'object') {
       setNestedProperty(formData, path, {});
@@ -126,9 +126,9 @@ const transformData = (data: any) => {
       const [key, definitionValue] = definition;
 
       if (key.charAt(0) !== '_') {
-        Object.entries(definitionValue.properties).forEach((subProperty: any) => {
+        Object.entries((definitionValue as any).properties).forEach((subProperty: any) => {
           const [subKey] = subProperty;
-          definitions[key].properties[subKey]._isSection = true;
+          (definitions[key] as any).properties[subKey]._isSection = true;
         });
       }
     });
