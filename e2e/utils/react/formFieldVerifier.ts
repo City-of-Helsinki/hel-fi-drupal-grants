@@ -86,17 +86,19 @@ async function handleField(
     triggeredConditions.add(field.conditionField);
   }
 
-  // This field belongs to a repeatable list, like "Applied grants".
+  // The current field belongs to a repeatable list, like "Applied grants".
   if (field.isArrayItem && field.arrayField && !addedArrays.has(field.arrayField)) {
     const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
-    // Traverse up from the current field to its .field-array ancestor so we
-    // never touch items from a different array that has already been filled.
-    const arrayContainer = page
-      .locator(`#${fieldId}`)
-      .locator('xpath=ancestor::div[contains(@class,"field-array")][1]');
+    const fieldElement = page.locator(`#${fieldId}`);
 
-    // Remove all empty list items that were auto-added by the form before
-    // we add our own.
+    // Get the current scope by searching the ".field-array" element.
+    const arrayContainer = await fieldElement.count() > 0
+      ? fieldElement.locator('xpath=ancestor::div[contains(@class,"field-array")][1]')
+      : page.locator('.field-array').filter({
+          has: page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }),
+        }).first();
+
+    // Remove auto-added empty rows left over from the error-gathering pass.
     let emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
     while (await emptyItem.count() > 0) {
       logger('Found empty list item, removing it.');
@@ -105,7 +107,7 @@ async function handleField(
     }
 
     // Click "Add" to create a fresh list item to fill in.
-    await arrayContainer.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).click();
+    await page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).first().click();
     addedArrays.add(field.arrayField);
     if (field.groupDescriptionKey) {
       await expect(
