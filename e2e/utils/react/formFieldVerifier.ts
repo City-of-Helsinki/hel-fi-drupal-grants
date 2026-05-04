@@ -493,15 +493,12 @@ export async function fillFormFields(
   const tree = buildFormTree(formData as any);
   const filledFields:FilledFields = options.filledFields ?? new Map();
 
-  let missingInputs = {};
-
   // Submit the empty form first to trigger all required field errors.
   // This lets us verify that every required field shows an error message.
   await test.step('Gather form errors', async () => {
     if (!options.formURL) throw new Error(`The form URL is missing.`);
     await page.goto(options.formURL);
     await gatherRequiredFieldWarnings(page);
-    missingInputs = page.locator('[class*="notification_hds-notification--error__"] li');
     await assertMissingInputsVisible(page);
   });
 
