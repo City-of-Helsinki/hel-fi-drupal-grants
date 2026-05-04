@@ -88,16 +88,24 @@ async function handleField(
 
   // This field belongs to a repeatable list, like "Applied grants".
   if (field.isArrayItem && field.arrayField && !addedArrays.has(field.arrayField)) {
-    // Find and remove any empty list item that was auto-added by the
-    // form, since it would cause errors if left unfilled.
-    const emptyItem = page.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
-    if (await emptyItem.count() > 0) {
+    const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
+    // Traverse up from the current field to its .field-array ancestor so we
+    // never touch items from a different array that has already been filled.
+    const arrayContainer = page
+      .locator(`#${fieldId}`)
+      .locator('xpath=ancestor::div[contains(@class,"field-array")][1]');
+
+    // Remove all empty list items that were auto-added by the form before
+    // we add our own.
+    let emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
+    while (await emptyItem.count() > 0) {
+      logger('Found empty list item, removing it.');
       await emptyItem.getByRole('button', { name: /Remove|Poista|Ta bort/i }).click();
+      emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
     }
 
-    // Click "Add" to create a new list item to fill in.
-    const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
-    await page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).first().click();
+    // Click "Add" to create a fresh list item to fill in.
+    await arrayContainer.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).click();
     addedArrays.add(field.arrayField);
     if (field.groupDescriptionKey) {
       await expect(
@@ -126,7 +134,7 @@ async function handleField(
   }
 
   // Handle the radio buttons by selecting "Yes", to expand the extra
-  // questions.
+  // questions. Note! This might clash with conditional fields.
   if (field.widget === 'radio') {
     await expect(page.locator(`#${fieldId}_true`)).toBeVisible();
     await expect(page.locator(`#${fieldId}_false`)).toBeVisible();
