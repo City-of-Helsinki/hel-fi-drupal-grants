@@ -1,10 +1,13 @@
-import {defineConfig} from '@playwright/test';
+import { defineConfig } from '@playwright/test';
+import { globalCache } from '@global-cache/playwright';
 import 'dotenv/config';
+
+globalCache.config({ ignoreTTL: !!process.env.CI });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+export default globalCache.wrap(defineConfig({
   globalTeardown: require.resolve('./tests/global.teardown.ts'),
   globalSetup: require.resolve('./tests/init.setup.ts'),
   testDir: './tests',
@@ -54,15 +57,6 @@ export default defineConfig({
       dependencies: ['setup'],
     },
     /* Profile tests. */
-    {
-      name: 'profiles',
-      testMatch: [
-        '/profiles/private_person.ts',
-        '/profiles/unregistered_community.ts',
-        '/profiles/registered_community.ts',
-      ],
-      dependencies: ['auth-setup']
-    },
     {
       name: 'profile-private_person',
       testMatch: '/profiles/private_person.ts',
@@ -374,4 +368,4 @@ export default defineConfig({
       dependencies: ['profile-registered_community']
     },
   ],
-});
+}));
