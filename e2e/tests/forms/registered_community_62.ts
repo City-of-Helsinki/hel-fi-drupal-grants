@@ -3,7 +3,7 @@ import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
 import {fillHakijanTiedotRegisteredCommunity} from "../../utils/form_helpers";
 import {fillFormField, fillInputField, uploadFile} from "../../utils/input_helpers";
 import {generateTests} from "../../utils/test_generator_helpers";
-import {Role, selectRole} from "../../utils/auth_helpers";
+import {Role, selectRoleCached} from "../../utils/auth_helpers";
 import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 const formPages: PageHandlers = {
@@ -207,8 +207,7 @@ test.describe('NUORPROJ(62)', () => {
   const formId = '62';
 
   test.beforeAll(async ({browser}) => {
-    page = await browser.newPage();
-    await selectRole(page, profileType.toUpperCase() as Role);
+    page = await selectRoleCached(browser, profileType.toUpperCase() as Role);
   });
 
   test.afterAll(async() => {

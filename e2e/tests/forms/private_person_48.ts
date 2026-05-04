@@ -3,7 +3,7 @@ import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
 import {fillHakijanTiedotPrivatePerson} from "../../utils/form_helpers";
 import {fillFormField, fillInputField} from "../../utils/input_helpers";
 import {generateTests} from "../../utils/test_generator_helpers";
-import {Role, selectRole} from "../../utils/auth_helpers";
+import {Role, selectRoleCached} from "../../utils/auth_helpers";
 import {privatePersonApplications as applicationData} from '../../utils/data/application_data';
 
 /**
@@ -555,8 +555,7 @@ test.describe('KUVAPROJ(48)', () => {
   const formId = '48';
 
   test.beforeAll(async ({browser}) => {
-    page = await browser.newPage();
-    await selectRole(page, profileType.toUpperCase() as Role);
+    page = await selectRoleCached(browser, profileType.toUpperCase() as Role);
   });
 
   test.afterAll(async() => {
