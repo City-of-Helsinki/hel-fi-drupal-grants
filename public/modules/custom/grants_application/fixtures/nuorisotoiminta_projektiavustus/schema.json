@@ -144,7 +144,7 @@
           "type": "object",
           "properties": {
             "acting_year": {
-              "title": "acting_year.title",
+              "title": "acting_year_section_acting_year.title",
               "type": "string"
             }
           },
