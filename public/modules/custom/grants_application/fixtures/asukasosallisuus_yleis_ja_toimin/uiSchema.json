@@ -21,8 +21,8 @@
         "ui:widget": "textarea",
         "misc:max-length": 5000,
         "ui:options": {
-          "tooltipLabel": "purpose.title",
-          "tooltipButtonLabel": "purpose.title",
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
           "tooltipText": "purpose.custom_description"
         }
       }

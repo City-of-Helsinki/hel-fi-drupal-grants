@@ -125,7 +125,7 @@
               ]
             },
             "purpose": {
-              "title": "purpose.title",
+              "title": "purpose_section_purpose.title",
               "type": "string"
             }
           },
@@ -137,7 +137,7 @@
           "type": "object",
           "properties": {
             "have_received_other_compensations": {
-              "title": "have_received_other_compensations.title",
+              "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
                 false,
                 true
