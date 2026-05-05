@@ -149,30 +149,31 @@ async function handleField(
     return;
   }
 
-  // File upload fields need a real file attached and a description
-  // filled in.
-  // @todo Test with two or more files.
+  // File upload fields need a real file(s) attached.
   if (field.widget === 'atvFile') {
-    const descriptionLocator = page.locator(`#${field.fieldName}-description`);
-    await expect(descriptionLocator).toBeVisible();
+    const fileInput = page.locator(`#${field.fieldName}`);
+    await expect(fileInput).toBeVisible();
+    // Fill the form with two files.
     if (shouldFill) {
-      // The actual file input is hidden inside the upload component.
-      // Walk up the DOM to find it.
-      const fileInput = descriptionLocator.locator(
-        'xpath=ancestor::div[contains(@class,"hdbt-form--fileinput")][1]//input[@type="file"]'
-      );
-      await fileInput.setInputFiles(path.join(__dirname, '../data/attachments/07_muu_liite.pdf'));
-      await expect(page.locator('.hdbt-form--fileinput').filter({ hasText: '07_muu_liite.pdf' })).toBeVisible();
-      const description = faker.lorem.sentence();
-      await page.locator(`#${field.fieldName}-description`).pressSequentially(description);
-      filledFields?.set(`${field.fieldName}-description`, description);
+      const attachments = ['07_muu_liite.pdf', '08_muu_liite.pdf'];
+      for (const attachment of attachments) {
+        // Register before setInputFiles so we don't miss the response event.
+        const uploadDone = page.waitForResponse(
+          r => r.url().includes('/upload') && r.ok(),
+          { timeout: 15000 },
+        );
+        await fileInput.setInputFiles(path.join(__dirname, '../data/attachments', attachment));
+        // Each upload must be completed before the next upload, otherwise only
+        // one file is actually uploaded.
+        await uploadDone;
+        await expect(page.locator('.hdbt-form--fileinput').filter({ hasText: attachment })).toBeVisible();
+      }
+      filledFields?.set(fieldId, attachments.join(', '));
     }
     // When verifying, check the description still holds the value
     // we typed during the fill pass.
-    else if (filledFields?.has(`${field.fieldName}-description`)) {
-      await expect(descriptionLocator).toHaveValue(
-        filledFields!.get(`${field.fieldName}-description`)!
-      );
+    else if (filledFields?.has(fieldId)) {
+      await expect(fileInput).toHaveValue(filledFields!.get(fieldId)!);
     }
     return;
   }
