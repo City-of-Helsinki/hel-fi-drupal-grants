@@ -419,56 +419,59 @@ async function verifyPreviewStep(
   await expect(preview).toBeVisible();
 
   // Loop through all fields and check each value appears in the preview.
-  for (const [sectionKey, fields] of Object.entries(confirmStep)) {
-    for (const [, field] of Object.entries(fields)) {
-      const fieldId = `root_${field.fieldPath.join('_')}`;
-      const value = filledFields.get(fieldId);
-      if (!value || value === 'true' || value === 'false') continue;
+  for (const [, [, sections]] of Object.entries(tree).entries()) {
+    for (const [, [section, fields]] of Object.entries(sections).entries()) {
+      for (const [, field] of Object.entries(fields)) {
+        const fieldId = `root_${field.fieldPath.join('_')}`;
+        const value = filledFields.get(fieldId);
+        const fieldTitle = t(field.titleKey);
+        const sectionTitle = t(`${section}.title`);
 
-      const fieldTitle = t(field.titleKey);
-      const sectionTitle = t(`${sectionKey}.title`);
+        // Skip if there is no value or the value is a radio button value.
+        if (!value || value === 'true' || value === 'false') continue;
 
-      // Build an exact-match pattern for the field title to avoid a short
-      // title like "Vuosi" matching a longer label like "Vuosi, jolle haen".
-      const exactFieldTitle = new RegExp(`^\\s*${fieldTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`);
+        // Build an exact-match pattern for the field title to avoid a short
+        // title like "Vuosi" matching a longer label like "Vuosi, jolle haen".
+        const exactFieldTitle = new RegExp(`^\\s*${fieldTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`);
 
-      await test.step(`Preview: ${fieldTitle} = ${value}`, async () => {
+        await test.step(`Preview: ${fieldTitle} = ${value}`, async () => {
 
-        // Narrow the search area to this section so we don't accidentally
-        // find the value in a different section with the same field name.
-        const sectionContainer = preview
-          .locator('section.grants-form--preview-section')
-          .filter({ has: page.locator('h4.hdbt-form--section__title', { hasText: sectionTitle }) });
-        const scope = (await sectionContainer.count() > 0) ? sectionContainer : preview;
+          // Narrow the search area to this section so we don't accidentally
+          // find the value in a different section with the same field name.
+          const sectionContainer = preview
+            .locator('section.grants-form--preview-section')
+            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: sectionTitle})});
+          const scope = (await sectionContainer.count() > 0) ? sectionContainer : preview;
 
-        // First try: some fields have their own section heading.
-        // Check the value appears inside that section.
-        const byFieldTitle = preview
-          .locator('section.grants-form--preview-section')
-          .filter({ has: page.locator('h4.hdbt-form--section__title', { hasText: fieldTitle }) });
-        if (await byFieldTitle.count() > 0) {
-          await expect(byFieldTitle.locator('.hdbt-form--section__content')).toContainText(value);
-          return;
-        }
+          // First try: some fields have their own section heading.
+          // Check the value appears inside that section.
+          const byFieldTitle = preview
+            .locator('section.grants-form--preview-section')
+            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: fieldTitle})});
+          if (await byFieldTitle.count() > 0) {
+            await expect(byFieldTitle.locator('.hdbt-form--section__content')).toContainText(value);
+            return;
+          }
 
-        // Second try: find the field by its label span and check the
-        // value appears next to it.
-        const bySpanLabel = scope
-          .locator('span.grants-form--preview-section__label')
-          .filter({ hasText: exactFieldTitle })
-          .locator('xpath=..')
-          .first();
+          // Second try: find the field by its label span and check the
+          // value appears next to it.
+          const bySpanLabel = scope
+            .locator('span.grants-form--preview-section__label')
+            .filter({hasText: exactFieldTitle})
+            .locator('xpath=..')
+            .first();
 
-        if (await bySpanLabel.count() > 0) {
-          await expect(bySpanLabel).toContainText(value);
-          return;
-        }
+          if (await bySpanLabel.count() > 0) {
+            await expect(bySpanLabel).toContainText(value);
+            return;
+          }
 
-        // Last resort: check the value appears anywhere in the section.
-        await expect(
-          scope.locator('.hdbt-form--section__content').filter({ hasText: value }).first()
-        ).toBeVisible();
-      });
+          // Last resort: check the value appears anywhere in the section.
+          await expect(
+            scope.locator('.hdbt-form--section__content').filter({hasText: value}).first()
+          ).toBeVisible();
+        });
+      }
     }
   }
 }
