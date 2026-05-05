@@ -107,6 +107,13 @@ export default defineConfig({
       testMatch: '/public/*',
       dependencies: ['setup']
     },
+    /* React forms. */
+    {
+      name: 'forms-70',
+      testMatch: '/forms/70_promoting_safer_club_activities/*',
+      dependencies: ['profile-registered_community'],
+    },
+    /* Webforms. */
     /* Form 29 tests. */
     {
       name: 'forms-29',
@@ -302,12 +309,6 @@ export default defineConfig({
       testMatch: '/forms/registered_community_69.ts',
       dependencies: ['profile-registered_community']
     },
-    /* Form 70 tests. */
-    {
-      name: 'forms-70',
-      testMatch: '/forms/registered_community_70.ts',
-      dependencies: ['profile-registered_community']
-    },
     /* Form 73 tests. */
     {
       name: 'forms-73',
@@ -338,7 +339,7 @@ export default defineConfig({
     },
     {
       name: 'forms-76',
-      testMatch: /forms\/.*_64\.ts$/,
+      testMatch: /forms\/.*_76\.ts$/,
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
     {
@@ -364,12 +365,12 @@ export default defineConfig({
     },
     {
       name: 'forms-77-unregistered',
-      testMatch: '/forms/unregistered_community_62.ts',
+      testMatch: '/forms/unregistered_community_77.ts',
       dependencies: ['profile-unregistered_community']
     },
     {
       name: 'forms-77-registered',
-      testMatch: '/forms/registered_community_62.ts',
+      testMatch: '/forms/registered_community_77.ts',
       dependencies: ['profile-registered_community']
     },
   ],

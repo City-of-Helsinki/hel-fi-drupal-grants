@@ -1,40 +1,63 @@
-import type { UiSchema } from '@rjsf/utils';
-import type { JSONSchema7Definition, JSONSchema7TypeName } from 'json-schema';
+type JSONSchema7TypeName =
+  | "string"
+  | "number"
+  | "integer"
+  | "boolean"
+  | "object"
+  | "array"
+  | "null";
 
 const objectType: JSONSchema7TypeName = 'object';
 const stringType: JSONSchema7TypeName = 'string';
+const booleanType: JSONSchema7TypeName = 'boolean';
 
-export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
-  { title: 'Omat yhteystiedot', type: objectType, $ref: '#/definitions/applicant_info' },
+/**
+ * Local schema for the final confirmation and submit step.
+ *
+ * The API response does not include this step, so we define it
+ * here and inject it into the schema before the tests run.
+ *
+ * The tuple holds three things in order:
+ *   1. The root property entry added to schema.properties.
+ *   2. The field definitions added to schema.definitions.
+ *   3. The UI schema additions merged into ui_schema.
+ */
+export const confirmAndSubmitSettings: [any, any, any] = [
+  // Root property (referenced from schema.properties.confirm_and_submit).
+  { title: 'confirm_and_submit.title', type: objectType, $ref: '#/definitions/confirm_and_submit' },
+  // Definition.
   {
     type: objectType,
     properties: {
-      applicant_address_data: {
-        title: 'Osoite',
+      terms_section: {
+        title: 'terms_section.title',
         type: objectType,
         properties: {
-          address: {
-            title: 'Henkilökohtainen osoite',
-            type: objectType,
-            properties: {
-              address_name: { title: 'Katuosoite', type: stringType, minLength: 1 },
-              postal_code: { title: 'Postinumero', type: stringType, minLength: 5 },
-              post_area: { title: 'Toimipaikka', type: stringType, minLength: 1 },
-            },
-          },
+          final_acceptance: { title: 'final_acceptance.title', type: booleanType },
         },
-      },
-      applicant_phone: {
-        title: 'Puhelinnumero',
-        type: objectType,
-        properties: { phone: { title: 'Henkilökohtainen puhelinnumero', type: stringType, minLength: 1 } },
+        required: ['final_acceptance'],
       },
     },
   },
-  {},
+  // UI schema additions.
+  {
+    confirm_and_submit: {},
+  },
 ];
 
-export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
+/**
+ * Local schema for the applicant info step.
+ *
+ * The server response does not include this step, so we define it
+ * here and inject it into the schema before the tests run.
+ *
+ * The tuple holds three things in order:
+ *   1. The root property entry added to schema.properties.
+ *   2. The field definitions (email, contact person, address,
+ *      bank account, and community officials).
+ *   3. The UI schema additions merged into ui_schema.
+ */
+export const communitySettings: [any, any, any] = [
   { title: 'applicant_info.title', type: objectType, $ref: '#/definitions/applicant_info' },
   {
     type: objectType,
@@ -49,11 +72,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
       contact_person_info: {
         properties: {
           contact_person: { minLength: 1, title: 'contact_person_info_contact_person.title', type: stringType },
-          contact_person_phone_number: {
-            minLength: 1,
-            title: 'contact_person_info_contact_person_phone_number.title',
-            type: stringType,
-          },
+          contact_person_phone_number: { minLength: 1, title: 'contact_person_info_contact_person_phone_number.title', type: stringType },
         },
         required: ['contact_person', 'contact_person_phone_number'],
         title: 'contact_person_info.title',

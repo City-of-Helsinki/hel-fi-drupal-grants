@@ -1,5 +1,10 @@
 {
   "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
     "subventions_section": {
       "subventions": {
         "ui:field": "subventionTable"
@@ -13,8 +18,8 @@
         "ui:widget": "textarea",
         "misc:max-length": 5000,
         "ui:options": {
-          "tooltipLabel": "purpose.title",
-          "tooltipButtonLabel": "purpose.title",
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
           "tooltipText": "purpose.description"
         }
       }

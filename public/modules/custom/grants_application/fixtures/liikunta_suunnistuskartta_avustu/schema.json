@@ -8,11 +8,8 @@
           "description": "acting_year_section.description",
           "properties": {
             "acting_year": {
-              "title": "acting_year.title",
-              "type": "string",
-              "enum": [
-                "2026"
-              ]
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
             }
           },
           "required": ["acting_year"]

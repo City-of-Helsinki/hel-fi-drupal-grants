@@ -2,13 +2,17 @@
 import { Component, type ErrorInfo } from 'react';
 import { InvalidSchemaError } from './InvalidSchemaError';
 
+interface InvalidSchemaBoundaryState {
+  errorStack: string | null;
+}
+
 /**
  * Boundary for invalid schema errors.
  * Catches only `InvalidSchemaError` errors.
  *
  * @see https://reactjs.org/docs/error-boundaries.html
  */
-export class InvalidSchemaBoundary extends Component {
+export class InvalidSchemaBoundary extends Component<{ children: React.ReactNode }, InvalidSchemaBoundaryState> {
   constructor(props: { children: React.ReactNode }) {
     super(props);
     this.state = { errorStack: null };
@@ -30,23 +34,21 @@ export class InvalidSchemaBoundary extends Component {
     const { errorStack } = this.state;
     const { children } = this.props;
 
-    const formatSchemaErrors = () => {
+    if (errorStack) {
       const [, errors] = errorStack.split('schema is invalid:');
 
       return (
-        <div>
-          <h3>Invalid schema</h3>
-          <ul>
-            {errors.split(',').map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
+        <div style={{ backgroundColor: 'salmon', padding: '28px' }}>
+          <div>
+            <h3>Invalid schema</h3>
+            <ul>
+              {errors.split(',').map((error: string, index: number) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       );
-    };
-
-    if (errorStack) {
-      return <div style={{ backgroundColor: 'salmon', padding: '28px' }}>{formatSchemaErrors()}</div>;
     }
 
     return children;

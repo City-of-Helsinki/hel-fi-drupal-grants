@@ -189,11 +189,8 @@
           "type": "object",
           "properties": {
             "acting_year": {
-              "title": "acting_year.title",
-              "type": "string",
-              "enum": [
-                "2026"
-              ]
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
             }
           },
           "required": ["acting_year"]
@@ -218,7 +215,7 @@
           "type": "object",
           "properties": {
             "purpose": {
-              "title": "purpose.title",
+              "title": "purpose_section_purpose.title",
               "type": "string",
               "description": "purpose.description"
             }
@@ -231,7 +228,7 @@
           "type": "object",
           "properties": {
             "have_received_other_compensations": {
-              "title": "have_received_other_compensations.title",
+              "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
                 false,
                 true
@@ -293,7 +290,7 @@
           "type": "object",
           "properties": {
             "have_received_prior_compensations": {
-              "title": "have_received_prior_compensations.title",
+              "title": "other_compensations_section_have_received_prior_compensations.title",
               "enum": [
                 false,
                 true

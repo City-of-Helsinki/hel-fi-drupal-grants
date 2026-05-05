@@ -1,6 +1,6 @@
 {
   "translations": {
-    "acting_year.title": {
+    "acting_year_section_acting_year.title": {
       "en": "Year for which I am applying for a grant",
       "fi": "Vuosi, jolle haen avustusta",
       "sv": "År för vilket jag ansöker om understöd"
@@ -285,7 +285,7 @@
       "fi": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
       "sv": "Fastställt bokslut (för den föregående avslutade räkenskapsperioden)"
     },
-    "contact_person.title": {
+    "contact_person_info_contact_person.title": {
       "en": "Contact person",
       "fi": "Yhteyshenkilö",
       "sv": "Kontaktperson"
@@ -295,10 +295,15 @@
       "fi": "Hakemuksen yhteyshenkilö",
       "sv": "Kontaktperson för ansökan"
     },
-    "contact_person_phone_number.title": {
+    "contact_person_info_contact_person_phone_number.title": {
       "en": "Phone number",
       "fi": "Puhelinnumero",
       "sv": "Telefonnummer"
+    },
+    "confirm_and_submit.title": {
+      "en": "Confirm, preview and submit",
+      "fi": "Vahvista, esikatsele ja lähetä",
+      "sv": "Bekräfta, förhandsgranska och skicka"
     },
     "economy_forecast.description": {
       "en": "Specify the project's income and expenses as accurately as possible.",
@@ -410,7 +415,7 @@
       "fi": "Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta",
       "sv": "Vi har ansökt om understöd från annanstans än Helsingfors stad"
     },
-    "have_received_other_compensations.title": {
+    "other_compensations_section_have_received_other_compensations.title": {
       "en": "We have received other grants",
       "fi": "Olemme saaneet muita avustuksia",
       "sv": "Vi har fått andra understöd"
@@ -420,7 +425,7 @@
       "fi": "En ole saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
       "sv": "Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år."
     },
-    "have_received_prior_compensations.title": {
+    "other_compensations_section_have_received_prior_compensations.title": {
       "en": "Report on the use of the grant I received in the previous year",
       "fi": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta",
       "sv": "Redovisning om understödet som jag fick under det föregående året "
@@ -675,7 +680,7 @@
       "fi": "Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet. Kerro myös mitä avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.",
       "sv": "Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten."
     },
-    "purpose.title": {
+    "purpose_section_purpose.title": {
       "en": "Brief description of the purpose(s) of the grant(s) applied for",
       "fi": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista",
       "sv": "En kort beskrivning av användningsändamålet för det/de understöd som ansöks"
@@ -695,10 +700,20 @@
       "fi": "Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.",
       "sv": "För behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan."
     },
+    "save_as_draft": {
+      "en": "Save as draft",
+      "fi": "Tallenna luonnoksena",
+      "sv": "Spara som oavslutad"
+    },
     "select.placeholder": {
       "en": "- Select -",
       "fi": "- Valitse -",
       "sv": "- Välj -"
+    },
+    "submit": {
+      "en": "Submit",
+      "fi": "Lähetä",
+      "sv": "Skicka"
     },
     "subvention.greater_than_zero": {
       "en": "You must insert at least one subvention amount.",
