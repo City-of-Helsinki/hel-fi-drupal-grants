@@ -290,10 +290,20 @@
       "fi": "Yhteyshenkilö",
       "sv": "Kontaktperson"
     },
+    "contact_person": {
+      "en": "Contact person for the application",
+      "fi": "Hakemuksen yhteyshenkilö",
+      "sv": "Kontaktperson för ansökan"
+    },
     "contact_person_info.title": {
       "en": "Contact person for the application",
       "fi": "Hakemuksen yhteyshenkilö",
       "sv": "Kontaktperson för ansökan"
+    },
+    "contact_person_phone_number": {
+      "en": "Phone number",
+      "fi": "Puhelinnumero",
+      "sv": "Telefonnummer"
     },
     "contact_person_info_contact_person_phone_number.title": {
       "en": "Phone number",
