@@ -16,7 +16,7 @@ export const ActingYear = ({ formData, idSchema, name, onChange, rawErrors, sche
   const label = schema?.title ?? undefined;
 
   if (shouldRenderPreview) {
-    return <PreviewInput label={label} value={formData?.[0]?.label} uiSchema={uiSchema} />;
+    return <PreviewInput label={label} value={formData ?? undefined} uiSchema={uiSchema} />;
   }
 
   const options = (yearOptions ?? []).map((year) => {
