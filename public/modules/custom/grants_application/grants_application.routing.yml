@@ -154,3 +154,11 @@ entity.application_metadata.delete_form:
     _title: 'Delete application metadata'
   requirements:
     _entity_access: 'application_metadata.delete'
+
+helfi_grants.message_read:
+  path: '/application/{submission_id}/message/{message_id}/read'
+  defaults:
+    _title: 'Mark message read'
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::markMessageRead'
+  requirements:
+    _role: helsinkiprofiili
