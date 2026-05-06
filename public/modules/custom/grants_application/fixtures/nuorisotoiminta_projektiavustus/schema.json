@@ -9,8 +9,9 @@
           "type": "string"
         },
         "income_row_amount": {
+          "format": "decimal-number",
           "title": "income_row_amount.title",
-          "type": "integer"
+          "type": "string"
         }
       },
       "required": [
@@ -27,8 +28,9 @@
           "type": "string"
         },
         "expenditure_row_amount": {
+          "format": "decimal-number",
           "title": "expenditure_row_amount.title",
-          "type": "integer"
+          "type": "string"
         }
       },
       "required": [
@@ -58,8 +60,9 @@
           "type": "string"
         },
         "other_compensation_amount": {
+          "format": "decimal-number",
           "title": "other_compensation_amount.title",
-          "type": "integer"
+          "type": "string"
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
@@ -96,8 +99,9 @@
           "type": "string"
         },
         "other_applied_compensation_amount": {
+          "format": "decimal-number",
           "title": "other_applied_compensation_amount.title",
-          "type": "integer"
+          "type": "string"
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
@@ -140,13 +144,8 @@
           "type": "object",
           "properties": {
             "acting_year": {
-              "title": "acting_year.title",
-              "type": "string",
-              "enum": [
-                "2026",
-                "2027",
-                "2028"
-              ]
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
             }
           },
           "required": ["acting_year"]
@@ -186,7 +185,7 @@
           "type": "object",
           "properties": {
             "have_received_other_compensations": {
-              "title": "have_received_other_compensations.title",
+              "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
                 false,
                 true
@@ -289,8 +288,9 @@
               "type": "string"
             },
             "self_financing_amount": {
+              "format": "decimal-number",
               "title": "self_financing_amount.title",
-              "type": "integer"
+              "type": "string"
             },
             "income_rows": {
               "type": "array",

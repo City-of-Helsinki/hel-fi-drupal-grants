@@ -1,5 +1,10 @@
 {
   "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
     "subventions_section": {
       "subventions": {
         "ui:field": "subventionTable"
@@ -9,8 +14,8 @@
       "purpose": {
         "ui:widget": "textarea",
         "ui:options": {
-          "tooltipLabel": "purpose.title",
-          "tooltipButtonLabel": "purpose.title",
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
           "tooltipText": "purpose.description"
         }
       }
@@ -318,7 +323,8 @@
         "other_attachment_fieldset_file": {
           "misc:file-type": 0,
           "misc:variant": "simple",
-          "ui:help": "other_attachment_fieldset.ui_help",
+          "misc:multiple": "true",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help",
           "ui:field": "atvFile"
         }
       }

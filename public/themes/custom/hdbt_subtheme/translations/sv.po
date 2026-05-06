@@ -430,8 +430,8 @@ msgid "Field is required"
 msgstr "Fält är obligatoriskt"
 
 msgctxt "Grants application: Validation"
-msgid "@field field is required."
-msgstr "Fält @field är obligatoriskt."
+msgid "!field field is required."
+msgstr "Fält !field är obligatoriskt."
 
 msgctxt "Grants application: Draft"
 msgid "Save as draft"
@@ -591,3 +591,63 @@ msgstr "Nästa"
 
 msgid "Are you sure you want to log out?"
 msgstr "Är du säker på att du vill logga ut?"
+
+msgctxt "Grants application"
+msgid "Community for which the grant is being applied for"
+msgstr "Samfund för vilket understödet ansöks"
+
+msgctxt "Grants application"
+msgid "Applicant details"
+msgstr "Den sökandes uppgifter"
+
+msgctxt "Grants application"
+msgid "Name of association"
+msgstr "Sammanslutningens namn"
+
+msgctxt "Grants application"
+msgid "Business ID"
+msgstr "FO-nummer"
+
+msgctxt "Grants application"
+msgid "Date of registration"
+msgstr "Registreringsdatum"
+
+msgctxt "Grants application"
+msgid "Municipality where the association is based (domicile)"
+msgstr "Hemort"
+
+msgctxt "Grants application"
+msgid "Abbreviated name"
+msgstr "Gemenskapens förkortning"
+
+msgctxt "Grants application"
+msgid "Year of establishment"
+msgstr "Grundläggningsår"
+
+msgctxt "Grants application"
+msgid "Website address"
+msgstr "Webbadress"
+
+msgctxt "Grants application"
+msgid "First name"
+msgstr "Förnamn"
+
+msgctxt "Grants application"
+msgid "Last name"
+msgstr "Efternamn"
+
+msgctxt "Grants application"
+msgid "Social security number"
+msgstr "Personnummer"
+
+msgctxt "Grants application"
+msgid "Email"
+msgstr "E-post"
+
+msgctxt "Grants application"
+msgid "Address"
+msgstr "Adress"
+
+msgctxt "Grants application"
+msgid "Phone number"
+msgstr "Telefonnummer"

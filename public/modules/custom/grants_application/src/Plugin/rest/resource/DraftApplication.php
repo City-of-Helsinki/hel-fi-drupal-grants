@@ -3,7 +3,6 @@
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
-use Drupal\content_lock\ContentLock\ContentLock;
 use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -167,8 +166,11 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    if (!$settings->isApplicationOpen() && $document->getStatus() === 'DRAFT') {
-      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
+    $isOpen = $settings->isApplicationOpen();
+    $status = $document->getStatus();
+
+    if (!$isOpen && !in_array($status, ['RECEIVED', 'PREPARING'])) {
+      return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
     }
 
     // Side document bc.
@@ -210,6 +212,9 @@ final class DraftApplication extends ResourceBase {
     $response['status'] = $document->getStatus();
     $response['token'] = $this->csrfTokenGenerator->get('rest');
     $response['last_changed'] = $submission->get('changed')->value;
+    $response['form_settings'] = [
+      'acting_years' => $settings->getActingYears(),
+    ];
     $response = array_merge($response, $settings->toArray());
 
     return new JsonResponse($response);

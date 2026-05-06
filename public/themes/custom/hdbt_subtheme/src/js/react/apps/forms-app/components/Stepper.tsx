@@ -23,8 +23,7 @@ export const transformSteps = (
 
   return Array.from(steps).map(([index, step]) => {
     const { label } = step;
-    // biome-ignore lint/suspicious/noImplicitAnyLet: @todo UHF-12501
-    let state;
+    let state: StepState;
 
     if (index === steps.size - 1) {
       state = StepState.disabled;
@@ -45,7 +44,6 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
   const submitState = useAtomValue(getSubmitStatusAtom);
   const transformedSteps = transformSteps(steps, submitState, errorPageIndices);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: @todo UHF-12501
   useEffect(() => {
     if (!divRef?.current) {
       return;

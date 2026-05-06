@@ -9,8 +9,9 @@
           "type": "string"
         },
         "other_material_acquired_amount": {
+          "format": "decimal-number",
           "title": "amount.title",
-          "type": "integer"
+          "type": "string"
         }
       }
     },
@@ -23,8 +24,9 @@
           "type": "string"
         },
         "other_service_acquired_amount": {
+          "format": "decimal-number",
           "title": "amount.title",
-          "type": "integer"
+          "type": "string"
         }
       }
     },
@@ -37,8 +39,9 @@
           "type": "string"
         },
         "other_expenditure_amount": {
+          "format": "decimal-number",
           "title": "amount.title",
-          "type": "integer"
+          "type": "string"
         }
       }
     },
@@ -51,8 +54,9 @@
           "type": "string"
         },
         "other_benefit_amount": {
+          "format": "decimal-number",
           "title": "amount.title",
-          "type": "integer"
+          "type": "string"
         }
       }
     },
@@ -73,23 +77,23 @@
         },
         "location_pupil_number": {
           "title": "location_pupil_number.title",
-          "type": "string"
+          "type": "integer"
         },
         "location_pupil_number_special_needs": {
           "title": "location_pupil_number_special_needs.title",
-          "type": "string"
+          "type": "integer"
         },
         "location_number_of_groups": {
           "title": "location_number_of_groups.title",
-          "type": "string"
+          "type": "integer"
         },
         "location_number_of_groups_special_needs": {
           "title": "location_number_of_groups_special_needs.title",
-          "type": "string"
+          "type": "integer"
         },
         "location_staff": {
           "title": "location_staff.title",
-          "type": "string"
+          "type": "integer"
         },
         "location_held_in_provided_space": {
           "title": "location_held_in_provided_space.title",
@@ -114,6 +118,7 @@
               "unprovided_space_details": {
                 "properties": {
                   "unprovided_rent_amount": {
+                    "format": "decimal-number",
                     "title": "unprovided_rent_amount.title",
                     "type": "string"
                   },
@@ -154,8 +159,9 @@
           "type": "string"
         },
         "other_compensation_amount": {
+          "format": "decimal-number",
           "title": "other_compensation_amount.title",
-          "type": "integer"
+          "type": "string"
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
@@ -183,11 +189,8 @@
           "type": "object",
           "properties": {
             "acting_year": {
-              "title": "acting_year.title",
-              "type": "string",
-              "enum": [
-                "2026"
-              ]
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
             }
           },
           "required": ["acting_year"]
@@ -212,7 +215,7 @@
           "type": "object",
           "properties": {
             "purpose": {
-              "title": "purpose.title",
+              "title": "purpose_section_purpose.title",
               "type": "string",
               "description": "purpose.description"
             }
@@ -225,7 +228,7 @@
           "type": "object",
           "properties": {
             "have_received_other_compensations": {
-              "title": "have_received_other_compensations.title",
+              "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
                 false,
                 true
@@ -287,7 +290,7 @@
           "type": "object",
           "properties": {
             "have_received_prior_compensations": {
-              "title": "have_received_prior_compensations.title",
+              "title": "other_compensations_section_have_received_prior_compensations.title",
               "enum": [
                 false,
                 true
@@ -375,16 +378,19 @@
               "default": "general"
             },
             "applied_benefits": {
+              "format": "decimal-number",
               "title": "applied_benefits.title",
-              "type": "integer"
+              "type": "string"
             },
             "customer_sales": {
+              "format": "decimal-number",
               "title": "customer_sales.title",
-              "type": "integer"
+              "type": "string"
             },
             "donations": {
+              "format": "decimal-number",
               "title": "donations.title",
-              "type": "integer"
+              "type": "string"
             }
           }
         },
@@ -410,16 +416,19 @@
               "default": "subventionUseCosts"
             },
             "salaries_and_bonuses": {
+              "format": "decimal-number",
               "title": "salaries_and_bonuses.title",
-              "type": "integer"
+              "type": "string"
             },
             "rents": {
+              "format": "decimal-number",
               "title": "rents.title",
-              "type": "integer"
+              "type": "string"
             },
             "personnel_side_costs": {
+              "format": "decimal-number",
               "title": "personnel_side_costs.title",
-              "type": "integer"
+              "type": "string"
             }
           }
         },
@@ -445,20 +454,24 @@
               "default": "costsForServicesAcquired"
             },
             "snacks": {
+              "format": "decimal-number",
               "title": "snacks.title",
-              "type": "integer"
+              "type": "string"
             },
             "cleaning_services": {
+              "format": "decimal-number",
               "title": "cleaning_services.title",
-              "type": "integer"
+              "type": "string"
             },
             "property_maintenance": {
+              "format": "decimal-number",
               "title": "property_maintenance.title",
-              "type": "integer"
+              "type": "string"
             },
             "travel": {
+              "format": "decimal-number",
               "title": "travel.title",
-              "type": "integer"
+              "type": "string"
             }
           }
         },
@@ -484,24 +497,29 @@
               "default": "costsForMaterialsSuppliesAndGoods"
             },
             "snacks": {
+              "format": "decimal-number",
               "title": "snacks.title",
-              "type": "integer"
+              "type": "string"
             },
             "heating": {
+              "format": "decimal-number",
               "title": "heating.title",
-              "type": "integer"
+              "type": "string"
             },
             "water": {
+              "format": "decimal-number",
               "title": "water.title",
-              "type": "integer"
+              "type": "string"
             },
             "electricity": {
+              "format": "decimal-number",
               "title": "electricity.title",
-              "type": "integer"
+              "type": "string"
             },
             "operational_materials": {
+              "format": "decimal-number",
               "title": "operational_materials.title",
-              "type": "integer"
+              "type": "string"
             }
           }
         },
@@ -527,16 +545,19 @@
               "default": "otherCosts"
             },
             "management_office_expenses": {
+              "format": "decimal-number",
               "title": "management_office_expenses.title",
-              "type": "integer"
+              "type": "string"
             },
             "accounting_auditing_expenses": {
+              "format": "decimal-number",
               "title": "accounting_auditing_expenses.title",
-              "type": "integer"
+              "type": "string"
             },
             "staff_health_expenses": {
+              "format": "decimal-number",
               "title": "staff_health_expenses.title",
-              "type": "integer"
+              "type": "string"
             }
           }
         },
@@ -562,24 +583,29 @@
               "default": "useOfCustomerFeeIncome"
             },
             "salaries_and_bonuses": {
+              "format": "decimal-number",
               "title": "salaries_and_bonuses.title",
-              "type": "integer"
+              "type": "string"
             },
             "rents": {
+              "format": "decimal-number",
               "title": "rents.title",
-              "type": "integer"
+              "type": "string"
             },
             "materials": {
+              "format": "decimal-number",
               "title": "materials.title",
-              "type": "integer"
+              "type": "string"
             },
             "services": {
+              "format": "decimal-number",
               "title": "services.title",
-              "type": "integer"
+              "type": "string"
             },
             "personnel_side_costs": {
+              "format": "decimal-number",
               "title": "personnel_side_costs.title",
-              "type": "integer"
+              "type": "string"
             }
           }
         },

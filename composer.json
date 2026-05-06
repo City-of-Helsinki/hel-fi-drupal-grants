@@ -9,7 +9,7 @@
     "version": "2024.16",
     "require": {
         "ext-json": "*",
-        "city-of-helsinki/php-resilient-logger": "^1.0",
+        "city-of-helsinki/php-resilient-logger": "^2.0",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
         "doctrine/lexer": "^2",
@@ -25,6 +25,7 @@
         "drupal/hdbt_admin": "^3.0",
         "drupal/helfi_azure_fs": "^2",
         "drupal/helfi_drupal_tools": "dev-main",
+        "drupal/helfi_navigation": "^2.3",
         "drupal/helfi_platform_config": "^5.1",
         "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",

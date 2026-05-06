@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FocusEvent, type WheelEvent, useCallback, useEffect } from 'react';
+import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallback, useEffect } from 'react';
 import {
   Checkbox,
   DateInput,
@@ -6,11 +6,11 @@ import {
   TextArea as HDSTextArea,
   TextInput as HDSTextInput,
   Notification,
-  NumberInput,
   RadioButton,
   Select,
+  type Option,
 } from 'hds-react';
-import { DateTime } from 'luxon';
+import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -18,16 +18,16 @@ import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-import { formatErrors, getTooltip } from '../utils';
+import { formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
 import {
   getAccountsAtom,
   getAddressesAtom,
   getOfficialsAtom,
   getProfileAtom,
+  isEmptyPreviewAtom,
   isReadOnlyAtom,
   shouldRenderPreviewAtom,
 } from '../store';
-import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
 
 export const PreviewInput = ({
   value,
@@ -49,11 +49,6 @@ export const PreviewInput = ({
   </>
 );
 
-const sanitizeNumericInput = (value: string, allowPhone = false): string => {
-  const pattern = allowPhone ? /[^0-9 ,+()]/g : /[^0-9 ,]/g;
-  return value.replace(pattern, '').replace(/ {2,}/g, ' ');
-};
-
 export const TextInput = ({
   id,
   label,
@@ -67,7 +62,8 @@ export const TextInput = ({
   value,
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
-  const isNumberInput = schema.type === 'number' || schema.type === 'integer';
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
+  const isNumberInput = schema.type === 'number' || schema.type === 'integer' || schema.format === 'decimal-number';
   const phone = uiSchema?.['misc:phone'] ?? false;
 
   if (shouldRenderPreview) {
@@ -92,56 +88,60 @@ export const TextInput = ({
   };
 
   if (isNumberInput) {
+    const sanitizationType = schema.type === 'integer' ? 'integer' : 'decimal-number';
+
     return (
-      <NumberInput
-        disabled={readonly}
-        errorText={formatErrors(rawErrors)}
-        hideLabel={false}
-        id={id}
-        invalid={Boolean(rawErrors?.length)}
-        label={label}
-        min={0}
-        name={name}
-        onBlur={() => null}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          const sanitized = sanitizeNumericInput(event.target.value);
-          onChange(sanitized === '' ? undefined : sanitized);
-        }}
-        onFocus={(event: FocusEvent<HTMLInputElement>) => {
-          if (event.target.value === '0') {
-            event.target.select();
-          }
-        }}
-        onWheel={(event: WheelEvent<HTMLInputElement>) => {
-          event.currentTarget.blur();
-        }}
-        required={required}
-        style={{ maxWidth: getMaxWidth() }}
-        tooltip={getTooltip(uiSchema)}
-        value={value ?? ''}
+      <HDSTextInput
+        {...({
+          disabled: readonly || isReadOnly,
+          errorText: formatErrors(rawErrors),
+          hideLabel: false,
+          id,
+          inputMode: schema.type === 'integer' ? 'numeric' : 'decimal',
+          invalid: Boolean(rawErrors?.length),
+          label,
+          name,
+          onBlur: () => null,
+          onChange: (event: ChangeEvent<HTMLInputElement>) => {
+            const sanitized = sanitizeNumericInput(event.target.value, sanitizationType);
+            if (numberIsTooLarge(sanitized)) return;
+            onChange(sanitized === '' ? undefined : sanitized);
+          },
+          onFocus: (event: FocusEvent<HTMLInputElement>) => {
+            if (event.target.value === '0') {
+              event.target.select();
+            }
+          },
+          required,
+          style: { maxWidth: getMaxWidth() },
+          tooltip: getTooltip(uiSchema),
+          value: value ?? '',
+        } as ComponentPropsWithRef<typeof HDSTextInput>)}
       />
     );
   }
 
   return (
     <HDSTextInput
-      errorText={formatErrors(rawErrors)}
-      disabled={readonly}
-      hideLabel={false}
-      id={id}
-      invalid={Boolean(rawErrors?.length)}
-      label={label}
-      name={name}
-      onBlur={() => null}
-      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-        const value = phone ? sanitizeNumericInput(event.target.value, true) : event.target.value;
-        onChange(value);
-      }}
-      onFocus={() => null}
-      required={required}
-      style={{ maxWidth: getMaxWidth() }}
-      tooltip={getTooltip(uiSchema)}
-      value={value ?? ''}
+      {...({
+        errorText: formatErrors(rawErrors),
+        disabled: readonly,
+        hideLabel: false,
+        id,
+        invalid: Boolean(rawErrors?.length),
+        label,
+        name,
+        onBlur: () => null,
+        onChange: (event: ChangeEvent<HTMLInputElement>) => {
+          const value = phone ? sanitizeNumericInput(event.target.value, 'phone') : event.target.value;
+          onChange(value === '' ? undefined : value);
+        },
+        onFocus: () => null,
+        required,
+        style: { maxWidth: getMaxWidth() },
+        tooltip: getTooltip(uiSchema),
+        value: value ?? '',
+      } as ComponentPropsWithRef<typeof HDSTextInput>)}
     />
   );
 };
@@ -160,6 +160,7 @@ export const TextArea = ({
 }: WidgetProps) => {
   const readGrantsProfile = useAtomCallback(useCallback((get) => get(getProfileAtom), []));
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   const getDefaultValue = () => {
     if (!uiSchema?.['misc:profilePrefill']) {
@@ -186,16 +187,26 @@ export const TextArea = ({
     <>
       {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
       <HDSTextArea
-        disabled={readonly}
-        errorText={formatErrors(rawErrors)}
-        helperText={`${value?.length || 0}/${maxLength}`}
-        hideLabel={false}
-        invalid={Boolean(rawErrors?.length)}
-        onBlur={() => null}
-        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
-        onFocus={() => null}
-        tooltip={getTooltip(uiSchema)}
-        {...{ id, label, maxLength, name, required, value }}
+        {...({
+          disabled: readonly || isReadOnly,
+          errorText: formatErrors(rawErrors),
+          helperText: `${value?.length || 0}/${maxLength}`,
+          hideLabel: false,
+          id,
+          invalid: Boolean(rawErrors?.length),
+          label,
+          maxLength,
+          name,
+          onBlur: () => null,
+          onChange: (event: ChangeEvent<HTMLTextAreaElement>) => {
+            const val = event.target.value;
+            onChange(val === '' ? undefined : val);
+          },
+          onFocus: () => null,
+          required,
+          tooltip: getTooltip(uiSchema),
+          value: value ?? '',
+        } as unknown as ComponentPropsWithRef<typeof HDSTextArea>)}
       />
     </>
   );
@@ -218,6 +229,7 @@ export const SelectWidget = ({
 }: SelectWidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
@@ -226,18 +238,18 @@ export const SelectWidget = ({
   return (
     <Select
       className='hdbt-form--select'
-      disabled={readonly}
+      disabled={readonly || isReadOnly}
       id={id}
       invalid={Boolean(rawErrors?.length)}
       multiSelect={multiple}
       onBlur={() => null}
-      onChange={(newValue) => {
+      onChange={(newValue: Option[]) => {
         if (!newValue.length) {
           onChange(undefined);
           return;
         }
         if (multiple) {
-          onChange(newValue.map((option) => option.value));
+          onChange(newValue.map((option: Option) => option.value));
           return;
         }
 
@@ -261,6 +273,14 @@ export const SelectWidget = ({
 
 export const AddressSelect = (props: WidgetProps) => {
   const addresses = useAtomValue(getAddressesAtom);
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+
+  if (shouldRenderPreview) {
+    const full = addresses?.find((a) => a.street === props.value);
+    const displayValue = full ? [full.street, full.postCode, full.city].filter(Boolean).join(', ') : props.value;
+    return <PreviewInput value={displayValue} label={props.label} uiSchema={props.uiSchema} />;
+  }
+
   const options = addresses?.length
     ? Object.assign(addresses.map(({ street }) => ({ label: street, value: street })))
     : [];
@@ -312,20 +332,24 @@ export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: Wi
       )
     : [];
 
-  const formatPreviewValue = () => {
-    if (Array.isArray(value)) {
-      return value.map((official_id) => {
-        const { email, name, phone, role } = officials.find(
-          ({ official_id: officialId }) => officialId === official_id,
-        );
+  const formatOfficial = (id: string | number) => {
+    const official = officials?.find(({ official_id: officialId }) => officialId === id);
 
-        return `${getCommunityOfficialRole(role)}: ${name} (${email}, ${phone})`;
-      });
+    if (!official) {
+      return '';
     }
 
-    const { email, name, phone, role } = officials.find(({ official_id: officialId }) => officialId === value);
+    const { email, name, phone, role } = official;
 
     return `${getCommunityOfficialRole(role)}: ${name} (${email}, ${phone})`;
+  };
+
+  const formatPreviewValue = () => {
+    if (Array.isArray(value)) {
+      return value.map((official_id) => formatOfficial(official_id));
+    }
+
+    return formatOfficial(value);
   };
 
   if (shouldRenderPreview) {
@@ -359,6 +383,7 @@ export const RadioWidget = ({
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
+  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
   if (shouldRenderPreview) {
     const selectedLabel = options?.enumOptions?.find((opt) => opt.value === value)?.label ?? value;
@@ -383,7 +408,7 @@ export const RadioWidget = ({
           return (
             <RadioButton
               checked={option.value === value}
-              disabled={isReadOnly}
+              disabled={isReadOnly && !isEmptyPreview}
               id={optionId}
               key={optionId}
               label={option.label}
@@ -409,20 +434,20 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
-  let date: DateTime | undefined;
   const handleChange = (_dateStr: string, dateObject: Date) => {
     try {
-      date = DateTime.fromJSDate(dateObject);
+      onChange(toLocalISO(dateObject).slice(0, 10));
     } catch (_error) {
       return;
     }
-
-    onChange(date?.toISODate());
   };
 
   let formattedValue: string | undefined;
   try {
-    formattedValue = value ? DateTime.fromISO(value).toFormat(HDS_DATE_FORMAT) : undefined;
+    if (value) {
+      const [year, month, day] = (value as string).split('-').map(Number);
+      formattedValue = formatHDSDate(new Date(year, month - 1, day));
+    }
   } catch (_error) {
     formattedValue = undefined;
   }
@@ -433,18 +458,18 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
 
   return (
     <DateInput
-      disabled={isReadOnly}
-      errorText={formatErrors(rawErrors)}
-      invalid={Boolean(rawErrors?.length)}
-      language={currentLanguage}
-      onChange={handleChange}
-      tooltip={getTooltip(uiSchema)}
-      value={formattedValue}
-      {...{
+      {...({
+        disabled: isReadOnly,
+        errorText: formatErrors(rawErrors),
         id,
+        invalid: Boolean(rawErrors?.length),
         label,
+        language: currentLanguage,
+        onChange: handleChange,
         required,
-      }}
+        tooltip: getTooltip(uiSchema),
+        value: formattedValue,
+      } as ComponentPropsWithRef<typeof DateInput>)}
     />
   );
 };

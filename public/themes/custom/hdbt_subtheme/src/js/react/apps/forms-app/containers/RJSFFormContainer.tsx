@@ -8,7 +8,7 @@ import type {
 } from '@rjsf/utils';
 import { useAtomValue, useSetAtom, type WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import { useDebounceCallback } from 'usehooks-ts';
+import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import Form, { getDefaultRegistry, type IChangeEvent } from '@rjsf/core';
 import type { ReactNode, FormEvent } from 'react';
 import { createRef, useCallback, useEffect, useState } from 'react';
@@ -43,7 +43,7 @@ import {
   isEmptyPreviewAtom,
 } from '../store';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
-import { isDraft, keyErrorsByStep } from '../utils';
+import { expandConditionalRequiredErrors, isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
 import { SubventionSum } from '../components/Fields/SubventionSum';
@@ -53,6 +53,7 @@ import { TextParagraph } from '../components/Fields/TextParagraph';
 import { localizeErrors } from '../localizeErrors';
 import { Notification, NotificationSize } from 'hds-react';
 import type { RJSFFormData } from '../types/RJSFFormData';
+import { ActingYear } from '../components/Fields/ActingYear';
 
 const widgets: RegistryWidgetsType = {
   address: AddressSelect,
@@ -185,9 +186,13 @@ export const RJSFFormContainer = ({
       return [];
     }
 
-    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null');
+    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null' && error.name !== 'if');
 
-    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(prefilteredErrors, steps));
+    // Expand section-level required errors to field-level errors so fields inside
+    // conditionally-required allOf/then sections display red borders when absent.
+    const expandedErrors = expandConditionalRequiredErrors(prefilteredErrors, schema, formRef.current?.state?.formData);
+
+    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(expandedErrors, steps));
     setErrors(errorsToShow);
 
     return errorsToShow;
@@ -213,7 +218,10 @@ export const RJSFFormContainer = ({
         | { addError: (msg: string) => void }
         | undefined;
       const hasValues = values
-        ? Object.entries(values).reduce((acc, [, curr]) => acc || Number(curr[1].value) > 0, false)
+        ? Object.entries(values).reduce(
+            (acc, [, curr]) => acc || (curr?.[1]?.value?.toString().trim().length ?? 0) > 0,
+            false,
+          )
         : false;
 
       if (_field && !hasValues) {
@@ -307,6 +315,7 @@ export const RJSFFormContainer = ({
           customValidate={customValidate}
           fields={{
             ...getDefaultRegistry().fields,
+            actingYear: ActingYear,
             atvFile: FileInput,
             subventionTable: SubventionTable,
             subventionSum: SubventionSum,
@@ -331,7 +340,7 @@ export const RJSFFormContainer = ({
               submitData(data.formData);
             }
           }}
-          readonly={readOnly}
+          readonly={readOnly && !isEmptyPreview}
           ref={formRef}
           schema={schema}
           showErrorList={false}
@@ -350,7 +359,12 @@ export const RJSFFormContainer = ({
           transformErrors={transformErrors}
           uiSchema={{ ...uiSchema, 'ui:globalOptions': { label: false } }}
           validator={customizeValidator(
-            { ajvOptionsOverrides: { allErrors: true, coerceTypes: false } },
+            {
+              ajvOptionsOverrides: { allErrors: true, coerceTypes: false },
+              customFormats: {
+                'decimal-number': /^-?[0-9]+(,[0-9]+)?$/,
+              },
+            },
             localizeErrors,
           )}
           widgets={widgets}

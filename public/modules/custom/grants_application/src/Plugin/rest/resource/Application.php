@@ -207,7 +207,10 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
-    if (!$settings->isApplicationOpen() && $document->getStatus() === 'DRAFT') {
+    $isOpen = $settings->isApplicationOpen();
+    $status = $document->getStatus();
+
+    if (!$isOpen && !in_array($status, ['RECEIVED', 'PREPARING'])) {
       return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
     }
 
@@ -233,8 +236,11 @@ final class Application extends ResourceBase {
       'status' => $document->getStatus(),
       'token' => $this->csrfTokenGenerator->get('rest'),
       'user_data' => $user_information,
-      ...$settings->toArray(),
     ];
+    $response['form_settings'] = [
+      'acting_years' => $settings->getActingYears(),
+    ];
+    $response = array_merge($response, $settings->toArray());
 
     return new JsonResponse($response);
   }
@@ -398,7 +404,7 @@ final class Application extends ResourceBase {
         'HANDLER_ATT_OK',
         $application_number,
         "Attachment uploaded for the IBAN: $bankAccountNumber.",
-        $save_id
+        $bankFile['filename'],
       );
       $this->eventsService->addNewEventForApplication($document, $event);
     }

@@ -1,7 +1,6 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import { atom } from 'jotai';
-import { DateTime } from 'luxon';
 import type { ReactNode } from 'react';
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 
@@ -12,16 +11,25 @@ import { getUrlParts } from './testutils/Helpers';
 export type FormStep = { id: string; label: string };
 
 type GrantsProfile = {
-  companyNameShort: string;
-  companyName: string;
-  companyHome: string;
-  companyHomePage: string;
-  companyStatus: string;
-  companyStatusSpecial: string;
-  businessPurpose: string;
-  foundingYear: string;
-  registrationDate: string;
-  officials: Array<any>;
+  // Community fields
+  companyNameShort?: string;
+  companyName?: string;
+  companyHome?: string;
+  companyHomePage?: string;
+  companyStatus?: string;
+  companyStatusSpecial?: string;
+  businessPurpose?: string;
+  foundingYear?: string;
+  registrationDate?: string;
+  officials?: Array<any>;
+  businessId?: string;
+  // Private person fields
+  firstName?: string;
+  lastName?: string;
+  socialSecurityNumber?: string;
+  email?: string;
+  phone_number?: string;
+  // Shared
   addresses: Array<{ address_id: string; street: string; postCode: string; city: string; country: string }>;
   bankAccounts: Array<{
     bankAccount: string;
@@ -30,12 +38,12 @@ type GrantsProfile = {
     ownerName?: string;
     ownerSsn?: string;
   }>;
-  businessId: string;
 };
 
 export type FormState = { currentStep: [number, FormStep]; reachedStep: number };
 
 type FormConfig = {
+  actingYears?: string[];
   applicationNumber: string;
   grantsProfile: GrantsProfile;
   persistedData: any;
@@ -61,8 +69,10 @@ type FormConfig = {
 type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
   applicationNumber: string;
   grants_profile: GrantsProfile;
+  settings: {
+    acting_years?: string[];
+  };
   status: string;
-  ui_schema: UiSchema;
   summary_data?: {
     application_number?: string;
     application_submitted?: string;
@@ -70,6 +80,7 @@ type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_stat
     handlers?: string[];
     status_updates?: string[];
   };
+  ui_schema: UiSchema;
 };
 
 const buildFormSteps = ({ schema: { properties } }: any) => {
@@ -106,8 +117,8 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
 
     const parsedItem = JSON.parse(sessionItem);
     const { timestamp: sessionTimeStamp, data: sessionData } = parsedItem;
-    const sessionTime = DateTime.fromMillis(Number(sessionTimeStamp) * 1000);
-    const serverTime = timestamp ? DateTime.fromMillis(Number(timestamp) * 1000) : null;
+    const sessionTime = new Date(Number(sessionTimeStamp) * 1000);
+    const serverTime = timestamp ? new Date(Number(timestamp) * 1000) : null;
 
     if (serverTime && sessionTime < serverTime) {
       return initialValue;
@@ -129,21 +140,30 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
   return derivedAtom;
 };
 export const formDataAtomRef = atom<any>(null);
-export const formStateAtom = atom<FormState | undefined>();
-export const formConfigAtom = atom<FormConfig | undefined>();
-export const formStepsAtom = atom<Map<number, FormStep> | undefined>();
+export const formStateAtom = atom<FormState | undefined>(undefined);
+export const formConfigAtom = atom<FormConfig | undefined>(undefined);
+export const formStepsAtom = atom<Map<number, FormStep> | undefined>(undefined);
 export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
-  const { grants_profile: grantsProfile, status, summary_data: summaryData, ui_schema: uiSchema, ...rest } = formConfig;
+  const {
+    grants_profile: grantsProfile,
+    status,
+    summary_data: summaryData,
+    ui_schema: uiSchema,
+    settings,
+    ...rest
+  } = formConfig;
+  const { acting_years: actingYears } = settings || {};
   const steps = buildFormSteps(formConfig);
-  _set(formStepsAtom, (state) => steps);
-  _set(formConfigAtom, (state) => ({
+  _set(formStepsAtom, () => steps);
+  _set(formConfigAtom, () => ({
     grantsProfile,
     ...rest,
-    uiSchema,
+    actingYears,
+    settings: settings as { [key: string]: string },
+    requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
     submitState: status || SubmitStates.DRAFT,
     subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
-    requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
     summaryData: summaryData
       ? {
           applicationNumber: summaryData?.application_number,
@@ -153,8 +173,9 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
           statusUpdates: summaryData?.status_updates,
         }
       : undefined,
+    uiSchema,
   }));
-  _set(formStateAtom, (state) => ({ currentStep: [0, steps.get(0)], reachedStep: 0 }));
+  _set(formStateAtom, () => ({ currentStep: [0, steps.get(0)], reachedStep: 0 }));
 
   // Make sure application number is set in url params.
   const { applicationNumber } = formConfig;
@@ -202,7 +223,7 @@ export const setStepAtom = atom(null, (_get, _set, index: number) => {
     throw new Error(`Index ${index} does not exist in defined steps for the form.`);
   }
 
-  _set(formStateAtom, (_state) => ({
+  _set(formStateAtom, () => ({
     ...currentState,
     reachedStep: currentState?.reachedStep > index ? currentState?.reachedStep : index,
     currentStep: [index, step],
@@ -222,7 +243,7 @@ export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError
     return;
   }
 
-  _set(errorsAtom, (state) => [...state, ...keyErrorsByStep(errors, steps)]);
+  _set(errorsAtom, (state) => [...state, ...keyErrorsByStep(errors, steps)].sort(([a], [b]) => a - b));
 });
 export const getErrorPageIndicesAtom = atom((_get) => {
   const errors = _get(errorsAtom);
@@ -233,6 +254,12 @@ export const getProfileAtom = atom((_get) => {
   const { grantsProfile } = _get(getFormConfigAtom);
 
   return grantsProfile;
+});
+export const getApplicantTypeAtom = atom((_get) => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+  if (!grantsProfile.companyName) return 'private_person' as const;
+  if (!grantsProfile.registrationDate) return 'unregistered_community' as const;
+  return 'registered_community' as const;
 });
 export const getAddressesAtom = atom((_get) => {
   const { grantsProfile } = _get(getFormConfigAtom);
@@ -257,7 +284,7 @@ export const getSubmitStatusAtom = atom((_get) => {
 export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: string) => {
   const formConfig = _get(getFormConfigAtom);
 
-  _set(formConfigAtom, (state) => ({ ...formConfig, submitState }));
+  _set(formConfigAtom, () => ({ ...formConfig, submitState }));
 });
 export const getSchemasAtom = atom((_get) => {
   const { schema, uiSchema } = _get(getFormConfigAtom);
@@ -318,7 +345,7 @@ export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumbe
     window.history.replaceState(null, '', currentUrl.toString());
   }
 
-  _set(formConfigAtom, (state) => ({ ...formConfig, applicationNumber }));
+  _set(formConfigAtom, () => ({ ...formConfig, applicationNumber }));
 });
 export type SystemNotification = {
   children: string | ReactNode;
@@ -361,7 +388,7 @@ type avus2Data = {
     timeCreated: string;
   }>;
 };
-export const avus2DataAtom = atom<avus2Data | null>();
+export const avus2DataAtom = atom<avus2Data | null>(null);
 export const shouldRenderPreviewAtom = atom((_get) => {
   const { currentStep } = _get(getFormStateAtom);
 
@@ -395,4 +422,9 @@ export const getFormTitleAtom = atom((_get) => {
 
 export const isEmptyPreviewAtom = atom((_get) => {
   return drupalSettings.grants_react_form.use_empty_preview;
+});
+export const getActingYearsAtom = atom((_get) => {
+  const { actingYears } = _get(getFormConfigAtom);
+
+  return actingYears;
 });

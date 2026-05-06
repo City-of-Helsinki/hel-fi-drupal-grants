@@ -3,7 +3,8 @@ import type { FieldProps, UiSchema } from '@rjsf/utils';
 import { Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
 import type { JSONSchema7Definition } from 'json-schema';
-import { parseAllowedHtml } from '../../utils';
+import { htmlToReact } from '@/react/common/helpers/htmlToReact';
+import { ALLOWED_HTML_TAGS } from '../../utils';
 
 import { shouldRenderPreviewAtom } from '../../store';
 
@@ -33,7 +34,7 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
     <Notification label={title} className='hdbt-form--notification'>
       {Array.isArray(items) &&
         items?.length &&
-        items.map((p, index) => <p key={index}>{parseAllowedHtml(getTitle(p) ?? '')}</p>)}
+        items.map((p, index) => <p key={index}>{htmlToReact(getTitle(p) ?? '', ALLOWED_HTML_TAGS)}</p>)}
     </Notification>
   ) : (
     <div className='hdbt-form--paragraph'>
@@ -42,7 +43,7 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
         items?.length &&
         items.map((p, index) => (
           <p className='hdbt-form--paragraph__content' key={index}>
-            {parseAllowedHtml(getTitle(p) ?? '')}
+            {htmlToReact(getTitle(p) ?? '', ALLOWED_HTML_TAGS)}
           </p>
         ))}
     </div>

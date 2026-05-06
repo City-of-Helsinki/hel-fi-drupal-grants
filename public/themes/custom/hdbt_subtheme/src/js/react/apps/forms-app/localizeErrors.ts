@@ -16,8 +16,8 @@ const formatMinItemsError = (error: ErrorObject) => {
   } = error;
 
   return Drupal.t(
-    'You must insert at least @limit value for field @field',
-    { '@field': parentSchema?.title || '', '@limit': limit.toString() },
+    'You must insert at least @limit value for field !field',
+    { '!field': parentSchema?.title || '', '@limit': limit.toString() },
     { context: 'Grants application: Validation' },
   );
 };
@@ -42,15 +42,15 @@ const formatMinLengthError = (error: ErrorObject) => {
   // RJSF accepts empty strings as valid input for string fields (since this is valid according JSONSchema specification)
   if (limit === 1 && parentSchema) {
     return Drupal.t(
-      '@field field is required.',
-      { '@field': parentSchema.title },
+      '!field field is required.',
+      { '!field': parentSchema.title },
       { context: 'Grants application: Validation' },
     );
   }
 
   return Drupal.t(
-    '@field field must be at least @limit characters.',
-    { '@field': parentSchema?.title, '@limit': limit },
+    '!field field must be at least @limit characters.',
+    { '!field': parentSchema?.title, '@limit': limit },
     { context: 'Grants application: Validation' },
   );
 };
@@ -70,7 +70,7 @@ const formatRequiredError = (error: ErrorObject) => {
 
   const { title } = error.parentSchema.properties[missingProperty];
 
-  return Drupal.t('@field field is required.', { '@field': title }, { context: 'Grants application: Validation' });
+  return Drupal.t('!field field is required.', { '!field': title }, { context: 'Grants application: Validation' });
 };
 
 /**
@@ -81,17 +81,24 @@ const formatRequiredError = (error: ErrorObject) => {
  * @return {string} - Translated error message indicating the required field.
  */
 const formatPatternError = (error: ErrorObject) => {
-  const { data } = error;
+  const {
+    data,
+    params: { format },
+  } = error;
 
   if (!data || data === '') {
     return formatRequiredError(error);
   }
 
-  return Drupal.t(
-    'The email address @mail is not valid. Use the format user@example.com.',
-    { '@mail': data },
-    { context: 'Grants application: Validation' },
-  );
+  if (format === 'email') {
+    return Drupal.t(
+      'The email address @mail is not valid. Use the format user@example.com.',
+      { '@mail': data },
+      { context: 'Grants application: Validation' },
+    );
+  }
+
+  return Drupal.t('Value is of incorrect type.', {}, { context: 'Grants application: Validation' });
 };
 
 /**
@@ -106,6 +113,10 @@ const formatTypeError = (error: ErrorObject) => {
 
   if (schema === 'integer') {
     return Drupal.t('The value must be an integer.', {}, { context: 'Grants application: Validation' });
+  }
+
+  if (schema === 'number') {
+    return Drupal.t('The value must be a number.', {}, { context: 'Grants application: Validation' });
   }
 
   return Drupal.t('Value is of incorrect type.', {}, { context: 'Grants application: Validation' });
@@ -125,7 +136,7 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
   }
 
   errors.forEach((error) => {
-    let outMessage: string | null | undefined;
+    let outMessage: string | undefined;
 
     switch (error.keyword) {
       case 'format': {

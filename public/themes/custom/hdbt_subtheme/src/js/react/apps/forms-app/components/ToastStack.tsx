@@ -9,7 +9,6 @@ export const ToastStack = () => {
   const shiftNotifications = useSetAtom(shiftNotificationsAtom);
   const [currentNotification, setCurrentNotification] = useState<SystemNotification | null>(notifications[0] || null);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: @todo UHF-12501
   useEffect(() => {
     if (!currentNotification && notifications.length > 0) {
       setCurrentNotification(notifications[0]);

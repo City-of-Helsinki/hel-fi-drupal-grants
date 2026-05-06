@@ -348,7 +348,7 @@
     "data": {
       "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
       "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
-      "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
+      "fileType": {"ID": "fileType", "value": "0", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}

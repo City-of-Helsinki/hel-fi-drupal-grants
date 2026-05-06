@@ -1,5 +1,10 @@
 {
   "orienteering_maps_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
     "orienteering_subvention": {
       "orienteering_maps": {
         "ui:options": {
@@ -15,6 +20,29 @@
               "tooltipLabel": "map_name.title",
               "tooltipButtonLabel": "map_name.title",
               "tooltipText": "map_name.description"
+            }
+          },
+          "size": {
+            "ui:options": {
+              "format": "decimal-number"
+            }
+          }
+        },
+        "additionalItems": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          },
+          "map_name": {
+            "ui:widget": "textarea",
+            "ui:options": {
+              "tooltipLabel": "map_name.title",
+              "tooltipButtonLabel": "map_name.title",
+              "tooltipText": "map_name.description"
+            }
+          },
+          "size": {
+            "ui:options": {
+              "format": "decimal-number"
             }
           }
         }
@@ -54,7 +82,8 @@
         "other_attachment_fieldset_file": {
           "misc:file-type": 0,
           "misc:variant": "simple",
-          "ui:help": "other_attachment_fieldset.ui_help",
+          "misc:multiple": "true",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help",
           "ui:field": "atvFile"
         }
       }
