@@ -31,8 +31,8 @@ final class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The value to validate, a result of json_decode function call.
    *
-   * @return array
-   *   Messages array.
+   * @return mixed[]
+   *   Handlers array.
    */
   public function getHandlers(AtvDocument $document): array {
     $content = $document->getContent();
@@ -71,7 +71,7 @@ final class Avus2DataParser {
           $message['messageStatus'] = 'READ';
         }
 
-        // An url which is shown to end user, allows marking message as read.
+        // A url which is shown to end user, allows marking message as read.
         if (
           $message['sentBy'] === 'Avustusten kasittelyjarjestelma' &&
           !$this->hasMatchingReadEvent($events, $message['messageId'])
@@ -125,7 +125,7 @@ final class Avus2DataParser {
    *   The atv document.
    *
    * @return array
-   *   The history.
+   *   The status history.
    */
   public function getHistory(AtvDocument $document): array {
     $content = $document->getContent();
@@ -152,7 +152,7 @@ final class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    *
-   * @return array
+   * @return mixed[]
    *   The submitted attachments.
    */
   public function getSubmittedAttachments(AtvDocument $document): array {
@@ -189,7 +189,7 @@ final class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
    *
-   * @return array
+   * @return mixed[]
    *   Uploaded files.
    */
   public function getUploadedAttachments(AtvDocument $document): array {
@@ -202,7 +202,7 @@ final class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
    *
-   * @return array
+   * @return mixed[]
    *   Array of filenames.
    */
   public function getUploadedAttachmentsFilenames(AtvDocument $document): array {
@@ -247,7 +247,7 @@ final class Avus2DataParser {
    * @param string $langcode
    *   The langcode.
    *
-   * @return array|null
+   * @return mixed[]|null
    *   The status string array or null.
    */
   public function getStatusStrings(string $langcode): ?array {
