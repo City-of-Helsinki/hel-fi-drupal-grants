@@ -236,10 +236,11 @@ final class Application extends ResourceBase {
       'status' => $document->getStatus(),
       'token' => $this->csrfTokenGenerator->get('rest'),
       'user_data' => $user_information,
-      'settings' => [
-        'acting_years' => $settings->getActingYears(),
-      ]
     ];
+    $response['form_settings'] = [
+      'acting_years' => $settings->getActingYears(),
+    ];
+    $response = array_merge($response, $settings->toArray());
 
     return new JsonResponse($response);
   }
@@ -403,7 +404,7 @@ final class Application extends ResourceBase {
         'HANDLER_ATT_OK',
         $application_number,
         "Attachment uploaded for the IBAN: $bankAccountNumber.",
-        $save_id
+        $bankFile['filename'],
       );
       $this->eventsService->addNewEventForApplication($document, $event);
     }
