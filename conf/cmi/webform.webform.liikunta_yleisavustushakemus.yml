@@ -14,8 +14,8 @@ third_party_settings:
     applicationTypeTerms:
       52: '52'
       60: '60'
-    applicationOpen: '2026-01-01T00:00:00'
-    applicationClose: '2026-12-06T23:59:59'
+    applicationOpen: '2026-05-01T00:00:00'
+    applicationClose: '2026-06-26T23:59:59'
     applicationContinuous: 0
     applicationTargetGroup: '26'
     disableCopying: 1
