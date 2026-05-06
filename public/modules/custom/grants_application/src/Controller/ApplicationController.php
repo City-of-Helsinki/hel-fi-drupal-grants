@@ -7,6 +7,9 @@ namespace Drupal\grants_application\Controller;
 use Drupal\Component\Transliteration\TransliterationInterface;
 use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\PrependCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -21,6 +24,7 @@ use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
@@ -338,8 +342,7 @@ final class ApplicationController extends ControllerBase {
     $submitted = $this->avus2DataParser->getSubmitted($document);
     $history = $this->avus2DataParser->getHistory($document);
     $handlers = $this->avus2DataParser->getHandlers($document);
-    // $unreadMsg = $this->avus2DataParser->getUnreadMessages($document);
-    $messages = $this->avus2DataParser->getReadMessages($document);
+    $messages = $this->avus2DataParser->getMessages($document);
 
     $langCode = $this->languageManager()->getCurrentLanguage()->getId();
     $statusStrings = $this->avus2DataParser->getStatusStrings($langCode);
@@ -755,6 +758,126 @@ final class ApplicationController extends ControllerBase {
     ] + $settings->toArray();
 
     return new JsonResponse($response);
+  }
+
+  /**
+   * Allow user marking message as "Read".
+   *
+   * Copied from original implementation (MessageController::markMessageRead)
+   *
+   * @param string $application_number
+   *   The application number.
+   * @param string $message_id
+   *   The message id.
+   *
+   * @return AjaxResponse
+   *   The ajax response.
+   */
+  public function markMessageRead(string $application_number, string $message_id): AjaxResponse {
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $user_information = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      // Unable to fetch user information.
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $submission = $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
+    }
+    catch (\Exception) {
+      throw new NotFoundHttpException();
+    }
+
+    if (!$submission) {
+      die('ajax response');
+      return new AjaxResponse();
+    }
+
+    try {
+      $atvDocument = $this->helfiAtvService->getDocument($application_number);
+    }
+    catch(\Exception $e) {
+      die('ajax respons');
+      return new AjaxResponse();
+    }
+
+    $submissionData = $atvDocument->getContent();
+    $thisEvent = array_filter($submissionData['events'], function ($event) use ($message_id) {
+      if (
+        isset($event['eventTarget']) &&
+        $event['eventTarget'] == $message_id &&
+        $event['eventType'] == $this->eventsService->getEventTypes()['MESSAGE_READ']
+      ) {
+        return TRUE;
+      }
+      return FALSE;
+    });
+
+    if (empty($thisEvent)) {
+      try {
+        $this->eventsService->logEvent(
+          $application_number,
+          $this->eventsService->getEventTypes()['MESSAGE_READ'],
+          (string) $this->t('Message marked as read'),
+          $message_id
+        );
+        $message = $this->t('Message marked as read');
+        $this->atvService->clearCache($application_number);
+      }
+      catch (EventException $ee) {
+        $this->getLogger('message_controller')->error('Error: %error', [
+          '%error' => $ee->getMessage(),
+        ]);
+        $isError = TRUE;
+        $message = $this->t('Message marking as read failed.');
+      }
+    }
+    else {
+      $message = $this->t('Message already read.');
+    }
+
+    $ajaxResponse = new AjaxResponse();
+
+    $dataSelector = str_replace(
+      '@message_id',
+      $message_id,
+      '[data-message-id="@message_id"]'
+    );
+
+    if (!$isError) {
+      // New message container.
+      $replaceMessageContainerCommand = new ReplaceCommand(
+        $dataSelector . ' .webform-submission-messages__new-message',
+        NULL
+      );
+      // Mark as read button.
+      $replaceButtonCommand = new ReplaceCommand($dataSelector . ' .use-ajax', NULL);
+
+      $ajaxResponse->addCommand($replaceMessageContainerCommand);
+      $ajaxResponse->addCommand($replaceButtonCommand);
+    }
+
+    $render = [
+      '#theme' => 'status_messages',
+      '#message_list' => [],
+      '#status_headings' => [
+        'status' => $this->t('Status message'),
+        'error' => $this->t('Error message'),
+        'warning' => $this->t('Warning message'),
+      ],
+    ];
+
+    $messageType = $isError ? 'error' : 'status';
+    $render['#message_list'][$messageType][] = $message;
+
+    $renderedHtml = $this->renderer->render($render);
+    $prependCommand = new PrependCommand($dataSelector, $renderedHtml);
+
+    $ajaxResponse->addCommand($prependCommand);
+
+    return $ajaxResponse;
   }
 
   /**
