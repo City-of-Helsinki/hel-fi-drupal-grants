@@ -124,7 +124,7 @@ final class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    *
-   * @return array
+   * @return mixed[]
    *   The status history.
    */
   public function getHistory(AtvDocument $document): array {

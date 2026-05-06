@@ -344,7 +344,7 @@ final class ApplicationController extends ControllerBase {
     $submitted = $this->avus2DataParser->getSubmitted($document);
     $history = $this->avus2DataParser->getHistory($document);
     $handlers = $this->avus2DataParser->getHandlers($document);
-    $messages = $this->avus2DataParser->getMessages($document, $application_number);
+    $messages = $this->avus2DataParser->getMessages($document);
 
     $langCode = $this->languageManager()->getCurrentLanguage()->getId();
     $statusStrings = $this->avus2DataParser->getStatusStrings($langCode);
@@ -864,13 +864,14 @@ final class ApplicationController extends ControllerBase {
 
     $render['#message_list'][$messageType][] = $message;
 
+    $renderedHtml = '';
     try {
       $renderedHtml = $this->renderer->render($render);
     }
     catch (\Exception $e) {
     }
 
-    $prependCommand = new PrependCommand($dataSelector, $renderedHtml);
+    $prependCommand = new PrependCommand($dataSelector, (string) $renderedHtml);
     $ajaxResponse->addCommand($prependCommand);
 
     return $ajaxResponse;
