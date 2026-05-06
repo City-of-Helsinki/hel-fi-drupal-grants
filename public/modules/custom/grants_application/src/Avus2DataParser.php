@@ -3,6 +3,7 @@
 namespace Drupal\grants_application;
 
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Link;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvDocument;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -40,37 +41,7 @@ final readonly class Avus2DataParser {
   }
 
   /**
-   * Get unread messages.
-   *
-   * @param \Drupal\helfi_atv\AtvDocument $document
-   *   The atv document.
-   *
-   * @return array
-   *   Messages array.
-   */
-  public function getUnreadMessages(AtvDocument $document): array {
-    $content = $document->getContent();
-
-    // grants_handler_preprocess_webform_submission_messages.
-    $unreadMsg = [];
-    foreach ($content['messages'] as $msg) {
-      if (!isset($msg["messageStatus"]) || !$msg["messageStatus"]) {
-        continue;
-      }
-
-      if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
-        $unreadMsg[] = [
-          '#theme' => 'message_notification_item',
-          '#message' => $msg,
-        ];
-      }
-    }
-
-    return $unreadMsg;
-  }
-
-  /**
-   * Get the read messages.
+   * Get the messages.
    *
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
@@ -78,17 +49,42 @@ final readonly class Avus2DataParser {
    * @return array
    *   Read messages.
    */
-  public function getReadMessages(AtvDocument $document): array {
+  public function getMessages(AtvDocument $document): array {
     $content = $document->getContent();
+    $events = $content['events'] ?? [];
 
     $messages = [];
     if (isset($content['messages']) && is_array($content['messages'])) {
       $submissionMessages = $this->messageService->parseMessages($content);
+
       foreach ($submissionMessages as $message) {
+        $message['messageStatus'] = 'UNREAD';
+        $message['markReadLink'] = $this->createMarkReadLink($message['caseId'], $message['messageId']);
+
+        if ($this->hasMatchingReadEvent($events, $message['messageId'])) {
+          $message['messageStatus'] = 'READ';
+          $message['markReadLink'] = '';
+        }
+
         $messages[] = $message;
       }
     }
     return $messages;
+  }
+
+  /**
+   * Does message have a matching read event?
+   *
+   * @param array $events
+   *   The events.
+   * @param $messageId
+   *   The messageId from a message.
+   *
+   * @return bool
+   *   Message has a matching read event.
+   */
+  private function hasMatchingReadEvent(array $events, string $messageId): bool {
+    return (bool) array_find($events, fn ($event) => $event['eventType'] == 'MESSAGE_READ' && $event['eventTarget'] === $messageId);
   }
 
   /**
@@ -199,6 +195,37 @@ final readonly class Avus2DataParser {
   public function getUploadedAttachmentsFilenames(AtvDocument $document): array {
     $files = $this->getUploadedAttachments($document);
     return array_map(fn($file) => $file['filename'], $files);
+  }
+
+  /**
+   * Triggers ajax which marks message as read.
+   *
+   * @param string $applicationNumber
+   *   The application number.
+   * @param string $messageId
+   *   The message link.
+   *
+   * @return \Drupal\Core\Link
+   *   The link to the "mark as read" method
+   */
+  private function createMarkReadLink(string $applicationNumber, string $messageId): Link {
+    $currentUri = \Drupal::request()->getUri();
+    $currentHost = \Drupal::request()->getSchemeAndHttpHost();
+    $currentDestination = str_replace($currentHost, '', $currentUri);
+
+    return Link::createFromRoute(t('Mark as read', [], []), 'helfi_grants.message_read',
+      [
+        'message_id' => $messageId,
+        'submission_id' => $applicationNumber,
+      ],
+      [
+        'query' => [
+          'destination' => $currentDestination,
+        ],
+        'attributes' => [
+          'class' => ['hds-button', 'hds-button--secondary', 'use-ajax'],
+        ],
+      ]);
   }
 
   /**
