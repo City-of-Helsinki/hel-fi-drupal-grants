@@ -4,19 +4,24 @@ namespace Drupal\grants_application;
 
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvDocument;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Parse the handlers, states, files etc.
  */
-final readonly class Avus2DataParser {
+final class Avus2DataParser {
+
+  use StringTranslationTrait;
 
   public function __construct(
     #[Autowire(service: 'grants_handler.message_service')]
     private MessageService $messageService,
     private LanguageManagerInterface $languageManager,
+    private RequestStack $requestStack,
   ) {
   }
 
@@ -46,24 +51,32 @@ final readonly class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    *
-   * @return array
-   *   Read messages.
+   * @return mixed[]
+   *   All messages.
    */
   public function getMessages(AtvDocument $document): array {
     $content = $document->getContent();
     $events = $content['events'] ?? [];
 
     $messages = [];
+
     if (isset($content['messages']) && is_array($content['messages'])) {
       $submissionMessages = $this->messageService->parseMessages($content);
 
       foreach ($submissionMessages as $message) {
         $message['messageStatus'] = 'UNREAD';
-        $message['markReadLink'] = $this->createMarkReadLink($message['caseId'], $message['messageId']);
+        $message['markReadLink'] = '';
 
         if ($this->hasMatchingReadEvent($events, $message['messageId'])) {
           $message['messageStatus'] = 'READ';
-          $message['markReadLink'] = '';
+        }
+
+        // An url which is shown to end user, allows marking message as read.
+        if (
+          $message['sentBy'] === 'Avustusten kasittelyjarjestelma' &&
+          !$this->hasMatchingReadEvent($events, $message['messageId'])
+        ) {
+          $message['markReadLink'] = $this->createMarkReadLink($message['caseId'], $message['messageId']);
         }
 
         $messages[] = $message;
@@ -75,9 +88,9 @@ final readonly class Avus2DataParser {
   /**
    * Does message have a matching read event?
    *
-   * @param array $events
+   * @param mixed[] $events
    *   The events.
-   * @param $messageId
+   * @param string $messageId
    *   The messageId from a message.
    *
    * @return bool
@@ -209,14 +222,14 @@ final readonly class Avus2DataParser {
    *   The link to the "mark as read" method
    */
   private function createMarkReadLink(string $applicationNumber, string $messageId): Link {
-    $currentUri = \Drupal::request()->getUri();
-    $currentHost = \Drupal::request()->getSchemeAndHttpHost();
+    $currentUri = $this->requestStack->getCurrentRequest()->getUri();
+    $currentHost = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
     $currentDestination = str_replace($currentHost, '', $currentUri);
 
-    return Link::createFromRoute(t('Mark as read', [], []), 'helfi_grants.message_read',
+    return Link::createFromRoute($this->t('Mark as read', [], []), 'helfi_grants.message_read',
       [
         'message_id' => $messageId,
-        'submission_id' => $applicationNumber,
+        'application_number' => $applicationNumber,
       ],
       [
         'query' => [
