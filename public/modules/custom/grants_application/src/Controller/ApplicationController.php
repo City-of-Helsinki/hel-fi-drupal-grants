@@ -772,7 +772,7 @@ final class ApplicationController extends ControllerBase {
    * @param string $message_id
    *   The message id.
    *
-   * @return AjaxResponse
+   * @return \Drupal\Core\Ajax\AjaxResponse
    *   The ajax response.
    */
   public function markMessageRead(string $application_number, string $message_id): AjaxResponse {
