@@ -4,9 +4,10 @@
 // biome-ignore-all lint/style/noNonNullAssertion: @todo UHF-12501
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 import type { FieldProps, UiSchema } from '@rjsf/utils';
-import { Checkbox, FileInput as HDSFileInput, TextInput } from 'hds-react';
+import { Checkbox, FileInput as HDSFileInput } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
+import type { ChangeEvent } from 'react';
 
 import {
   formConfigAtom,
@@ -21,7 +22,7 @@ import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 import { SubmitStates } from '../enum/SubmitStates';
 
-type ATVFile = { description?: string; fileId: number; fileName: string; fileType: string; href: string; size: number };
+type ATVFile = { fileId: number; fileName: string; fileType: string; href: string; size: number };
 
 type PersistedFile = ATVFile & {
   integrationID: string;
@@ -73,15 +74,14 @@ const filesFromATVData = (value?: ATVFile): File[] => {
  *
  * Add 'misc:multiple': 'true' to uiSchema to enable the feature.
  */
-const multipleFilesFromATVData = (value?: { files: ATVFile[]; description: string } | []): any => {
+const multipleFilesFromATVData = (value?: { files: ATVFile[] } | { files?: [] }): any => {
   if (!value?.files?.length) {
     return [];
   }
 
-  return value?.files?.map((file: ATVFile) => {
+  return value.files.map((file: ATVFile) => {
     const data = new Uint8Array(file.size);
-    const f = new File([data], file.fileName);
-    return f;
+    return new File([data], file.fileName);
   });
 };
 
@@ -126,14 +126,7 @@ export const FileInput = ({
     } else if (!isSimple && isIncludedInOtherFile) {
       previewValue = Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' });
     }
-    return (
-      <>
-        <PreviewInput value={previewValue} label={label} uiSchema={uiSchema} />
-        {isSimple && (
-          <PreviewInput value={formData?.description} label={t('file_description.title')} uiSchema={undefined} />
-        )}
-      </>
-    );
+    return <PreviewInput value={previewValue} label={label} uiSchema={uiSchema} />;
   }
 
   const handleResponseError = async (response: Response) => {
@@ -188,11 +181,8 @@ export const FileInput = ({
 
     const { href: integrationID, ...rest } = result;
 
-    const description = existingData?.description || '';
-
     onChange({
       integrationID,
-      description,
       isDeliveredLater: false,
       isIncludedInOtherFile: false,
       isNewAttachment: true,
@@ -203,12 +193,8 @@ export const FileInput = ({
   /**
    * Upload/delete handler for a file upload field accepting multiple file uploads.
    */
-  const handleMultiple = async (
-    files: File[],
-    existingData: { files: PersistedFile[]; description: string } | undefined,
-  ) => {
+  const handleMultiple = async (files: File[], existingData: { files: PersistedFile[] } | undefined) => {
     const existingFileCount = existingData?.files?.length ?? 0;
-    const description = existingData?.description || '';
 
     // Remove a file from rjsf-data.
     if (existingFileCount > files?.length) {
@@ -222,7 +208,7 @@ export const FileInput = ({
         }
       });
 
-      // Readd the existing files to the json.
+      // Read the existing files to the json.
       onChange({ files: existingFiles });
       return;
     }
@@ -245,7 +231,7 @@ export const FileInput = ({
       result = await uploadFiles(name, applicationNumber, token, files, fileType);
     } catch (error) {
       pushNotification({
-        children: <div>{error.message}</div>,
+        children: <div>{error instanceof Error ? error.message : String(error)}</div>,
         label: t('file_upload_failed.title'),
         type: 'error',
       });
@@ -261,7 +247,6 @@ export const FileInput = ({
     const { href: integrationID, ...rest } = result;
     const newFile = {
       integrationID,
-      description,
       isDeliveredLater: false,
       isIncludedInOtherFile: false,
       isNewAttachment: true,
@@ -275,7 +260,7 @@ export const FileInput = ({
     });
     allFiles.push(newFile);
 
-    onChange({ files: allFiles, description });
+    onChange({ files: allFiles });
   };
 
   const inputElement = multipleFiles ? (
@@ -283,10 +268,10 @@ export const FileInput = ({
       accept={accept}
       defaultValue={defaultValue}
       disabled={readonly || isEmptyPreview}
-      dragAndDrop
+      dragAndDrop={false}
       errorText={formatErrors(rawErrors)}
       hideLabel={false}
-      id={id || ''}
+      id={id || name || ''}
       invalid={Boolean(rawErrors?.length)}
       label={label}
       language={drupalSettings.path.currentLanguage}
@@ -304,10 +289,10 @@ export const FileInput = ({
       accept={accept}
       defaultValue={defaultValue}
       disabled={readonly || isEmptyPreview}
-      dragAndDrop
+      dragAndDrop={false}
       errorText={formatErrors(rawErrors)}
       hideLabel={false}
-      id={id || ''}
+      id={id || name || ''}
       invalid={Boolean(rawErrors?.length)}
       label={label}
       language={drupalSettings.path.currentLanguage}
@@ -321,23 +306,10 @@ export const FileInput = ({
     />
   );
 
-  const descriptionElement = (
-    <TextInput
-      disabled={readonly || isEmptyPreview}
-      id={`${name}-description`}
-      label={t('file_description.title')}
-      onChange={(e) => {
-        onChange({ ...formData, description: e.target.value });
-      }}
-      value={formData?.description || ''}
-    />
-  );
-
   if (uiSchema?.['misc:variant'] === 'simple') {
     return (
       <div className='hdbt-form--fileinput' key={refreshKey}>
         {inputElement}
-        {descriptionElement}
       </div>
     );
   }
@@ -350,7 +322,7 @@ export const FileInput = ({
         disabled={readonly || isEmptyPreview || Boolean(defaultValue.length)}
         id={`${name}-delivered-later`}
         label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
-        onChange={(e) => {
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
           onChange({
             ...formData,
             isDeliveredLater: e.target.checked,
@@ -365,7 +337,7 @@ export const FileInput = ({
         disabled={readonly || isEmptyPreview || Boolean(defaultValue.length)}
         id={`${name}-included-in-other-file`}
         label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
-        onChange={(e) => {
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
           onChange({
             ...formData,
             isIncludedInOtherFile: e.target.checked,

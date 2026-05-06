@@ -86,17 +86,27 @@ async function handleField(
     triggeredConditions.add(field.conditionField);
   }
 
-  // This field belongs to a repeatable list, like "Applied grants".
+  // The current field belongs to a repeatable list, like "Applied grants".
   if (field.isArrayItem && field.arrayField && !addedArrays.has(field.arrayField)) {
-    // Find and remove any empty list item that was auto-added by the
-    // form, since it would cause errors if left unfilled.
-    const emptyItem = page.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
-    if (await emptyItem.count() > 0) {
+    const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
+    const fieldElement = page.locator(`#${fieldId}`);
+
+    // Get the current scope by searching the ".field-array" element.
+    const arrayContainer = await fieldElement.count() > 0
+      ? fieldElement.locator('xpath=ancestor::div[contains(@class,"field-array")][1]')
+      : page.locator('.field-array').filter({
+          has: page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }),
+        }).first();
+
+    // Remove auto-added empty rows left over from the error-gathering pass.
+    let emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
+    while (await emptyItem.count() > 0) {
+      logger('Found empty list item, removing it.');
       await emptyItem.getByRole('button', { name: /Remove|Poista|Ta bort/i }).click();
+      emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
     }
 
-    // Click "Add" to create a new list item to fill in.
-    const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
+    // Click "Add" to create a fresh list item to fill in.
     await page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).first().click();
     addedArrays.add(field.arrayField);
     if (field.groupDescriptionKey) {
@@ -126,7 +136,7 @@ async function handleField(
   }
 
   // Handle the radio buttons by selecting "Yes", to expand the extra
-  // questions.
+  // questions. Note! This might clash with conditional fields.
   if (field.widget === 'radio') {
     await expect(page.locator(`#${fieldId}_true`)).toBeVisible();
     await expect(page.locator(`#${fieldId}_false`)).toBeVisible();
@@ -139,30 +149,31 @@ async function handleField(
     return;
   }
 
-  // File upload fields need a real file attached and a description
-  // filled in.
-  // @todo Test with two or more files.
+  // File upload fields need a real file(s) attached.
   if (field.widget === 'atvFile') {
-    const descriptionLocator = page.locator(`#${field.fieldName}-description`);
-    await expect(descriptionLocator).toBeVisible();
+    const fileInput = page.locator(`#${field.fieldName}`);
+    await expect(fileInput).toBeVisible();
+    // Fill the form with two files.
     if (shouldFill) {
-      // The actual file input is hidden inside the upload component.
-      // Walk up the DOM to find it.
-      const fileInput = descriptionLocator.locator(
-        'xpath=ancestor::div[contains(@class,"hdbt-form--fileinput")][1]//input[@type="file"]'
-      );
-      await fileInput.setInputFiles(path.join(__dirname, '../data/attachments/07_muu_liite.pdf'));
-      await expect(page.locator('.hdbt-form--fileinput').filter({ hasText: '07_muu_liite.pdf' })).toBeVisible();
-      const description = faker.lorem.sentence();
-      await page.locator(`#${field.fieldName}-description`).pressSequentially(description);
-      filledFields?.set(`${field.fieldName}-description`, description);
+      const attachments = ['07_muu_liite.pdf', '08_muu_liite.pdf'];
+      for (const attachment of attachments) {
+        // Register before setInputFiles so we don't miss the response event.
+        const uploadDone = page.waitForResponse(
+          r => r.url().includes('/upload') && r.ok(),
+          { timeout: 15000 },
+        );
+        await fileInput.setInputFiles(path.join(__dirname, '../data/attachments', attachment));
+        // Each upload must be completed before the next upload, otherwise only
+        // one file is actually uploaded.
+        await uploadDone;
+        await expect(page.locator('.hdbt-form--fileinput').filter({ hasText: attachment })).toBeVisible();
+      }
+      filledFields?.set(fieldId, attachments.join(', '));
     }
     // When verifying, check the description still holds the value
     // we typed during the fill pass.
-    else if (filledFields?.has(`${field.fieldName}-description`)) {
-      await expect(descriptionLocator).toHaveValue(
-        filledFields!.get(`${field.fieldName}-description`)!
-      );
+    else if (filledFields?.has(fieldId)) {
+      await expect(fileInput).toHaveValue(filledFields!.get(fieldId)!);
     }
     return;
   }
@@ -408,56 +419,59 @@ async function verifyPreviewStep(
   await expect(preview).toBeVisible();
 
   // Loop through all fields and check each value appears in the preview.
-  for (const [sectionKey, fields] of Object.entries(confirmStep)) {
-    for (const [, field] of Object.entries(fields)) {
-      const fieldId = `root_${field.fieldPath.join('_')}`;
-      const value = filledFields.get(fieldId);
-      if (!value || value === 'true' || value === 'false') continue;
+  for (const [, [, sections]] of Object.entries(tree).entries()) {
+    for (const [, [section, fields]] of Object.entries(sections).entries()) {
+      for (const [, field] of Object.entries(fields)) {
+        const fieldId = `root_${field.fieldPath.join('_')}`;
+        const value = filledFields.get(fieldId);
+        const fieldTitle = t(field.titleKey);
+        const sectionTitle = t(`${section}.title`);
 
-      const fieldTitle = t(field.titleKey);
-      const sectionTitle = t(`${sectionKey}.title`);
+        // Skip if there is no value or the value is a radio button value.
+        if (!value || value === 'true' || value === 'false') continue;
 
-      // Build an exact-match pattern for the field title to avoid a short
-      // title like "Vuosi" matching a longer label like "Vuosi, jolle haen".
-      const exactFieldTitle = new RegExp(`^\\s*${fieldTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`);
+        // Build an exact-match pattern for the field title to avoid a short
+        // title like "Vuosi" matching a longer label like "Vuosi, jolle haen".
+        const exactFieldTitle = new RegExp(`^\\s*${fieldTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`);
 
-      await test.step(`Preview: ${fieldTitle} = ${value}`, async () => {
+        await test.step(`Preview: ${fieldTitle} = ${value}`, async () => {
 
-        // Narrow the search area to this section so we don't accidentally
-        // find the value in a different section with the same field name.
-        const sectionContainer = preview
-          .locator('section.grants-form--preview-section')
-          .filter({ has: page.locator('h4.hdbt-form--section__title', { hasText: sectionTitle }) });
-        const scope = (await sectionContainer.count() > 0) ? sectionContainer : preview;
+          // Narrow the search area to this section so we don't accidentally
+          // find the value in a different section with the same field name.
+          const sectionContainer = preview
+            .locator('section.grants-form--preview-section')
+            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: sectionTitle})});
+          const scope = (await sectionContainer.count() > 0) ? sectionContainer : preview;
 
-        // First try: some fields have their own section heading.
-        // Check the value appears inside that section.
-        const byFieldTitle = preview
-          .locator('section.grants-form--preview-section')
-          .filter({ has: page.locator('h4.hdbt-form--section__title', { hasText: fieldTitle }) });
-        if (await byFieldTitle.count() > 0) {
-          await expect(byFieldTitle.locator('.hdbt-form--section__content')).toContainText(value);
-          return;
-        }
+          // First try: some fields have their own section heading.
+          // Check the value appears inside that section.
+          const byFieldTitle = preview
+            .locator('section.grants-form--preview-section')
+            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: fieldTitle})});
+          if (await byFieldTitle.count() > 0) {
+            await expect(byFieldTitle.locator('.hdbt-form--section__content')).toContainText(value);
+            return;
+          }
 
-        // Second try: find the field by its label span and check the
-        // value appears next to it.
-        const bySpanLabel = scope
-          .locator('span.grants-form--preview-section__label')
-          .filter({ hasText: exactFieldTitle })
-          .locator('xpath=..')
-          .first();
+          // Second try: find the field by its label span and check the
+          // value appears next to it.
+          const bySpanLabel = scope
+            .locator('span.grants-form--preview-section__label')
+            .filter({hasText: exactFieldTitle})
+            .locator('xpath=..')
+            .first();
 
-        if (await bySpanLabel.count() > 0) {
-          await expect(bySpanLabel).toContainText(value);
-          return;
-        }
+          if (await bySpanLabel.count() > 0) {
+            await expect(bySpanLabel).toContainText(value);
+            return;
+          }
 
-        // Last resort: check the value appears anywhere in the section.
-        await expect(
-          scope.locator('.hdbt-form--section__content').filter({ hasText: value }).first()
-        ).toBeVisible();
-      });
+          // Last resort: check the value appears anywhere in the section.
+          await expect(
+            scope.locator('.hdbt-form--section__content').filter({hasText: value}).first()
+          ).toBeVisible();
+        });
+      }
     }
   }
 }
@@ -485,15 +499,12 @@ export async function fillFormFields(
   const tree = buildFormTree(formData as any);
   const filledFields:FilledFields = options.filledFields ?? new Map();
 
-  let missingInputs = {};
-
   // Submit the empty form first to trigger all required field errors.
   // This lets us verify that every required field shows an error message.
   await test.step('Gather form errors', async () => {
     if (!options.formURL) throw new Error(`The form URL is missing.`);
     await page.goto(options.formURL);
     await gatherRequiredFieldWarnings(page);
-    missingInputs = page.locator('[class*="notification_hds-notification--error__"] li');
     await assertMissingInputsVisible(page);
   });
 

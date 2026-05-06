@@ -1,8 +1,7 @@
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import type { FieldProps } from '@rjsf/utils';
 import { TextInput } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ComponentPropsWithRef } from 'react';
 
 import { formDataAtomRef, getSubventionFieldsAtom, shouldRenderPreviewAtom } from '../../store';
 import { getSubventionSum, sanitizeNumericInput } from '../../utils';
@@ -33,5 +32,15 @@ export const SubventionSum = ({ idSchema, name, onChange, schema, uiSchema }: Fi
     return <PreviewInput label={schema?.title} value={formattedSum} uiSchema={uiSchema} />;
   }
 
-  return <TextInput disabled id={idSchema.$id} label={schema?.title} name={name} value={formattedSum} />;
+  return (
+    <TextInput
+      {...({
+        disabled: true,
+        id: idSchema.$id,
+        label: schema?.title,
+        name,
+        value: formattedSum,
+      } as ComponentPropsWithRef<typeof TextInput>)}
+    />
+  );
 };
