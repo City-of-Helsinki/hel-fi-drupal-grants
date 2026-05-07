@@ -329,7 +329,7 @@ final class ApplicationController extends ControllerBase {
         }
       }
     }
-    elseif (in_array($documentStatus, ['DRAFT', 'RECEIVED'])) {
+    elseif (in_array($documentStatus, ['DRAFT', 'RECEIVED', 'PREPARING'])) {
       $isEditable = TRUE;
     }
 
