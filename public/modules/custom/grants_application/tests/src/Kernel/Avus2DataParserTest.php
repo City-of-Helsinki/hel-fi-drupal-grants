@@ -27,7 +27,7 @@ final class Avus2DataParserTest extends KernelTestBase {
   /**
    * Test message parsing.
    */
-  public function testMessageParsing() {
+  public function testMessageParsing(): void {
     $document = $this->getAtvDocument($this->applicationNumber);
     $messages = $this->container->get(Avus2DataParser::class)->getMessages($document);
 
