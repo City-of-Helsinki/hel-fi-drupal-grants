@@ -20,6 +20,7 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusService;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
+use Drupal\Tests\grants_application\Trait\AtvDocumentTrait;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -31,6 +32,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @group grants_application
  */
 final class ApplicationControllerTest extends KernelTestBase {
+
+  use AtvDocumentTrait;
 
   /**
    * The application submission.
@@ -105,46 +108,7 @@ final class ApplicationControllerTest extends KernelTestBase {
     ]);
     $this->applicationSubmission->save();
 
-    $this->atvDocument = AtvDocument::create([
-      'id' => 'test-id',
-      'type' => 'type',
-      'status' => [
-        'value' => 'DRAFT',
-      ],
-      'status_histories' => [
-        'DRAFT',
-      ],
-      'transaction_id' => '1234567890',
-      'business_id' => '1234567-1',
-      'tos_function_id' => '12345',
-      'tos_record_id' => '54321',
-      'draft' => TRUE,
-      'human_readable_type' => ['humanType'],
-      'metadata' => '{"name": "Name", "value": "Value"}',
-      'content' => '{"data": "content"}',
-      'created_at' => '2024-06-06',
-      'updated_at' => '2024-06-07',
-      'user_id' => 'userId',
-      'locked_after' => '2024-06-08',
-      'deletable' => TRUE,
-      'delete_after' => '2075-01-01',
-      'document_language' => 'fi',
-      'content_schema_url' => 'schemaURL',
-    ]);
-    $this->atvDocument->setContent([
-      'compensation' => [],
-      'formUpdate' => FALSE,
-      'events' => [],
-      'messages' => [
-        [
-          'caseId' => $this->applicationNumber,
-          'messageId' => 'aaaaaaaa-1111-2222-3333-bbbbbbbbbbbbb',
-          'body' => 'viesti viesti viesti',
-          'sentBy' => 'Avustusten kasittelyjarjestelma',
-          'sendDateTime' => '2026-05-06T08:40:37',
-        ],
-      ],
-    ]);
+    $this->atvDocument = $this->getAtvDocument($this->applicationNumber);
 
     $applicationGetterService = $this->createMock(ApplicationGetterService::class);
     $applicationGetterService->expects($this->any())->method('getAtvDocument')->willReturn($this->atvDocument);
