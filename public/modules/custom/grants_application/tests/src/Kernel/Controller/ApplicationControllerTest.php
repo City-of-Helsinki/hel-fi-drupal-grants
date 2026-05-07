@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel\Controller;
 
+use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Controller\ApplicationController;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -44,6 +45,13 @@ final class ApplicationControllerTest extends KernelTestBase {
    * @var string
    */
   private string $applicationNumber = "KERNELTEST-058-0000001";
+
+  /**
+   * The message id.
+   *
+   * @var string
+   */
+  private string $messageId = 'aaaaaaaa-1111-2222-3333-bbbbbbbbbbbbb';
 
   /**
    * The atv document.
@@ -122,6 +130,20 @@ final class ApplicationControllerTest extends KernelTestBase {
       'delete_after' => '2075-01-01',
       'document_language' => 'fi',
       'content_schema_url' => 'schemaURL',
+    ]);
+    $this->atvDocument->setContent([
+      'compensation' => [],
+      'formUpdate' => FALSE,
+      'events' => [],
+      'messages' => [
+        [
+          'caseId' => $this->applicationNumber,
+          'messageId' => 'aaaaaaaa-1111-2222-3333-bbbbbbbbbbbbb',
+          'body' => 'viesti viesti viesti',
+          'sentBy' => 'Avustusten kasittelyjarjestelma',
+          'sendDateTime' => '2026-05-06T08:40:37',
+        ],
+      ],
     ]);
 
     $applicationGetterService = $this->createMock(ApplicationGetterService::class);
@@ -292,6 +314,29 @@ final class ApplicationControllerTest extends KernelTestBase {
     $response = $controller->formPreview($this->applicationNumber);
     $this->assertEquals(404, $response->getStatusCode());
     $this->assertEquals([], json_decode($response->getContent(), TRUE));
+  }
+
+  /**
+   * Test updating a message as "read".
+   */
+  public function testUpdateMessageAsRead(): void {
+    $grantsProfile = new GrantsProfile(['businessId' => 'no-match']);
+    $userInformationService = $this->createMock(UserInformationService::class);
+    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
+    $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
+    $this->container->set(UserInformationService::class, $userInformationService);
+
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->method('getDocument')->willReturn($this->atvDocument);
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $eventsService = $this->createMock(EventsService::class);
+    $eventsService->method('logEvent')->willReturn([]);
+    $this->container->set(EventsService::class, $eventsService);
+
+    $controller = ApplicationController::create($this->container);
+    $response = $controller->markMessageRead($this->applicationNumber, $this->messageId);
+    $this->assertInstanceOf(AjaxResponse::class, $response);
   }
 
 }

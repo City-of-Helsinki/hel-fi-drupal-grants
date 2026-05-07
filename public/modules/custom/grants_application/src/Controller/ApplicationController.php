@@ -790,7 +790,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
     }
-    catch (\Exception) {
+    catch (\Exception $e) {
       die();
     }
 
@@ -802,11 +802,12 @@ final class ApplicationController extends ControllerBase {
     }
 
     $submissionData = $atvDocument->getContent();
-    $thisEvent = array_filter($submissionData['events'], function ($event) use ($message_id) {
+    $messageType = 'MESSAGE_READ';
+    $thisEvent = array_filter($submissionData['events'], function ($event) use ($message_id, $messageType) {
       if (
         isset($event['eventTarget']) &&
         $event['eventTarget'] == $message_id &&
-        $event['eventType'] == $this->eventsService->getEventTypes()['MESSAGE_READ']
+        $event['eventType'] == $messageType
       ) {
         return TRUE;
       }
@@ -815,10 +816,10 @@ final class ApplicationController extends ControllerBase {
 
     if (empty($thisEvent)) {
       try {
-        // Log event will send request..
+        // EventsService::logEvent will send a request.
         $this->eventsService->logEvent(
           $application_number,
-          $this->eventsService->getEventTypes()['MESSAGE_READ'],
+          $messageType,
           (string) $this->t('Message marked as read'),
           $message_id
         );
