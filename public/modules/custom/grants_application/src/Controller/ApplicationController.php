@@ -593,9 +593,9 @@ final class ApplicationController extends ControllerBase {
   /**
    * Remove an application.
    */
-  public function removeApplication(string $id): RedirectResponse {
+  public function removeApplication(string $id): JsonResponse {
     // @todo The original implementation and this must be done properly.
-    $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
+    $redirectUrl = Url::fromRoute('grants_oma_asiointi.front')->toString();
     $tOpts = ['context' => 'grants_handler'];
 
     try {
@@ -610,7 +610,7 @@ final class ApplicationController extends ControllerBase {
           ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
         $this->getLogger('grants_handler')
           ->error('Error: %error', ['%error' => "Cannot find application number $id"]);
-        return new RedirectResponse($redirectUrl->toString());
+        return new JsonResponse(['redirectUrl' => $redirectUrl]);
       }
 
       $submission = ApplicationSubmission::load(reset($ids));
@@ -620,7 +620,7 @@ final class ApplicationController extends ControllerBase {
         ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
       $this->getLogger('grants_handler')
         ->error('Error: %error', ['%error' => $e->getMessage()]);
-      return new RedirectResponse($redirectUrl->toString());
+      return new JsonResponse(['redirectUrl' => $redirectUrl]);
     }
     $document = $this->applicationGetterService->getAtvDocument($id);
 
@@ -628,7 +628,7 @@ final class ApplicationController extends ControllerBase {
       if ($document->getStatus() !== 'DRAFT') {
         $this->messenger()
           ->addError($this->t('Only DRAFT status submissions are deletable', [], $tOpts));
-        return new RedirectResponse($redirectUrl->toString());
+        return new JsonResponse(['redirectUrl' => $redirectUrl]);
       }
     }
 
@@ -641,7 +641,7 @@ final class ApplicationController extends ControllerBase {
       if ($lock && $lock->uid !== $uid) {
         $msg = $this->contentLock->displayLockOwner($lock, FALSE);
         $this->messenger()->addMessage($msg);
-        return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
+        return new JsonResponse(['redirectUrl' => $redirectUrl]);
       }
     }
 
@@ -657,7 +657,7 @@ final class ApplicationController extends ControllerBase {
         ->error('Error: %error', ['%error' => $e->getMessage()]);
     }
 
-    return new RedirectResponse($redirectUrl->toString());
+    return new JsonResponse(['redirectUrl' => $redirectUrl]);
   }
 
   /**
