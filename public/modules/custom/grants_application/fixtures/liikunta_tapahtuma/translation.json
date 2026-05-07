@@ -1,0 +1,159 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Sports, event grant application",
+      "fi": "Liikunta, tapahtuma-avustushakemus",
+      "sv": "Idrott, ansökan om understöd för evenemang"
+    },
+    "acting_year_section_acting_year.description": {
+      "en": "Please note that eligibility criteria for different grants might change from year to year.",
+      "fi": "Huomioithan, että avustusten kriteerit saattavat muuttua vuosittain.",
+      "sv": "Observera att grunder för beviljande för olika understödsformer kan ändras årligen."
+    },
+    "subventions.37.title": {
+      "en": "Event grant",
+      "fi": "Tapahtuma-avustus",
+      "sv": "Evenemangsunderstöd"
+    },
+    "event_info_section.title": {
+      "en": "Event information",
+      "fi": "Tapahtuman tiedot",
+      "sv": "Information om evenemanget"
+    },
+    "event_for_applied_grant.title": {
+      "en": "Event for which the grant is being applied",
+      "fi": "Tapahtuma, johon avustusta haetaan",
+      "sv": "Evenemanget för vilket understödet ansöks"
+    },
+    "event_target_group.title": {
+      "en": "Event's target group",
+      "fi": "Tapahtuman kohderyhmä",
+      "sv": "Evenemangets målgrupp"
+    },
+    "event_location.title": {
+      "en": "Event location",
+      "fi": "Tapahtumapaikka",
+      "sv": "Evenemangsplats"
+    },
+    "event_details.title": {
+      "en": "Details on the event and its content",
+      "fi": "Tarkemmat tiedot tapahtumasta ja sen sisällöstä",
+      "sv": "Närmare information om evenemanget och dess innehåll"
+    },
+    "equality_radios.title": {
+      "en": "The event promotes equality and non-discrimination",
+      "fi": "Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa",
+      "sv": "Evenemanget främjar likvärdighet och jämlikhet"
+    },
+    "equality_how.title": {
+      "en": "How does the event promote equality and non-discrimination?",
+      "fi": "Miten tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?",
+      "sv": "Hur kommer evenemanget att främja likvärdighet och jämlikhet?"
+    },
+    "inclusion_radios.title": {
+      "en": "The event promotes inclusion and communality",
+      "fi": "Tapahtuma edistää osallisuutta ja yhteisöllisyyttä",
+      "sv": "Evenemanget främjar delaktighet och social gemenskap"
+    },
+    "inclusion_how.title": {
+      "en": "How does the event promote inclusion and communality?",
+      "fi": "Miten tapahtuma edistää osallisuutta ja yhteisöllisyyttä?",
+      "sv": "Hur främjar evenemanget delaktighet och social gemenskap?"
+    },
+    "environment_radios.title": {
+      "en": "The event takes environmental matters into account",
+      "fi": "Tapahtumassa on huomioitu ympäristöasiat",
+      "sv": "Miljöfrågor har beaktats vid evenemanget"
+    },
+    "environment_how.title": {
+      "en": "How does the event take environmental matters into account?",
+      "fi": "Miten tapahtumassa on huomioitu ympäristöasiat?",
+      "sv": "Hur har evenemanget tagit hänsyn till miljöfrågor?"
+    },
+    "exercise_radios.title": {
+      "en": "The event inspires new people to take up independent or guided sports activities",
+      "fi": "Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin",
+      "sv": "Evenemanget inspirerar nya utövare att delta i självständig eller handledd motion"
+    },
+    "exercise_how.title": {
+      "en": "How does the event inspire new people to take up independent or guided sports activities?",
+      "fi": "Miten tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin?",
+      "sv": "Hur kommer evenemanget att inspirera nya utövare att delta i självständig eller handledd motion?"
+    },
+    "activity_radios.title": {
+      "en": "The event inspires people to be more actively in their daily lives",
+      "fi": "Tapahtuma innostaa ihmisiä arkiaktiivisuuteen",
+      "sv": "Evenemanget uppmuntrar människor till en fysiskt aktiv vardag"
+    },
+    "activity_how.title": {
+      "en": "How does the event inspire people to be more actively in their daily lives?",
+      "fi": "Miten tapahtuma innostaa ihmisiä arkiaktiivisuuteen?",
+      "sv": "Hur kommer evenemanget att uppmuntra människor till en fysiskt aktiv vardag?"
+    },
+    "participants_section.title": {
+      "en": "Participants",
+      "fi": "Osallistujat",
+      "sv": "Deltagare"
+    },
+    "participants_section_help.value": {
+      "en": "The estimated numbers must include the participants whom the event engages in physical activity. As such, the estimates should exclude the participating audience and volunteers, for example.",
+      "fi": "Arvioiduissa osallistujamäärissä tulee huomioida ne osallistujat, joita tapahtuma liikuttaa. Arvioiduissa määrissä ei siis huomioida esimerkiksi tapahtumaan osallistuvan yleisön tai vapaaehtoisten määrää.",
+      "sv": "I det beräknade antalet deltagare ska de deltagare som idrottar i evenemanget beaktas. Till exempel antalet personer i publiken eller frivilliga som medverkar vid evenemanget ska alltså inte beaktas."
+    },
+    "adult_participants.title": {
+      "en": "Participants 20 years and older",
+      "fi": "20 vuotta täyttäneet osallistujat",
+      "sv": "Deltagare 20 år och äldre"
+    },
+    "adult_men.title": {
+      "en": "Men",
+      "fi": "Miehet",
+      "sv": "Män"
+    },
+    "adult_women.title": {
+      "en": "Women",
+      "fi": "Naiset",
+      "sv": "Kvinnor"
+    },
+    "adult_other.title": {
+      "en": "Others",
+      "fi": "Muut",
+      "sv": "Övriga"
+    },
+    "minor_participants.title": {
+      "en": "Participants under the age of 20",
+      "fi": "Alle 20-vuotiaat osallistujat",
+      "sv": "Deltagare under 20 år"
+    },
+    "minor_men.title": {
+      "en": "Boys",
+      "fi": "Pojat",
+      "sv": "Pojkar"
+    },
+    "minor_women.title": {
+      "en": "Girls",
+      "fi": "Tytöt",
+      "sv": "Flickor"
+    },
+    "minor_other.title": {
+      "en": "Others",
+      "fi": "Muut",
+      "sv": "Övriga"
+    },
+    "event_date_section.title": {
+      "en": "Timing of the event",
+      "fi": "Tapahtuma-ajankohta",
+      "sv": "Evenemangets tidpunkt"
+    },
+    "event_start_date.title": {
+      "en": "Begins",
+      "fi": "Alkaa",
+      "sv": "Börjar"
+    },
+    "event_end_date.title": {
+      "en": "Ends",
+      "fi": "Päättyy",
+      "sv": "Slutar"
+    }
+  }
+}

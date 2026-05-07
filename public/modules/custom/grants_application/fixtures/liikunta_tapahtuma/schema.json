@@ -1,0 +1,250 @@
+{
+  "definitions": {
+    "grant_info_step": {
+      "required": [
+        "acting_year_section",
+        "subventions_section",
+        "event_info_section",
+        "participants_section",
+        "event_date_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
+            }
+          },
+          "required": ["acting_year"]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 37,
+                  "label": "subventions.37.title"
+                }
+              ]
+            }
+          }
+        },
+        "event_info_section": {
+          "title": "event_info_section.title",
+          "type": "object",
+          "properties": {
+            "event_for_applied_grant": {
+              "title": "event_for_applied_grant.title",
+              "type": "string"
+            },
+            "event_target_group": {
+              "title": "event_target_group.title",
+              "type": "string"
+            },
+            "event_location": {
+              "title": "event_location.title",
+              "type": "string"
+            },
+            "event_details": {
+              "title": "event_details.title",
+              "type": "string"
+            },
+            "equality_radios": {
+              "title": "equality_radios.title",
+              "enum": [false, true],
+              "default": false
+            },
+            "inclusion_radios": {
+              "title": "inclusion_radios.title",
+              "enum": [false, true],
+              "default": false
+            },
+            "environment_radios": {
+              "title": "environment_radios.title",
+              "enum": [false, true],
+              "default": false
+            },
+            "exercise_radios": {
+              "title": "exercise_radios.title",
+              "enum": [false, true],
+              "default": false
+            },
+            "activity_radios": {
+              "title": "activity_radios.title",
+              "enum": [false, true],
+              "default": false
+            }
+          },
+          "required": [
+            "event_for_applied_grant",
+            "event_target_group",
+            "event_location",
+            "event_details",
+            "equality_radios",
+            "inclusion_radios",
+            "environment_radios",
+            "exercise_radios",
+            "activity_radios"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": { "equality_radios": { "const": true } }
+              },
+              "then": {
+                "properties": {
+                  "equality_how": {
+                    "title": "equality_how.title",
+                    "type": "string"
+                  }
+                },
+                "required": ["equality_how"]
+              }
+            },
+            {
+              "if": {
+                "properties": { "inclusion_radios": { "const": true } }
+              },
+              "then": {
+                "properties": {
+                  "inclusion_how": {
+                    "title": "inclusion_how.title",
+                    "type": "string"
+                  }
+                },
+                "required": ["inclusion_how"]
+              }
+            },
+            {
+              "if": {
+                "properties": { "environment_radios": { "const": true } }
+              },
+              "then": {
+                "properties": {
+                  "environment_how": {
+                    "title": "environment_how.title",
+                    "type": "string"
+                  }
+                },
+                "required": ["environment_how"]
+              }
+            },
+            {
+              "if": {
+                "properties": { "exercise_radios": { "const": true } }
+              },
+              "then": {
+                "properties": {
+                  "exercise_how": {
+                    "title": "exercise_how.title",
+                    "type": "string"
+                  }
+                },
+                "required": ["exercise_how"]
+              }
+            },
+            {
+              "if": {
+                "properties": { "activity_radios": { "const": true } }
+              },
+              "then": {
+                "properties": {
+                  "activity_how": {
+                    "title": "activity_how.title",
+                    "type": "string"
+                  }
+                },
+                "required": ["activity_how"]
+              }
+            }
+          ]
+        },
+        "participants_section": {
+          "title": "participants_section.title",
+          "type": "object",
+          "properties": {
+            "participants_help": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "participants_section_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "adult_participants": {
+              "title": "adult_participants.title",
+              "type": "object",
+              "properties": {
+                "adult_men": {
+                  "title": "adult_men.title",
+                  "type": "integer"
+                },
+                "adult_women": {
+                  "title": "adult_women.title",
+                  "type": "integer"
+                },
+                "adult_other": {
+                  "title": "adult_other.title",
+                  "type": "integer"
+                }
+              },
+              "required": ["adult_men", "adult_women", "adult_other"]
+            },
+            "minor_participants": {
+              "title": "minor_participants.title",
+              "type": "object",
+              "properties": {
+                "minor_men": {
+                  "title": "minor_men.title",
+                  "type": "integer"
+                },
+                "minor_women": {
+                  "title": "minor_women.title",
+                  "type": "integer"
+                },
+                "minor_other": {
+                  "title": "minor_other.title",
+                  "type": "integer"
+                }
+              },
+              "required": ["minor_men", "minor_women", "minor_other"]
+            }
+          },
+          "required": ["adult_participants", "minor_participants"]
+        },
+        "event_date_section": {
+          "title": "event_date_section.title",
+          "type": "object",
+          "properties": {
+            "start_date": {
+              "title": "event_start_date.title",
+              "type": "string"
+            },
+            "end_date": {
+              "title": "event_end_date.title",
+              "type": "string"
+            }
+          },
+          "required": ["start_date", "end_date"]
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    }
+  }
+}

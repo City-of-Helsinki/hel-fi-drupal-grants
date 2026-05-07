@@ -1,0 +1,136 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear",
+        "ui:options": {
+          "tooltipLabel": "acting_year_section_acting_year.title",
+          "tooltipButtonLabel": "acting_year_section_acting_year.title",
+          "tooltipText": "acting_year_section_acting_year.description"
+        }
+      }
+    },
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
+    "event_info_section": {
+      "ui:order": [
+        "event_for_applied_grant",
+        "event_target_group",
+        "event_location",
+        "event_details",
+        "equality_radios",
+        "equality_how",
+        "inclusion_radios",
+        "inclusion_how",
+        "environment_radios",
+        "environment_how",
+        "exercise_radios",
+        "exercise_how",
+        "activity_radios",
+        "activity_how"
+      ],
+      "event_for_applied_grant": {
+        "misc:max-length": 150
+      },
+      "event_target_group": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "event_location": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "event_details": {
+        "ui:widget": "textarea",
+        "misc:max-length": 3000
+      },
+      "equality_radios": {
+        "ui:enumNames": ["boolean.no", "boolean.yes"],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "equality_how": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "inclusion_radios": {
+        "ui:enumNames": ["boolean.no", "boolean.yes"],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "inclusion_how": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "environment_radios": {
+        "ui:enumNames": ["boolean.no", "boolean.yes"],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "environment_how": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "exercise_radios": {
+        "ui:enumNames": ["boolean.no", "boolean.yes"],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "exercise_how": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "activity_radios": {
+        "ui:enumNames": ["boolean.no", "boolean.yes"],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "activity_how": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    },
+    "participants_section": {
+      "participants_help": {
+        "ui:field": "textParagraph"
+      },
+      "adult_participants": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
+      },
+      "minor_participants": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
+      }
+    },
+    "event_date_section": {
+      "start_date": {
+        "ui:widget": "date",
+        "ui:options": {
+          "printableName": "event_start_date.title"
+        }
+      },
+      "end_date": {
+        "ui:widget": "date",
+        "ui:options": {
+          "printableName": "event_end_date.title"
+        }
+      }
+    }
+  }
+}
