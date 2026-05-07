@@ -795,12 +795,12 @@ final class ApplicationController extends ControllerBase {
       $user_information = $this->userInformationService->getUserData();
       $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
       $atvDocument = $this->helfiAtvService->getDocument($application_number);
-      $renderedHtml = $this->renderer->render($render);
     }
     catch (\Exception $e) {
       $this->getLogger('grants_application')
         ->error("User data fetch error when marking message as read: {$e->getMessage()}");
 
+      $renderedHtml = $this->renderer->render($render);
       $prependCommand = new PrependCommand($dataSelector, (string) $renderedHtml);
       $ajaxResponse->addCommand($prependCommand);
 
