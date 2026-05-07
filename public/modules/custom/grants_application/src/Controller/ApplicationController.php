@@ -778,27 +778,33 @@ final class ApplicationController extends ControllerBase {
   public function markMessageRead(string $application_number, string $message_id): AjaxResponse {
     $ajaxResponse = new AjaxResponse();
     $isError = FALSE;
+    $render = [
+      '#theme' => 'status_messages',
+      '#message_list' => [],
+      '#status_headings' => [
+        'status' => $this->t('Status message'),
+        'error' => $this->t('Error message'),
+        'warning' => $this->t('Warning message'),
+      ],
+    ];
+    $dataSelector = "[data-message-id=\"$message_id\"]";
+    $renderedHtml = '';
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $user_information = $this->userInformationService->getUserData();
-    }
-    catch (\Exception $e) {
-      die();
-    }
-
-    try {
       $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
-    }
-    catch (\Exception $e) {
-      die();
-    }
-
-    try {
       $atvDocument = $this->helfiAtvService->getDocument($application_number);
+      $renderedHtml = $this->renderer->render($render);
     }
     catch (\Exception $e) {
-      die();
+      $this->getLogger('grants_application')
+        ->error("User data fetch error when marking message as read: {$e->getMessage()}");
+
+      $prependCommand = new PrependCommand($dataSelector, (string) $renderedHtml);
+      $ajaxResponse->addCommand($prependCommand);
+
+      return $ajaxResponse;
     }
 
     $submissionData = $atvDocument->getContent();
@@ -839,7 +845,6 @@ final class ApplicationController extends ControllerBase {
       $message = $this->t('Message already read.');
     }
 
-    $dataSelector = "[data-message-id=\"$message_id\"]";
     if (!$isError) {
       $replaceMessageContainerCommand = new ReplaceCommand(
         $dataSelector . ' .webform-submission-messages__new-message',
@@ -853,19 +858,8 @@ final class ApplicationController extends ControllerBase {
     }
 
     $messageType = $isError ? 'error' : 'status';
-    $render = [
-      '#theme' => 'status_messages',
-      '#message_list' => [],
-      '#status_headings' => [
-        'status' => $this->t('Status message'),
-        'error' => $this->t('Error message'),
-        'warning' => $this->t('Warning message'),
-      ],
-    ];
-
     $render['#message_list'][$messageType][] = $message;
 
-    $renderedHtml = '';
     try {
       $renderedHtml = $this->renderer->render($render);
     }
