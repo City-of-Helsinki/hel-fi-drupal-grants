@@ -800,7 +800,7 @@ final class ApplicationController extends ControllerBase {
       $this->getLogger('grants_application')
         ->error("User data fetch error when marking message as read: {$e->getMessage()}");
 
-      $render['#message_list']['error'][] =  $this->t('Message marking as read failed.');
+      $render['#message_list']['error'][] = $this->t('Message marking as read failed.');
       $renderedHtml = $this->renderer->render($render);
       $prependCommand = new PrependCommand($dataSelector, (string) $renderedHtml);
       $ajaxResponse->addCommand($prependCommand);
