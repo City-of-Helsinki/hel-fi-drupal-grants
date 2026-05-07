@@ -345,6 +345,10 @@ final class ApplicationController extends ControllerBase {
     $statusStrings = $this->avus2DataParser->getStatusStrings($langCode);
     $statusLocalized = $statusStrings[$document->getStatus()] ?? ucfirst(strtolower($document->getStatus()));
 
+    $lastHandler = array_find(array_reverse($handlers), function ($handler) {
+      return !empty($handler);
+    });
+
     // @todo Replace the grants handler message form with a better one.
     $build = [
       '#theme' => 'grants_application_view',
@@ -358,6 +362,7 @@ final class ApplicationController extends ControllerBase {
       '#application_name' => $application_name,
       '#form_identifier' => $form_identifier,
       '#application_handlers' => $handlers,
+      '#last_handler' => $lastHandler,
       '#is_copyable' => $settings->isCopyable(),
       '#status' => $document->getStatus(),
       '#statusLocalized' => $statusLocalized,

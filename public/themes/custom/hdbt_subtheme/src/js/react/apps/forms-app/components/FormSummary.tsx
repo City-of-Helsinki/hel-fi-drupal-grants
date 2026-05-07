@@ -6,6 +6,19 @@ import { getFormConfigAtom, getFormTitleAtom, getSummaryDataAtom } from '../stor
 import { useState } from 'react';
 import { Requests } from '../Requests';
 
+const getHandlerKey = (index: number) => {
+  switch (index) {
+    case 0:
+      return 'handler_name';
+    case 1:
+      return 'handler_phone';
+    case 2:
+      return 'handler_email';
+    default:
+      return `handler_${index + 1}`;
+  }
+};
+
 export const FormSummary = () => {
   const [disableActions, setDisableActions] = useState(false);
   const formTitle = useAtomValue(getFormTitleAtom);
@@ -30,6 +43,9 @@ export const FormSummary = () => {
 
     throw new Error('Failed to copy application');
   };
+
+  const latestHandler =
+    handlers?.length && Array.isArray(handlers[handlers.length - 1]) ? handlers[handlers.length - 1] : null;
 
   return (
     <div className='hdbt-react-form__submission-info'>
@@ -64,9 +80,11 @@ export const FormSummary = () => {
           <h5>{Drupal.t('Sent date', {}, { context: 'Grants application: Submitted form' })}</h5>
           {applicationSubmitted}
           <h5>{Drupal.t('Handler information', {}, { context: 'Grants application: Submitted form' })}</h5>
-          {handlers?.length
-            ? handlers.join(', ')
-            : Drupal.t('No handler information set', {}, { context: 'Grants application: Submitted form' })}
+          {latestHandler ? (
+            latestHandler.map((value, index) => <div key={getHandlerKey(index)}>{value}</div>)
+          ) : (
+            <div>{Drupal.t('No handler information set')}</div>
+          )}
         </div>
         <div>
           <h5>{Drupal.t('Application statuses', {}, { context: 'Grants application: Submitted form' })}</h5>
