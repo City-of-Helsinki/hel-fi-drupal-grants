@@ -301,6 +301,7 @@ final class ApplicationControllerTest extends KernelTestBase {
     $controller = ApplicationController::create($this->container);
     $response = $controller->markMessageRead($this->applicationNumber, $this->messageId);
     $this->assertInstanceOf(AjaxResponse::class, $response);
+    $this->assertEquals(200, $response->getStatusCode());
   }
 
 }
