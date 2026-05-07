@@ -6,6 +6,9 @@ namespace Drupal\Tests\grants_application\Trait;
 
 use Drupal\helfi_atv\AtvDocument;
 
+/**
+ * A test trait for atv document creation.
+ */
 trait AtvDocumentTrait {
 
   /**
