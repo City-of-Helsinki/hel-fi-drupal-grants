@@ -299,6 +299,7 @@ elements: |-
             '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
             '#maxlength': 1000
             '#counter_type': character
+            '#required': true
             '#attributes':
               class:
                 - webform--large
@@ -387,6 +388,7 @@ elements: |-
             '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
             '#maxlength': 1000
             '#counter_type': character
+            '#required': true
             '#attributes':
               class:
                 - webform--large
