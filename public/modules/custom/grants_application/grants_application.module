@@ -54,6 +54,7 @@ function grants_application_theme(): array {
         'status' => NULL,
         'statusLocalized' => NULL,
         'submissionObject' => NULL,
+        'last_handler' => NULL,
       ],
     ],
     'grants_application_print' => [

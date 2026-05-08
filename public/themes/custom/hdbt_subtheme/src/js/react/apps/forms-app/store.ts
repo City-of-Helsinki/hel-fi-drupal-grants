@@ -56,7 +56,7 @@ type FormConfig = {
     applicationNumber?: string;
     applicationSubmitted?: string;
     attachments?: string[];
-    handlers?: string[];
+    handlers?: Array<string[]>;
     statusUpdates?: string[];
   };
   requiredFileFields: string[];
@@ -77,7 +77,7 @@ type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_stat
     application_number?: string;
     application_submitted?: string;
     attachments?: string[];
-    handlers?: string[];
+    handlers?: Array<string[]>;
     status_updates?: string[];
   };
   ui_schema: UiSchema;
