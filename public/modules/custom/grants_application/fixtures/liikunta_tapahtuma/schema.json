@@ -1,5 +1,37 @@
 {
   "definitions": {
+    "_income_row_item": {
+      "type": "object",
+      "title": "income_row_item.title",
+      "properties": {
+        "income_row_description": {
+          "title": "income_row_description.title",
+          "type": "string"
+        },
+        "income_row_amount": {
+          "format": "decimal-number",
+          "title": "income_row_amount.title",
+          "type": "string"
+        }
+      },
+      "required": ["income_row_description", "income_row_amount"]
+    },
+    "_expenditure_row_item": {
+      "type": "object",
+      "title": "expenditure_row_item.title",
+      "properties": {
+        "expenditure_row_description": {
+          "title": "expenditure_row_description.title",
+          "type": "string"
+        },
+        "expenditure_row_amount": {
+          "format": "decimal-number",
+          "title": "expenditure_row_amount.title",
+          "type": "string"
+        }
+      },
+      "required": ["expenditure_row_description", "expenditure_row_amount"]
+    },
     "grant_info_step": {
       "required": [
         "acting_year_section",
@@ -237,6 +269,45 @@
       }
     }
   },
+  "budget_step": {
+    "type": "object",
+    "properties": {
+      "income_section": {
+        "title": "income_section.title",
+        "description": "income_section.description",
+        "type": "object",
+        "properties": {
+          "incomeGroupName": {
+            "type": "string",
+            "default": "general"
+          },
+          "income_rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/_income_row_item"
+            }
+          }
+        }
+      },
+      "expenditure_section": {
+        "title": "expenditure_section.title",
+        "description": "expenditure_section.description",
+        "type": "object",
+        "properties": {
+          "costGroupName": {
+            "type": "string",
+            "default": "general"
+          },
+          "expenditure_rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/_expenditure_row_item"
+            }
+          }
+        }
+      }
+    }
+  },
   "description": "",
   "title": "form_title",
   "type": "object",
@@ -245,6 +316,11 @@
       "title": "grant_info_step.title",
       "type": "object",
       "$ref": "#/definitions/grant_info_step"
+    },
+    "budget_step": {
+      "title": "budget_step.title",
+      "type": "object",
+      "$ref": "#/definitions/budget_step"
     }
   }
 }
