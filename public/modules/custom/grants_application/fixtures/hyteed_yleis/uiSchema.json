@@ -16,7 +16,7 @@
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
-          "tooltipText": "purpose.description"
+          "tooltipText": "purpose.custom_description"
         }
       }
     },
@@ -184,6 +184,7 @@
         },
         "community_rules_file": {
           "misc:file-type": 0,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }

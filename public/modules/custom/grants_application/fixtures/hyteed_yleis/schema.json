@@ -117,9 +117,9 @@
           "type": "object",
           "properties": {
             "purpose": {
-              "title": "purpose_section_purpose.title",
+              "title": "purpose_section_modified.title",
               "type": "string",
-              "description": "purpose.description"
+              "description": ""
             }
           },
           "required": ["purpose"]
@@ -195,7 +195,8 @@
                     "title": "prior_compensations.title",
                     "type": "string"
                   }
-                }
+                },
+                "required": ["prior_compensations"]
               }
             }
           ]
