@@ -197,7 +197,7 @@ $settings["resilient_logger"] = [
       "es_index" => getenv("AUDIT_LOG_ES_INDEX") ?: "",
     ]
   ],
-  "environment" => getenv("AUDIT_LOG_ENV") ?? "",
+  "environment" => getenv("APP_ENV") ?: "production",
   "origin" => "hel-fi-drupal-grants",
   "store_old_entries_days" => 30,
   "batch_limit" => 5000,
