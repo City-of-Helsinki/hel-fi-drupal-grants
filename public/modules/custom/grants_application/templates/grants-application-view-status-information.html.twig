@@ -19,22 +19,20 @@
       <h5>{{ 'Sent date'|t }}</h5>
       {{ application_submit_date }}
       <h5>{{ 'Handler information'|t }}</h5>
-      {% if application_handlers is empty %}
+      {% if not last_handler %}
         <em>{{ "No handler information set"|t }}</em>
       {% else %}
-        {% for handler in application_handlers %}
-          {% for string in handler %}
-            <div>
-              {{ string }}
-            </div>
-          {% endfor %}
+        {% for string in last_handler %}
+          <div>
+            {{ string }}
+          </div>
         {% endfor %}
       {% endif %}
     </div>
     <div>
       <h5>{{ "Application statuses"|t }}</h5>
       {% for event in history %}
-        {{ event }}
+        <div>{{ event }}</div>
       {% endfor %}
     </div>
     <div>
