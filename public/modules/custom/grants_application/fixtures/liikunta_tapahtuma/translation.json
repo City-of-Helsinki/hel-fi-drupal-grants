@@ -195,10 +195,20 @@
       "fi": "Arvioiduissa osallistujamäärissä tulee huomioida ne osallistujat, joita tapahtuma liikuttaa. Arvioiduissa määrissä ei siis huomioida esimerkiksi tapahtumaan osallistuvan yleisön tai vapaaehtoisten määrää.",
       "sv": "I det beräknade antalet deltagare ska de deltagare som idrottar i evenemanget beaktas. Till exempel antalet personer i publiken eller frivilliga som medverkar vid evenemanget ska alltså inte beaktas."
     },
+    "required_attachments_help.value": {
+      "en": "<ul><li>Event plan and event budget (if sufficient information is not provided in the application form)</li></ul><p>If the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, an extract from the relevant register for the organisation type must also be attached to the application.</p>",
+      "fi": "<ul><li>Tapahtumasuunnitelma ja tapahtuman budjetti (jos riittävät tiedot eivät tule ilmi hakemuslomakkeella)</li></ul><p>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee toimittaa myös ote yhteisömuotoa koskevasta rekisteristä.</p>",
+      "sv": "<ul><li>Evenemangsplan och budget för evenemanget (om tillräcklig information inte framgår av ansökningsblanketten)</li></ul><p>Om sökanden inte tidigare har ansökt om Helsingfors stads understöd eller om uppgifterna har förändrats, ska även ett utdrag ur registret som gäller sammanslutningsform lämnas i samband med ansökan.</p>"
+    },
     "subventions.37.title": {
       "en": "Event grant",
       "fi": "Tapahtuma-avustus",
       "sv": "Evenemangsunderstöd"
+    },
+    "event_plan_fieldset.title": {
+      "en": "Event plan",
+      "fi": "Tapahtumasuunnitelma",
+      "sv": "Evenemangsplan"
     }
   }
 }
