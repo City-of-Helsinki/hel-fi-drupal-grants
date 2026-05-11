@@ -98,246 +98,246 @@
     }
   },
 
-  "compensation.participantsArray.adultsMale": {
+  "compensation.participantsArray.0": {
     "datasource": "form_data",
     "source": "grant_info_step.participants_section.adult_participants.adult_men",
     "mapping_type": "default",
     "data": {
-      "ID": "adult_men",
+      "ID": "adultsMale",
       "label": "Miehet",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.participantsArray.adultsFemale": {
+  "compensation.participantsArray.1": {
     "datasource": "form_data",
     "source": "grant_info_step.participants_section.adult_participants.adult_women",
     "mapping_type": "default",
     "data": {
-      "ID": "adult_women",
+      "ID": "adultsFemale",
       "label": "Naiset",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.participantsArray.adultsOther": {
+  "compensation.participantsArray.2": {
     "datasource": "form_data",
     "source": "grant_info_step.participants_section.adult_participants.adult_other",
     "mapping_type": "default",
     "data": {
-      "ID": "adult_other",
+      "ID": "adultsOther",
       "label": "Muut",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.participantsArray.juniorsMale": {
+  "compensation.participantsArray.3": {
     "datasource": "form_data",
     "source": "grant_info_step.participants_section.minor_participants.minor_men",
     "mapping_type": "default",
     "data": {
-      "ID": "minor_men",
+      "ID": "juniorsMale",
       "label": "Pojat",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.participantsArray.juniorsFemale": {
+  "compensation.participantsArray.4": {
     "datasource": "form_data",
     "source": "grant_info_step.participants_section.minor_participants.minor_women",
     "mapping_type": "default",
     "data": {
-      "ID": "minor_women",
+      "ID": "juniorsFemale",
       "label": "Tytöt",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.participantsArray.juniorsOther": {
+  "compensation.participantsArray.5": {
     "datasource": "form_data",
     "source": "grant_info_step.participants_section.minor_participants.minor_other",
     "mapping_type": "default",
     "data": {
-      "ID": "minor_other",
+      "ID": "juniorsOther",
       "label": "Muut",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.eventInfoArray.eventName": {
+  "compensation.eventInfoArray.0.0": {
     "datasource": "form_data",
     "source": "grant_info_step.event_info_section.event_for_applied_grant",
     "mapping_type": "default",
     "data": {
-      "ID": "event_for_applied_grant",
+      "ID": "eventName",
       "label": "Tapahtuma, johon avustusta haetaan",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.eventInfoArray.eventTargetGroup": {
+  "compensation.eventInfoArray.0.1": {
     "datasource": "form_data",
     "source": "grant_info_step.event_info_section.event_target_group",
     "mapping_type": "default",
     "data": {
-      "ID": "event_target_group",
+      "ID": "eventTargetGroup",
       "label": "Tapahtuman kohderyhmä",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.eventInfoArray.eventPlace": {
+  "compensation.eventInfoArray.0.2": {
     "datasource": "form_data",
     "source": "grant_info_step.event_info_section.event_location",
     "mapping_type": "default",
     "data": {
-      "ID": "event_location",
+      "ID": "eventPlace",
       "label": "Tapahtumapaikka",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.eventInfoArray.eventContent": {
+  "compensation.eventInfoArray.0.3": {
     "datasource": "form_data",
     "source": "grant_info_step.event_info_section.event_details",
     "mapping_type": "default",
     "data": {
-      "ID": "event_details",
+      "ID": "eventContent",
       "label": "Tarkemmat tiedot tapahtumasta ja sen sisällöstä",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.eventInfoArray.isEventEquality": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.equality_radios",
-    "mapping_type": "default",
-    "data": {
-      "ID": "equality_radios",
-      "label": "Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa",
-      "value": "",
-      "valueType": "bool"
-    }
-  },
-  "compensation.eventInfoArray.eventEqualityText": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.equality_how",
-    "mapping_type": "default",
-    "data": {
-      "ID": "equality_how",
-      "label": "Miten tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.eventInfoArray.isEventCommunal": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.inclusion_radios",
-    "mapping_type": "default",
-    "data": {
-      "ID": "inclusion_radios",
-      "label": "Tapahtuma edistää osallisuutta ja yhteisöllisyyttä",
-      "value": "",
-      "valueType": "bool"
-    }
-  },
-  "compensation.eventInfoArray.eventCommunalText": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.inclusion_how",
-    "mapping_type": "default",
-    "data": {
-      "ID": "inclusion_how",
-      "label": "Miten tapahtuma edistää osallisuutta ja yhteisöllisyyttä?",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.eventInfoArray.isEventEnvironment": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.environment_radios",
-    "mapping_type": "default",
-    "data": {
-      "ID": "environment_radios",
-      "label": "Tapahtumassa on huomioitu ympäristöasiat",
-      "value": "",
-      "valueType": "bool"
-    }
-  },
-  "compensation.eventInfoArray.eventEnvironmentText": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.environment_how",
-    "mapping_type": "default",
-    "data": {
-      "ID": "environment_how",
-      "label": "Miten tapahtumassa on huomioitu ympäristöasiat?",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.eventInfoArray.isEventNewPeopleActivating": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.exercise_radios",
-    "mapping_type": "default",
-    "data": {
-      "ID": "exercise_radios",
-      "label": "Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin",
-      "value": "",
-      "valueType": "bool"
-    }
-  },
-  "compensation.eventInfoArray.eventNewPeopleActivatingText": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.exercise_how",
-    "mapping_type": "default",
-    "data": {
-      "ID": "exercise_how",
-      "label": "Miten tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin?",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.eventInfoArray.isEventWorkdayActivating": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.activity_radios",
-    "mapping_type": "default",
-    "data": {
-      "ID": "activity_radios",
-      "label": "Tapahtuma innostaa ihmisiä arkiaktiivisuuteen",
-      "value": "",
-      "valueType": "bool"
-    }
-  },
-  "compensation.eventInfoArray.eventWorkdayActivatingText": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.activity_how",
-    "mapping_type": "default",
-    "data": {
-      "ID": "activity_how",
-      "label": "Miten tapahtuma innostaa ihmisiä arkiaktiivisuuteen?",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.eventInfoArray.eventBegin": {
+  "compensation.eventInfoArray.0.4": {
     "datasource": "form_data",
     "source": "grant_info_step.event_date_section.start_date",
     "mapping_type": "default",
     "data": {
-      "ID": "start_date",
+      "ID": "eventBegin",
       "label": "Alkaa",
       "value": "",
       "valueType": "datetime"
     }
   },
-  "compensation.eventInfoArray.eventEnd": {
+  "compensation.eventInfoArray.0.5": {
     "datasource": "form_data",
     "source": "grant_info_step.event_date_section.end_date",
     "mapping_type": "default",
     "data": {
-      "ID": "end_date",
+      "ID": "eventEnd",
       "label": "Päättyy",
       "value": "",
       "valueType": "datetime"
+    }
+  },
+  "compensation.eventInfoArray.0.6": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.equality_radios",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isEventEquality",
+      "label": "Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.eventInfoArray.0.7": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.equality_how",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventEqualityText",
+      "label": "Miten tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.eventInfoArray.0.8": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.inclusion_radios",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isEventCommunal",
+      "label": "Tapahtuma edistää osallisuutta ja yhteisöllisyyttä",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.eventInfoArray.0.9": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.inclusion_how",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventCommunalText",
+      "label": "Miten tapahtuma edistää osallisuutta ja yhteisöllisyyttä?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.eventInfoArray.0.10": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.environment_radios",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isEventEnvironment",
+      "label": "Tapahtumassa on huomioitu ympäristöasiat",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.eventInfoArray.0.11": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.environment_how",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventEnvironmentText",
+      "label": "Miten tapahtumassa on huomioitu ympäristöasiat?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.eventInfoArray.0.12": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.exercise_radios",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isEventNewPeopleActivating",
+      "label": "Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.eventInfoArray.0.13": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.exercise_how",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventNewPeopleActivatingText",
+      "label": "Miten tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.eventInfoArray.0.14": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.activity_radios",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isEventWorkdayActivating",
+      "label": "Tapahtuma innostaa ihmisiä arkiaktiivisuuteen",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.eventInfoArray.0.15": {
+    "datasource": "form_data",
+    "source": "grant_info_step.event_info_section.activity_how",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventWorkdayActivatingText",
+      "label": "Miten tapahtuma innostaa ihmisiä arkiaktiivisuuteen?",
+      "value": "",
+      "valueType": "string"
     }
   },
 
