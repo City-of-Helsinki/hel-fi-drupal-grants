@@ -473,6 +473,7 @@ elements: |-
             '#title': 'Kuvaus käyttötarkoituksesta'
             '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
             '#maxlength': 1000
+            '#required': true
             '#attributes':
               class:
                 - webform--large
