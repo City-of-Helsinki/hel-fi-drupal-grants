@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel\Controller;
 
+use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Controller\ApplicationController;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -19,6 +20,7 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusService;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
+use Drupal\Tests\grants_application\Trait\AtvDocumentTrait;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -30,6 +32,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @group grants_application
  */
 final class ApplicationControllerTest extends KernelTestBase {
+
+  use AtvDocumentTrait;
 
   /**
    * The application submission.
@@ -44,6 +48,13 @@ final class ApplicationControllerTest extends KernelTestBase {
    * @var string
    */
   private string $applicationNumber = "KERNELTEST-058-0000001";
+
+  /**
+   * The message id.
+   *
+   * @var string
+   */
+  private string $messageId = 'aaaaaaaa-1111-2222-3333-bbbbbbbbbbbbb';
 
   /**
    * The atv document.
@@ -97,32 +108,7 @@ final class ApplicationControllerTest extends KernelTestBase {
     ]);
     $this->applicationSubmission->save();
 
-    $this->atvDocument = AtvDocument::create([
-      'id' => 'test-id',
-      'type' => 'type',
-      'status' => [
-        'value' => 'DRAFT',
-      ],
-      'status_histories' => [
-        'DRAFT',
-      ],
-      'transaction_id' => '1234567890',
-      'business_id' => '1234567-1',
-      'tos_function_id' => '12345',
-      'tos_record_id' => '54321',
-      'draft' => TRUE,
-      'human_readable_type' => ['humanType'],
-      'metadata' => '{"name": "Name", "value": "Value"}',
-      'content' => '{"data": "content"}',
-      'created_at' => '2024-06-06',
-      'updated_at' => '2024-06-07',
-      'user_id' => 'userId',
-      'locked_after' => '2024-06-08',
-      'deletable' => TRUE,
-      'delete_after' => '2075-01-01',
-      'document_language' => 'fi',
-      'content_schema_url' => 'schemaURL',
-    ]);
+    $this->atvDocument = $this->getAtvDocument($this->applicationNumber);
 
     $applicationGetterService = $this->createMock(ApplicationGetterService::class);
     $applicationGetterService->expects($this->any())->method('getAtvDocument')->willReturn($this->atvDocument);
@@ -292,6 +278,30 @@ final class ApplicationControllerTest extends KernelTestBase {
     $response = $controller->formPreview($this->applicationNumber);
     $this->assertEquals(404, $response->getStatusCode());
     $this->assertEquals([], json_decode($response->getContent(), TRUE));
+  }
+
+  /**
+   * Test updating a message as "read".
+   */
+  public function testUpdateMessageAsRead(): void {
+    $grantsProfile = new GrantsProfile(['businessId' => 'no-match']);
+    $userInformationService = $this->createMock(UserInformationService::class);
+    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
+    $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
+    $this->container->set(UserInformationService::class, $userInformationService);
+
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->method('getDocument')->willReturn($this->atvDocument);
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $eventsService = $this->createMock(EventsService::class);
+    $eventsService->method('logEvent')->willReturn([]);
+    $this->container->set(EventsService::class, $eventsService);
+
+    $controller = ApplicationController::create($this->container);
+    $response = $controller->markMessageRead($this->applicationNumber, $this->messageId);
+    $this->assertInstanceOf(AjaxResponse::class, $response);
+    $this->assertEquals(200, $response->getStatusCode());
   }
 
 }

@@ -1,0 +1,166 @@
+{
+  "definitions": {
+    "grant_info_step": {
+      "required": [
+        "acting_year_section",
+        "purpose_section",
+        "period_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
+            }
+          },
+          "required": ["acting_year"]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 14,
+                  "label": "subventions.14.title"
+                }
+              ]
+            }
+          }
+        },
+        "purpose_section": {
+          "title": "purpose_section.title",
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "title": "purpose_section_purpose.title",
+              "type": "string"
+            }
+          },
+          "required": ["purpose"]
+        },
+        "period_section": {
+          "title": "period_section.title",
+          "type": "object",
+          "properties": {
+            "starting_date": {
+              "title": "period_section_starting_date.title",
+              "type": "string"
+            },
+            "ending_date": {
+              "title": "period_section_ending_date.title",
+              "type": "string"
+            }
+          },
+          "required": ["starting_date", "ending_date"]
+        }
+      }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "additional_information.title",
+              "type": "string"
+            }
+          }
+        },
+        "attachments_section": {
+          "title": "attachments_section.title",
+          "type": "object",
+          "properties": {
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "other_attachment_fieldset_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "file_id": {
+                            "type": "integer"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "fileType": {
+                            "type": "integer"
+                          },
+                          "integrationID": {
+                            "type": "string"
+                          },
+                          "isDeliveredLater": {
+                            "type": "boolean"
+                          },
+                          "isIncludedInOtherFile": {
+                            "type": "boolean"
+                          },
+                          "isNewAttachment": {
+                            "type": "boolean"
+                          },
+                          "size": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    },
+    "attachments_step": {
+      "$ref": "#/definitions/attachments_step",
+      "title": "attachments_step.title",
+      "type": "object"
+    }
+  }
+}

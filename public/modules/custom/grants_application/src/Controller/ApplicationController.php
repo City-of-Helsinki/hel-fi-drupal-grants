@@ -7,8 +7,12 @@ namespace Drupal\grants_application\Controller;
 use Drupal\Component\Transliteration\TransliterationInterface;
 use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\PrependCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Render\Renderer;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
@@ -65,6 +69,8 @@ final class ApplicationController extends ControllerBase {
     #[Autowire(service: 'transliteration')]
     private readonly TransliterationInterface $transliteration,
     private readonly Avus2DataParser $avus2DataParser,
+    #[Autowire(service: 'Drupal\Core\Render\RendererInterface')]
+    private readonly Renderer $renderer,
   ) {
   }
 
@@ -329,7 +335,7 @@ final class ApplicationController extends ControllerBase {
         }
       }
     }
-    elseif (in_array($documentStatus, ['DRAFT', 'RECEIVED'])) {
+    elseif (in_array($documentStatus, ['DRAFT', 'RECEIVED', 'PREPARING'])) {
       $isEditable = TRUE;
     }
 
@@ -338,12 +344,15 @@ final class ApplicationController extends ControllerBase {
     $submitted = $this->avus2DataParser->getSubmitted($document);
     $history = $this->avus2DataParser->getHistory($document);
     $handlers = $this->avus2DataParser->getHandlers($document);
-    // $unreadMsg = $this->avus2DataParser->getUnreadMessages($document);
-    $messages = $this->avus2DataParser->getReadMessages($document);
+    $messages = $this->avus2DataParser->getMessages($document);
 
     $langCode = $this->languageManager()->getCurrentLanguage()->getId();
     $statusStrings = $this->avus2DataParser->getStatusStrings($langCode);
     $statusLocalized = $statusStrings[$document->getStatus()] ?? ucfirst(strtolower($document->getStatus()));
+
+    $lastHandler = array_find(array_reverse($handlers), function ($handler) {
+      return !empty($handler);
+    });
 
     // @todo Replace the grants handler message form with a better one.
     $build = [
@@ -358,6 +367,7 @@ final class ApplicationController extends ControllerBase {
       '#application_name' => $application_name,
       '#form_identifier' => $form_identifier,
       '#application_handlers' => $handlers,
+      '#last_handler' => $lastHandler,
       '#is_copyable' => $settings->isCopyable(),
       '#status' => $document->getStatus(),
       '#statusLocalized' => $statusLocalized,
@@ -588,9 +598,9 @@ final class ApplicationController extends ControllerBase {
   /**
    * Remove an application.
    */
-  public function removeApplication(string $id): RedirectResponse {
+  public function removeApplication(string $id): JsonResponse {
     // @todo The original implementation and this must be done properly.
-    $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
+    $redirectUrl = Url::fromRoute('grants_oma_asiointi.front')->toString();
     $tOpts = ['context' => 'grants_handler'];
 
     try {
@@ -605,7 +615,7 @@ final class ApplicationController extends ControllerBase {
           ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
         $this->getLogger('grants_handler')
           ->error('Error: %error', ['%error' => "Cannot find application number $id"]);
-        return new RedirectResponse($redirectUrl->toString());
+        return new JsonResponse(['redirectUrl' => $redirectUrl]);
       }
 
       $submission = ApplicationSubmission::load(reset($ids));
@@ -615,7 +625,7 @@ final class ApplicationController extends ControllerBase {
         ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
       $this->getLogger('grants_handler')
         ->error('Error: %error', ['%error' => $e->getMessage()]);
-      return new RedirectResponse($redirectUrl->toString());
+      return new JsonResponse(['redirectUrl' => $redirectUrl]);
     }
     $document = $this->applicationGetterService->getAtvDocument($id);
 
@@ -623,7 +633,7 @@ final class ApplicationController extends ControllerBase {
       if ($document->getStatus() !== 'DRAFT') {
         $this->messenger()
           ->addError($this->t('Only DRAFT status submissions are deletable', [], $tOpts));
-        return new RedirectResponse($redirectUrl->toString());
+        return new JsonResponse(['redirectUrl' => $redirectUrl]);
       }
     }
 
@@ -636,7 +646,7 @@ final class ApplicationController extends ControllerBase {
       if ($lock && $lock->uid !== $uid) {
         $msg = $this->contentLock->displayLockOwner($lock, FALSE);
         $this->messenger()->addMessage($msg);
-        return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
+        return new JsonResponse(['redirectUrl' => $redirectUrl]);
       }
     }
 
@@ -652,7 +662,7 @@ final class ApplicationController extends ControllerBase {
         ->error('Error: %error', ['%error' => $e->getMessage()]);
     }
 
-    return new RedirectResponse($redirectUrl->toString());
+    return new JsonResponse(['redirectUrl' => $redirectUrl]);
   }
 
   /**
@@ -755,6 +765,120 @@ final class ApplicationController extends ControllerBase {
     ] + $settings->toArray();
 
     return new JsonResponse($response);
+  }
+
+  /**
+   * Allow user marking message as "Read".
+   *
+   * Copied from original implementation (MessageController::markMessageRead)
+   *
+   * @param string $application_number
+   *   The application number.
+   * @param string $message_id
+   *   The message id.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   The ajax response.
+   */
+  public function markMessageRead(string $application_number, string $message_id): AjaxResponse {
+    $ajaxResponse = new AjaxResponse();
+    $isError = FALSE;
+    $render = [
+      '#theme' => 'status_messages',
+      '#message_list' => [],
+      '#status_headings' => [
+        'status' => $this->t('Status message'),
+        'error' => $this->t('Error message'),
+        'warning' => $this->t('Warning message'),
+      ],
+    ];
+    $dataSelector = "[data-message-id=\"$message_id\"]";
+    $renderedHtml = '';
+
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $user_information = $this->userInformationService->getUserData();
+      $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
+      $atvDocument = $this->helfiAtvService->getDocument($application_number);
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application')
+        ->error("User data fetch error when marking message as read: {$e->getMessage()}");
+
+      $render['#message_list']['error'][] = $this->t('Message marking as read failed.');
+      $renderedHtml = $this->renderer->render($render);
+      $prependCommand = new PrependCommand($dataSelector, (string) $renderedHtml);
+      $ajaxResponse->addCommand($prependCommand);
+      $ajaxResponse->setStatusCode(500);
+      return $ajaxResponse;
+    }
+
+    $submissionData = $atvDocument->getContent();
+    $messageType = 'MESSAGE_READ';
+    $thisEvent = array_filter($submissionData['events'], function ($event) use ($message_id, $messageType) {
+      if (
+        isset($event['eventTarget']) &&
+        $event['eventTarget'] == $message_id &&
+        $event['eventType'] == $messageType
+      ) {
+        return TRUE;
+      }
+      return FALSE;
+    });
+
+    if (empty($thisEvent)) {
+      try {
+        // EventsService::logEvent will send a request.
+        $this->eventsService->logEvent(
+          $application_number,
+          $messageType,
+          (string) $this->t('Message marked as read'),
+          $message_id
+        );
+
+        $message = $this->t('Message marked as read');
+        $this->atvService->clearCache($application_number);
+      }
+      catch (\Exception $e) {
+        $this->getLogger('message_controller')->error('Error: %error', [
+          '%error' => $e->getMessage(),
+        ]);
+        $isError = TRUE;
+        $message = $this->t('Message marking as read failed.');
+      }
+    }
+    else {
+      $message = $this->t('Message already read.');
+    }
+
+    if (!$isError) {
+      $replaceMessageContainerCommand = new ReplaceCommand(
+        $dataSelector . ' .webform-submission-messages__new-message',
+        ''
+      );
+      // Mark as read button.
+      $replaceButtonCommand = new ReplaceCommand($dataSelector . ' .use-ajax', '');
+
+      $ajaxResponse->addCommand($replaceMessageContainerCommand);
+      $ajaxResponse->addCommand($replaceButtonCommand);
+    }
+    else {
+      $ajaxResponse->setStatusCode(500);
+    }
+
+    $messageType = $isError ? 'error' : 'status';
+    $render['#message_list'][$messageType][] = $message;
+
+    try {
+      $renderedHtml = $this->renderer->render($render);
+    }
+    catch (\Exception $e) {
+    }
+
+    $prependCommand = new PrependCommand($dataSelector, (string) $renderedHtml);
+    $ajaxResponse->addCommand($prependCommand);
+
+    return $ajaxResponse;
   }
 
   /**

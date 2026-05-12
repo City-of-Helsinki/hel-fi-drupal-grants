@@ -1,0 +1,14 @@
+{
+  "title": "Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus",
+  "description": "KASKOIPLISA",
+  "application_type": "KASKOIPLISA",
+  "application_type_id": 53,
+  "application_industry": "KASKO",
+  "application_open": "2026-01-01T00:00:00",
+  "application_close": "2026-12-31T23:59:59",
+  "applicant_types": ["registered_community"],
+  "subvention_type": [14],
+  "acting_years": [2026],
+  "continuous": true,
+  "disable_copy": false
+}
