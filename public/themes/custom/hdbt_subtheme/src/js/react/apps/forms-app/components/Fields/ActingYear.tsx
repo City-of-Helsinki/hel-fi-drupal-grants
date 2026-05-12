@@ -8,7 +8,16 @@ import { formatErrors } from '../../utils';
 import type OptionType from '@/common/types/OptionType';
 import { useTranslation } from 'react-i18next';
 
-export const ActingYear = ({ formData, idSchema, name, onChange, rawErrors, schema, uiSchema }: FieldProps) => {
+export const ActingYear = ({
+  formData,
+  idSchema,
+  name,
+  onChange,
+  rawErrors,
+  required,
+  schema,
+  uiSchema,
+}: FieldProps) => {
   const { t } = useTranslation();
   const isReadOnly = useAtomValue(isReadOnlyAtom);
   const yearOptions = useAtomValue(getActingYearsAtom);
@@ -40,6 +49,7 @@ export const ActingYear = ({ formData, idSchema, name, onChange, rawErrors, sche
       name={name}
       onChange={handleChange}
       options={options}
+      required={required}
       texts={{
         error: rawErrors ? formatErrors(rawErrors) : undefined,
         label: label ?? '',
