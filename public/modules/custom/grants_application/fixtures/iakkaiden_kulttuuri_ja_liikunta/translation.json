@@ -1,0 +1,29 @@
+{
+  "translations": {
+    "compensation_purpose_information.value": {
+      "en": "In the \"Purpose of Use\" field, write a brief project summary that clearly states the project's purpose, target group, and concrete actions and schedule.",
+      "fi": "Kirjoita käyttötarkoitus -kenttään lyhyt hanketiivistelmä, josta käy ilmi hankkeen tarkoitus, kohderyhmä sekä konkreettiset toimenpiteet ja aikataulu.",
+      "sv": "Skriv i fältet för användningsändamål en kort projektbeskrivning som tydligt anger projektets syfte, målgrupp samt konkreta åtgärder och tidtabell."
+    },
+    "form_title": {
+      "en": "KUVA: grant application for the promotion of physical activity and cultural activities for the elderly",
+      "fi": "KUVA: avustushakemus iäkkäiden ihmisten liikkumisen ja kulttuuritoiminnan edistämiseksi",
+      "sv": "KUVA: ansökan om understöd för främjande av idrott och kulturverksamhet hos äldre"
+    },
+    "grants_compensations_information.value": {
+      "en": "<p>Only apply for one grant type at a time with each application.</p><p>Enter the grant amount you are applying for the year 2026. The grant amounts for subsequent years of a multiyear application will be entered on the next page.</p>",
+      "fi": "<p>Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.</p><p>Syötä kenttään vuodelle 2026 haettava avustussumma. Monivuotisen hakemuksen jatkokausien avustussummat syötetään seuraavalla sivulla.</p>",
+      "sv": "<p>Ansök alltid endast om en typ av understöd åt gången.</p><p>Ange det bidragsbelopp som ansöks för år 2026. Bidragsbeloppen för fortsättningsåren i en flerårig ansökan anges på nästa sida.</p>"
+    },
+    "other_applied_compensations_section.description": {
+      "en": "Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet. Indicate only the grants applied for the same purpose of use, not all grants your organization has applied for.",
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eikä päätöstä ole vielä tehty. Ilmoita vain samaan käyttötarkoitukseen haetut avustukset, ei kaikkia organisaationne hakemia avustuksia.",
+      "sv": "Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, mutta beslut har ännu inte fattats. Ange endast de understöd som sökts för samma användningsändamål, inte alla understöd som er organisation har ansökt om."
+    },
+    "other_compensations_section.description": {
+      "en": "Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years. Indicate only the grants awarded for the same purpose of use, not all grants awarded to your organization.",
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisenä verovuotena. Ilmoita vain samaan käyttötarkoitukseen myönnetyt avustukset, ei kaikkia organisaatiollenne myönnettyjä avustuksia.",
+      "sv": "Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren. Ange endast de understöd som beviljats för samma användningsändamål, inte alla understöd som beviljats er organisation."
+    }
+  }
+}
