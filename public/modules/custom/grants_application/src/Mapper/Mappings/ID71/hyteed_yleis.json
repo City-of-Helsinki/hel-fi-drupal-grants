@@ -292,5 +292,57 @@
     "data": {
       "additionalInformation": ""
     }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "label": null,
+        "value": "0",
+        "valueType": "double"
+      }
+    },
+    "compensation.benefitsInfoArray.0": {
+      "datasource": "form_data",
+      "source": "hardcoded",
+      "mapping_type": "hardcoded",
+      "data": {
+        "0": {
+          "ID": "loans",
+          "label": "",
+          "value": "",
+          "valueType": "string"
+        }
+      }
+    },
+    "compensation.benefitsInfoArray.1": {
+      "datasource": "form_data",
+      "source": "hardcoded",
+      "mapping_type": "hardcoded",
+      "data": {
+        "0": {
+          "ID": "premises",
+          "label": "",
+          "value": "",
+          "valueType": "string"
+        }
+      }
+    }
   }
 }
