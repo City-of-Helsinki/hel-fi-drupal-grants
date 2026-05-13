@@ -7,6 +7,7 @@ import { Notification, TextInput, Fieldset } from 'hds-react';
 
 import type { FocusEvent } from 'react';
 import { isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
+import { useStartGrant } from '../../hooks/useStartGrant';
 import { formatErrors, numberIsTooLarge, sanitizeNumericInput } from '../../utils';
 
 type SubventionOption = { id: string; label: string };
@@ -14,18 +15,29 @@ type SubventionOption = { id: string; label: string };
 type SubventionDataItem = [{ value: string }, { value: string }];
 
 // Static values for Avus2 integration.
-const AMOUNT_ID = 'amount';
-const AMOUNT_LABEL = 'Euroa';
-const AMOUNT_VALUE_TYPE = 'double';
+export const AMOUNT_ID = 'amount';
+export const AMOUNT_LABEL = 'Euroa';
+export const AMOUNT_VALUE_TYPE = 'double';
 
-const SUBVENTION_ID = 'subventionType';
-const SUBVENTION_LABEL = 'Avustuslaji';
-const SUBVENTION_VALUE_TYPE = 'string';
+export const SUBVENTION_ID = 'subventionType';
+export const SUBVENTION_LABEL = 'Avustuslaji';
+export const SUBVENTION_VALUE_TYPE = 'string';
 
-export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, required, schema }: FieldProps) => {
+export const SubventionTable = ({
+  idSchema,
+  formData,
+  onChange,
+  rawErrors,
+  required,
+  schema,
+  uiSchema,
+}: FieldProps) => {
   const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
+
+  // Handle the liikunta_yleisavustushakemus start grant requirement.
+  const startGrantSubventionId = useStartGrant(uiSchema, formData, onChange);
 
   if (!schema.options || !schema.options.length) {
     console.error('Tried to render subvention table without items');
@@ -96,7 +108,7 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
                 {...({
                   className: 'form-group field field-integer',
                   'data-subvention-id': itemId,
-                  disabled: isReadOnly,
+                  disabled: isReadOnly || itemId.toString() === startGrantSubventionId,
                   id: key,
                   inputMode: 'decimal',
                   label: `${label} (€)`,
