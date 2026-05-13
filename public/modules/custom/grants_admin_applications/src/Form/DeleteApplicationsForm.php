@@ -129,11 +129,11 @@ final class DeleteApplicationsForm extends FormBase {
     $form['appData'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Documents in ATV for: @appEnv @uuid @bid @type @status', [
-        '@uuid' => $uuid,
-        '@appEnv' => $appEnv,
-        '@bid' => $businessId,
-        '@type' => $type,
-        '@status' => $status,
+        '@uuid' => $uuid ?? '',
+        '@appEnv' => $appEnv ?? '',
+        '@bid' => $businessId ?? '',
+        '@type' => $type ?? '',
+        '@status' => $status ?? '',
       ]),
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,

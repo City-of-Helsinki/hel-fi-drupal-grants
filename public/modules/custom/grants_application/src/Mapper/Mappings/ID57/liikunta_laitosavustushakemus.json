@@ -220,7 +220,7 @@
         "ID": "amount",
         "label": "Myönnetyn avustuksen summa",
         "value": "",
-        "valueType": "string"
+        "valueType": "float"
       },
       "other_compensation_description": {
         "ID": "purpose",

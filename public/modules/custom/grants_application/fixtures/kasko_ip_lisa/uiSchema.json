@@ -1,0 +1,69 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
+    "purpose_section": {
+      "purpose": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
+          "tooltipText": "purpose.description"
+        }
+      }
+    },
+    "period_section": {
+      "starting_date": {
+        "ui:widget": "date",
+        "ui:options": {
+          "printableName": "period_section_starting_date.title"
+        }
+      },
+      "ending_date": {
+        "ui:widget": "date",
+        "ui:options": {
+          "printableName": "period_section_ending_date.title"
+        }
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "further_clarification": {
+        "ui:widget": "textarea"
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:variant": "simple",
+          "misc:multiple": "true",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help",
+          "ui:field": "atvFile"
+        }
+      }
+    }
+  }
+}

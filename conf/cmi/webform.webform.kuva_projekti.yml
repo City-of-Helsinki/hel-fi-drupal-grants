@@ -422,6 +422,7 @@ elements: |-
             '#maxlength': 1000
             '#counter_type': character
             '#counter_maximum': 1000
+            '#required': true
             '#attributes':
               class:
                 - webform--large

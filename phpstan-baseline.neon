@@ -736,46 +736,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Avus2DataParser.php
 
 		-
-			message: "#^Method Drupal\\\\grants_application\\\\Avus2DataParser\\:\\:getHandlers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Avus2DataParser.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Avus2DataParser\\:\\:getHistory\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Avus2DataParser.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Avus2DataParser\\:\\:getReadMessages\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Avus2DataParser.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Avus2DataParser\\:\\:getStatusStrings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Avus2DataParser.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Avus2DataParser\\:\\:getSubmittedAttachments\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Avus2DataParser.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Avus2DataParser\\:\\:getUnreadMessages\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Avus2DataParser.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Avus2DataParser\\:\\:getUploadedAttachments\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Avus2DataParser.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Avus2DataParser\\:\\:getUploadedAttachmentsFilenames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Avus2DataParser.php
-
-		-
 			message: "#^Access to an undefined property object\\:\\:\\$uid\\.$#"
 			count: 2
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
