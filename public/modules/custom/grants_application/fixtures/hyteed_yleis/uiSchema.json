@@ -76,7 +76,7 @@
         "ui:options": {
           "tooltipLabel": "prior_compensations.title",
           "tooltipButtonLabel": "prior_compensations.title",
-          "tooltipText": "prior_compensations.tooltip"
+          "tooltipText": "prior_compensations.tooltip_custom"
         }
       },
       "prior_compensations_help": {
