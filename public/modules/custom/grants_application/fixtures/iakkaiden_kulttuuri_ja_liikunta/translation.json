@@ -285,10 +285,35 @@
       "fi": "Mihin tarpeeseen tai rakenteelliseen ongelmaan toiminnalla halutaan vastata? Millainen muutos toiminnalla halutaan saada aikaiseksi?",
       "sv": "Vilket behov eller strukturellt problem vill verksamheten svara på? Vilken förändring vill man åstadkomma med verksamheten?"
     },
+    "additional_information.description": {
+      "en": "If necessary, you can write additional information or other justifications related to the application or report changes to the basic information",
+      "fi": "Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista",
+      "sv": "Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan eller meddela om ändringar i basuppgifterna."
+    },
+    "attachments_section.description": {
+      "en": "All the attachments listed in the call for applications must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki hakuilmoituksessa luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
+      "sv": "Alla bilagor som anges i utlysningen måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan."
+    },
+    "required_attachments_help.value": {
+      "en": "<p>If the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, the following documents must be submitted:</p><ul><li>Statutes of the organisation</li><li>A notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid)</li><li>An extract from the Register of Associations/Foundations</li><li>Financial statements and annual report (last confirmed)</li><li>Action plan and budget for the grant year</li></ul>",
+      "fi": "<p>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee hakijan toimittaa seuraavat liitteet:</p><ul><li>yhteisön säännöt</li><li>pankin ilmoitus tilinomistajasta tai tiliotekopio (hakijalla tulee olla oma suomalainen pankkitili, jolle avustus maksetaan)</li><li>ote yhdistys-/säätiörekisteristä</li><li>viimeisin vahvistettu tilinpäätös ja toimintakertomus</li><li>toimintasuunnitelma ja budjetti avustusvuodelle</li></ul>",
+      "sv": "<p>Om sökanden inte tidigare har ansökt om understöd från Helsingfors stad eller om uppgifterna har ändrats, måste följande bilagor lämnas in:</p><ul><li>samfundets stadgar</li><li>bankens meddelande om kontoinnehavare eller kopia av kontoutdrag (sökanden måste ha ett eget finskt bankkonto där understödet betalas ut)</li><li>utdrag ur förenings-/stiftelseregistret</li><li>bokslut och verksamhetsberättelse (sist bekräftade)</li><li>verksamhetsplan och budget för understödsåret</li></ul>"
+    },
+    "multiple_attachments_help.value": {
+      "en": "<p>When applying for a grant for multiple years, budgets for the coming years must be attached under the Other attachment section. The budgets can be submitted as a single file.</p><p>In the Other attachment section, the application can also be supplemented with, for example, a freely formatted project plan if attaching such a document is essential to complement the information provided in the application.</p>",
+      "fi": "<p>Useammalle vuodelle avustusta haettaessa hakemuksen liitteeksi tulee Muu liite -kohdassa liittää tulevia vuosia koskevat talousarviot. Talousarviot voidaan liittää yhtenä tiedostona.</p><p>Muu liite -kohdassa hakemusta voi täydentää myös esimerkiksi vapaamuotoisella hankesuunnitelmalla, jos sellaisen liittäminen on olennaista hakemuksen sisältämien tietojen täydentämiseksi.</p>",
+      "sv": "<p>När understöd söks för flera år ska budgetar för kommande år bifogas under punkten Övrig bilaga. Budgetarna kan bifogas som en enda fil.</p><p>Under punkten Övrig bilaga kan ansökan även kompletteras med till exempel en fritt formulerad projektplan, om det är väsentligt för att komplettera uppgifterna i ansökan.</p>"
+    },
+    "formerly_provided_attachments_help.value": {
+      "en": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.",
+      "fi": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä.",
+      "sv": "Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna."
+    },
     "budget_info.value": {
-      "en": "Break down the budget for the project period 2026– 2027. When applying for multi-year support, the budgets for 2027–2028 and 2028–2029 must be attached as appendices to the application.",
+      "en": "Break down the budget for the project period 2026-2027. When applying for multi-year support, the budgets for 2027-2028 and 2028-2029 must be attached as appendices to the application.",
       "fi": "Erittele tässä hankekauden 2026-2027 talousarvio. Monivuotista avustusta haettaessa budjetti vuosille 2027-2028 ja 2028-2029 tulee liittää hakemuksen liitteeksi.",
-      "sv": "Specificera budgeten för projektperioden 2026–2027. Vid ansökan om flerårigt understöd ska budgetarna för 2027–2028 och 2028– 2029 bifogas som bilagor till ansökan."
+      "sv": "Specificera budgeten för projektperioden 2026-2027. Vid ansökan om flerårigt understöd ska budgetarna för 2027-2028 och 2028-2029 bifogas som bilagor till ansökan."
     }
   }
 }
