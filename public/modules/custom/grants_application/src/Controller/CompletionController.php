@@ -91,8 +91,6 @@ class CompletionController extends ControllerBase {
     $statusStrings = $config->get('statusStrings');
     $humanReadableStatus = $statusStrings[$langCode][$status] ?? '';
 
-    // @todo UHF-12685 viewApplicationLink requires a separate page.
-    // The react form opened on preview page would be optimal (no controls).
     $build = [
       '#theme' => 'grants_application_completion',
       '#applicationTimestamp' => date('Y-m-d h:i:s', (int) $entity->get('created')->value),

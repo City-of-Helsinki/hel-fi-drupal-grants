@@ -99,11 +99,13 @@ async function handleField(
         }).first();
 
     // Remove auto-added empty rows left over from the error-gathering pass.
-    let emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
-    while (await emptyItem.count() > 0) {
+    const errorItems = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') });
+    let errorCount = await errorItems.count();
+    while (errorCount > 0) {
       logger('Found empty list item, removing it.');
-      await emptyItem.getByRole('button', { name: /Remove|Poista|Ta bort/i }).click();
-      emptyItem = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') }).first();
+      await errorItems.first().getByRole('button', { name: /Remove|Poista|Ta bort/i }).click();
+      await expect(errorItems).toHaveCount(errorCount - 1);
+      errorCount = await errorItems.count();
     }
 
     // Click "Add" to create a fresh list item to fill in.

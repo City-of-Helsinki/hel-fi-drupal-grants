@@ -3,19 +3,25 @@
 namespace Drupal\grants_application;
 
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Link;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvDocument;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Parse the handlers, states, files etc.
  */
-final readonly class Avus2DataParser {
+final class Avus2DataParser {
+
+  use StringTranslationTrait;
 
   public function __construct(
     #[Autowire(service: 'grants_handler.message_service')]
     private MessageService $messageService,
     private LanguageManagerInterface $languageManager,
+    private RequestStack $requestStack,
   ) {
   }
 
@@ -25,8 +31,8 @@ final readonly class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The value to validate, a result of json_decode function call.
    *
-   * @return array
-   *   Messages array.
+   * @return mixed[]
+   *   Handlers array.
    */
   public function getHandlers(AtvDocument $document): array {
     $content = $document->getContent();
@@ -40,55 +46,58 @@ final readonly class Avus2DataParser {
   }
 
   /**
-   * Get unread messages.
+   * Get the messages.
    *
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    *
-   * @return array
-   *   Messages array.
+   * @return mixed[]
+   *   All messages.
    */
-  public function getUnreadMessages(AtvDocument $document): array {
+  public function getMessages(AtvDocument $document): array {
     $content = $document->getContent();
-
-    // grants_handler_preprocess_webform_submission_messages.
-    $unreadMsg = [];
-    foreach ($content['messages'] as $msg) {
-      if (!isset($msg["messageStatus"]) || !$msg["messageStatus"]) {
-        continue;
-      }
-
-      if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
-        $unreadMsg[] = [
-          '#theme' => 'message_notification_item',
-          '#message' => $msg,
-        ];
-      }
-    }
-
-    return $unreadMsg;
-  }
-
-  /**
-   * Get the read messages.
-   *
-   * @param \Drupal\helfi_atv\AtvDocument $document
-   *   The atv document.
-   *
-   * @return array
-   *   Read messages.
-   */
-  public function getReadMessages(AtvDocument $document): array {
-    $content = $document->getContent();
+    $events = $content['events'] ?? [];
 
     $messages = [];
+
     if (isset($content['messages']) && is_array($content['messages'])) {
       $submissionMessages = $this->messageService->parseMessages($content);
+
       foreach ($submissionMessages as $message) {
+        $message['messageStatus'] = 'UNREAD';
+        $message['markReadLink'] = '';
+
+        if ($this->hasMatchingReadEvent($events, $message['messageId'])) {
+          $message['messageStatus'] = 'READ';
+        }
+
+        // A url which is shown to end user, allows marking message as read.
+        if (
+          $message['sentBy'] === 'Avustusten kasittelyjarjestelma' &&
+          !$this->hasMatchingReadEvent($events, $message['messageId'])
+        ) {
+          $message['markReadLink'] = $this->createMarkReadLink($message['caseId'], $message['messageId']);
+        }
+
         $messages[] = $message;
       }
     }
     return $messages;
+  }
+
+  /**
+   * Does message have a matching read event?
+   *
+   * @param mixed[] $events
+   *   The events.
+   * @param string $messageId
+   *   The messageId from a message.
+   *
+   * @return bool
+   *   Message has a matching read event.
+   */
+  private function hasMatchingReadEvent(array $events, string $messageId): bool {
+    return (bool) array_find($events, fn ($event) => $event['eventType'] == 'MESSAGE_READ' && $event['eventTarget'] === $messageId);
   }
 
   /**
@@ -115,8 +124,8 @@ final readonly class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    *
-   * @return array
-   *   The history.
+   * @return mixed[]
+   *   The status history.
    */
   public function getHistory(AtvDocument $document): array {
     $content = $document->getContent();
@@ -143,7 +152,7 @@ final readonly class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    *
-   * @return array
+   * @return mixed[]
    *   The submitted attachments.
    */
   public function getSubmittedAttachments(AtvDocument $document): array {
@@ -180,7 +189,7 @@ final readonly class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
    *
-   * @return array
+   * @return mixed[]
    *   Uploaded files.
    */
   public function getUploadedAttachments(AtvDocument $document): array {
@@ -193,7 +202,7 @@ final readonly class Avus2DataParser {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
    *
-   * @return array
+   * @return mixed[]
    *   Array of filenames.
    */
   public function getUploadedAttachmentsFilenames(AtvDocument $document): array {
@@ -202,12 +211,43 @@ final readonly class Avus2DataParser {
   }
 
   /**
+   * Triggers ajax which marks message as read.
+   *
+   * @param string $applicationNumber
+   *   The application number.
+   * @param string $messageId
+   *   The message link.
+   *
+   * @return \Drupal\Core\Link
+   *   The link to the "mark as read" method
+   */
+  private function createMarkReadLink(string $applicationNumber, string $messageId): Link {
+    $currentUri = $this->requestStack->getCurrentRequest()->getUri();
+    $currentHost = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
+    $currentDestination = str_replace($currentHost, '', $currentUri);
+
+    return Link::createFromRoute($this->t('Mark as read', [], []), 'helfi_grants.message_read',
+      [
+        'message_id' => $messageId,
+        'application_number' => $applicationNumber,
+      ],
+      [
+        'query' => [
+          'destination' => $currentDestination,
+        ],
+        'attributes' => [
+          'class' => ['hds-button', 'hds-button--secondary', 'use-ajax'],
+        ],
+      ]);
+  }
+
+  /**
    * Get status string.
    *
    * @param string $langcode
    *   The langcode.
    *
-   * @return array|null
+   * @return mixed[]|null
    *   The status string array or null.
    */
   public function getStatusStrings(string $langcode): ?array {

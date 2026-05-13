@@ -1,0 +1,24 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Education, discretionary additional grant application for organisers of afternoon activities for school children",
+      "fi": "Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus",
+      "sv": "Fostran och utbildning, ansökan om prövningsbaserat tilläggsbidrag för organisatörer av eftermiddagsverksamhet för skolbarn"
+    },
+    "period_section.title": {
+      "en": "For the period of time",
+      "fi": "Ajankohta",
+      "sv": "Åt tiden"
+    },
+    "period_section_starting_date.title": {
+      "en": "Starting",
+      "fi": "Alkaen",
+      "sv": "Från"
+    },
+    "period_section_ending_date.title": {
+      "en": "Ending",
+      "fi": "Päättyy",
+      "sv": "Till"
+    }
+  }
+}
