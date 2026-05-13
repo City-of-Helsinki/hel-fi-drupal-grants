@@ -425,6 +425,11 @@
       "fi": "Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta",
       "sv": "Vi har ansökt om understöd från annanstans än Helsingfors stad"
     },
+    "apply_for_start_grant.title": {
+      "en": "Are you applying for a start grant?",
+      "fi": "Haetko starttiavustusta?",
+      "sv": "Ansöker du om Sportunderstöd?"
+    },
     "other_compensations_section_have_received_other_compensations.title": {
       "en": "We have received other grants",
       "fi": "Olemme saaneet muita avustuksia",
