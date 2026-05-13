@@ -20,7 +20,8 @@
             "controlledBy": "grant_info_step.subventions_section.apply_for_start_grant",
             "subventionId": "31",
             "valueWhenTrue": "500"
-          }
+          },
+          "useSingleSubvention": true
         }
       },
       "subventions_help": {

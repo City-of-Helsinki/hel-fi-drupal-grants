@@ -39,6 +39,9 @@ export const SubventionTable = ({
   // Handle the liikunta_yleisavustushakemus start grant requirement.
   const startGrantSubventionId = useStartGrant(uiSchema, formData, onChange);
 
+  // Allow only one subvention to have a value at a time, clearing others when one is filled.
+  const useSingleSubvention = uiSchema?.['ui:options']?.useSingleSubvention === true;
+
   if (!schema.options || !schema.options.length) {
     console.error('Tried to render subvention table without items');
     return null;
@@ -84,7 +87,19 @@ export const SubventionTable = ({
       data[index] = newValue;
     }
 
-    onChange(data);
+    // When useSingleSubvention is enabled and a value is entered,
+    // clear all other subventions.
+    if (useSingleSubvention && numericValue) {
+      onChange(
+        data.map((item: SubventionDataItem) => {
+          const itemId = item?.[0]?.value;
+          if (itemId === subventionId) return item;
+          return [item[0], { ...item[1], value: '' }];
+        }),
+      );
+    } else {
+      onChange(data);
+    }
   };
 
   const keyedData: Record<string, string> = {};
@@ -93,6 +108,12 @@ export const SubventionTable = ({
       keyedData[item[0].value] = item[1].value;
     });
   }
+
+  // When useSingleSubvention is enabled, find the subvention that currently
+  // has a value to disable all others.
+  const activeSubventionId = useSingleSubvention
+    ? Object.entries(keyedData).find(([, value]) => value !== '')?.[0]
+    : undefined;
 
   return (
     <>
@@ -108,7 +129,10 @@ export const SubventionTable = ({
                 {...({
                   className: 'form-group field field-integer',
                   'data-subvention-id': itemId,
-                  disabled: isReadOnly || itemId.toString() === startGrantSubventionId,
+                  disabled:
+                    isReadOnly ||
+                    itemId.toString() === startGrantSubventionId ||
+                    (!!activeSubventionId && itemId.toString() !== activeSubventionId),
                   id: key,
                   inputMode: 'decimal',
                   label: `${label} (€)`,

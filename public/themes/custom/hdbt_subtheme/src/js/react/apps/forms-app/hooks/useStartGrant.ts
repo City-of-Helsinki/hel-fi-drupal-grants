@@ -75,7 +75,17 @@ export const useStartGrant = (
       data[index] = entry;
     }
 
-    onChange(data);
+    // When useSingleSubvention is enabled and start grant is applied, clear all other subventions.
+    if (uiSchema?.['ui:options']?.useSingleSubvention === true && isStartGrantApplied) {
+      onChange(
+        data.map((item: unknown) => {
+          if (!Array.isArray(item) || item[0]?.value === subventionId) return item;
+          return [item[0], { ...item[1], value: '' }];
+        }),
+      );
+    } else {
+      onChange(data);
+    }
   }, [isStartGrantApplied]);
 
   return config?.subventionId;
