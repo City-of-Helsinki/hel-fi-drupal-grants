@@ -589,6 +589,11 @@
               "type": "string",
               "default": "general"
             },
+            "applied_benefits": {
+              "format": "decimal-number",
+              "title": "applied_benefits.title",
+              "type": "string"
+            },
             "income_rows": {
               "type": "array",
               "items": {

@@ -291,6 +291,9 @@
       "incomeGroupName": {
         "ui:widget": "hidden"
       },
+      "applied_benefits": {
+        "ui:field": "subventionSum"
+      },
       "income_rows": {
         "ui:options": {
           "addText": "income_rows.add"
