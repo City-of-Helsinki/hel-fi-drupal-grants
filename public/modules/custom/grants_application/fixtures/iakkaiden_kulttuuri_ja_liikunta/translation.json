@@ -24,6 +24,271 @@
       "en": "Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years. Indicate only the grants awarded for the same purpose of use, not all grants awarded to your organization.",
       "fi": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisenä verovuotena. Ilmoita vain samaan käyttötarkoitukseen myönnetyt avustukset, ei kaikkia organisaatiollenne myönnettyjä avustuksia.",
       "sv": "Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren. Ange endast de understöd som beviljats för samma användningsändamål, inte alla understöd som beviljats er organisation."
+    },
+    "information_in_more_detail_step.title": {
+      "en": "Information in more detail",
+      "fi": "Tarkemmat tiedot",
+      "sv": "Mer detaljerad information"
+    },
+    "information_in_more_detail_section.title": {
+      "en": " ",
+      "fi": " ",
+      "sv": " "
+    },
+    "project_plan_grant_duration.title": {
+      "en": "Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project's subsequent years in the fields that open for them.",
+      "fi": "Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.",
+      "sv": "Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem."
+    },
+    "project_plan_grant_duration.opt1": {
+      "en": "I am applying for the grant as a one-year grant",
+      "fi": "Haen avustusta yksivuotisena",
+      "sv": "Jag ansöker om understöd som ettårigt"
+    },
+    "project_plan_grant_duration.opt2": {
+      "en": "I am applying for the grant as a two-year grant",
+      "fi": "Haen avustusta kaksivuotisena",
+      "sv": "Jag ansöker om understöd som tvåårigt"
+    },
+    "project_plan_grant_duration.opt3": {
+      "en": "I am applying for the grant as a three-year grant",
+      "fi": "Haen avustusta kolmevuotisena",
+      "sv": "Jag ansöker om understöd som treårigt"
+    },
+    "applied_grant_amount.title": {
+      "en": "Grant amount applied for",
+      "fi": "Haettava avustussumma",
+      "sv": "Ansökt understödsbelopp"
+    },
+    "applied_grant_amount_help.value": {
+      "en": "Grants of €5,000-€19,999 are awarded for one year at a time. Projects in this category must promote at least one of the alternative objectives listed above, and the self financing share or other funding must be at least 5% of the project costs.",
+      "fi": "5000-19999 euron avustukset myönnetään yhdeksi vuodeksi kerrallaan. Hankkeen tulee tässä kategoriassa edistää vähintään yhtä yllä luetelluista vaihtoehdoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 5% hankkeen kuluista",
+      "sv": "Understöd på 5 000-19 999 euro beviljas för ett år i taget. Projekten i denna kategori ska främja minst ett av de ovan nämnda alternativa målen, och den egna finansieringsandelen eller annan finansiering ska uppgå till minst 5 % av projektets kostnader."
+    },
+    "applied_grant_amount_2026.title": {
+      "en": "2026 (euros)",
+      "fi": "2026 (euroa)",
+      "sv": "2026 (euro)"
+    },
+    "applied_grant_amount_2027.title": {
+      "en": "2027 (euros)",
+      "fi": "2027 (euroa)",
+      "sv": "2027 (euro)"
+    },
+    "applied_grant_amount_2028.title": {
+      "en": "2028 (euros)",
+      "fi": "2028 (euroa)",
+      "sv": "2028 (euro)"
+    },
+    "project_plan_section.title": {
+      "en": "Project plan",
+      "fi": "Hankesuunnitelma",
+      "sv": "Projektplan"
+    },
+    "project_name.title": {
+      "en": "Project name",
+      "fi": "Hankkeen nimi",
+      "sv": "Projektets namn"
+    },
+    "project_purpose_goals.title": {
+      "en": "Purpose and goals of the project",
+      "fi": "Hankkeen tarkoitus ja tavoitteet",
+      "sv": "Syfte och mål med projektet"
+    },
+    "is_application_extension.title": {
+      "en": "Is this a continuation project for a project or an activity that has previously received funding within the grant scheme?",
+      "fi": "Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?",
+      "sv": "Är detta ett fortsättningsprojekt för ett projekt eller verksamhet som tidigare har fått understöd inom stödhelheten?"
+    },
+    "actions_and_timeline.title": {
+      "en": "Project activities and schedule",
+      "fi": "Hankkeen toimenpiteet ja aikataulu",
+      "sv": "Projektets åtgärder och tidtabell"
+    },
+    "actions_timeline_info.value": {
+      "en": "<p>Describe the activities to be organized within the project in as much detail as possible for each year for which support is requested.</p><p>For the possible second and third project years, describe the activities and schedule in as much detail as possible at the time of application.</p>",
+      "fi": "<p>Kuvaa hankeessa järjestettävä toiminta mahdollisimman yksityiskohtaisesti jokaisen vuoden osalta, jolle haetaan avustusta.</p><p>Mahdollisen toisen ja kolmannen hankevuoden osalta kirjaa toimenpiteet ja aikataulu niin tarkalla tasolla kuin se on hakuhetkellä mahdollista.</p>",
+      "sv": "<p>Beskriv den verksamhet som ska ordnas inom projektet så detaljerat som möjligt för varje år som understöd söks för.</p><p>För det möjliga andra och tredje projektåret, anteckna åtgärderna och tidtabellen så noggrant som möjligt vid ansökningstillfället.</p>"
+    },
+    "project_actions_timeline_2026.title": {
+      "en": "Activities during the 2026-2027 period and their planned scheduling",
+      "fi": "Toimenpiteet kaudella 2026-2027 ja niiden suunnitteltu aikataulutus",
+      "sv": "Åtgärder under perioden 2026–2027 och deras planerade tidtabell"
+    },
+    "project_actions_timeline_2027.title": {
+      "en": "Activities during the 2027-2028 period and their planned scheduling",
+      "fi": "Toimenpiteet kaudella 2027-2028 ja niiden suunnitteltu aikataulutus",
+      "sv": "Åtgärder under perioden 2027–2028 och deras planerade tidtabell"
+    },
+    "project_actions_timeline_2028.title": {
+      "en": "Activities during the 2028-2029 period and their planned scheduling",
+      "fi": "Toimenpiteet kaudella 2028-2029 ja niiden suunnitteltu aikataulutus",
+      "sv": "Åtgärder under perioden 2028–2029 och deras planerade tidtabell"
+    },
+    "grant_interim_report_2025.title": {
+      "en": "Interim report on the activities carried out in the project during the 2025–2026 period",
+      "fi": "Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026",
+      "sv": "Mellanrapport om projektets genomförda verksamhet under perioden 2025–2026"
+    },
+    "grant_interim_report_2025.description": {
+      "en": "How successful was the project during the 2025–2026 period in relation to the project plan? How much activity has been organized, and how many elderly residents of Helsinki have been reached? Has there been a need to alter the plan during the latter part of 2025?",
+      "fi": "Miten hankkeessa on kaudella 2025–2026 onnistuttu suhteessa hankesuunnitelmaan? Paljonko toimintaa on järjestetty ja montako helsinkiläistä ikäihmistä on tavoitettu? Onko suunnitelmaa jouduttu muuttamaan loppuvuoden 2025 aikana?",
+      "sv": "Hur har projektet under perioden 2025–2026 lyckats i förhållande till projektplanen? Hur mycket verksamhet har ordnats och hur många äldre Helsingforsbor har nåtts? Har planen behövt ändras under slutet av år 2025?"
+    },
+    "grant_goals_fieldset.title": {
+      "en": "Objectives of the call for applications",
+      "fi": "Haun tavoitteet",
+      "sv": "Målen med ansökan"
+    },
+    "goals_info.value": {
+      "en": "<p>Which of the following objectives for promoting physical activity or cultural activities among the elderly does the project address?</p><p>NOTE! Select only those objectives that are advanced through concrete measures in the project.</p>",
+      "fi": "<p>Mihin seuraavista iäkkäiden liikkumisen tai kulttuuritoiminnan edistämisen avustuksen tavoitteista hanke vastaa?</p><p>HUOM! Valitse tavoitteista vain ne, joita edistetään hankkeessa konkreettisilla toimenpiteillä</p>",
+      "sv": "<p>Vilka av följande mål för att främja äldre personers rörelse eller kulturverksamhet svarar projektet mot?</p><p>OBS! Välj endast de mål som främjas i projektet genom konkreta åtgärder.</p>"
+    },
+    "grant_goals_1.title": {
+      "en": "Does the project increase local or regional opportunities for physical activity or art and cultural activities? How?",
+      "fi": "Lisääkö hanke lähiympäristön tai alueellisia liikkumismahdollisuuksia / taide- ja kulttuuritoimintaa? Miten?",
+      "sv": "Ökar projektet möjligheterna till rörelse eller konst- och kulturverksamhet i närområdet eller regionalt? Hur?"
+    },
+    "grant_goals_2.title": {
+      "en": "Does the project increase volunteer or peer activities to promote physical activity or cultural activity among older adults? How?",
+      "fi": "Lisääkö hanke vapaaehtois- / vertaistoimintaa ikäihmisten liikkumiseksi / kulttuuritoiminnassa? Miten?",
+      "sv": "Ökar projektet frivillig- eller kamratverksamhet för att främja äldre personers rörelse eller kulturverksamhet? Hur?"
+    },
+    "grant_goals_3.title": {
+      "en": "Does the project increase digital and remote activities that encourage physical activity or cultural participation? How?",
+      "fi": "Lisääkö hanke digitalista ja etänä toteutettavaa liikkumiseen aktivoivaa toimitaa / kulttuuritoimintaa? Miten?",
+      "sv": "Ökar projektet digital och distansbaserad verksamhet som aktiverar till rörelse eller kulturverksamhet? Hur?"
+    },
+    "grant_goals_4.title": {
+      "en": "Does the project reduce loneliness and improve mental well-being through physical activity or cultural activities? How?",
+      "fi": "Vähentääkö hanke yksinäisyyttä ja lisääkö mielen hyvinvointia liikkumisen / kulttuuritoiminnan avulla? Miten?",
+      "sv": "Minskar projektet ensamhet och ökar det psykiska välbefinnandet genom rörelse eller kulturverksamhet? Hur?"
+    },
+    "grant_goals_5.title": {
+      "en": "Does the project include intergenerational activities and increase encounters between generations through physical activity or cultural activities? How?",
+      "fi": "Sisältääkö hanke sukupolvia yhdistävää toimintaa ja lisääkö sukupolvien välisiä kohtaamisia liikkumisen / kulttuuritoiminnan kautta? Miten?",
+      "sv": "Innehåller projektet verksamhet som förenar generationer och ökar möten mellan generationer genom rörelse eller kulturverksamhet? Hur?"
+    },
+    "grant_goals_6.title": {
+      "en": "Does the project promote consideration of diversity or multiculturalism in physical activity or cultural activities aimed at the elderly? How?",
+      "fi": "Edistääkö hanke moninaisuuden tai monikulttuurisuuden huomioon ottamista ikäihmisille suunnatussa liikunta- / kulttuuritoiminnassa? Miten?",
+      "sv": "Främjar projektet beaktande av mångfald eller mångkulturalism i rörelse eller kulturverksamhet som riktas till äldre personer? Hur?"
+    },
+    "target_groups_section.title": {
+      "en": "Project target groups, partners, and area",
+      "fi": "Hankkeen kohderyhmät, yhteistyökumppanit ja alue",
+      "sv": "Projektets målgrupper, samarbetspartner och område"
+    },
+    "target_groups_for_who.title": {
+      "en": "Does the project have a more specifically defined target group or groups? Which one(s)?",
+      "fi": "Onko hankkeelle tarkempaa määriteltyä kohderyhmää / kohderyhmiä? Mikä / mitä?",
+      "sv": "Har projektet en mer specifikt definierad målgrupp eller målgrupper? Vilken/vilka?"
+    },
+    "target_groups_participation.title": {
+      "en": "In what ways does the project promote the inclusion of the elderly?",
+      "fi": "Millä tavoin hankkeessa edistetään ikäihmisten osallisuutta?",
+      "sv": "På vilket sätt främjar projektet äldre personers delaktighet?"
+    },
+    "target_groups_skills.title": {
+      "en": "What experience do the organization already have in working with the target group(s)?",
+      "fi": "Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?",
+      "sv": "Vilken kompetens har organisationen sedan tidigare i att arbeta med målgruppen/målgrupperna?"
+    },
+    "assesment_1_fieldset.title": {
+      "en": "Estimate the numerical output target of the planned activities during the 2026–2027 project period:",
+      "fi": "Arvioi hankekauden 2026-2027 osalta tavoitellut toiminnan numeeriset mittarit:",
+      "sv": "Bedöm målsättningen för de numeriska indikatorerna för den planerade verksamheten under projektperioden 2026–2027:"
+    },
+    "target_groups_reached_in_helsinki.title": {
+      "en": "Older people living in Helsinki to be reached through the activities of the project",
+      "fi": "Hankkeen toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset",
+      "sv": "Äldre personer som bor i Helsingfors och nås genom verksamheten i projektet."
+    },
+    "target_groups_reached_in_helsinki.description": {
+      "en": "<p>Indicate here the target number of older adults to be reached.</p>",
+      "fi": "<p>Ilmoita tässä tavoitettujen ikäihmisten tavoiteltu määrä.</p>",
+      "sv": "<p>Ange här det målsatta antalet äldre personer som ska nås.</p>"
+    },
+    "event_count_total.title": {
+      "en": "Total number of events/meetings",
+      "fi": "Tapahtumakertoja / tapaamisten määrä yhteensä",
+      "sv": "Det totala antalet evenemang/möten"
+    },
+    "event_count_total.description": {
+      "en": "How many encounters will be organized for participants during the project period? Each instance, such as a weekly exercise group session or an individual client meeting, is counted as one event here.",
+      "fi": "Monta kohtaamista toimintaan osallistuville järjestetään hankekauden aikana? Jokainen esimerkiksi viikottaisen liikuntaryhmän kerta tai yksilöasiakastapaaminen lasketaan yhtenä tapahtumakertana tässä.",
+      "sv": "Hur många möten ordnas för deltagarna under projektperioden? Varje tillfälle, till exempel ett veckovis motionsgruppstillfälle eller ett individuellt kundmöte, räknas som ett evenemang här."
+    },
+    "assesment_2_fieldset.title": {
+      "en": "In which area or areas of Helsinki will the activities be carried out during the 2026–2027 period? Select up to five (5) areas.",
+      "fi": "Millä alueella tai alueilla Helsingissä toimintaa tullaan toteuttamaan kaudella 2026-2027? Valitse enintään viisi (5) aluetta.",
+      "sv": "På vilket område eller vilka områden i Helsingfors kommer verksamheten att genomföras under perioden 2026–2027? Välj högst fem (5) områden."
+    },
+    "assesment_2_info.value": {
+      "en": "Select based on the exact location of the activity venues from the list of Helsinki sub-areas (Sub area, postal code).",
+      "fi": "Valitse toimintapaikkojen tarkan sijainnin perusteella Helsingin osa-alueiden luettelosta (Osa-alue, postinumero).",
+      "sv": "Välj utifrån verksamhetsplatsernas exakta läge från förteckningen över Helsingfors delområden (Delområde, postnummer)."
+    },
+    "location_1.title": {
+      "en": "Venue 1",
+      "fi": "Toimintapaikka 1",
+      "sv": "Verksamhetsplats 1"
+    },
+    "location_2.title": {
+      "en": "Venue 2",
+      "fi": "Toimintapaikka 2",
+      "sv": "Verksamhetsplats 2"
+    },
+    "location_3.title": {
+      "en": "Venue 3",
+      "fi": "Toimintapaikka 3",
+      "sv": "Verksamhetsplats 3"
+    },
+    "location_4.title": {
+      "en": "Venue 4",
+      "fi": "Toimintapaikka 4",
+      "sv": "Verksamhetsplats 4"
+    },
+    "location_5.title": {
+      "en": "Venue 5",
+      "fi": "Toimintapaikka 5",
+      "sv": "Verksamhetsplats 5"
+    },
+    "project_area_selection_criterion.title": {
+      "en": "Why was this particular area or these areas chosen?",
+      "fi": "Miksi juuri kyseinen alue / alueet on valittu?",
+      "sv": "Varför har just detta område eller dessa områden valts?"
+    },
+    "project_partners.title": {
+      "en": "Name the key partners and their roles in the project. Specify separately the partnerships already agreed upon and those still under consideration.",
+      "fi": "Nimeä keskeisimmät yhteistökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla olevat tahot.",
+      "sv": "Namnge de viktigaste samarbetspartnerna och deras roller i projektet. Ange separat de redan överenskomna samarbetena och de samarbeten som fortfarande är under planering."
+    },
+    "risks_section.title": {
+      "en": "Risks, evaluation, and integrating the activities",
+      "fi": "Riskit, arviointi ja toiminnan juurruttaminen",
+      "sv": "Risker, utvärdering och förankring av verksamheten"
+    },
+    "key_risks.title": {
+      "en": "What are the key risks from the perspective of implementing the project according to the plan?",
+      "fi": "Mitkä ovat hankkeen suunnitelman mukaisen toteuttamisen näkökulmasta keskeisimmät riskit?",
+      "sv": "Vilka är de viktigaste riskerna ur perspektivet att genomföra projektet enligt planen?"
+    },
+    "monitoring_of_project_implementation.title": {
+      "en": "How will the project monitor the achievement of its objectives, and how will the impact of the project be measured?",
+      "fi": "Miten hankkeessa aiotaan seurata tavoitteiden toteutumista ja miten hankkeen vaikuttavuutta aiotaan mitata",
+      "sv": "Hur ska projektet följa upp måluppfyllelsen och hur ska projektets påverkan mätas?"
+    },
+    "project_establishment.title": {
+      "en": "Is the planned activity of the project intended to be integrated into the applicant's or another actor's core operations after the project ends? If yes, describe the plan for implementing this integration.",
+      "fi": "Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa suunnitelma vakiinnuttamisen toteuttamiseksi",
+      "sv": "Är det planerade arbetet i projektet avsett att integreras i den sökandes eller någon annan aktörs ordinarie verksamhet efter projektets slut? Om ja, beskriv planen för att genomföra denna förankring."
+    },
+    "project_solved_problem.title": {
+      "en": "What need or structural problem does the activity aim to address? What kind of change is the activity intended to achieve?",
+      "fi": "Mihin tarpeeseen tai rakenteelliseen ongelmaan toiminnalla halutaan vastata? Millainen muutos toiminnalla halutaan saada aikaiseksi?",
+      "sv": "Vilket behov eller strukturellt problem vill verksamheten svara på? Vilken förändring vill man åstadkomma med verksamheten?"
     }
   }
 }
