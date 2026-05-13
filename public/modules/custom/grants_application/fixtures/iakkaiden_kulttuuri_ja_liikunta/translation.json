@@ -30,11 +30,6 @@
       "fi": "Tarkemmat tiedot",
       "sv": "Mer detaljerad information"
     },
-    "information_in_more_detail_section.title": {
-      "en": " ",
-      "fi": " ",
-      "sv": " "
-    },
     "project_plan_grant_duration.title": {
       "en": "Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project's subsequent years in the fields that open for them.",
       "fi": "Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.",
@@ -289,6 +284,11 @@
       "en": "What need or structural problem does the activity aim to address? What kind of change is the activity intended to achieve?",
       "fi": "Mihin tarpeeseen tai rakenteelliseen ongelmaan toiminnalla halutaan vastata? Millainen muutos toiminnalla halutaan saada aikaiseksi?",
       "sv": "Vilket behov eller strukturellt problem vill verksamheten svara på? Vilken förändring vill man åstadkomma med verksamheten?"
+    },
+    "budget_info.value": {
+      "en": "Break down the budget for the project period 2026– 2027. When applying for multi-year support, the budgets for 2027–2028 and 2028–2029 must be attached as appendices to the application.",
+      "fi": "Erittele tässä hankekauden 2026-2027 talousarvio. Monivuotista avustusta haettaessa budjetti vuosille 2027-2028 ja 2028-2029 tulee liittää hakemuksen liitteeksi.",
+      "sv": "Specificera budgeten för projektperioden 2026–2027. Vid ansökan om flerårigt understöd ska budgetarna för 2027–2028 och 2028– 2029 bifogas som bilagor till ansökan."
     }
   }
 }
