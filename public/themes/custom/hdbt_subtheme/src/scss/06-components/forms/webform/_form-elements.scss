@@ -545,7 +545,8 @@ input[type='radio']+label.form-required::after {
   }
 }
 
-.hdbt-form--section__title {
+.hdbt-form--section__title,
+.hdbt-form--section__spacer {
   margin-block: 0 $spacing;
 
   @include breakpoint($breakpoint-m) {

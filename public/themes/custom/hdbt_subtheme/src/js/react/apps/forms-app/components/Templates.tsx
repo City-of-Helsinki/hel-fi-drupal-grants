@@ -253,7 +253,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
 
     return (
       <section className='hdbt-form--section'>
-        <h3 className='hdbt-form--section__title'>{title}</h3>
+        {title ? (
+          <h3 className='hdbt-form--section__title'>{title}</h3>
+        ) : (
+          <span className='hdbt-form--section__spacer' />
+        )}
         <div className='hdbt-form--section__content'>
           {description && <div className='hdbt-form--description'>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
           {properties.map((field) => field.content)}
