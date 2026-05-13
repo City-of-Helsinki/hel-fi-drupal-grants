@@ -1,32 +1,96 @@
 {
-  "compensation.benefitsInfoArray.0": {
+  "compensation.compensationInfo.compensationArray.0.0": {
     "datasource": "form_data",
-    "source": "grant_info_step.city_benefits_loans_section.city_benefits_loans",
-    "mapping_type": "default",
+    "source": "",
+    "mapping_type": "hardcoded",
     "data": {
-      "ID": "loans",
-      "value": "",
-      "valueType": "string",
-      "label": "Kuvaus lainoista ja takauksista"
+      "0": {
+        "ID": "subventionType",
+        "value": "6",
+        "valueType": "string",
+        "label": "Avustuslajin koodi"
+      }
     }
   },
-  "compensation.benefitsInfoArray.1": {
+  "compensation.compensationInfo.compensationArray.0.1": {
     "datasource": "form_data",
-    "source": "grant_info_step.city_premises_benefits_section.city_premises_benefits",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
     "mapping_type": "default",
     "data": {
-      "ID": "premises",
+      "ID": "amount",
       "value": "",
-      "valueType": "string",
-      "label": "Kuvaus tiloihin liittyvästä tuesta"
+      "valueType": "float",
+      "label": "Avustussumma"
     }
   },
-  "compensation.additionalInformation": {
+  "compensation.compensationInfo.generalInfoArray.0": {
     "datasource": "form_data",
-    "source": "attachments_step.additional_info_section.additional_info",
-    "mapping_type": "simple",
+    "source": "grant_info_step.purpose_section.purpose",
+    "mapping_type": "default",
     "data": {
-      "additionalInformation": ""
+      "ID": "purpose",
+      "value": "",
+      "valueType": "string",
+      "label": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_compensations_section.have_received_other_compensations",
+    "mapping_type": "default",
+    "data": {
+      "ID": "compensationPreviousYear",
+      "value": "",
+      "valueType": "bool",
+      "label": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.2": {
+    "datasource": "form_data",
+    "source": "grant_info_step.prior_benefits_usage_section.prior_compensations",
+    "mapping_type": "default",
+    "data": {
+      "ID": "explanation",
+      "value": "",
+      "valueType": "string",
+      "label": "Selvitys avustuksen käytöstä"
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_compensations_section.other_compensations",
+    "mapping_type": "multiple_values",
+    "data": {
+      "other_compensation_issuer": {
+        "ID": "issuer",
+        "label": "Avustuksen myöntäjä",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_name": {
+        "ID": "issuerName",
+        "label": "Myöntäjän nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_year": {
+        "ID": "year",
+        "label": "Vuosi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_amount": {
+        "ID": "amount",
+        "label": "Myönnetyn avustuksen summa",
+        "value": "",
+        "valueType": "float"
+      },
+      "other_compensation_description": {
+        "ID": "purpose",
+        "label": "Kuvaus käyttötarkoituksesta",
+        "value": "",
+        "valueType": "string"
+      }
     }
   },
   "compensation.activitiesInfoArray.0": {
@@ -115,76 +179,6 @@
       "value": "",
       "valueType": "float",
       "label": "Yhteisöjäsen (€ / vuosi)"
-    }
-  },
-  "compensation.compensationInfo.generalInfoArray.0": {
-    "datasource": "form_data",
-    "source": "grant_info_step.purpose_section.purpose",
-    "mapping_type": "default",
-    "data": {
-      "ID": "purpose",
-      "value": "",
-      "valueType": "string",
-      "label": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista"
-    }
-  },
-  "compensation.compensationInfo.generalInfoArray.1": {
-    "datasource": "form_data",
-    "source": "grant_info_step.prior_benefits_usage_section.have_received_prior_compensations",
-    "mapping_type": "default",
-    "data": {
-      "ID": "compensationPreviousYear",
-      "value": "",
-      "valueType": "bool",
-      "label": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta"
-    }
-  },
-  "compensation.compensationInfo.generalInfoArray.3": {
-    "datasource": "form_data",
-    "source": "grant_info_step.prior_benefits_usage_section.prior_compensations",
-    "mapping_type": "default",
-    "data": {
-      "ID": "explanation",
-      "value": "",
-      "valueType": "string",
-      "label": "Selvitys avustuksen käytöstä"
-    }
-  },
-  "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
-    "datasource": "form_data",
-    "source": "grant_info_step.other_compensations_section.other_compensations",
-    "mapping_type": "multiple_values",
-    "data": {
-      "other_compensation_issuer": {
-        "ID": "issuer",
-        "label": "Avustuksen myöntäjä",
-        "value": "",
-        "valueType": "string"
-      },
-      "other_compensation_issuer_name": {
-        "ID": "issuerName",
-        "label": "Myöntäjän nimi",
-        "value": "",
-        "valueType": "string"
-      },
-      "other_compensation_issuer_year": {
-        "ID": "year",
-        "label": "Vuosi",
-        "value": "",
-        "valueType": "string"
-      },
-      "other_compensation_amount": {
-        "ID": "amount",
-        "label": "Myönnetyn avustuksen summa",
-        "value": "",
-        "valueType": "float"
-      },
-      "other_compensation_description": {
-        "ID": "purpose",
-        "label": "Kuvaus käyttötarkoituksesta",
-        "value": "",
-        "valueType": "string"
-      }
     }
   },
   "attachmentsInfo.attachmentsArray.0": {
@@ -278,7 +272,6 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-
   "attachmentsInfo.attachmentsArray.7": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
@@ -292,77 +285,64 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
+  "compensation.additionalInformation": {
+    "datasource": "form_data",
+    "source": "attachments_step.additional_info_section.additional_info",
+    "mapping_type": "simple",
+    "data": {
+      "additionalInformation": ""
+    }
+  },
 
-  "compensation.compensationInfo.compensationArray.0.0": {
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
     "datasource": "form_data",
-    "source": "",
+    "source": "hardcoded",
     "mapping_type": "hardcoded",
     "data": {
       "0": {
-        "ID": "subventionType",
-        "label": "Avustuslaji",
-        "value": "1",
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "label": null,
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.benefitsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "loans",
+        "label": "",
+        "value": "",
         "valueType": "string"
       }
     }
   },
-  "compensation.compensationInfo.compensationArray.0.1": {
+  "compensation.benefitsInfoArray.1": {
     "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.0.1.value",
-    "mapping_type": "default",
-    "data": {
-      "ID": "amount",
-      "label": "Euroa",
-      "value": "",
-      "valueType": "float"
-    }
-  },
-  "compensation.compensationInfo.compensationArray.1.0": {
-    "datasource": "form_data",
-    "source": "",
+    "source": "hardcoded",
     "mapping_type": "hardcoded",
     "data": {
       "0": {
-        "ID": "subventionType",
-        "label": "Avustuslaji",
-        "value": "5",
+        "ID": "premises",
+        "label": "",
+        "value": "",
         "valueType": "string"
       }
-    }
-  },
-  "compensation.compensationInfo.compensationArray.1.1": {
-    "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.1.1.value",
-    "mapping_type": "default",
-    "data": {
-      "ID": "amount",
-      "label": "Euroa",
-      "value": "",
-      "valueType": "float"
-    }
-  },
-  "compensation.compensationInfo.compensationArray.2.0": {
-    "datasource": "form_data",
-    "source": "",
-    "mapping_type": "hardcoded",
-    "data": {
-      "0": {
-        "ID": "subventionType",
-        "label": "Avustuslaji",
-        "value": "9",
-        "valueType": "string"
-      }
-    }
-  },
-  "compensation.compensationInfo.compensationArray.2.1": {
-    "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.2.1.value",
-    "mapping_type": "default",
-    "data": {
-      "ID": "amount",
-      "label": "Euroa",
-      "value": "",
-      "valueType": "float"
     }
   }
 }
