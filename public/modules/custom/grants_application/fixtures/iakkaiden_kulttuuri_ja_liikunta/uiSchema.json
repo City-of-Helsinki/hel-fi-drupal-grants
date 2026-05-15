@@ -7,7 +7,8 @@
     },
     "subventions_section": {
       "subventions": {
-        "ui:field": "subventionTable"
+        "ui:field": "subventionTable",
+        "misc:exclusive": true
       }
     },
     "purpose_section": {
@@ -116,6 +117,7 @@
           "hideNameFromPrint": true
         },
         "applied_grant_amount_2026": {
+          "ui:field": "subventionSum",
           "ui:options": {
             "printableName": "applied_grant_amount_2026.title"
           }
