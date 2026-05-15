@@ -1,0 +1,14 @@
+{
+  "title": "Liikunta, tapahtuma-avustushakemus",
+  "description": "LIIKUNTATAPAHTUMA",
+  "application_type": "LIIKUNTATAPAHTUMA",
+  "application_type_id": 59,
+  "application_industry": "KUVA",
+  "application_open": "2026-01-01T00:00:00",
+  "application_close": "2026-12-31T23:59:59",
+  "applicant_types": ["registered_community"],
+  "subvention_type": [37],
+  "acting_years": [2026],
+  "continuous": false,
+  "disable_copy": true
+}

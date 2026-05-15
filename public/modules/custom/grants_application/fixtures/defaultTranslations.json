@@ -370,11 +370,6 @@
       "fi": "Liitetiedosto",
       "sv": "Bilaga"
     },
-    "file_description.title": {
-      "en": "Attachment description",
-      "fi": "Liitteen kuvaus",
-      "sv": "Beskrivning av bilagan"
-    },
     "file_removal_failed.title": {
       "en": "File removal failed",
       "fi": "Liitteen poistaminen epäonnistui",
