@@ -122,15 +122,19 @@ export const TextInput = ({
     );
   }
 
+  const maxLength = uiSchema?.['misc:max-length'] as number | undefined;
+
   return (
     <HDSTextInput
       {...({
         errorText: formatErrors(rawErrors),
         disabled: readonly,
+        helperText: maxLength ? `${(value as string)?.length || 0}/${maxLength}` : undefined,
         hideLabel: false,
         id,
         invalid: Boolean(rawErrors?.length),
         label,
+        maxLength,
         name,
         onBlur: () => null,
         onChange: (event: ChangeEvent<HTMLInputElement>) => {
