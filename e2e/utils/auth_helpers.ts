@@ -1,8 +1,11 @@
-import {Page} from '@playwright/test';
+import {Browser, BrowserContext, Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
 import {acceptCookies, hideDialog, logCurrentUrl} from "./helpers";
 import {chmodSync} from "node:fs";
+import {globalCache} from '@global-cache/playwright';
+
+type StorageState = Awaited<ReturnType<BrowserContext['storageState']>>;
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
 type Mode = "new" | "existing";
@@ -304,8 +307,55 @@ const checkLoginStateAndLogin = async (page: Page) => {
   }
 }
 
+/**
+ * Logs in and selects a role, then saves the session so the next
+ * test can reuse it without repeating the login step.
+ *
+ * This is the single place that calls globalCache.get for auth state.
+ * All callers must go through this function to avoid a signature mismatch.
+ *
+ * @param browser
+ *   The Playwright browser used to open pages.
+ * @param role
+ *   The role to select after logging in.
+ * @param mode
+ *   Whether to use an existing or new unregistered community.
+ *   Only used when role is UNREGISTERED_COMMUNITY.
+ *   Defaults to 'existing'.
+ */
+const getAuthState = async (browser: Browser, role: Role, mode: Mode = 'existing'): Promise<StorageState> => {
+  return await globalCache.get(`auth-state-${role.toLowerCase()}`, async () => {
+    const tempPage = await browser.newPage();
+    await selectRole(tempPage, role, mode);
+    const state = await tempPage.context().storageState();
+    await tempPage.close();
+    return state;
+  }) as StorageState;
+};
+
+/**
+ * Returns a page that is already logged in with the given role.
+ * Reuses the cached session from getAuthState when available.
+ *
+ * @param browser
+ *   The Playwright browser used to open pages.
+ * @param role
+ *   The role to select after logging in.
+ * @param mode
+ *   Whether to use an existing or new unregistered community.
+ *   Only used when role is UNREGISTERED_COMMUNITY.
+ *   Defaults to 'existing'.
+ */
+const selectRoleCached = async (browser: Browser, role: Role, mode: Mode = 'existing'): Promise<Page> => {
+  const authState = await getAuthState(browser, role, mode);
+  const context = await browser.newContext({ storageState: authState });
+  return context.newPage();
+};
+
 export {
   Role,
   checkLoginStateAndLogin,
   selectRole,
+  getAuthState,
+  selectRoleCached,
 }

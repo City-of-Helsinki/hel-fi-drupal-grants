@@ -6,7 +6,7 @@ import {
   verifyFormFieldTranslations
 } from './formFieldVerifier';
 import { craftSchema } from './schemaFetcher';
-import { Role, selectRole} from "../auth_helpers";
+import { getAuthState, Role} from "../auth_helpers";
 import {
   captureApplicationNumber,
   waitForFormLoad
@@ -37,8 +37,11 @@ export async function executeFormFlow(
   const FORM_URL = `/fi/application/new/${FORM_ID}`;
   const FORM_JSON = `/fi/application/preview/${FORM_ID}`;
 
-  // Log in and select the role before opening the form.
-  await selectRole(page, FORM_ROLE);
+  // Get the cached auth state for this role. On the first run it logs in
+  // and selects the role, then saves the session for all later tests to reuse.
+  const browser = page.context().browser()!;
+  const authState = await getAuthState(browser, FORM_ROLE);
+  await page.context().addCookies(authState.cookies);
   await page.goto(FORM_URL);
 
   let applicationNumber;

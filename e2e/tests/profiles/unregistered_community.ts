@@ -1,7 +1,7 @@
 import {expect, Page, test} from '@playwright/test';
 import {logger} from "../../utils/logger";
 import {runProfileFormTest, isProfileCreated} from '../../utils/profile_helpers';
-import {selectRole} from "../../utils/auth_helpers";
+import {selectRoleCached} from "../../utils/auth_helpers";
 import {validateExistingProfileData, validateProfileData} from "../../utils/validation_helpers";
 import {profileDataUnregisteredCommunity as profileData, FormData} from '../../utils/data/test_data'
 
@@ -13,16 +13,12 @@ test.describe('Unregistered Community - Grants Profile', () => {
   const profileType = 'unregistered_community';
 
   test.beforeAll(async ({browser}) => {
-    page = await browser.newPage()
-    profileExists = await isProfileCreated(profileType, page);
+    const tempPage = await browser.newPage();
+    profileExists = await isProfileCreated(profileType, tempPage);
+    await tempPage.close();
 
-    if (profileExists) {
-      logger(`Using existing profile for unregistered community.`);
-      await selectRole(page, 'UNREGISTERED_COMMUNITY', 'existing');
-    } else {
-      logger(`Using new profile for unregistered community.`);
-      await selectRole(page, 'UNREGISTERED_COMMUNITY', 'new');
-    }
+    const mode = profileExists ? 'existing' : 'new';
+    page = await selectRoleCached(browser, 'UNREGISTERED_COMMUNITY', mode);
   });
 
   test.afterAll(async() => {

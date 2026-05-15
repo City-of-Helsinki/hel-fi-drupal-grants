@@ -1,7 +1,7 @@
 import {expect, Page, test} from '@playwright/test';
 import {logger} from "../../utils/logger";
 import {runProfileFormTest, isProfileCreated} from '../../utils/profile_helpers';
-import {selectRole} from "../../utils/auth_helpers";
+import {selectRoleCached} from "../../utils/auth_helpers";
 import {validateExistingProfileData, validateProfileData} from "../../utils/validation_helpers";
 import {profileDataPrivatePerson as profileData, FormData} from '../../utils/data/test_data'
 
@@ -13,8 +13,7 @@ test.describe('Private person - Grants Profile', () => {
   const profileType = 'private_person';
 
   test.beforeAll(async ({browser}) => {
-    page = await browser.newPage()
-    await selectRole(page, 'PRIVATE_PERSON');
+    page = await selectRoleCached(browser, 'PRIVATE_PERSON');
     profileExists = await isProfileCreated(profileType, page);
   });
 
