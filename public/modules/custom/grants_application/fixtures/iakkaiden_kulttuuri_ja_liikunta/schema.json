@@ -327,15 +327,6 @@
                   "type": "string"
                 }
               }
-            },
-            "applied_grant_amount_help": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "applied_grant_amount_help.value",
-                  "type": "null"
-                }
-              ]
             }
           },
           "allOf": [

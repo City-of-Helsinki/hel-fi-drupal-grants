@@ -99,12 +99,17 @@
   "information_in_more_detail_step": {
     "information_in_more_detail_section": {
       "project_plan_grant_duration": {
-        "ui:widget": "radio",
+        "ui:field": "grantDuration",
         "ui:enumNames": [
           "project_plan_grant_duration.opt1",
           "project_plan_grant_duration.opt2",
           "project_plan_grant_duration.opt3"
-        ]
+        ],
+        "ui:options": {
+          "smallDescription": "applied_grant_amount_help.value",
+          "mediumDescription": "applied_grant_amount_help_medium.value",
+          "largeDescription": "applied_grant_amount_help_large.value"
+        }
       },
       "applied_grant_amount": {
         "ui:options": {
@@ -125,9 +130,6 @@
             "printableName": "applied_grant_amount_2028.title"
           }
         }
-      },
-      "applied_grant_amount_help": {
-        "ui:field": "textParagraph"
       }
     },
     "project_plan_section": {
