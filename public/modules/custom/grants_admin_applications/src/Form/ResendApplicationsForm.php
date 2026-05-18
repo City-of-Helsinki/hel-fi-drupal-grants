@@ -44,6 +44,7 @@ class ResendApplicationsForm extends AtvFormBase {
     $applicationId = trim($form_state->getValue('applicationId') ?? '');
 
     $prefilledNumber = $this->getRequest()->query->get('transaction_id');
+    $cleanMetadata = $this->getRequest()->query->get('pretty') !== NULL;
 
     if (empty($applicationId) && $prefilledNumber) {
       $applicationId = $prefilledNumber;
@@ -104,6 +105,11 @@ class ResendApplicationsForm extends AtvFormBase {
       $documentArray = json_decode($document, TRUE);
       $prettyJson = json_encode($documentArray, JSON_PRETTY_PRINT);
       $document = $prettyJson;
+      if ($cleanMetadata) {
+        // Replace the metadata from webform json.
+        $document = preg_replace('/,[\n\r]+ *?"meta": "\[\]"/', '', $document ?: '');
+        $document = preg_replace('/,[\n\r]+ *?"meta":[\s\S]*?}}"/', '', $document ?: '');
+      }
     }
 
     if ($status) {
