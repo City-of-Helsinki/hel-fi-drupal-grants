@@ -5,7 +5,7 @@ import { useAtomValue } from 'jotai';
 import type { ComponentPropsWithRef } from 'react';
 import { Notification, TextInput, Fieldset } from 'hds-react';
 
-import type { FocusEvent } from 'react';
+import { useEffect, type FocusEvent } from 'react';
 import { isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
 import { useStartGrant } from '../../hooks/useStartGrant';
 import { formatErrors, numberIsTooLarge, sanitizeNumericInput } from '../../utils';
@@ -35,6 +35,25 @@ export const SubventionTable = ({
   const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
+
+  // Build the full sorted entry list on mount. The ATV mapping uses positional
+  // indices, so all entries must exist and be in schema.options order from the start.
+  useEffect(() => {
+    const data = Array.isArray(formData) ? [...formData] : [];
+    const optionOrder = Array.isArray(schema.options)
+      ? (schema.options as SubventionOption[]).map(({ id: optionId }) => optionId.toString())
+      : [];
+    const sorted = optionOrder.map((optionId) => {
+      const existing = data.find((item) => Array.isArray(item) && item[0]?.value === optionId);
+      return (
+        existing ?? [
+          { ID: SUBVENTION_ID, label: SUBVENTION_LABEL, value: optionId, valueType: SUBVENTION_VALUE_TYPE },
+          { ID: AMOUNT_ID, label: AMOUNT_LABEL, value: '0', valueType: AMOUNT_VALUE_TYPE },
+        ]
+      );
+    });
+    onChange(sorted);
+  }, []);
 
   // Handle the liikunta_yleisavustushakemus start grant requirement.
   const startGrantSubventionId = useStartGrant(uiSchema, formData, onChange);
@@ -89,12 +108,12 @@ export const SubventionTable = ({
 
     // When useSingleSubvention is enabled and a value is entered,
     // clear all other subventions.
-    if (useSingleSubvention && numericValue) {
+    if (useSingleSubvention && numericValue && numericValue !== '0') {
       onChange(
         data.map((item: SubventionDataItem) => {
           const itemId = item?.[0]?.value;
           if (itemId === subventionId) return item;
-          return [item[0], { ...item[1], value: '' }];
+          return [item[0], { ...item[1], value: '0' }];
         }),
       );
     } else {
@@ -110,9 +129,9 @@ export const SubventionTable = ({
   }
 
   // When useSingleSubvention is enabled, find the subvention that currently
-  // has a value to disable all others.
+  // has a real value (not 0) to disable all others.
   const activeSubventionId = useSingleSubvention
-    ? Object.entries(keyedData).find(([, value]) => value !== '')?.[0]
+    ? Object.entries(keyedData).find(([, value]) => value !== '' && value !== '0')?.[0]
     : undefined;
 
   return (
@@ -142,7 +161,7 @@ export const SubventionTable = ({
                       event.target.select();
                     }
                   },
-                  value: keyedData[itemId] ?? '',
+                  value: keyedData[itemId] ?? '0',
                 } as unknown as Omit<ComponentPropsWithRef<typeof TextInput>, 'key'>)}
               />
             );

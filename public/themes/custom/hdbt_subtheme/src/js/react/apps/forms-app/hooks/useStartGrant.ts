@@ -37,15 +37,16 @@ export const useStartGrant = (
   const fullFormData = useAtomValue(getFormDataAtom);
   const config = uiSchema?.['ui:options']?.startGrant as StartGrantConfig | undefined;
 
-  // Track the previous radio button value to avoid calling onChange on every render.
-  const prevValueRef = useRef<boolean | undefined>(undefined);
-
   // Read the apply_for_start_grant radio button value from the full form data.
   const isStartGrantApplied = config
     ? config.controlledBy
         .split('.')
         .reduce((acc: unknown, key) => (acc as Record<string, unknown>)?.[key], fullFormData) === true
     : undefined;
+
+  // Initialize the ref to the current radio button value so the effect does not
+  // fire on mount.
+  const prevValueRef = useRef<boolean | undefined>(isStartGrantApplied);
 
   useEffect(() => {
     // Skip if the radio button value has not changed since the last run.
@@ -63,7 +64,7 @@ export const useStartGrant = (
       {
         ID: AMOUNT_ID,
         label: AMOUNT_LABEL,
-        value: isStartGrantApplied ? valueWhenTrue : '',
+        value: isStartGrantApplied ? valueWhenTrue : '0',
         valueType: AMOUNT_VALUE_TYPE,
       },
     ];
@@ -80,7 +81,7 @@ export const useStartGrant = (
       onChange(
         data.map((item: unknown) => {
           if (!Array.isArray(item) || item[0]?.value === subventionId) return item;
-          return [item[0], { ...item[1], value: '' }];
+          return [item[0], { ...item[1], value: '0' }];
         }),
       );
     } else {
