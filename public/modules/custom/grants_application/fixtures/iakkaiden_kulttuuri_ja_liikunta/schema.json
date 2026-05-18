@@ -80,45 +80,155 @@
     },
     "_location_select": {
       "type": "string",
+      "default": "location_select.none",
       "enum": [
-        "Kluuvi, 00100", "Etu-Töölö, 00100", "Punavuori, 00120", "Kaartinkaupunki, 00130",
-        "Ullanlinna, 00140", "Eira, 00150", "Hernesaari, 00150", "Katajanokka, 00160",
-        "Kruununhaka, 00170", "Kamppi, 00180", "Ruoholahti, 00180", "Lapinlahti, 00180",
-        "Kaivopuisto, 00190", "Suomenlinna, 00190", "Kotkavuori, 00200", "Myllykallio, 00200",
-        "Koivusaari, 00200", "Vattuniemi, 00210", "Jätkäsaari, 00220", "Länsi-Pasila, 00240",
-        "Pohjois-Pasila, 00240", "Keski-Pasila, 00240", "Taka-Töölö, 00250", "Meilahti, 00250",
-        "Laakso, 00270", "Vanha Ruskeasuo, 00280", "Pikku Huopalahti, 00300", "Kivihaka, 00310",
-        "Etelä-Haaga, 00320", "Vanha Munkkiniemi, 00330", "Kuusisaari, 00340", "Lehtisaari, 00340",
-        "Munkkivuori, 00350", "Niemenmäki, 00350", "Talinranta, 00350", "Tali, 00350",
-        "Pajamäki, 00360", "Reimarla, 00370", "Marttila, 00370", "Pitäjänmäen yritysalue, 00380",
-        "Konala, 00390", "Honkasuo, 00390", "Pohjois-Haaga, 00400", "Malminkartano, 00410",
-        "Kannelmäki, 00420", "Maununneva, 00430", "Hakuninmaa, 00430", "Kuninkaantammi, 00430",
-        "Lassila, 00440", "Torkkelinmäki, 00500", "Harju, 00510", "Alppila, 00510",
-        "Vallila, 00510", "Itä-Pasila, 00520", "Vilhonvuori, 00530", "Siltasaari, 00530",
-        "Linjat, 00530", "Sompasaari, 00540", "Hanasaari, 00540", "Toukola, 00560",
-        "Arabianranta, 00560", "Kumpula, 00560", "Vanhakaupunki, 00560", "Viikinranta, 00560",
-        "Mustikkamaa-Korkeasaari, 00570", "Kulosaari, 00570", "Kalasatama, 00580",
-        "Hermanninmäki, 00580", "Hermanninranta, 00580", "Kyläsaari, 00580",
-        "Tullisaari, 00590", "Kruunuvuorenranta, 00590", "Koskela, 00600", "Käpylä, 00610",
-        "Metsälä, 00620", "Pirkkola, 00630", "Maunula, 00630", "Maunulanpuisto, 00630",
-        "Patola, 00640", "Veräjämäki, 00650", "Veräjälaakso, 00650", "Länsi-Pakila, 00660",
-        "Paloheinä, 00670", "Itä-Pakila, 00680", "Torpparinmäki, 00690", "Haltiala, 00690",
-        "Tuomarinkartano, 00690", "Ylä-Malmi, 00700", "Ala-Malmi, 00700", "Tattariharju, 00700",
-        "Malmin lentokenttä, 00700", "Viikinmäki, 00710", "Pihlajamäki, 00710", "Pihlajisto, 00710",
-        "Pukinmäki, 00720", "Tapanila, 00730", "Töyrynummi, 00730", "Siltamäki, 00740",
-        "Tapulikaupunki, 00750", "Puistola, 00760", "Heikinlaakso, 00760", "Tattarisuo, 00770",
-        "Alppikylä, 00770", "Jakomäki, 00770", "Tapaninvainio, 00780", "Latokartano, 00790",
-        "Viikin tiedepuisto, 00790", "Länsi-Herttoniemi, 00800", "Herttoniemenranta, 00810",
-        "Roihuvuori, 00820", "Tammisalo, 00830", "Vartiosaari, 00830", "Yliskylä, 00840",
-        "Jollas, 00850", "Villinki, 00850", "Itäsaaret, 00850", "Santahamina, 00860",
-        "Hevossalmi, 00870", "Herttoniemen yritysalue, 00880", "Roihupelto, 00880",
-        "Östersundom, 00890", "Salmenkallio, 00890", "Talosaari, 00890", "Karhusaari, 00890",
-        "Landbo, 00890", "Puroniitty, 00890", "Puotinharju, 00900", "Puotila, 00910",
-        "Myllypuro, 00920", "Marjaniemi, 00930", "Itäkeskus, 00930", "Kontula, 00940",
-        "Vesala, 00940", "Kivikko, 00940", "Kurkimäki, 00940", "Vartioharju, 00950",
-        "Mustavuori, 00960", "Mellunmäki, 00970", "Keski-Vuosaari, 00980",
-        "Nordsjön kartano, 00980", "Meri-Rastila, 00980", "Kallahti, 00980",
-        "Rastila, 00980", "Niinisaari, 00980", "Uutela, 00990", "Aurinkolahti, 00990"
+        "location_select.none",
+        "location_select.Kluuvi",
+        "location_select.Etu-Töölö",
+        "location_select.Punavuori",
+        "location_select.Kaartinkaupunki",
+        "location_select.Ullanlinna",
+        "location_select.Eira",
+        "location_select.Hernesaari",
+        "location_select.Katajanokka",
+        "location_select.Kruununhaka",
+        "location_select.Kamppi",
+        "location_select.Ruoholahti",
+        "location_select.Lapinlahti",
+        "location_select.Kaivopuisto",
+        "location_select.Suomenlinna",
+        "location_select.Kotkavuori",
+        "location_select.Myllykallio",
+        "location_select.Koivusaari",
+        "location_select.Vattuniemi",
+        "location_select.Jätkäsaari",
+        "location_select.Länsi-Pasila",
+        "location_select.Pohjois-Pasila",
+        "location_select.Keski-Pasila",
+        "location_select.Taka-Töölö",
+        "location_select.Meilahti",
+        "location_select.Laakso",
+        "location_select.Vanha Ruskeasuo",
+        "location_select.Pikku Huopalahti",
+        "location_select.Kivihaka",
+        "location_select.Etelä-Haaga",
+        "location_select.Vanha Munkkiniemi",
+        "location_select.Kuusisaari",
+        "location_select.Lehtisaari",
+        "location_select.Munkkivuori",
+        "location_select.Niemenmäki",
+        "location_select.Talinranta",
+        "location_select.Tali",
+        "location_select.Pajamäki",
+        "location_select.Reimarla",
+        "location_select.Marttila",
+        "location_select.Pitäjänmäen yritysalue",
+        "location_select.Konala",
+        "location_select.Honkasuo",
+        "location_select.Pohjois-Haaga",
+        "location_select.Malminkartano",
+        "location_select.Kannelmäki",
+        "location_select.Maununneva",
+        "location_select.Hakuninmaa",
+        "location_select.Kuninkaantammi",
+        "location_select.Lassila",
+        "location_select.Torkkelinmäki",
+        "location_select.Harju",
+        "location_select.Alppila",
+        "location_select.Vallila",
+        "location_select.Itä-Pasila",
+        "location_select.Vilhonvuori",
+        "location_select.Siltasaari",
+        "location_select.Linjat",
+        "location_select.Sompasaari",
+        "location_select.Hanasaari",
+        "location_select.Toukola",
+        "location_select.Arabianranta",
+        "location_select.Kumpula",
+        "location_select.Vanhakaupunki",
+        "location_select.Viikinranta",
+        "location_select.Mustikkamaa-Korkeasaari",
+        "location_select.Kulosaari",
+        "location_select.Kalasatama",
+        "location_select.Hermanninmäki",
+        "location_select.Hermanninranta",
+        "location_select.Kyläsaari",
+        "location_select.Tullisaari",
+        "location_select.Kruunuvuorenranta",
+        "location_select.Koskela",
+        "location_select.Käpylä",
+        "location_select.Metsälä",
+        "location_select.Pirkkola",
+        "location_select.Maunula",
+        "location_select.Maunulanpuisto",
+        "location_select.Patola",
+        "location_select.Veräjämäki",
+        "location_select.Veräjälaakso",
+        "location_select.Länsi-Pakila",
+        "location_select.Paloheinä",
+        "location_select.Itä-Pakila",
+        "location_select.Torpparinmäki",
+        "location_select.Haltiala",
+        "location_select.Tuomarinkartano",
+        "location_select.Ylä-Malmi",
+        "location_select.Ala-Malmi",
+        "location_select.Tattariharju",
+        "location_select.Malmin lentokenttä",
+        "location_select.Viikinmäki",
+        "location_select.Pihlajamäki",
+        "location_select.Pihlajisto",
+        "location_select.Pukinmäki",
+        "location_select.Tapanila",
+        "location_select.Töyrynummi",
+        "location_select.Siltamäki",
+        "location_select.Tapulikaupunki",
+        "location_select.Puistola",
+        "location_select.Heikinlaakso",
+        "location_select.Tattarisuo",
+        "location_select.Alppikylä",
+        "location_select.Jakomäki",
+        "location_select.Tapaninvainio",
+        "location_select.Latokartano",
+        "location_select.Viikin tiedepuisto",
+        "location_select.Länsi-Herttoniemi",
+        "location_select.Herttoniemenranta",
+        "location_select.Roihuvuori",
+        "location_select.Tammisalo",
+        "location_select.Vartiosaari",
+        "location_select.Yliskylä",
+        "location_select.Jollas",
+        "location_select.Villinki",
+        "location_select.Itäsaaret",
+        "location_select.Santahamina",
+        "location_select.Hevossalmi",
+        "location_select.Herttoniemen yritysalue",
+        "location_select.Roihupelto",
+        "location_select.Östersundom",
+        "location_select.Salmenkallio",
+        "location_select.Talosaari",
+        "location_select.Karhusaari",
+        "location_select.Landbo",
+        "location_select.Puroniitty",
+        "location_select.Puotinharju",
+        "location_select.Puotila",
+        "location_select.Myllypuro",
+        "location_select.Marjaniemi",
+        "location_select.Itäkeskus",
+        "location_select.Kontula",
+        "location_select.Vesala",
+        "location_select.Kivikko",
+        "location_select.Kurkimäki",
+        "location_select.Vartioharju",
+        "location_select.Mustavuori",
+        "location_select.Mellunmäki",
+        "location_select.Keski-Vuosaari",
+        "location_select.Nordsjön kartano",
+        "location_select.Meri-Rastila",
+        "location_select.Kallahti",
+        "location_select.Rastila",
+        "location_select.Niinisaari",
+        "location_select.Uutela",
+        "location_select.Aurinkolahti"
       ]
     },
     "_income_row_item": {
@@ -179,7 +289,9 @@
               "type": "string"
             }
           },
-          "required": ["acting_year"]
+          "required": [
+            "acting_year"
+          ]
         },
         "subventions_section": {
           "title": "subventions_section.title",
@@ -211,7 +323,9 @@
               "type": "string"
             }
           },
-          "required": ["purpose"]
+          "required": [
+            "purpose"
+          ]
         },
         "other_compensations_section": {
           "title": "other_compensations_section.title",
@@ -227,7 +341,9 @@
               "default": false
             }
           },
-          "required": ["have_received_other_compensations"],
+          "required": [
+            "have_received_other_compensations"
+          ],
           "allOf": [
             {
               "if": {
@@ -268,7 +384,9 @@
               "default": false
             }
           },
-          "required": ["have_applied_other_compensations"],
+          "required": [
+            "have_applied_other_compensations"
+          ],
           "allOf": [
             {
               "if": {
@@ -308,18 +426,27 @@
       "properties": {
         "information_in_more_detail_section": {
           "type": "object",
-          "required": ["project_plan_grant_duration", "applied_grant_amount"],
+          "required": [
+            "project_plan_grant_duration",
+            "applied_grant_amount"
+          ],
           "properties": {
             "project_plan_grant_duration": {
               "title": "project_plan_grant_duration.title",
               "type": "string",
-              "enum": ["1", "2", "3"],
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ],
               "default": "1"
             },
             "applied_grant_amount": {
               "title": "applied_grant_amount.title",
               "type": "object",
-              "required": ["applied_grant_amount_2026"],
+              "required": [
+                "applied_grant_amount_2026"
+              ],
               "properties": {
                 "applied_grant_amount_2026": {
                   "format": "decimal-number",
@@ -332,7 +459,14 @@
           "allOf": [
             {
               "if": {
-                "properties": { "project_plan_grant_duration": { "enum": ["2", "3"] } }
+                "properties": {
+                  "project_plan_grant_duration": {
+                    "enum": [
+                      "2",
+                      "3"
+                    ]
+                  }
+                }
               },
               "then": {
                 "properties": {
@@ -344,14 +478,20 @@
                         "type": "string"
                       }
                     },
-                    "required": ["applied_grant_amount_2027"]
+                    "required": [
+                      "applied_grant_amount_2027"
+                    ]
                   }
                 }
               }
             },
             {
               "if": {
-                "properties": { "project_plan_grant_duration": { "const": "3" } }
+                "properties": {
+                  "project_plan_grant_duration": {
+                    "const": "3"
+                  }
+                }
               },
               "then": {
                 "properties": {
@@ -363,7 +503,9 @@
                         "type": "string"
                       }
                     },
-                    "required": ["applied_grant_amount_2028"]
+                    "required": [
+                      "applied_grant_amount_2028"
+                    ]
                   }
                 }
               }
@@ -390,28 +532,30 @@
             },
             "is_application_extension": {
               "title": "is_application_extension.title",
-              "enum": [false, true],
+              "enum": [
+                false,
+                true
+              ],
               "default": false
             },
             "actions_and_timeline": {
               "title": "actions_and_timeline.title",
               "type": "object",
-              "required": ["project_actions_timeline_2026"],
+              "required": [
+                "project_actions_timeline_2026"
+              ],
               "properties": {
                 "actions_timeline_info": {
                   "type": "array",
-                  "items": [{ "title": "actions_timeline_info.value", "type": "null" }]
+                  "items": [
+                    {
+                      "title": "actions_timeline_info.value",
+                      "type": "null"
+                    }
+                  ]
                 },
                 "project_actions_timeline_2026": {
                   "title": "project_actions_timeline_2026.title",
-                  "type": "string"
-                },
-                "project_actions_timeline_2027": {
-                  "title": "project_actions_timeline_2027.title",
-                  "type": "string"
-                },
-                "project_actions_timeline_2028": {
-                  "title": "project_actions_timeline_2028.title",
                   "type": "string"
                 }
               }
@@ -422,21 +566,48 @@
               "properties": {
                 "goals_info": {
                   "type": "array",
-                  "items": [{ "title": "goals_info.value", "type": "null" }]
+                  "items": [
+                    {
+                      "title": "goals_info.value",
+                      "type": "null"
+                    }
+                  ]
                 },
-                "grant_goals_1": { "title": "grant_goals_1.title", "type": "string" },
-                "grant_goals_2": { "title": "grant_goals_2.title", "type": "string" },
-                "grant_goals_3": { "title": "grant_goals_3.title", "type": "string" },
-                "grant_goals_4": { "title": "grant_goals_4.title", "type": "string" },
-                "grant_goals_5": { "title": "grant_goals_5.title", "type": "string" },
-                "grant_goals_6": { "title": "grant_goals_6.title", "type": "string" }
+                "grant_goals_1": {
+                  "title": "grant_goals_1.title",
+                  "type": "string"
+                },
+                "grant_goals_2": {
+                  "title": "grant_goals_2.title",
+                  "type": "string"
+                },
+                "grant_goals_3": {
+                  "title": "grant_goals_3.title",
+                  "type": "string"
+                },
+                "grant_goals_4": {
+                  "title": "grant_goals_4.title",
+                  "type": "string"
+                },
+                "grant_goals_5": {
+                  "title": "grant_goals_5.title",
+                  "type": "string"
+                },
+                "grant_goals_6": {
+                  "title": "grant_goals_6.title",
+                  "type": "string"
+                }
               }
             }
           },
           "allOf": [
             {
               "if": {
-                "properties": { "is_application_extension": { "const": true } }
+                "properties": {
+                  "is_application_extension": {
+                    "const": true
+                  }
+                }
               },
               "then": {
                 "properties": {
@@ -445,7 +616,9 @@
                     "type": "string"
                   }
                 },
-                "required": ["grant_interim_report_2025"]
+                "required": [
+                  "grant_interim_report_2025"
+                ]
               }
             }
           ]
@@ -476,7 +649,10 @@
             "assesment_1_fieldset": {
               "title": "assesment_1_fieldset.title",
               "type": "object",
-              "required": ["target_groups_reached_in_helsinki", "event_count_total"],
+              "required": [
+                "target_groups_reached_in_helsinki",
+                "event_count_total"
+              ],
               "properties": {
                 "target_groups_reached_in_helsinki": {
                   "title": "target_groups_reached_in_helsinki.title",
@@ -491,11 +667,18 @@
             "assesment_2_fieldset": {
               "title": "assesment_2_fieldset.title",
               "type": "object",
-              "required": ["project_area_selection_criterion"],
+              "required": [
+                "project_area_selection_criterion"
+              ],
               "properties": {
                 "assesment_2_info": {
                   "type": "array",
-                  "items": [{ "title": "assesment_2_info.value", "type": "null" }]
+                  "items": [
+                    {
+                      "title": "assesment_2_info.value",
+                      "type": "null"
+                    }
+                  ]
                 },
                 "location_1": {
                   "title": "location_1.title",
@@ -532,7 +715,10 @@
         "risks_section": {
           "title": "risks_section.title",
           "type": "object",
-          "required": ["key_risks", "monitoring_of_project_implementation"],
+          "required": [
+            "key_risks",
+            "monitoring_of_project_implementation"
+          ],
           "properties": {
             "key_risks": {
               "title": "key_risks.title",
@@ -545,21 +731,120 @@
             "project_establishment": {
               "title": "project_establishment.title",
               "type": "string"
-            },
-            "project_solved_problem": {
-              "title": "project_solved_problem.title",
-              "type": "string"
             }
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "project_plan_grant_duration": {
+                    "enum": [
+                      "2",
+                      "3"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_plan_section": {
+                "properties": {
+                  "actions_and_timeline": {
+                    "properties": {
+                      "project_actions_timeline_2027": {
+                        "title": "project_actions_timeline_2027.title",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "project_actions_timeline_2027"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "project_plan_grant_duration": {
+                    "const": "3"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_plan_section": {
+                "properties": {
+                  "actions_and_timeline": {
+                    "properties": {
+                      "project_actions_timeline_2028": {
+                        "title": "project_actions_timeline_2028.title",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "project_actions_timeline_2028"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "applied_grant_amount": {
+                    "properties": {
+                      "applied_grant_amount_2026": {
+                        "pattern": "^([5-9][0-9]{4}|[0-9]{6,})(,[0-9]+)?$"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "risks_section": {
+                "properties": {
+                  "project_solved_problem": {
+                    "title": "project_solved_problem.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "project_solved_problem"
+                ]
+              }
+            }
+          }
+        }
+      ]
     },
     "budget_step": {
       "type": "object",
       "properties": {
         "budget_info_section": {
           "type": "object",
-          "required": ["budget_info"],
+          "required": [
+            "budget_info"
+          ],
           "properties": {
             "budget_info": {
               "type": "array",
@@ -690,18 +975,36 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "file_id": { "type": "integer" },
-                          "fileName": { "type": "string" },
-                          "fileType": { "type": "integer" },
-                          "integrationID": { "type": "string" },
-                          "isDeliveredLater": { "type": "boolean" },
-                          "isIncludedInOtherFile": { "type": "boolean" },
-                          "isNewAttachment": { "type": "boolean" },
-                          "size": { "type": "integer" }
+                          "file_id": {
+                            "type": "integer"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "fileType": {
+                            "type": "integer"
+                          },
+                          "integrationID": {
+                            "type": "string"
+                          },
+                          "isDeliveredLater": {
+                            "type": "boolean"
+                          },
+                          "isIncludedInOtherFile": {
+                            "type": "boolean"
+                          },
+                          "isNewAttachment": {
+                            "type": "boolean"
+                          },
+                          "size": {
+                            "type": "integer"
+                          }
                         }
                       }
                     },
-                    "description": { "type": "string" }
+                    "description": {
+                      "type": "string"
+                    }
                   }
                 }
               }

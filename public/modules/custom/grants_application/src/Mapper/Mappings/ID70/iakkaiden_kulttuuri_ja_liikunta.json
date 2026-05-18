@@ -179,7 +179,7 @@
     "source": "information_in_more_detail_step.information_in_more_detail_section.project_plan_grant_duration",
     "mapping_type": "default",
     "data": {
-      "ID": "hankesuunnitelma_avustuksen_kesto_2",
+      "ID": "hankesuunnitelma_avustuksen_kesto",
       "label": "Haetaanko yksi-, kaksi- vai kolmevuotista avustusta?",
       "value": "",
       "valueType": "string"
@@ -531,7 +531,7 @@
     "source": "information_in_more_detail_step.risks_section.project_solved_problem",
     "mapping_type": "default",
     "data": {
-      "ID": "project_solved_problem",
+      "ID": "hankkeen_ratkaisema_ongelma",
       "label": "Hankkeen ratkaisema ongelma",
       "value": "",
       "valueType": "string"
