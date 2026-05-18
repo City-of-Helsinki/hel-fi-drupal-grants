@@ -87,7 +87,7 @@
     "data": {
       "ID": "membersApplicantPersonLocal",
       "value": "",
-      "valueType": "string",
+      "valueType": "int",
       "label": "Helsinkiläisiä henkilöjäseniä yhteensä"
     }
   },
@@ -98,7 +98,7 @@
     "data": {
       "ID": "membersApplicantPersonGlobal",
       "value": "",
-      "valueType": "string",
+      "valueType": "int",
       "label": "Henkilöjäseniä yhteensä"
     }
   },
@@ -109,7 +109,7 @@
     "data": {
       "ID": "membersApplicantCommunityLocal",
       "value": "",
-      "valueType": "string",
+      "valueType": "int",
       "label": "Helsinkiläisiä yhteisöjäseniä yhteensä"
     }
   },
@@ -120,7 +120,7 @@
     "data": {
       "ID": "membersApplicantCommunityGlobal",
       "value": "",
-      "valueType": "string",
+      "valueType": "int",
       "label": "Yhteisöjäseniä"
     }
   },
@@ -208,7 +208,7 @@
         "ID": "amount",
         "label": "Myönnetyn avustuksen summa",
         "value": "",
-        "valueType": "string"
+        "valueType": "float"
       },
       "other_compensation_description": {
         "ID": "purpose",

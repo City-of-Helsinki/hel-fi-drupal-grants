@@ -253,7 +253,7 @@
             "ID": "amount",
             "label": "My\u00f6nnetyn avustuksen summa",
             "value": "1000",
-            "valueType": "string"
+            "valueType": "float"
           },
           {
             "ID": "purpose",
