@@ -63,7 +63,8 @@
           "properties": {
             "purpose": {
               "title": "purpose_section_purpose.title",
-              "type": "string"
+              "type": "string",
+              "description": "purpose.description"
             }
           },
           "required": ["purpose"]

@@ -10,10 +10,15 @@
       "fi": "Tällä lomakkeella haetaan vain yhtä avustusta kerrallaan. Hakiessasi starttiavustusta, avustussumma (500€) tulee valmiina kenttään, eikä summaa voi muuttaa, koska avustussumma on kiinteä. Muissa avustuslajeissa haettava summa tulee lisätä kenttään.",
       "sv": "Med denna blankett ansöker du om ett understöd i taget. När du ansöker om startunderstöd, finns understödsbeloppet (500 €) färdigt i fältet, och du kan inte ändra beloppet, eftersom det är fast. I andra understödsslag ska du själv ange beloppet i fältet."
     },
-    "purpose.description": {
+    "purpose.tooltip": {
       "en": "For a targeted grant application, detailed information is provided with a separate Webropol form (a mandatory attachment).",
       "fi": "Kohdeavustuksen osalta tarkemmat tiedot kysytään Webropol-lomakkeella (pakollinen liite).",
       "sv": "Med ansökan om riktat understöd, ska den mer detaljerade informationen avges med en separat Webropol-blankett (en erforderlig bilaga)."
+    },
+    "purpose.description": {
+      "en": "Indicate the purpose for which the grant is applied for. If necessary, specify the different uses.",
+      "fi": "Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet.",
+      "sv": "Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen."
     },
     "required_attachments_help.title": {
       "en": "Required attachments with regards to grant types",

@@ -24,4 +24,3 @@ The fixtures folder contains everything that is needed for react forms.
 
 ### Default translations
 - Contains translations used in all forms
-

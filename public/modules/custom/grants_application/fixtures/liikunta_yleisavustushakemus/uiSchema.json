@@ -34,7 +34,7 @@
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
-          "tooltipText": "purpose.description"
+          "tooltipText": "purpose.tooltip"
         }
       }
     }
