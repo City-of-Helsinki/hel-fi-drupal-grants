@@ -176,7 +176,7 @@ class JsonMapperService {
     $formData = $dataSources['form_data'];
     $mappedBankFile = $this->mapper->mapBankFile($this->getSelectedBankAccount($formData), $bankFile);
     $mappedFileData = $this->mapper->mapFiles($dataSources);
-    $mappedData = array_merge($mappedData, $mappedFileData);
+    $mappedData = array_merge_recursive($mappedData, $mappedFileData);
 
     $mappedData['attachmentsInfo']['attachmentsArray'][] = $mappedBankFile;
     return $mappedData;
