@@ -51,7 +51,10 @@ export const SubventionTable = ({
         ]
       );
     });
-    onChange(sorted);
+    const isAlreadySorted = JSON.stringify(data) === JSON.stringify(sorted);
+    if (!isAlreadySorted) {
+      onChange(sorted);
+    }
   }, []);
 
   // Handle the liikunta_yleisavustushakemus start grant requirement.
