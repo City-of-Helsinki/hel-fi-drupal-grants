@@ -1,10 +1,10 @@
-import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
+import type { RJSFSchema, RJSFValidationError } from '@rjsf/utils';
 import { atom } from 'jotai';
 import type { ReactNode } from 'react';
 import { SubmitStates } from './enum/SubmitStates';
 import { getUrlParts } from './testutils/Helpers';
 import type { Avus2Message } from './types/Avus2';
-import type { GrantsProfile } from './types/GrantsProfile';
+import type { FormConfig, ResponseData } from './types/Data';
 import type { RJSFFormData } from './types/RJSFFormData';
 import { findFieldsOfType, findFieldsWithOption, keyErrorsByStep } from './utils';
 
@@ -13,47 +13,6 @@ export type FormStep = { id: string; label: string };
 export type FormState = {
   currentStep: [number, FormStep];
   reachedStep: number;
-};
-
-type FormConfig = {
-  actingYears?: string[];
-  applicationNumber: string;
-  grantsProfile: GrantsProfile;
-  persistedData: RJSFFormData;
-  token: string;
-  schema: RJSFSchema;
-  settings: { [key: string]: string };
-  submitState: string;
-  subventionFields: string[];
-  summaryData?: {
-    applicationNumber?: string;
-    applicationSubmitted?: string;
-    attachments?: string[];
-    handlers?: Array<string[]>;
-    statusUpdates?: string[];
-  };
-  requiredFileFields: string[];
-  translations: {
-    [key in 'fi' | 'sv' | 'en']: { [key: string]: string };
-  };
-  uiSchema: UiSchema;
-};
-
-type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
-  applicationNumber: string;
-  grants_profile: GrantsProfile;
-  settings: {
-    acting_years?: string[];
-  };
-  status: string;
-  summary_data?: {
-    application_number?: string;
-    application_submitted?: string;
-    attachments?: string[];
-    handlers?: Array<string[]>;
-    status_updates?: string[];
-  };
-  ui_schema: UiSchema;
 };
 
 const buildFormSteps = ({ properties }: RJSFSchema): Map<number, FormStep> => {

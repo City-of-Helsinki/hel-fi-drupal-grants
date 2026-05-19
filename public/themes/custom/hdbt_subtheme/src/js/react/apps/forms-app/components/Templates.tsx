@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: This file has many references to form data that is always any
 
+import { getDefaultRegistry } from '@rjsf/core';
 import type {
   ArrayFieldTemplateProps,
   FieldTemplateProps,
@@ -7,11 +8,10 @@ import type {
   ObjectFieldTemplatePropertyType,
   ObjectFieldTemplateProps,
 } from '@rjsf/utils';
-import { getDefaultRegistry } from '@rjsf/core';
-import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus, type AccordionTheme } from 'hds-react';
-import type { ReactNode } from 'react';
+import { Accordion, type AccordionTheme, Button, Fieldset, IconCross, IconPlus, Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
-
+import type { ReactNode } from 'react';
+import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import {
   formStepsAtom,
   getApplicantTypeAtom,
@@ -19,10 +19,9 @@ import {
   isEmptyPreviewAtom,
   shouldRenderPreviewAtom,
 } from '../store';
-import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
-import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
-import { getTooltip } from '../utils';
 import type { UiSchema } from '../types/UiSchema';
+import { getTooltip } from '../utils';
+import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
 
 export const ArrayFieldTemplate = ({
   canAdd,

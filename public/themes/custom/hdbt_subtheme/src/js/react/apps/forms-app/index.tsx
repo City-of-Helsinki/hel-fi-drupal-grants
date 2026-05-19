@@ -1,14 +1,13 @@
 import { ErrorBoundary, type FallbackRender } from '@sentry/react';
+import { LoadingSpinner, Notification } from 'hds-react';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { LoadingSpinner, Notification } from 'hds-react';
-
+import initSentry from '@/react/common/helpers/Sentry';
 import { GeneralError } from './components/GeneralError';
 import { ToastStack } from './components/ToastStack';
-import initSentry from '@/react/common/helpers/Sentry';
 import { AppContainer } from './containers/AppContainer';
-import { InvalidSchemaError } from './errors/InvalidSchemaError';
 import { BackendError } from './errors/BackendError';
+import { InvalidSchemaError } from './errors/InvalidSchemaError';
 
 initSentry();
 

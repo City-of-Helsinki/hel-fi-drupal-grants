@@ -1,13 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import {
-  addApplicantInfoStep,
-  getIndicesWithErrors,
-  getSubventionSum,
-  isValidFormResponse,
-  keyErrorsByStep,
-} from '../utils';
-import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
 import { communitySettings } from '../formConstants';
+import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
+import type { GrantsProfile } from '../types/GrantsProfile';
+import { addApplicantInfoStep, getIndicesWithErrors, getSubventionSum, keyErrorsByStep } from '../utils';
 
 describe('Utils.ts', () => {
   test('getIndicesWithErrors', () => {
@@ -20,11 +15,6 @@ describe('Utils.ts', () => {
   test('keyErrorsByStep', () => {
     expect(keyErrorsByStep(undefined)).toEqual([]);
     expect(keyErrorsByStep(testErrors, testSteps)).toEqual(testKeyedErrors);
-  });
-
-  // @todo implement actual test once this function is actually implemented
-  test('isValidFormResponse', () => {
-    expect(isValidFormResponse({})).toEqual([true, undefined]);
   });
 
   describe('getSubventionSum', () => {
@@ -115,7 +105,24 @@ describe('Utils.ts', () => {
 
   test('addApplicantInfoStep', () => {
     const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
-    const result = addApplicantInfoStep({}, {}, { business_id: '123' });
+
+    const profile: GrantsProfile = {
+      addresses: [],
+      bankAccounts: [],
+      businessId: '1234567-8',
+      businessPurpose: 'Testing',
+      companyHome: 'Helsinki',
+      companyHomePage: 'https://www.testcompany.com',
+      companyName: 'Test Company Ltd.',
+      companyNameShort: 'Test Company',
+      companyStatus: 'active',
+      companyStatusSpecial: 'none',
+      foundingYear: '2020',
+      officials: [],
+      registrationDate: '2020-01-01',
+    };
+
+    const result = addApplicantInfoStep({}, {}, profile);
 
     expect(result[0]).toEqual({
       definitions: { applicant_info: definition },

@@ -1,13 +1,21 @@
-// biome-ignore-all lint/suspicious/useIterableCallbackReturn: @todo UHF-12501
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
-// biome-ignore-all lint/suspicious/noPrototypeBuiltins: @todo UHF-12501
-// biome-ignore-all lint/complexity/noBannedTypes: @todo UHF-12501
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
-import type { FormStep } from './store';
-import { communitySettings } from './formConstants';
-import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { Tooltip } from 'hds-react';
+import { htmlToReact } from '@/react/common/helpers/htmlToReact';
+import { communitySettings } from './formConstants';
+import type { FormStep } from './store';
+import type { ResponseData } from './types/Data';
+import type { GrantsProfile } from './types/GrantsProfile';
+import type { RJSFFormData } from './types/RJSFFormData';
+
+type SchemaNode = {
+  type?: string;
+  title?: string;
+  $ref?: string;
+  required?: string[];
+  properties?: Record<string, SchemaNode>;
+  allOf?: Array<{ if?: SchemaNode; then?: SchemaNode; else?: SchemaNode }>;
+  definitions?: Record<string, SchemaNode>;
+};
 
 const regex = /^.([^.]+)/;
 
@@ -20,7 +28,7 @@ const regex = /^.([^.]+)/;
  * @return {Array} - Array of step indices with errors in them
  */
 export const getIndicesWithErrors = (errors: RJSFValidationError[] | undefined, steps?: Map<number, FormStep>) => {
-  if (!steps || !errors || !errors?.length) {
+  if (!steps || !errors?.length) {
     return [];
   }
 
@@ -49,13 +57,18 @@ export const getIndicesWithErrors = (errors: RJSFValidationError[] | undefined, 
  * The step level resolves $ref from schema.definitions.
  * Subsequent levels merge base properties with allOf/then properties.
  */
-const resolveFieldSchema = (rootSchema: RJSFSchema, path: string[]): any => {
+const resolveFieldSchema = (rootSchema: RJSFSchema, path: string[]): SchemaNode | null => {
   if (path.length === 0) return null;
 
   const [stepId, ...rest] = path;
-  const stepProp = rootSchema.properties?.[stepId] as any;
+  const stepProp = (rootSchema.properties as Record<string, SchemaNode> | undefined)?.[stepId];
+
+  if (!stepProp || typeof stepProp !== 'object') {
+    return null;
+  }
+
   const refName = stepProp?.$ref?.replace('#/definitions/', '');
-  const stepDef = (refName ? (rootSchema.definitions as any)?.[refName] : stepProp) as any;
+  const stepDef = refName ? (rootSchema.definitions as Record<string, SchemaNode> | undefined)?.[refName] : stepProp;
 
   if (!stepDef) return null;
   if (rest.length === 0) return stepDef;
@@ -63,16 +76,16 @@ const resolveFieldSchema = (rootSchema: RJSFSchema, path: string[]): any => {
   return resolveNestedSchema(stepDef, rest);
 };
 
-const resolveNestedSchema = (schema: any, path: string[]): any => {
-  if (!schema || path.length === 0) return schema;
+const resolveNestedSchema = (schema: SchemaNode | null | undefined, path: string[]): SchemaNode | null => {
+  if (!schema || path.length === 0) return schema ?? null;
 
   const [key, ...rest] = path;
 
   // Start with base property schema
-  let merged: any = schema?.properties?.[key] ? { ...schema.properties[key] } : null;
+  let merged: SchemaNode | null = schema.properties?.[key] ? { ...schema.properties[key] } : null;
 
   // Merge in any allOf/then schemas for this key
-  for (const allOfItem of schema?.allOf ?? []) {
+  for (const allOfItem of schema.allOf ?? []) {
     const thenField = allOfItem.then?.properties?.[key];
     if (thenField) {
       merged = merged
@@ -98,13 +111,13 @@ const resolveNestedSchema = (schema: any, path: string[]): any => {
  * so only actual input fields (leaf nodes) receive rawErrors and show red borders.
  */
 const expandLeafRequiredErrors = (
-  objectSchema: any,
+  objectSchema: SchemaNode,
   pathPrefix: string,
   expanded: RJSFValidationError[],
   schemaPath: string,
 ): void => {
-  for (const fieldId of objectSchema?.required ?? []) {
-    const fieldSchema = objectSchema?.properties?.[fieldId];
+  for (const fieldId of objectSchema.required ?? []) {
+    const fieldSchema = objectSchema.properties?.[fieldId];
 
     if (fieldSchema?.type === 'object') {
       // Recurse into nested object (fieldset) rather than adding an object-level error
@@ -112,11 +125,7 @@ const expandLeafRequiredErrors = (
     } else {
       const fieldTitle = fieldSchema?.title;
       const message = fieldTitle
-        ? Drupal.t(
-            '!field field is required.',
-            { '!field': fieldTitle as string },
-            { context: 'Grants application: Validation' },
-          )
+        ? Drupal.t('!field field is required.', { '!field': fieldTitle }, { context: 'Grants application: Validation' })
         : Drupal.t('Field is required', {}, { context: 'Grants application: Validation' });
 
       expanded.push({
@@ -151,14 +160,14 @@ const expandLeafRequiredErrors = (
 export const expandConditionalRequiredErrors = (
   errors: RJSFValidationError[],
   schema: RJSFSchema,
-  formData: any,
+  formData: RJSFFormData,
 ): RJSFValidationError[] => {
   const expanded: RJSFValidationError[] = [];
 
   for (const error of errors) {
     expanded.push(error);
 
-    if ((error as any).name !== 'required' || !error.property) {
+    if (error.name !== 'required' || !error.property) {
       continue;
     }
 
@@ -170,7 +179,11 @@ export const expandConditionalRequiredErrors = (
     // Check if the missing property is absent from form data
     const parentParts = parts.slice(0, -1);
     const missingFieldId = parts[parts.length - 1];
-    const parentData = parentParts.reduce((data: any, key: string) => data?.[key], formData);
+    const parentData = parentParts.reduce<Record<string, unknown> | undefined>(
+      (data, key) =>
+        data && typeof data === 'object' ? (data[key] as Record<string, unknown> | undefined) : undefined,
+      formData,
+    );
     const missingFieldData = parentData?.[missingFieldId];
 
     // Only expand if absent — if present (even as {}), AJV already generates field errors
@@ -200,7 +213,7 @@ export const expandConditionalRequiredErrors = (
  * @return {Array} - Array of validation errors, keyed by step index
  */
 export const keyErrorsByStep = (errors: RJSFValidationError[] | undefined, steps?: Map<number, FormStep>) => {
-  if (!steps || !errors || !errors?.length) {
+  if (!steps || !errors?.length) {
     return [];
   }
 
@@ -210,7 +223,7 @@ export const keyErrorsByStep = (errors: RJSFValidationError[] | undefined, steps
   errors.forEach((error) => {
     const match = error?.property?.match(regex)?.[0];
 
-    const matchedStep = stepsArray.find(([index, step]) => step.id === match?.split('.')[1]);
+    const matchedStep = stepsArray.find(([_index, step]) => step.id === match?.split('.')[1]);
 
     if (matchedStep) {
       const [matchedIndex] = matchedStep;
@@ -225,25 +238,25 @@ export const keyErrorsByStep = (errors: RJSFValidationError[] | undefined, steps
  * Checks that server response is in valid form response format.
  *  @todo implement actual check when server implementation is finalized.
  *
- * @param {Object} data - Server response
+ * @param {Object} _data - Server response
  *
  * @return {Array} - [isValid, message]
  */
-export const isValidFormResponse = (data: Object): [boolean, string | undefined] => [true, undefined];
+export const isValidFormResponse = (_data: ResponseData): [boolean, string | undefined] => [true, undefined];
 
 /**
  * Add static applicant info step to form schema.
  *
  * @param {Object} schema - Form schema
  * @param {Object} uiSchema - Form Ui Schema
- * @param {Object} grantsProfile - Grants profile
+ * @param {Object} _grantsProfile - Grants profile
  *
  * @return {Array} - Resulting forma and ui schemas
  */
 export const addApplicantInfoStep = (
   schema: RJSFSchema,
   uiSchema: UiSchema,
-  grantsProfile: Array<undefined> | { business_id?: string },
+  _grantsProfile: GrantsProfile,
 ): [RJSFSchema, UiSchema] => {
   const { definitions, properties } = schema;
   const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
@@ -274,7 +287,7 @@ export const getNestedSchemaProperty = (obj: RJSFSchema, path: string) => {
 
   properties.forEach((property, index) => {
     const propertyName = property.toString();
-    const hasProperty = current && Object.prototype.hasOwnProperty.call(current, propertyName);
+    const hasProperty = current && Object.hasOwn(current, propertyName);
     if (hasProperty && index === properties.length - 1) {
       current = current?.[propertyName];
     } else if (hasProperty) {
@@ -296,18 +309,18 @@ export const getNestedSchemaProperty = (obj: RJSFSchema, path: string) => {
  *
  * @return {void}
  */
-export const setNestedProperty = (obj: any, path: string, value: any) => {
+export const setNestedProperty = (obj: Record<string, unknown>, path: string, value: unknown) => {
   const properties = path.split('.').slice(1);
-  let current = obj;
+  let current: Record<string, unknown> = obj;
 
   properties.forEach((property, index) => {
     if (index === properties.length - 1) {
       current[property] = value;
     } else {
-      if (!Object.prototype.hasOwnProperty.call(current, property)) {
+      if (!Object.hasOwn(current, property)) {
         current[property] = {};
       }
-      current = current[property];
+      current = current[property] as Record<string, unknown>;
     }
   });
 };
@@ -321,10 +334,10 @@ export const setNestedProperty = (obj: any, path: string, value: any) => {
  *
  * @yields {string} - form element path
  */
-export function* findFieldsOfType(element: any, type: string, prefix: string = ''): IterableIterator<string> {
+export function* findFieldsOfType(element: unknown, type: string, prefix: string = ''): IterableIterator<string> {
   const isObject = typeof element === 'object' && !Array.isArray(element) && element !== null;
 
-  if (isObject && element['ui:field'] && element['ui:field'] === type) {
+  if (isObject && (element as Record<string, unknown>)['ui:field'] === type) {
     yield prefix;
   } else if (isObject) {
     // Functional loops mess mess up generator function, so use for - of loop here.
@@ -344,10 +357,10 @@ export function* findFieldsOfType(element: any, type: string, prefix: string = '
  *
  * @yields {string} - form element path
  */
-export function* findFieldsWithOption(element: any, option: string, prefix: string = ''): IterableIterator<string> {
+export function* findFieldsWithOption(element: unknown, option: string, prefix: string = ''): IterableIterator<string> {
   const isObject = typeof element === 'object' && !Array.isArray(element) && element !== null;
 
-  if (isObject && element[option]) {
+  if (isObject && (element as Record<string, unknown>)[option]) {
     yield prefix;
   } else if (isObject) {
     // Functional loops mess up generator function, so use for - of loop here.
@@ -379,7 +392,7 @@ export const formatErrors = (rawErrors: string[] | undefined) => {
  * @param {array} subventionFields - Array of subvention field paths
  * @return {number} - Total sum
  */
-export const getSubventionSum = (formData: any, subventionFields: string[]) =>
+export const getSubventionSum = (formData: RJSFFormData, subventionFields: string[]) =>
   subventionFields.reduce((total, field) => {
     const values = getNestedSchemaProperty(formData, field);
     let totalNumericValue = Number(String(total).replace(',', '.'));
@@ -413,7 +426,7 @@ export const ALLOWED_HTML_TAGS = ['p', 'ul', 'ol', 'li', 'strong'];
  * @return {React.ReactNode} - Tooltip component
  */
 export const getTooltip = (uiSchema: UiSchema | undefined) => {
-  if (!uiSchema || !uiSchema?.['ui:options']?.tooltipText) {
+  if (!uiSchema?.['ui:options']?.tooltipText) {
     return undefined;
   }
 

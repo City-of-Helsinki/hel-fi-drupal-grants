@@ -1,11 +1,9 @@
 // biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import type { FieldProps } from '@rjsf/utils';
+import { Fieldset, Notification, TextInput } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import type { ComponentPropsWithRef } from 'react';
-import { Notification, TextInput, Fieldset } from 'hds-react';
-
-import type { FocusEvent } from 'react';
+import type { ComponentPropsWithRef, FocusEvent } from 'react';
 import { isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
 import { formatErrors, numberIsTooLarge, sanitizeNumericInput } from '../../utils';
 

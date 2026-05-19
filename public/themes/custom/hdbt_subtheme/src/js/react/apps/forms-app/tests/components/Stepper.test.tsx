@@ -1,12 +1,12 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { StepState } from 'hds-react';
-import { TestProvider } from '../../testutils/TestProvider';
-import { formConfigAtom, formStateAtom, formStepsAtom } from '../../store';
-import { initializeFormState } from '../../testutils/Helpers';
-import { testSteps } from '../../testutils/Data';
+import { describe, expect, it } from 'vitest';
 import { Stepper, transformSteps } from '../../components/Stepper';
 import { SubmitStates } from '../../enum/SubmitStates';
+import { formConfigAtom, formStateAtom, formStepsAtom } from '../../store';
+import { testSteps } from '../../testutils/Data';
+import { initializeFormState } from '../../testutils/Helpers';
+import { TestProvider } from '../../testutils/TestProvider';
 
 describe('Stepper.tsx tests', () => {
   render(

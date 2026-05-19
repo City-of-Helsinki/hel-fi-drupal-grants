@@ -1,20 +1,20 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
+
+import type { ValidationData } from '@rjsf/utils';
 import { Button, IconAngleLeft, IconAngleRight } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
-import type { ValidationData } from '@rjsf/utils';
 import type { SyntheticEvent } from 'react';
-
+import { primaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import {
-  getCurrentStepAtom,
   errorsAtom,
-  getStepsAtom,
-  setStepAtom,
   finalAcceptanceAtom,
+  getCurrentStepAtom,
+  getStepsAtom,
   isReadOnlyAtom,
+  setStepAtom,
 } from '../../store';
 import { isDraft, keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
-import { primaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
 export const FormActions = ({
   saveDraft,

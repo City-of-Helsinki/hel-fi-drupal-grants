@@ -1,12 +1,11 @@
-import useSWRImmutable from 'swr/immutable';
 import { LoadingSpinner } from 'hds-react';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-
-import { FormWrapper } from './FormWrapper';
-import { getUrlParts } from '../testutils/Helpers';
+import useSWRImmutable from 'swr/immutable';
 import { BackendError } from '../errors/BackendError';
 import { Requests } from '../Requests';
+import { getUrlParts } from '../testutils/Helpers';
+import { FormWrapper } from './FormWrapper';
 
 /**
  * Instantiates a new application draft for the given form.
