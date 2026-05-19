@@ -143,7 +143,7 @@ class JsonMapper {
     if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'bool') {
       $value = $value ? 'true' : 'false';
     }
-    else if (!$value || $value === '' && $definition['data']['value'] !== ""){
+    else if (!$value && $definition['data']['value'] !== ""){
       // The mapping contains a default value and datasource does not
       // have a value, we use the mapped default value.
       $value = $definition['data']['value'];
