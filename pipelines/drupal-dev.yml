@@ -9,8 +9,7 @@ trigger:
     exclude:
     - '*.md'
     - '.github/'
-    - 'pipelines/drupal-production.yml'
-    - 'pipelines/drupal-staging.yml'
+    - 'pipelines/drupal-release.yml'
     - 'pipelines/drupal-test.yml'
 
 # Pull request (PR) triggers cause a pipeline to run whenever a pull request is
