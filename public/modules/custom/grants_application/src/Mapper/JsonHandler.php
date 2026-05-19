@@ -26,7 +26,7 @@ class JsonHandler {
    * @return mixed
    *   Anything that is needed.
    */
-  public function handleDefinitionUpdate(string $handler, array $data, array $definition): mixed {
+  public function handleDefinitionUpdate(string $handler, mixed $data, array $definition): mixed {
     return call_user_func([self::class, $handler], $data, $definition);
   }
 
@@ -82,6 +82,25 @@ class JsonHandler {
     }
 
     return $result;
+  }
+
+  /**
+   * Map a scalar enum value to a human-readable label using a value_map.
+   *
+   * @param string $data
+   *   The raw enum value from form data (e.g. "1", "2", "3").
+   * @param array $definition
+   *   Mapping definition; must contain data.value_map keyed by enum values.
+   *
+   * @return array
+   *   A data-definition with the mapped label as value.
+   */
+  public static function enumToLabel(string $data, array $definition): array {
+    $handledData = $definition['data'];
+    $valueMap = $handledData['value_map'] ?? [];
+    $handledData['value'] = $valueMap[$data] ?? $data;
+    unset($handledData['value_map']);
+    return $handledData;
   }
 
 }

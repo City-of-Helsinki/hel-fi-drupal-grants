@@ -177,12 +177,18 @@
   "compensation.customQuestionsInfo.customQuestionsArray.0": {
     "datasource": "form_data",
     "source": "information_in_more_detail_step.information_in_more_detail_section.project_plan_grant_duration",
-    "mapping_type": "default",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
     "data": {
       "ID": "hankesuunnitelma_avustuksen_kesto",
       "label": "Haetaanko yksi-, kaksi- vai kolmevuotista avustusta?",
       "value": "",
-      "valueType": "string"
+      "valueType": "string",
+      "value_map": {
+        "1": "Haen avustusta yksivuotisena",
+        "2": "Haen avustusta kaksivuotisena",
+        "3": "Haen avustusta kolmevuotisena"
+      }
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.1": {
@@ -221,12 +227,17 @@
   "compensation.customQuestionsInfo.customQuestionsArray.4": {
     "datasource": "form_data",
     "source": "information_in_more_detail_step.project_plan_section.is_application_extension",
-    "mapping_type": "default",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
     "data": {
       "ID": "onko_kyseessa_jatkohakemus",
       "label": "Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?",
       "value": "",
-      "valueType": "bool"
+      "valueType": "string",
+      "value_map": {
+        "1": "Kyllä",
+        "": "Ei"
+      }
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.5": {
@@ -581,6 +592,15 @@
     "mapping_type": "hardcoded",
     "data": {
       "incomeGroupName": "general"
+    }
+  },
+
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "costRowsArrayStatic": {}
     }
   },
 
