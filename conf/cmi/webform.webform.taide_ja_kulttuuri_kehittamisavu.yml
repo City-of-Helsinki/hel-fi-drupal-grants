@@ -394,6 +394,7 @@ elements: |-
           purpose:
             '#type': textarea
             '#title': 'Kuvaus käyttötarkoituksesta'
+            '#required': true
             '#attributes':
               class:
                 - webform--large

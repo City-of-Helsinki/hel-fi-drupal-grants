@@ -1,0 +1,23 @@
+{
+  "title": "Sosiaali-, terveys- ja pelastustoimen yleisavustus",
+  "description": "Sosiaali-, terveys- ja pelastustoimen yleisavustus",
+  "application_type": "SOTEPEYLEIS",
+  "application_type_id": 72,
+  "application_industry": "KANSLIA",
+  "application_open": "2026-01-01T00:00:00",
+  "application_close": "2029-07-30T11:19:00",
+  "applicant_types": [
+    "registered_community"
+  ],
+  "subvention_type": [
+    6
+  ],
+  "target_group": 30,
+  "acting_years": [
+    2026,
+    2027,
+    2028
+  ],
+  "continuous": false,
+  "disable_copy": true
+}

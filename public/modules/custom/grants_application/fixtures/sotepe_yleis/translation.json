@@ -1,0 +1,19 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "General grants for social welfare, health care and rescue services",
+      "fi": "Sosiaali-, terveys- ja pelastustoimen yleisavustus",
+      "sv": "Allmänt understöd inom social-, hälsovårds- och räddningssektorn"
+    },
+    "purpose_section_modified.title": {
+      "en": "For what purpose will the grant be used?",
+      "fi": "Mihin avustus käytetään?",
+      "sv": "Vad kommer understödet att användas till?"
+    },
+    "purpose.custom_description": {
+      "en": "<p>Provide a short description of the scope and nature of the activities to be carried out with the grant e.g. as follows:</p><ul><li>How much or how often will you organise groups, events or other activities during the period of the grant?</li><li>How many target group representatives do you expect to reach?</li><li>In what areas of Helsinki will the activities be arranged?</li><li>What kind of cooperation do you pursue with other operators in Helsinki?</li></ul>",
+      "fi": "<p>Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:</p><ul><li>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana?</li><li>Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne?</li><li>Missä Helsingin alueilla toimintaa järjestetään?</li><li>Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?</li></ul>",
+      "sv": "<p>Beskriv den verksamhet som ska genomföras med hjälp av understödet och verksamhetens omfattning i korthet exempelvis på följande sätt:</p><ul><li>Hur mycket eller ofta ordnar ni grupper, evenemang eller annan verksamhet under den understödda perioden?</li><li>Hur många representanter för målgruppen kommer ni att nå enligt er uppskattning?</li><li>Inom vilka områden i Helsingfors kommer verksamheten att ordnas?</li><li>På vilka sätt samarbetar ni med andra aktörer i Helsingfors?</li></ul>"
+    }
+  }
+}
