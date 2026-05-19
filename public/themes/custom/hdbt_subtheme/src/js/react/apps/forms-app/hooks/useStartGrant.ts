@@ -8,7 +8,7 @@ import {
   SUBVENTION_ID,
   SUBVENTION_LABEL,
   SUBVENTION_VALUE_TYPE,
-} from '../components/Fields/SubventionTable';
+} from '../enum/SubventionFields';
 import { getFormDataAtom } from '../store';
 
 type StartGrantConfig = {

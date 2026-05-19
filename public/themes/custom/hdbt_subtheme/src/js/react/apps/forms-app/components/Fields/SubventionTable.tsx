@@ -9,19 +9,18 @@ import { useEffect, type FocusEvent } from 'react';
 import { isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
 import { useStartGrant } from '../../hooks/useStartGrant';
 import { formatErrors, numberIsTooLarge, sanitizeNumericInput } from '../../utils';
+import {
+  AMOUNT_ID,
+  AMOUNT_LABEL,
+  AMOUNT_VALUE_TYPE,
+  SUBVENTION_ID,
+  SUBVENTION_LABEL,
+  SUBVENTION_VALUE_TYPE,
+} from '../../enum/SubventionFields';
 
 type SubventionOption = { id: string; label: string };
 
 type SubventionDataItem = [{ value: string }, { value: string }];
-
-// Static values for Avus2 integration.
-export const AMOUNT_ID = 'amount';
-export const AMOUNT_LABEL = 'Euroa';
-export const AMOUNT_VALUE_TYPE = 'double';
-
-export const SUBVENTION_ID = 'subventionType';
-export const SUBVENTION_LABEL = 'Avustuslaji';
-export const SUBVENTION_VALUE_TYPE = 'string';
 
 export const SubventionTable = ({
   idSchema,
