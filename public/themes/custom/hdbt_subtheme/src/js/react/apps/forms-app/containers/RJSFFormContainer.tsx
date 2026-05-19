@@ -220,7 +220,7 @@ export const RJSFFormContainer = ({
       const hasValues = values
         ? Object.entries(values).reduce((acc, [, curr]) => {
             const value = curr?.[1]?.value?.toString().trim();
-            return acc || (!!value && value !== '0' && value !== '0,00');
+            return acc || (!!value && value !== '0' && value !== '0,0' && value !== '0,00');
           }, false)
         : false;
 
