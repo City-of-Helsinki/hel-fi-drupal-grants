@@ -19,8 +19,26 @@ import {
 } from '../../enum/SubventionFields';
 
 type SubventionOption = { id: string; label: string };
+type SubventionField = { ID: string; label: string; value: string; valueType: string };
+type SubventionDataItem = [SubventionField, SubventionField];
 
-type SubventionDataItem = [{ value: string }, { value: string }];
+/**
+ * Create a default subvention data item.
+ */
+const createSubventionDataItem = (subventionId: string, amount: string): SubventionDataItem => [
+  { ID: SUBVENTION_ID, label: SUBVENTION_LABEL, value: subventionId, valueType: SUBVENTION_VALUE_TYPE },
+  { ID: AMOUNT_ID, label: AMOUNT_LABEL, value: amount, valueType: AMOUNT_VALUE_TYPE },
+];
+
+/**
+ * Clear all subventions except the active one.
+ */
+const clearOtherSubventions = (data: SubventionDataItem[], activeSubventionId: string): SubventionDataItem[] =>
+  data.map((item: SubventionDataItem) => {
+    const itemId = item?.[0]?.value;
+    if (itemId === activeSubventionId) return item;
+    return [item[0], { ...item[1], value: '0' }];
+  });
 
 export const SubventionTable = ({
   idSchema,
@@ -34,6 +52,13 @@ export const SubventionTable = ({
   const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
+  const startGrant = useStartGrant(uiSchema);
+
+  // When true, only one subvention can have a non-zero amount at a time.
+  const useSingleSubvention = uiSchema?.['ui:options']?.useSingleSubvention === true;
+
+  const findIndexForData = (elementId: string, data: SubventionDataItem[] = formData) =>
+    data.findIndex((item: SubventionDataItem) => item && item?.[0]?.value === elementId);
 
   // Build the full sorted entry list on mount. The ATV mapping uses positional
   // indices, so all entries must exist and be in schema.options order from the start.
@@ -44,32 +69,43 @@ export const SubventionTable = ({
       : [];
     const sorted = optionOrder.map((optionId) => {
       const existing = data.find((item) => Array.isArray(item) && item[0]?.value === optionId);
-      return (
-        existing ?? [
-          { ID: SUBVENTION_ID, label: SUBVENTION_LABEL, value: optionId, valueType: SUBVENTION_VALUE_TYPE },
-          { ID: AMOUNT_ID, label: AMOUNT_LABEL, value: '0', valueType: AMOUNT_VALUE_TYPE },
-        ]
-      );
+      return existing ?? createSubventionDataItem(optionId, '0');
     });
-    const isAlreadySorted = JSON.stringify(data) === JSON.stringify(sorted);
-    if (!isAlreadySorted) {
+
+    if (JSON.stringify(data) !== JSON.stringify(sorted)) {
       onChange(sorted);
     }
   }, []);
 
-  // Handle the liikunta_yleisavustushakemus start grant requirement.
-  const startGrantSubventionId = useStartGrant(uiSchema, formData, onChange);
+  // Handle the "start grant" value changes from sibling radio button.
+  useEffect(() => {
+    if (!startGrant.toggled || !startGrant.subventionId || !startGrant.valueWhenTrue) return;
 
-  // Allow only one subvention to have a value at a time, clearing others when one is filled.
-  const useSingleSubvention = uiSchema?.['ui:options']?.useSingleSubvention === true;
+    const data = Array.isArray(formData) ? [...formData] : [];
+    const index = findIndexForData(startGrant.subventionId, data);
+    const entry = createSubventionDataItem(
+      startGrant.subventionId,
+      startGrant.isApplied ? startGrant.valueWhenTrue : '0',
+    );
+
+    if (index === -1) {
+      data.push(entry);
+    } else {
+      data[index] = entry;
+    }
+
+    if (useSingleSubvention && startGrant.isApplied) {
+      onChange(clearOtherSubventions(data, startGrant.subventionId));
+      return;
+    }
+
+    onChange(data);
+  }, [startGrant.toggled, startGrant.isApplied, startGrant.subventionId, startGrant.valueWhenTrue]);
 
   if (!schema.options || !schema.options.length) {
     console.error('Tried to render subvention table without items');
     return null;
   }
-
-  const findIndexForData = (elementId: string, data: SubventionDataItem[] = formData) =>
-    data.findIndex((item: SubventionDataItem) => item && item?.[0]?.value === elementId);
 
   if (shouldRenderPreview) {
     return (
@@ -94,12 +130,7 @@ export const SubventionTable = ({
     const subventionId = dataset.subventionId as string;
     const numericValue = sanitizeNumericInput(value, 'decimal-number');
     const data = formData && Array.isArray(formData) ? [...formData] : [];
-
-    const newValue = [
-      { ID: SUBVENTION_ID, label: SUBVENTION_LABEL, value: subventionId, valueType: SUBVENTION_VALUE_TYPE },
-      { ID: AMOUNT_ID, label: AMOUNT_LABEL, value: numericValue, valueType: AMOUNT_VALUE_TYPE },
-    ];
-
+    const newValue = createSubventionDataItem(subventionId, numericValue);
     const index = findIndexForData(subventionId, data);
 
     if (index === -1) {
@@ -111,13 +142,7 @@ export const SubventionTable = ({
     // When useSingleSubvention is enabled and a value is entered,
     // clear all other subventions.
     if (useSingleSubvention && numericValue && numericValue !== '0') {
-      onChange(
-        data.map((item: SubventionDataItem) => {
-          const itemId = item?.[0]?.value;
-          if (itemId === subventionId) return item;
-          return [item[0], { ...item[1], value: '0' }];
-        }),
-      );
+      onChange(clearOtherSubventions(data, subventionId));
     } else {
       onChange(data);
     }
@@ -152,7 +177,7 @@ export const SubventionTable = ({
                   'data-subvention-id': itemId,
                   disabled:
                     isReadOnly ||
-                    itemId.toString() === startGrantSubventionId ||
+                    itemId.toString() === startGrant.subventionId ||
                     (!!activeSubventionId && itemId.toString() !== activeSubventionId),
                   id: key,
                   inputMode: 'decimal',
