@@ -95,12 +95,9 @@ class JsonHandler {
    * @return array
    *   A data-definition with the mapped label as value.
    */
-  public static function enumToLabel(string $data, array $definition): array {
-    $handledData = $definition['data'];
-    $valueMap = $handledData['value_map'] ?? [];
-    $handledData['value'] = $valueMap[$data] ?? $data;
-    unset($handledData['value_map']);
-    return $handledData;
+  public static function enumToLabel(string $data, array $definition): string {
+    $valueMap = $definition['data']['value_map'] ?? [];
+    return $valueMap[$data] ?? $data;
   }
 
 }

@@ -262,13 +262,19 @@ class JsonMapper {
         $definition
       );
 
-    if (!$val) {
+    if ($val === NULL || $val === FALSE || $val === []) {
       return;
     }
 
-    $definition['data'] = $val;
-    $sourceValue = $definition['data'];
+    if (is_string($val)) {
+      $definition['data']['value'] = $val;
+      unset($definition['data']['value_map']);
+    }
+    else {
+      $definition['data'] = $val;
+    }
 
+    $sourceValue = $definition['data'];
     $this->setTargetValue($data, $targetPath, $sourceValue, $definition);
   }
 
