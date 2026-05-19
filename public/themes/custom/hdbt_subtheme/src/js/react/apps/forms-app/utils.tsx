@@ -243,7 +243,7 @@ export const isValidFormResponse = (data: Object): [boolean, string | undefined]
 export const addApplicantInfoStep = (
   schema: RJSFSchema,
   uiSchema: UiSchema,
-  grantsProfile: Array<undefined> | { business_id: string },
+  grantsProfile: Array<undefined> | { business_id?: string },
 ): [RJSFSchema, UiSchema] => {
   const { definitions, properties } = schema;
   const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
