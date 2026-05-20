@@ -140,6 +140,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
+      $applicantType = $this->userInformationService->getApplicantType();
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_information = $this->userInformationService->getUserData();
@@ -212,10 +213,8 @@ final class DraftApplication extends ResourceBase {
     $response['status'] = $document->getStatus();
     $response['token'] = $this->csrfTokenGenerator->get('rest');
     $response['last_changed'] = $submission->get('changed')->value;
-    $response['form_settings'] = [
-      'acting_years' => $settings->getActingYears(),
-    ];
     $response = array_merge($response, $settings->toArray());
+    $response['settings']['applicant_type'] = $applicantType;
 
     return new JsonResponse($response);
   }
@@ -527,13 +526,13 @@ final class DraftApplication extends ResourceBase {
    *   User uuid.
    * @param string $application_number
    *   The application number.
-   * @param string $business_id
-   *   The business id.
+   * @param string|null $business_id
+   *   The business id or NULL.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
    */
-  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
+  private function getSubmissionEntity(string $sub, string $application_number, string|null $business_id): ApplicationSubmission {
     // @todo Duplicated, put this in better place.
     $ids = $this->entityTypeManager
       ->getStorage('application_submission')
@@ -545,6 +544,10 @@ final class DraftApplication extends ResourceBase {
 
     if ($ids) {
       return ApplicationSubmission::load(reset($ids));
+    }
+
+    if (!$business_id) {
+      throw new \Exception('Application not found');
     }
 
     // Check for business id as well.

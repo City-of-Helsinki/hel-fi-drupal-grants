@@ -237,9 +237,6 @@ final class Application extends ResourceBase {
       'token' => $this->csrfTokenGenerator->get('rest'),
       'user_data' => $user_information,
     ];
-    $response['form_settings'] = [
-      'acting_years' => $settings->getActingYears(),
-    ];
     $response = array_merge($response, $settings->toArray());
 
     return new JsonResponse($response);

@@ -2,14 +2,22 @@ import type { RJSFSchema, UiSchema } from '@rjsf/utils/lib';
 import type { GrantsProfile } from './GrantsProfile';
 import type { RJSFFormData } from './RJSFFormData';
 
+export type FormSettings = {
+  acting_years?: number[];
+  applicant_type?: string;
+  title?: string;
+  [key: string]: unknown;
+};
+
 export type FormConfig = {
-  actingYears?: string[];
+  actingYears?: number[];
+  applicantType?: string;
   applicationNumber: string;
   grantsProfile: GrantsProfile;
   persistedData: RJSFFormData;
   token: string;
   schema: RJSFSchema;
-  settings: { [key: string]: string };
+  settings: FormSettings;
   submitState: string;
   subventionFields: string[];
   summaryData?: {
@@ -29,9 +37,7 @@ export type FormConfig = {
 export type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
   applicationNumber: string;
   grants_profile: GrantsProfile;
-  settings: {
-    acting_years?: string[];
-  };
+  settings: FormSettings;
   status: string;
   summary_data?: {
     application_number?: string;

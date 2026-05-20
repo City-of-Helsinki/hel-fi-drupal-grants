@@ -1,7 +1,8 @@
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { Tooltip } from 'hds-react';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
-import { communitySettings } from './formConstants';
+import { UserType } from './enum/UserType';
+import { communitySettings, privatePersonSettings } from './formConstants';
 import type { FormStep } from './store';
 import type { ResponseData } from './types/Data';
 import type { GrantsProfile } from './types/GrantsProfile';
@@ -249,17 +250,28 @@ export const isValidFormResponse = (_data: ResponseData): [boolean, string | und
  *
  * @param {Object} schema - Form schema
  * @param {Object} uiSchema - Form Ui Schema
- * @param {Object} _grantsProfile - Grants profile
+ * @param {Object} grantsProfile - Grants profile
  *
  * @return {Array} - Resulting forma and ui schemas
  */
 export const addApplicantInfoStep = (
   schema: RJSFSchema,
   uiSchema: UiSchema,
-  _grantsProfile: GrantsProfile,
+  grantsProfile: GrantsProfile,
 ): [RJSFSchema, UiSchema] => {
   const { definitions, properties } = schema;
-  const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
+
+  const userType = getUserType(grantsProfile);
+
+  let rootProperty: any;
+  let definition: any;
+  let uiSchemaAdditions: UiSchema;
+
+  if (userType === UserType.PRIVATE_PERSON) {
+    [rootProperty, definition, uiSchemaAdditions] = privatePersonSettings;
+  } else {
+    [rootProperty, definition, uiSchemaAdditions] = communitySettings;
+  }
 
   const transformedSchema: RJSFSchema = {
     ...schema,
@@ -467,4 +479,14 @@ export const sanitizeNumericInput = (
 export const numberIsTooLarge = (value: string): boolean => {
   const numericValue = Number(value.replace(',', '.'));
   return Math.abs(numericValue) >= 1e21;
+};
+
+export const getUserType = (grantsProfile: GrantsProfile): string => {
+  if (grantsProfile?.socialSecurityNumber) {
+    return UserType.PRIVATE_PERSON;
+  } else if (grantsProfile?.businessId) {
+    return UserType.REGISTERED_COMMUNITY;
+  } else {
+    return UserType.UNREGISTERED_COMMUNITY;
+  }
 };
