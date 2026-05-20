@@ -7,7 +7,8 @@
   "application_open": "2026-01-01T00:00:00",
   "application_close": "2026-12-31T23:59:59",
   "applicant_types": [
-    "registered_community"
+    "registered_community",
+    "private_person"
   ],
   "subvention_type": [
     56

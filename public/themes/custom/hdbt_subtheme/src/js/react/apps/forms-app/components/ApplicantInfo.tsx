@@ -9,25 +9,100 @@ const InfoField = ({ label, value }: { label: string; value: string | number | u
 );
 
 export const ApplicantInfo = () => {
-  const {
-    grantsProfile: {
-      businessId,
-      companyHome,
-      companyHomePage,
-      companyName,
-      companyNameShort,
-      foundingYear,
-      registrationDate,
-    },
-  } = useAtomValue(getFormConfigAtom);
+  const { grantsProfile } = useAtomValue(getFormConfigAtom);
+  const applicantType = useAtomValue(getApplicantTypeAtom);
+  const address = grantsProfile.addresses?.[0];
 
-  const registrationDateString = registrationDate ? new Date(registrationDate).toLocaleDateString('fi-FI') : '-';
+  if (applicantType === 'private_person') {
+    return (
+      <>
+        <div className='prh-content-block__content-row'>
+          <InfoField
+            label={Drupal.t('First name', {}, { context: 'Grants application' })}
+            value={grantsProfile.firstName}
+          />
+          <InfoField
+            label={Drupal.t('Last name', {}, { context: 'Grants application' })}
+            value={grantsProfile.lastName}
+          />
+          <InfoField
+            label={Drupal.t('Social security number', {}, { context: 'Grants application' })}
+            value={grantsProfile.socialSecurityNumber}
+          />
+        </div>
+        <div className='prh-content-block__content-row'>
+          <InfoField label={Drupal.t('Email', {}, { context: 'Grants application' })} value={grantsProfile.email} />
+          <InfoField
+            label={Drupal.t('Street address', {}, { context: 'Grants application' })}
+            value={address?.street}
+          />
+          <InfoField label={Drupal.t('City', {}, { context: 'Grants application' })} value={address?.city} />
+        </div>
+        <div className='prh-content-block__content-row'>
+          <InfoField label={Drupal.t('Postal code', {}, { context: 'Grants application' })} value={address?.postCode} />
+          <InfoField label={Drupal.t('Country', {}, { context: 'Grants application' })} value={address?.country} />
+          <InfoField
+            label={Drupal.t('Phone number', {}, { context: 'Grants application' })}
+            value={grantsProfile.phone_number}
+          />
+        </div>
+      </>
+    );
+  }
+
+  if (applicantType === 'unregistered_community') {
+    const officialEmail = grantsProfile.officials?.[0]?.email;
+    return (
+      <>
+        <div className='prh-content-block__content-row'>
+          <InfoField
+            label={Drupal.t('Name of association', {}, { context: 'Grants application' })}
+            value={grantsProfile.companyName}
+          />
+          <InfoField
+            label={Drupal.t('First name', {}, { context: 'Grants application' })}
+            value={grantsProfile.firstName}
+          />
+          <InfoField
+            label={Drupal.t('Last name', {}, { context: 'Grants application' })}
+            value={grantsProfile.lastName}
+          />
+        </div>
+        <div className='prh-content-block__content-row'>
+          <InfoField
+            label={Drupal.t('Social security number', {}, { context: 'Grants application' })}
+            value={grantsProfile.socialSecurityNumber}
+          />
+          <InfoField label={Drupal.t('Email', {}, { context: 'Grants application' })} value={officialEmail} />
+          <InfoField
+            label={Drupal.t('Street address', {}, { context: 'Grants application' })}
+            value={address?.street}
+          />
+        </div>
+        <div className='prh-content-block__content-row'>
+          <InfoField label={Drupal.t('City', {}, { context: 'Grants application' })} value={address?.city} />
+          <InfoField label={Drupal.t('Postal code', {}, { context: 'Grants application' })} value={address?.postCode} />
+          <InfoField label={Drupal.t('Country', {}, { context: 'Grants application' })} value={address?.country} />
+        </div>
+      </>
+    );
+  }
+
+  const registrationDateString = grantsProfile.registrationDate
+    ? new Date(grantsProfile.registrationDate).toLocaleDateString('fi-FI')
+    : '-';
 
   return (
     <>
       <div className='prh-content-block__content-row'>
-        <InfoField label={Drupal.t('Name of association', {}, { context: 'Grants application' })} value={companyName} />
-        <InfoField label={Drupal.t('Business ID', {}, { context: 'Grants application' })} value={businessId} />
+        <InfoField
+          label={Drupal.t('Name of association', {}, { context: 'Grants application' })}
+          value={grantsProfile.companyName}
+        />
+        <InfoField
+          label={Drupal.t('Business ID', {}, { context: 'Grants application' })}
+          value={grantsProfile.businessId}
+        />
         <InfoField
           label={Drupal.t('Date of registration', {}, { context: 'Grants application' })}
           value={registrationDateString}
@@ -40,17 +115,20 @@ export const ApplicantInfo = () => {
             {},
             { context: 'Grants application' },
           )}
-          value={companyHome}
+          value={grantsProfile.companyHome}
         />
         <InfoField
           label={Drupal.t('Abbreviated name', {}, { context: 'Grants application' })}
-          value={companyNameShort}
+          value={grantsProfile.companyNameShort}
         />
         <InfoField
           label={Drupal.t('Year of establishment', {}, { context: 'Grants application' })}
-          value={foundingYear}
+          value={grantsProfile.foundingYear}
         />
-        <InfoField label={Drupal.t('Website address', {}, { context: 'Grants application' })} value={companyHomePage} />
+        <InfoField
+          label={Drupal.t('Website address', {}, { context: 'Grants application' })}
+          value={grantsProfile.companyHomePage}
+        />
       </div>
     </>
   );

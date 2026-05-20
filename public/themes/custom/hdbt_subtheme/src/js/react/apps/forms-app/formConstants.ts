@@ -5,33 +5,34 @@ const objectType: JSONSchema7TypeName = 'object';
 const stringType: JSONSchema7TypeName = 'string';
 
 export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
-  { title: 'Omat yhteystiedot', type: objectType, $ref: '#/definitions/applicant_info' },
+  { title: 'applicant_info.title', type: objectType, $ref: '#/definitions/applicant_info' },
   {
     type: objectType,
     properties: {
-      applicant_address_data: {
-        title: 'Osoite',
+      bank_account: {
+        properties: { bank_account: { title: 'bank_account_bank_account.title', type: stringType } },
+        required: ['bank_account'],
+        title: 'bank_account.title',
         type: objectType,
-        properties: {
-          address: {
-            title: 'Henkilökohtainen osoite',
-            type: objectType,
-            properties: {
-              address_name: { title: 'Katuosoite', type: stringType, minLength: 1 },
-              postal_code: { title: 'Postinumero', type: stringType, minLength: 5 },
-              post_area: { title: 'Toimipaikka', type: stringType, minLength: 1 },
-            },
+      },
+    },
+    required: ['bank_account'],
+  },
+  {
+    applicant_info: {
+      bank_account: {
+        bank_account: {
+          'ui:widget': 'bank_account',
+          'ui:options': {
+            hideNameFromPrint: true,
+            tooltipLabel: 'bank_account.title',
+            tooltipButtonLabel: 'bank_account.title',
+            tooltipText: 'bank_account.tooltip',
           },
         },
       },
-      applicant_phone: {
-        title: 'Puhelinnumero',
-        type: objectType,
-        properties: { phone: { title: 'Henkilökohtainen puhelinnumero', type: stringType, minLength: 1 } },
-      },
     },
   },
-  {},
 ];
 
 export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [

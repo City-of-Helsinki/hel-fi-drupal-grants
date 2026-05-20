@@ -1,10 +1,10 @@
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { Tooltip } from 'hds-react';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
-import { communitySettings } from './formConstants';
+import { UserType } from './enum/UserType';
+import { communitySettings, privatePersonSettings } from './formConstants';
 import type { FormStep } from './store';
 import type { ResponseData } from './types/Data';
-import type { GrantsProfile } from './types/GrantsProfile';
 import type { RJSFFormData } from './types/RJSFFormData';
 
 type SchemaNode = {
@@ -249,17 +249,26 @@ export const isValidFormResponse = (_data: ResponseData): [boolean, string | und
  *
  * @param {Object} schema - Form schema
  * @param {Object} uiSchema - Form Ui Schema
- * @param {Object} _grantsProfile - Grants profile
+ * @param {Object} grantsProfile - Grants profile
  *
  * @return {Array} - Resulting forma and ui schemas
  */
 export const addApplicantInfoStep = (
   schema: RJSFSchema,
   uiSchema: UiSchema,
-  _grantsProfile: GrantsProfile,
+  userType: string | undefined,
 ): [RJSFSchema, UiSchema] => {
   const { definitions, properties } = schema;
-  const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
+
+  let rootProperty: any;
+  let definition: any;
+  let uiSchemaAdditions: UiSchema;
+
+  if (userType === UserType.PRIVATE_PERSON) {
+    [rootProperty, definition, uiSchemaAdditions] = privatePersonSettings;
+  } else {
+    [rootProperty, definition, uiSchemaAdditions] = communitySettings;
+  }
 
   const transformedSchema: RJSFSchema = {
     ...schema,

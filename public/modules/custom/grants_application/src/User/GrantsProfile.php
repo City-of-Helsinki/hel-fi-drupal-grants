@@ -244,7 +244,7 @@ class GrantsProfile {
    * @return string
    *   Business id.
    */
-  public function getBusinessId(): string {
+  public function getBusinessId(): string|null {
     return $this->grantsProfileData['businessId'];
   }
 

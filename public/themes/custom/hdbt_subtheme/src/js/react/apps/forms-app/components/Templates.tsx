@@ -168,6 +168,14 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     applicantType === 'registered_community'
       ? Drupal.t('Community for which the grant is being applied for', {}, { context: 'Grants application' })
       : Drupal.t('Applicant details', {}, { context: 'Grants application' });
+  const prhBlockDescription =
+    applicantType === 'registered_community'
+      ? Drupal.t(
+          'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
+          {},
+          { context: 'Grants application' },
+        )
+      : Drupal.t('The data has been fetched from your application profile.', {}, { context: 'Grants application' });
 
   if (idSchema.$id === 'root') {
     const className = shouldRenderPreview ? 'hdbt-form__preview form-wrapper' : 'form-wrapper';
@@ -223,11 +231,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
         {stepId === 'applicant_info' && !isEmptyPreview && (
           <section className='prh-content-block'>
             <h3 className='prh-content-block__title'>{prhBlockTitle}</h3>
-            <p>
-              {Drupal.t(
-                'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
-              )}
-            </p>
+            <p>{prhBlockDescription}</p>
             <ApplicantInfo />
           </section>
         )}

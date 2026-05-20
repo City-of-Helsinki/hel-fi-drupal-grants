@@ -8,6 +8,7 @@ import { ToastStack } from './components/ToastStack';
 import { AppContainer } from './containers/AppContainer';
 import { BackendError } from './errors/BackendError';
 import { InvalidSchemaError } from './errors/InvalidSchemaError';
+import { RedirectError } from './errors/RedirectError';
 
 initSentry();
 
@@ -32,6 +33,10 @@ const isDevEnvironment = window.location.hostname.includes('docker.so');
 const handleErrorFallback: FallbackRender = ({ error }) => {
   if (error instanceof InvalidSchemaError && isDevEnvironment) {
     return <div style={{ backgroundColor: 'salmon', padding: '28px' }}>{formatSchemaErrors(error.message)}</div>;
+  }
+
+  if (error instanceof RedirectError) {
+    return <LoadingSpinner className='hdbt-react-form__loading-spinner' />;
   }
 
   if (error instanceof BackendError) {

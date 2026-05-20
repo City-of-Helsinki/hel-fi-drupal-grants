@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
+import { UserType } from '../enum/UserType';
 import { communitySettings } from '../formConstants';
 import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
-import type { GrantsProfile } from '../types/GrantsProfile';
 import { addApplicantInfoStep, getIndicesWithErrors, getSubventionSum, keyErrorsByStep } from '../utils';
 
 describe('Utils.ts', () => {
@@ -106,23 +106,7 @@ describe('Utils.ts', () => {
   test('addApplicantInfoStep', () => {
     const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
 
-    const profile: GrantsProfile = {
-      addresses: [],
-      bankAccounts: [],
-      businessId: '1234567-8',
-      businessPurpose: 'Testing',
-      companyHome: 'Helsinki',
-      companyHomePage: 'https://www.testcompany.com',
-      companyName: 'Test Company Ltd.',
-      companyNameShort: 'Test Company',
-      companyStatus: 'active',
-      companyStatusSpecial: 'none',
-      foundingYear: '2020',
-      officials: [],
-      registrationDate: '2020-01-01',
-    };
-
-    const result = addApplicantInfoStep({}, {}, profile);
+    const result = addApplicantInfoStep({}, {}, UserType.REGISTERED_COMMUNITY);
 
     expect(result[0]).toEqual({
       definitions: { applicant_info: definition },

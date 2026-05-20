@@ -95,14 +95,15 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     settings,
     ...rest
   } = formConfig;
-  const { acting_years: actingYears } = settings || {};
+  const { acting_years: actingYears, applicant_type: applicantType } = settings || {};
   const steps = buildFormSteps(schema);
   _set(formStepsAtom, () => steps);
   _set(formConfigAtom, () => ({
     grantsProfile,
     ...rest,
     actingYears,
-    settings: settings as { [key: string]: string },
+    applicantType,
+    settings,
     requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
     schema,
     submitState: status || SubmitStates.DRAFT,
@@ -378,4 +379,10 @@ export const getActingYearsAtom = atom((_get) => {
   const { actingYears } = _get(getFormConfigAtom);
 
   return actingYears;
+});
+
+export const getUserTypeAtom = atom((_get) => {
+  const { applicantType } = _get(getFormConfigAtom);
+
+  return applicantType;
 });
