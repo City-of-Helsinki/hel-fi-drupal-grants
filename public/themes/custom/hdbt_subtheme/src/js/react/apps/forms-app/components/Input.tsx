@@ -18,7 +18,8 @@ import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-import { formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
+import { ALLOWED_HTML_TAGS, formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
+import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import {
   getAccountsAtom,
   getAddressesAtom,
@@ -189,7 +190,9 @@ export const TextArea = ({
 
   return (
     <>
-      {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
+      {schema.description && (
+        <div className='hdbt-form--description'>{htmlToReact(schema.description, ALLOWED_HTML_TAGS)}</div>
+      )}
       <HDSTextArea
         {...({
           disabled: readonly || isReadOnly,
@@ -405,7 +408,9 @@ export const RadioWidget = ({
         className='hdbt-form--fieldset'
         tooltip={getTooltip(uiSchema)}
       >
-        {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
+        {schema.description && (
+          <div className='hdbt-form--description'>{htmlToReact(schema.description, ALLOWED_HTML_TAGS)}</div>
+        )}
         {options?.enumOptions?.map((option) => {
           const optionId = `${id}_${option.value}`;
 

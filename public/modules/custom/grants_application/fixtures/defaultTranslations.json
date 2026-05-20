@@ -765,6 +765,16 @@
       "fi": "Pienavustus",
       "sv": "Litet understöd"
     },
+    "subventions.47.title": {
+      "en": "Special grant for culture 1",
+      "fi": "Kulttuurin erityisavustus 1",
+      "sv": "Specialunderstöd för kultur 1"
+    },
+    "subventions.51.title": {
+      "en": "Special grant for sports 1",
+      "fi": "Liikunnan erityisavustus 1",
+      "sv": "Specialunderstöd för idrott 1"
+    },
     "subventions.52.title": {
       "en": "Special grant for sports 2",
       "fi": "Liikunnan erityisavustus 2",
