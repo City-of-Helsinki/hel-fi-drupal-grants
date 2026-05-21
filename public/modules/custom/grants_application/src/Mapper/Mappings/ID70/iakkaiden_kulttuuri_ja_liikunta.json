@@ -448,7 +448,7 @@
       "value": "",
       "valueType": "string"
     }
-  },  
+  },
   "compensation.customQuestionsInfo.customQuestionsArray.22": {
     "datasource": "form_data",
     "source": "information_in_more_detail_step.target_groups_section.assesment_1_fieldset.target_groups_reached_in_helsinki",

@@ -28,7 +28,7 @@
     "data": {
       "ID": "amount",
       "label": "Euroa",
-      "value": "",
+      "value": "0",
       "valueType": "double"
     }
   },
