@@ -179,16 +179,16 @@
     "source": "information_in_more_detail_step.information_in_more_detail_section.project_plan_grant_duration",
     "mapping_type": "custom",
     "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Haen avustusta yksivuotisena",
+      "2": "Haen avustusta kaksivuotisena",
+      "3": "Haen avustusta kolmevuotisena"
+    },
     "data": {
       "ID": "hankesuunnitelma_avustuksen_kesto",
       "label": "Haetaanko yksi-, kaksi- vai kolmevuotista avustusta?",
       "value": "",
-      "valueType": "string",
-      "value_map": {
-        "1": "Haen avustusta yksivuotisena",
-        "2": "Haen avustusta kaksivuotisena",
-        "3": "Haen avustusta kolmevuotisena"
-      }
+      "valueType": "string"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.1": {
@@ -229,15 +229,15 @@
     "source": "information_in_more_detail_step.project_plan_section.is_application_extension",
     "mapping_type": "custom",
     "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "": "Ei"
+    },
     "data": {
       "ID": "onko_kyseessa_jatkohakemus",
       "label": "Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?",
       "value": "",
-      "valueType": "string",
-      "value_map": {
-        "1": "Kyllä",
-        "": "Ei"
-      }
+      "valueType": "string"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.5": {

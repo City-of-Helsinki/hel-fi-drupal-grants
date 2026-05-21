@@ -271,7 +271,6 @@ class JsonMapper {
 
     if (is_string($val)) {
       $definition['data']['value'] = $val;
-      unset($definition['data']['value_map']);
     }
     else {
       $definition['data'] = $val;
