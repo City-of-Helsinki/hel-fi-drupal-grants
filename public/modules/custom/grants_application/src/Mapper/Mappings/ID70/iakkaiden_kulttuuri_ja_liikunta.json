@@ -6,7 +6,7 @@
     "data": {
       "ID": "subventionType",
       "label": "Avustuslaji",
-      "value": "",
+      "value": "47",
       "valueType": "string"
     }
   },
@@ -17,7 +17,29 @@
     "data": {
       "ID": "amount",
       "label": "Euroa",
-      "value": "",
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.1.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.1.0.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "subventionType",
+      "label": "Avustuslaji",
+      "value": "51",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.1.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.1.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "0",
       "valueType": "double"
     }
   },

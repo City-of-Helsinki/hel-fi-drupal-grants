@@ -67,7 +67,7 @@
     "data": {
       "ID": "amount",
       "label": "Euroa",
-      "value": "",
+      "value": "0",
       "valueType": "float"
     }
   },
@@ -92,7 +92,7 @@
     "data": {
       "ID": "amount",
       "label": "Euroa",
-      "value": "",
+      "value": "0",
       "valueType": "float"
     }
   },
@@ -117,7 +117,7 @@
     "data": {
       "ID": "amount",
       "label": "Euroa",
-      "value": "",
+      "value": "0",
       "valueType": "float"
     }
   },
@@ -142,7 +142,7 @@
     "data": {
       "ID": "amount",
       "label": "Euroa",
-      "value": "",
+      "value": "0",
       "valueType": "float"
     }
   },
