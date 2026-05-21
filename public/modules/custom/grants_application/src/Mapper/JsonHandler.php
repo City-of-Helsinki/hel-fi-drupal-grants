@@ -89,11 +89,11 @@ class JsonHandler {
    *
    * @param string $data
    *   The raw enum value from form data (e.g. "1", "2", "3").
-   * @param array $definition
+   * @param array<string, mixed> $definition
    *   Mapping definition; must contain data.value_map keyed by enum values.
    *
-   * @return array
-   *   A data-definition with the mapped label as value.
+   * @return string
+   *   The mapped label, or the original value if no mapping exists.
    */
   public static function enumToLabel(string $data, array $definition): string {
     $valueMap = $definition['value_map'] ?? [];
