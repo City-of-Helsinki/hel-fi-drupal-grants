@@ -22,19 +22,10 @@ const SUBVENTION_ID = 'subventionType';
 const SUBVENTION_LABEL = 'Avustuslaji';
 const SUBVENTION_VALUE_TYPE = 'string';
 
-export const SubventionTable = ({
-  idSchema,
-  formData,
-  onChange,
-  rawErrors,
-  required,
-  schema,
-  uiSchema,
-}: FieldProps) => {
+export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, required, schema }: FieldProps) => {
   const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
-  const exclusive = uiSchema?.['misc:exclusive'] as boolean | undefined;
 
   if (!schema.options || !schema.options.length) {
     console.error('Tried to render subvention table without items');
@@ -91,8 +82,6 @@ export const SubventionTable = ({
     });
   }
 
-  const filledId = exclusive ? Object.entries(keyedData).find(([, val]) => val?.trim() !== '')?.[0] : undefined;
-
   return (
     <>
       <div className='array-item'>
@@ -107,7 +96,7 @@ export const SubventionTable = ({
                 {...({
                   className: 'form-group field field-integer',
                   'data-subvention-id': itemId,
-                  disabled: isReadOnly || (!!filledId && filledId !== String(itemId)),
+                  disabled: isReadOnly,
                   id: key,
                   inputMode: 'decimal',
                   label: `${label} (€)`,
