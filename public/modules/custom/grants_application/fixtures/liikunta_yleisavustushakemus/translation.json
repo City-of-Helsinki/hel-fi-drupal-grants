@@ -1,0 +1,39 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Sports, general grant application",
+      "fi": "Liikunta, yleisavustushakemus",
+      "sv": "Idrott, allmän bidragsansökan"
+    },
+    "subventions_help.description": {
+      "en": "This form is used to apply for only one grant at a time. When you apply for a start grant, the grant amount (€500) will appear in the field automatically and cannot be changed because the amount is fixed. For other types of grant, you must specify the amount applied for in the field.",
+      "fi": "Tällä lomakkeella haetaan vain yhtä avustusta kerrallaan. Hakiessasi starttiavustusta, avustussumma (500€) tulee valmiina kenttään, eikä summaa voi muuttaa, koska avustussumma on kiinteä. Muissa avustuslajeissa haettava summa tulee lisätä kenttään.",
+      "sv": "Med denna blankett ansöker du om ett understöd i taget. När du ansöker om startunderstöd, finns understödsbeloppet (500 €) färdigt i fältet, och du kan inte ändra beloppet, eftersom det är fast. I andra understödsslag ska du själv ange beloppet i fältet."
+    },
+    "purpose.tooltip": {
+      "en": "For a targeted grant application, detailed information is provided with a separate Webropol form (a mandatory attachment).",
+      "fi": "Kohdeavustuksen osalta tarkemmat tiedot kysytään Webropol-lomakkeella (pakollinen liite).",
+      "sv": "Med ansökan om riktat understöd, ska den mer detaljerade informationen avges med en separat Webropol-blankett (en erforderlig bilaga)."
+    },
+    "purpose.description": {
+      "en": "Indicate the purpose for which the grant is applied for. If necessary, specify the different uses.",
+      "fi": "Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet.",
+      "sv": "Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen."
+    },
+    "required_attachments_help.title": {
+      "en": "Required attachments with regards to grant types",
+      "fi": "Vaaditut liitteet avustuslajeittain",
+      "sv": "Erforderliga bilagor efter understödskategori"
+    },
+    "required_attachments_help.value": {
+      "en": "<p>Targeted grant: a separate Webropol attachment which can be found on the grants for sports web page. If the applicant has not previously applied for any grants from the City of Helsinki (first time applicants) or if any of the relevant information has changed, the following documents must also be attached to the application: the rules of the association, a notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid) and an extract from the Register of Associations. If the applicant has not submitted the following attachments to the City of Helsinki in other grant applications in the application year, the following attachments must be submitted in addition: the action plan for the application year, the budget for the application year, the financial statements (most recently confirmed), the audit report (most recently confirmed) and the annual report (most recently confirmed).</p><p>Start grant: an extract from the Register of Associations, the rules of the association, a budget and an action plan.</p><p>Other: the requisite attachments for any separate grant applications will be announced on the grants for sports web page on a case-by-case basis.</p>",
+      "fi": "<p>Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka löytyy liikunnan avustusten verkkosivuilta. Jos kyseessä on uusi yhdistys (ensimmäistä kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lisäksi: yhdistyksen säännöt, sekä ote yhdistysrekisteristä. Mikäli hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteitä muiden avustushakujen yhteydessä, niin edellä mainittujen lisäksi tulee liittää myös: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinpäätös (viimeisin vahvistettu), jäljennös tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sekä toimintakertomus (viimeisin vahvistettu).</p><p>Starttiavustus: ote yhdistysrekisteristä, yhdistyksen säännöt, talousarvio ja toimintasuunnitelma.</p><p>Muu: mahdollisten erillishakujen pakollisista liitteistä tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.</p>",
+      "sv": "<p>Riktat understöd: en separat Webropol-ansökningsbilaga som kan hittas på webbplatsen för understöd för idrott. Om sökanden inte tidigare har ansökt om Helsingfors stads understöd (nya ansökande) eller om uppgifterna har förändrats, ska även följande bilagor lämnas i samband med ansökan: föreningens stadgar, och ett utdrag ur föreningsregistret. I det fall sökanden inte har lämnat de följande bilagor till Helsingfors stad i samband med andra ansökningar i ansökningsåret, ska utöver de nämnda lämnas: verksamhetsplan för ansökningsåret, budget för ansökningsåret, bokslut (det senast fastställda), revisionsberättelse eller verksamhetsgranskningsberättelse (den senast fastställda) och verksamhetsberättelse (den senast fastställda).</p><p>Startbidrag: ett utdrag ur föreningsregistret, föreningens stadgar, budget och verksamhetsplan.</p><p>Övrigt: de erforderliga bilagorna som krävs i samband med separata ansökningar informeras från fall till fall på webbplatsen för understöd för idrott.</p>"
+    },
+    "multiple_attachments_help.value": {
+      "en": "If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate \"The attachment has been submitted as a single file or with another application\".",
+      "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla \"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\".",
+      "sv": "Om du vill kan du lämna in flera bilagor i en fil. Ange i detta fall vid andra bilagor att \"Bilagan har lämnats in som en fil eller i samband med en annan ansökan\"."
+    }
+  }
+}
