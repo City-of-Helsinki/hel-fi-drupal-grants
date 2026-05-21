@@ -70,19 +70,26 @@
           "title": "venue_post_code.title",
           "type": "string"
         },
-        "is_owned_by_city": {
-          "title": "venue_is_owned_by_city.title",
-          "enum": [
-            false,
-            true
-          ],
-          "default": false
+        "owned_by_city_fieldset": {
+          "type": "object",
+          "properties": {
+            "is_owned_by_city": {
+              "title": "venue_is_owned_by_city.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": [
+            "is_owned_by_city"
+          ]
         }
       },
       "required": [
         "premise_name",
-        "post_code",
-        "is_owned_by_city"
+        "post_code"
       ]
     },
     "grant_info_step": {
@@ -372,33 +379,6 @@
           "description": "venues_section.text",
           "type": "object",
           "properties": {
-            "first_venue": {
-              "title": "venues_in_helsinki_fieldset.title",
-              "type": "object",
-              "properties": {
-                "premise_name": {
-                  "title": "venue_name.title",
-                  "type": "string"
-                },
-                "post_code": {
-                  "title": "venue_post_code.title",
-                  "type": "string"
-                },
-                "is_owned_by_city": {
-                  "title": "venue_is_owned_by_city.title",
-                  "enum": [
-                    false,
-                    true
-                  ],
-                  "default": false
-                }
-              },
-              "required": [
-                "premise_name",
-                "post_code",
-                "is_owned_by_city"
-              ]
-            },
             "venues_fieldset": {
               "title": "venues_in_helsinki_fieldset.title",
               "type": "array",
