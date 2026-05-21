@@ -68,12 +68,26 @@ class JsonMapper {
         continue;
       }
 
+      if (isset($definition['skip']) && $definition['skip']) {
+        continue;
+      }
+
+      // If source data does not exist, we should skip unless a default value
+      // is given in mapping file.
       if (
-        (isset($definition['skip']) && $definition['skip']) ||
         !$definition['source'] ||
         !$this->sourcePathExists($allDataSources, $dataSourceType, $sourcePath)
       ) {
-        continue;
+        // If something else than default, skip if the value is not sent.
+        if ($definition['mapping_type'] !== 'default') {
+          continue;
+        }
+
+        // No default value given in mapping and React does not send the value,
+        // we can skip.
+        if (isset($definition['data']['value']) && $definition['data']['value'] === '') {
+          continue;
+        }
       }
 
       match($definition['mapping_type']) {
@@ -106,10 +120,7 @@ class JsonMapper {
    */
   private function sourcePathExists(array $dataSources, string $sourceType, string $sourcePath): bool {
     $value = $this->getValue($dataSources[$sourceType], $sourcePath);
-    if ($value === NULL) {
-      return FALSE;
-    }
-    return TRUE;
+    return !($value === NULL);
   }
 
   /**
@@ -134,6 +145,11 @@ class JsonMapper {
     }
     else if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'string' && $value === "") {
       return;
+    }
+    else if (!$value && $definition['data']['value'] !== ""){
+      // The mapping contains a default value and datasource does not
+      // have a value, we use the mapped default value.
+      $value = $definition['data']['value'];
     }
 
     $this->setTargetValue($data, $targetPath, $value, $definition);

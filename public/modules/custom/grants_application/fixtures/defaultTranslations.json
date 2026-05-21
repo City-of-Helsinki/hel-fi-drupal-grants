@@ -132,7 +132,7 @@
     },
     "cant_view_after_help.value_2": {
       "en": "Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.",
-      "fi": "Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
+      "fi": "Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
       "sv": "Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd."
     },
     "city_benefits_loans.title": {
@@ -419,6 +419,11 @@
       "en": "We have applied for grants from somewhere other than the City of Helsinki",
       "fi": "Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta",
       "sv": "Vi har ansökt om understöd från annanstans än Helsingfors stad"
+    },
+    "apply_for_start_grant.title": {
+      "en": "Are you applying for a start grant?",
+      "fi": "Haetko starttiavustusta?",
+      "sv": "Ansöker du om Sportunderstöd?"
     },
     "other_compensations_section_have_received_other_compensations.title": {
       "en": "We have received other grants",
@@ -759,6 +764,16 @@
       "en": "Extra grant",
       "fi": "Lisäavustus",
       "sv": "Extra understöd"
+    },
+    "subventions.31.title": {
+      "en": "Start grant",
+      "fi": "Starttiavustus",
+      "sv": "Sportunderstöd"
+    },
+    "subventions.43.title": {
+      "en": "Targeted sports grant",
+      "fi": "Kohdeavustus",
+      "sv": "Riktat understöd för idrott och motion"
     },
     "subventions.38.title": {
       "en": "Small grant",
