@@ -132,6 +132,9 @@ class JsonMapper {
     if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'bool') {
       $value = $value ? 'true' : 'false';
     }
+    else if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'string' && $value === "") {
+      return;
+    }
 
     $this->setTargetValue($data, $targetPath, $value, $definition);
   }
