@@ -11,23 +11,46 @@
       }
     },
     "grant_details_section": {
-      "ensisijainen_taiteen_ala": {
-        "ui:widget": "select"
+      "primary_art_field": {
+        "ui:widget": "select",
+        "ui:options": {
+          "tooltipLabel": "primary_art_field.title",
+          "tooltipButtonLabel": "primary_art_field.title",
+          "tooltipText": "primary_art_field.tooltip"
+        }
       },
-      "kyseessa_on_festivaali_tai_tapahtuma": {
+      "project_name": {
+        "ui:options": {
+          "tooltipLabel": "project_name.title",
+          "tooltipButtonLabel": "project_name.title",
+          "tooltipText": "project_name_tooltip.text"
+        }
+      },
+      "is_festival_or_event": {
+        "ui:options": {
+          "tooltipLabel": "is_festival_or_event.title",
+          "tooltipButtonLabel": "is_festival_or_event.title",
+          "tooltipText": "is_festival_or_event.tooltip"
+        },
         "ui:enumNames": [
           "boolean.no",
           "boolean.yes"
         ],
-        "ui:widget": "radio"
+        "ui:widget": "radio",
+        "ui:help": "is_festival_or_event.help"
       },
-      "hankkeen_tai_toiminnan_lyhyt_esittelyteksti": {
+      "project_short_description": {
+        "ui:options": {
+          "tooltipLabel": "project_short_description.title",
+          "tooltipButtonLabel": "project_short_description.title",
+          "tooltipText": "project_short_description.tooltip"
+        },
         "ui:widget": "textarea",
         "misc:max-length": 500
       }
     },
-    "other_grants_section": {
-      "olemme_saaneet_muita_avustuksia": {
+    "other_compensations_section": {
+      "have_received_other_compensations": {
         "ui:enumNames": [
           "boolean.no",
           "boolean.yes"
@@ -37,14 +60,31 @@
         },
         "ui:widget": "radio"
       },
-      "myonnetty_avustus": {
+      "other_compensations": {
         "ui:options": {
-          "addText": "myonnetty_avustus.add"
+          "addText": "other_compensation.add"
         },
         "items": {
-          "purpose": {
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
           }
         }
       }
@@ -95,50 +135,88 @@
     "personnel_section": {
       "personnel_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true
+          "hideNameFromPrint": true,
+          "tooltipLabel": "personnel_fieldset.legend",
+          "tooltipButtonLabel": "personnel_fieldset.legend",
+          "tooltipText": "personnel_fieldset.tooltip"
         }
       }
     }
   },
   "planned_activity_step": {
-    "venues_section": {
-      "first_venue_fieldset": {
-        "kyseessa_on_kaupungin_omistama_tila": {
-          "ui:enumNames": [
-            "boolean.no",
-            "boolean.yes"
-          ],
-          "ui:widget": "radio"
+    "activity_counts_section": {
+      "activity_counts_text": {
+        "ui:field": "textParagraph"
+      },
+      "helsinki_counts_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "helsinki_counts_fieldset.title",
+          "tooltipButtonLabel": "helsinki_counts_fieldset.title",
+          "tooltipText": "helsinki_counts_fieldset.tooltip"
         }
       },
-      "tila": {
+      "total_counts_fieldset": {
         "ui:options": {
-          "addText": "tila.add"
+          "hideNameFromPrint": true,
+          "tooltipLabel": "total_counts_fieldset.title",
+          "tooltipButtonLabel": "total_counts_fieldset.title",
+          "tooltipText": "total_counts_fieldset.tooltip"
+        }
+      },
+      "premieres_fieldset": {
+        "premiere_count": {
+          "ui:options": {
+            "hideNameFromPrint": true,
+            "tooltipLabel": "premiere_count.title",
+            "tooltipButtonLabel": "premiere_count.title",
+            "tooltipText": "premiere_count.tooltip"
+          }
         },
+        "premiere_helsinki_count": {
+          "ui:options": {
+            "hideNameFromPrint": true,
+            "tooltipLabel": "premiere_helsinki_count.title",
+            "tooltipButtonLabel": "premiere_helsinki_count.title",
+            "tooltipText": "premiere_helsinki_count.tooltip"
+          }
+        }
+      }
+    },
+    "venues_section": {
+      "venues_fieldset": {
         "items": {
-          "isOwnedByCity": {
-            "ui:enumNames": [
-              "boolean.no",
-              "boolean.yes"
-            ],
-            "ui:widget": "radio"
+          "owned_by_city_fieldset": {
+            "is_owned_by_city": {
+              "ui:enumNames": [
+                "boolean.no",
+                "boolean.yes"
+              ],
+              "ui:widget": "radio"
+            }
           }
         }
       }
     },
     "schedule_section": {
-      "ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara": {
+      "first_open_event_date": {
         "ui:widget": "date"
       },
-      "hanke_alkaa": {
+      "project_begins": {
         "ui:widget": "date"
       },
-      "hanke_loppuu": {
+      "project_ends": {
         "ui:widget": "date"
       }
     },
     "project_description_section": {
-      "laajempi_hankekuvaus": {
+      "comprehensive_description": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "comprehensive_description.title",
+          "tooltipButtonLabel": "comprehensive_description.title",
+          "tooltipText": "comprehensive_description.tooltip"
+        },
         "ui:widget": "textarea",
         "misc:max-length": 2500
       }
@@ -146,39 +224,51 @@
   },
   "activity_foundations_step": {
     "artistic_foundations_section": {
-      "toiminta_taiteelliset_lahtokohdat": {
+      "project_artistic_basis": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "comprehensive_description.title",
+          "tooltipButtonLabel": "comprehensive_description.title",
+          "tooltipText": "project_artistic_basis.tooltip"
+        },
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
-      "toiminta_tasa_arvo": {
+      "project_equality": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       }
     },
     "accessibility_section": {
-      "toiminta_saavutettavuus": {
+      "project_accessibility": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
-      "toiminta_yhteisollisyys": {
+      "project_community": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
-      "toiminta_kohderyhmat": {
+      "project_target_audiece": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       }
     },
     "operations_section": {
-      "toiminta_ammattimaisuus": {
+      "operations_professionalism": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
-      "toiminta_ekologisuus": {
+      "operations_ecology": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
-      "toiminta_yhteistyokumppanit": {
+      "operations_partners": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "comprehensive_description.title",
+          "tooltipButtonLabel": "comprehensive_description.title",
+          "tooltipText": "operations_partners.tooltip"
+        },
         "ui:widget": "textarea",
         "misc:max-length": 1000
       }
@@ -186,7 +276,13 @@
   },
   "budget_step": {
     "budget_section": {
-      "organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_": {
+      "organization_subsidities": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "organization_subsidities.title",
+          "tooltipButtonLabel": "organization_subsidities.title",
+          "tooltipText": "organization_subsidities.tooltip"
+        },
         "ui:enumNames": [
           "boolean.no",
           "boolean.yes"
@@ -194,13 +290,43 @@
         "ui:widget": "radio"
       },
       "budget_income": {
-        "incomeGroupName": {
+        "budget_income_text": {
+          "ui:field": "textParagraph"
+        },
+        "income_group_name": {
           "ui:widget": "hidden"
+        },
+        "compensation": {
+          "ui:field": "subventionSum"
+        },
+        "planned_other_compensations": {
+          "ui:options": {
+            "tooltipLabel": "budget_income_planned_other_compensations.title",
+            "tooltipButtonLabel": "budget_income_planned_other_compensations.title",
+            "tooltipText": "budget_income_planned_other_compensations.tooltip"
+          }
+        },
+        "entry_fees": {
+          "ui:options": {
+            "tooltipLabel": "budget_income_entry_fees.title",
+            "tooltipButtonLabel": "budget_income_entry_fees.title",
+            "tooltipText": "budget_income_entry_fees.tooltip"
+          }
         }
       },
       "budget_cost": {
-        "costGroupName": {
+        "budget_cost_text": {
+          "ui:field": "textParagraph"
+        },
+        "cost_group_name": {
           "ui:widget": "hidden"
+        },
+        "show_costs": {
+          "ui:options": {
+            "tooltipLabel": "budget_cost_show_costs.title",
+            "tooltipButtonLabel": "budget_cost_show_costs.title",
+            "tooltipText": "budget_cost_show_costs.tooltip"
+          }
         }
       },
       "budget_other_cost": {
@@ -215,7 +341,7 @@
       }
     },
     "other_input_section": {
-      "muu_huomioitava_panostus": {
+      "other_financing": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       }

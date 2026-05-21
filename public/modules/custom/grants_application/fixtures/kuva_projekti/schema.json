@@ -1,6 +1,6 @@
 {
   "definitions": {
-    "_granted_other_compensation_item": {
+    "_other_compensation_item": {
       "type": "object",
       "properties": {
         "issuer": {
@@ -61,22 +61,35 @@
     "_venue_item": {
       "type": "object",
       "properties": {
-        "premiseName": {
-          "title": "venue_premise_name.title",
+        "premise_name": {
+          "title": "venue_name.title",
           "type": "string"
         },
-        "postCode": {
+        "post_code": {
           "title": "venue_post_code.title",
           "type": "string"
         },
-        "isOwnedByCity": {
-          "title": "venue_is_owned_by_city.title",
-          "enum": [
-            true,
-            false
+        "owned_by_city_fieldset": {
+          "type": "object",
+          "properties": {
+            "is_owned_by_city": {
+              "title": "venue_is_owned_by_city.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": [
+            "is_owned_by_city"
           ]
         }
-      }
+      },
+      "required": [
+        "premise_name",
+        "post_code"
+      ]
     },
     "grant_info_step": {
       "required": [
@@ -114,53 +127,54 @@
           "title": "grant_details_section.title",
           "type": "object",
           "properties": {
-            "ensisijainen_taiteen_ala": {
-              "title": "ensisijainen_taiteen_ala.title",
+            "primary_art_field": {
+              "title": "primary_art_field.title",
               "type": "string",
               "enum": [
-                "ensisijainen_taiteen_ala.design_kasityo",
-                "ensisijainen_taiteen_ala.elokuva_valokuva_media",
-                "ensisijainen_taiteen_ala.kaupunkikulttuuri",
-                "ensisijainen_taiteen_ala.kirjallisuus",
-                "ensisijainen_taiteen_ala.kuvataide_sarjakuva",
-                "ensisijainen_taiteen_ala.monitaide",
-                "ensisijainen_taiteen_ala.museo",
-                "ensisijainen_taiteen_ala.musiikki",
-                "ensisijainen_taiteen_ala.muu",
-                "ensisijainen_taiteen_ala.sirkus",
-                "ensisijainen_taiteen_ala.tanssi",
-                "ensisijainen_taiteen_ala.teatteri"
+                "primary_art_field.design_kasityo",
+                "primary_art_field.elokuva_valokuva_media",
+                "primary_art_field.kaupunkikulttuuri",
+                "primary_art_field.kirjallisuus",
+                "primary_art_field.kuvataide_sarjakuva",
+                "primary_art_field.monitaide",
+                "primary_art_field.museo",
+                "primary_art_field.musiikki",
+                "primary_art_field.muu",
+                "primary_art_field.sirkus",
+                "primary_art_field.tanssi",
+                "primary_art_field.teatteri"
               ]
             },
-            "hankkeen_nimi": {
-              "title": "hankkeen_nimi.title",
+            "project_name": {
+              "title": "project_name.title",
               "type": "string"
             },
-            "kyseessa_on_festivaali_tai_tapahtuma": {
-              "title": "kyseessa_on_festivaali_tai_tapahtuma.title",
+            "is_festival_or_event": {
+              "title": "is_festival_or_event.title",
               "enum": [
                 true,
                 false
               ]
             },
-            "hankkeen_tai_toiminnan_lyhyt_esittelyteksti": {
-              "title": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.title",
+            "project_short_description": {
+              "title": "project_short_description.title",
               "type": "string"
             }
           },
           "required": [
-            "ensisijainen_taiteen_ala",
-            "hankkeen_nimi",
-            "kyseessa_on_festivaali_tai_tapahtuma",
-            "hankkeen_tai_toiminnan_lyhyt_esittelyteksti"
+            "primary_art_field",
+            "project_name",
+            "is_festival_or_event",
+            "project_short_description"
           ]
         },
-        "other_grants_section": {
-          "title": "other_grants_section.title",
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
           "type": "object",
           "properties": {
-            "olemme_saaneet_muita_avustuksia": {
-              "title": "olemme_saaneet_muita_avustuksia.title",
+            "have_received_other_compensations": {
+              "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
                 false,
                 true
@@ -172,20 +186,20 @@
             {
               "if": {
                 "properties": {
-                  "olemme_saaneet_muita_avustuksia": {
+                  "have_received_other_compensations": {
                     "const": true
                   }
                 }
               },
               "then": {
                 "properties": {
-                  "myonnetty_avustus": {
+                  "other_compensations": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/definitions/_granted_other_compensation_item"
+                      "$ref": "#/definitions/_other_compensation_item"
                     },
                     "additionalItems": {
-                      "$ref": "#/definitions/_granted_other_compensation_item"
+                      "$ref": "#/definitions/_other_compensation_item"
                     },
                     "minItems": 1
                   }
@@ -223,7 +237,13 @@
                   "title": "members_applicant_community_local.title",
                   "type": "integer"
                 }
-              }
+              },
+              "required": [
+                "members_applicant_person_global",
+                "members_applicant_person_local",
+                "members_applicant_community_global",
+                "members_applicant_community_local"
+              ]
             }
           }
         },
@@ -235,29 +255,36 @@
               "title": "personnel_fieldset.legend",
               "type": "object",
               "properties": {
-                "kokoaikainen_henkilosto": {
-                  "title": "kokoaikainen_henkilosto.title",
+                "fulltime_personnel": {
+                  "title": "fulltime_personnel.title",
                   "type": "integer"
                 },
-                "kokoaikainen_henkilotyovuosia": {
+                "fulltime_personnel_worktime": {
                   "format": "decimal-number",
-                  "title": "kokoaikainen_henkilotyovuosia.title",
+                  "title": "fulltime_personnel_worktime.title",
                   "type": "string"
                 },
-                "osa_aikainen_henkilosto": {
-                  "title": "osa_aikainen_henkilosto.title",
+                "parttime_personnel": {
+                  "title": "parttime_personnel.title",
                   "type": "integer"
                 },
-                "osa_aikainen_henkilotyovuosia": {
+                "parttime_personnel_worktime": {
                   "format": "decimal-number",
-                  "title": "osa_aikainen_henkilotyovuosia.title",
+                  "title": "parttime_personnel_worktime.title",
                   "type": "string"
                 },
-                "vapaaehtoinen_henkilosto": {
-                  "title": "vapaaehtoinen_henkilosto.title",
+                "voluenteer_personnel": {
+                  "title": "voluenteer_personnel.title",
                   "type": "integer"
                 }
-              }
+              },
+              "required": [
+                "fulltime_personnel",
+                "fulltime_personnel_worktime",
+                "parttime_personnel",
+                "parttime_personnel_worktime",
+                "voluenteer_personnel"
+              ]
             }
           }
         }
@@ -270,24 +297,33 @@
           "title": "activity_counts_section.title",
           "type": "object",
           "properties": {
-            "tapahtuma_tai_esityspaivien_maara_helsingissa": {
-              "title": "tapahtuma_tai_esityspaivien_maara_helsingissa.title",
+            "activity_counts_text": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "activity_counts_section.text",
+                  "type": "null"
+                }
+              ]
+            },
+            "event_days_count_helsinki": {
+              "title": "event_days_count_helsinki.title",
               "type": "integer"
             },
             "helsinki_counts_fieldset": {
               "title": "helsinki_counts_fieldset.title",
               "type": "object",
               "properties": {
-                "esitykset_maara_helsingissa": {
-                  "title": "esitykset_maara_helsingissa.title",
+                "show_count_helsinki": {
+                  "title": "show_count_helsinki.title",
                   "type": "integer"
                 },
-                "nayttelyt_maara_helsingissa": {
-                  "title": "nayttelyt_maara_helsingissa.title",
+                "exhibition_count_helsinki": {
+                  "title": "exhibition_count_helsinki.title",
                   "type": "integer"
                 },
-                "tyopaja_maara_helsingissa": {
-                  "title": "tyopaja_maara_helsingissa.title",
+                "workshop_count_helsinki": {
+                  "title": "workshop_count_helsinki.title",
                   "type": "integer"
                 }
               }
@@ -296,83 +332,62 @@
               "title": "total_counts_fieldset.title",
               "type": "object",
               "properties": {
-                "esitykset_maara_kaikkiaan": {
-                  "title": "esitykset_maara_kaikkiaan.title",
+                "show_count_all": {
+                  "title": "show_count_all.title",
                   "type": "integer"
                 },
-                "nayttelyt_maara_kaikkiaan": {
-                  "title": "nayttelyt_maara_kaikkiaan.title",
+                "exhibition_count_all": {
+                  "title": "exhibition_count_all.title",
                   "type": "integer"
                 },
-                "tyopaja_maara_kaikkiaan": {
-                  "title": "tyopaja_maara_kaikkiaan.title",
+                "workshop_count_all": {
+                  "title": "workshop_count_all.title",
                   "type": "integer"
                 }
               }
             },
-            "maara_helsingissa": {
-              "title": "maara_helsingissa.title",
+            "visitor_count_helsinki": {
+              "title": "visitor_count_helsinki.title",
               "type": "integer"
             },
-            "maara_kaikkiaan": {
-              "title": "maara_kaikkiaan.title",
+            "visitor_count_all": {
+              "title": "visitor_count_all.title",
               "type": "integer"
             },
             "premieres_fieldset": {
               "title": "premieres_fieldset.title",
               "type": "object",
               "properties": {
-                "kantaesitysten_maara": {
-                  "title": "kantaesitysten_maara.title",
+                "premiere_count": {
+                  "title": "premiere_count.title",
                   "type": "integer"
                 },
-                "ensi_iltojen_maara_helsingissa": {
-                  "title": "ensi_iltojen_maara_helsingissa.title",
+                "premiere_helsinki_count": {
+                  "title": "premiere_helsinki_count.title",
                   "type": "integer"
                 }
               }
             }
-          }
+          },
+          "required": [
+            "event_days_count_helsinki"
+          ]
         },
         "venues_section": {
           "title": "venues_section.title",
+          "description": "venues_section.text",
           "type": "object",
           "properties": {
-            "first_venue_fieldset": {
-              "title": "first_venue_fieldset.title",
-              "type": "object",
-              "properties": {
-                "ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa": {
-                  "title": "ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa.title",
-                  "type": "string"
-                },
-                "postinumero": {
-                  "title": "postinumero.title",
-                  "type": "string"
-                },
-                "kyseessa_on_kaupungin_omistama_tila": {
-                  "title": "kyseessa_on_kaupungin_omistama_tila.title",
-                  "enum": [
-                    true,
-                    false
-                  ]
-                }
-              },
-              "required": [
-                "ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa",
-                "postinumero",
-                "kyseessa_on_kaupungin_omistama_tila"
-              ]
-            },
-            "tila": {
-              "title": "tila.title",
+            "venues_fieldset": {
+              "title": "venues_in_helsinki_fieldset.title",
               "type": "array",
               "items": {
                 "$ref": "#/definitions/_venue_item"
               },
               "additionalItems": {
                 "$ref": "#/definitions/_venue_item"
-              }
+              },
+              "minItems": 1
             }
           }
         },
@@ -380,35 +395,35 @@
           "title": "schedule_section.title",
           "type": "object",
           "properties": {
-            "ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara": {
-              "title": "ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara.title",
+            "first_open_event_date": {
+              "title": "first_open_event_date.title",
               "type": "string"
             },
-            "festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat": {
-              "title": "festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat.title",
+            "festival_dates": {
+              "title": "festival_dates.title",
               "type": "string"
             },
-            "hanke_alkaa": {
-              "title": "hanke_alkaa.title",
+            "project_begins": {
+              "title": "project_begins.title",
               "type": "string"
             },
-            "hanke_loppuu": {
-              "title": "hanke_loppuu.title",
+            "project_ends": {
+              "title": "project_ends.title",
               "type": "string"
             }
           },
           "required": [
-            "ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara",
-            "hanke_alkaa",
-            "hanke_loppuu"
+            "first_open_event_date",
+            "project_begins",
+            "project_ends"
           ]
         },
         "project_description_section": {
           "title": "project_description_section.title",
           "type": "object",
           "properties": {
-            "laajempi_hankekuvaus": {
-              "title": "laajempi_hankekuvaus.title",
+            "comprehensive_description": {
+              "title": "comprehensive_description.title",
               "type": "string"
             }
           }
@@ -422,12 +437,12 @@
           "title": "artistic_foundations_section.title",
           "type": "object",
           "properties": {
-            "toiminta_taiteelliset_lahtokohdat": {
-              "title": "toiminta_taiteelliset_lahtokohdat.title",
+            "project_artistic_basis": {
+              "title": "project_artistic_basis.title",
               "type": "string"
             },
-            "toiminta_tasa_arvo": {
-              "title": "toiminta_tasa_arvo.title",
+            "project_equality": {
+              "title": "project_equality.title",
               "type": "string"
             }
           }
@@ -436,16 +451,16 @@
           "title": "accessibility_section.title",
           "type": "object",
           "properties": {
-            "toiminta_saavutettavuus": {
-              "title": "toiminta_saavutettavuus.title",
+            "project_accessibility": {
+              "title": "project_accessibility.title",
               "type": "string"
             },
-            "toiminta_yhteisollisyys": {
-              "title": "toiminta_yhteisollisyys.title",
+            "project_community": {
+              "title": "project_community.title",
               "type": "string"
             },
-            "toiminta_kohderyhmat": {
-              "title": "toiminta_kohderyhmat.title",
+            "project_target_audiece": {
+              "title": "project_target_audiece.title",
               "type": "string"
             }
           }
@@ -454,16 +469,16 @@
           "title": "operations_section.title",
           "type": "object",
           "properties": {
-            "toiminta_ammattimaisuus": {
-              "title": "toiminta_ammattimaisuus.title",
+            "operations_professionalism": {
+              "title": "operations_professionalism.title",
               "type": "string"
             },
-            "toiminta_ekologisuus": {
-              "title": "toiminta_ekologisuus.title",
+            "operations_ecology": {
+              "title": "operations_ecology.title",
               "type": "string"
             },
-            "toiminta_yhteistyokumppanit": {
-              "title": "toiminta_yhteistyokumppanit.title",
+            "operations_partners": {
+              "title": "operations_partners.title",
               "type": "string"
             }
           }
@@ -475,20 +490,30 @@
       "properties": {
         "budget_section": {
           "title": "budget_section.title",
+          "description": "budget_section.text",
           "type": "object",
           "properties": {
-            "organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_": {
-              "title": "organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_.title",
+            "organization_subsidities": {
+              "title": "organization_subsidities.title",
               "enum": [
-                true,
-                false
+                false,
+                true
               ]
             },
             "budget_income": {
               "title": "budget_income.title",
               "type": "object",
               "properties": {
-                "incomeGroupName": {
+                "budget_income_text": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "title": "budget_income.text",
+                      "type": "null"
+                    }
+                  ]
+                },
+                "income_group_name": {
                   "type": "string",
                   "default": "general"
                 },
@@ -497,7 +522,7 @@
                   "title": "budget_income_compensation.title",
                   "type": "string"
                 },
-                "plannedOtherCompensations": {
+                "planned_other_compensations": {
                   "format": "decimal-number",
                   "title": "budget_income_planned_other_compensations.title",
                   "type": "string"
@@ -507,7 +532,7 @@
                   "title": "budget_income_sponsorships.title",
                   "type": "string"
                 },
-                "entryFees": {
+                "entry_fees": {
                   "format": "decimal-number",
                   "title": "budget_income_entry_fees.title",
                   "type": "string"
@@ -517,7 +542,7 @@
                   "title": "budget_income_sales.title",
                   "type": "string"
                 },
-                "ownFunding": {
+                "own_funding": {
                   "format": "decimal-number",
                   "title": "budget_income_own_funding.title",
                   "type": "string"
@@ -528,36 +553,45 @@
               "title": "budget_cost.title",
               "type": "object",
               "properties": {
-                "costGroupName": {
+                "budget_cost_text": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "title": "budget_cost.text",
+                      "type": "null"
+                    }
+                  ]
+                },
+                "cost_group_name": {
                   "type": "string",
                   "default": "general"
                 },
-                "performerFees": {
+                "performer_fees": {
                   "format": "decimal-number",
                   "title": "budget_cost_performer_fees.title",
                   "type": "string"
                 },
-                "otherFees": {
+                "other_fees": {
                   "format": "decimal-number",
                   "title": "budget_cost_other_fees.title",
                   "type": "string"
                 },
-                "personnelSideCosts": {
+                "personnel_side_costs": {
                   "format": "decimal-number",
                   "title": "budget_cost_personnel_side_costs.title",
                   "type": "string"
                 },
-                "showCosts": {
+                "show_costs": {
                   "format": "decimal-number",
                   "title": "budget_cost_show_costs.title",
                   "type": "string"
                 },
-                "travelCosts": {
+                "travel_costs": {
                   "format": "decimal-number",
                   "title": "budget_cost_travel_costs.title",
                   "type": "string"
                 },
-                "transportCosts": {
+                "transport_costs": {
                   "format": "decimal-number",
                   "title": "budget_cost_transport_costs.title",
                   "type": "string"
@@ -589,14 +623,17 @@
                 "$ref": "#/definitions/_other_cost_item"
               }
             }
-          }
+          },
+          "required": [
+            "organization_subsidities"
+          ]
         },
         "other_input_section": {
           "title": "other_input_section.title",
           "type": "object",
           "properties": {
-            "muu_huomioitava_panostus": {
-              "title": "muu_huomioitava_panostus.title",
+            "other_financing": {
+              "title": "other_financing.title",
               "type": "string"
             }
           }
