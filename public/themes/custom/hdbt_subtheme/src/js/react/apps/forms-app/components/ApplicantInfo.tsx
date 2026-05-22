@@ -59,6 +59,8 @@ export const ApplicantInfo = () => {
             label={Drupal.t('Name of association', {}, { context: 'Grants application' })}
             value={grantsProfile.companyName}
           />
+        </div>
+        <div className='prh-content-block__content-row'>
           <InfoField
             label={Drupal.t('First name', {}, { context: 'Grants application' })}
             value={grantsProfile.firstName}
@@ -67,20 +69,20 @@ export const ApplicantInfo = () => {
             label={Drupal.t('Last name', {}, { context: 'Grants application' })}
             value={grantsProfile.lastName}
           />
-        </div>
-        <div className='prh-content-block__content-row'>
           <InfoField
             label={Drupal.t('Social security number', {}, { context: 'Grants application' })}
             value={grantsProfile.socialSecurityNumber}
           />
+        </div>
+        <div className='prh-content-block__content-row'>
           <InfoField label={Drupal.t('Email', {}, { context: 'Grants application' })} value={officialEmail} />
           <InfoField
             label={Drupal.t('Street address', {}, { context: 'Grants application' })}
             value={address?.street}
           />
+          <InfoField label={Drupal.t('City', {}, { context: 'Grants application' })} value={address?.city} />
         </div>
         <div className='prh-content-block__content-row'>
-          <InfoField label={Drupal.t('City', {}, { context: 'Grants application' })} value={address?.city} />
           <InfoField label={Drupal.t('Postal code', {}, { context: 'Grants application' })} value={address?.postCode} />
           <InfoField label={Drupal.t('Country', {}, { context: 'Grants application' })} value={address?.country} />
         </div>

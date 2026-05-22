@@ -2,7 +2,7 @@ import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { Tooltip } from 'hds-react';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { UserType } from './enum/UserType';
-import { communitySettings, privatePersonSettings } from './formConstants';
+import { communitySettings, privatePersonSettings, unregisteredCommunitySettings } from './formConstants';
 import type { FormStep } from './store';
 import type { ResponseData } from './types/Data';
 import type { RJSFFormData } from './types/RJSFFormData';
@@ -266,6 +266,8 @@ export const addApplicantInfoStep = (
 
   if (userType === UserType.PRIVATE_PERSON) {
     [rootProperty, definition, uiSchemaAdditions] = privatePersonSettings;
+  } else if (userType === UserType.UNREGISTERED_COMMUNITY) {
+    [rootProperty, definition, uiSchemaAdditions] = unregisteredCommunitySettings;
   } else {
     [rootProperty, definition, uiSchemaAdditions] = communitySettings;
   }
