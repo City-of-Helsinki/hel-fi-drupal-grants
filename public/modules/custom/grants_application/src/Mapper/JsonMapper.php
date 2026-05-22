@@ -143,6 +143,9 @@ class JsonMapper {
     if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'bool') {
       $value = $value ? 'true' : 'false';
     }
+    else if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'string' && $value === "") {
+      return;
+    }
     else if (!$value && $definition['data']['value'] !== ""){
       // The mapping contains a default value and datasource does not
       // have a value, we use the mapped default value.
@@ -278,13 +281,18 @@ class JsonMapper {
         $definition
       );
 
-    if (!$val) {
+    if ($val === NULL || $val === FALSE || $val === []) {
       return;
     }
 
-    $definition['data'] = $val;
-    $sourceValue = $definition['data'];
+    if (is_string($val)) {
+      $definition['data']['value'] = $val;
+    }
+    else {
+      $definition['data'] = $val;
+    }
 
+    $sourceValue = $definition['data'];
     $this->setTargetValue($data, $targetPath, $sourceValue, $definition);
   }
 

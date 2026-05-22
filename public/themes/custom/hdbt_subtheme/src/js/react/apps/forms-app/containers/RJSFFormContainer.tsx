@@ -54,6 +54,7 @@ import { localizeErrors } from '../localizeErrors';
 import { Notification, NotificationSize } from 'hds-react';
 import type { RJSFFormData } from '../types/RJSFFormData';
 import { ActingYear } from '../components/Fields/ActingYear';
+import { GrantDurationRadio } from '../components/Fields/GrantDurationRadio';
 
 const widgets: RegistryWidgetsType = {
   address: AddressSelect,
@@ -317,6 +318,7 @@ export const RJSFFormContainer = ({
             ...getDefaultRegistry().fields,
             actingYear: ActingYear,
             atvFile: FileInput,
+            grantDuration: GrantDurationRadio,
             subventionTable: SubventionTable,
             subventionSum: SubventionSum,
             textParagraph: TextParagraph,

@@ -1,0 +1,1064 @@
+{
+  "translations": {
+    "actions_and_timeline.title": {
+      "en": "Project activities and schedule",
+      "fi": "Hankkeen toimenpiteet ja aikataulu",
+      "sv": "Projektets åtgärder och tidtabell"
+    },
+    "actions_timeline_info.value": {
+      "en": "<p>Describe the activities to be organized within the project in as much detail as possible for each year for which support is requested.</p><p>For the possible second and third project years, describe the activities and schedule in as much detail as possible at the time of application.</p>",
+      "fi": "<p>Kuvaa hankeessa järjestettävä toiminta mahdollisimman yksityiskohtaisesti jokaisen vuoden osalta, jolle haetaan avustusta.</p><p>Mahdollisen toisen ja kolmannen hankevuoden osalta kirjaa toimenpiteet ja aikataulu niin tarkalla tasolla kuin se on hakuhetkellä mahdollista.</p>",
+      "sv": "<p>Beskriv den verksamhet som ska ordnas inom projektet så detaljerat som möjligt för varje år som understöd söks för.</p><p>För det möjliga andra och tredje projektåret, anteckna åtgärderna och tidtabellen så noggrant som möjligt vid ansökningstillfället.</p>"
+    },
+    "additional_information.description": {
+      "en": "If necessary, you can write additional information or other justifications related to the application or report changes to the basic information",
+      "fi": "Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista",
+      "sv": "Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan eller meddela om ändringar i basuppgifterna."
+    },
+    "applied_grant_amount.title": {
+      "en": "Grant amount applied for",
+      "fi": "Haettava avustussumma",
+      "sv": "Ansökt understödsbelopp"
+    },
+    "applied_grant_amount_2026.title": {
+      "en": "2026 (euros)",
+      "fi": "2026 (euroa)",
+      "sv": "2026 (euro)"
+    },
+    "applied_grant_amount_2027.title": {
+      "en": "2027 (euros)",
+      "fi": "2027 (euroa)",
+      "sv": "2027 (euro)"
+    },
+    "applied_grant_amount_2028.title": {
+      "en": "2028 (euros)",
+      "fi": "2028 (euroa)",
+      "sv": "2028 (euro)"
+    },
+    "applied_grant_amount_help.value": {
+      "en": "Grants of €5,000-€19,999 are awarded for one year at a time. Projects in this category must promote at least one of the alternative objectives listed above, and the self financing share or other funding must be at least 5% of the project costs.",
+      "fi": "5000-19999 euron avustukset myönnetään yhdeksi vuodeksi kerrallaan. Hankkeen tulee tässä kategoriassa edistää vähintään yhtä yllä luetelluista vaihtoehdoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 5% hankkeen kuluista",
+      "sv": "Understöd på 5 000-19 999 euro beviljas för ett år i taget. Projekten i denna kategori ska främja minst ett av de ovan nämnda alternativa målen, och den egna finansieringsandelen eller annan finansiering ska uppgå till minst 5 % av projektets kostnader."
+    },
+    "applied_grant_amount_help_large.value": {
+      "en": "Grants of €50,000-€80,000 per year can be applied for projects lasting 2-3 years. Projects in this category must promote at least three of the alternative objectives listed above, and the sefinancing share or other funding must be at least 15% of the project costs.",
+      "fi": "50 000-80 000 euron avustussummaa per vuosi voi hakea 2-3 vuoden mittaisille hankkeille. Hankkeiden tulee tässä kategoriassa edistää vähintään kolmea yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 15% hankkeen kuluista.",
+      "sv": "Understöd på 50 000-80 000 euro per år kan sökas för projekt som varar 2-3 år. Projekten i denna kategori ska främja minst tre av de ovan nämnda alternativa målen, och den egna finansieringsandelen eller annan finansiering ska uppgå till minst 15 % av projektets kostnader."
+    },
+    "applied_grant_amount_help_medium.value": {
+      "en": "Grants of €20,000-€49,999 per year can be applied for projects lasting 1-3 years. Projects in this category must promote at least two of the alternative objectives listed above, and the self-financing share or other funding must be at least 10% of the project costs.",
+      "fi": "20 000-49 999 euron avustussummaa per vuosi voi hakea 1-3 vuoden mittaisille hankkeilla. Hankkeiden tulee tässä kategoriassa edistää vähintään kahta yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 10% hankkeen kuluista",
+      "sv": "Understöd på 20 000-49 999 euro per år kan sökas för projekt som varar 1-3 år Projekten i denna kategori ska främja minst två av de ovan nämnda alternativa målen, och den egna finansieringsandelen eller annan finansiering ska uppgå till minst 10 % av projektets kostnader."
+    },
+    "assesment_1_fieldset.title": {
+      "en": "Estimate the numerical output target of the planned activities during the 2026–2027 project period:",
+      "fi": "Arvioi hankekauden 2026-2027 osalta tavoitellut toiminnan numeeriset mittarit:",
+      "sv": "Bedöm målsättningen för de numeriska indikatorerna för den planerade verksamheten under projektperioden 2026–2027:"
+    },
+    "assesment_2_fieldset.title": {
+      "en": "In which area or areas of Helsinki will the activities be carried out during the 2026–2027 period? Select up to five (5) areas.",
+      "fi": "Millä alueella tai alueilla Helsingissä toimintaa tullaan toteuttamaan kaudella 2026-2027? Valitse enintään viisi (5) aluetta.",
+      "sv": "På vilket område eller vilka områden i Helsingfors kommer verksamheten att genomföras under perioden 2026–2027? Välj högst fem (5) områden."
+    },
+    "assesment_2_info.value": {
+      "en": "Select based on the exact location of the activity venues from the list of Helsinki sub-areas (Sub area, postal code).",
+      "fi": "Valitse toimintapaikkojen tarkan sijainnin perusteella Helsingin osa-alueiden luettelosta (Osa-alue, postinumero).",
+      "sv": "Välj utifrån verksamhetsplatsernas exakta läge från förteckningen över Helsingfors delområden (Delområde, postnummer)."
+    },
+    "attachments_section.description": {
+      "en": "All the attachments listed in the call for applications must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki hakuilmoituksessa luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
+      "sv": "Alla bilagor som anges i utlysningen måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan."
+    },
+    "budget_info.value": {
+      "en": "Break down the budget for the project period 2026-2027. When applying for multi-year support, the budgets for 2027-2028 and 2028-2029 must be attached as appendices to the application.",
+      "fi": "Erittele tässä hankekauden 2026-2027 talousarvio. Monivuotista avustusta haettaessa budjetti vuosille 2027-2028 ja 2028-2029 tulee liittää hakemuksen liitteeksi.",
+      "sv": "Specificera budgeten för projektperioden 2026-2027. Vid ansökan om flerårigt understöd ska budgetarna för 2027-2028 och 2028-2029 bifogas som bilagor till ansökan."
+    },
+    "compensation_purpose_information.value": {
+      "en": "In the \"Purpose of Use\" field, write a brief project summary that clearly states the project's purpose, target group, and concrete actions and schedule.",
+      "fi": "Kirjoita käyttötarkoitus -kenttään lyhyt hanketiivistelmä, josta käy ilmi hankkeen tarkoitus, kohderyhmä sekä konkreettiset toimenpiteet ja aikataulu.",
+      "sv": "Skriv i fältet för användningsändamål en kort projektbeskrivning som tydligt anger projektets syfte, målgrupp samt konkreta åtgärder och tidtabell."
+    },
+    "event_count_total.description": {
+      "en": "How many encounters will be organized for participants during the project period? Each instance, such as a weekly exercise group session or an individual client meeting, is counted as one event here.",
+      "fi": "Monta kohtaamista toimintaan osallistuville järjestetään hankekauden aikana? Jokainen esimerkiksi viikottaisen liikuntaryhmän kerta tai yksilöasiakastapaaminen lasketaan yhtenä tapahtumakertana tässä.",
+      "sv": "Hur många möten ordnas för deltagarna under projektperioden? Varje tillfälle, till exempel ett veckovis motionsgruppstillfälle eller ett individuellt kundmöte, räknas som ett evenemang här."
+    },
+    "event_count_total.title": {
+      "en": "Total number of events/meetings",
+      "fi": "Tapahtumakertoja / tapaamisten määrä yhteensä",
+      "sv": "Det totala antalet evenemang/möten"
+    },
+    "form_title": {
+      "en": "KUVA: grant application for the promotion of physical activity and cultural activities for the elderly",
+      "fi": "KUVA: avustushakemus iäkkäiden ihmisten liikkumisen ja kulttuuritoiminnan edistämiseksi",
+      "sv": "KUVA: ansökan om understöd för främjande av idrott och kulturverksamhet hos äldre"
+    },
+    "formerly_provided_attachments_help.value": {
+      "en": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.",
+      "fi": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä.",
+      "sv": "Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna."
+    },
+    "goals_info.value": {
+      "en": "<p>Which of the following objectives for promoting physical activity or cultural activities among the elderly does the project address?</p><p>NOTE! Select only those objectives that are advanced through concrete measures in the project.</p>",
+      "fi": "<p>Mihin seuraavista iäkkäiden liikkumisen tai kulttuuritoiminnan edistämisen avustuksen tavoitteista hanke vastaa?</p><p>HUOM! Valitse tavoitteista vain ne, joita edistetään hankkeessa konkreettisilla toimenpiteillä</p>",
+      "sv": "<p>Vilka av följande mål för att främja äldre personers rörelse eller kulturverksamhet svarar projektet mot?</p><p>OBS! Välj endast de mål som främjas i projektet genom konkreta åtgärder.</p>"
+    },
+    "grant_goals_1.title": {
+      "en": "Does the project increase local or regional opportunities for physical activity or art and cultural activities? How?",
+      "fi": "Lisääkö hanke lähiympäristön tai alueellisia liikkumismahdollisuuksia / taide- ja kulttuuritoimintaa? Miten?",
+      "sv": "Ökar projektet möjligheterna till rörelse eller konst- och kulturverksamhet i närområdet eller regionalt? Hur?"
+    },
+    "grant_goals_2.title": {
+      "en": "Does the project increase volunteer or peer activities to promote physical activity or cultural activity among older adults? How?",
+      "fi": "Lisääkö hanke vapaaehtois- / vertaistoimintaa ikäihmisten liikkumiseksi / kulttuuritoiminnassa? Miten?",
+      "sv": "Ökar projektet frivillig- eller kamratverksamhet för att främja äldre personers rörelse eller kulturverksamhet? Hur?"
+    },
+    "grant_goals_3.title": {
+      "en": "Does the project increase digital and remote activities that encourage physical activity or cultural participation? How?",
+      "fi": "Lisääkö hanke digitalista ja etänä toteutettavaa liikkumiseen aktivoivaa toimitaa / kulttuuritoimintaa? Miten?",
+      "sv": "Ökar projektet digital och distansbaserad verksamhet som aktiverar till rörelse eller kulturverksamhet? Hur?"
+    },
+    "grant_goals_4.title": {
+      "en": "Does the project reduce loneliness and improve mental well-being through physical activity or cultural activities? How?",
+      "fi": "Vähentääkö hanke yksinäisyyttä ja lisääkö mielen hyvinvointia liikkumisen / kulttuuritoiminnan avulla? Miten?",
+      "sv": "Minskar projektet ensamhet och ökar det psykiska välbefinnandet genom rörelse eller kulturverksamhet? Hur?"
+    },
+    "grant_goals_5.title": {
+      "en": "Does the project include intergenerational activities and increase encounters between generations through physical activity or cultural activities? How?",
+      "fi": "Sisältääkö hanke sukupolvia yhdistävää toimintaa ja lisääkö sukupolvien välisiä kohtaamisia liikkumisen / kulttuuritoiminnan kautta? Miten?",
+      "sv": "Innehåller projektet verksamhet som förenar generationer och ökar möten mellan generationer genom rörelse eller kulturverksamhet? Hur?"
+    },
+    "grant_goals_6.title": {
+      "en": "Does the project promote consideration of diversity or multiculturalism in physical activity or cultural activities aimed at the elderly? How?",
+      "fi": "Edistääkö hanke moninaisuuden tai monikulttuurisuuden huomioon ottamista ikäihmisille suunnatussa liikunta- / kulttuuritoiminnassa? Miten?",
+      "sv": "Främjar projektet beaktande av mångfald eller mångkulturalism i rörelse eller kulturverksamhet som riktas till äldre personer? Hur?"
+    },
+    "grant_goals_fieldset.title": {
+      "en": "Objectives of the call for applications",
+      "fi": "Haun tavoitteet",
+      "sv": "Målen med ansökan"
+    },
+    "grant_interim_report_2025.description": {
+      "en": "How successful was the project during the 2025–2026 period in relation to the project plan? How much activity has been organized, and how many elderly residents of Helsinki have been reached? Has there been a need to alter the plan during the latter part of 2025?",
+      "fi": "Miten hankkeessa on kaudella 2025–2026 onnistuttu suhteessa hankesuunnitelmaan? Paljonko toimintaa on järjestetty ja montako helsinkiläistä ikäihmistä on tavoitettu? Onko suunnitelmaa jouduttu muuttamaan loppuvuoden 2025 aikana?",
+      "sv": "Hur har projektet under perioden 2025–2026 lyckats i förhållande till projektplanen? Hur mycket verksamhet har ordnats och hur många äldre Helsingforsbor har nåtts? Har planen behövt ändras under slutet av år 2025?"
+    },
+    "grant_interim_report_2025.title": {
+      "en": "Interim report on the activities carried out in the project during the 2025–2026 period",
+      "fi": "Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026",
+      "sv": "Mellanrapport om projektets genomförda verksamhet under perioden 2025–2026"
+    },
+    "grants_compensations_information.value": {
+      "en": "<p>Only apply for one grant type at a time with each application.</p><p>Enter the grant amount you are applying for the year 2026. The grant amounts for subsequent years of a multiyear application will be entered on the next page.</p>",
+      "fi": "<p>Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.</p><p>Syötä kenttään vuodelle 2026 haettava avustussumma. Monivuotisen hakemuksen jatkokausien avustussummat syötetään seuraavalla sivulla.</p>",
+      "sv": "<p>Ansök alltid endast om en typ av understöd åt gången.</p><p>Ange det bidragsbelopp som ansöks för år 2026. Bidragsbeloppen för fortsättningsåren i en flerårig ansökan anges på nästa sida.</p>"
+    },
+    "information_in_more_detail_step.title": {
+      "en": "Information in more detail",
+      "fi": "Tarkemmat tiedot",
+      "sv": "Mer detaljerad information"
+    },
+    "is_application_extension.title": {
+      "en": "Is this a continuation project for a project or an activity that has previously received funding within the grant scheme?",
+      "fi": "Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?",
+      "sv": "Är detta ett fortsättningsprojekt för ett projekt eller verksamhet som tidigare har fått understöd inom stödhelheten?"
+    },
+    "key_risks.title": {
+      "en": "What are the key risks from the perspective of implementing the project according to the plan?",
+      "fi": "Mitkä ovat hankkeen suunnitelman mukaisen toteuttamisen näkökulmasta keskeisimmät riskit?",
+      "sv": "Vilka är de viktigaste riskerna ur perspektivet att genomföra projektet enligt planen?"
+    },
+    "location_1.title": {
+      "en": "Venue 1",
+      "fi": "Toimintapaikka 1",
+      "sv": "Verksamhetsplats 1"
+    },
+    "location_2.title": {
+      "en": "Venue 2",
+      "fi": "Toimintapaikka 2",
+      "sv": "Verksamhetsplats 2"
+    },
+    "location_3.title": {
+      "en": "Venue 3",
+      "fi": "Toimintapaikka 3",
+      "sv": "Verksamhetsplats 3"
+    },
+    "location_4.title": {
+      "en": "Venue 4",
+      "fi": "Toimintapaikka 4",
+      "sv": "Verksamhetsplats 4"
+    },
+    "location_5.title": {
+      "en": "Venue 5",
+      "fi": "Toimintapaikka 5",
+      "sv": "Verksamhetsplats 5"
+    },
+    "location_select.Ala-Malmi": {
+      "fi": "Ala-Malmi, 00700",
+      "en": "Ala-Malmi, 00700",
+      "sv": "Ala-Malmi, 00700"
+    },
+    "location_select.Alppikylä": {
+      "fi": "Alppikylä, 00770",
+      "en": "Alppikylä, 00770",
+      "sv": "Alppikylä, 00770"
+    },
+    "location_select.Alppila": {
+      "fi": "Alppila, 00510",
+      "en": "Alppila, 00510",
+      "sv": "Alppila, 00510"
+    },
+    "location_select.Arabianranta": {
+      "fi": "Arabianranta, 00560",
+      "en": "Arabianranta, 00560",
+      "sv": "Arabianranta, 00560"
+    },
+    "location_select.Aurinkolahti": {
+      "fi": "Aurinkolahti, 00990",
+      "en": "Aurinkolahti, 00990",
+      "sv": "Aurinkolahti, 00990"
+    },
+    "location_select.Eira": {
+      "fi": "Eira, 00150",
+      "en": "Eira, 00150",
+      "sv": "Eira, 00150"
+    },
+    "location_select.Etelä-Haaga": {
+      "fi": "Etelä-Haaga, 00320",
+      "en": "Etelä-Haaga, 00320",
+      "sv": "Etelä-Haaga, 00320"
+    },
+    "location_select.Etu-Töölö": {
+      "fi": "Etu-Töölö, 00100",
+      "en": "Etu-Töölö, 00100",
+      "sv": "Etu-Töölö, 00100"
+    },
+    "location_select.Hakuninmaa": {
+      "fi": "Hakuninmaa, 00430",
+      "en": "Hakuninmaa, 00430",
+      "sv": "Hakuninmaa, 00430"
+    },
+    "location_select.Haltiala": {
+      "fi": "Haltiala, 00690",
+      "en": "Haltiala, 00690",
+      "sv": "Haltiala, 00690"
+    },
+    "location_select.Hanasaari": {
+      "fi": "Hanasaari, 00540",
+      "en": "Hanasaari, 00540",
+      "sv": "Hanasaari, 00540"
+    },
+    "location_select.Harju": {
+      "fi": "Harju, 00510",
+      "en": "Harju, 00510",
+      "sv": "Harju, 00510"
+    },
+    "location_select.Heikinlaakso": {
+      "fi": "Heikinlaakso, 00760",
+      "en": "Heikinlaakso, 00760",
+      "sv": "Heikinlaakso, 00760"
+    },
+    "location_select.Hermanninmäki": {
+      "fi": "Hermanninmäki, 00580",
+      "en": "Hermanninmäki, 00580",
+      "sv": "Hermanninmäki, 00580"
+    },
+    "location_select.Hermanninranta": {
+      "fi": "Hermanninranta, 00580",
+      "en": "Hermanninranta, 00580",
+      "sv": "Hermanninranta, 00580"
+    },
+    "location_select.Hernesaari": {
+      "fi": "Hernesaari, 00150",
+      "en": "Hernesaari, 00150",
+      "sv": "Hernesaari, 00150"
+    },
+    "location_select.Herttoniemen yritysalue": {
+      "fi": "Herttoniemen yritysalue, 00880",
+      "en": "Herttoniemen yritysalue, 00880",
+      "sv": "Herttoniemen yritysalue, 00880"
+    },
+    "location_select.Herttoniemenranta": {
+      "fi": "Herttoniemenranta, 00810",
+      "en": "Herttoniemenranta, 00810",
+      "sv": "Herttoniemenranta, 00810"
+    },
+    "location_select.Hevossalmi": {
+      "fi": "Hevossalmi, 00870",
+      "en": "Hevossalmi, 00870",
+      "sv": "Hevossalmi, 00870"
+    },
+    "location_select.Honkasuo": {
+      "fi": "Honkasuo, 00390",
+      "en": "Honkasuo, 00390",
+      "sv": "Honkasuo, 00390"
+    },
+    "location_select.Itä-Pakila": {
+      "fi": "Itä-Pakila, 00680",
+      "en": "Itä-Pakila, 00680",
+      "sv": "Itä-Pakila, 00680"
+    },
+    "location_select.Itä-Pasila": {
+      "fi": "Itä-Pasila, 00520",
+      "en": "Itä-Pasila, 00520",
+      "sv": "Itä-Pasila, 00520"
+    },
+    "location_select.Itäkeskus": {
+      "fi": "Itäkeskus, 00930",
+      "en": "Itäkeskus, 00930",
+      "sv": "Itäkeskus, 00930"
+    },
+    "location_select.Itäsaaret": {
+      "fi": "Itäsaaret, 00850",
+      "en": "Itäsaaret, 00850",
+      "sv": "Itäsaaret, 00850"
+    },
+    "location_select.Jakomäki": {
+      "fi": "Jakomäki, 00770",
+      "en": "Jakomäki, 00770",
+      "sv": "Jakomäki, 00770"
+    },
+    "location_select.Jollas": {
+      "fi": "Jollas, 00850",
+      "en": "Jollas, 00850",
+      "sv": "Jollas, 00850"
+    },
+    "location_select.Jätkäsaari": {
+      "fi": "Jätkäsaari, 00220",
+      "en": "Jätkäsaari, 00220",
+      "sv": "Jätkäsaari, 00220"
+    },
+    "location_select.Kaartinkaupunki": {
+      "fi": "Kaartinkaupunki, 00130",
+      "en": "Kaartinkaupunki, 00130",
+      "sv": "Kaartinkaupunki, 00130"
+    },
+    "location_select.Kaivopuisto": {
+      "fi": "Kaivopuisto, 00190",
+      "en": "Kaivopuisto, 00190",
+      "sv": "Kaivopuisto, 00190"
+    },
+    "location_select.Kalasatama": {
+      "fi": "Kalasatama, 00580",
+      "en": "Kalasatama, 00580",
+      "sv": "Kalasatama, 00580"
+    },
+    "location_select.Kallahti": {
+      "fi": "Kallahti, 00980",
+      "en": "Kallahti, 00980",
+      "sv": "Kallahti, 00980"
+    },
+    "location_select.Kamppi": {
+      "fi": "Kamppi, 00180",
+      "en": "Kamppi, 00180",
+      "sv": "Kamppi, 00180"
+    },
+    "location_select.Kannelmäki": {
+      "fi": "Kannelmäki, 00420",
+      "en": "Kannelmäki, 00420",
+      "sv": "Kannelmäki, 00420"
+    },
+    "location_select.Karhusaari": {
+      "fi": "Karhusaari, 00890",
+      "en": "Karhusaari, 00890",
+      "sv": "Karhusaari, 00890"
+    },
+    "location_select.Katajanokka": {
+      "fi": "Katajanokka, 00160",
+      "en": "Katajanokka, 00160",
+      "sv": "Katajanokka, 00160"
+    },
+    "location_select.Keski-Pasila": {
+      "fi": "Keski-Pasila, 00240",
+      "en": "Keski-Pasila, 00240",
+      "sv": "Keski-Pasila, 00240"
+    },
+    "location_select.Keski-Vuosaari": {
+      "fi": "Keski-Vuosaari, 00980",
+      "en": "Keski-Vuosaari, 00980",
+      "sv": "Keski-Vuosaari, 00980"
+    },
+    "location_select.Kivihaka": {
+      "fi": "Kivihaka, 00310",
+      "en": "Kivihaka, 00310",
+      "sv": "Kivihaka, 00310"
+    },
+    "location_select.Kivikko": {
+      "fi": "Kivikko, 00940",
+      "en": "Kivikko, 00940",
+      "sv": "Kivikko, 00940"
+    },
+    "location_select.Kluuvi": {
+      "fi": "Kluuvi, 00100",
+      "en": "Kluuvi, 00100",
+      "sv": "Kluuvi, 00100"
+    },
+    "location_select.Koivusaari": {
+      "fi": "Koivusaari, 00200",
+      "en": "Koivusaari, 00200",
+      "sv": "Koivusaari, 00200"
+    },
+    "location_select.Konala": {
+      "fi": "Konala, 00390",
+      "en": "Konala, 00390",
+      "sv": "Konala, 00390"
+    },
+    "location_select.Kontula": {
+      "fi": "Kontula, 00940",
+      "en": "Kontula, 00940",
+      "sv": "Kontula, 00940"
+    },
+    "location_select.Koskela": {
+      "fi": "Koskela, 00600",
+      "en": "Koskela, 00600",
+      "sv": "Koskela, 00600"
+    },
+    "location_select.Kotkavuori": {
+      "fi": "Kotkavuori, 00200",
+      "en": "Kotkavuori, 00200",
+      "sv": "Kotkavuori, 00200"
+    },
+    "location_select.Kruununhaka": {
+      "fi": "Kruununhaka, 00170",
+      "en": "Kruununhaka, 00170",
+      "sv": "Kruununhaka, 00170"
+    },
+    "location_select.Kruunuvuorenranta": {
+      "fi": "Kruunuvuorenranta, 00590",
+      "en": "Kruunuvuorenranta, 00590",
+      "sv": "Kruunuvuorenranta, 00590"
+    },
+    "location_select.Kulosaari": {
+      "fi": "Kulosaari, 00570",
+      "en": "Kulosaari, 00570",
+      "sv": "Kulosaari, 00570"
+    },
+    "location_select.Kumpula": {
+      "fi": "Kumpula, 00560",
+      "en": "Kumpula, 00560",
+      "sv": "Kumpula, 00560"
+    },
+    "location_select.Kuninkaantammi": {
+      "fi": "Kuninkaantammi, 00430",
+      "en": "Kuninkaantammi, 00430",
+      "sv": "Kuninkaantammi, 00430"
+    },
+    "location_select.Kurkimäki": {
+      "fi": "Kurkimäki, 00940",
+      "en": "Kurkimäki, 00940",
+      "sv": "Kurkimäki, 00940"
+    },
+    "location_select.Kuusisaari": {
+      "fi": "Kuusisaari, 00340",
+      "en": "Kuusisaari, 00340",
+      "sv": "Kuusisaari, 00340"
+    },
+    "location_select.Kyläsaari": {
+      "fi": "Kyläsaari, 00580",
+      "en": "Kyläsaari, 00580",
+      "sv": "Kyläsaari, 00580"
+    },
+    "location_select.Käpylä": {
+      "fi": "Käpylä, 00610",
+      "en": "Käpylä, 00610",
+      "sv": "Käpylä, 00610"
+    },
+    "location_select.Laakso": {
+      "fi": "Laakso, 00270",
+      "en": "Laakso, 00270",
+      "sv": "Laakso, 00270"
+    },
+    "location_select.Landbo": {
+      "fi": "Landbo, 00890",
+      "en": "Landbo, 00890",
+      "sv": "Landbo, 00890"
+    },
+    "location_select.Lapinlahti": {
+      "fi": "Lapinlahti, 00180",
+      "en": "Lapinlahti, 00180",
+      "sv": "Lapinlahti, 00180"
+    },
+    "location_select.Lassila": {
+      "fi": "Lassila, 00440",
+      "en": "Lassila, 00440",
+      "sv": "Lassila, 00440"
+    },
+    "location_select.Latokartano": {
+      "fi": "Latokartano, 00790",
+      "en": "Latokartano, 00790",
+      "sv": "Latokartano, 00790"
+    },
+    "location_select.Lehtisaari": {
+      "fi": "Lehtisaari, 00340",
+      "en": "Lehtisaari, 00340",
+      "sv": "Lehtisaari, 00340"
+    },
+    "location_select.Linjat": {
+      "fi": "Linjat, 00530",
+      "en": "Linjat, 00530",
+      "sv": "Linjat, 00530"
+    },
+    "location_select.Länsi-Herttoniemi": {
+      "fi": "Länsi-Herttoniemi, 00800",
+      "en": "Länsi-Herttoniemi, 00800",
+      "sv": "Länsi-Herttoniemi, 00800"
+    },
+    "location_select.Länsi-Pakila": {
+      "fi": "Länsi-Pakila, 00660",
+      "en": "Länsi-Pakila, 00660",
+      "sv": "Länsi-Pakila, 00660"
+    },
+    "location_select.Länsi-Pasila": {
+      "fi": "Länsi-Pasila, 00240",
+      "en": "Länsi-Pasila, 00240",
+      "sv": "Länsi-Pasila, 00240"
+    },
+    "location_select.Malmin lentokenttä": {
+      "fi": "Malmin lentokenttä, 00700",
+      "en": "Malmin lentokenttä, 00700",
+      "sv": "Malmin lentokenttä, 00700"
+    },
+    "location_select.Malminkartano": {
+      "fi": "Malminkartano, 00410",
+      "en": "Malminkartano, 00410",
+      "sv": "Malminkartano, 00410"
+    },
+    "location_select.Marjaniemi": {
+      "fi": "Marjaniemi, 00930",
+      "en": "Marjaniemi, 00930",
+      "sv": "Marjaniemi, 00930"
+    },
+    "location_select.Marttila": {
+      "fi": "Marttila, 00370",
+      "en": "Marttila, 00370",
+      "sv": "Marttila, 00370"
+    },
+    "location_select.Maunula": {
+      "fi": "Maunula, 00630",
+      "en": "Maunula, 00630",
+      "sv": "Maunula, 00630"
+    },
+    "location_select.Maunulanpuisto": {
+      "fi": "Maunulanpuisto, 00630",
+      "en": "Maunulanpuisto, 00630",
+      "sv": "Maunulanpuisto, 00630"
+    },
+    "location_select.Maununneva": {
+      "fi": "Maununneva, 00430",
+      "en": "Maununneva, 00430",
+      "sv": "Maununneva, 00430"
+    },
+    "location_select.Meilahti": {
+      "fi": "Meilahti, 00250",
+      "en": "Meilahti, 00250",
+      "sv": "Meilahti, 00250"
+    },
+    "location_select.Mellunmäki": {
+      "fi": "Mellunmäki, 00970",
+      "en": "Mellunmäki, 00970",
+      "sv": "Mellunmäki, 00970"
+    },
+    "location_select.Meri-Rastila": {
+      "fi": "Meri-Rastila, 00980",
+      "en": "Meri-Rastila, 00980",
+      "sv": "Meri-Rastila, 00980"
+    },
+    "location_select.Metsälä": {
+      "fi": "Metsälä, 00620",
+      "en": "Metsälä, 00620",
+      "sv": "Metsälä, 00620"
+    },
+    "location_select.Munkkivuori": {
+      "fi": "Munkkivuori, 00350",
+      "en": "Munkkivuori, 00350",
+      "sv": "Munkkivuori, 00350"
+    },
+    "location_select.Mustavuori": {
+      "fi": "Mustavuori, 00960",
+      "en": "Mustavuori, 00960",
+      "sv": "Mustavuori, 00960"
+    },
+    "location_select.Mustikkamaa-Korkeasaari": {
+      "fi": "Mustikkamaa-Korkeasaari, 00570",
+      "en": "Mustikkamaa-Korkeasaari, 00570",
+      "sv": "Mustikkamaa-Korkeasaari, 00570"
+    },
+    "location_select.Myllykallio": {
+      "fi": "Myllykallio, 00200",
+      "en": "Myllykallio, 00200",
+      "sv": "Myllykallio, 00200"
+    },
+    "location_select.Myllypuro": {
+      "fi": "Myllypuro, 00920",
+      "en": "Myllypuro, 00920",
+      "sv": "Myllypuro, 00920"
+    },
+    "location_select.Niemenmäki": {
+      "fi": "Niemenmäki, 00350",
+      "en": "Niemenmäki, 00350",
+      "sv": "Niemenmäki, 00350"
+    },
+    "location_select.Niinisaari": {
+      "fi": "Niinisaari, 00980",
+      "en": "Niinisaari, 00980",
+      "sv": "Niinisaari, 00980"
+    },
+    "location_select.Nordsjön kartano": {
+      "fi": "Nordsjön kartano, 00980",
+      "en": "Nordsjön kartano, 00980",
+      "sv": "Nordsjön kartano, 00980"
+    },
+    "location_select.Pajamäki": {
+      "fi": "Pajamäki, 00360",
+      "en": "Pajamäki, 00360",
+      "sv": "Pajamäki, 00360"
+    },
+    "location_select.Paloheinä": {
+      "fi": "Paloheinä, 00670",
+      "en": "Paloheinä, 00670",
+      "sv": "Paloheinä, 00670"
+    },
+    "location_select.Patola": {
+      "fi": "Patola, 00640",
+      "en": "Patola, 00640",
+      "sv": "Patola, 00640"
+    },
+    "location_select.Pihlajamäki": {
+      "fi": "Pihlajamäki, 00710",
+      "en": "Pihlajamäki, 00710",
+      "sv": "Pihlajamäki, 00710"
+    },
+    "location_select.Pihlajisto": {
+      "fi": "Pihlajisto, 00710",
+      "en": "Pihlajisto, 00710",
+      "sv": "Pihlajisto, 00710"
+    },
+    "location_select.Pikku Huopalahti": {
+      "fi": "Pikku Huopalahti, 00300",
+      "en": "Pikku Huopalahti, 00300",
+      "sv": "Pikku Huopalahti, 00300"
+    },
+    "location_select.Pirkkola": {
+      "fi": "Pirkkola, 00630",
+      "en": "Pirkkola, 00630",
+      "sv": "Pirkkola, 00630"
+    },
+    "location_select.Pitäjänmäen yritysalue": {
+      "fi": "Pitäjänmäen yritysalue, 00380",
+      "en": "Pitäjänmäen yritysalue, 00380",
+      "sv": "Pitäjänmäen yritysalue, 00380"
+    },
+    "location_select.Pohjois-Haaga": {
+      "fi": "Pohjois-Haaga, 00400",
+      "en": "Pohjois-Haaga, 00400",
+      "sv": "Pohjois-Haaga, 00400"
+    },
+    "location_select.Pohjois-Pasila": {
+      "fi": "Pohjois-Pasila, 00240",
+      "en": "Pohjois-Pasila, 00240",
+      "sv": "Pohjois-Pasila, 00240"
+    },
+    "location_select.Puistola": {
+      "fi": "Puistola, 00760",
+      "en": "Puistola, 00760",
+      "sv": "Puistola, 00760"
+    },
+    "location_select.Pukinmäki": {
+      "fi": "Pukinmäki, 00720",
+      "en": "Pukinmäki, 00720",
+      "sv": "Pukinmäki, 00720"
+    },
+    "location_select.Punavuori": {
+      "fi": "Punavuori, 00120",
+      "en": "Punavuori, 00120",
+      "sv": "Punavuori, 00120"
+    },
+    "location_select.Puotila": {
+      "fi": "Puotila, 00910",
+      "en": "Puotila, 00910",
+      "sv": "Puotila, 00910"
+    },
+    "location_select.Puotinharju": {
+      "fi": "Puotinharju, 00900",
+      "en": "Puotinharju, 00900",
+      "sv": "Puotinharju, 00900"
+    },
+    "location_select.Puroniitty": {
+      "fi": "Puroniitty, 00890",
+      "en": "Puroniitty, 00890",
+      "sv": "Puroniitty, 00890"
+    },
+    "location_select.Rastila": {
+      "fi": "Rastila, 00980",
+      "en": "Rastila, 00980",
+      "sv": "Rastila, 00980"
+    },
+    "location_select.Reimarla": {
+      "fi": "Reimarla, 00370",
+      "en": "Reimarla, 00370",
+      "sv": "Reimarla, 00370"
+    },
+    "location_select.Roihupelto": {
+      "fi": "Roihupelto, 00880",
+      "en": "Roihupelto, 00880",
+      "sv": "Roihupelto, 00880"
+    },
+    "location_select.Roihuvuori": {
+      "fi": "Roihuvuori, 00820",
+      "en": "Roihuvuori, 00820",
+      "sv": "Roihuvuori, 00820"
+    },
+    "location_select.Ruoholahti": {
+      "fi": "Ruoholahti, 00180",
+      "en": "Ruoholahti, 00180",
+      "sv": "Ruoholahti, 00180"
+    },
+    "location_select.Salmenkallio": {
+      "fi": "Salmenkallio, 00890",
+      "en": "Salmenkallio, 00890",
+      "sv": "Salmenkallio, 00890"
+    },
+    "location_select.Santahamina": {
+      "fi": "Santahamina, 00860",
+      "en": "Santahamina, 00860",
+      "sv": "Santahamina, 00860"
+    },
+    "location_select.Siltamäki": {
+      "fi": "Siltamäki, 00740",
+      "en": "Siltamäki, 00740",
+      "sv": "Siltamäki, 00740"
+    },
+    "location_select.Siltasaari": {
+      "fi": "Siltasaari, 00530",
+      "en": "Siltasaari, 00530",
+      "sv": "Siltasaari, 00530"
+    },
+    "location_select.Sompasaari": {
+      "fi": "Sompasaari, 00540",
+      "en": "Sompasaari, 00540",
+      "sv": "Sompasaari, 00540"
+    },
+    "location_select.Suomenlinna": {
+      "fi": "Suomenlinna, 00190",
+      "en": "Suomenlinna, 00190",
+      "sv": "Suomenlinna, 00190"
+    },
+    "location_select.Taka-Töölö": {
+      "fi": "Taka-Töölö, 00250",
+      "en": "Taka-Töölö, 00250",
+      "sv": "Taka-Töölö, 00250"
+    },
+    "location_select.Tali": {
+      "fi": "Tali, 00350",
+      "en": "Tali, 00350",
+      "sv": "Tali, 00350"
+    },
+    "location_select.Talinranta": {
+      "fi": "Talinranta, 00350",
+      "en": "Talinranta, 00350",
+      "sv": "Talinranta, 00350"
+    },
+    "location_select.Talosaari": {
+      "fi": "Talosaari, 00890",
+      "en": "Talosaari, 00890",
+      "sv": "Talosaari, 00890"
+    },
+    "location_select.Tammisalo": {
+      "fi": "Tammisalo, 00830",
+      "en": "Tammisalo, 00830",
+      "sv": "Tammisalo, 00830"
+    },
+    "location_select.Tapanila": {
+      "fi": "Tapanila, 00730",
+      "en": "Tapanila, 00730",
+      "sv": "Tapanila, 00730"
+    },
+    "location_select.Tapaninvainio": {
+      "fi": "Tapaninvainio, 00780",
+      "en": "Tapaninvainio, 00780",
+      "sv": "Tapaninvainio, 00780"
+    },
+    "location_select.Tapulikaupunki": {
+      "fi": "Tapulikaupunki, 00750",
+      "en": "Tapulikaupunki, 00750",
+      "sv": "Tapulikaupunki, 00750"
+    },
+    "location_select.Tattariharju": {
+      "fi": "Tattariharju, 00700",
+      "en": "Tattariharju, 00700",
+      "sv": "Tattariharju, 00700"
+    },
+    "location_select.Tattarisuo": {
+      "fi": "Tattarisuo, 00770",
+      "en": "Tattarisuo, 00770",
+      "sv": "Tattarisuo, 00770"
+    },
+    "location_select.Torkkelinmäki": {
+      "fi": "Torkkelinmäki, 00500",
+      "en": "Torkkelinmäki, 00500",
+      "sv": "Torkkelinmäki, 00500"
+    },
+    "location_select.Torpparinmäki": {
+      "fi": "Torpparinmäki, 00690",
+      "en": "Torpparinmäki, 00690",
+      "sv": "Torpparinmäki, 00690"
+    },
+    "location_select.Toukola": {
+      "fi": "Toukola, 00560",
+      "en": "Toukola, 00560",
+      "sv": "Toukola, 00560"
+    },
+    "location_select.Tullisaari": {
+      "fi": "Tullisaari, 00590",
+      "en": "Tullisaari, 00590",
+      "sv": "Tullisaari, 00590"
+    },
+    "location_select.Tuomarinkartano": {
+      "fi": "Tuomarinkartano, 00690",
+      "en": "Tuomarinkartano, 00690",
+      "sv": "Tuomarinkartano, 00690"
+    },
+    "location_select.Töyrynummi": {
+      "fi": "Töyrynummi, 00730",
+      "en": "Töyrynummi, 00730",
+      "sv": "Töyrynummi, 00730"
+    },
+    "location_select.Ullanlinna": {
+      "fi": "Ullanlinna, 00140",
+      "en": "Ullanlinna, 00140",
+      "sv": "Ullanlinna, 00140"
+    },
+    "location_select.Uutela": {
+      "fi": "Uutela, 00990",
+      "en": "Uutela, 00990",
+      "sv": "Uutela, 00990"
+    },
+    "location_select.Vallila": {
+      "fi": "Vallila, 00510",
+      "en": "Vallila, 00510",
+      "sv": "Vallila, 00510"
+    },
+    "location_select.Vanha Munkkiniemi": {
+      "fi": "Vanha Munkkiniemi, 00330",
+      "en": "Vanha Munkkiniemi, 00330",
+      "sv": "Vanha Munkkiniemi, 00330"
+    },
+    "location_select.Vanha Ruskeasuo": {
+      "fi": "Vanha Ruskeasuo, 00280",
+      "en": "Vanha Ruskeasuo, 00280",
+      "sv": "Vanha Ruskeasuo, 00280"
+    },
+    "location_select.Vanhakaupunki": {
+      "fi": "Vanhakaupunki, 00560",
+      "en": "Vanhakaupunki, 00560",
+      "sv": "Vanhakaupunki, 00560"
+    },
+    "location_select.Vartioharju": {
+      "fi": "Vartioharju, 00950",
+      "en": "Vartioharju, 00950",
+      "sv": "Vartioharju, 00950"
+    },
+    "location_select.Vartiosaari": {
+      "fi": "Vartiosaari, 00830",
+      "en": "Vartiosaari, 00830",
+      "sv": "Vartiosaari, 00830"
+    },
+    "location_select.Vattuniemi": {
+      "fi": "Vattuniemi, 00210",
+      "en": "Vattuniemi, 00210",
+      "sv": "Vattuniemi, 00210"
+    },
+    "location_select.Veräjälaakso": {
+      "fi": "Veräjälaakso, 00650",
+      "en": "Veräjälaakso, 00650",
+      "sv": "Veräjälaakso, 00650"
+    },
+    "location_select.Veräjämäki": {
+      "fi": "Veräjämäki, 00650",
+      "en": "Veräjämäki, 00650",
+      "sv": "Veräjämäki, 00650"
+    },
+    "location_select.Vesala": {
+      "fi": "Vesala, 00940",
+      "en": "Vesala, 00940",
+      "sv": "Vesala, 00940"
+    },
+    "location_select.Viikin tiedepuisto": {
+      "fi": "Viikin tiedepuisto, 00790",
+      "en": "Viikin tiedepuisto, 00790",
+      "sv": "Viikin tiedepuisto, 00790"
+    },
+    "location_select.Viikinmäki": {
+      "fi": "Viikinmäki, 00710",
+      "en": "Viikinmäki, 00710",
+      "sv": "Viikinmäki, 00710"
+    },
+    "location_select.Viikinranta": {
+      "fi": "Viikinranta, 00560",
+      "en": "Viikinranta, 00560",
+      "sv": "Viikinranta, 00560"
+    },
+    "location_select.Vilhonvuori": {
+      "fi": "Vilhonvuori, 00530",
+      "en": "Vilhonvuori, 00530",
+      "sv": "Vilhonvuori, 00530"
+    },
+    "location_select.Villinki": {
+      "fi": "Villinki, 00850",
+      "en": "Villinki, 00850",
+      "sv": "Villinki, 00850"
+    },
+    "location_select.Yliskylä": {
+      "fi": "Yliskylä, 00840",
+      "en": "Yliskylä, 00840",
+      "sv": "Yliskylä, 00840"
+    },
+    "location_select.Ylä-Malmi": {
+      "fi": "Ylä-Malmi, 00700",
+      "en": "Ylä-Malmi, 00700",
+      "sv": "Ylä-Malmi, 00700"
+    },
+    "location_select.none": {
+      "fi": "- Ei valintaa -",
+      "en": "- No selection -",
+      "sv": "- Inget val -"
+    },
+    "location_select.Östersundom": {
+      "fi": "Östersundom, 00890",
+      "en": "Östersundom, 00890",
+      "sv": "Östersundom, 00890"
+    },
+    "monitoring_of_project_implementation.title": {
+      "en": "How will the project monitor the achievement of its objectives, and how will the impact of the project be measured?",
+      "fi": "Miten hankkeessa aiotaan seurata tavoitteiden toteutumista ja miten hankkeen vaikuttavuutta aiotaan mitata",
+      "sv": "Hur ska projektet följa upp måluppfyllelsen och hur ska projektets påverkan mätas?"
+    },
+    "multiple_attachments_help.value": {
+      "en": "<p>When applying for a grant for multiple years, budgets for the coming years must be attached under the Other attachment section. The budgets can be submitted as a single file.</p><p>In the Other attachment section, the application can also be supplemented with, for example, a freely formatted project plan if attaching such a document is essential to complement the information provided in the application.</p>",
+      "fi": "<p>Useammalle vuodelle avustusta haettaessa hakemuksen liitteeksi tulee Muu liite -kohdassa liittää tulevia vuosia koskevat talousarviot. Talousarviot voidaan liittää yhtenä tiedostona.</p><p>Muu liite -kohdassa hakemusta voi täydentää myös esimerkiksi vapaamuotoisella hankesuunnitelmalla, jos sellaisen liittäminen on olennaista hakemuksen sisältämien tietojen täydentämiseksi.</p>",
+      "sv": "<p>När understöd söks för flera år ska budgetar för kommande år bifogas under punkten Övrig bilaga. Budgetarna kan bifogas som en enda fil.</p><p>Under punkten Övrig bilaga kan ansökan även kompletteras med till exempel en fritt formulerad projektplan, om det är väsentligt för att komplettera uppgifterna i ansökan.</p>"
+    },
+    "other_applied_compensations_section.description": {
+      "en": "Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet. Indicate only the grants applied for the same purpose of use, not all grants your organization has applied for.",
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eikä päätöstä ole vielä tehty. Ilmoita vain samaan käyttötarkoitukseen haetut avustukset, ei kaikkia organisaationne hakemia avustuksia.",
+      "sv": "Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, mutta beslut har ännu inte fattats. Ange endast de understöd som sökts för samma användningsändamål, inte alla understöd som er organisation har ansökt om."
+    },
+    "other_compensations_section.description": {
+      "en": "Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years. Indicate only the grants awarded for the same purpose of use, not all grants awarded to your organization.",
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisenä verovuotena. Ilmoita vain samaan käyttötarkoitukseen myönnetyt avustukset, ei kaikkia organisaatiollenne myönnettyjä avustuksia.",
+      "sv": "Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren. Ange endast de understöd som beviljats för samma användningsändamål, inte alla understöd som beviljats er organisation."
+    },
+    "project_actions_timeline_2026.title": {
+      "en": "Activities during the 2026-2027 period and their planned scheduling",
+      "fi": "Toimenpiteet kaudella 2026-2027 ja niiden suunnitteltu aikataulutus",
+      "sv": "Åtgärder under perioden 2026-2027 och deras planerade tidtabell"
+    },
+    "project_actions_timeline_2027.title": {
+      "en": "Activities during the 2027-2028 period and their planned scheduling",
+      "fi": "Toimenpiteet kaudella 2027-2028 ja niiden suunnitteltu aikataulutus",
+      "sv": "Åtgärder under perioden 2027-2028 och deras planerade tidtabell"
+    },
+    "project_actions_timeline_2028.title": {
+      "en": "Activities during the 2028-2029 period and their planned scheduling",
+      "fi": "Toimenpiteet kaudella 2028-2029 ja niiden suunnitteltu aikataulutus",
+      "sv": "Åtgärder under perioden 2028-2029 och deras planerade tidtabell"
+    },
+    "project_area_selection_criterion.title": {
+      "en": "Why was this particular area or these areas chosen?",
+      "fi": "Miksi juuri kyseinen alue / alueet on valittu?",
+      "sv": "Varför har just detta område eller dessa områden valts?"
+    },
+    "project_establishment.title": {
+      "en": "Is the planned activity of the project intended to be integrated into the applicant's or another actor's core operations after the project ends? If yes, describe the plan for implementing this integration.",
+      "fi": "Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa suunnitelma vakiinnuttamisen toteuttamiseksi",
+      "sv": "Är det planerade arbetet i projektet avsett att integreras i den sökandes eller någon annan aktörs ordinarie verksamhet efter projektets slut? Om ja, beskriv planen för att genomföra denna förankring."
+    },
+    "project_name.title": {
+      "en": "Project name",
+      "fi": "Hankkeen nimi",
+      "sv": "Projektets namn"
+    },
+    "project_partners.title": {
+      "en": "Name the key partners and their roles in the project. Specify separately the partnerships already agreed upon and those still under consideration.",
+      "fi": "Nimeä keskeisimmät yhteistökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla olevat tahot.",
+      "sv": "Namnge de viktigaste samarbetspartnerna och deras roller i projektet. Ange separat de redan överenskomna samarbetena och de samarbeten som fortfarande är under planering."
+    },
+    "project_plan_grant_duration.opt1": {
+      "en": "I am applying for the grant as a one-year grant",
+      "fi": "Haen avustusta yksivuotisena",
+      "sv": "Jag ansöker om understöd som ettårigt"
+    },
+    "project_plan_grant_duration.opt2": {
+      "en": "I am applying for the grant as a two-year grant",
+      "fi": "Haen avustusta kaksivuotisena",
+      "sv": "Jag ansöker om understöd som tvåårigt"
+    },
+    "project_plan_grant_duration.opt3": {
+      "en": "I am applying for the grant as a three-year grant",
+      "fi": "Haen avustusta kolmevuotisena",
+      "sv": "Jag ansöker om understöd som treårigt"
+    },
+    "project_plan_grant_duration.title": {
+      "en": "Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project's subsequent years in the fields that open for them.",
+      "fi": "Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.",
+      "sv": "Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem."
+    },
+    "project_plan_section.title": {
+      "en": "Project plan",
+      "fi": "Hankesuunnitelma",
+      "sv": "Projektplan"
+    },
+    "project_purpose_goals.title": {
+      "en": "Purpose and goals of the project",
+      "fi": "Hankkeen tarkoitus ja tavoitteet",
+      "sv": "Syfte och mål med projektet"
+    },
+    "project_solved_problem.title": {
+      "en": "What need or structural problem does the activity aim to address? What kind of change is the activity intended to achieve?",
+      "fi": "Mihin tarpeeseen tai rakenteelliseen ongelmaan toiminnalla halutaan vastata? Millainen muutos toiminnalla halutaan saada aikaiseksi?",
+      "sv": "Vilket behov eller strukturellt problem vill verksamheten svara på? Vilken förändring vill man åstadkomma med verksamheten?"
+    },
+    "required_attachments_help.value": {
+      "en": "<p>If the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, the following documents must be submitted:</p><ul><li>Statutes of the organisation</li><li>A notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid)</li><li>An extract from the Register of Associations/Foundations</li><li>Financial statements and annual report (last confirmed)</li><li>Action plan and budget for the grant year</li></ul>",
+      "fi": "<p>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee hakijan toimittaa seuraavat liitteet:</p><ul><li>yhteisön säännöt</li><li>pankin ilmoitus tilinomistajasta tai tiliotekopio (hakijalla tulee olla oma suomalainen pankkitili, jolle avustus maksetaan)</li><li>ote yhdistys-/säätiörekisteristä</li><li>viimeisin vahvistettu tilinpäätös ja toimintakertomus</li><li>toimintasuunnitelma ja budjetti avustusvuodelle</li></ul>",
+      "sv": "<p>Om sökanden inte tidigare har ansökt om understöd från Helsingfors stad eller om uppgifterna har ändrats, måste följande bilagor lämnas in:</p><ul><li>samfundets stadgar</li><li>bankens meddelande om kontoinnehavare eller kopia av kontoutdrag (sökanden måste ha ett eget finskt bankkonto där understödet betalas ut)</li><li>utdrag ur förenings-/stiftelseregistret</li><li>bokslut och verksamhetsberättelse (sist bekräftade)</li><li>verksamhetsplan och budget för understödsåret</li></ul>"
+    },
+    "risks_section.title": {
+      "en": "Risks, evaluation, and integrating the activities",
+      "fi": "Riskit, arviointi ja toiminnan juurruttaminen",
+      "sv": "Risker, utvärdering och förankring av verksamheten"
+    },
+    "target_groups_for_who.title": {
+      "en": "Does the project have a more specifically defined target group or groups? Which one(s)?",
+      "fi": "Onko hankkeelle tarkempaa määriteltyä kohderyhmää / kohderyhmiä? Mikä / mitä?",
+      "sv": "Har projektet en mer specifikt definierad målgrupp eller målgrupper? Vilken/vilka?"
+    },
+    "target_groups_participation.title": {
+      "en": "In what ways does the project promote the inclusion of the elderly?",
+      "fi": "Millä tavoin hankkeessa edistetään ikäihmisten osallisuutta?",
+      "sv": "På vilket sätt främjar projektet äldre personers delaktighet?"
+    },
+    "target_groups_reached_in_helsinki.description": {
+      "en": "<p>Indicate here the target number of older adults to be reached.</p>",
+      "fi": "<p>Ilmoita tässä tavoitettujen ikäihmisten tavoiteltu määrä.</p>",
+      "sv": "<p>Ange här det målsatta antalet äldre personer som ska nås.</p>"
+    },
+    "target_groups_reached_in_helsinki.title": {
+      "en": "Older people living in Helsinki to be reached through the activities of the project",
+      "fi": "Hankkeen toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset",
+      "sv": "Äldre personer som bor i Helsingfors och nås genom verksamheten i projektet."
+    },
+    "target_groups_section.title": {
+      "en": "Project target groups, partners, and area",
+      "fi": "Hankkeen kohderyhmät, yhteistyökumppanit ja alue",
+      "sv": "Projektets målgrupper, samarbetspartner och område"
+    },
+    "target_groups_skills.title": {
+      "en": "What experience do the organization already have in working with the target group(s)?",
+      "fi": "Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?",
+      "sv": "Vilken kompetens har organisationen sedan tidigare i att arbeta med målgruppen/målgrupperna?"
+    }
+  }
+}

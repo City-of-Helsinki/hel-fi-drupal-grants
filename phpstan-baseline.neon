@@ -1021,11 +1021,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/JsonSchemaValidator.php
 
 		-
-			message: "#^Method Drupal\\\\grants_application\\\\Mapper\\\\JsonHandler\\:\\:handleDefinitionUpdate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Mapper/JsonHandler.php
-
-		-
 			message: "#^Method Drupal\\\\grants_application\\\\Mapper\\\\JsonHandler\\:\\:handleDefinitionUpdate\\(\\) has parameter \\$definition with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Mapper/JsonHandler.php
@@ -1332,11 +1327,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\grants_application\\\\Mapper\\\\JsonMapper\\:\\:sourcePathExists\\(\\) has parameter \\$dataSources with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Mapper/JsonMapper.php
-
-		-
-			message: "#^Parameter \\#2 \\$data of method Drupal\\\\grants_application\\\\Mapper\\\\JsonHandler\\:\\:handleDefinitionUpdate\\(\\) expects array, array\\|string\\|null given\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Mapper/JsonMapper.php
 
