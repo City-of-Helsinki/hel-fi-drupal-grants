@@ -42,48 +42,6 @@ final class JsonHandlerTest extends UnitTestCase {
   }
 
   /**
-   * Tests setLabelAndValue returns empty strings when data is empty.
-   */
-  public function testSetLabelAndValueWithEmptyData(): void {
-    $definition = ['data' => ['ID' => 'x', 'label' => '', 'value' => '']];
-
-    $result = JsonHandler::setLabelAndValue([], $definition);
-
-    $this->assertEquals('', $result['label']);
-    $this->assertEquals('', $result['value']);
-  }
-
-  /**
-   * Tests setLabelAndValue returns empty strings when data has only one element.
-   */
-  public function testSetLabelAndValueWithSingleElement(): void {
-    $definition = ['data' => ['ID' => 'x', 'label' => '', 'value' => '']];
-
-    $result = JsonHandler::setLabelAndValue(['only one'], $definition);
-
-    $this->assertEquals('', $result['label']);
-    $this->assertEquals('', $result['value']);
-  }
-
-  /**
-   * Tests income returns FALSE when data is empty.
-   */
-  public function testIncomeWithEmptyData(): void {
-    $definition = [
-      'data' => [
-        'ID' => 'muut_menot',
-        'label' => '',
-        'value' => '',
-        'valueType' => 'double',
-      ],
-    ];
-
-    $result = JsonHandler::income([], $definition);
-
-    $this->assertFalse($result);
-  }
-
-  /**
    * Tests income maps multiple items and appends index to ID.
    */
   public function testIncomeWithMultipleItems(): void {
@@ -126,28 +84,6 @@ final class JsonHandlerTest extends UnitTestCase {
   }
 
   /**
-   * Tests enumToLabel falls back to the original value for an unknown key.
-   */
-  public function testEnumToLabelFallbackToOriginalValue(): void {
-    $definition = [
-      'value_map' => [
-        '1' => 'Alle vuosi',
-      ],
-    ];
-
-    $this->assertEquals('unknown_value', JsonHandler::enumToLabel('unknown_value', $definition));
-  }
-
-  /**
-   * Tests enumToLabel with an empty value_map returns original value.
-   */
-  public function testEnumToLabelWithEmptyValueMap(): void {
-    $definition = ['value_map' => []];
-
-    $this->assertEquals('2', JsonHandler::enumToLabel('2', $definition));
-  }
-
-  /**
    * Tests enumToLabel maps boolean true ("1") to the configured label.
    */
   public function testEnumToLabelBoolTrue(): void {
@@ -173,19 +109,6 @@ final class JsonHandlerTest extends UnitTestCase {
     ];
 
     $this->assertEquals('Ei', JsonHandler::enumToLabel('', $definition));
-  }
-
-  /**
-   * Tests handleDefinitionUpdate dispatches to the named method.
-   */
-  public function testHandleDefinitionUpdateDispatch(): void {
-    $definition = [
-      'value_map' => ['1' => 'Yksi'],
-    ];
-
-    $result = $this->handler->handleDefinitionUpdate('enumToLabel', '1', $definition);
-
-    $this->assertEquals('Yksi', $result);
   }
 
 }

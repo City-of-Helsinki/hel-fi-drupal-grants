@@ -18,7 +18,7 @@ class JsonHandler {
    *
    * @param string $handler
    *   The name of the handler function.
-   * @param array $data
+   * @param mixed $data
    *   The actual data to handle.
    * @param array $definition
    *   The mapping definition.
