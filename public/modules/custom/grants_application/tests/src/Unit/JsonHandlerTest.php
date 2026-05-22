@@ -14,13 +14,6 @@ use Drupal\Tests\UnitTestCase;
  */
 final class JsonHandlerTest extends UnitTestCase {
 
-  private JsonHandler $handler;
-
-  protected function setUp(): void {
-    parent::setUp();
-    $this->handler = new JsonHandler();
-  }
-
   /**
    * Tests setLabelAndValue with a valid 2-element array.
    */
@@ -109,6 +102,19 @@ final class JsonHandlerTest extends UnitTestCase {
     ];
 
     $this->assertEquals('Ei', JsonHandler::enumToLabel('', $definition));
+  }
+
+  /**
+   * Tests handleDefinitionUpdate dispatches to the named method.
+   */
+  public function testHandleDefinitionUpdateDispatch(): void {
+    $definition = [
+      'value_map' => ['1' => 'Yksi'],
+    ];
+
+    $result = (new JsonHandler())->handleDefinitionUpdate('enumToLabel', '1', $definition);
+
+    $this->assertEquals('Yksi', $result);
   }
 
 }
