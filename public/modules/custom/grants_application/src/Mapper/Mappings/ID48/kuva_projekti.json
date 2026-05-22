@@ -23,7 +23,6 @@
       "valueType": "float"
     }
   },
-
   "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
     "datasource": "form_data",
     "source": "hardcoded",
@@ -52,7 +51,7 @@
 
   "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
     "datasource": "form_data",
-    "source": "grant_info_step.other_grants_section.myonnetty_avustus",
+    "source": "grant_info_step.other_compensations_section.other_compensations",
     "mapping_type": "multiple_values",
     "data": {
       "issuer": {
@@ -114,13 +113,12 @@
       }
     }
   },
-
   "compensation.compensationInfo.generalInfoArray.0": {
     "datasource": "form_data",
-    "source": "grant_info_step.grant_details_section.ensisijainen_taiteen_ala",
+    "source": "grant_info_step.grant_details_section.primary_art_field",
     "mapping_type": "default",
     "data": {
-      "ID": "primaryArtField",
+      "ID": "primaryArt",
       "label": "Ensisijainen taiteenala",
       "value": "",
       "valueType": "string"
@@ -128,10 +126,10 @@
   },
   "compensation.compensationInfo.generalInfoArray.1": {
     "datasource": "form_data",
-    "source": "grant_info_step.grant_details_section.hankkeen_nimi",
+    "source": "grant_info_step.grant_details_section.project_name",
     "mapping_type": "default",
     "data": {
-      "ID": "projectName",
+      "ID": "nameOfEvent",
       "label": "Hankkeen nimi",
       "value": "",
       "valueType": "string"
@@ -139,10 +137,10 @@
   },
   "compensation.compensationInfo.generalInfoArray.2": {
     "datasource": "form_data",
-    "source": "grant_info_step.grant_details_section.kyseessa_on_festivaali_tai_tapahtuma",
+    "source": "grant_info_step.grant_details_section.is_festival_or_event",
     "mapping_type": "default",
     "data": {
-      "ID": "isFestivalOrEvent",
+      "ID": "isFestival",
       "label": "Kyseessä on festivaali tai tapahtuma",
       "value": "",
       "valueType": "bool"
@@ -150,456 +148,445 @@
   },
   "compensation.compensationInfo.generalInfoArray.3": {
     "datasource": "form_data",
-    "source": "grant_info_step.grant_details_section.hankkeen_tai_toiminnan_lyhyt_esittelyteksti",
+    "source": "grant_info_step.grant_details_section.project_short_description",
     "mapping_type": "default",
     "data": {
-      "ID": "shortDescription",
+      "ID": "purpose",
       "label": "Lyhyt esittely",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.compensationInfo.generalInfoArray.4": {
-    "datasource": "form_data",
-    "source": "grant_info_step.other_grants_section.olemme_saaneet_muita_avustuksia",
-    "mapping_type": "default",
-    "data": {
-      "ID": "hasReceivedOtherGrants",
-      "label": "Olemme saaneet muita avustuksia",
-      "value": "",
-      "valueType": "bool"
-    }
-  },
 
-  "compensation.activitiesInfoArray.0": {
+  "compensation.communityInfo.generalCommunityInfoArray.0": {
     "datasource": "form_data",
-    "source": "community_info_step.members_section.members_fieldset.members_applicant_person_global",
+    "source": "community_info_step.personnel_section.personnel_fieldset.fulltime_personnel",
     "mapping_type": "default",
     "data": {
-      "ID": "membersApplicantPersonGlobal",
-      "label": "Henkilöjäsenet yhteensä",
-      "value": "",
+      "ID": "staffPeopleFulltime",
+      "label": "Kokoaikaisia: Henkilöitä",
+      "value": "0",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.1": {
+  "compensation.communityInfo.generalCommunityInfoArray.1": {
+    "datasource": "form_data",
+    "source": "community_info_step.personnel_section.personnel_fieldset.parttime_personnel",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffPeopleParttime",
+      "label": "Osa-aikaisia: Henkilöitä",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.2": {
+    "datasource": "form_data",
+    "source": "community_info_step.personnel_section.personnel_fieldset.voluenteer_personnel",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffPeopleVoluntary",
+      "label": "Vapaaehtoisia: Henkilöitä",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.3": {
+    "datasource": "form_data",
+    "source": "community_info_step.personnel_section.personnel_fieldset.fulltime_personnel_worktime",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffManyearsFulltime",
+      "label": "Kokoaikaisia: Henkilötyövuosia",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.4": {
+    "datasource": "form_data",
+    "source": "community_info_step.personnel_section.personnel_fieldset.parttime_personnel_worktime",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffManyearsParttime",
+      "label": "Osa-aikaisia: Henkilötyövuosia",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.5": {
     "datasource": "form_data",
     "source": "community_info_step.members_section.members_fieldset.members_applicant_person_local",
     "mapping_type": "default",
     "data": {
-      "ID": "membersApplicantPersonLocal",
+      "ID": "membersPersonLocal",
       "label": "Henkilöjäsenet, Helsinki",
-      "value": "",
+      "value": "0",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.2": {
+  "compensation.communityInfo.generalCommunityInfoArray.6": {
     "datasource": "form_data",
-    "source": "community_info_step.members_section.members_fieldset.members_applicant_community_global",
+    "source": "community_info_step.members_section.members_fieldset.members_applicant_person_global",
     "mapping_type": "default",
     "data": {
-      "ID": "membersApplicantCommunityGlobal",
+      "ID": "membersPersonGlobal",
       "label": "Yhteisöjäsenet yhteensä",
-      "value": "",
+      "value": "0",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.3": {
+  "compensation.communityInfo.generalCommunityInfoArray.7": {
     "datasource": "form_data",
     "source": "community_info_step.members_section.members_fieldset.members_applicant_community_local",
     "mapping_type": "default",
     "data": {
-      "ID": "membersApplicantCommunityLocal",
+      "ID": "membersCommunityLocal",
       "label": "Yhteisöjäsenet, Helsinki",
-      "value": "",
+      "value": "0",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.4": {
+  "compensation.communityInfo.generalCommunityInfoArray.8": {
     "datasource": "form_data",
-    "source": "community_info_step.personnel_section.personnel_fieldset.kokoaikainen_henkilosto",
+    "source": "community_info_step.members_section.members_fieldset.members_applicant_community_global",
     "mapping_type": "default",
     "data": {
-      "ID": "fullTimePersonnel",
-      "label": "Kokoaikainen henkilöstö",
-      "value": "",
+      "ID": "membersCommunityGlobal",
+      "label": "Yhteisöjäsenet, yhteensä",
+      "value": "0",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.5": {
+  "compensation.activityBasisInfo.activityBasisArray.0": {
     "datasource": "form_data",
-    "source": "community_info_step.personnel_section.personnel_fieldset.kokoaikainen_henkilotyovuosia",
+    "source": "activity_foundations_step.artistic_foundations_section.project_artistic_basis",
     "mapping_type": "default",
     "data": {
-      "ID": "fullTimePersonYears",
-      "label": "Kokoaikaiset henkilötyövuosia",
+      "ID": "toiminta_taiteelliset_lahtokohdat",
+      "label": "Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.",
       "value": "",
-      "valueType": "double"
+      "valueType": "string"
     }
   },
-  "compensation.activitiesInfoArray.6": {
+  "compensation.activityBasisInfo.activityBasisArray.1": {
     "datasource": "form_data",
-    "source": "community_info_step.personnel_section.personnel_fieldset.osa_aikainen_henkilosto",
+    "source": "activity_foundations_step.artistic_foundations_section.project_equality",
     "mapping_type": "default",
     "data": {
-      "ID": "partTimePersonnel",
-      "label": "Osa-aikainen henkilöstö",
+      "ID": "toiminta_tasa_arvo",
+      "label": "Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
       "value": "",
-      "valueType": "int"
+      "valueType": "string"
     }
   },
-  "compensation.activitiesInfoArray.7": {
+  "compensation.activityBasisInfo.activityBasisArray.2": {
     "datasource": "form_data",
-    "source": "community_info_step.personnel_section.personnel_fieldset.osa_aikainen_henkilotyovuosia",
+    "source": "activity_foundations_step.accessibility_section.project_accessibility",
     "mapping_type": "default",
     "data": {
-      "ID": "partTimePersonYears",
-      "label": "Osa-aikaiset henkilötyövuosia",
+      "ID": "toiminta_saavutettavuus",
+      "label": "Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
       "value": "",
-      "valueType": "double"
+      "valueType": "string"
     }
   },
-  "compensation.activitiesInfoArray.8": {
+  "compensation.activityBasisInfo.activityBasisArray.3": {
     "datasource": "form_data",
-    "source": "community_info_step.personnel_section.personnel_fieldset.vapaaehtoinen_henkilosto",
+    "source": "activity_foundations_step.accessibility_section.project_community",
     "mapping_type": "default",
     "data": {
-      "ID": "volunteers",
-      "label": "Vapaaehtoinen henkilöstö",
-      "value": "",
-      "valueType": "int"
+      "ID": "toiminta_yhteisollisyys",
+      "label": "Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "value": "activity_foundations_step.artistic_foundations_section.project_equality",
+      "valueType": "string"
     }
   },
-  "compensation.activitiesInfoArray.9": {
+  "compensation.activityBasisInfo.activityBasisArray.4": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.tapahtuma_tai_esityspaivien_maara_helsingissa",
+    "source": "activity_foundations_step.accessibility_section.project_target_audiece",
     "mapping_type": "default",
     "data": {
-      "ID": "eventDaysInHelsinki",
+      "ID": "toiminta_kohderyhmat",
+      "label": "Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.5": {
+    "datasource": "form_data",
+    "source": "activity_foundations_step.operations_section.operations_professionalism",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_ammattimaisuus",
+      "label": "Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.6": {
+    "datasource": "form_data",
+    "source": "activity_foundations_step.operations_section.operations_ecology",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_ekologisuus",
+      "label": "Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.7": {
+    "datasource": "form_data",
+    "source": "activity_foundations_step.operations_section.operations_partners",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_yhteistyokumppanit",
+      "label": "Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.activityInfo.plannedActivityInfoArray.0": {
+    "datasource": "form_data",
+    "source": "planned_activity_step.activity_counts_section.event_days_count_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventDaysCountHki",
       "label": "Tapahtuma- tai esityspäivien määrä Helsingissä",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.10": {
+  "compensation.activityInfo.plannedActivityInfoArray.1": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.helsinki_counts_fieldset.esitykset_maara_helsingissa",
+    "source": "planned_activity_step.activity_counts_section.helsinki_counts_fieldset.show_count_helsinki",
     "mapping_type": "default",
     "data": {
-      "ID": "performancesInHelsinki",
-      "label": "Esitysten määrä Helsingissä",
+      "ID": "performanceCountHki",
+      "label": "Esitykset, Helsinki",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.11": {
+  "compensation.activityInfo.plannedActivityInfoArray.2": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.helsinki_counts_fieldset.nayttelyt_maara_helsingissa",
+    "source": "planned_activity_step.activity_counts_section.total_counts_fieldset.show_count_all",
     "mapping_type": "default",
     "data": {
-      "ID": "exhibitionsInHelsinki",
-      "label": "Näyttelyjen määrä Helsingissä",
+      "ID": "performanceCountAll",
+      "label": "Esitykset, kaikki",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.12": {
+  "compensation.activityInfo.plannedActivityInfoArray.3": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.helsinki_counts_fieldset.tyopaja_maara_helsingissa",
+    "source": "planned_activity_step.activity_counts_section.helsinki_counts_fieldset.exhibition_count_helsinki",
     "mapping_type": "default",
     "data": {
-      "ID": "workshopsInHelsinki",
-      "label": "Työpajojen määrä Helsingissä",
+      "ID": "exhibitionCountHki",
+      "label": "Näyttelyt, Helsinki",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.13": {
+  "compensation.activityInfo.plannedActivityInfoArray.4": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.total_counts_fieldset.esitykset_maara_kaikkiaan",
+    "source": "planned_activity_step.activity_counts_section.total_counts_fieldset.exhibition_count_all",
     "mapping_type": "default",
     "data": {
-      "ID": "performancesTotal",
-      "label": "Esitysten määrä kaikkiaan",
+      "ID": "exhibitionCountAll",
+      "label": "Näyttelyt, kaikki",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.14": {
+  "compensation.activityInfo.plannedActivityInfoArray.5": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.total_counts_fieldset.nayttelyt_maara_kaikkiaan",
+    "source": "planned_activity_step.activity_counts_section.helsinki_counts_fieldset.workshop_count_helsinki",
     "mapping_type": "default",
     "data": {
-      "ID": "exhibitionsTotal",
-      "label": "Näyttelyjen määrä kaikkiaan",
+      "ID": "workshopCountHki",
+      "label": "Työpajat, Helsinki",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.15": {
+  "compensation.activityInfo.plannedActivityInfoArray.6": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.total_counts_fieldset.tyopaja_maara_kaikkiaan",
+    "source": "planned_activity_step.activity_counts_section.total_counts_fieldset.workshop_count_all",
     "mapping_type": "default",
     "data": {
-      "ID": "workshopsTotal",
-      "label": "Työpajojen määrä kaikkiaan",
+      "ID": "workshopCountAll",
+      "label": "Työpaja, kaikki",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.16": {
+  "compensation.activityInfo.plannedActivityInfoArray.7": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.maara_helsingissa",
+    "source": "planned_activity_step.activity_counts_section.premieres_fieldset.premiere_count",
     "mapping_type": "default",
     "data": {
-      "ID": "audienceInHelsinki",
-      "label": "Kävijöiden / osallistujien määrä Helsingissä",
-      "value": "",
-      "valueType": "int"
-    }
-  },
-  "compensation.activitiesInfoArray.17": {
-    "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.maara_kaikkiaan",
-    "mapping_type": "default",
-    "data": {
-      "ID": "audienceTotal",
-      "label": "Kävijöiden / osallistujien määrä kaikkiaan",
-      "value": "",
-      "valueType": "int"
-    }
-  },
-  "compensation.activitiesInfoArray.18": {
-    "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.premieres_fieldset.kantaesitysten_maara",
-    "mapping_type": "default",
-    "data": {
-      "ID": "worldPremieres",
+      "ID": "firstPublicPerformancesCount",
       "label": "Kantaesitysten määrä",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.19": {
+  "compensation.activityInfo.plannedActivityInfoArray.8": {
     "datasource": "form_data",
-    "source": "planned_activity_step.activity_counts_section.premieres_fieldset.ensi_iltojen_maara_helsingissa",
+    "source": "planned_activity_step.activity_counts_section.premieres_fieldset.premiere_helsinki_count",
     "mapping_type": "default",
     "data": {
-      "ID": "firstNightsInHelsinki",
+      "ID": "premiereCountHki",
       "label": "Ensi-iltojen määrä Helsingissä",
       "value": "",
       "valueType": "int"
     }
   },
-
-  "compensation.projectInfoArray.0": {
+  "compensation.activityInfo.plannedActivityInfoArray.9": {
     "datasource": "form_data",
-    "source": "planned_activity_step.venues_section.first_venue_fieldset.ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa",
+    "source": "planned_activity_step.venues_section.first_venue.premise_name",
     "mapping_type": "default",
     "data": {
-      "ID": "firstVenueName",
-      "label": "Ensimmäinen yleisölle avoimen tilaisuuden paikka Helsingissä",
+      "ID": "firstPublicEventLocationHki",
+      "label": "Tilan nimi",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.projectInfoArray.1": {
+  "compensation.activityInfo.plannedActivityInfoArray.10": {
     "datasource": "form_data",
-    "source": "planned_activity_step.venues_section.first_venue_fieldset.postinumero",
+    "source": "planned_activity_step.venues_section.first_venue.post_code",
     "mapping_type": "default",
     "data": {
-      "ID": "firstVenuePostCode",
+      "ID": "firstPublicEventLocationPostCode",
       "label": "Postinumero",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.projectInfoArray.2": {
+  "compensation.activityInfo.plannedActivityInfoArray.11": {
     "datasource": "form_data",
-    "source": "planned_activity_step.venues_section.first_venue_fieldset.kyseessa_on_kaupungin_omistama_tila",
+    "source": "planned_activity_step.venues_section.first_venue.is_owned_by_city",
     "mapping_type": "default",
     "data": {
-      "ID": "firstVenueIsOwnedByCity",
+      "ID": "isOwnedByCity",
       "label": "Kyseessä on kaupungin omistama tila",
       "value": "",
       "valueType": "bool"
     }
   },
-  "compensation.projectInfoArray.3": {
+  "compensation.activityInfo.plannedActivityInfoArray.12": {
     "datasource": "form_data",
-    "source": "planned_activity_step.venues_section.tila",
-    "mapping_type": "multiple_values",
-    "data": {
-      "premiseName": {
-        "ID": "premiseName",
-        "label": "Tilan nimi",
-        "value": "",
-        "valueType": "string"
-      },
-      "postCode": {
-        "ID": "postCode",
-        "label": "Postinumero",
-        "value": "",
-        "valueType": "string"
-      },
-      "isOwnedByCity": {
-        "ID": "isOwnedByCity",
-        "label": "Kaupungin omistama tila",
-        "value": "",
-        "valueType": "bool"
-      }
-    }
-  },
-  "compensation.projectInfoArray.4": {
-    "datasource": "form_data",
-    "source": "planned_activity_step.schedule_section.ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara",
+    "source": "planned_activity_step.activity_counts_section.visitor_count_helsinki",
     "mapping_type": "default",
     "data": {
-      "ID": "firstEventDate",
+      "ID": "eventsVisitorsHkiTotal",
+      "label": "Kävijämäärä Helsingissä",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.13": {
+    "datasource": "form_data",
+    "source": "planned_activity_step.activity_counts_section.visitor_count_all",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventsVisitorsTotal",
+      "label": "Kävijämäärä kaikkiaan",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.14": {
+    "datasource": "form_data",
+    "source": "planned_activity_step.schedule_section.first_open_event_date",
+    "mapping_type": "default",
+    "data": {
+      "ID": "firstPublicOccasionDate",
       "label": "Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä",
       "value": "",
-      "valueType": "string"
+      "valueType": "datetime"
     }
   },
-  "compensation.projectInfoArray.5": {
+  "compensation.activityInfo.plannedActivityInfoArray.15": {
     "datasource": "form_data",
-    "source": "planned_activity_step.schedule_section.festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat",
+    "source": "planned_activity_step.schedule_section.project_begins",
     "mapping_type": "default",
     "data": {
-      "ID": "festivalDates",
-      "label": "Festivaalin tai tapahtuman päivämäärät",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.projectInfoArray.6": {
-    "datasource": "form_data",
-    "source": "planned_activity_step.schedule_section.hanke_alkaa",
-    "mapping_type": "default",
-    "data": {
-      "ID": "startDate",
+      "ID": "projectStartDate",
       "label": "Hanke alkaa",
       "value": "",
-      "valueType": "string"
+      "valueType": "datetime"
     }
   },
-  "compensation.projectInfoArray.7": {
+  "compensation.activityInfo.plannedActivityInfoArray.16": {
     "datasource": "form_data",
-    "source": "planned_activity_step.schedule_section.hanke_loppuu",
+    "source": "planned_activity_step.schedule_section.project_ends",
     "mapping_type": "default",
     "data": {
-      "ID": "endDate",
+      "ID": "projectEndDate",
       "label": "Hanke loppuu",
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.17": {
+    "datasource": "form_data",
+    "source": "planned_activity_step.schedule_section.festival_dates",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventOrFestivalDates",
+      "label": "Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.projectInfoArray.8": {
+  "compensation.activityInfo.plannedActivityInfoArray.18": {
     "datasource": "form_data",
-    "source": "planned_activity_step.project_description_section.laajempi_hankekuvaus",
+    "source": "planned_activity_step.project_description_section.comprehensive_description",
     "mapping_type": "default",
     "data": {
-      "ID": "projectDescription",
+      "ID": "detailedProjectDescription",
       "label": "Laajempi hankekuvaus",
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.projectInfoArray.9": {
+  "compensation.activityInfo.plannedPremisesArray.0.n": {
     "datasource": "form_data",
-    "source": "activity_foundations_step.artistic_foundations_section.toiminta_taiteelliset_lahtokohdat",
-    "mapping_type": "default",
+    "source": "planned_activity_step.venues_section.venues_fieldset",
+    "mapping_type": "multiple_values",
     "data": {
-      "ID": "artisticFoundations",
-      "label": "Toiminnan taiteelliset lähtökohdat",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.projectInfoArray.10": {
-    "datasource": "form_data",
-    "source": "activity_foundations_step.artistic_foundations_section.toiminta_tasa_arvo",
-    "mapping_type": "default",
-    "data": {
-      "ID": "equality",
-      "label": "Tasa-arvo ja yhdenvertaisuus",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.projectInfoArray.11": {
-    "datasource": "form_data",
-    "source": "activity_foundations_step.accessibility_section.toiminta_saavutettavuus",
-    "mapping_type": "default",
-    "data": {
-      "ID": "accessibility",
-      "label": "Saavutettavuus",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.projectInfoArray.12": {
-    "datasource": "form_data",
-    "source": "activity_foundations_step.accessibility_section.toiminta_yhteisollisyys",
-    "mapping_type": "default",
-    "data": {
-      "ID": "communality",
-      "label": "Yhteisöllisyys",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.projectInfoArray.13": {
-    "datasource": "form_data",
-    "source": "activity_foundations_step.accessibility_section.toiminta_kohderyhmat",
-    "mapping_type": "default",
-    "data": {
-      "ID": "targetGroups",
-      "label": "Kohderyhmät",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.projectInfoArray.14": {
-    "datasource": "form_data",
-    "source": "activity_foundations_step.operations_section.toiminta_ammattimaisuus",
-    "mapping_type": "default",
-    "data": {
-      "ID": "professionalism",
-      "label": "Ammattimaisuus",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.projectInfoArray.15": {
-    "datasource": "form_data",
-    "source": "activity_foundations_step.operations_section.toiminta_ekologisuus",
-    "mapping_type": "default",
-    "data": {
-      "ID": "ecology",
-      "label": "Ekologisuus",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.projectInfoArray.16": {
-    "datasource": "form_data",
-    "source": "activity_foundations_step.operations_section.toiminta_yhteistyokumppanit",
-    "mapping_type": "default",
-    "data": {
-      "ID": "partners",
-      "label": "Yhteistyökumppanit",
-      "value": "",
-      "valueType": "string"
+      "premise_name": {
+        "ID": "premiseName",
+        "label": "Tilan nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "post_code": {
+        "ID": "postCode",
+        "label": "Postinumero",
+        "value": "",
+        "valueType": "string"
+      },
+      "is_owned_by_city": {
+        "ID": "isOwnedByCity",
+        "label": "Kyseessä on kaupungin omistama tila",
+        "value": "",
+        "valueType": "bool"
+      }
     }
   },
 
   "compensation.budgetInfo.budgetInfoArray.0": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_",
+    "source": "budget_step.budget_section.organization_subsidities",
     "mapping_type": "default",
     "data": {
-      "ID": "isVOSOrganization",
+      "ID": "isPartOfVOS",
       "label": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
       "value": "",
       "valueType": "bool"
@@ -607,33 +594,11 @@
   },
   "compensation.budgetInfo.budgetInfoArray.1": {
     "datasource": "form_data",
-    "source": "budget_step.other_input_section.muu_huomioitava_panostus",
+    "source": "budget_step.other_input_section.other_financing",
     "mapping_type": "default",
     "data": {
-      "ID": "otherInput",
+      "ID": "otherValuables",
       "label": "Muu huomioitava panostus",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.budgetInfo.budgetInfoArray.2": {
-    "datasource": "form_data",
-    "source": "attachments_step.attachments_section.extra_info",
-    "mapping_type": "default",
-    "data": {
-      "ID": "extraInfo",
-      "label": "Lisäselvitys",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.budgetInfo.budgetInfoArray.3": {
-    "datasource": "form_data",
-    "source": "attachments_step.additional_information_section.additional_information",
-    "mapping_type": "default",
-    "data": {
-      "ID": "additionalInformation",
-      "label": "Lisätietoja",
       "value": "",
       "valueType": "string"
     }
@@ -660,7 +625,7 @@
   },
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.1": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_income.plannedOtherCompensations",
+    "source": "budget_step.budget_section.budget_income.planned_other_compensations",
     "mapping_type": "default",
     "data": {
       "ID": "plannedOtherCompensations",
@@ -721,7 +686,6 @@
       "otherIncomeRowsArrayStatic": {}
     }
   },
-
   "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {
     "datasource": "form_data",
     "source": null,
@@ -730,9 +694,10 @@
       "costGroupName": "general"
     }
   },
+
   "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.0": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_cost.performerFees",
+    "source": "budget_step.budget_section.budget_cost.performer_fees",
     "mapping_type": "default",
     "data": {
       "ID": "performerFees",
@@ -743,7 +708,7 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.1": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_cost.otherFees",
+    "source": "budget_step.budget_section.budget_cost.other_fees",
     "mapping_type": "default",
     "data": {
       "ID": "otherFees",
@@ -754,7 +719,7 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.2": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_cost.personnelSideCosts",
+    "source": "budget_step.budget_section.budget_cost.personnel_side_costs",
     "mapping_type": "default",
     "data": {
       "ID": "personnelSideCosts",
@@ -765,7 +730,7 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.3": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_cost.showCosts",
+    "source": "budget_step.budget_section.budget_cost.show_costs",
     "mapping_type": "default",
     "data": {
       "ID": "showCosts",
@@ -776,7 +741,7 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.4": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_cost.travelCosts",
+    "source": "budget_step.budget_section.budget_cost.travel_costs",
     "mapping_type": "default",
     "data": {
       "ID": "travelCosts",
@@ -787,7 +752,7 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.5": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_cost.transportCosts",
+    "source": "budget_step.budget_section.budget_cost.transport_costs",
     "mapping_type": "default",
     "data": {
       "ID": "transportCosts",
@@ -842,10 +807,51 @@
     }
   },
 
-  "attachmentsInfo.attachmentsArray.0": {
+
+
+
+  "": {
+    "datasource": "",
+    "source": "",
+    "mapping_type": "",
+    "data": {
+      "ID": "",
+      "label": "",
+      "value": "",
+      "valueType": ""
+    }
+  },
+
+
+
+  "compensation.activitiesInfoArray.6": {
+    "datasource": "form_data",
+    "source": "community_info_step.members_section.members_fieldset .osa_aikainen_henkilosto",
+    "mapping_type": "default",
+    "data": {
+      "ID": "partTimePersonnel",
+      "label": "Osa-aikainen henkilöstö",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activitiesInfoArray.0": {
+    "datasource": "grants_profile_array",
+    "source": "businessPurpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "businessPurpose",
+      "label": "Toiminnan kuvaus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "attachmentsInfo.attachmentsArray.n": {
+    "#tip": "file mapping, multiple files from one field",
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
-    "mapping_type": "file",
+    "mapping_type": "multiple_files",
     "data": {
       "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
       "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},

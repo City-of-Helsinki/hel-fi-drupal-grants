@@ -184,16 +184,23 @@
       }
     },
     "venues_section": {
+      "first_venue": {
+        "is_owned_by_city": {
+          "ui:enumNames": [
+            "boolean.no",
+            "boolean.yes"
+          ],
+          "ui:widget": "radio"
+        }
+      },
       "venues_fieldset": {
         "items": {
-          "owned_by_city_fieldset": {
-            "is_owned_by_city": {
-              "ui:enumNames": [
-                "boolean.no",
-                "boolean.yes"
-              ],
-              "ui:widget": "radio"
-            }
+          "is_owned_by_city": {
+            "ui:enumNames": [
+              "boolean.no",
+              "boolean.yes"
+            ],
+            "ui:widget": "radio"
           }
         }
       }
