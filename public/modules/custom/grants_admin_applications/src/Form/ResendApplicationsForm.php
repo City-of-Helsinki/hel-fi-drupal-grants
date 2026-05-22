@@ -434,6 +434,12 @@ class ResendApplicationsForm extends AtvFormBase {
       }
 
       $this->attachmentFixerService->fixAttachmentsOnApplication($atvDoc);
+
+      $updatedDocument = $this->fixedId67MemeberFields($atvDoc);
+      if ($updatedDocument) {
+        $atvDoc = $updatedDocument;
+      }
+
       $this->sendApplicationToIntegrations($atvDoc, $applicationId);
       $formState->setRebuild();
     }
@@ -653,6 +659,48 @@ class ResendApplicationsForm extends AtvFormBase {
     }
     // Return empty if no match is found.
     return [];
+  }
+
+  /**
+   * Allow resender tool to update broken values from ID67 form.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
+   *   The document.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument|false
+   *   The document or FALSE if nothing is updated.
+   */
+  private function fixedId67MemeberFields(AtvDocument $atvDocument): AtvDocument|FALSE {
+    $applicationNumber = $atvDocument->getMetadata()['applicationnumber'] ?? FALSE;
+    if (!$applicationNumber || !str_contains($applicationNumber, '-067-')) {
+      return FALSE;
+    }
+
+    $dataChanged = FALSE;
+    $content = $atvDocument->getContent();
+
+    $activitiesInfoArray = $content['compensation']['activitiesInfoArray'] ?? [];
+    foreach ($activitiesInfoArray as &$item) {
+      if (!isset($item['ID']) || $item['valueType'] !== 'int') {
+        continue;
+      }
+
+      if (isset($item['value']) && $item['value'] !== NULL) {
+        continue;
+      }
+
+      // Null or missing value in int field is not allowed.
+      $item['value'] = "0";
+      $dataChanged = TRUE;
+    }
+
+    if (!$dataChanged) {
+      return FALSE;
+    }
+
+    $content['compensation']['activitiesInfoArray'] = $activitiesInfoArray;
+    $atvDocument->setContent($content);
+    return $atvDocument;
   }
 
 }
