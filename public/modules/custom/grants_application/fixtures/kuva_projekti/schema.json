@@ -81,7 +81,8 @@
       },
       "required": [
         "premise_name",
-        "post_code"
+        "post_code",
+        "is_owned_by_city"
       ]
     },
     "grant_info_step": {
@@ -391,7 +392,12 @@
                   ],
                   "default": false
                 }
-              }
+              },
+              "required": [
+                "premise_name",
+                "post_code",
+                "is_owned_by_city"
+              ]
             },
             "venues_fieldset": {
               "title": "venues_in_helsinki_fieldset.title",
