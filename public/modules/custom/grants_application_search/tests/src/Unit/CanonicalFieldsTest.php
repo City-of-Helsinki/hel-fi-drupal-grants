@@ -146,8 +146,10 @@ final class CanonicalFieldsTest extends CanonicalUnitTestBase {
   private function sourceField(array $values): object {
     return new class($values) {
       // phpcs:disable
+      /** @param array<mixed> $values */
       public function __construct(private readonly array $values) {}
 
+      /** @return array<mixed> */
       public function getValues(): array {
         return $this->values;
       }
@@ -167,6 +169,7 @@ final class CanonicalFieldsTest extends CanonicalUnitTestBase {
   private function targetField(): object {
     return new class() {
       // phpcs:disable
+      /** @var array<string> */
       public array $values = [];
 
       public function addValue(mixed $value): void {
