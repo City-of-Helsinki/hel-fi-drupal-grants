@@ -27,7 +27,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
-      $info['members_applicant_person_local'] = DataDefinition::create('string')
+      $info['members_applicant_person_local'] = DataDefinition::create('integer')
         ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
@@ -35,7 +35,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
           'membersApplicantPersonLocal',
         ]);
 
-      $info['members_applicant_person_global'] = DataDefinition::create('string')
+      $info['members_applicant_person_global'] = DataDefinition::create('integer')
         ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
@@ -43,7 +43,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
           'membersApplicantPersonGlobal',
         ]);
 
-      $info['members_applicant_community_local'] = DataDefinition::create('string')
+      $info['members_applicant_community_local'] = DataDefinition::create('integer')
         ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
@@ -51,7 +51,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
           'membersApplicantCommunityLocal',
         ]);
 
-      $info['members_applicant_community_global'] = DataDefinition::create('string')
+      $info['members_applicant_community_global'] = DataDefinition::create('integer')
         ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
