@@ -368,6 +368,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $info['members_applicant_person_global'] = DataDefinition::create('integer')
+      ->setSetting('defaultValue', "0")
       ->setSetting('jsonPath', [
         'compensation',
         'communityInfo',
@@ -383,6 +384,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $info['members_applicant_person_local'] = DataDefinition::create('integer')
+      ->setSetting('defaultValue', "0")
       ->setSetting('jsonPath', [
         'compensation',
         'communityInfo',
@@ -398,6 +400,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $info['members_applicant_community_global'] = DataDefinition::create('integer')
+      ->setSetting('defaultValue', "0")
       ->setSetting('jsonPath', [
         'compensation',
         'communityInfo',
@@ -413,6 +416,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $info['members_applicant_community_local'] = DataDefinition::create('integer')
+      ->setSetting('defaultValue', "0")
       ->setSetting('jsonPath', [
         'compensation',
         'communityInfo',

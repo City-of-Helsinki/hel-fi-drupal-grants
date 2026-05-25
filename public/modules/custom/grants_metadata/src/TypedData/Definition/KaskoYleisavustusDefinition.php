@@ -28,7 +28,7 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['members_applicant_person_local'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
+        ->setSetting('defaultValue', "0")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -40,7 +40,7 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_person_global'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
+        ->setSetting('defaultValue', "0")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -52,7 +52,7 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_local'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
+        ->setSetting('defaultValue', "0")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -64,6 +64,7 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_global'] = DataDefinition::create('string')
+        ->setSetting('defaultValue', "0")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
