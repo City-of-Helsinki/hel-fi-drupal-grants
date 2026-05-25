@@ -27,8 +27,8 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
-      $info['members_applicant_person_local'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
+      $info['members_applicant_person_local'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -39,8 +39,8 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'convertToInt',
         ]);
 
-      $info['members_applicant_person_global'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
+      $info['members_applicant_person_global'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -51,8 +51,8 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'convertToInt',
         ]);
 
-      $info['members_applicant_community_local'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
+      $info['members_applicant_community_local'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -63,7 +63,8 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'convertToInt',
         ]);
 
-      $info['members_applicant_community_global'] = DataDefinition::create('string')
+      $info['members_applicant_community_global'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
