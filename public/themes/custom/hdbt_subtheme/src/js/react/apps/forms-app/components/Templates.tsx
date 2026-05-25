@@ -12,6 +12,7 @@ import { Accordion, type AccordionTheme, Button, Fieldset, IconCross, IconPlus, 
 import { useAtomValue } from 'jotai';
 import type { ReactNode } from 'react';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
+import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import {
   formStepsAtom,
   getApplicantTypeAtom,
@@ -20,7 +21,7 @@ import {
   shouldRenderPreviewAtom,
 } from '../store';
 import type { UiSchema } from '../types/UiSchema';
-import { getTooltip } from '../utils';
+import { ALLOWED_HTML_TAGS, getTooltip } from '../utils';
 import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
 
 export const ArrayFieldTemplate = ({
@@ -66,7 +67,7 @@ export const ArrayFieldTemplate = ({
 
   return (
     <div>
-      {description && <div className='hdbt-form--description'>{description}</div>}
+      {description && <div className='hdbt-form--description'>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
       {items.map((item) => (
         // biome-ignore lint/correctness/useJsxKeyInIterable: Item contains key already
         <ArrayFieldItemTemplate {...item} />
@@ -236,7 +237,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
           </section>
         )}
         <div className='hdbt-form--page'>
-          {description && <div>{description}</div>}
+          {description && <div>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
           {properties.map((field) => field.content)}
         </div>
       </>
@@ -255,9 +256,13 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
 
     return (
       <section className='hdbt-form--section'>
-        <h3 className='hdbt-form--section__title'>{title}</h3>
+        {title ? (
+          <h3 className='hdbt-form--section__title'>{title}</h3>
+        ) : (
+          <span className='hdbt-form--section__spacer' />
+        )}
         <div className='hdbt-form--section__content'>
-          {description && <div className='hdbt-form--description'>{description}</div>}
+          {description && <div className='hdbt-form--description'>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
           {properties.map((field) => field.content)}
         </div>
       </section>
@@ -308,7 +313,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       style={{ marginInline: '0' }}
       tooltip={getTooltip(uiSchema)}
     >
-      {description && <div className='hdbt-form--description'>{description}</div>}
+      {description && <div className='hdbt-form--description'>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
       {properties.map((field) => field.content)}
     </Fieldset>
   );

@@ -9,7 +9,7 @@ trigger: none
   #   exclude:
   #   - '*.md'
   #   - '.github/'
-  #   - 'pipelines/drupal-production.yml'
+  #   - 'pipelines/drupal-release.yml'
   #   - 'pipelines/drupal-staging.yml'
   #   - 'pipelines/drupal-dev.yml'
 

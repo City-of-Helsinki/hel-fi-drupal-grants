@@ -18,9 +18,9 @@
     "mapping_type": "default",
     "data": {
       "ID": "amount",
-      "value": "",
-      "valueType": "float",
-      "label": "Avustussumma"
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "float"
     }
   },
   "compensation.compensationInfo.generalInfoArray.0": {

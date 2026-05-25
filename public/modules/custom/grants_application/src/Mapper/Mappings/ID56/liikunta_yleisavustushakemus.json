@@ -1,0 +1,133 @@
+{
+  "json.path.to.target": {
+    "#tip": "this is just an example",
+    "skip": true,
+    "datasource": "form_data",
+    "source": "json.path.to.source.data",
+    "mapping_type": "default",
+    "data": {
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "label": null,
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.purpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "purpose",
+      "label": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.0.0": {
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "9",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.compensationInfo.compensationArray.0.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "float"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.1.0": {
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "31",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.compensationInfo.compensationArray.1.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.1.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "float"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.2.0": {
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "43",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.compensationInfo.compensationArray.2.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.2.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "float"
+    }
+  },
+  "attachmentsInfo.attachmentsArray.n": {
+    "#tip": "file mapping, multiple files from one field",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
+    "mapping_type": "multiple_files",
+    "data": {
+      "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "0", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  }
+}

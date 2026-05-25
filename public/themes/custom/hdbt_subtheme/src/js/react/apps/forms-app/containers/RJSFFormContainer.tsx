@@ -16,6 +16,7 @@ import { createRef, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorsList } from '../components/ErrorsList';
 import { ActingYear } from '../components/Fields/ActingYear';
+import { GrantDurationRadio } from '../components/Fields/GrantDurationRadio';
 import { SubventionSum } from '../components/Fields/SubventionSum';
 import { SubventionTable } from '../components/Fields/SubventionTable';
 import { TextParagraph } from '../components/Fields/TextParagraph';
@@ -217,10 +218,10 @@ export const RJSFFormContainer = ({
         | { addError: (msg: string) => void }
         | undefined;
       const hasValues = values
-        ? Object.entries(values).reduce(
-            (acc, [, curr]) => acc || (curr?.[1]?.value?.toString().trim().length ?? 0) > 0,
-            false,
-          )
+        ? Object.entries(values).reduce((acc, [, curr]) => {
+            const value = curr?.[1]?.value?.toString().trim();
+            return acc || (!!value && value !== '0' && value !== '0,0' && value !== '0,00');
+          }, false)
         : false;
 
       if (_field && !hasValues) {
@@ -316,6 +317,7 @@ export const RJSFFormContainer = ({
             ...getDefaultRegistry().fields,
             actingYear: ActingYear,
             atvFile: FileInput,
+            grantDuration: GrantDurationRadio,
             subventionTable: SubventionTable,
             subventionSum: SubventionSum,
             textParagraph: TextParagraph,

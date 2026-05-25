@@ -15,9 +15,9 @@ import { useAtomCallback } from 'jotai/utils';
 import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
+import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import {
   getAccountsAtom,
   getAddressesAtom,
@@ -27,7 +27,7 @@ import {
   isReadOnlyAtom,
   shouldRenderPreviewAtom,
 } from '../store';
-import { formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
+import { ALLOWED_HTML_TAGS, formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
 
 export const PreviewInput = ({
   value,
@@ -189,7 +189,9 @@ export const TextArea = ({
 
   return (
     <>
-      {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
+      {schema.description && (
+        <div className='hdbt-form--description'>{htmlToReact(schema.description, ALLOWED_HTML_TAGS)}</div>
+      )}
       <HDSTextArea
         {...({
           disabled: readonly || isReadOnly,
@@ -405,7 +407,9 @@ export const RadioWidget = ({
         className='hdbt-form--fieldset'
         tooltip={getTooltip(uiSchema)}
       >
-        {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
+        {schema.description && (
+          <div className='hdbt-form--description'>{htmlToReact(schema.description, ALLOWED_HTML_TAGS)}</div>
+        )}
         {options?.enumOptions?.map((option) => {
           const optionId = `${id}_${option.value}`;
 

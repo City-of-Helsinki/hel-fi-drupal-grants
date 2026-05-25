@@ -260,7 +260,9 @@ export const addApplicantInfoStep = (
 ): [RJSFSchema, UiSchema] => {
   const { definitions, properties } = schema;
 
+  // biome-ignore lint/suspicious/noExplicitAny: Refactor this
   let rootProperty: any;
+  // biome-ignore lint/suspicious/noExplicitAny: Refactor this
   let definition: any;
   let uiSchemaAdditions: UiSchema;
 
