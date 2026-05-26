@@ -46,7 +46,7 @@ import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { expandConditionalRequiredErrors, isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
-import { SubventionSum } from '../components/Fields/SubventionSum';
+import { ComputedSum } from '../components/Fields/ComputedSum';
 import { SubventionTable } from '../components/Fields/SubventionTable';
 import { Terms } from '../components/Terms';
 import { TextParagraph } from '../components/Fields/TextParagraph';
@@ -320,7 +320,7 @@ export const RJSFFormContainer = ({
             atvFile: FileInput,
             grantDuration: GrantDurationRadio,
             subventionTable: SubventionTable,
-            subventionSum: SubventionSum,
+            computedSum: ComputedSum,
             textParagraph: TextParagraph,
           }}
           formData={readFormData() || {}}
