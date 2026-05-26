@@ -435,9 +435,15 @@ class ResendApplicationsForm extends AtvFormBase {
 
       $this->attachmentFixerService->fixAttachmentsOnApplication($atvDoc);
 
-      $updatedDocument = $this->fixedId67MemeberFields($atvDoc);
+      $updatedDocument = $this->fixedId67MemberFields($atvDoc);
       if ($updatedDocument) {
         $atvDoc = $updatedDocument;
+        try {
+          $this->atvService->patchDocument($atvDoc->getId(), $atvDoc->toArray());
+        }
+        catch (\Exception $e) {
+          $this->handleException("Error: Admin application forms - Resend error", $e);
+        }
       }
 
       $this->sendApplicationToIntegrations($atvDoc, $applicationId);
@@ -670,7 +676,7 @@ class ResendApplicationsForm extends AtvFormBase {
    * @return \Drupal\helfi_atv\AtvDocument|false
    *   The document or FALSE if nothing is updated.
    */
-  private function fixedId67MemeberFields(AtvDocument $atvDocument): AtvDocument|FALSE {
+  private function fixedId67MemberFields(AtvDocument $atvDocument): AtvDocument|FALSE {
     $applicationNumber = $atvDocument->getMetadata()['applicationnumber'] ?? FALSE;
     if (!$applicationNumber || !str_contains($applicationNumber, '-067-')) {
       return FALSE;
@@ -678,18 +684,19 @@ class ResendApplicationsForm extends AtvFormBase {
 
     $dataChanged = FALSE;
     $content = $atvDocument->getContent();
-
     $activitiesInfoArray = $content['compensation']['activitiesInfoArray'] ?? [];
+
     foreach ($activitiesInfoArray as &$item) {
       if (!isset($item['ID']) || $item['valueType'] !== 'int') {
         continue;
       }
 
+      // Correct value.
       if (isset($item['value']) && $item['value'] !== NULL) {
         continue;
       }
 
-      // Null or missing value in int field is not allowed.
+      // Null value in int field is not allowed.
       $item['value'] = "0";
       $dataChanged = TRUE;
     }
