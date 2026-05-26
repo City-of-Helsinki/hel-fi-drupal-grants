@@ -15,7 +15,9 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
+use Drupal\search_api\Plugin\views\query\SearchApiQuery;
 use Drupal\taxonomy\TermInterface;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ResultRow;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\views\ViewExecutable;
@@ -511,6 +513,71 @@ class ViewsHooks {
     }
 
     return array_values(array_unique($ids));
+  }
+
+  /**
+   * Implements hook_views_query_alter().
+   */
+  #[Hook('views_query_alter')]
+  public function viewsQueryAlter(ViewExecutable $view, QueryPluginBase $query): void {
+    if (
+      !$query instanceof SearchApiQuery ||
+      $view->id() !== 'application_search_search_api' ||
+      $view->current_display !== 'search_page'
+    ) {
+      return;
+    }
+
+    $exposed_input = $view->getExposedInput();
+
+    // Check if we are filtering for applications that are open.
+    if (isset($exposed_input['application_open']) && $exposed_input['application_open'] === "1") {
+      $time = time();
+
+      // Look for applications that have an application period that falls within
+      // the current time.
+      $webform_period = $query->createConditionGroup();
+      $webform_period->addCondition('field_application_period', $time, '<=');
+      $webform_period->addCondition('field_application_period_end_value', $time, '>=');
+      $react_period = $query->createConditionGroup();
+      $react_period->addCondition('application_open', $time, '<=');
+      $react_period->addCondition('application_close', $time, '>=');
+
+      // Include applications which are continuous.
+      $or_condition = $query->createConditionGroup('OR');
+      $or_condition->addCondition('field_application_continuous', TRUE);
+      $or_condition->addConditionGroup($webform_period);
+      $or_condition->addCondition('application_continuous', TRUE);
+      $or_condition->addConditionGroup($react_period);
+
+      $query->addConditionGroup($or_condition);
+    }
+  }
+
+  /**
+   * Implements hook_form_FORM_ID_alter().
+   *
+   * @param array<string, mixed> $form
+   *   The form.
+   */
+  #[Hook('form_views_exposed_form_alter')]
+  public function searchFormAlter(array &$form): void {
+    if ($form['#id'] !== 'views-exposed-form-application-search-search-api-search-page') {
+      return;
+    }
+
+    // Override the applicant translations.
+    if (isset($form['applicant']['#options'])) {
+      $form['applicant']['#options']['registered_community'] = $this->t('Registered community', options: ['context' => 'grants_application_search']);
+      $form['applicant']['#options']['unregistered_community'] = $this->t('Unregistered community or group', options: ['context' => 'grants_application_search']);
+      $form['applicant']['#options']['private_person'] = $this->t('Private person', options: ['context' => 'grants_application_search']);
+    }
+
+    // Add a custom application_open filter.
+    $form['application_open'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show only the grants that can be applied for', options: ['context' => 'grants_application_search']),
+    ];
   }
 
 }

@@ -46,6 +46,16 @@ field_settings:
         - field.storage.node.field_react_form
       module:
         - grants_application
+  application_continuous:
+    label: 'Application continuous (React)'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_continuous'
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
   application_open:
     label: 'Application open'
     datasource_id: 'entity:node'
