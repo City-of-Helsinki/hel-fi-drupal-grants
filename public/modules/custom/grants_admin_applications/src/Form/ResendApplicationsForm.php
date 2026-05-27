@@ -692,7 +692,7 @@ class ResendApplicationsForm extends AtvFormBase {
       }
 
       // Correct value.
-      if (isset($item['value']) && $item['value'] !== NULL) {
+      if (isset($item['value']) && is_numeric($item['value'])) {
         continue;
       }
 
