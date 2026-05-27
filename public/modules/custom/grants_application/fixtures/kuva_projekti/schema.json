@@ -467,6 +467,10 @@
             }
           }
         },
+        "accessibility_section": {
+          "type": "object",
+          "default": {}
+        },
         "operations_section": {
           "title": "operations_section.title",
           "type": "object",
