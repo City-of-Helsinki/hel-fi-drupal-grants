@@ -454,34 +454,15 @@
     "activity_foundations_step": {
       "type": "object",
       "properties": {
+        "subventions_total": {
+          "type": "number"
+        },
         "artistic_foundations_section": {
           "title": "artistic_foundations_section.title",
           "type": "object",
           "properties": {
-            "project_artistic_basis": {
-              "title": "project_artistic_basis.title",
-              "type": "string"
-            },
             "project_equality": {
               "title": "project_equality.title",
-              "type": "string"
-            }
-          }
-        },
-        "accessibility_section": {
-          "title": "accessibility_section.title",
-          "type": "object",
-          "properties": {
-            "project_accessibility": {
-              "title": "project_accessibility.title",
-              "type": "string"
-            },
-            "project_community": {
-              "title": "project_community.title",
-              "type": "string"
-            },
-            "project_target_audiece": {
-              "title": "project_target_audiece.title",
               "type": "string"
             }
           }
@@ -490,21 +471,67 @@
           "title": "operations_section.title",
           "type": "object",
           "properties": {
-            "operations_professionalism": {
-              "title": "operations_professionalism.title",
-              "type": "string"
-            },
-            "operations_ecology": {
-              "title": "operations_ecology.title",
-              "type": "string"
-            },
             "operations_partners": {
               "title": "operations_partners.title",
               "type": "string"
             }
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "subventions_total": {
+                "minimum": 5000
+              }
+            },
+            "required": ["subventions_total"]
+          },
+          "then": {
+            "properties": {
+              "artistic_foundations_section": {
+                "properties": {
+                  "project_artistic_basis": {
+                    "title": "project_artistic_basis.title",
+                    "type": "string"
+                  }
+                }
+              },
+              "accessibility_section": {
+                "title": "accessibility_section.title",
+                "type": "object",
+                "properties": {
+                  "project_accessibility": {
+                    "title": "project_accessibility.title",
+                    "type": "string"
+                  },
+                  "project_community": {
+                    "title": "project_community.title",
+                    "type": "string"
+                  },
+                  "project_target_audiece": {
+                    "title": "project_target_audiece.title",
+                    "type": "string"
+                  }
+                }
+              },
+              "operations_section": {
+                "properties": {
+                  "operations_professionalism": {
+                    "title": "operations_professionalism.title",
+                    "type": "string"
+                  },
+                  "operations_ecology": {
+                    "title": "operations_ecology.title",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "budget_step": {
       "type": "object",

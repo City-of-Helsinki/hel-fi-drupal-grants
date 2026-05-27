@@ -230,6 +230,15 @@
     }
   },
   "activity_foundations_step": {
+    "subventions_total": {
+      "ui:field": "computedSum",
+      "ui:options": {
+        "sourceFields": ["grant_info_step.subventions_section.subventions"],
+        "sourceShape": "subvention",
+        "numericOutput": true,
+        "hidden": true
+      }
+    },
     "artistic_foundations_section": {
       "project_artistic_basis": {
         "ui:options": {
@@ -304,7 +313,11 @@
           "ui:widget": "hidden"
         },
         "compensation": {
-          "ui:field": "subventionSum"
+          "ui:field": "computedSum",
+          "ui:options": {
+            "sourceFields": ["grant_info_step.subventions_section.subventions"],
+            "sourceShape": "subvention"
+          }
         },
         "planned_other_compensations": {
           "ui:options": {
