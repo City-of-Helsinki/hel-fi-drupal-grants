@@ -678,7 +678,7 @@ class ResendApplicationsForm extends AtvFormBase {
    */
   private function fixedId67MemberFields(AtvDocument $atvDocument): AtvDocument|FALSE {
     $applicationNumber = $atvDocument->getMetadata()['applicationnumber'] ?? FALSE;
-    if (!$applicationNumber || !str_contains($applicationNumber, '-067-')) {
+    if (!$applicationNumber || !str_contains($applicationNumber, '067-')) {
       return FALSE;
     }
 
