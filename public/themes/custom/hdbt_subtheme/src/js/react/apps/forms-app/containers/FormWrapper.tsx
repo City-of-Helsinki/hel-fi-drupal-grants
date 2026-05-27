@@ -127,8 +127,10 @@ const transformData = (data: any) => {
 
       if (key.charAt(0) !== '_') {
         Object.entries((definitionValue as any).properties).forEach((subProperty: any) => {
-          const [subKey] = subProperty;
-          (definitions[key] as any).properties[subKey]._isSection = true;
+          const [subKey, subValue] = subProperty;
+          if ((subValue as any)?.type === 'object') {
+            (definitions[key] as any).properties[subKey]._isSection = true;
+          }
         });
       }
     });
