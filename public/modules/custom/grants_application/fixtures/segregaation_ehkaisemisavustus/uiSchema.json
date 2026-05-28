@@ -1,0 +1,404 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable",
+        "ui:options": {
+          "useSingleSubvention": true
+        }
+      }
+    },
+    "purpose_section": {
+      "purpose": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000,
+        "ui:options": {
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
+          "tooltipText": "purpose.description"
+        }
+      }
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_compensations": {
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer_name.title",
+              "tooltipButtonLabel": "other_compensation_issuer_name.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_applied_compensations": {
+        "ui:options": {
+          "addText": "other_applied_compensations.add"
+        },
+        "items": {
+          "other_applied_compensation_issuer": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_applied_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    }
+  },
+  "information_in_more_detail_step": {
+    "grant_target_section": {
+      "ui:order": [
+        "avustuksen_kohde_yhdistys_toimintaryhma",
+        "avustuksen_kohde_tiivistelma",
+        "jatkohakemus_info",
+        "onko_kyseessa_jatkohakemus"
+      ],
+      "avustuksen_kohde_yhdistys_toimintaryhma": {
+        "ui:widget": "textarea",
+        "misc:max-length": 100,
+        "ui:options": {
+          "tooltipLabel": "avustuksen_kohde_yhdistys_toimintaryhma.title",
+          "tooltipButtonLabel": "avustuksen_kohde_yhdistys_toimintaryhma.title",
+          "tooltipText": "avustuksen_kohde_yhdistys_toimintaryhma.description"
+        }
+      },
+      "avustuksen_kohde_tiivistelma": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "jatkohakemus_info": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "onko_kyseessa_jatkohakemus": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "tooltipLabel": "onko_kyseessa_jatkohakemus.title",
+          "tooltipButtonLabel": "onko_kyseessa_jatkohakemus.title",
+          "tooltipText": "onko_kyseessa_jatkohakemus.description"
+        }
+      }
+    },
+    "project_schedule_section": {
+      "ui:order": [
+        "hankkeen_nimi",
+        "project_schedule",
+        "hankkeen_kohderyhmat_kenelle",
+        "hankkeen_mennyt_tavoite",
+        "hankkeen_kohderyhma_ja_keinot",
+        "hankkeen_kohderyhmat_tavoittavuus",
+        "hankkeen_kohderyhmat_jo_tavoitettu",
+        "hankkeen_kaytetyt_tunnit_per_postinumero",
+        "hankkeen_kohderyhmat_postinrot",
+        "hankkeen_kohderyhmat_tarve"
+      ],
+      "hankkeen_nimi": {
+        "ui:widget": "textarea",
+        "misc:max-length": 300
+      },
+      "project_schedule": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "project_schedule_info": {
+          "ui:field": "textParagraph"
+        },
+        "hankkeen_toimenpiteet_alkupvm": {
+          "ui:widget": "date",
+          "ui:options": {
+            "printableName": "hankkeen_toimenpiteet_alkupvm.printable_title"
+          }
+        },
+        "hankkeen_toimenpiteet_loppupvm": {
+          "ui:widget": "date",
+          "ui:options": {
+            "printableName": "hankkeen_toimenpiteet_loppupvm.printable_title"
+          }
+        }
+      },
+      "hankkeen_kohderyhmat_kenelle": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1250
+      },
+      "hankkeen_mennyt_tavoite": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_kohderyhma_ja_keinot": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_kohderyhmat_tavoittavuus": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "tavoittavuus_info": {
+          "ui:field": "textParagraph"
+        }
+      },
+      "hankkeen_kohderyhmat_jo_tavoitettu": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "jo_tavoitettu_info": {
+          "ui:field": "textParagraph"
+        }
+      },
+      "hankkeen_kaytetyt_tunnit_per_postinumero": {
+        "ui:widget": "textarea",
+        "misc:max-length": 500
+      },
+      "hankkeen_kohderyhmat_postinrot": {
+        "ui:widget": "textarea",
+        "misc:max-length": 500
+      },
+      "hankkeen_kohderyhmat_tarve": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      }
+    },
+    "project_methods_section": {
+      "ui:order": [
+        "hankkeen_kohderyhmat_tavoitus_seg",
+        "hankkeen_kohderyhmat_konkretia_seg",
+        "hankkeen_kohderyhmat_osallisuus_seg",
+        "hankkeen_keskeisimmat_kumppanit_seg",
+        "hankkeen_uudet_kumppanit_seg",
+        "hankkeen_riskit_vakiinnuttaminen",
+        "hankeen_toteutuneet_tavoitteet",
+        "hankkeen_tulevan_vuoden_tavoitteet",
+        "hankkeen_kumppanuudet_ja_toimintamuodot",
+        "hankkeen_vanhat_yhteistyokumppanit",
+        "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun"
+      ],
+      "hankkeen_kohderyhmat_tavoitus_seg": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_kohderyhmat_konkretia_seg": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1250
+      },
+      "hankkeen_kohderyhmat_osallisuus_seg": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_keskeisimmat_kumppanit_seg": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_uudet_kumppanit_seg": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_riskit_vakiinnuttaminen": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankeen_toteutuneet_tavoitteet": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500,
+        "ui:options": {
+          "tooltipLabel": "hankeen_toteutuneet_tavoitteet.title",
+          "tooltipButtonLabel": "hankeen_toteutuneet_tavoitteet.title",
+          "tooltipText": "hankeen_toteutuneet_tavoitteet.description"
+        }
+      },
+      "hankkeen_tulevan_vuoden_tavoitteet": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_kumppanuudet_ja_toimintamuodot": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500,
+        "ui:options": {
+          "tooltipLabel": "hankkeen_kumppanuudet_ja_toimintamuodot.title",
+          "tooltipButtonLabel": "hankkeen_kumppanuudet_ja_toimintamuodot.title",
+          "tooltipText": "hankkeen_kumppanuudet_ja_toimintamuodot.description"
+        }
+      },
+      "hankkeen_vanhat_yhteistyokumppanit": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      }
+    },
+    "project_economy_section": {
+      "hankkeen_kaytetty_avustuksen_maara": {
+        "ui:options": {
+          "tooltipLabel": "hankkeen_kaytetty_avustuksen_maara.title",
+          "tooltipButtonLabel": "hankkeen_kaytetty_avustuksen_maara.title",
+          "tooltipText": "hankkeen_kaytetty_avustuksen_maara.description"
+        }
+      },
+      "hankkeen_edellisen_vuoden_avustuksen_kaytto": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500,
+        "ui:options": {
+          "tooltipLabel": "hankkeen_edellisen_vuoden_avustuksen_kaytto.title",
+          "tooltipButtonLabel": "hankkeen_edellisen_vuoden_avustuksen_kaytto.title",
+          "tooltipText": "hankkeen_edellisen_vuoden_avustuksen_kaytto.description"
+        }
+      },
+      "hankkeen_talous_toiminta_aikataulu_muutokset": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "hankkeen_jatkokausi_suunnitelma": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      }
+    }
+  },
+  "budget_step": {
+    "budget_info_section": {
+      "budget_info": {
+        "ui:field": "textParagraph"
+      }
+    },
+    "income_section": {
+      "incomeGroupName": {
+        "ui:widget": "hidden"
+      },
+      "applied_benefits": {
+        "ui:field": "subventionSum"
+      },
+      "income_rows": {
+        "ui:options": {
+          "addText": "income_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    },
+    "expenditure_section": {
+      "costGroupName": {
+        "ui:widget": "hidden"
+      },
+      "expenditure_rows": {
+        "ui:options": {
+          "addText": "expenditure_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000,
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "further_clarification": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:multiple": "true",
+          "misc:variant": "simple",
+          "ui:field": "atvFile",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help"
+        }
+      }
+    }
+  }
+}
