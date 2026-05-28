@@ -404,7 +404,7 @@ export const getSubventionSum = (formData: any, subventionFields: string[]) =>
  */
 export const isDraft = () => drupalSettings.grants_react_form.use_draft;
 
-export const ALLOWED_HTML_TAGS = ['p', 'ul', 'ol', 'li', 'strong'];
+export const ALLOWED_HTML_TAGS = ['p', 'ul', 'ol', 'li', 'strong', 'a'];
 
 /**
  * Get the tooltip component.
