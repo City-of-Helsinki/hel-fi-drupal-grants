@@ -1,0 +1,792 @@
+{
+  "definitions": {
+    "_other_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_compensation_amount": {
+          "format": "decimal-number",
+          "title": "other_compensation_amount.title",
+          "type": "string"
+        },
+        "other_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_compensation_issuer",
+        "other_compensation_issuer_name",
+        "other_compensation_issuer_year",
+        "other_compensation_amount",
+        "other_compensation_description"
+      ]
+    },
+    "_other_applied_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_applied_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_applied_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_applied_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_applied_compensation_amount": {
+          "format": "decimal-number",
+          "title": "other_applied_compensation_amount.title",
+          "type": "string"
+        },
+        "other_applied_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_applied_compensation_issuer",
+        "other_applied_compensation_issuer_name",
+        "other_applied_compensation_issuer_year",
+        "other_applied_compensation_amount",
+        "other_applied_compensation_description"
+      ]
+    },
+    "_income_row_item": {
+      "type": "object",
+      "title": "income_row_item.title",
+      "description": "income_row_item.description",
+      "properties": {
+        "income_row_description": {
+          "title": "income_row_description.title",
+          "type": "string"
+        },
+        "income_row_amount": {
+          "format": "decimal-number",
+          "title": "income_row_amount.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "income_row_description",
+        "income_row_amount"
+      ]
+    },
+    "_expenditure_row_item": {
+      "type": "object",
+      "title": "expenditure_row_item.title",
+      "description": "expenditure_row_item.description",
+      "properties": {
+        "expenditure_row_description": {
+          "title": "expenditure_row_description.title",
+          "type": "string"
+        },
+        "expenditure_row_amount": {
+          "format": "decimal-number",
+          "title": "expenditure_row_amount.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "expenditure_row_description",
+        "expenditure_row_amount"
+      ]
+    },
+    "grant_info_step": {
+      "required": [
+        "acting_year_section",
+        "subventions_section",
+        "purpose_section",
+        "other_compensations_section",
+        "other_applied_compensations_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "acting_year"
+          ]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 49,
+                  "label": "subventions.49.title"
+                }
+              ]
+            }
+          }
+        },
+        "purpose_section": {
+          "title": "purpose_section.title",
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "title": "purpose_section_purpose.title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "purpose"
+          ]
+        },
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_received_other_compensations": {
+              "title": "other_compensations_section_have_received_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": [
+            "have_received_other_compensations"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "other_applied_compensations_section": {
+          "title": "other_applied_compensations_section.title",
+          "description": "other_applied_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_applied_other_compensations": {
+              "title": "have_applied_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": [
+            "have_applied_other_compensations"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_applied_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_applied_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "information_in_more_detail_step": {
+      "type": "object",
+      "required": [
+        "grant_target_section",
+        "project_schedule_section",
+        "project_methods_section"
+      ],
+      "properties": {
+        "grant_target_section": {
+          "title": "grant_target_section.title",
+          "type": "object",
+          "required": [
+            "avustuksen_kohde_yhdistys_toimintaryhma",
+            "avustuksen_kohde_tiivistelma",
+            "onko_kyseessa_jatkohakemus"
+          ],
+          "properties": {
+            "avustuksen_kohde_yhdistys_toimintaryhma": {
+              "title": "avustuksen_kohde_yhdistys_toimintaryhma.title",
+              "type": "string"
+            },
+            "avustuksen_kohde_tiivistelma": {
+              "title": "avustuksen_kohde_tiivistelma.title",
+              "type": "string"
+            },
+            "jatkohakemus_info": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "jatkohakemus_info.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "onko_kyseessa_jatkohakemus": {
+              "title": "onko_kyseessa_jatkohakemus.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          }
+        },
+        "project_schedule_section": {
+          "title": "project_schedule_section.title",
+          "type": "object",
+          "required": [
+            "hankkeen_nimi",
+            "project_schedule"
+          ],
+          "properties": {
+            "hankkeen_nimi": {
+              "title": "hankkeen_nimi.title",
+              "type": "string"
+            },
+            "project_schedule": {
+              "title": "project_schedule.title",
+              "type": "object",
+              "required": [
+                "hankkeen_toimenpiteet_alkupvm",
+                "hankkeen_toimenpiteet_loppupvm"
+              ],
+              "properties": {
+                "project_schedule_info": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "title": "project_schedule.help",
+                      "type": "null"
+                    }
+                  ]
+                },
+                "hankkeen_toimenpiteet_alkupvm": {
+                  "title": "hankkeen_toimenpiteet_alkupvm.title",
+                  "type": "string"
+                },
+                "hankkeen_toimenpiteet_loppupvm": {
+                  "title": "hankkeen_toimenpiteet_loppupvm.title",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "project_methods_section": {
+          "title": "project_methods_section.title",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "grant_target_section": {
+                "properties": {
+                  "onko_kyseessa_jatkohakemus": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_schedule_section": {
+                "properties": {
+                  "hankkeen_kohderyhmat_kenelle": {
+                    "title": "hankkeen_kohderyhmat_kenelle.title",
+                    "type": "string"
+                  },
+                  "hankkeen_kohderyhmat_tavoittavuus": {
+                    "title": "hankkeen_kohderyhmat_tavoittavuus.title",
+                    "type": "object",
+                    "required": [
+                      "hankkeen_kohderyhmat_lapset_9_12",
+                      "hankkeen_kohderyhmat_nuoret_18_24",
+                      "hankkeen_kohderyhmat_uudet"
+                    ],
+                    "properties": {
+                      "tavoittavuus_info": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "title": "hankkeen_kohderyhmat_tavoittavuus.help",
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "hankkeen_kohderyhmat_lapset_9_12": {
+                        "title": "hankkeen_kohderyhmat_lapset_9_12.title",
+                        "type": "integer"
+                      },
+                      "hankkeen_kohderyhmat_nuoret_18_24": {
+                        "title": "hankkeen_kohderyhmat_nuoret_18_24.title",
+                        "type": "integer"
+                      },
+                      "hankkeen_kohderyhmat_uudet": {
+                        "title": "hankkeen_kohderyhmat_uudet.title",
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "hankkeen_kohderyhmat_postinrot": {
+                    "title": "hankkeen_kohderyhmat_postinrot.title",
+                    "type": "string"
+                  },
+                  "hankkeen_kohderyhmat_tarve": {
+                    "title": "hankkeen_kohderyhmat_tarve.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "hankkeen_kohderyhmat_kenelle",
+                  "hankkeen_kohderyhmat_tavoittavuus",
+                  "hankkeen_kohderyhmat_postinrot",
+                  "hankkeen_kohderyhmat_tarve"
+                ]
+              },
+              "project_methods_section": {
+                "properties": {
+                  "hankkeen_kohderyhmat_tavoitus_seg": {
+                    "title": "hankkeen_kohderyhmat_tavoitus_seg.title",
+                    "type": "string"
+                  },
+                  "hankkeen_kohderyhmat_konkretia_seg": {
+                    "title": "hankkeen_kohderyhmat_konkretia_seg.title",
+                    "type": "string"
+                  },
+                  "hankkeen_kohderyhmat_osallisuus_seg": {
+                    "title": "hankkeen_kohderyhmat_osallisuus_seg.title",
+                    "type": "string"
+                  },
+                  "hankkeen_keskeisimmat_kumppanit_seg": {
+                    "title": "hankkeen_keskeisimmat_kumppanit_seg.title",
+                    "type": "string"
+                  },
+                  "hankkeen_uudet_kumppanit_seg": {
+                    "title": "hankkeen_uudet_kumppanit_seg.title",
+                    "type": "string"
+                  },
+                  "hankkeen_riskit_vakiinnuttaminen": {
+                    "title": "hankkeen_riskit_vakiinnuttaminen.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "hankkeen_kohderyhmat_tavoitus_seg",
+                  "hankkeen_kohderyhmat_konkretia_seg",
+                  "hankkeen_kohderyhmat_osallisuus_seg",
+                  "hankkeen_keskeisimmat_kumppanit_seg",
+                  "hankkeen_uudet_kumppanit_seg"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "grant_target_section": {
+                "properties": {
+                  "onko_kyseessa_jatkohakemus": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_schedule_section": {
+                "properties": {
+                  "hankkeen_mennyt_tavoite": {
+                    "title": "hankkeen_mennyt_tavoite.title",
+                    "type": "string"
+                  },
+                  "hankkeen_kohderyhma_ja_keinot": {
+                    "title": "hankkeen_kohderyhma_ja_keinot.title",
+                    "type": "string"
+                  },
+                  "hankkeen_kohderyhmat_jo_tavoitettu": {
+                    "title": "hankkeen_kohderyhmat_jo_tavoitettu.title",
+                    "type": "object",
+                    "required": [
+                      "hankkeen_jo_osallistuneet_9_12",
+                      "hankkeen_jo_osallistuneet_18_24",
+                      "hankkeen_jo_osalistuneet_uudet"
+                    ],
+                    "properties": {
+                      "jo_tavoitettu_info": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "title": "hankkeen_kohderyhmat_jo_tavoitettu.help",
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "hankkeen_jo_osallistuneet_9_12": {
+                        "title": "hankkeen_jo_osallistuneet_9_12.title",
+                        "type": "integer"
+                      },
+                      "hankkeen_jo_osallistuneet_18_24": {
+                        "title": "hankkeen_jo_osallistuneet_18_24.title",
+                        "type": "integer"
+                      },
+                      "hankkeen_jo_osalistuneet_uudet": {
+                        "title": "hankkeen_jo_osalistuneet_uudet.title",
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "hankkeen_kaytetyt_tunnit_per_postinumero": {
+                    "title": "hankkeen_kaytetyt_tunnit_per_postinumero.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "hankkeen_mennyt_tavoite",
+                  "hankkeen_kohderyhma_ja_keinot",
+                  "hankkeen_kohderyhmat_jo_tavoitettu",
+                  "hankkeen_kaytetyt_tunnit_per_postinumero"
+                ]
+              },
+              "project_methods_section": {
+                "properties": {
+                  "hankeen_toteutuneet_tavoitteet": {
+                    "title": "hankeen_toteutuneet_tavoitteet.title",
+                    "type": "string"
+                  },
+                  "hankkeen_tulevan_vuoden_tavoitteet": {
+                    "title": "hankkeen_tulevan_vuoden_tavoitteet.title",
+                    "type": "string"
+                  },
+                  "hankkeen_kumppanuudet_ja_toimintamuodot": {
+                    "title": "hankkeen_kumppanuudet_ja_toimintamuodot.title",
+                    "type": "string"
+                  },
+                  "hankkeen_vanhat_yhteistyokumppanit": {
+                    "title": "hankkeen_vanhat_yhteistyokumppanit.title",
+                    "type": "string"
+                  },
+                  "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun": {
+                    "title": "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "hankeen_toteutuneet_tavoitteet",
+                  "hankkeen_tulevan_vuoden_tavoitteet",
+                  "hankkeen_vanhat_yhteistyokumppanit",
+                  "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun"
+                ]
+              },
+              "project_economy_section": {
+                "title": "project_economy_section.title",
+                "type": "object",
+                "required": [
+                  "hankkeen_kaytetty_avustuksen_maara",
+                  "hankkeen_edellisen_vuoden_avustuksen_kaytto",
+                  "hankkeen_talous_toiminta_aikataulu_muutokset",
+                  "hankkeen_jatkokausi_suunnitelma"
+                ],
+                "properties": {
+                  "hankkeen_kaytetty_avustuksen_maara": {
+                    "title": "hankkeen_kaytetty_avustuksen_maara.title",
+                    "format": "decimal-number",
+                    "type": "string"
+                  },
+                  "hankkeen_edellisen_vuoden_avustuksen_kaytto": {
+                    "title": "hankkeen_edellisen_vuoden_avustuksen_kaytto.title",
+                    "type": "string"
+                  },
+                  "hankkeen_talous_toiminta_aikataulu_muutokset": {
+                    "title": "hankkeen_talous_toiminta_aikataulu_muutokset.title",
+                    "type": "string"
+                  },
+                  "hankkeen_jatkokausi_suunnitelma": {
+                    "title": "hankkeen_jatkokausi_suunnitelma.title",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": [
+              "project_economy_section"
+            ]
+          }
+        }
+      ]
+    },
+    "budget_step": {
+      "type": "object",
+      "properties": {
+        "budget_info_section": {
+          "type": "object",
+          "properties": {
+            "budget_info": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "budget_info.value",
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "income_section": {
+          "title": "income_section.title",
+          "description": "economy_forecast.description",
+          "type": "object",
+          "properties": {
+            "incomeGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "applied_benefits": {
+              "format": "decimal-number",
+              "title": "applied_benefits.title",
+              "type": "string"
+            },
+            "income_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_income_row_item"
+              }
+            }
+          }
+        },
+        "expenditure_section": {
+          "title": "expenditure_section.title",
+          "type": "object",
+          "properties": {
+            "costGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "expenditure_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_expenditure_row_item"
+              }
+            }
+          }
+        }
+      }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "additional_information.title",
+              "type": "string"
+            }
+          }
+        },
+        "attachments_section": {
+          "description": "attachments_section.description",
+          "title": "attachments_section.title",
+          "type": "object",
+          "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "multiple_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "formerly_provided_attachments_help": {
+              "title": "formerly_provided_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "formerly_provided_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "other_attachment_fieldset_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "file_id": {
+                            "type": "integer"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "fileType": {
+                            "type": "integer"
+                          },
+                          "integrationID": {
+                            "type": "string"
+                          },
+                          "isDeliveredLater": {
+                            "type": "boolean"
+                          },
+                          "isIncludedInOtherFile": {
+                            "type": "boolean"
+                          },
+                          "isNewAttachment": {
+                            "type": "boolean"
+                          },
+                          "size": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    },
+    "information_in_more_detail_step": {
+      "title": "information_in_more_detail_step.title",
+      "type": "object",
+      "$ref": "#/definitions/information_in_more_detail_step"
+    },
+    "budget_step": {
+      "title": "budget_step.title",
+      "type": "object",
+      "$ref": "#/definitions/budget_step"
+    },
+    "attachments_step": {
+      "title": "attachments_step.title",
+      "type": "object",
+      "$ref": "#/definitions/attachments_step"
+    }
+  }
+}

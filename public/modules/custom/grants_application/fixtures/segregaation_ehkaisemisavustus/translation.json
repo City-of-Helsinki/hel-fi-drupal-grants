@@ -1,0 +1,279 @@
+{
+  "translations": {
+    "form_title": {
+      "fi": "Nuorisotoiminnan erillisavustus segregaation ehkäisemiseen",
+      "en": "Special youth activity grant for preventing segregation",
+      "sv": "Segregationsförebyggande specialunderstöd för ungdomsverksamhet"
+    },
+    "subventions.49.title": {
+      "fi": "Nuorison erityisavustus 1",
+      "en": "Special grant for youth activities 1",
+      "sv": "Specialunderstöd för ungdomsverksamhet 1"
+    },
+    "budget_info.value": {
+      "fi": "Täytä tähän projektin talousarvio suunnitellulta kaudelta.",
+      "en": "Fill in the project's budget for the planned period here.",
+      "sv": "Fyll i projektets budget för den planerade perioden här."
+    },
+    "grant_target_section.title": {
+      "fi": "Avustuksen kohde",
+      "en": "Target of the grant",
+      "sv": "Understödets ändamål"
+    },
+    "avustuksen_kohde_yhdistys_toimintaryhma.title": {
+      "fi": "Haetaanko avustusta yhdistykselle vai nuorten toimintaryhmälle?",
+      "en": "Are you applying for a grant for an association or a youth activity group?",
+      "sv": "Ansöker ni om understöd för en förening eller för en aktivitetsgrupp för unga?"
+    },
+    "avustuksen_kohde_yhdistys_toimintaryhma.description": {
+      "fi": "Kerro tässä kummalle olet hakemassa avustusta.",
+      "en": "Indicate here for which of the two you are applying for a grant.",
+      "sv": "Ange här för vilken av dem ni ansöker om understöd."
+    },
+    "avustuksen_kohde_tiivistelma.title": {
+      "fi": "Kerro tiivistettynä yhdistyksestänne/nuorten toimintaryhmästänne. Vastaa lyhyesti ainakin seuraaviin kysymyksiin: Mikä on toiminta-alueenne Helsingissä? Ketkä osallistuvat toimintaanne? Minkälaisia valmiuksia teillä on toteuttaa tämä projekti (esim. resurssit/ kokemus)?",
+      "en": "Give a summary of your association/youth activity group. Answer at least the following questions briefly: What is your area of activity in Helsinki? Who participates in your activities? What capabilities do you have to carry out this project (e.g. resources/experience)?",
+      "sv": "Ge en sammanfattning av er förening/aktivitetsgrupp för unga. Besvara åtminstone följande frågor kortfattat: Vad är ert verksamhetsområde i Helsingfors? Vilka deltar i er verksamhet? Vilka förutsättningar har ni att genomföra detta projekt (t.ex. resurser/erfarenhet)?"
+    },
+    "jatkohakemus_info.value": {
+      "fi": "Myöntävä tai kieltävä vastaus avaa lisäkysymyksen",
+      "en": "An affirmative or negative answer opens a further question",
+      "sv": "Ett jakande eller nekande svar öppnar ytterligare en fråga"
+    },
+    "onko_kyseessa_jatkohakemus.title": {
+      "fi": "Onko kyseessä jatkohakemus",
+      "en": "Is this a continuation application?",
+      "sv": "Gäller det en fortsättningsansökan?"
+    },
+    "onko_kyseessa_jatkohakemus.description": {
+      "fi": "Vastaa kyllä, jos olette saaneet nuorisotoiminnan erillisavustusta samaan hankkeeseen tai projektiin edelliselle vuodelle.",
+      "en": "Answer yes if you have received a special youth activity grant for the same project for the previous year.",
+      "sv": "Svara ja om ni har fått ett specialunderstöd för ungdomsverksamhet för samma projekt för det föregående året."
+    },
+    "project_schedule_section.title": {
+      "fi": "Projektin aikataulu, kohderyhmä ja toiminta-alue",
+      "en": "Project schedule, target group and activity area",
+      "sv": "Projektets tidsplan, målgrupp och verksamhetsområde"
+    },
+    "hankkeen_nimi.title": {
+      "fi": "Projektin nimi",
+      "en": "Project name",
+      "sv": "Projektets namn"
+    },
+    "project_schedule.title": {
+      "fi": "Mikä on projektin aikataulu?",
+      "en": "What is the project's schedule?",
+      "sv": "Vad är projektets tidsplan?"
+    },
+    "project_schedule.help": {
+      "fi": "Merkitse tähän projektin suunniteltu alkamispäivä ja loppumispäivä.",
+      "en": "Enter the planned start date and end date of the project here.",
+      "sv": "Ange projektets planerade start- och slutdatum här."
+    },
+    "hankkeen_toimenpiteet_alkupvm.title": {
+      "fi": "Alkupäivämäärä",
+      "en": "Start date",
+      "sv": "Startdatum"
+    },
+    "hankkeen_toimenpiteet_alkupvm.printable_title": {
+      "fi": "Hankkeen alkupäivämäärä",
+      "en": "Project start date",
+      "sv": "Projektets startdatum"
+    },
+    "hankkeen_toimenpiteet_loppupvm.title": {
+      "fi": "Loppupäivämäärä",
+      "en": "End date",
+      "sv": "Slutdatum"
+    },
+    "hankkeen_toimenpiteet_loppupvm.printable_title": {
+      "fi": "Hankkeen loppupäivämäärä",
+      "en": "Project end date",
+      "sv": "Projektets slutdatum"
+    },
+    "hankkeen_kohderyhmat_kenelle.title": {
+      "fi": "Mikä on projektin kohderyhmä/kohderyhmät?",
+      "en": "What is the project's target group/target groups?",
+      "sv": "Vad är projektets målgrupp/målgrupper?"
+    },
+    "hankkeen_kohderyhmat_tavoittavuus.title": {
+      "fi": "Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan. Arvioi tavoitettujen lasten ja nuorten määrä yhteensä koko hankkeen aikana.",
+      "en": "Estimate how many children and young people the activities will reach. Estimate the total number of children and young people reached during the entire project.",
+      "sv": "Uppskatta hur många barn och unga som nås av verksamheten. Uppskatta det totala antalet barn och unga som nås under hela projektet."
+    },
+    "hankkeen_kohderyhmat_tavoittavuus.help": {
+      "fi": "Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään \"0\".",
+      "en": "If the project does not reach the age group in question, enter \"0\" in the field.",
+      "sv": "Om projektet inte når den aktuella åldersgruppen, ange \"0\" i fältet."
+    },
+    "hankkeen_kohderyhmat_lapset_9_12.title": {
+      "fi": "9–12-vuotiasta helsinkiläistä",
+      "en": "9–12-year-old residents of Helsinki",
+      "sv": "9–12-åriga Helsingforsbor"
+    },
+    "hankkeen_kohderyhmat_nuoret_18_24.title": {
+      "fi": "18-24-vuotiasta helsinkiläistä",
+      "en": "18–24-year-old residents of Helsinki",
+      "sv": "18–24-åriga Helsingforsbor"
+    },
+    "hankkeen_kohderyhmat_uudet.title": {
+      "fi": "Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
+      "en": "How many of these are new, i.e. have not participated in activities previously organised by the operator?",
+      "sv": "Hur många av dessa är nya, dvs. har inte tidigare deltagit i verksamhet som aktören ordnat?"
+    },
+    "hankkeen_kohderyhmat_postinrot.title": {
+      "fi": "Millä alueilla toiminta toteutetaan? Kirjaa tekstikenttään kaikki tilojen nimet/toimintapaikat ja postinumerot pilkulla eroteltuna.",
+      "en": "In which areas are the activities carried out? List all the names of the premises/activity locations and postal codes in the text field, separated by commas.",
+      "sv": "I vilka områden genomförs verksamheten? Ange alla lokalers namn/verksamhetsplatser och postnummer i textfältet, åtskilda med kommatecken."
+    },
+    "hankkeen_kohderyhmat_tarve.title": {
+      "fi": "Mihin alueen tarpeeseen toiminnassa vastataan?",
+      "en": "Which need of the area do the activities respond to?",
+      "sv": "Vilket behov i området svarar verksamheten på?"
+    },
+    "hankkeen_mennyt_tavoite.title": {
+      "fi": "Mikä on ollut projektin tavoite?",
+      "en": "What has been the project's objective?",
+      "sv": "Vad har varit projektets mål?"
+    },
+    "hankkeen_kohderyhma_ja_keinot.title": {
+      "fi": "Mikä on ollut projektin kohderyhmä ja mitä keinoja kohderyhmän tavoittamiseen on käytetty?",
+      "en": "What has been the project's target group and what means have been used to reach the target group?",
+      "sv": "Vad har varit projektets målgrupp och vilka metoder har använts för att nå målgruppen?"
+    },
+    "hankkeen_kohderyhmat_jo_tavoitettu.title": {
+      "fi": "Arvioi montako lasta ja nuorta toiminnalla on tähän saakka tavoitettu.",
+      "en": "Estimate how many children and young people the activities have reached so far.",
+      "sv": "Uppskatta hur många barn och unga som verksamheten hittills har nått."
+    },
+    "hankkeen_kohderyhmat_jo_tavoitettu.help": {
+      "fi": "Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään \"0\".",
+      "en": "If the project does not reach the age group in question, enter \"0\" in the field.",
+      "sv": "Om projektet inte når den aktuella åldersgruppen, ange \"0\" i fältet."
+    },
+    "hankkeen_jo_osallistuneet_9_12.title": {
+      "fi": "9–12-vuotiasta helsinkiläistä",
+      "en": "9–12-year-old residents of Helsinki",
+      "sv": "9–12-åriga Helsingforsbor"
+    },
+    "hankkeen_jo_osallistuneet_18_24.title": {
+      "fi": "18-24-vuotiasta helsinkiläistä",
+      "en": "18–24-year-old residents of Helsinki",
+      "sv": "18–24-åriga Helsingforsbor"
+    },
+    "hankkeen_jo_osalistuneet_uudet.title": {
+      "fi": "Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
+      "en": "How many of these are new, i.e. have not participated in activities previously organised by the operator?",
+      "sv": "Hur många av dessa är nya, dvs. har inte tidigare deltagit i verksamhet som aktören ordnat?"
+    },
+    "hankkeen_kaytetyt_tunnit_per_postinumero.title": {
+      "fi": "Kuinka monta tuntia harrastustoimintaa projektissa on järjestetty kullakin postinumeroalueella? Erittele tekstikenttään postinumeroittain pilkulla eroteltuna esimerkiksi näin: 00400: 7h, 00900: 16h.",
+      "en": "How many hours of recreational activities has the project organised in each postal code area? Specify by postal code in the text field, separated by commas, for example: 00400: 7h, 00900: 16h.",
+      "sv": "Hur många timmar fritidsverksamhet har projektet ordnat inom varje postnummerområde? Specificera per postnummer i textfältet, åtskilda med kommatecken, till exempel: 00400: 7h, 00900: 16h."
+    },
+    "project_methods_section.title": {
+      "fi": "Projektin menetelmät",
+      "en": "Project methods",
+      "sv": "Projektets metoder"
+    },
+    "hankkeen_kohderyhmat_tavoitus_seg.title": {
+      "fi": "Miten kohderyhmät tavoitetaan ja tunnistetaan?",
+      "en": "How are the target groups reached and identified?",
+      "sv": "Hur nås och identifieras målgrupperna?"
+    },
+    "hankkeen_kohderyhmat_konkretia_seg.title": {
+      "fi": "Miten toiminnan toivotaan vaikuttavan osallistujien elämään?",
+      "en": "How is the activity hoped to affect the participants' lives?",
+      "sv": "Hur hoppas man att verksamheten ska påverka deltagarnas liv?"
+    },
+    "hankkeen_kohderyhmat_osallisuus_seg.title": {
+      "fi": "Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?",
+      "en": "How do children and young people participate in the planning and decision-making of the activities?",
+      "sv": "Hur deltar barn och unga i planeringen av och beslutsfattandet om verksamheten?"
+    },
+    "hankkeen_keskeisimmat_kumppanit_seg.title": {
+      "fi": "Kenen kanssa hankkeessa tehdään yhteistyötä? Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.",
+      "en": "Who are the project's collaborators? Name the key collaboration partners and their roles in the project. Name separately the partners already agreed upon and those still being planned.",
+      "sv": "Med vem samarbetar projektet? Namnge de viktigaste samarbetspartnerna och deras roller i projektet. Namnge separat de partner som redan avtalats och de som ännu planeras."
+    },
+    "hankkeen_uudet_kumppanit_seg.title": {
+      "fi": "Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?",
+      "en": "Does the project test new kinds of partnerships or develop new operating models? What kind?",
+      "sv": "Prövas nya slags partnerskap i projektet eller utvecklas nya verksamhetsmodeller? Hurdana?"
+    },
+    "hankkeen_riskit_vakiinnuttaminen.title": {
+      "fi": "Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos on, niin kuvaa tekstikenttään, miten ja millä rahoituksella vakiinnuttaminen aiotaan tehdä?",
+      "en": "Is the planned activity of the project intended to be established as part of the basic operations of the applicant/some other operator after the project? If so, describe in the text field how and with what funding the establishment is intended to be carried out.",
+      "sv": "Är avsikten att projektets planerade verksamhet ska etableras som en del av den sökandes/någon annan aktörs basverksamhet efter projektet? Om så är fallet, beskriv i textfältet hur och med vilken finansiering etableringen är avsedd att genomföras."
+    },
+    "hankeen_toteutuneet_tavoitteet.title": {
+      "fi": "Miten projektissa on onnistuttu saavuttamaan seuraavia tavoitteita: väestöryhmien välisten positiivisten kohtaamisten ja harrastustoiminnan saavutettavuuden lisääminen, erityisesti maahanmuuttajataustaisille tytöille, sekä nuorten aikuisten työkyvyn edistäminen?",
+      "en": "How has the project succeeded in achieving the following objectives: increasing positive encounters between population groups and the accessibility of recreational activities, especially for girls with an immigrant background, as well as promoting the working capacity of young adults?",
+      "sv": "Hur har projektet lyckats uppnå följande mål: att öka positiva möten mellan befolkningsgrupper och tillgängligheten till fritidsverksamhet, särskilt för flickor med invandrarbakgrund, samt att främja unga vuxnas arbetsförmåga?"
+    },
+    "hankeen_toteutuneet_tavoitteet.description": {
+      "fi": "Vastaa niiltä osin, kuin mainitut tavoitteet ovat olleet projektinne tavoitteita.",
+      "en": "Answer to the extent that the mentioned objectives have been the objectives of your project.",
+      "sv": "Svara i den mån de nämnda målen har varit ert projekts mål."
+    },
+    "hankkeen_tulevan_vuoden_tavoitteet.title": {
+      "fi": "Mitä projektissa tullaan tekemään tämän vuoden aikana?",
+      "en": "What will be done in the project during this year?",
+      "sv": "Vad kommer att göras i projektet under detta år?"
+    },
+    "hankkeen_kumppanuudet_ja_toimintamuodot.title": {
+      "fi": "Minkälaisia kumppanuuksia ja uudenlaisia toimintamuotoja projektissa on kokeiltu tai kehitetty?",
+      "en": "What kinds of partnerships and new forms of activity have been tested or developed in the project?",
+      "sv": "Vilka slags partnerskap och nya verksamhetsformer har prövats eller utvecklats i projektet?"
+    },
+    "hankkeen_kumppanuudet_ja_toimintamuodot.description": {
+      "fi": "Vastaa kysymykseen, jos projektissa on ollut tarkoitus kehittää uudenlaisia kumppanuuksia ja toimintamuotoja.",
+      "en": "Answer the question if the project has been intended to develop new kinds of partnerships and forms of activity.",
+      "sv": "Besvara frågan om avsikten med projektet har varit att utveckla nya slags partnerskap och verksamhetsformer."
+    },
+    "hankkeen_vanhat_yhteistyokumppanit.title": {
+      "fi": "Mitkä ovat olleet projektin keskeiset yhteistyökumppanit tähän mennessä, ja mikä heidän roolinsa on ollut?",
+      "en": "Who have been the project's key collaboration partners so far, and what has their role been?",
+      "sv": "Vilka har hittills varit projektets viktigaste samarbetspartner och vilken har deras roll varit?"
+    },
+    "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun.title": {
+      "fi": "Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon? Mainitse konkreettisia esimerkkejä.",
+      "en": "How have children and young people participated in the planning and decision-making of the activities? Give concrete examples.",
+      "sv": "Hur har barn och unga deltagit i planeringen av och beslutsfattandet om verksamheten? Ge konkreta exempel."
+    },
+    "project_economy_section.title": {
+      "fi": "Projektin talous ja toiminta",
+      "en": "Project finances and activities",
+      "sv": "Projektets ekonomi och verksamhet"
+    },
+    "hankkeen_kaytetty_avustuksen_maara.title": {
+      "fi": "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä euroina yhteensä, kuinka paljon myönnettyä avustusta on käytetty.",
+      "en": "Report on the use of the previous year's special grant. Indicate here in euros in total how much of the granted grant has been used.",
+      "sv": "Redovisning av användningen av föregående års specialunderstöd. Ange här i euro sammanlagt hur mycket av det beviljade understödet som har använts."
+    },
+    "hankkeen_kaytetty_avustuksen_maara.description": {
+      "fi": "Ilmoitettu luku voi olla osittain arvio, koska tilinpäätös tai tilikausi voi olla kesken.",
+      "en": "The figure reported may be partly an estimate, as the financial statements or accounting period may be incomplete.",
+      "sv": "Den angivna siffran kan delvis vara en uppskattning, eftersom bokslutet eller räkenskapsperioden kan vara ofullständig."
+    },
+    "hankkeen_edellisen_vuoden_avustuksen_kaytto.title": {
+      "fi": "Kuvaus edellisen vuoden erillisavustuksen käytöstä. Kerro tässä tarkemmin avustuksen käytöstä kululajeittain.",
+      "en": "Description of the use of the previous year's special grant. Describe the use of the grant in more detail by type of expense.",
+      "sv": "Beskrivning av användningen av föregående års specialunderstöd. Beskriv närmare användningen av understödet per utgiftsslag."
+    },
+    "hankkeen_edellisen_vuoden_avustuksen_kaytto.description": {
+      "fi": "Kuvaa avustuksen käyttöä kululajeittain, ei yksittäisten tulojen ja menojen tasolla.",
+      "en": "Describe the use of the grant by type of expense, not at the level of individual incomes and expenses.",
+      "sv": "Beskriv användningen av understödet per utgiftsslag, inte på nivån av enskilda inkomster och utgifter."
+    },
+    "hankkeen_talous_toiminta_aikataulu_muutokset.title": {
+      "fi": "Onko projektissa tapahtunut merkittäviä muutoksia talouteen, toimintaan tai aikatauluun liittyen, mitä?",
+      "en": "Have there been significant changes in the project related to finances, activities or schedule? What kind?",
+      "sv": "Har det skett betydande förändringar i projektet i fråga om ekonomi, verksamhet eller tidsplan? Vilka?"
+    },
+    "hankkeen_jatkokausi_suunnitelma.title": {
+      "fi": "Onko projektin jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen suunnitelman mukaan? Jos ei, niin miksi?",
+      "en": "Is the project's continuation period/periods intended to be carried out according to the original plan? If not, why?",
+      "sv": "Är avsikten att projektets fortsättningsperiod/-perioder ska genomföras enligt den ursprungliga planen? Om inte, varför?"
+    }
+  }
+}

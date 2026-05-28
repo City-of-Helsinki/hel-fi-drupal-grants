@@ -1,0 +1,581 @@
+{
+  "compensation.compensationInfo.compensationArray.0.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.0.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "subventionType",
+      "label": "Avustuslaji",
+      "value": "49",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.0.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.purpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "purpose",
+      "value": "",
+      "valueType": "string",
+      "label": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista"
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_compensations_section.other_compensations",
+    "mapping_type": "multiple_values",
+    "data": {
+      "other_compensation_issuer": {
+        "ID": "issuer",
+        "label": "Avustuksen myöntäjä",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_name": {
+        "ID": "issuerName",
+        "label": "Myöntäjän nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_year": {
+        "ID": "year",
+        "label": "Vuosi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_amount": {
+        "ID": "amount",
+        "label": "Myönnetyn avustuksen summa",
+        "value": "",
+        "valueType": "float"
+      },
+      "other_compensation_description": {
+        "ID": "purpose",
+        "label": "Kuvaus käyttötarkoituksesta",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherAppliedCompensationsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_applied_compensations_section.other_applied_compensations",
+    "mapping_type": "multiple_values",
+    "data": {
+      "other_applied_compensation_issuer": {
+        "ID": "issuer",
+        "label": "Avustuksen myöntäjä",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_issuer_name": {
+        "ID": "issuerName",
+        "label": "Myöntäjän nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_issuer_year": {
+        "ID": "year",
+        "label": "Vuosi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_amount": {
+        "ID": "amount",
+        "label": "Haetun avustuksen summa",
+        "value": "",
+        "valueType": "float"
+      },
+      "other_applied_compensation_description": {
+        "ID": "purpose",
+        "label": "Kuvaus käyttötarkoituksesta",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "label": null,
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+
+  "compensation.customQuestionsInfo.customQuestionsArray.0": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.grant_target_section.avustuksen_kohde_yhdistys_toimintaryhma",
+    "mapping_type": "default",
+    "data": {
+      "ID": "avustuksen_kohde_yhdistys_toimintaryhma",
+      "label": "Haetaanko avustusta yhdistykselle vai nuorten toimintaryhmälle?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.1": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.grant_target_section.avustuksen_kohde_tiivistelma",
+    "mapping_type": "default",
+    "data": {
+      "ID": "avustuksen_kohde_tiivistelma",
+      "label": "Kerro tiivistettynä yhdistyksestänne/nuorten toimintaryhmästänne.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.2": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.grant_target_section.onko_kyseessa_jatkohakemus",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "": "Ei"
+    },
+    "data": {
+      "ID": "onko_kyseessa_jatkohakemus",
+      "label": "Onko kyseessä jatkohakemus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.3": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_nimi",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_nimi",
+      "label": "Projektin nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.4": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.project_schedule.hankkeen_toimenpiteet_alkupvm",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_toimenpiteet_alkupvm",
+      "label": "Aikataulu alkupäivämäärä",
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.5": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.project_schedule.hankkeen_toimenpiteet_loppupvm",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_toimenpiteet_loppupvm",
+      "label": "Aikataulu loppupäivämäärä",
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.6": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_kenelle",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_kenelle",
+      "label": "Mikä on projektin kohderyhmä/kohderyhmät?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.7": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_tavoittavuus.hankkeen_kohderyhmat_lapset_9_12",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_lapset_9_12",
+      "label": "9–12-vuotiasta helsinkiläistä",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.8": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_tavoittavuus.hankkeen_kohderyhmat_nuoret_18_24",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_nuoret_18_24",
+      "label": "18-24-vuotiasta helsinkiläistä",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.9": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_tavoittavuus.hankkeen_kohderyhmat_uudet",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_uudet",
+      "label": "Kuinka monta näistä on uusia?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.10": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_postinrot",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_postinrot",
+      "label": "Millä alueilla toiminta toteutetaan?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.11": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_tarve",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_tarve",
+      "label": "Mihin alueen tarpeeseen toiminnassa vastataan?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.12": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_mennyt_tavoite",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_mennyt_tavoite",
+      "label": "Mikä on ollut projektin tavoite?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.13": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhma_ja_keinot",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhma_ja_keinot",
+      "label": "Mikä on ollut projektin kohderyhmä ja mitä keinoja kohderyhmän tavoittamiseen on käytetty?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.14": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_jo_tavoitettu.hankkeen_jo_osallistuneet_9_12",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_jo_osallistuneet_9_12",
+      "label": "9–12-vuotiasta helsinkiläistä",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.15": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_jo_tavoitettu.hankkeen_jo_osallistuneet_18_24",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_jo_osallistuneet_18_24",
+      "label": "18-24-vuotiasta helsinkiläistä",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.16": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_jo_tavoitettu.hankkeen_jo_osalistuneet_uudet",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_jo_osalistuneet_uudet",
+      "label": "Kuinka monta näistä on uusia?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.17": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kaytetyt_tunnit_per_postinumero",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kaytetyt_tunnit_per_postinumero",
+      "label": "Kuinka monta tuntia harrastustoimintaa projektissa on järjestetty kullakin postinumeroalueella?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.18": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_kohderyhmat_tavoitus_seg",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_tavoitus_seg",
+      "label": "Miten kohderyhmät tavoitetaan ja tunnistetaan?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.19": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_kohderyhmat_konkretia_seg",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_konkretia_seg",
+      "label": "Miten toiminnan toivotaan vaikuttavan osallistujien elämään?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.20": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_kohderyhmat_osallisuus_seg",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kohderyhmat_osallisuus_seg",
+      "label": "Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.21": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_keskeisimmat_kumppanit_seg",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_keskeisimmat_kumppanit_seg",
+      "label": "Kenen kanssa hankkeessa tehdään yhteistyötä?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.22": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_uudet_kumppanit_seg",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_uudet_kumppanit_seg",
+      "label": "Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.23": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_riskit_vakiinnuttaminen",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_riskit_vakiinnuttaminen",
+      "label": "Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi perustoimintaa hankkeen jälkeen?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.24": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankeen_toteutuneet_tavoitteet",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankeen_toteutuneet_tavoitteet",
+      "label": "Miten projektissa on onnistuttu saavuttamaan tavoitteita?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.25": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_tulevan_vuoden_tavoitteet",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_tulevan_vuoden_tavoitteet",
+      "label": "Mitä projektissa tullaan tekemään tämän vuoden aikana?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.26": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_kumppanuudet_ja_toimintamuodot",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kumppanuudet_ja_toimintamuodot",
+      "label": "Minkälaisia kumppanuuksia ja uudenlaisia toimintamuotoja projektissa on kokeiltu tai kehitetty?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.27": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_vanhat_yhteistyokumppanit",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_vanhat_yhteistyokumppanit",
+      "label": "Mitkä ovat olleet projektin keskeiset yhteistyökumppanit tähän mennessä?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.28": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_methods_section.hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun",
+      "label": "Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.29": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_economy_section.hankkeen_kaytetty_avustuksen_maara",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_kaytetty_avustuksen_maara",
+      "label": "Selvitys edellisen vuoden erillisavustuksen käytöstä (euroa).",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.30": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_economy_section.hankkeen_edellisen_vuoden_avustuksen_kaytto",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_edellisen_vuoden_avustuksen_kaytto",
+      "label": "Kuvaus edellisen vuoden erillisavustuksen käytöstä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.31": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_economy_section.hankkeen_talous_toiminta_aikataulu_muutokset",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_talous_toiminta_aikataulu_muutokset",
+      "label": "Onko projektissa tapahtunut merkittäviä muutoksia talouteen, toimintaan tai aikatauluun liittyen?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.32": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.project_economy_section.hankkeen_jatkokausi_suunnitelma",
+    "mapping_type": "default",
+    "data": {
+      "ID": "hankkeen_jatkokausi_suunnitelma",
+      "label": "Onko projektin jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen suunnitelman mukaan?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "attachmentsInfo.attachmentsArray.n": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
+    "mapping_type": "multiple_files",
+    "data": {
+      "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "0", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "compensation",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic": {
+    "datasource": "form_data",
+    "source": "budget_step.income_section.income_rows",
+    "mapping_type": "custom",
+    "custom_handler": "income",
+    "data": {
+      "ID": "talous_tulon_tyyppi",
+      "label": "Tulo",
+      "value": "",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeGroupName": {
+    "datasource": "form_data",
+    "source": null,
+    "mapping_type": "hardcoded",
+    "data": {
+      "incomeGroupName": "general"
+    }
+  },
+
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "costRowsArrayStatic": {}
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
+    "datasource": "form_data",
+    "source": "budget_step.expenditure_section.expenditure_rows",
+    "mapping_type": "custom",
+    "custom_handler": "income",
+    "data": {
+      "ID": "talous_menon_tyyppi",
+      "label": "Meno",
+      "value": "",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {
+    "datasource": "form_data",
+    "source": null,
+    "mapping_type": "hardcoded",
+    "data": {
+      "costGroupName": "general"
+    }
+  }
+}
