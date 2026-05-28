@@ -285,8 +285,14 @@ class ViewsHooks {
    */
   protected function buildApplicationPeriodMarkup(ViewExecutable $view, ResultRow $row): MarkupInterface {
     $date_icon = '<span aria-hidden="true" class="hel-icon hel-icon--calendar-clock hel-icon--size-s"></span>';
-    $continuous_raw = $this->getFieldValue($view, $row, 'field_application_continuous');
-    $continuous = ($continuous_raw === '1' || $continuous_raw === 'true');
+    $continuous_webform = $this->getFieldValue($view, $row, 'field_application_continuous');
+    $continuous_react_form = $this->getFieldValue($view, $row, 'application_continuous');
+    $continuous = (
+      $continuous_webform === '1' ||
+      $continuous_webform === 'true' ||
+      $continuous_react_form === '1' ||
+      $continuous_react_form === 'true'
+    );
 
     if ($continuous) {
       return Markup::create($date_icon . '<span>' . $this->t('Continuous application') . '</span>');

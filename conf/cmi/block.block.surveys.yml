@@ -17,5 +17,5 @@ settings:
   label: Surveys
   label_display: ''
   provider: helfi_node_survey
-  use_remote_entities: true
+  use_remote_entities: false
 visibility: {  }
