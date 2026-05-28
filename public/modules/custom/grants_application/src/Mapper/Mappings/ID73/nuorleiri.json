@@ -23,31 +23,7 @@
       "valueType": "float"
     }
   },
-  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
-    "datasource": "form_data",
-    "source": "hardcoded",
-    "mapping_type": "hardcoded",
-    "data": {
-      "0": {
-        "ID": "otherCompensationsTotal",
-        "value": "0",
-        "valueType": "double"
-      }
-    }
-  },
-  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
-    "datasource": "form_data",
-    "source": "hardcoded",
-    "mapping_type": "hardcoded",
-    "data": {
-      "0": {
-        "ID": "otherAppliedCompensationsTotal",
-        "label": null,
-        "value": "0",
-        "valueType": "double"
-      }
-    }
-  },
+
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeGroupName": {
     "#tip": "income component hardcoded value 'general'",
     "datasource": "form_data",
@@ -93,7 +69,6 @@
   },
 
   "attachmentsInfo.attachmentsArray.0": {
-    "#tip": "yhteison_saannot, fileType 7",
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.community_rules.community_rules_file",
     "mapping_type": "file",
@@ -107,9 +82,8 @@
     }
   },
   "attachmentsInfo.attachmentsArray.1": {
-    "#tip": "leiri_excel, fileType 36",
     "datasource": "form_data",
-    "source": "attachments_step.attachments_section.leiri_excel_fieldset.leiri_excel_fieldset_file",
+    "source": "attachments_step.attachments_section.camp_excel.camp_excel_file",
     "mapping_type": "file",
     "data": {
       "description": {"ID": "description", "value": "Leiri-excel", "valueType": "string", "label": "Liitteen kuvaus"},
@@ -121,9 +95,8 @@
     }
   },
   "attachmentsInfo.attachmentsArray.2": {
-    "#tip": "toimintasuunnitelma, fileType 1",
     "datasource": "form_data",
-    "source": "attachments_step.attachments_section.toimintasuunnitelma_fieldset.toimintasuunnitelma_fieldset_file",
+    "source": "attachments_step.attachments_section.action_plan.action_plan_file",
     "mapping_type": "file",
     "data": {
       "description": {"ID": "description", "value": "Toimintasuunnitelma", "valueType": "string", "label": "Liitteen kuvaus"},
@@ -135,9 +108,8 @@
     }
   },
   "attachmentsInfo.attachmentsArray.3": {
-    "#tip": "talousarvio, fileType 2",
     "datasource": "form_data",
-    "source": "attachments_step.attachments_section.talousarvio_fieldset.talousarvio_fieldset_file",
+    "source": "attachments_step.attachments_section.budget.budget_file",
     "mapping_type": "file",
     "data": {
       "description": {"ID": "description", "value": "Talousarvio", "valueType": "string", "label": "Liitteen kuvaus"},
@@ -149,7 +121,6 @@
     }
   },
   "attachmentsInfo.attachmentsArray.4": {
-    "#tip": "other attachments, multiple files, fileType 0",
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
     "mapping_type": "multiple_files",
