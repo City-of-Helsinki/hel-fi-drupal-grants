@@ -11,8 +11,8 @@
     }
   },
   "compensation.applicantInfoArray.1": {
-    "datasource": "custom",
-    "source": "selected_community_official.name",
+    "datasource": "company",
+    "source": "name",
     "mapping_type": "default",
     "data": {
       "ID": "communityOfficialName",
@@ -23,7 +23,7 @@
   },
   "compensation.applicantInfoArray.2": {
     "datasource": "custom",
-    "source": "selected_community_official.email",
+    "source": "selected_community_officials.0.email",
     "mapping_type": "default",
     "data": {
       "ID": "email",
@@ -34,30 +34,8 @@
   },
 
   "compensation.currentAddressInfoArray.0": {
-    "datasource": "form_data",
-    "source": "applicant_info.contact_person_info.contact_person",
-    "mapping_type": "default",
-    "data": {
-      "ID": "contactPerson",
-      "label": "Yhteyshenkilö",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.currentAddressInfoArray.1": {
-    "datasource": "form_data",
-    "source": "applicant_info.contact_person_info.contact_person_phone_number",
-    "mapping_type": "default",
-    "data": {
-      "ID": "phoneNumber",
-      "label": "Puhelinnumero",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.currentAddressInfoArray.2": {
     "datasource": "custom",
-    "source": "selected_address.street",
+    "source": "addresses.0.street",
     "mapping_type": "default",
     "data": {
       "ID": "street",
@@ -66,9 +44,9 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.3": {
+  "compensation.currentAddressInfoArray.1": {
     "datasource": "custom",
-    "source": "selected_address.city",
+    "source": "addresses.0.city",
     "mapping_type": "default",
     "data": {
       "ID": "city",
@@ -77,9 +55,9 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.4": {
+  "compensation.currentAddressInfoArray.2": {
     "datasource": "custom",
-    "source": "selected_address.postCode",
+    "source": "addresses.0.postCode",
     "mapping_type": "default",
     "data": {
       "ID": "postCode",
@@ -88,13 +66,99 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.5": {
+  "compensation.currentAddressInfoArray.3": {
     "datasource": "custom",
-    "source": "selected_address.country",
+    "source": "addresses.0.country",
     "mapping_type": "default",
     "data": {
       "ID": "country",
       "label": "Maa",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.4": {
+    "datasource": "user",
+    "source": "name",
+    "mapping_type": "default",
+    "data": {
+      "ID": "contactPerson",
+      "label": "Yhteyshenkilö",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.5": {
+    "datasource": "custom",
+    "source": "selected_community_officials.0.phone",
+    "mapping_type": "default",
+    "data": {
+      "ID": "phoneNumber",
+      "label": "Puhelinnumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantOfficialsArray.0.n": {
+    "datasource": "custom",
+    "mapping_type": "multiple_values",
+    "source": "selected_community_officials",
+    "data": {
+      "name": {
+        "ID": "name",
+        "label": "Nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "role": {
+        "ID": "role",
+        "label": "Rooli",
+        "value": "",
+        "valueType": "int"
+      },
+      "email": {
+        "ID": "email",
+        "label": "Sähköposti",
+        "value": "",
+        "valueType": "string"
+      },
+      "phone": {
+        "ID": "phone",
+        "label": "Puhelinnumero",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.bankAccountArray.0": {
+    "datasource": "custom",
+    "source": "selected_bank_account.ownerName",
+    "mapping_type": "default",
+    "data": {
+      "ID": "accountOwnerName",
+      "label": "Pankkitilin omistajan nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.bankAccountArray.1": {
+    "datasource": "custom",
+    "source": "selected_bank_account.ownerSsn",
+    "mapping_type": "default",
+    "data": {
+      "ID": "socialSecurityNumber",
+      "label": "Pankkitilin omistajan henkilötunnus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.bankAccountArray.2": {
+    "datasource": "custom",
+    "source": "selected_bank_account.bankAccount",
+    "mapping_type": "default",
+    "data": {
+      "ID": "accountNumber",
+      "label": "Tilinumero",
       "value": "",
       "valueType": "string"
     }
@@ -179,7 +243,7 @@
   },
   "compensation.applicationInfoArray.7": {
     "datasource": "form_data",
-    "source": "orienteering_maps_step.acting_year_section.acting_year",
+    "source": "grant_info_step.acting_year_section.acting_year",
     "mapping_type": "default",
     "data": {
       "ID": "actingYear",

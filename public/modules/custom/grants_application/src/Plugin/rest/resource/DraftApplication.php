@@ -213,7 +213,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     $grantsProfile = $grants_profile_data->toArray();
-    if ($applicantType === 'private_person') {
+    if ($applicantType === 'private_person' || $applicantType === 'unregistered_community') {
       $userProfileData = $this->userInformationService->getUserProfileData()['myProfile'] ?? [];
       $grantsProfile['firstName'] = $userProfileData['firstName'] ?? '';
       $grantsProfile['lastName'] = $userProfileData['lastName'] ?? '';
