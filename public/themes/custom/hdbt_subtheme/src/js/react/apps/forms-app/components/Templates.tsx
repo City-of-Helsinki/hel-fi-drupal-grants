@@ -144,10 +144,10 @@ const PreviewSection = ({
   uiSchema: UiSchema;
 }) => {
   const printableName = uiSchema?.['ui:options']?.printableName;
-
+  const hideFromPreview = uiSchema?.['ui:options']?.hideFromPreview;
   const visibleProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
 
-  if (!visibleProperties.length) {
+  if (hideFromPreview || !visibleProperties.length) {
     return null;
   }
 
