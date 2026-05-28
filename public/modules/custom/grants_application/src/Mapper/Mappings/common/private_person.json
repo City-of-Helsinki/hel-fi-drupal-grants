@@ -56,28 +56,6 @@
   },
 
   "compensation.currentAddressInfoArray.0": {
-    "datasource": "user",
-    "source": "name",
-    "mapping_type": "default",
-    "data": {
-      "ID": "contactPerson",
-      "label": "Yhteyshenkilö",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.currentAddressInfoArray.1": {
-    "datasource": "grants_profile_array",
-    "source": "phone_number",
-    "mapping_type": "default",
-    "data": {
-      "ID": "phoneNumber",
-      "label": "Puhelinnumero",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.currentAddressInfoArray.2": {
     "datasource": "custom",
     "source": "addresses.0.street",
     "mapping_type": "default",
@@ -88,7 +66,7 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.3": {
+  "compensation.currentAddressInfoArray.1": {
     "datasource": "custom",
     "source": "addresses.0.city",
     "mapping_type": "default",
@@ -99,7 +77,7 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.4": {
+  "compensation.currentAddressInfoArray.2": {
     "datasource": "custom",
     "source": "addresses.0.postCode",
     "mapping_type": "default",
@@ -110,13 +88,35 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.5": {
+  "compensation.currentAddressInfoArray.3": {
     "datasource": "custom",
     "source": "addresses.0.country",
     "mapping_type": "default",
     "data": {
       "ID": "country",
       "label": "Maa",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.4": {
+    "datasource": "user",
+    "source": "name",
+    "mapping_type": "default",
+    "data": {
+      "ID": "contactPerson",
+      "label": "Yhteyshenkilö",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.5": {
+    "datasource": "grants_profile_array",
+    "source": "phone_number",
+    "mapping_type": "default",
+    "data": {
+      "ID": "phoneNumber",
+      "label": "Puhelinnumero",
       "value": "",
       "valueType": "string"
     }
@@ -199,24 +199,23 @@
       "valueType": "string"
     }
   },
+  "compensation.applicationInfoArray.7": {
+    "datasource": "form_data",
+    "source": "grant_info_step.acting_year_section.acting_year",
+    "mapping_type": "default",
+    "data": {
+      "ID": "actingYear",
+      "label": "Vuosi, jolle haen avustusta",
+      "value": "",
+      "valueType": "string"
+    }
+  },
   "compensation.additionalInformation": {
     "datasource": "form_data",
     "source": "attachments_step.additional_information_section.additional_information",
     "mapping_type": "simple",
     "data": {
       "additionalInformation": ""
-    }
-  },
-  "attachmentsInfo.generalInfoArray.extraInfo": {
-    "#tip": "attachment extra info",
-    "datasource": "form_data",
-    "source": "attachments_step.attachments_section.further_clarification",
-    "mapping_type": "default",
-    "data": {
-      "ID": "extraInfo",
-      "label": "Lisäselvitys liitteistä",
-      "value": "",
-      "valueType": "string"
     }
   },
   "compensation.bankAccountArray.0": {
@@ -283,6 +282,18 @@
       "value": "",
       "valueType": "string",
       "label": null
+    }
+  },
+  "attachmentsInfo.generalInfoArray.0": {
+    "#tip": "attachment extra info",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.further_clarification",
+    "mapping_type": "default",
+    "data": {
+      "ID": "extraInfo",
+      "label": "Lisäselvitys liitteistä",
+      "value": "",
+      "valueType": "string"
     }
   }
 }

@@ -197,7 +197,62 @@
       "additionalInformation": ""
     }
   },
-  "attachmentsInfo.generalInfoArray.extraInfo": {
+  "compensation.senderInfoArray.0": {
+    "datasource": "user_profile",
+    "source": "myProfile.verifiedPersonalInformation.firstName",
+    "mapping_type": "default",
+    "data": {
+      "ID": "firstname",
+      "value": "",
+      "valueType": "string",
+      "label": null
+    }
+  },
+  "compensation.senderInfoArray.1": {
+    "datasource": "user_profile",
+    "source": "myProfile.verifiedPersonalInformation.lastName",
+    "mapping_type": "default",
+    "data": {
+      "ID": "lastname",
+      "value": "",
+      "valueType": "string",
+      "label": null
+    }
+  },
+  "compensation.senderInfoArray.2": {
+    "datasource": "user_profile",
+    "source": "myProfile.verifiedPersonalInformation.nationalIdentificationNumber",
+    "mapping_type": "default",
+    "data": {
+      "ID": "personID",
+      "value": "",
+      "valueType": "string",
+      "label": null
+    }
+  },
+  "compensation.senderInfoArray.3": {
+    "datasource": "user",
+    "source": "sub",
+    "mapping_type": "default",
+    "data": {
+      "ID": "userID",
+      "value": "",
+      "valueType": "string",
+      "label": null
+    }
+  },
+  "compensation.senderInfoArray.4": {
+    "datasource": "user",
+    "source": "email",
+    "mapping_type": "default",
+    "data": {
+      "ID": "email",
+      "value": "",
+      "valueType": "string",
+      "label": null
+    }
+  },
+  "attachmentsInfo.generalInfoArray.0": {
     "#tip": "attachment extra info",
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.further_clarification",
