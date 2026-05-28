@@ -461,6 +461,11 @@
       "sv": "Skriv ner vilken typ av inkomst det gäller. Inkomster kan till exempel vara andra understöd och inträdes- eller deltagaravgifter. Självfinansiering måste uppges som en inkomst även om den självfinansierade delen finansieras med sökandes övrig verksamhet."
     },
     "income_row_item.title": {
+      "en": "Income item",
+      "fi": "Tulo",
+      "sv": "Inkomst"
+    },
+    "income_type_row_item.title": {
       "en": "Type of income",
       "fi": "Tulon tyyppi",
       "sv": "Typ av inkomst"
