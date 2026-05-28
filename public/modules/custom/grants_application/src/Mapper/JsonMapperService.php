@@ -266,8 +266,8 @@ class JsonMapperService {
    *   All data sources combined
    */
   private function getDataSources(array $formData, string $applicationNumber, string|int $formTypeId, string $formIdentifier): array {
-    $community_official_uuids = $formData['applicant_info']['community_officials']['community_officials'];
-    $street_name = $formData['applicant_info']['community_address']['community_address'];
+    $community_official_uuids = $formData['applicant_info']['community_officials']['community_officials'] ?? [];
+    $street_name = $formData['applicant_info']['community_address']['community_address'] ?? '';
 
     $community_officials = [];
     $grantsProfile = $this->userInformationService->getGrantsProfileContent();
@@ -287,6 +287,7 @@ class JsonMapperService {
 
     try {
       $formSettings = $this->formSettingsService->getFormSettings($formTypeId, $formIdentifier);
+      $addresses = $grantsProfile->getAddresses();
       $address = $grantsProfile->getAddressByStreetname($street_name);
       $address['country'] = $address['country'] ?? 'Suomi';
     }
@@ -301,6 +302,7 @@ class JsonMapperService {
       'application_number' => $applicationNumber,
       'now' => (new \DateTime())->format('Y-m-d\TH:i:s'),
       'registration_date' => $grantsProfile->getRegistrationDate(TRUE),
+      'addresses' => $addresses,
       'selected_address' => $address,
       'selected_community_officials' => $community_officials,
       'status' => 'DRAFT',

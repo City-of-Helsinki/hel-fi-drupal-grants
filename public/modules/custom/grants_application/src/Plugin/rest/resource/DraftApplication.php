@@ -212,11 +212,19 @@ final class DraftApplication extends ResourceBase {
 
     }
 
+    $grantsProfile = $grants_profile_data->toArray();
+    if ($applicantType === 'private_person') {
+      $userProfileData = $this->userInformationService->getUserProfileData()['myProfile'] ?? [];
+      $grantsProfile['firstName'] = $userProfileData['firstName'] ?? '';
+      $grantsProfile['lastName'] = $userProfileData['lastName'] ?? '';
+      $grantsProfile['socialSecurityNumber'] = $userProfileData['verifiedPersonalInformation']['nationalIdentificationNumber'] ?? '';
+    }
+
     $response = [];
 
     // @todo Only return required user data to frontend
     $response['form_data'] = $sideDocument->getContent();
-    $response['grants_profile'] = $grants_profile_data->toArray();
+    $response['grants_profile'] = $grantsProfile;
     $response['user_data'] = $user_information;
     $response['status'] = $document->getStatus();
     $response['token'] = $this->csrfTokenGenerator->get('rest');

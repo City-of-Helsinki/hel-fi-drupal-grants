@@ -236,6 +236,13 @@ final class Application extends ResourceBase {
     $attachment_data = $this->avus2DataParser->getSubmittedAttachments($document);
     $history = $this->avus2DataParser->getHistory($document);
 
+    $grantsProfile = $grants_profile_data->toArray();
+    if ($applicantType === 'private_person') {
+      $grantsProfile['firstName'] = 'asd';
+      $grantsProfile['lastName'] = 'asd';
+      $grantsProfile['socialSecurityNumber'] = 'asd';
+    }
+
     // @todo Only return required user data to frontend.
     $response = [
       'form_data' => $sideDocument->getContent(),
@@ -246,7 +253,7 @@ final class Application extends ResourceBase {
         'status_updates' => $history,
         'attachments' => $attachment_data,
       ],
-      'grants_profile' => $grants_profile_data->toArray(),
+      'grants_profile' => $grantsProfile,
       'last_changed' => $changeTime->getTimestamp(),
       'status' => $document->getStatus(),
       'token' => $this->csrfTokenGenerator->get('rest'),
