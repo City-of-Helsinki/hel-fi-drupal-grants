@@ -1,0 +1,332 @@
+{
+  "definitions": {
+    "_income_row_item": {
+      "type": "object",
+      "title": "income_row_item.title",
+      "properties": {
+        "income_row_description": {
+          "title": "income_row_description.title",
+          "type": "string"
+        },
+        "income_row_amount": {
+          "format": "decimal-number",
+          "title": "income_row_amount.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "income_row_description",
+        "income_row_amount"
+      ]
+    },
+    "_expenditure_row_item": {
+      "type": "object",
+      "title": "expenditure_row_item.title",
+      "properties": {
+        "expenditure_row_description": {
+          "title": "expenditure_row_description.title",
+          "type": "string"
+        },
+        "expenditure_row_amount": {
+          "format": "decimal-number",
+          "title": "expenditure_row_amount.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "expenditure_row_description",
+        "expenditure_row_amount"
+      ]
+    },
+    "grant_info_step": {
+      "required": [
+        "acting_year_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "acting_year"
+          ]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 12,
+                  "label": "subventions.12.title"
+                }
+              ]
+            }
+          }
+        },
+        "camp_information": {
+          "title": "camp_information.title",
+          "type": "object",
+          "properties": {
+            "camp_information_markup": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "camp_information_markup.value",
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "budget_step": {
+      "type": "object",
+      "properties": {
+        "income_section": {
+          "title": "income_section.title",
+          "description": "income_section.description",
+          "type": "object",
+          "properties": {
+            "incomeGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "income_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_income_row_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_income_row_item"
+              }
+            }
+          }
+        },
+        "expenditure_section": {
+          "title": "expenditure_section.title",
+          "description": "expenditure_section.description",
+          "type": "object",
+          "properties": {
+            "expenditureGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "expenditure_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_expenditure_row_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_expenditure_row_item"
+              }
+            }
+          }
+        }
+      }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "additional_information.title",
+              "type": "string"
+            }
+          }
+        },
+        "attachments_section": {
+          "title": "attachments_section.title",
+          "description": "attachments_section.description",
+          "type": "object",
+          "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "multiple_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "previously_sent_attachments": {
+              "title": "previously_sent_attachments.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "previously_sent_attachments.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "community_rules": {
+              "title": "community_rules.title",
+              "type": "object",
+              "properties": {
+                "community_rules_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "camp_excel": {
+              "title": "camp_excel.title",
+              "type": "object",
+              "properties": {
+                "camp_excel_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "action_plan": {
+              "title": "action_plan.title",
+              "type": "object",
+              "properties": {
+                "action_plan_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "budget": {
+              "title": "budget.title",
+              "type": "object",
+              "properties": {
+                "budget_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "other_attachment_fieldset_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    },
+    "budget_step": {
+      "title": "budget_step.title",
+      "type": "object",
+      "$ref": "#/definitions/budget_step"
+    },
+    "attachments_step": {
+      "title": "attachments_step.title",
+      "type": "object",
+      "$ref": "#/definitions/attachments_step"
+    }
+  }
+}
