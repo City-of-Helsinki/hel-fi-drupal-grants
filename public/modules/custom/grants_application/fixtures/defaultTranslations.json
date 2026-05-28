@@ -765,6 +765,11 @@
       "fi": "Muu",
       "sv": "Annan"
     },
+    "subventions.12.title": {
+      "en": "Camp grant",
+      "fi": "Leiriavustus",
+      "sv": "Lägerunderstöd"
+    },
     "subventions.14.title": {
       "en": "Extra grant",
       "fi": "Lisäavustus",
