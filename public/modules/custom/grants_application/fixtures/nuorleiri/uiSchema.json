@@ -16,6 +16,9 @@
       }
     },
     "camp_information": {
+      "ui:options": {
+        "hideFromPreview": true
+      },
       "camp_information_markup": {
         "ui:field": "textParagraph"
       }
