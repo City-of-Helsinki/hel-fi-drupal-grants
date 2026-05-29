@@ -21,6 +21,7 @@ use Drupal\user\Entity\User;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\Plugin\rest\resource\Application
@@ -357,7 +358,7 @@ final class DraftTest extends KernelTestBase {
   /**
    * Dispatch a request to the draft endpoint.
    */
-  private function dispatch(string $method): JsonResponse {
+  private function dispatch(string $method): Response {
     $form_identifier = 'liikunta_suunnistuskartta_avustu';
     $uri = "/applications/$form_identifier/$this->applicationNumber";
     $request = Request::create($uri, $method, [], [], [], [], '');

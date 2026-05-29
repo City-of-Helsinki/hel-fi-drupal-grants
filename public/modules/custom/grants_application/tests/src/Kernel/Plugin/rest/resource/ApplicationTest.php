@@ -22,6 +22,7 @@ use Drupal\user\Entity\User;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\Plugin\rest\resource\Application
@@ -399,7 +400,7 @@ final class ApplicationTest extends KernelTestBase {
   /**
    * Build and dispatch a GET request to the application endpoint.
    */
-  private function dispatchGet(): JsonResponse {
+  private function dispatchGet(): Response {
     $form_identifier = 'liikunta_suunnistuskartta_avustu';
     $uri = "/applications/$form_identifier/application/$this->applicationNumber";
     $request = Request::create($uri, "GET", [], [], [], [], '');
