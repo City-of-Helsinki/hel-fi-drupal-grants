@@ -267,14 +267,14 @@ function grants_metadata_set_node_values(Node &$page, mixed $thirdPartySettings)
   }
   $applicationOpenStr = strtotime($thirdPartySettings["applicationOpen"]);
   $applicationOpenDate = $applicationOpenStr ?
-    DrupalDateTime::createFromFormat('U', $applicationOpenStr, 'Europe/Helsinki') :
+    DrupalDateTime::createFromFormat('U', (string) $applicationOpenStr, 'Europe/Helsinki') :
     NULL;
 
   $applicationOpenDateFormat = $applicationOpenDate?->format('Y-m-d\TH:i:s');
 
   $applicationCloseStr = strtotime($thirdPartySettings["applicationClose"]);
   $applicationCloseDate = $applicationCloseStr ?
-    DrupalDateTime::createFromFormat('U', $applicationCloseStr, 'Europe/Helsinki') :
+    DrupalDateTime::createFromFormat('U', (string) $applicationCloseStr, 'Europe/Helsinki') :
     NULL;
 
   $applicationCloseDateFormat = $applicationCloseDate?->format('Y-m-d\TH:i:s');
