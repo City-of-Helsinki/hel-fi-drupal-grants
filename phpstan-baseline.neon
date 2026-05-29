@@ -6276,11 +6276,6 @@ parameters:
 			path: public/modules/custom/grants_metadata/grants_metadata.module
 
 		-
-			message: "#^Parameter \\#2 \\$time of static method Drupal\\\\Component\\\\Datetime\\\\DateTimePlus\\:\\:createFromFormat\\(\\) expects string, \\(int\\<min, \\-1\\>\\|int\\<1, max\\>\\) given\\.$#"
-			count: 2
-			path: public/modules/custom/grants_metadata/grants_metadata.module
-
-		-
 			message: "#^Method Drupal\\\\grants_metadata\\\\ApplicationDataService\\:\\:getDataDefinition\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: public/modules/custom/grants_metadata/src/ApplicationDataService.php
