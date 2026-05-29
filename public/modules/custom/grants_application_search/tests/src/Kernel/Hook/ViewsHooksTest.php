@@ -15,6 +15,8 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application_search\Hook\ViewsHooks;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\search_api\Plugin\views\query\SearchApiQuery;
+use Drupal\search_api\Query\ConditionGroupInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
@@ -248,6 +250,30 @@ final class ViewsHooksTest extends KernelTestBase {
   }
 
   /**
+   * Tests searchFormAlter() overrides applicant options and adds the checkbox.
+   */
+  public function testSearchFormAlterOverridesApplicantOptionsAndAddsCheckbox(): void {
+    $form = [
+      '#id' => 'views-exposed-form-application-search-search-api-search-page',
+      'applicant' => [
+        '#options' => [
+          'registered_community' => 'old_registered_community',
+          'unregistered_community' => 'old_unregistered_community',
+          'private_person' => 'old_private_person',
+        ],
+      ],
+    ];
+
+    $this->sut->searchFormAlter($form);
+
+    $this->assertSame('Registered community', (string) $form['applicant']['#options']['registered_community']);
+    $this->assertSame('Unregistered community or group', (string) $form['applicant']['#options']['unregistered_community']);
+    $this->assertSame('Private person', (string) $form['applicant']['#options']['private_person']);
+    $this->assertSame('checkbox', $form['application_open']['#type']);
+    $this->assertSame('Show only the grants that can be applied for', (string) $form['application_open']['#title']);
+  }
+
+  /**
    * Tests preprocess_views_view() hook.
    */
   public function testPreprocessViewsViewBuildsNewExposedFilterLabels(): void {
@@ -296,6 +322,26 @@ final class ViewsHooksTest extends KernelTestBase {
       'subvention_type' => 'Subvention label',
       'target_type' => 'Target label',
     ], $variables['newExposedFilter']);
+  }
+
+  /**
+   * Tests viewsQueryAlter() adding a condition group when the filter is active.
+   */
+  public function testViewsQueryAlterBuildsConditionGroupWhenFilterIsActive(): void {
+    $view = $this->createMock(ViewExecutable::class);
+    $view->method('id')->willReturn('application_search_search_api');
+    $view->current_display = 'search_page';
+    $view->method('getExposedInput')->willReturn(['application_open' => '1']);
+
+    $conditionGroup = $this->createMock(ConditionGroupInterface::class);
+    $conditionGroup->method('addCondition')->willReturnSelf();
+    $conditionGroup->method('addConditionGroup')->willReturnSelf();
+
+    $query = $this->createMock(SearchApiQuery::class);
+    $query->method('createConditionGroup')->willReturn($conditionGroup);
+    $query->expects($this->once())->method('addConditionGroup');
+
+    $this->sut->viewsQueryAlter($view, $query);
   }
 
 }

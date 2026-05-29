@@ -60,6 +60,7 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['jasenet_0_6_vuotiaat'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -74,6 +75,7 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['0_6_joista_helsinkilaisia'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -88,6 +90,7 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['jasenet_7_28_vuotiaat'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -102,6 +105,7 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['7_28_joista_helsinkilaisia'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -116,6 +120,7 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['muut_jasenet_tai_aktiiviset_osallistujat'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -130,6 +135,7 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['muut_joista_helsinkilaisia'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
