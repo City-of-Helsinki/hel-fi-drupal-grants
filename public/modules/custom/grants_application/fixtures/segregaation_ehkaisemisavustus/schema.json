@@ -345,6 +345,11 @@
           "title": "project_methods_section.title",
           "type": "object",
           "properties": {}
+        },
+        "project_economy_section": {
+          "title": "project_economy_section.title",
+          "type": "object",
+          "properties": {}
         }
       },
       "allOf": [
