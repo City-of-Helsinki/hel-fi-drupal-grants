@@ -289,17 +289,9 @@
       "properties": {
         "activity_counts_section": {
           "title": "activity_counts_section.title",
+          "description": "activity_counts_section.text",
           "type": "object",
           "properties": {
-            "activity_counts_text": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "activity_counts_section.text",
-                  "type": "null"
-                }
-              ]
-            },
             "event_days_count_helsinki": {
               "title": "event_days_count_helsinki.title",
               "type": "integer"
@@ -407,8 +399,7 @@
               },
               "additionalItems": {
                 "$ref": "#/definitions/_venue_item"
-              },
-              "minItems": 1
+              }
             }
           }
         },
@@ -554,17 +545,9 @@
             },
             "budget_income": {
               "title": "budget_income.title",
+              "description": "budget_income.text",
               "type": "object",
               "properties": {
-                "budget_income_text": {
-                  "type": "array",
-                  "items": [
-                    {
-                      "title": "budget_income.text",
-                      "type": "null"
-                    }
-                  ]
-                },
                 "income_group_name": {
                   "type": "string",
                   "default": "general"
@@ -603,17 +586,9 @@
             },
             "budget_cost": {
               "title": "budget_cost.title",
+              "description": "budget_cost.text",
               "type": "object",
               "properties": {
-                "budget_cost_text": {
-                  "type": "array",
-                  "items": [
-                    {
-                      "title": "budget_cost.text",
-                      "type": "null"
-                    }
-                  ]
-                },
                 "cost_group_name": {
                   "type": "string",
                   "default": "general"
