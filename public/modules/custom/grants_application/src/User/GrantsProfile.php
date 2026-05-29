@@ -153,6 +153,16 @@ class GrantsProfile {
   }
 
   /**
+   * Get the addresses.
+   *
+   * @return array<mixed>
+   *   The addresses.
+   */
+  public function getAddresses(): array {
+    return $this->grantsProfileData['addresses'] ?? [];
+  }
+
+  /**
    * Get the registration date.
    *
    * @param bool $formatted
@@ -162,6 +172,11 @@ class GrantsProfile {
    *   The registration date.
    */
   public function getRegistrationDate(bool $formatted = FALSE): string {
+    $registrationDate = $this->grantsProfileData['registrationDate'] ?? FALSE;
+    if (!$registrationDate) {
+      return '';
+    }
+
     return $formatted ?
       (new \DateTime($this->grantsProfileData['registrationDate']))
         ->format('d.m.Y') :
@@ -244,7 +259,7 @@ class GrantsProfile {
    * @return string
    *   Business id.
    */
-  public function getBusinessId(): string {
+  public function getBusinessId(): string|null {
     return $this->grantsProfileData['businessId'];
   }
 

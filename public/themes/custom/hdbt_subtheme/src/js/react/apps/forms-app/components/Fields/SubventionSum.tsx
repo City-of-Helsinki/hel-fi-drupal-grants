@@ -1,7 +1,7 @@
 import type { FieldProps } from '@rjsf/utils';
 import { TextInput } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { useEffect, useRef, type ComponentPropsWithRef } from 'react';
+import { type ComponentPropsWithRef, useEffect, useRef } from 'react';
 
 import { formDataAtomRef, getSubventionFieldsAtom, shouldRenderPreviewAtom } from '../../store';
 import { getSubventionSum, sanitizeNumericInput } from '../../utils';

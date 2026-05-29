@@ -1,7 +1,8 @@
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
-import { useAtomValue, type WritableAtom } from 'jotai';
+
 import type { RJSFSchema } from '@rjsf/utils';
+import { useAtomValue, type WritableAtom } from 'jotai';
 
 import { getCurrentStepAtom } from '../store';
 
