@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: This file has many references to form data that is always any
 
+import { getDefaultRegistry } from '@rjsf/core';
 import type {
   ArrayFieldTemplateProps,
   FieldTemplateProps,
@@ -7,11 +8,11 @@ import type {
   ObjectFieldTemplatePropertyType,
   ObjectFieldTemplateProps,
 } from '@rjsf/utils';
-import { getDefaultRegistry } from '@rjsf/core';
-import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus, type AccordionTheme } from 'hds-react';
-import type { ReactNode } from 'react';
+import { Accordion, type AccordionTheme, Button, Fieldset, IconCross, IconPlus, Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
-
+import type { ReactNode } from 'react';
+import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
+import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import {
   formStepsAtom,
   getApplicantTypeAtom,
@@ -19,11 +20,9 @@ import {
   isEmptyPreviewAtom,
   shouldRenderPreviewAtom,
 } from '../store';
-import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
-import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
-import { ALLOWED_HTML_TAGS, getTooltip } from '../utils';
-import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import type { UiSchema } from '../types/UiSchema';
+import { ALLOWED_HTML_TAGS, getTooltip } from '../utils';
+import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -170,6 +169,14 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     applicantType === 'registered_community'
       ? Drupal.t('Community for which the grant is being applied for', {}, { context: 'Grants application' })
       : Drupal.t('Applicant details', {}, { context: 'Grants application' });
+  const prhBlockDescription =
+    applicantType === 'registered_community'
+      ? Drupal.t(
+          'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
+          {},
+          { context: 'Grants application' },
+        )
+      : Drupal.t('The data has been fetched from your application profile.', {}, { context: 'Grants application' });
 
   if (idSchema.$id === 'root') {
     const className = shouldRenderPreview ? 'hdbt-form__preview form-wrapper' : 'form-wrapper';
@@ -225,11 +232,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
         {stepId === 'applicant_info' && !isEmptyPreview && (
           <section className='prh-content-block'>
             <h3 className='prh-content-block__title'>{prhBlockTitle}</h3>
-            <p>
-              {Drupal.t(
-                'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
-              )}
-            </p>
+            <p>{prhBlockDescription}</p>
             <ApplicantInfo />
           </section>
         )}

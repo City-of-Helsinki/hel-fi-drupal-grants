@@ -22,6 +22,7 @@ use Drupal\user\Entity\User;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\Plugin\rest\resource\Application
@@ -270,6 +271,7 @@ final class ApplicationTest extends KernelTestBase {
 
     $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
     $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
     $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
     $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
     $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
@@ -380,6 +382,69 @@ final class ApplicationTest extends KernelTestBase {
     $response = $http_kernel->handle($request);
 
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+  }
+
+  /**
+   * Override the user information service with a custom applicant type/profile.
+   */
+  private function overrideUserService(string $applicantType, GrantsProfile $profile): void {
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn($applicantType);
+    $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn($profile);
+    $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
+    $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
+    $this->container->set(UserInformationService::class, $userService);
+  }
+
+  /**
+   * Build and dispatch a GET request to the application endpoint.
+   */
+  private function dispatchGet(): Response {
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $uri = "/applications/$form_identifier/application/$this->applicationNumber";
+    $request = Request::create($uri, "GET", [], [], [], [], '');
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    return $this->container->get('http_kernel')->handle($request);
+  }
+
+  /**
+   * Applicant type not allowed by the form yields a 403.
+   */
+  public function testApplicationGetDeniedApplicantType(): void {
+    // Form 58 only allows registered_community.
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $this->overrideUserService('private_person', new GrantsProfile($userData['grants_profile_array']));
+
+    $response = $this->dispatchGet();
+    $this->assertEquals(403, $response->getStatusCode());
+  }
+
+  /**
+   * An empty profile redirects to the profile edit page.
+   */
+  public function testApplicationGetEmptyProfileRedirect(): void {
+    $this->overrideUserService('registered_community', new GrantsProfile([]));
+
+    $response = $this->dispatchGet();
+    $this->assertEquals(403, $response->getStatusCode());
+    $this->assertStringContainsString('redirect_url', $response->getContent() ?: '');
+  }
+
+  /**
+   * A profile missing addresses or bank accounts redirects.
+   */
+  public function testApplicationGetIncompleteProfileRedirect(): void {
+    $this->overrideUserService('registered_community', new GrantsProfile([
+      'businessId' => '1234567-1',
+      'addresses' => [],
+      'bankAccounts' => [],
+    ]));
+
+    $response = $this->dispatchGet();
+    $this->assertEquals(403, $response->getStatusCode());
   }
 
   /**

@@ -1,8 +1,9 @@
 // biome-ignore-all lint/security/noDangerouslySetInnerHtml: @todo UHF-12501
-import { useAtom, useAtomValue } from 'jotai';
+
 import { Checkbox, Notification } from 'hds-react';
-import { finalAcceptanceAtom, getCurrentStepAtom } from '../store';
+import { useAtom, useAtomValue } from 'jotai';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
+import { finalAcceptanceAtom, getCurrentStepAtom } from '../store';
 
 export const Terms = () => {
   const [finalAcceptance, setFinalAcceptance] = useAtom(finalAcceptanceAtom);

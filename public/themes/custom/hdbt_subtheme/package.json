@@ -42,8 +42,11 @@
     "breakpoint-sass": "^3.0.0",
     "glob": "^11.0.0",
     "i18next": "^25.1.2",
+    "jotai": "file:../../contrib/hdbt/node_modules/jotai",
     "jsdom": "^26.0.0",
     "npm-run-all2": "^8.0.4",
+    "react": "file:../../contrib/hdbt/node_modules/react",
+    "react-dom": "file:../../contrib/hdbt/node_modules/react-dom",
     "react-i18next": "^15.5.1",
     "vitest": "^3.0.8"
   },
@@ -69,6 +72,7 @@
     "stylelint-high-performance-animation": "^1.10.0",
     "stylelint-order": "^6.0.0",
     "stylelint-scss": "^6.0.0",
+    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^3.0.8"
   }
 }

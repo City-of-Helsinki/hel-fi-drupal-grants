@@ -6,9 +6,11 @@
 import type { FieldProps, UiSchema } from '@rjsf/utils';
 import { Checkbox, FileInput as HDSFileInput } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useTranslation } from 'react-i18next';
 import type { ChangeEvent } from 'react';
-
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
+import { SubmitStates } from '../enum/SubmitStates';
 import {
   formConfigAtom,
   getApplicationNumberAtom,
@@ -18,9 +20,6 @@ import {
 } from '../store';
 import { formatErrors } from '../utils';
 import { PreviewInput } from './Input';
-import { useState } from 'react';
-import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
-import { SubmitStates } from '../enum/SubmitStates';
 
 type ATVFile = { fileId: number; fileName: string; fileType: string; href: string; size: number };
 

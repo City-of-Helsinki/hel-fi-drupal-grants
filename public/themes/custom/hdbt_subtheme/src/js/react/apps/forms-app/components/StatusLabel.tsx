@@ -1,9 +1,8 @@
 import { StatusLabel as HDStatusLabel, IconAlertCircle, IconInfoCircle, type StatusLabelType } from 'hds-react';
 import { useAtomValue } from 'jotai';
-
-import { getSubmitStatusAtom } from '../store';
 import { StatusLabels } from '../enum/StatusLabels';
 import { SubmitStates } from '../enum/SubmitStates';
+import { getSubmitStatusAtom } from '../store';
 
 export const StatusLabel = () => {
   const submitStatus = useAtomValue(getSubmitStatusAtom);

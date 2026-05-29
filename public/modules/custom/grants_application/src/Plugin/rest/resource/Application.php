@@ -142,6 +142,7 @@ final class Application extends ResourceBase {
     }
 
     try {
+      $applicantType = $this->userInformationService->getApplicantType();
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_information = $this->userInformationService->getUserData();
@@ -149,6 +150,20 @@ final class Application extends ResourceBase {
     catch (\Exception $e) {
       // Unable to fetch user information.
       return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
+    }
+
+    if (!$settings->isAllowedApplicantType($applicantType)) {
+      $message = $this->t('This application is not available for your user role.');
+      $this->messenger()->addError($message);
+
+      return new JsonResponse([
+        'error' => $message,
+        'redirect_url' => Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString(),
+      ], 403);
+    }
+
+    if ($redirect = $this->profileIncompleteRedirect($grants_profile_data->toArray())) {
+      return $redirect;
     }
 
     try {
@@ -221,6 +236,13 @@ final class Application extends ResourceBase {
     $attachment_data = $this->avus2DataParser->getSubmittedAttachments($document);
     $history = $this->avus2DataParser->getHistory($document);
 
+    $grantsProfile = $grants_profile_data->toArray();
+    if ($applicantType === 'private_person') {
+      $grantsProfile['firstName'] = 'asd';
+      $grantsProfile['lastName'] = 'asd';
+      $grantsProfile['socialSecurityNumber'] = 'asd';
+    }
+
     // @todo Only return required user data to frontend.
     $response = [
       'form_data' => $sideDocument->getContent(),
@@ -231,16 +253,14 @@ final class Application extends ResourceBase {
         'status_updates' => $history,
         'attachments' => $attachment_data,
       ],
-      'grants_profile' => $grants_profile_data->toArray(),
+      'grants_profile' => $grantsProfile,
       'last_changed' => $changeTime->getTimestamp(),
       'status' => $document->getStatus(),
       'token' => $this->csrfTokenGenerator->get('rest'),
       'user_data' => $user_information,
     ];
-    $response['form_settings'] = [
-      'acting_years' => $settings->getActingYears(),
-    ];
     $response = array_merge($response, $settings->toArray());
+    $response['settings']['applicant_type'] = $applicantType;
 
     return new JsonResponse($response);
   }
@@ -661,6 +681,48 @@ final class Application extends ResourceBase {
         ['absolute' => TRUE],
       )->toString(),
     ], 200);
+  }
+
+  /**
+   * Build a redirect to the grants profile edit page if the profile is
+   * incomplete. Mirrors the old webform behavior in
+   * GrantsHandler::prepareForm. Applies uniformly to all applicant types.
+   *
+   * @param array<string, mixed> $profileContent
+   *   The grants profile content array (from GrantsProfile::toArray()).
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse|null
+   *   Redirect response when the profile is incomplete, NULL otherwise.
+   */
+  private function profileIncompleteRedirect(array $profileContent): ?JsonResponse {
+    $tOpts = ['context' => 'grants_handler'];
+
+    if (empty($profileContent)) {
+      $this->messenger()->addWarning($this->t('You must have grants profile created.', [], $tOpts));
+      return new JsonResponse([
+        'error' => $this->t('Your profile is incomplete.', [], $tOpts),
+        'redirect_url' => Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE])->toString(),
+      ], 403);
+    }
+
+    $needsRedirect = FALSE;
+    if (empty($profileContent['addresses'])) {
+      $this->messenger()->addWarning($this->t('You must have address saved to your profile.', [], $tOpts));
+      $needsRedirect = TRUE;
+    }
+    if (empty($profileContent['bankAccounts'])) {
+      $this->messenger()->addWarning($this->t('You must have bank account saved to your profile.', [], $tOpts));
+      $needsRedirect = TRUE;
+    }
+
+    if (!$needsRedirect) {
+      return NULL;
+    }
+
+    return new JsonResponse([
+      'error' => $this->t('Your profile is incomplete.', [], $tOpts),
+      'redirect_url' => Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE])->toString(),
+    ], 403);
   }
 
   /**

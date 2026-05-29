@@ -104,9 +104,9 @@ const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
  * @return {object} - Resulting data
  */
 const transformData = (data: any) => {
-  const { grants_profile, form_data: formData, schema: originalSchema, ui_schema: originalUiSchema } = data;
+  const { settings, form_data: formData, schema: originalSchema, ui_schema: originalUiSchema } = data;
 
-  const [schema, ui_schema] = addApplicantInfoStep(originalSchema, originalUiSchema, grants_profile);
+  const [schema, ui_schema] = addApplicantInfoStep(originalSchema, originalUiSchema, settings?.applicant_type);
   const { definitions, properties } = schema;
   const transformedProperties: any = {};
 
