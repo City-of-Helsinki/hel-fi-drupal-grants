@@ -269,6 +269,7 @@ final class DraftTest extends KernelTestBase {
 
     $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
     $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
     $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
     $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
     $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
