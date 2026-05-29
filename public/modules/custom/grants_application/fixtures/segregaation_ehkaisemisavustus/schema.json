@@ -268,30 +268,30 @@
           "title": "grant_target_section.title",
           "type": "object",
           "required": [
-            "avustuksen_kohde_yhdistys_toimintaryhma",
-            "avustuksen_kohde_tiivistelma",
-            "onko_kyseessa_jatkohakemus"
+            "grant_recipient_type",
+            "applicant_summary",
+            "is_application_extension"
           ],
           "properties": {
-            "avustuksen_kohde_yhdistys_toimintaryhma": {
-              "title": "avustuksen_kohde_yhdistys_toimintaryhma.title",
+            "grant_recipient_type": {
+              "title": "grant_recipient_type.title",
               "type": "string"
             },
-            "avustuksen_kohde_tiivistelma": {
-              "title": "avustuksen_kohde_tiivistelma.title",
+            "applicant_summary": {
+              "title": "applicant_summary.title",
               "type": "string"
             },
-            "jatkohakemus_info": {
+            "continuation_info": {
               "type": "array",
               "items": [
                 {
-                  "title": "jatkohakemus_info.value",
+                  "title": "continuation_info.value",
                   "type": "null"
                 }
               ]
             },
-            "onko_kyseessa_jatkohakemus": {
-              "title": "onko_kyseessa_jatkohakemus.title",
+            "is_application_extension": {
+              "title": "is_application_extension.title",
               "enum": [
                 false,
                 true
@@ -304,20 +304,20 @@
           "title": "project_schedule_section.title",
           "type": "object",
           "required": [
-            "hankkeen_nimi",
+            "project_name",
             "project_schedule"
           ],
           "properties": {
-            "hankkeen_nimi": {
-              "title": "hankkeen_nimi.title",
+            "project_name": {
+              "title": "project_name.title",
               "type": "string"
             },
             "project_schedule": {
               "title": "project_schedule.title",
               "type": "object",
               "required": [
-                "hankkeen_toimenpiteet_alkupvm",
-                "hankkeen_toimenpiteet_loppupvm"
+                "start_date",
+                "end_date"
               ],
               "properties": {
                 "project_schedule_info": {
@@ -329,12 +329,12 @@
                     }
                   ]
                 },
-                "hankkeen_toimenpiteet_alkupvm": {
-                  "title": "hankkeen_toimenpiteet_alkupvm.title",
+                "start_date": {
+                  "title": "start_date.title",
                   "type": "string"
                 },
-                "hankkeen_toimenpiteet_loppupvm": {
-                  "title": "hankkeen_toimenpiteet_loppupvm.title",
+                "end_date": {
+                  "title": "end_date.title",
                   "type": "string"
                 }
               }
@@ -358,7 +358,7 @@
             "properties": {
               "grant_target_section": {
                 "properties": {
-                  "onko_kyseessa_jatkohakemus": {
+                  "is_application_extension": {
                     "const": false
                   }
                 }
@@ -369,91 +369,91 @@
             "properties": {
               "project_schedule_section": {
                 "properties": {
-                  "hankkeen_kohderyhmat_kenelle": {
-                    "title": "hankkeen_kohderyhmat_kenelle.title",
+                  "target_group_description": {
+                    "title": "target_group_description.title",
                     "type": "string"
                   },
-                  "hankkeen_kohderyhmat_tavoittavuus": {
-                    "title": "hankkeen_kohderyhmat_tavoittavuus.title",
+                  "participant_estimate": {
+                    "title": "participant_estimate.title",
                     "type": "object",
                     "required": [
-                      "hankkeen_kohderyhmat_lapset_9_12",
-                      "hankkeen_kohderyhmat_nuoret_18_24",
-                      "hankkeen_kohderyhmat_uudet"
+                      "participant_estimate_9_12",
+                      "participant_estimate_18_24",
+                      "new_participant_estimate"
                     ],
                     "properties": {
-                      "tavoittavuus_info": {
+                      "participant_estimate_info": {
                         "type": "array",
                         "items": [
                           {
-                            "title": "hankkeen_kohderyhmat_tavoittavuus.help",
+                            "title": "participant_estimate.help",
                             "type": "null"
                           }
                         ]
                       },
-                      "hankkeen_kohderyhmat_lapset_9_12": {
-                        "title": "hankkeen_kohderyhmat_lapset_9_12.title",
+                      "participant_estimate_9_12": {
+                        "title": "participant_estimate_9_12.title",
                         "type": "integer"
                       },
-                      "hankkeen_kohderyhmat_nuoret_18_24": {
-                        "title": "hankkeen_kohderyhmat_nuoret_18_24.title",
+                      "participant_estimate_18_24": {
+                        "title": "participant_estimate_18_24.title",
                         "type": "integer"
                       },
-                      "hankkeen_kohderyhmat_uudet": {
-                        "title": "hankkeen_kohderyhmat_uudet.title",
+                      "new_participant_estimate": {
+                        "title": "new_participant_estimate.title",
                         "type": "integer"
                       }
                     }
                   },
-                  "hankkeen_kohderyhmat_postinrot": {
-                    "title": "hankkeen_kohderyhmat_postinrot.title",
+                  "postal_code_areas": {
+                    "title": "postal_code_areas.title",
                     "type": "string"
                   },
-                  "hankkeen_kohderyhmat_tarve": {
-                    "title": "hankkeen_kohderyhmat_tarve.title",
+                  "area_need": {
+                    "title": "area_need.title",
                     "type": "string"
                   }
                 },
                 "required": [
-                  "hankkeen_kohderyhmat_kenelle",
-                  "hankkeen_kohderyhmat_tavoittavuus",
-                  "hankkeen_kohderyhmat_postinrot",
-                  "hankkeen_kohderyhmat_tarve"
+                  "target_group_description",
+                  "participant_estimate",
+                  "postal_code_areas",
+                  "area_need"
                 ]
               },
               "project_methods_section": {
                 "properties": {
-                  "hankkeen_kohderyhmat_tavoitus_seg": {
-                    "title": "hankkeen_kohderyhmat_tavoitus_seg.title",
+                  "target_group_reach": {
+                    "title": "target_group_reach.title",
                     "type": "string"
                   },
-                  "hankkeen_kohderyhmat_konkretia_seg": {
-                    "title": "hankkeen_kohderyhmat_konkretia_seg.title",
+                  "impact_on_participants": {
+                    "title": "impact_on_participants.title",
                     "type": "string"
                   },
-                  "hankkeen_kohderyhmat_osallisuus_seg": {
-                    "title": "hankkeen_kohderyhmat_osallisuus_seg.title",
+                  "youth_participation_planning": {
+                    "title": "youth_participation_planning.title",
                     "type": "string"
                   },
-                  "hankkeen_keskeisimmat_kumppanit_seg": {
-                    "title": "hankkeen_keskeisimmat_kumppanit_seg.title",
+                  "key_partners": {
+                    "title": "key_partners.title",
                     "type": "string"
                   },
-                  "hankkeen_uudet_kumppanit_seg": {
-                    "title": "hankkeen_uudet_kumppanit_seg.title",
+                  "new_partnerships": {
+                    "title": "new_partnerships.title",
                     "type": "string"
                   },
-                  "hankkeen_riskit_vakiinnuttaminen": {
-                    "title": "hankkeen_riskit_vakiinnuttaminen.title",
+                  "establishment_after_project": {
+                    "title": "establishment_after_project.title",
                     "type": "string"
                   }
                 },
                 "required": [
-                  "hankkeen_kohderyhmat_tavoitus_seg",
-                  "hankkeen_kohderyhmat_konkretia_seg",
-                  "hankkeen_kohderyhmat_osallisuus_seg",
-                  "hankkeen_keskeisimmat_kumppanit_seg",
-                  "hankkeen_uudet_kumppanit_seg"
+                  "target_group_reach",
+                  "impact_on_participants",
+                  "youth_participation_planning",
+                  "key_partners",
+                  "new_partnerships"
                 ]
               }
             }
@@ -464,7 +464,7 @@
             "properties": {
               "grant_target_section": {
                 "properties": {
-                  "onko_kyseessa_jatkohakemus": {
+                  "is_application_extension": {
                     "const": true
                   }
                 }
@@ -475,113 +475,113 @@
             "properties": {
               "project_schedule_section": {
                 "properties": {
-                  "hankkeen_mennyt_tavoite": {
-                    "title": "hankkeen_mennyt_tavoite.title",
+                  "past_project_objective": {
+                    "title": "past_project_objective.title",
                     "type": "string"
                   },
-                  "hankkeen_kohderyhma_ja_keinot": {
-                    "title": "hankkeen_kohderyhma_ja_keinot.title",
+                  "past_target_group_and_means": {
+                    "title": "past_target_group_and_means.title",
                     "type": "string"
                   },
-                  "hankkeen_kohderyhmat_jo_tavoitettu": {
-                    "title": "hankkeen_kohderyhmat_jo_tavoitettu.title",
+                  "participants_reached": {
+                    "title": "participants_reached.title",
                     "type": "object",
                     "required": [
-                      "hankkeen_jo_osallistuneet_9_12",
-                      "hankkeen_jo_osallistuneet_18_24",
-                      "hankkeen_jo_osalistuneet_uudet"
+                      "participants_reached_9_12",
+                      "participants_reached_18_24",
+                      "participants_reached_new"
                     ],
                     "properties": {
-                      "jo_tavoitettu_info": {
+                      "participants_reached_info": {
                         "type": "array",
                         "items": [
                           {
-                            "title": "hankkeen_kohderyhmat_jo_tavoitettu.help",
+                            "title": "participants_reached.help",
                             "type": "null"
                           }
                         ]
                       },
-                      "hankkeen_jo_osallistuneet_9_12": {
-                        "title": "hankkeen_jo_osallistuneet_9_12.title",
+                      "participants_reached_9_12": {
+                        "title": "participants_reached_9_12.title",
                         "type": "integer"
                       },
-                      "hankkeen_jo_osallistuneet_18_24": {
-                        "title": "hankkeen_jo_osallistuneet_18_24.title",
+                      "participants_reached_18_24": {
+                        "title": "participants_reached_18_24.title",
                         "type": "integer"
                       },
-                      "hankkeen_jo_osalistuneet_uudet": {
-                        "title": "hankkeen_jo_osalistuneet_uudet.title",
+                      "participants_reached_new": {
+                        "title": "participants_reached_new.title",
                         "type": "integer"
                       }
                     }
                   },
-                  "hankkeen_kaytetyt_tunnit_per_postinumero": {
-                    "title": "hankkeen_kaytetyt_tunnit_per_postinumero.title",
+                  "hours_by_postal_area": {
+                    "title": "hours_by_postal_area.title",
                     "type": "string"
                   }
                 },
                 "required": [
-                  "hankkeen_mennyt_tavoite",
-                  "hankkeen_kohderyhma_ja_keinot",
-                  "hankkeen_kohderyhmat_jo_tavoitettu",
-                  "hankkeen_kaytetyt_tunnit_per_postinumero"
+                  "past_project_objective",
+                  "past_target_group_and_means",
+                  "participants_reached",
+                  "hours_by_postal_area"
                 ]
               },
               "project_methods_section": {
                 "properties": {
-                  "hankeen_toteutuneet_tavoitteet": {
-                    "title": "hankeen_toteutuneet_tavoitteet.title",
+                  "achieved_objectives": {
+                    "title": "achieved_objectives.title",
                     "type": "string"
                   },
-                  "hankkeen_tulevan_vuoden_tavoitteet": {
-                    "title": "hankkeen_tulevan_vuoden_tavoitteet.title",
+                  "current_year_objectives": {
+                    "title": "current_year_objectives.title",
                     "type": "string"
                   },
-                  "hankkeen_kumppanuudet_ja_toimintamuodot": {
-                    "title": "hankkeen_kumppanuudet_ja_toimintamuodot.title",
+                  "tested_partnerships": {
+                    "title": "tested_partnerships.title",
                     "type": "string"
                   },
-                  "hankkeen_vanhat_yhteistyokumppanit": {
-                    "title": "hankkeen_vanhat_yhteistyokumppanit.title",
+                  "key_partners_report": {
+                    "title": "key_partners_report.title",
                     "type": "string"
                   },
-                  "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun": {
-                    "title": "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun.title",
+                  "youth_participation_report": {
+                    "title": "youth_participation_report.title",
                     "type": "string"
                   }
                 },
                 "required": [
-                  "hankeen_toteutuneet_tavoitteet",
-                  "hankkeen_tulevan_vuoden_tavoitteet",
-                  "hankkeen_vanhat_yhteistyokumppanit",
-                  "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun"
+                  "achieved_objectives",
+                  "current_year_objectives",
+                  "key_partners_report",
+                  "youth_participation_report"
                 ]
               },
               "project_economy_section": {
                 "title": "project_economy_section.title",
                 "type": "object",
                 "required": [
-                  "hankkeen_kaytetty_avustuksen_maara",
-                  "hankkeen_edellisen_vuoden_avustuksen_kaytto",
-                  "hankkeen_talous_toiminta_aikataulu_muutokset",
-                  "hankkeen_jatkokausi_suunnitelma"
+                  "previous_grant_amount_used",
+                  "grant_usage_report",
+                  "significant_changes",
+                  "continuation_plan"
                 ],
                 "properties": {
-                  "hankkeen_kaytetty_avustuksen_maara": {
-                    "title": "hankkeen_kaytetty_avustuksen_maara.title",
+                  "previous_grant_amount_used": {
+                    "title": "previous_grant_amount_used.title",
                     "format": "decimal-number",
                     "type": "string"
                   },
-                  "hankkeen_edellisen_vuoden_avustuksen_kaytto": {
-                    "title": "hankkeen_edellisen_vuoden_avustuksen_kaytto.title",
+                  "grant_usage_report": {
+                    "title": "grant_usage_report.title",
                     "type": "string"
                   },
-                  "hankkeen_talous_toiminta_aikataulu_muutokset": {
-                    "title": "hankkeen_talous_toiminta_aikataulu_muutokset.title",
+                  "significant_changes": {
+                    "title": "significant_changes.title",
                     "type": "string"
                   },
-                  "hankkeen_jatkokausi_suunnitelma": {
-                    "title": "hankkeen_jatkokausi_suunnitelma.title",
+                  "continuation_plan": {
+                    "title": "continuation_plan.title",
                     "type": "string"
                   }
                 }

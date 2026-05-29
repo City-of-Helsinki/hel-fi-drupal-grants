@@ -110,55 +110,55 @@
   "information_in_more_detail_step": {
     "grant_target_section": {
       "ui:order": [
-        "avustuksen_kohde_yhdistys_toimintaryhma",
-        "avustuksen_kohde_tiivistelma",
-        "jatkohakemus_info",
-        "onko_kyseessa_jatkohakemus"
+        "grant_recipient_type",
+        "applicant_summary",
+        "continuation_info",
+        "is_application_extension"
       ],
-      "avustuksen_kohde_yhdistys_toimintaryhma": {
+      "grant_recipient_type": {
         "ui:widget": "textarea",
         "misc:max-length": 100,
         "ui:options": {
-          "tooltipLabel": "avustuksen_kohde_yhdistys_toimintaryhma.title",
-          "tooltipButtonLabel": "avustuksen_kohde_yhdistys_toimintaryhma.title",
-          "tooltipText": "avustuksen_kohde_yhdistys_toimintaryhma.description"
+          "tooltipLabel": "grant_recipient_type.title",
+          "tooltipButtonLabel": "grant_recipient_type.title",
+          "tooltipText": "grant_recipient_type.description"
         }
       },
-      "avustuksen_kohde_tiivistelma": {
+      "applicant_summary": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "jatkohakemus_info": {
+      "continuation_info": {
         "misc:variant": "infobox",
         "ui:field": "textParagraph"
       },
-      "onko_kyseessa_jatkohakemus": {
+      "is_application_extension": {
         "ui:widget": "radio",
         "ui:enumNames": [
           "boolean.no",
           "boolean.yes"
         ],
         "ui:options": {
-          "tooltipLabel": "onko_kyseessa_jatkohakemus.title",
-          "tooltipButtonLabel": "onko_kyseessa_jatkohakemus.title",
-          "tooltipText": "onko_kyseessa_jatkohakemus.description"
+          "tooltipLabel": "is_application_extension.title",
+          "tooltipButtonLabel": "is_application_extension.title",
+          "tooltipText": "is_application_extension.description"
         }
       }
     },
     "project_schedule_section": {
       "ui:order": [
-        "hankkeen_nimi",
+        "project_name",
         "project_schedule",
-        "hankkeen_kohderyhmat_kenelle",
-        "hankkeen_mennyt_tavoite",
-        "hankkeen_kohderyhma_ja_keinot",
-        "hankkeen_kohderyhmat_tavoittavuus",
-        "hankkeen_kohderyhmat_jo_tavoitettu",
-        "hankkeen_kaytetyt_tunnit_per_postinumero",
-        "hankkeen_kohderyhmat_postinrot",
-        "hankkeen_kohderyhmat_tarve"
+        "target_group_description",
+        "past_project_objective",
+        "past_target_group_and_means",
+        "participant_estimate",
+        "participants_reached",
+        "hours_by_postal_area",
+        "postal_code_areas",
+        "area_need"
       ],
-      "hankkeen_nimi": {
+      "project_name": {
         "ui:widget": "textarea",
         "misc:max-length": 300
       },
@@ -169,151 +169,151 @@
         "project_schedule_info": {
           "ui:field": "textParagraph"
         },
-        "hankkeen_toimenpiteet_alkupvm": {
+        "start_date": {
           "ui:widget": "date",
           "ui:options": {
-            "printableName": "hankkeen_toimenpiteet_alkupvm.printable_title"
+            "printableName": "start_date.printable_title"
           }
         },
-        "hankkeen_toimenpiteet_loppupvm": {
+        "end_date": {
           "ui:widget": "date",
           "ui:options": {
-            "printableName": "hankkeen_toimenpiteet_loppupvm.printable_title"
+            "printableName": "end_date.printable_title"
           }
         }
       },
-      "hankkeen_kohderyhmat_kenelle": {
+      "target_group_description": {
         "ui:widget": "textarea",
         "misc:max-length": 1250
       },
-      "hankkeen_mennyt_tavoite": {
+      "past_project_objective": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_kohderyhma_ja_keinot": {
+      "past_target_group_and_means": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_kohderyhmat_tavoittavuus": {
+      "participant_estimate": {
         "ui:options": {
           "hideNameFromPrint": true
         },
-        "tavoittavuus_info": {
+        "participant_estimate_info": {
           "ui:field": "textParagraph"
         }
       },
-      "hankkeen_kohderyhmat_jo_tavoitettu": {
+      "participants_reached": {
         "ui:options": {
           "hideNameFromPrint": true
         },
-        "jo_tavoitettu_info": {
+        "participants_reached_info": {
           "ui:field": "textParagraph"
         }
       },
-      "hankkeen_kaytetyt_tunnit_per_postinumero": {
+      "hours_by_postal_area": {
         "ui:widget": "textarea",
         "misc:max-length": 500
       },
-      "hankkeen_kohderyhmat_postinrot": {
+      "postal_code_areas": {
         "ui:widget": "textarea",
         "misc:max-length": 500
       },
-      "hankkeen_kohderyhmat_tarve": {
+      "area_need": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       }
     },
     "project_methods_section": {
       "ui:order": [
-        "hankkeen_kohderyhmat_tavoitus_seg",
-        "hankkeen_kohderyhmat_konkretia_seg",
-        "hankkeen_kohderyhmat_osallisuus_seg",
-        "hankkeen_keskeisimmat_kumppanit_seg",
-        "hankkeen_uudet_kumppanit_seg",
-        "hankkeen_riskit_vakiinnuttaminen",
-        "hankeen_toteutuneet_tavoitteet",
-        "hankkeen_tulevan_vuoden_tavoitteet",
-        "hankkeen_kumppanuudet_ja_toimintamuodot",
-        "hankkeen_vanhat_yhteistyokumppanit",
-        "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun"
+        "target_group_reach",
+        "impact_on_participants",
+        "youth_participation_planning",
+        "key_partners",
+        "new_partnerships",
+        "establishment_after_project",
+        "achieved_objectives",
+        "current_year_objectives",
+        "tested_partnerships",
+        "key_partners_report",
+        "youth_participation_report"
       ],
-      "hankkeen_kohderyhmat_tavoitus_seg": {
+      "target_group_reach": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_kohderyhmat_konkretia_seg": {
+      "impact_on_participants": {
         "ui:widget": "textarea",
         "misc:max-length": 1250
       },
-      "hankkeen_kohderyhmat_osallisuus_seg": {
+      "youth_participation_planning": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_keskeisimmat_kumppanit_seg": {
+      "key_partners": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_uudet_kumppanit_seg": {
+      "new_partnerships": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_riskit_vakiinnuttaminen": {
+      "establishment_after_project": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankeen_toteutuneet_tavoitteet": {
+      "achieved_objectives": {
         "ui:widget": "textarea",
         "misc:max-length": 2500,
         "ui:options": {
-          "tooltipLabel": "hankeen_toteutuneet_tavoitteet.title",
-          "tooltipButtonLabel": "hankeen_toteutuneet_tavoitteet.title",
-          "tooltipText": "hankeen_toteutuneet_tavoitteet.description"
+          "tooltipLabel": "achieved_objectives.title",
+          "tooltipButtonLabel": "achieved_objectives.title",
+          "tooltipText": "achieved_objectives.description"
         }
       },
-      "hankkeen_tulevan_vuoden_tavoitteet": {
+      "current_year_objectives": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_kumppanuudet_ja_toimintamuodot": {
+      "tested_partnerships": {
         "ui:widget": "textarea",
         "misc:max-length": 2500,
         "ui:options": {
-          "tooltipLabel": "hankkeen_kumppanuudet_ja_toimintamuodot.title",
-          "tooltipButtonLabel": "hankkeen_kumppanuudet_ja_toimintamuodot.title",
-          "tooltipText": "hankkeen_kumppanuudet_ja_toimintamuodot.description"
+          "tooltipLabel": "tested_partnerships.title",
+          "tooltipButtonLabel": "tested_partnerships.title",
+          "tooltipText": "tested_partnerships.description"
         }
       },
-      "hankkeen_vanhat_yhteistyokumppanit": {
+      "key_partners_report": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun": {
+      "youth_participation_report": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       }
     },
     "project_economy_section": {
-      "hankkeen_kaytetty_avustuksen_maara": {
+      "previous_grant_amount_used": {
         "ui:options": {
-          "tooltipLabel": "hankkeen_kaytetty_avustuksen_maara.title",
-          "tooltipButtonLabel": "hankkeen_kaytetty_avustuksen_maara.title",
-          "tooltipText": "hankkeen_kaytetty_avustuksen_maara.description"
+          "tooltipLabel": "previous_grant_amount_used.title",
+          "tooltipButtonLabel": "previous_grant_amount_used.title",
+          "tooltipText": "previous_grant_amount_used.description"
         }
       },
-      "hankkeen_edellisen_vuoden_avustuksen_kaytto": {
+      "grant_usage_report": {
         "ui:widget": "textarea",
         "misc:max-length": 2500,
         "ui:options": {
-          "tooltipLabel": "hankkeen_edellisen_vuoden_avustuksen_kaytto.title",
-          "tooltipButtonLabel": "hankkeen_edellisen_vuoden_avustuksen_kaytto.title",
-          "tooltipText": "hankkeen_edellisen_vuoden_avustuksen_kaytto.description"
+          "tooltipLabel": "grant_usage_report.title",
+          "tooltipButtonLabel": "grant_usage_report.title",
+          "tooltipText": "grant_usage_report.description"
         }
       },
-      "hankkeen_talous_toiminta_aikataulu_muutokset": {
+      "significant_changes": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "hankkeen_jatkokausi_suunnitelma": {
+      "continuation_plan": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
       }

@@ -64,37 +64,37 @@
   },
   "information_in_more_detail_step": {
     "grant_target_section": {
-      "avustuksen_kohde_yhdistys_toimintaryhma": "Yhdistykselle",
-      "avustuksen_kohde_tiivistelma": "Tiivistelmä yhdistyksen toiminnasta ja valmiuksista.",
-      "onko_kyseessa_jatkohakemus": true
+      "grant_recipient_type": "Yhdistykselle",
+      "applicant_summary": "Tiivistelmä yhdistyksen toiminnasta ja valmiuksista.",
+      "is_application_extension": true
     },
     "project_schedule_section": {
-      "hankkeen_nimi": "Segregaation ehkäisyhanke",
+      "project_name": "Segregaation ehkäisyhanke",
       "project_schedule": {
-        "hankkeen_toimenpiteet_alkupvm": "2026-03-01",
-        "hankkeen_toimenpiteet_loppupvm": "2026-12-31"
+        "start_date": "2026-03-01",
+        "end_date": "2026-12-31"
       },
-      "hankkeen_mennyt_tavoite": "Projektin aiempi tavoite.",
-      "hankkeen_kohderyhma_ja_keinot": "Aiempi kohderyhmä ja käytetyt keinot.",
-      "hankkeen_kohderyhmat_jo_tavoitettu": {
-        "hankkeen_jo_osallistuneet_9_12": 30,
-        "hankkeen_jo_osallistuneet_18_24": 20,
-        "hankkeen_jo_osalistuneet_uudet": 10
+      "past_project_objective": "Projektin aiempi tavoite.",
+      "past_target_group_and_means": "Aiempi kohderyhmä ja käytetyt keinot.",
+      "participants_reached": {
+        "participants_reached_9_12": 30,
+        "participants_reached_18_24": 20,
+        "participants_reached_new": 10
       },
-      "hankkeen_kaytetyt_tunnit_per_postinumero": "00400: 7h, 00900: 16h"
+      "hours_by_postal_area": "00400: 7h, 00900: 16h"
     },
     "project_methods_section": {
-      "hankeen_toteutuneet_tavoitteet": "Tavoitteiden saavuttaminen tähän mennessä.",
-      "hankkeen_tulevan_vuoden_tavoitteet": "Tämän vuoden toimenpiteet.",
-      "hankkeen_kumppanuudet_ja_toimintamuodot": "Kokeillut kumppanuudet ja toimintamuodot.",
-      "hankkeen_vanhat_yhteistyokumppanit": "Keskeiset yhteistyökumppanit ja heidän roolinsa.",
-      "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun": "Esimerkkejä lasten ja nuorten osallistamisesta."
+      "achieved_objectives": "Tavoitteiden saavuttaminen tähän mennessä.",
+      "current_year_objectives": "Tämän vuoden toimenpiteet.",
+      "tested_partnerships": "Kokeillut kumppanuudet ja toimintamuodot.",
+      "key_partners_report": "Keskeiset yhteistyökumppanit ja heidän roolinsa.",
+      "youth_participation_report": "Esimerkkejä lasten ja nuorten osallistamisesta."
     },
     "project_economy_section": {
-      "hankkeen_kaytetty_avustuksen_maara": "4500",
-      "hankkeen_edellisen_vuoden_avustuksen_kaytto": "Avustus käytettiin kululajeittain seuraavasti.",
-      "hankkeen_talous_toiminta_aikataulu_muutokset": "Ei merkittäviä muutoksia.",
-      "hankkeen_jatkokausi_suunnitelma": "Jatkokausi toteutetaan alkuperäisen suunnitelman mukaan."
+      "previous_grant_amount_used": "4500",
+      "grant_usage_report": "Avustus käytettiin kululajeittain seuraavasti.",
+      "significant_changes": "Ei merkittäviä muutoksia.",
+      "continuation_plan": "Jatkokausi toteutetaan alkuperäisen suunnitelman mukaan."
     }
   },
   "budget_step": {

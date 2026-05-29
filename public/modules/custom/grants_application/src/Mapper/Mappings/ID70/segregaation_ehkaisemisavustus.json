@@ -137,7 +137,7 @@
 
   "compensation.customQuestionsInfo.customQuestionsArray.0": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.grant_target_section.avustuksen_kohde_yhdistys_toimintaryhma",
+    "source": "information_in_more_detail_step.grant_target_section.grant_recipient_type",
     "mapping_type": "default",
     "data": {
       "ID": "avustuksen_kohde_yhdistys_toimintaryhma",
@@ -148,7 +148,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.1": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.grant_target_section.avustuksen_kohde_tiivistelma",
+    "source": "information_in_more_detail_step.grant_target_section.applicant_summary",
     "mapping_type": "default",
     "data": {
       "ID": "avustuksen_kohde_tiivistelma",
@@ -159,7 +159,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.2": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.grant_target_section.onko_kyseessa_jatkohakemus",
+    "source": "information_in_more_detail_step.grant_target_section.is_application_extension",
     "mapping_type": "custom",
     "custom_handler": "enumToLabel",
     "value_map": {
@@ -175,7 +175,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.3": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_nimi",
+    "source": "information_in_more_detail_step.project_schedule_section.project_name",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_nimi",
@@ -186,7 +186,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.4": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.project_schedule.hankkeen_toimenpiteet_alkupvm",
+    "source": "information_in_more_detail_step.project_schedule_section.project_schedule.start_date",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_toimenpiteet_alkupvm",
@@ -197,7 +197,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.5": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.project_schedule.hankkeen_toimenpiteet_loppupvm",
+    "source": "information_in_more_detail_step.project_schedule_section.project_schedule.end_date",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_toimenpiteet_loppupvm",
@@ -208,7 +208,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.6": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_kenelle",
+    "source": "information_in_more_detail_step.project_schedule_section.target_group_description",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_kenelle",
@@ -219,7 +219,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.7": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_tavoittavuus.hankkeen_kohderyhmat_lapset_9_12",
+    "source": "information_in_more_detail_step.project_schedule_section.participant_estimate.participant_estimate_9_12",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_lapset_9_12",
@@ -230,7 +230,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.8": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_tavoittavuus.hankkeen_kohderyhmat_nuoret_18_24",
+    "source": "information_in_more_detail_step.project_schedule_section.participant_estimate.participant_estimate_18_24",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_nuoret_18_24",
@@ -241,7 +241,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.9": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_tavoittavuus.hankkeen_kohderyhmat_uudet",
+    "source": "information_in_more_detail_step.project_schedule_section.participant_estimate.new_participant_estimate",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_uudet",
@@ -252,7 +252,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.10": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_postinrot",
+    "source": "information_in_more_detail_step.project_schedule_section.postal_code_areas",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_postinrot",
@@ -263,7 +263,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.11": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_tarve",
+    "source": "information_in_more_detail_step.project_schedule_section.area_need",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_tarve",
@@ -274,7 +274,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.12": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_mennyt_tavoite",
+    "source": "information_in_more_detail_step.project_schedule_section.past_project_objective",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_mennyt_tavoite",
@@ -285,7 +285,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.13": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhma_ja_keinot",
+    "source": "information_in_more_detail_step.project_schedule_section.past_target_group_and_means",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhma_ja_keinot",
@@ -296,7 +296,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.14": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_jo_tavoitettu.hankkeen_jo_osallistuneet_9_12",
+    "source": "information_in_more_detail_step.project_schedule_section.participants_reached.participants_reached_9_12",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_jo_osallistuneet_9_12",
@@ -307,7 +307,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.15": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_jo_tavoitettu.hankkeen_jo_osallistuneet_18_24",
+    "source": "information_in_more_detail_step.project_schedule_section.participants_reached.participants_reached_18_24",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_jo_osallistuneet_18_24",
@@ -318,7 +318,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.16": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kohderyhmat_jo_tavoitettu.hankkeen_jo_osalistuneet_uudet",
+    "source": "information_in_more_detail_step.project_schedule_section.participants_reached.participants_reached_new",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_jo_osalistuneet_uudet",
@@ -329,7 +329,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.17": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_schedule_section.hankkeen_kaytetyt_tunnit_per_postinumero",
+    "source": "information_in_more_detail_step.project_schedule_section.hours_by_postal_area",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kaytetyt_tunnit_per_postinumero",
@@ -340,7 +340,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.18": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_kohderyhmat_tavoitus_seg",
+    "source": "information_in_more_detail_step.project_methods_section.target_group_reach",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_tavoitus_seg",
@@ -351,7 +351,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.19": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_kohderyhmat_konkretia_seg",
+    "source": "information_in_more_detail_step.project_methods_section.impact_on_participants",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_konkretia_seg",
@@ -362,7 +362,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.20": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_kohderyhmat_osallisuus_seg",
+    "source": "information_in_more_detail_step.project_methods_section.youth_participation_planning",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_osallisuus_seg",
@@ -373,7 +373,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.21": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_keskeisimmat_kumppanit_seg",
+    "source": "information_in_more_detail_step.project_methods_section.key_partners",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_keskeisimmat_kumppanit_seg",
@@ -384,7 +384,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.22": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_uudet_kumppanit_seg",
+    "source": "information_in_more_detail_step.project_methods_section.new_partnerships",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_uudet_kumppanit_seg",
@@ -395,7 +395,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.23": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_riskit_vakiinnuttaminen",
+    "source": "information_in_more_detail_step.project_methods_section.establishment_after_project",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_riskit_vakiinnuttaminen",
@@ -406,7 +406,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.24": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankeen_toteutuneet_tavoitteet",
+    "source": "information_in_more_detail_step.project_methods_section.achieved_objectives",
     "mapping_type": "default",
     "data": {
       "ID": "hankeen_toteutuneet_tavoitteet",
@@ -417,7 +417,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.25": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_tulevan_vuoden_tavoitteet",
+    "source": "information_in_more_detail_step.project_methods_section.current_year_objectives",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_tulevan_vuoden_tavoitteet",
@@ -428,7 +428,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.26": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_kumppanuudet_ja_toimintamuodot",
+    "source": "information_in_more_detail_step.project_methods_section.tested_partnerships",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kumppanuudet_ja_toimintamuodot",
@@ -439,7 +439,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.27": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_vanhat_yhteistyokumppanit",
+    "source": "information_in_more_detail_step.project_methods_section.key_partners_report",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_vanhat_yhteistyokumppanit",
@@ -450,7 +450,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.28": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_methods_section.hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun",
+    "source": "information_in_more_detail_step.project_methods_section.youth_participation_report",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun",
@@ -461,7 +461,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.29": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_economy_section.hankkeen_kaytetty_avustuksen_maara",
+    "source": "information_in_more_detail_step.project_economy_section.previous_grant_amount_used",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kaytetty_avustuksen_maara",
@@ -472,7 +472,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.30": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_economy_section.hankkeen_edellisen_vuoden_avustuksen_kaytto",
+    "source": "information_in_more_detail_step.project_economy_section.grant_usage_report",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_edellisen_vuoden_avustuksen_kaytto",
@@ -483,7 +483,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.31": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_economy_section.hankkeen_talous_toiminta_aikataulu_muutokset",
+    "source": "information_in_more_detail_step.project_economy_section.significant_changes",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_talous_toiminta_aikataulu_muutokset",
@@ -494,7 +494,7 @@
   },
   "compensation.customQuestionsInfo.customQuestionsArray.32": {
     "datasource": "form_data",
-    "source": "information_in_more_detail_step.project_economy_section.hankkeen_jatkokausi_suunnitelma",
+    "source": "information_in_more_detail_step.project_economy_section.continuation_plan",
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_jatkokausi_suunnitelma",
