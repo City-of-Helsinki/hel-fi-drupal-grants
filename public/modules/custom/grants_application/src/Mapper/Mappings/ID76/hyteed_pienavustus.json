@@ -32,7 +32,7 @@
     "data": {
       "0": {
         "ID": "subventionType",
-        "label": "Avustuslaji",
+        "label": "Avustuslajin koodi",
         "value": "38",
         "valueType": "string"
       }
@@ -150,7 +150,7 @@
         "ID": "amount",
         "label": "Haetun avustuksen summa",
         "value": "",
-        "valueType": "string"
+        "valueType": "float"
       },
       "other_applied_compensation_description": {
         "ID": "purpose",
