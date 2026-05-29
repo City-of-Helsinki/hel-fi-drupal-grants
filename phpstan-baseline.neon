@@ -1699,6 +1699,7 @@ parameters:
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
 			count: 5
 			path: public/modules/custom/grants_application/tests/src/Unit/FormTest.php
+
 		-
 			message: "#^Method Drupal\\\\Tests\\\\grants_application\\\\Unit\\\\Form\\\\JsonMapperTest\\:\\:getAllDatasources\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
@@ -1723,16 +1724,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
 			count: 5
 			path: public/modules/custom/grants_application/tests/src/Unit/JsonMapperTest.php
-
-		-
-			message: "#^Function grants_application_search_form_views_exposed_form_alter\\(\\) has parameter \\$form with no type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/grants_application_search.module
-
-		-
-			message: "#^Function grants_application_search_form_views_exposed_form_alter\\(\\) has parameter \\$form_id with no type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/grants_application_search.module
 
 		-
 			message: "#^Argument of an invalid type array\\|string supplied for foreach, only iterables are supported\\.$#"
@@ -1970,21 +1961,6 @@ parameters:
 			path: public/modules/custom/grants_application_search/tests/src/Unit/CanonicalFieldsTest.php
 
 		-
-			message: "#^Method class@anonymous/modules/custom/grants_application_search/tests/src/Unit/CanonicalFieldsTest\\.php\\:147\\:\\:__construct\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/CanonicalFieldsTest.php
-
-		-
-			message: "#^Method class@anonymous/modules/custom/grants_application_search/tests/src/Unit/CanonicalFieldsTest\\.php\\:147\\:\\:getValues\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/CanonicalFieldsTest.php
-
-		-
-			message: "#^Property class@anonymous/modules/custom/grants_application_search/tests/src/Unit/CanonicalFieldsTest\\.php\\:168\\:\\:\\$values type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/CanonicalFieldsTest.php
-
-		-
 			message: "#^Cannot call method getMethod\\(\\) on ReflectionClass\\|false\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application_search/tests/src/Unit/CanonicalUnitTestBase.php
@@ -2001,41 +1977,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\Tests\\\\grants_application_search\\\\Unit\\\\ViewsHooksProxy\\:\\:callGetReferencedEntityIds\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\grants_application_search\\\\Unit\\\\ViewsHooksUnitTest\\:\\:buildSearchApiItem\\(\\) has parameter \\$field_map with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest.php
-
-		-
-			message: "#^Method class@anonymous/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest\\.php\\:113\\:\\:getValues\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest.php
-
-		-
-			message: "#^Method class@anonymous/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest\\.php\\:250\\:\\:getValue\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest.php
-
-		-
-			message: "#^Method class@anonymous/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest\\.php\\:281\\:\\:getValue\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest.php
-
-		-
-			message: "#^Method class@anonymous/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest\\.php\\:336\\:\\:__construct\\(\\) has parameter \\$field_map with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest.php
-
-		-
-			message: "#^Method class@anonymous/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest\\.php\\:346\\:\\:__construct\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest.php
-
-		-
-			message: "#^Method class@anonymous/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest\\.php\\:346\\:\\:getValues\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application_search/tests/src/Unit/ViewsHooksUnitTest.php
 
@@ -2470,6 +2411,16 @@ parameters:
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
 		-
+			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachment\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
+
+		-
+			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
+
+		-
 			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
@@ -2481,11 +2432,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:getCompositeElements\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
-
-		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
@@ -4154,7 +4100,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
-
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getBudgetInfoKeysForCopying\\(\\) has parameter \\$submissionData with no value type specified in iterable type array\\.$#"
 			count: 1
@@ -4174,7 +4119,6 @@ parameters:
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getHakijanTiedot\\(\\) has parameter \\$selectedCompany with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
-
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getHakijanTiedot\\(\\) has parameter \\$userProfileData with no value type specified in iterable type array\\.$#"
@@ -4256,7 +4200,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
-
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:setInitialSubmissionData\\(\\) has parameter \\$userProfileData with no value type specified in iterable type array\\.$#"
 			count: 1
@@ -4336,7 +4279,6 @@ parameters:
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationUploaderService\\:\\:handleApplicationUploadViaIntegration\\(\\) has parameter \\$submittedFormData with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationUploaderService.php
-
 
 		-
 			message: "#^Property Drupal\\\\grants_handler\\\\ApplicationUploaderService\\:\\:\\$atvDocument \\(Drupal\\\\helfi_atv\\\\AtvDocument\\) does not accept bool\\|Drupal\\\\helfi_atv\\\\AtvDocument\\|null\\.$#"
@@ -5118,7 +5060,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/MessageService.php
 
-
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\Plugin\\\\Block\\\\ApplicationTimeoutMessageBlock\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
@@ -5323,11 +5264,6 @@ parameters:
 			message: "#^Offset 'role' does not exist on array\\|string\\.$#"
 			count: 2
 			path: public/modules/custom/grants_handler/src/Plugin/WebformElement/CommunityOfficialsComposite.php
-
-		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachment\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\Plugin\\\\WebformElement\\\\CompensationsComposite\\:\\:defineDefaultProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -6337,11 +6273,6 @@ parameters:
 		-
 			message: "#^PHPDoc tag @var for variable \\$referenceItem contains generic class Drupal\\\\Core\\\\Field\\\\Plugin\\\\Field\\\\FieldType\\\\EntityReferenceItem but does not specify its types\\: T$#"
 			count: 1
-			path: public/modules/custom/grants_metadata/grants_metadata.module
-
-		-
-			message: "#^Parameter \\#2 \\$time of static method Drupal\\\\Component\\\\Datetime\\\\DateTimePlus\\:\\:createFromFormat\\(\\) expects string, \\(int\\<min, \\-1\\>\\|int\\<1, max\\>\\) given\\.$#"
-			count: 2
 			path: public/modules/custom/grants_metadata/grants_metadata.module
 
 		-
@@ -11608,7 +11539,6 @@ parameters:
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getApiAccessTokens\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
 
 		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getUserProfileData\\(\\) return type has no value type specified in iterable type array\\.$#"
