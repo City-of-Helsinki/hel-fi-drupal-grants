@@ -38,7 +38,7 @@
             "ID": "amount",
             "label": "Euroa",
             "value": "5000",
-            "valueType": "double"
+            "valueType": "float"
           }
         ]
       ]
