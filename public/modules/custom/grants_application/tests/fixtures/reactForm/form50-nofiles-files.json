@@ -1,0 +1,162 @@
+{
+    "attachmentsInfo": {
+        "attachmentsArray": [
+            [
+                {
+                    "ID": "description",
+                    "value": "Yhteisön säännöt",
+                    "valueType": "string",
+                    "label": "Liitteen kuvaus"
+                },
+                {
+                    "ID": "fileType",
+                    "value": "7",
+                    "valueType": "int",
+                    "label": "fileType"
+                },
+                {
+                    "ID": "isDeliveredLater",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite toimitetaan myöhemmin"
+                },
+                {
+                    "ID": "isIncludedInOtherFile",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+                }
+            ],
+            [
+                {
+                    "ID": "description",
+                    "value": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
+                    "valueType": "string",
+                    "label": "Liitteen kuvaus"
+                },
+                {
+                    "ID": "fileType",
+                    "value": "43",
+                    "valueType": "int",
+                    "label": "fileType"
+                },
+                {
+                    "ID": "isDeliveredLater",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite toimitetaan myöhemmin"
+                },
+                {
+                    "ID": "isIncludedInOtherFile",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+                }
+            ],
+            [
+                {
+                    "ID": "description",
+                    "value": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)",
+                    "valueType": "string",
+                    "label": "Liitteen kuvaus"
+                },
+                {
+                    "ID": "fileType",
+                    "value": "4",
+                    "valueType": "int",
+                    "label": "fileType"
+                },
+                {
+                    "ID": "isDeliveredLater",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite toimitetaan myöhemmin"
+                },
+                {
+                    "ID": "isIncludedInOtherFile",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+                }
+            ],
+            [
+                {
+                    "ID": "description",
+                    "value": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)",
+                    "valueType": "string",
+                    "label": "Liitteen kuvaus"
+                },
+                {
+                    "ID": "fileType",
+                    "value": "5",
+                    "valueType": "int",
+                    "label": "fileType"
+                },
+                {
+                    "ID": "isDeliveredLater",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite toimitetaan myöhemmin"
+                },
+                {
+                    "ID": "isIncludedInOtherFile",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+                }
+            ],
+            [
+                {
+                    "ID": "description",
+                    "value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
+                    "valueType": "string",
+                    "label": "Liitteen kuvaus"
+                },
+                {
+                    "ID": "fileType",
+                    "value": "1",
+                    "valueType": "int",
+                    "label": "fileType"
+                },
+                {
+                    "ID": "isDeliveredLater",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite toimitetaan myöhemmin"
+                },
+                {
+                    "ID": "isIncludedInOtherFile",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+                }
+            ],
+            [
+                {
+                    "ID": "description",
+                    "value": "Talousarvio (sille vuodelle jolle haet avustusta)",
+                    "valueType": "string",
+                    "label": "Liitteen kuvaus"
+                },
+                {
+                    "ID": "fileType",
+                    "value": "2",
+                    "valueType": "int",
+                    "label": "fileType"
+                },
+                {
+                    "ID": "isDeliveredLater",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite toimitetaan myöhemmin"
+                },
+                {
+                    "ID": "isIncludedInOtherFile",
+                    "value": "false",
+                    "valueType": "bool",
+                    "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+                }
+            ]
+        ]
+    }
+}
