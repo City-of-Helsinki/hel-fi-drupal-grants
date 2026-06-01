@@ -528,7 +528,7 @@ final class DraftApplication extends ResourceBase {
    * Mirrors the old webform behavior in GrantsHandler::prepareForm. Applies
    * uniformly to all applicant types; warnings stack into the messenger.
    *
-   * @param array $profileContent
+   * @param array<string, mixed> $profileContent
    *   The grants profile content array (from GrantsProfile::toArray()).
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse|null

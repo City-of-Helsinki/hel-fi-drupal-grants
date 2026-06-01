@@ -688,7 +688,7 @@ final class Application extends ResourceBase {
    * incomplete. Mirrors the old webform behavior in
    * GrantsHandler::prepareForm. Applies uniformly to all applicant types.
    *
-   * @param array $profileContent
+   * @param array<string, mixed> $profileContent
    *   The grants profile content array (from GrantsProfile::toArray()).
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse|null

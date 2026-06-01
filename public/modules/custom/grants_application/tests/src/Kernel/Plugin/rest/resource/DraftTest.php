@@ -21,6 +21,7 @@ use Drupal\user\Entity\User;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\Plugin\rest\resource\Application
@@ -269,6 +270,7 @@ final class DraftTest extends KernelTestBase {
 
     $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
     $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
     $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
     $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
     $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
@@ -338,6 +340,79 @@ final class DraftTest extends KernelTestBase {
     $response = $http_kernel->handle($request);
 
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+  }
+
+  /**
+   * Override the user information service with a custom applicant type/profile.
+   */
+  private function overrideUserService(string $applicantType, GrantsProfile $profile): void {
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn($applicantType);
+    $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn($profile);
+    $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
+    $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
+    $this->container->set(UserInformationService::class, $userService);
+  }
+
+  /**
+   * Dispatch a request to the draft endpoint.
+   */
+  private function dispatch(string $method): Response {
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $uri = "/applications/$form_identifier/$this->applicationNumber";
+    $request = Request::create($uri, $method, [], [], [], [], '');
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    return $this->container->get('http_kernel')->handle($request);
+  }
+
+  /**
+   * Applicant type not allowed by the form yields a 403 on GET.
+   */
+  public function testDraftGetDeniedApplicantType(): void {
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $this->overrideUserService('private_person', new GrantsProfile($userData['grants_profile_array']));
+
+    $response = $this->dispatch('GET');
+    $this->assertEquals(403, $response->getStatusCode());
+  }
+
+  /**
+   * An empty profile redirects to the profile edit page on GET.
+   */
+  public function testDraftGetEmptyProfileRedirect(): void {
+    $this->overrideUserService('registered_community', new GrantsProfile([]));
+
+    $response = $this->dispatch('GET');
+    $this->assertEquals(403, $response->getStatusCode());
+    $this->assertStringContainsString('redirect_url', $response->getContent() ?: '');
+  }
+
+  /**
+   * A profile missing addresses or bank accounts redirects on GET.
+   */
+  public function testDraftGetIncompleteProfileRedirect(): void {
+    $this->overrideUserService('registered_community', new GrantsProfile([
+      'businessId' => '1234567-1',
+      'addresses' => [],
+      'bankAccounts' => [],
+    ]));
+
+    $response = $this->dispatch('GET');
+    $this->assertEquals(403, $response->getStatusCode());
+  }
+
+  /**
+   * Applicant type not allowed by the form yields a 403 on POST.
+   */
+  public function testDraftPostDeniedApplicantType(): void {
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $this->overrideUserService('private_person', new GrantsProfile($userData['grants_profile_array']));
+
+    $response = $this->dispatch('POST');
+    $this->assertEquals(403, $response->getStatusCode());
   }
 
   /**
