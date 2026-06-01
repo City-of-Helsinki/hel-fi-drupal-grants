@@ -4,9 +4,8 @@ import { Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
 import type { JSONSchema7Definition } from 'json-schema';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
-import { ALLOWED_HTML_TAGS } from '../../utils';
-
 import { shouldRenderPreviewAtom } from '../../store';
+import { ALLOWED_HTML_TAGS } from '../../utils';
 
 export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);

@@ -1,12 +1,12 @@
+import type { FieldProps } from '@rjsf/utils';
 import { Select } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { getActingYearsAtom, isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
-import type { FieldProps } from '@rjsf/utils';
-import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
-import { PreviewInput } from '../Input';
-import { formatErrors } from '../../utils';
-import type OptionType from '@/common/types/OptionType';
 import { useTranslation } from 'react-i18next';
+import type OptionType from '@/common/types/OptionType';
+import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
+import { getActingYearsAtom, isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
+import { formatErrors } from '../../utils';
+import { PreviewInput } from '../Input';
 
 export const ActingYear = ({
   formData,

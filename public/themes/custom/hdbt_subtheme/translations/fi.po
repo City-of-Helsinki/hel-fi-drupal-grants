@@ -701,3 +701,7 @@ msgstr "Osoite"
 msgctxt "Grants application"
 msgid "Phone number"
 msgstr "Puhelinnumero"
+
+msgctxt "Grants application"
+msgid "The data has been fetched from your application profile."
+msgstr "Tiedot on haettu hakuprofiilistasi."

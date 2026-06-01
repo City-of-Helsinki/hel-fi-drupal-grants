@@ -1,4 +1,4 @@
-import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallback, useEffect } from 'react';
+import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
 import {
   Checkbox,
   DateInput,
@@ -6,19 +6,17 @@ import {
   TextArea as HDSTextArea,
   TextInput as HDSTextInput,
   Notification,
+  type Option,
   RadioButton,
   Select,
-  type Option,
 } from 'hds-react';
-import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
-import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
+import { useAtomCallback } from 'jotai/utils';
+import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
-
-import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-import { ALLOWED_HTML_TAGS, formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
+import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
+import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import {
   getAccountsAtom,
@@ -29,6 +27,7 @@ import {
   isReadOnlyAtom,
   shouldRenderPreviewAtom,
 } from '../store';
+import { ALLOWED_HTML_TAGS, formatErrors, getTooltip, numberIsTooLarge, sanitizeNumericInput } from '../utils';
 
 export const PreviewInput = ({
   value,
