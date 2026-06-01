@@ -1,0 +1,329 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      },
+      "apply_for_rental_grant": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:widget": "radio"
+      },
+      "apply_for_operating_advance": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:widget": "radio"
+      },
+      "apply_for_salary_advance": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:widget": "radio"
+      }
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_compensations": {
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_applied_compensations": {
+        "ui:options": {
+          "addText": "other_applied_compensations.add"
+        },
+        "items": {
+          "other_applied_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_applied_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_applied_compensation_amount.printable_title"
+            }
+          },
+          "other_applied_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    }
+  },
+  "community_activity_step": {
+    "members_section": {
+      "members_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "members_fieldset.legend",
+          "tooltipButtonLabel": "members_fieldset.legend",
+          "tooltipText": "members_fieldset.description"
+        }
+      }
+    },
+    "participation_section": {
+      "participation_total": {
+        "ui:options": {
+          "tooltipLabel": "participation_total.title",
+          "tooltipButtonLabel": "participation_total.title",
+          "tooltipText": "participation_total.description"
+        }
+      },
+      "participation_digital": {
+        "ui:options": {
+          "tooltipLabel": "participation_digital.title",
+          "tooltipButtonLabel": "participation_digital.title",
+          "tooltipText": "participation_digital.description"
+        }
+      }
+    },
+    "premises_section": {
+      "digital_only_info": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "digital_activity_only": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "tooltipLabel": "digital_activity_only.title",
+          "tooltipButtonLabel": "digital_activity_only.title",
+          "tooltipText": "digital_activity_only.description"
+        }
+      },
+      "premises": {
+        "ui:options": {
+          "addText": "premises.add"
+        }
+      }
+    },
+    "memberships_section": {
+      "memberships": {
+        "ui:options": {
+          "addText": "memberships.add"
+        }
+      }
+    },
+    "youth_participation_section": {
+      "youth_participation": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      }
+    }
+  },
+  "salary_info_step": {
+    "salary_costs_section": {
+      "salary_costs": {},
+      "personnel_side_costs": {},
+      "travel_and_training_costs": {}
+    }
+  },
+  "rental_info_step": {
+    "rented_premises_section": {
+      "rented_premises": {
+        "ui:options": {
+          "addText": "rented_premises.add"
+        }
+      }
+    },
+    "rental_additional_information_section": {
+      "rental_additional_information": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "community_rules": {
+        "ui:options": {
+          "tooltipLabel": "community_rules.title",
+          "tooltipButtonLabel": "community_rules.title",
+          "tooltipText": "community_rules.description"
+        },
+        "community_rules_file": {
+          "misc:file-type": 0,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_financial_statements": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_financial_statements.title",
+          "tooltipButtonLabel": "confirmed_financial_statements.title",
+          "tooltipText": "confirmed_financial_statements.description"
+        },
+        "confirmed_financial_statements_file": {
+          "misc:file-type": 0,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_annual_report": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_annual_report.title",
+          "tooltipButtonLabel": "confirmed_annual_report.title",
+          "tooltipText": "confirmed_annual_report.description"
+        },
+        "confirmed_annual_report_file": {
+          "misc:file-type": 0,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_audit_report": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_audit_report.title",
+          "tooltipButtonLabel": "confirmed_audit_report.title",
+          "tooltipText": "confirmed_audit_report.description"
+        },
+        "confirmed_audit_report_file": {
+          "misc:file-type": 0,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "minutes_of_the_annual_meeting": {
+        "ui:options": {
+          "tooltipLabel": "minutes_of_the_annual_meeting.title",
+          "tooltipButtonLabel": "minutes_of_the_annual_meeting.title",
+          "tooltipText": "minutes_of_the_annual_meeting.description"
+        },
+        "minutes_of_the_annual_meeting_file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "action_plan": {
+        "ui:options": {
+          "tooltipLabel": "action_plan.title",
+          "tooltipButtonLabel": "action_plan.title",
+          "tooltipText": "action_plan.description"
+        },
+        "action_plan_file": {
+          "misc:file-type": 0,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "budget": {
+        "ui:options": {
+          "tooltipLabel": "budget.title",
+          "tooltipButtonLabel": "budget.title",
+          "tooltipText": "budget.description"
+        },
+        "budget_file": {
+          "misc:file-type": 0,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "further_clarification": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:variant": "simple",
+          "misc:multiple": "true",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help",
+          "ui:field": "atvFile"
+        }
+      }
+    }
+  }
+}

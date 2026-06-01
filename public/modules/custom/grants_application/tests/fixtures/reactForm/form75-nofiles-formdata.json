@@ -1,0 +1,182 @@
+{
+  "applicant_info": {
+    "applicant_email": {
+      "email": "test@example.com"
+    },
+    "contact_person_info": {
+      "contact_person": "Joku Henkilö",
+      "contact_person_phone_number": "040 123 123 12"
+    },
+    "community_address": {
+      "community_address": "Kauppakatu 20"
+    },
+    "bank_account": {
+      "bank_account": "FI4950009420028730"
+    },
+    "community_officials": {
+      "community_officials": [
+        {
+          "official": "a464c2d0-a79a-400e-a9cf-32f583675194"
+        }
+      ]
+    }
+  },
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": "2026"
+    },
+    "subventions_section": {
+      "subventions": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "1",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "5000",
+            "valueType": "double"
+          }
+        ],
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "2",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "3000",
+            "valueType": "double"
+          }
+        ]
+      ],
+      "apply_for_rental_grant": true,
+      "apply_for_operating_advance": false,
+      "apply_for_salary_advance": true
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": true,
+      "other_compensations": [
+        {
+          "other_compensation_issuer": "Valtio",
+          "other_compensation_issuer_name": "Opetusministeriö",
+          "other_compensation_issuer_year": "2021",
+          "other_compensation_amount": 1000,
+          "other_compensation_description": "Lyhyt kuvaus myönnetyn avustuksen käyttötarkoituksesta"
+        }
+      ]
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": true,
+      "other_applied_compensations": [
+        {
+          "other_applied_compensation_issuer": "Säätiö",
+          "other_applied_compensation_issuer_name": "Haettu avustus säätiö",
+          "other_applied_compensation_issuer_year": "2022",
+          "other_applied_compensation_amount": 2000,
+          "other_applied_compensation_description": "haetun avustuksen käyttötarkoitus"
+        }
+      ]
+    }
+  },
+  "community_activity_step": {
+    "members_section": {
+      "members_fieldset": {
+        "members_0_6": 10,
+        "members_0_6_helsinki": 5,
+        "members_7_28": 20,
+        "members_7_28_helsinki": 12,
+        "members_others": 8,
+        "members_others_helsinki": 4
+      }
+    },
+    "participation_section": {
+      "participation_total": 1500,
+      "participation_digital": 300
+    },
+    "premises_section": {
+      "digital_only_info": [
+        null
+      ],
+      "digital_activity_only": false,
+      "premises": [
+        {
+          "premise_location": "Nuorisotalo",
+          "premise_street_address": "Kauppakatu 20",
+          "premise_postal_code": "00100"
+        }
+      ]
+    },
+    "memberships_section": {
+      "memberships": [
+        {
+          "membership_organization_name": "Nuorisoyhdistysten liitto",
+          "membership_fee": 150
+        }
+      ]
+    },
+    "youth_participation_section": {
+      "youth_participation": "Nuoret osallistuvat suunnitteluun säännöllisissä kokouksissa."
+    }
+  },
+  "salary_info_step": {
+    "hired_officials_section": {
+      "hired_officials_count": 2
+    },
+    "salary_costs_section": {
+      "salary_costs": "60000",
+      "personnel_side_costs": "15000",
+      "travel_and_training_costs": "3000"
+    }
+  },
+  "rental_info_step": {
+    "rented_premises_section": {
+      "rented_premises": [
+        {
+          "rented_premise_address": "Vuokrakatu 5",
+          "rented_premise_postal_code": "00200",
+          "rented_premise_post_office": "Helsinki",
+          "rented_premise_rent_sum": 1200,
+          "rented_premise_lessor_name": "Kiinteistö Oy",
+          "rented_premise_lessor_contact": "vuokraus@example.com",
+          "rented_premise_usage": "Harjoitustila",
+          "rented_premise_days_per_week": 3,
+          "rented_premise_hours_per_day": 4
+        }
+      ]
+    },
+    "rental_additional_information_section": {
+      "rental_additional_information": "Lisätietoja vuokra-avustuksesta."
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": "lisätiedot"
+    },
+    "attachments_section": {
+      "required_attachments_help": [
+        null
+      ],
+      "formerly_provided_attachments_help": [
+        null
+      ],
+      "cant_view_after_help": [
+        null,
+        null
+      ],
+      "further_clarification": "Liitteiden lisäselvitys",
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "files": [],
+          "description": ""
+        }
+      }
+    }
+  }
+}
