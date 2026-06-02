@@ -163,7 +163,7 @@ export const SubventionTable = ({
   return (
     <>
       <div className='array-item'>
-        <Fieldset className='hdbt-form--fieldset hdbt-form--fieldset--border' heading={`${schema.title}`}>
+        <Fieldset className='hdbt-form--fieldset hdbt-form--fieldset--border' heading={`${schema.title} *`}>
           {(schema.options as SubventionOption[]).map((item) => {
             const { id: itemId, label } = item;
             const key = `${id}-${itemId}`;
