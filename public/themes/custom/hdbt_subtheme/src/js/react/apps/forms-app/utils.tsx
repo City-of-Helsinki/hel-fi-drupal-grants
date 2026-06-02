@@ -443,13 +443,21 @@ export const formatErrors = (rawErrors: string[] | undefined) => {
  * @param {array} subventionFields - Array of subvention field paths
  * @return {number} - Total sum
  */
-export const getSubventionSum = (formData: RJSFFormData, subventionFields: string[]) =>
+export const getSubventionSum = (formData: RJSFFormData, subventionFields: string[], subventionType?: string) =>
   subventionFields.reduce((total, field) => {
     const values = getNestedSchemaProperty(formData, field);
     let totalNumericValue = Number(String(total).replace(',', '.'));
 
     if (values?.length) {
       Object.entries(values).forEach(([, curr]) => {
+        // When a subventionType is given, only sum rows matching that type.
+        if (subventionType != null) {
+          const typeEntry = Array.isArray(curr) ? curr.find((entry) => entry?.ID === 'subventionType') : undefined;
+          if (String(typeEntry?.value) !== String(subventionType)) {
+            return;
+          }
+        }
+
         const amount = Number(String(curr[1].value).replace(',', '.'));
 
         if (!Number.isNaN(amount)) {

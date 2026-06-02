@@ -464,43 +464,108 @@
     "salary_info_step": {
       "type": "object",
       "properties": {
-        "hired_officials_section": {
-          "title": "hired_officials_section.title",
+        "salary_subvention_sum": {
+          "type": "number",
+          "default": 0
+        },
+        "salary_not_applicable_section": {
           "type": "object",
-          "properties": {
-            "hired_officials_count": {
-              "title": "hired_officials_count.title",
-              "type": "integer"
+          "default": {}
+        },
+        "hired_officials_section": {
+          "type": "object",
+          "default": {}
+        },
+        "salary_costs_section": {
+          "type": "object",
+          "default": {}
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "salary_subvention_sum": {
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": ["salary_subvention_sum"]
+          },
+          "then": {
+            "properties": {
+              "hired_officials_section": {
+                "title": "hired_officials_section.title",
+                "type": "object",
+                "properties": {
+                  "hired_officials_count": {
+                    "title": "hired_officials_count.title",
+                    "type": "integer"
+                  }
+                }
+              },
+              "salary_costs_section": {
+                "title": "salary_costs_section.title",
+                "description": "salary_costs_section.description",
+                "type": "object",
+                "properties": {
+                  "salary_costs": {
+                    "format": "decimal-number",
+                    "title": "salary_costs.title",
+                    "type": "string"
+                  },
+                  "personnel_side_costs": {
+                    "format": "decimal-number",
+                    "title": "personnel_side_costs.title",
+                    "type": "string"
+                  },
+                  "travel_and_training_costs": {
+                    "format": "decimal-number",
+                    "title": "travel_and_training_costs.title",
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         },
-        "salary_costs_section": {
-          "title": "salary_costs_section.title",
-          "description": "salary_costs_section.description",
-          "type": "object",
-          "properties": {
-            "salary_costs": {
-              "format": "decimal-number",
-              "title": "salary_costs.title",
-              "type": "string"
+        {
+          "if": {
+            "properties": {
+              "salary_subvention_sum": {
+                "maximum": 0
+              }
             },
-            "personnel_side_costs": {
-              "format": "decimal-number",
-              "title": "personnel_side_costs.title",
-              "type": "string"
-            },
-            "travel_and_training_costs": {
-              "format": "decimal-number",
-              "title": "travel_and_training_costs.title",
-              "type": "string"
+            "required": ["salary_subvention_sum"]
+          },
+          "then": {
+            "properties": {
+              "salary_not_applicable_section": {
+                "type": "object",
+                "properties": {
+                  "salary_not_applicable_text": {
+                    "title": "salary_not_applicable_text.title",
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "salary_not_applicable_text.value",
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              }
             }
           }
         }
-      }
+      ]
     },
     "rental_info_step": {
       "type": "object",
       "properties": {
+        "rental_not_applicable_section": {
+          "type": "object",
+          "default": {}
+        },
         "rented_premises_section": {
           "title": "rented_premises_section.title",
           "type": "object",
@@ -809,6 +874,46 @@
                   "rental_additional_information": {
                     "title": "rental_additional_information.title",
                     "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "grant_info_step": {
+            "properties": {
+              "subventions_section": {
+                "properties": {
+                  "apply_for_rental_grant": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "rental_info_step": {
+            "properties": {
+              "rental_not_applicable_section": {
+                "type": "object",
+                "properties": {
+                  "rental_not_applicable_text": {
+                    "title": "rental_not_applicable_text.title",
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "rental_not_applicable_text.value",
+                        "type": "null"
+                      }
+                    ]
                   }
                 }
               }

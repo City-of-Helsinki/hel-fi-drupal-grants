@@ -177,6 +177,22 @@
     }
   },
   "salary_info_step": {
+    "salary_subvention_sum": {
+      "ui:field": "computedSum",
+      "misc:exclude-from-submit": true,
+      "ui:options": {
+        "sourceFields": ["grant_info_step.subventions_section.subventions"],
+        "sourceShape": "subvention",
+        "subventionType": "2",
+        "numericOutput": true,
+        "hidden": true
+      }
+    },
+    "salary_not_applicable_section": {
+      "salary_not_applicable_text": {
+        "ui:field": "textParagraph"
+      }
+    },
     "salary_costs_section": {
       "salary_costs": {},
       "personnel_side_costs": {},
@@ -184,6 +200,11 @@
     }
   },
   "rental_info_step": {
+    "rental_not_applicable_section": {
+      "rental_not_applicable_text": {
+        "ui:field": "textParagraph"
+      }
+    },
     "rented_premises_section": {
       "rented_premises": {
         "ui:options": {

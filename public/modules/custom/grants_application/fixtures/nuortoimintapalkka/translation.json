@@ -190,6 +190,26 @@
       "fi": "Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?",
       "sv": "Hur deltar unga i planeringen av och beslutsfattandet om föreningens verksamhet?"
     },
+    "salary_not_applicable_text.title": {
+      "en": "You do not need to fill out this page",
+      "fi": "Sinun ei tarvitse täyttää tätä sivua",
+      "sv": "Du behöver inte fylla i denna sida"
+    },
+    "rental_not_applicable_text.title": {
+      "en": "You do not need to fill out this page",
+      "fi": "Sinun ei tarvitse täyttää tätä sivua",
+      "sv": "Du behöver inte fylla i denna sida"
+    },
+    "rental_not_applicable_text.value": {
+      "en": "The contents of this page are not displayed because you are not applying for rent subsidy.",
+      "fi": "Tämän sivun sisältöjä ei näytetä, koska et ole hakemassa vuokra-avustusta.",
+      "sv": "Innehållet på denna sida visas inte eftersom du inte ansöker om hyresunderstöd."
+    },
+    "salary_not_applicable_text.value": {
+      "en": "The contents of this page are not displayed because you are not applying for hiring grant.",
+      "fi": "Tämän sivun sisältöjä ei näytetä, koska et ole hakemassa palkkausavustusta.",
+      "sv": "Innehållet på denna sida visas inte eftersom du inte ansöker om lönehjälp."
+    },
     "hired_officials_section.title": {
       "en": "Full-time employees",
       "fi": "Päätoimiset työntekijät",

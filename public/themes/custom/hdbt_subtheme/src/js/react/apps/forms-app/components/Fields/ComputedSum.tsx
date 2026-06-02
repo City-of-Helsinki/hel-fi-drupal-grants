@@ -28,6 +28,7 @@ export const ComputedSum = ({ idSchema, name, onChange, schema, uiSchema }: Fiel
   const sourceShape = (uiSchema?.['ui:options']?.sourceShape as SourceShape | undefined) ?? 'scalar';
   const numericOutput = (uiSchema?.['ui:options']?.numericOutput as boolean | undefined) ?? false;
   const hidden = (uiSchema?.['ui:options']?.hidden as boolean | undefined) ?? false;
+  const subventionType = uiSchema?.['ui:options']?.subventionType as string | undefined;
 
   if (!sourceFields.length) {
     console.error(`ComputedSum field "${name}" is missing ui:options.sourceFields`);
@@ -38,6 +39,7 @@ export const ComputedSum = ({ idSchema, name, onChange, schema, uiSchema }: Fiel
       ? getSubventionSum(
           data,
           sourceFields.map((field) => `.${field}`),
+          subventionType,
         )
       : sumScalarFields(data, sourceFields);
 
