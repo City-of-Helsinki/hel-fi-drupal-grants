@@ -1,39 +1,39 @@
 {
   "translations": {
     "form_title": {
+      "en": "Camp grants for youth activities",
       "fi": "Nuorisotoiminnan leiriavustushakemus",
-      "sv": "Ungdomsverksamhet, lägerunderstöd",
-      "en": "Camp grants for youth activities"
+      "sv": "Ungdomsverksamhet, lägerunderstöd"
     },
     "camp_information.title": {
+      "en": "Information about the camps",
       "fi": "Leirien tiedot",
-      "sv": "Uppgifter om lägren",
-      "en": "Information about the camps"
+      "sv": "Uppgifter om lägren"
     },
     "camp_information_markup.value": {
+      "en": "The estimated information of the camps is reported in a separate Excel attachment. Please fill out the attachment carefully for each camp. The attachment can be downloaded <a href=\"/en/information-about-grants/grants-for-youth-activities/holiday-camp-grants-for-youth-activities\">from the service description page of the camp grant</a>. The attachment is mandatory and must be submitted when sending the application.",
       "fi": "Leirien arvioidut tiedot ilmoitetaan erillisellä Excel-liitteellä. Täytä liite huolellisesti jokaisen leirin kohdalta. Liite on ladattavissa <a href=\"/fi/nuorisotoiminnan-loma-aikojen-leiriavustus\" target=\"_blank\">leiriavustuksen palvelukuvaussivulta</a>. Liite on pakollinen ja se on toimitettava hakemuksen lähettämisen yhteydessä.",
-      "sv": "Använd den separata Excel-bilagan för att ange lägrens preliminära uppgifter. Fyll i bilagan noggrant för varje läger. Bilagan kan laddas ner från <a href=\"/sv/om-understoden/understod-for-ungdomsverksamhet/understod-for-ungdomsverksamhet-lagerunderstod-under\">lägerbidragets tjänstebeskrivningssida</a>. Bilagan är obligatorisk och ska lämnas in när ansökan skickas.",
-      "en": "The estimated information of the camps is reported in a separate Excel attachment. Please fill out the attachment carefully for each camp. The attachment can be downloaded <a href=\"/en/information-about-grants/grants-for-youth-activities/holiday-camp-grants-for-youth-activities\">from the service description page of the camp grant</a>. The attachment is mandatory and must be submitted when sending the application."
+      "sv": "Använd den separata Excel-bilagan för att ange lägrens preliminära uppgifter. Fyll i bilagan noggrant för varje läger. Bilagan kan laddas ner från <a href=\"/sv/om-understoden/understod-for-ungdomsverksamhet/understod-for-ungdomsverksamhet-lagerunderstod-under\">lägerbidragets tjänstebeskrivningssida</a>. Bilagan är obligatorisk och ska lämnas in när ansökan skickas."
     },
     "income_section.tooltip": {
+      "en": "Indicate here the type of income in question. An example of income from camping activities is participation fees.",
       "fi": "Kerro tässä, millainen tulo on kyseessä. Leiritoiminnan tuloja voivat olla esimerkiksi osallistumismaksut.",
-      "sv": "Ange här vilken intäkt det är fråga om. Intäkter från lägerverksamheten är till exempel deltagaravgifter.",
-      "en": "Indicate here the type of income in question. An example of income from camping activities is participation fees."
+      "sv": "Ange här vilken intäkt det är fråga om. Intäkter från lägerverksamheten är till exempel deltagaravgifter."
     },
     "income_section.description": {
+      "en": "Specify here the income of the next camp season",
       "fi": "Erittele tässä seuraavan leirikauden tulot",
-      "sv": "Specificera här intäkterna för nästa lägersäsong",
-      "en": "Specify here the income of the next camp season"
+      "sv": "Specificera här intäkterna för nästa lägersäsong"
     },
     "expenditure_section.tooltip": {
+      "en": "Indicate here the type of expense in question. Expenses from camp activities may include accommodation and meal expenses and instructors&rsquo; salary expenses.",
       "fi": "Kerro tässä, millainen meno on kyseessä. Leiritoiminnan menoja voivat olla esimerkiksi majoituskulut, ruokakulut ja ohjaajien palkkakulut.",
-      "sv": "Ange här vilken utgift det är fråga om. Utgifter för lägerverksamheten är till exempel logikostnader, matkostnader och handledarnas lönekostnader.",
-      "en": "Indicate here the type of expense in question. Expenses from camp activities may include accommodation and meal expenses and instructors&rsquo; salary expenses."
+      "sv": "Ange här vilken utgift det är fråga om. Utgifter för lägerverksamheten är till exempel logikostnader, matkostnader och handledarnas lönekostnader."
     },
     "expenditure_section.description": {
+      "en": "Specify here the expenses of the next camp season",
       "fi": "Erittele tässä seuraavan leirikauden menot",
-      "sv": "Specificera här utgifterna för nästa lägersäsong",
-      "en": "Specify here the expenses of the next camp season"
+      "sv": "Specificera här utgifterna för nästa lägersäsong"
     },
     "attachments_section.description": {
       "en": "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
@@ -41,19 +41,19 @@
       "sv": "Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor."
     },
     "camp_excel.title": {
+      "en": "Camp excel",
       "fi": "Leiri-excel",
-      "sv": "Läger-excel",
-      "en": "Camp excel"
+      "sv": "Läger-excel"
     },
     "camp_excel.tooltip": {
+      "en": "Fill out this mandatory attachment carefully.",
       "fi": "Täytä tämä pakollinen liite huolellisesti.",
-      "sv": "Fyll i denna obligatoriska bilaga noggrant.",
-      "en": "Fill out this mandatory attachment carefully."
+      "sv": "Fyll i denna obligatoriska bilaga noggrant."
     },
     "required_attachments_help.value": {
+      "en": "The mandatory attachments to the application for the camp grant are the 'Advance information on camps' Excel sheet, the current rules of the association and the association's budget and action plan for the year for which the grant is being applied for. The rules must be approved by the Finnish Patent and Registration Office.",
       "fi": "Leiriavustushakemuksen pakolliset liitteet ovat ennakkotiedot leireistä excel-liite, yhdistyksen voimassa olevat säännöt sekä yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät.",
-      "sv": "De obligatoriska bilagorna till ansökan om lägerunderstöd är Excel-bilagan för lägrens preliminära uppgifter, föreningens giltiga stadgar samt föreningens budget och verksamhetsplan för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.",
-      "en": "The mandatory attachments to the application for the camp grant are the 'Advance information on camps' Excel sheet, the current rules of the association and the association's budget and action plan for the year for which the grant is being applied for. The rules must be approved by the Finnish Patent and Registration Office."
+      "sv": "De obligatoriska bilagorna till ansökan om lägerunderstöd är Excel-bilagan för lägrens preliminära uppgifter, föreningens giltiga stadgar samt föreningens budget och verksamhetsplan för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen."
     }
   }
 }
