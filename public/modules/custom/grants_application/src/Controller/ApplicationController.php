@@ -19,7 +19,9 @@ use Drupal\file\Entity\File;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2DataParser;
+use Drupal\grants_application\Entity\ApplicationMetadata;
 use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_events\EventsService;
@@ -34,6 +36,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -143,8 +146,22 @@ final class ApplicationController extends ControllerBase {
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
 
-    $submission = $this->getApplicationSubmission($application_number);
-    // Check the application status, if it's still editable.
+    // Figure out manually if user has permission to edit this entity.
+    $entities = $this->entityTypeManager()
+      ->getStorage('application_submission')
+      ->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('application_number', $application_number)
+      ->execute();
+    $submission = $entities ? ApplicationSubmission::load(reset($entities)) : NULL;
+
+    if (
+      $submission &&
+      $submission->access('edit', $this->accountProxy->getAccount(), TRUE)->isForbidden()
+    ) {
+      return new RedirectResponse($this->getRedirectBackUrl()->toString());
+    }
+
     if ($submission && !$submission->isDraft()) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
@@ -282,7 +299,6 @@ final class ApplicationController extends ControllerBase {
     }
 
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $user_information = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
@@ -291,28 +307,20 @@ final class ApplicationController extends ControllerBase {
     }
 
     try {
-      $submission = $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->applicationService->getSubmissionEntity($user_information->sub);
     }
     catch (\Exception) {
       throw new NotFoundHttpException();
     }
 
-    $submission = $this->getApplicationSubmission($application_number);
-
-    if ($application_number && !$submission) {
-      throw new NotFoundHttpException();
-    }
-
     $document = NULL;
-    if ($submission) {
-      try {
-        $document = $this->helfiAtvService->getDocument($application_number);
-      }
-      catch (\Throwable $e) {
-        $this->messenger()
-          ->addError($this->t('Your request was not fulfilled due to network error.', [], ['context' => 'grants_handler']));
-        return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
-      }
+    try {
+      $document = $this->helfiAtvService->getDocument($application_number);
+    }
+    catch (\Throwable $e) {
+      $this->messenger()
+        ->addError($this->t('Your request was not fulfilled due to network error.', [], ['context' => 'grants_handler']));
+      return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
     }
 
     if (!$document) {
@@ -418,13 +426,8 @@ final class ApplicationController extends ControllerBase {
    *   The response.
    */
   public function uploadFile(string $application_number, Request $request): JsonResponse {
-    $sub = $this->userInformationService->getUserData()->sub;
-    $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-    $businessId = $grants_profile_data->getBusinessId() ?? '';
-
     try {
-      /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
-      $submission = $this->getSubmissionEntity($sub, $application_number, $businessId);
+      $submission = $this->applicationService->getSubmissionEntity($application_number);
     }
     catch (\Exception $e) {
       $this->getLogger('grants_application')
@@ -541,18 +544,13 @@ final class ApplicationController extends ControllerBase {
    *   The response.
    */
   public function removeFile(string $application_number, string $attachmentId): JsonResponse {
-    $ids = $this->entityTypeManager()
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('application_number', $application_number)
-      ->execute();
-
-    if (
-      !$ids ||
-      !$submission = ApplicationSubmission::load(reset($ids))
-    ) {
-      return new JsonResponse(['error' => $this->t('Application not found')], 404);
+    try {
+      $submission = $this->applicationService->getSubmissionEntity($application_number);
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application')
+        ->error("Application does not exist in database while uploading a file: $application_number");
+      return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
     }
 
     if (!$submission->isDraft()) {
@@ -604,21 +602,7 @@ final class ApplicationController extends ControllerBase {
     $tOpts = ['context' => 'grants_handler'];
 
     try {
-      $ids = $this->entityTypeManager()->getStorage('application_submission')
-        ->getQuery()
-        ->accessCheck(TRUE)
-        ->condition('application_number', $id)
-        ->execute();
-
-      if (!$ids) {
-        $this->messenger()
-          ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
-        $this->getLogger('grants_handler')
-          ->error('Error: %error', ['%error' => "Cannot find application number $id"]);
-        return new JsonResponse(['redirectUrl' => $redirectUrl]);
-      }
-
-      $submission = ApplicationSubmission::load(reset($ids));
+      $submission = $this->applicationService->getSubmissionEntity($id);
     }
     catch (\Exception  $e) {
       $this->messenger()
@@ -672,27 +656,10 @@ final class ApplicationController extends ControllerBase {
    *   The application number.
    */
   public function printApplication(string $application_number): array {
-    if (!$application_number) {
-      throw new NotFoundHttpException();
-    }
-
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-      $user_information = $this->userInformationService->getUserData();
-    }
-    catch (\Throwable $e) {
-      throw new NotFoundHttpException();
-    }
-
-    try {
-      $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->applicationService->getSubmissionEntity($application_number);
     }
     catch (\Throwable) {
-      throw new NotFoundHttpException();
-    }
-
-    $submission = $this->getApplicationSubmission($application_number);
-    if (!$submission) {
       throw new NotFoundHttpException();
     }
 
@@ -796,9 +763,7 @@ final class ApplicationController extends ControllerBase {
     $renderedHtml = '';
 
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-      $user_information = $this->userInformationService->getUserData();
-      $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
+      $this->applicationService->getSubmissionEntity($application_number);
       $atvDocument = $this->helfiAtvService->getDocument($application_number);
     }
     catch (\Exception $e) {
@@ -890,7 +855,7 @@ final class ApplicationController extends ControllerBase {
    * @return \Drupal\Core\Url
    *   The redirect url.
    */
-  private function getRedirectBackUrl(?string $application_number): Url {
+  private function getRedirectBackUrl(?string $application_number = ''): Url {
     if ($application_number) {
       return Url::fromRoute('helfi_grants.view_application', ['application_number' => $application_number]);
     }
@@ -917,49 +882,6 @@ final class ApplicationController extends ControllerBase {
       ->loadByProperties(['application_number' => $application_number]);
 
     return $submissions ? reset($submissions) : NULL;
-  }
-
-  /**
-   * Get the submission entity with permission checking.
-   *
-   * @param string $sub
-   *   User sub.
-   * @param string $application_number
-   *   The application number.
-   * @param string $business_id
-   *   The business id.
-   *
-   * @return \Drupal\grants_application\Entity\ApplicationSubmission
-   *   The application submission.
-   */
-  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
-    // @todo Duplicated, put this functionality in better place.
-    $ids = $this->entityTypeManager()
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('sub', $sub)
-      ->condition('application_number', $application_number)
-      ->execute();
-
-    if ($ids) {
-      return ApplicationSubmission::load(reset($ids));
-    }
-
-    // Check for business id as well.
-    $ids = $this->entityTypeManager()
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('business_id', $business_id)
-      ->condition('application_number', $application_number)
-      ->execute();
-
-    if ($ids) {
-      return ApplicationSubmission::load(reset($ids));
-    }
-
-    throw new \Exception('Application not found');
   }
 
 }

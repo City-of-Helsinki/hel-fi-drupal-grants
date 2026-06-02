@@ -14,6 +14,7 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
+
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -28,8 +29,6 @@ class ApplicationService {
     private readonly FormSettingsServiceInterface $formSettingsService,
     private readonly HelfiAtvService $atvService,
     private readonly LanguageManagerInterface $languageManager,
-    #[Autowire(service: 'logger.channel.grants_application')]
-    private readonly LoggerInterface $logger,
     private readonly UserInformationService $userInformationService,
     private readonly UuidInterface $uuid,
   ) {
@@ -49,18 +48,10 @@ class ApplicationService {
   public function createDraft(string $form_identifier, string|null $original_application_number = NULL): array {
     try {
       $entity = $this->getSubmissionEntity(
-        $this->userInformationService->getUserData()->sub,
         $original_application_number,
-        $this->userInformationService->getGrantsProfileContent()->getBusinessId(),
       );
     }
     catch (\Exception $e) {
-      $this->logger->error('Unable to fetch application to copy: @message', [
-        '@message' => $e->getMessage(),
-        'application_number' => $original_application_number,
-        'user_id' => $this->userInformationService->getUserData()->sub,
-      ]);
-
       throw $e;
     }
 
@@ -125,11 +116,21 @@ class ApplicationService {
       'messages' => [],
     ]);
 
+    if ($this->userInformationService->getApplicantType() === 'private_person') {
+      $businessId = '';
+    }
+    else {
+      $businessId =
+        $this->userInformationService->getApplicantType() == 'registered_community' ?
+          $grants_profile_data->getBusinessId() :
+          $grants_profile_data->getBusinessId() ?? '';
+    }
+
     $document = $this->atvService->saveNewDocument($document);
     $now = time();
     ApplicationSubmission::create([
       'document_id' => $document->getId(),
-      'business_id' => $grants_profile_data->getBusinessId(),
+      'business_id' => $businessId,
       'sub' => $user_data->sub,
       'langcode' => $langcode,
       'draft' => TRUE,
@@ -185,43 +186,47 @@ class ApplicationService {
   /**
    * Get the application submission.
    *
-   * @param string $sub
-   *   User uuid.
    * @param string $application_number
    *   The application number.
-   * @param string $business_id
-   *   The business id.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
    */
-  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
-    // @todo Duplicated, put this in better place.
-    $ids = $this->entityTypeManager
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('sub', $sub)
-      ->condition('application_number', $application_number)
-      ->execute();
+  public function getSubmissionEntity(string $application_number): ApplicationSubmission {
+    if ($this->userInformationService->getApplicantType() === 'private_person') {
+      $ids = $this->entityTypeManager
+        ->getStorage('application_submission')
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('sub', $this->userInformationService->getUserData()->sub)
+        ->condition('application_number', $application_number)
+        ->condition('business_id', '')
+        ->execute();
 
-    if ($ids) {
-      return ApplicationSubmission::load(reset($ids));
+      if ($ids) {
+        return ApplicationSubmission::load(reset($ids));
+      }
+      throw new \Exception('Application not found');
     }
+    else {
+      $business_id = $this->userInformationService->getApplicantType() === 'registered_community' ?
+        $this->userInformationService->getGrantsProfileContent()->getBusinessId() :
+        $this->userInformationService->getGrantsProfileContent()->getBusinessId() ?? '';
 
-    $ids = $this->entityTypeManager
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('business_id', $business_id)
-      ->condition('application_number', $application_number)
-      ->execute();
+      $ids = $this->entityTypeManager
+        ->getStorage('application_submission')
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('business_id', $business_id)
+        ->condition('application_number', $application_number)
+        ->execute();
 
-    if ($ids) {
-      return ApplicationSubmission::load(reset($ids));
+      if ($ids) {
+        return ApplicationSubmission::load(reset($ids));
+      }
+
+      throw new \Exception('Application not found');
     }
-
-    throw new \Exception('Application not found');
   }
 
 }
