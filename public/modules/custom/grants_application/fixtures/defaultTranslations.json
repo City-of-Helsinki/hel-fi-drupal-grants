@@ -105,6 +105,11 @@
       "fi": "Kyllä",
       "sv": "Ja"
     },
+    "boys.title": {
+      "en": "Boys",
+      "fi": "Pojat",
+      "sv": "Pojkar"
+    },
     "budget.description": {
       "en": "Budget (for the year for which you are applying for a grant)",
       "fi": "Liitä tähän koko yhteisön talousarvio.",
@@ -405,6 +410,11 @@
       "fi": "Lisäselvitys liitteistä",
       "sv": "Ytterligare information om bilagorna"
     },
+    "girls.title": {
+      "en": "Girls",
+      "fi": "Tytöt",
+      "sv": "Flickor"
+    },
     "grant_info_step.title": {
       "en": "Grant details",
       "fi": "Avustustiedot",
@@ -664,6 +674,11 @@
       "en": "Other grants received for the same purpose",
       "fi": "Muut samaan tarkoitukseen myönnetyt avustukset",
       "sv": "Övriga understöd som beviljats för samma ändamål"
+    },
+    "postal_code.title": {
+      "en": "Postal code",
+      "fi": "Postinumero",
+      "sv": "Postnummer"
     },
     "prior_benefits_usage_section.title": {
       "en": "Report on the use of the previous grant",

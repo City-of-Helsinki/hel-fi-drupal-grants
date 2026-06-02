@@ -56,7 +56,7 @@
           ]
         },
         "art_premise_postal_code": {
-          "title": "art_premise_postal_code.title",
+          "title": "postal_code.title",
           "type": "string"
         },
         "art_premise_is_owned": {
@@ -93,7 +93,7 @@
           "type": "string"
         },
         "realized_premise_postal_code": {
-          "title": "realized_premise_postal_code.title",
+          "title": "postal_code.title",
           "type": "string"
         },
         "realized_premise_is_owned_by_city": {
@@ -110,7 +110,12 @@
         },
         "realized_premise_suitability": {
           "title": "realized_premise_suitability.title",
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "Hyvin",
+            "Osittain",
+            "Huonosti"
+          ]
         }
       }
     },
@@ -312,11 +317,11 @@
                   "type": "integer"
                 },
                 "pupils_childhood_girls": {
-                  "title": "pupils_girls.title",
+                  "title": "girls.title",
                   "type": "integer"
                 },
                 "pupils_childhood_boys": {
-                  "title": "pupils_boys.title",
+                  "title": "boys.title",
                   "type": "integer"
                 }
               }
@@ -330,11 +335,11 @@
                   "type": "integer"
                 },
                 "pupils_wide_basic_girls": {
-                  "title": "pupils_girls.title",
+                  "title": "girls.title",
                   "type": "integer"
                 },
                 "pupils_wide_basic_boys": {
-                  "title": "pupils_boys.title",
+                  "title": "boys.title",
                   "type": "integer"
                 }
               }
@@ -348,11 +353,11 @@
                   "type": "integer"
                 },
                 "pupils_wide_advanced_girls": {
-                  "title": "pupils_girls.title",
+                  "title": "girls.title",
                   "type": "integer"
                 },
                 "pupils_wide_advanced_boys": {
-                  "title": "pupils_boys.title",
+                  "title": "boys.title",
                   "type": "integer"
                 }
               }
@@ -366,11 +371,11 @@
                   "type": "integer"
                 },
                 "pupils_general_girls": {
-                  "title": "pupils_girls.title",
+                  "title": "girls.title",
                   "type": "integer"
                 },
                 "pupils_general_boys": {
-                  "title": "pupils_boys.title",
+                  "title": "boys.title",
                   "type": "integer"
                 }
               }
@@ -492,12 +497,20 @@
       "properties": {
         "planned_budget_section": {
           "title": "planned_budget_section.title",
-          "description": "planned_budget_section.description",
           "type": "object",
           "properties": {
+            "planned_budget_section_info": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "planned_budget_section_info.value",
+                  "type": "null"
+                }
+              ]
+            },
             "is_part_of_vos": {
               "title": "is_part_of_vos.title",
-              "description": "is_part_of_vos.description",
+              "description": "affirmative_expands",
               "enum": [
                 true,
                 false
@@ -517,7 +530,7 @@
             },
             "applied_grant": {
               "format": "decimal-number",
-              "title": "applied_grant.title",
+              "title": "applied_benefits.title",
               "type": "string"
             },
             "planned_state_operative_subvention": {
@@ -569,12 +582,20 @@
         },
         "realized_budget_section": {
           "title": "realized_budget_section.title",
-          "description": "realized_budget_section.description",
           "type": "object",
           "properties": {
+            "realized_budget_section_info": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "realized_budget_section_info.value",
+                  "type": "null"
+                }
+              ]
+            },
             "was_part_of_vos": {
               "title": "was_part_of_vos.title",
-              "description": "was_part_of_vos.description",
+              "description": "affirmative_expands",
               "enum": [
                 true,
                 false

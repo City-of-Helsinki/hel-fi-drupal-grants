@@ -185,6 +185,14 @@
               "tooltipButtonLabel": "realized_premise_city_section.title",
               "tooltipText": "realized_premise_city_section.description"
             }
+          },
+          "realized_premise_suitability": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "realized_premise_suitability.well",
+              "realized_premise_suitability.partially",
+              "realized_premise_suitability.poorly"
+            ]
           }
         }
       }
@@ -226,6 +234,10 @@
   },
   "budget_step": {
     "planned_budget_section": {
+      "planned_budget_section_info": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
       "is_part_of_vos": {
         "ui:enumNames": [
           "boolean.yes",
@@ -253,6 +265,10 @@
       }
     },
     "realized_budget_section": {
+      "realized_budget_section_info": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
       "was_part_of_vos": {
         "ui:enumNames": [
           "boolean.yes",

@@ -529,8 +529,8 @@
                     },
                     {
                         "ID": "premiseSuitability",
-                        "label": "Tilan soveltuvuus",
-                        "value": "Soveltuu hyvin.",
+                        "label": "Kuinka hyvin tila soveltuu toimintaan?",
+                        "value": "Hyvin",
                         "valueType": "string"
                     }
                 ]

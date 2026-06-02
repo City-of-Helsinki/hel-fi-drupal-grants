@@ -517,7 +517,7 @@
       },
       "realized_premise_suitability": {
         "ID": "premiseSuitability",
-        "label": "Tilan soveltuvuus",
+        "label": "Kuinka hyvin tila soveltuu toimintaan?",
         "value": "",
         "valueType": "string"
       }

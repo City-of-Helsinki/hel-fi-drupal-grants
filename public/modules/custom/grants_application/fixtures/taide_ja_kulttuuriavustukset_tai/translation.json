@@ -130,11 +130,6 @@
       "fi": "Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila",
       "sv": "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
     },
-    "art_premise_postal_code.title": {
-      "en": "Postal code",
-      "fi": "Postinumero",
-      "sv": "Postnummer"
-    },
     "art_premise_is_owned_by_city.title": {
       "en": "Premises owned by the city",
       "fi": "Kyseessä on kaupungin omistama tila",
@@ -189,16 +184,6 @@
       "en": "All",
       "fi": "Kaikki",
       "sv": "Alla"
-    },
-    "pupils_girls.title": {
-      "en": "Girls",
-      "fi": "Tytöt",
-      "sv": "Flickor"
-    },
-    "pupils_boys.title": {
-      "en": "Boys",
-      "fi": "Pojat",
-      "sv": "Pojkar"
     },
     "teaching_personnel.title": {
       "en": "Total number of teaching personnel on 20 September",
@@ -270,11 +255,6 @@
       "fi": "Tilan nimi",
       "sv": "Lokalens namn"
     },
-    "realized_premise_postal_code.title": {
-      "en": "Postal code",
-      "fi": "Postinumero",
-      "sv": "Postnummer"
-    },
     "realized_premise_is_owned_by_city.title": {
       "en": "Premises owned by the city",
       "fi": "Kyseessä on kaupungin omistama tila",
@@ -291,9 +271,24 @@
       "sv": "Stadsmiljösektorns lokaler är till exempel skolornas undervisningslokaler. Kultur- och fritidssektorns lokaler är till exempel lokaler som förvaltas av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Fostrans- och utbildningssektorns lokaler är till exempel arbetarinstitutets lokaler."
     },
     "realized_premise_suitability.title": {
-      "en": "Suitability of the premises",
-      "fi": "Tilan soveltuvuus",
-      "sv": "Lokalens lämplighet"
+      "en": "How well premises suit for the action?",
+      "fi": "Kuinka hyvin tila soveltuu toimintaan?",
+      "sv": "Hur väl lämpar sig utrymmena för undervisning?"
+    },
+    "realized_premise_suitability.well": {
+      "en": "Well",
+      "fi": "Hyvin",
+      "sv": "Väl"
+    },
+    "realized_premise_suitability.partially": {
+      "en": "Partially",
+      "fi": "Osittain",
+      "sv": "Partiskt"
+    },
+    "realized_premise_suitability.poorly": {
+      "en": "Poorly",
+      "fi": "Huonosti",
+      "sv": "Dåligt"
     },
     "activity_basis_step.title": {
       "en": "Basis of activities",
@@ -355,7 +350,7 @@
       "fi": "Talousarvio",
       "sv": "Budget"
     },
-    "planned_budget_section.description": {
+    "planned_budget_section_info.value": {
       "en": "Concerning the year for which the grant is applied for with this application. If the grant only concerns a part of the activities, the figures must only concern this part of the activities according to its own budget.",
       "fi": "Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta oman talousarvionsa mukaisesti.",
       "sv": "Gällande det år för vilket understödet ansöks med denna ansökan. Om understödet endast gäller en del av verksamheten ska siffrorna endast gälla denna del av verksamheten enligt dess egen budget."
@@ -364,11 +359,6 @@
       "en": "The organisation is part of the state subsidy system (VOS)",
       "fi": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
       "sv": "Organisationen omfattas av statsandelssystemet (VOS)"
-    },
-    "is_part_of_vos.description": {
-      "en": "An affirmative answer opens a further question",
-      "fi": "Myöntävä vastaus avaa lisäkysymyksen",
-      "sv": "Ett jakande svar öppnar ytterligare en fråga"
     },
     "is_part_of_vos.tooltip": {
       "en": "Select yes only if you know for certain that your organisation receives funding specifically in the form of a state subsidy. This does not refer to all grants awarded by the state, but a statutory separate form of funding concerning a limited group.",
@@ -379,11 +369,6 @@
       "en": "Planned income",
       "fi": "Suunnitellut tulot",
       "sv": "Planerade inkomster"
-    },
-    "applied_grant.title": {
-      "en": "Requested grants (€)",
-      "fi": "Haettu avustus (€)",
-      "sv": "Önskat understöd (€)"
     },
     "planned_state_operative_subvention.title": {
       "en": "Other state subsidies (€)",
@@ -430,7 +415,7 @@
       "fi": "Toteutuneet tulot ja menot",
       "sv": "Realiserade inkomster och utgifter"
     },
-    "realized_budget_section.description": {
+    "realized_budget_section_info.value": {
       "en": "For the previous accounting period, according to the financial statements. Include all income (under \"total income\") and all expenses (under \"total expenses\"), including, for example, depreciation and financial costs and income.",
       "fi": "Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan \"tulot yhteensä\") ja kaikki menot (kohtaan \"menot yhteensä\") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot.",
       "sv": "Under det föregående avslutade räkenskapsåret, enligt bokslutet. Räkna med alla inkomster (under \"inkomster sammanlagt\") och alla utgifter (under \"utgifter sammanlagt\"), inklusive bl.a. avskrivningar och finansieringskostnader och -intäkter."
@@ -439,11 +424,6 @@
       "en": "The organisation was part of the state subsidy system (VOS)",
       "fi": "Organisaatio kuului valtionosuusjärjestelmään (VOS)",
       "sv": "Organisationen omfattades av statsandelssystemet (VOS)"
-    },
-    "was_part_of_vos.description": {
-      "en": "An affirmative answer opens a further question",
-      "fi": "Myöntävä vastaus avaa lisäkysymyksen",
-      "sv": "Ett jakande svar öppnar ytterligare en fråga"
     },
     "was_part_of_vos.tooltip": {
       "en": "Select yes only if you know for certain that your organisation received funding specifically in the form of a state subsidy. This does not refer to all grants awarded by the state, but a statutory separate form of funding concerning a limited group.",
