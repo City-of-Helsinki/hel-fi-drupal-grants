@@ -5,20 +5,10 @@
       "en": "Special youth activity grant for preventing segregation",
       "sv": "Segregationsförebyggande specialunderstöd för ungdomsverksamhet"
     },
-    "subventions.49.title": {
-      "fi": "Nuorison erityisavustus 1",
-      "en": "Special grant for youth activities 1",
-      "sv": "Specialunderstöd för ungdomsverksamhet 1"
-    },
     "budget_info.value": {
       "fi": "Täytä tähän projektin talousarvio suunnitellulta kaudelta.",
       "en": "Fill in the project's budget for the planned period here.",
       "sv": "Fyll i projektets budget för den planerade perioden här."
-    },
-    "grant_target_section.title": {
-      "fi": "Avustuksen kohde",
-      "en": "Target of the grant",
-      "sv": "Understödets ändamål"
     },
     "grant_recipient_type.title": {
       "fi": "Haetaanko avustusta yhdistykselle vai nuorten toimintaryhmälle?",
@@ -41,7 +31,7 @@
       "sv": "Ett jakande eller nekande svar öppnar ytterligare en fråga"
     },
     "is_application_extension.title": {
-      "fi": "Onko kyseessä jatkohakemus",
+      "fi": "Onko kyseessä jatkohakemus?",
       "en": "Is this a continuation application?",
       "sv": "Gäller det en fortsättningsansökan?"
     },
@@ -55,11 +45,6 @@
       "en": "Project schedule, target group and activity area",
       "sv": "Projektets tidsplan, målgrupp och verksamhetsområde"
     },
-    "project_name.title": {
-      "fi": "Projektin nimi",
-      "en": "Project name",
-      "sv": "Projektets namn"
-    },
     "project_schedule.title": {
       "fi": "Mikä on projektin aikataulu?",
       "en": "What is the project's schedule?",
@@ -69,26 +54,6 @@
       "fi": "Merkitse tähän projektin suunniteltu alkamispäivä ja loppumispäivä.",
       "en": "Enter the planned start date and end date of the project here.",
       "sv": "Ange projektets planerade start- och slutdatum här."
-    },
-    "start_date.title": {
-      "fi": "Alkupäivämäärä",
-      "en": "Start date",
-      "sv": "Startdatum"
-    },
-    "start_date.printable_title": {
-      "fi": "Hankkeen alkupäivämäärä",
-      "en": "Project start date",
-      "sv": "Projektets startdatum"
-    },
-    "end_date.title": {
-      "fi": "Loppupäivämäärä",
-      "en": "End date",
-      "sv": "Slutdatum"
-    },
-    "end_date.printable_title": {
-      "fi": "Hankkeen loppupäivämäärä",
-      "en": "Project end date",
-      "sv": "Projektets slutdatum"
     },
     "target_group_description.title": {
       "fi": "Mikä on projektin kohderyhmä/kohderyhmät?",
@@ -104,21 +69,6 @@
       "fi": "Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään \"0\".",
       "en": "If the project does not reach the age group in question, enter \"0\" in the field.",
       "sv": "Om projektet inte når den aktuella åldersgruppen, ange \"0\" i fältet."
-    },
-    "participant_estimate_9_12.title": {
-      "fi": "9–12-vuotiasta helsinkiläistä",
-      "en": "9–12-year-old residents of Helsinki",
-      "sv": "9–12-åriga Helsingforsbor"
-    },
-    "participant_estimate_18_24.title": {
-      "fi": "18-24-vuotiasta helsinkiläistä",
-      "en": "18–24-year-old residents of Helsinki",
-      "sv": "18–24-åriga Helsingforsbor"
-    },
-    "new_participant_estimate.title": {
-      "fi": "Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
-      "en": "How many of these are new, i.e. have not participated in activities previously organised by the operator?",
-      "sv": "Hur många av dessa är nya, dvs. har inte tidigare deltagit i verksamhet som aktören ordnat?"
     },
     "postal_code_areas.title": {
       "fi": "Millä alueilla toiminta toteutetaan? Kirjaa tekstikenttään kaikki tilojen nimet/toimintapaikat ja postinumerot pilkulla eroteltuna.",
@@ -150,21 +100,6 @@
       "en": "If the project does not reach the age group in question, enter \"0\" in the field.",
       "sv": "Om projektet inte når den aktuella åldersgruppen, ange \"0\" i fältet."
     },
-    "participants_reached_9_12.title": {
-      "fi": "9–12-vuotiasta helsinkiläistä",
-      "en": "9–12-year-old residents of Helsinki",
-      "sv": "9–12-åriga Helsingforsbor"
-    },
-    "participants_reached_18_24.title": {
-      "fi": "18-24-vuotiasta helsinkiläistä",
-      "en": "18–24-year-old residents of Helsinki",
-      "sv": "18–24-åriga Helsingforsbor"
-    },
-    "participants_reached_new.title": {
-      "fi": "Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
-      "en": "How many of these are new, i.e. have not participated in activities previously organised by the operator?",
-      "sv": "Hur många av dessa är nya, dvs. har inte tidigare deltagit i verksamhet som aktören ordnat?"
-    },
     "hours_by_postal_area.title": {
       "fi": "Kuinka monta tuntia harrastustoimintaa projektissa on järjestetty kullakin postinumeroalueella? Erittele tekstikenttään postinumeroittain pilkulla eroteltuna esimerkiksi näin: 00400: 7h, 00900: 16h.",
       "en": "How many hours of recreational activities has the project organised in each postal code area? Specify by postal code in the text field, separated by commas, for example: 00400: 7h, 00900: 16h.",
@@ -175,30 +110,10 @@
       "en": "Project methods",
       "sv": "Projektets metoder"
     },
-    "target_group_reach.title": {
-      "fi": "Miten kohderyhmät tavoitetaan ja tunnistetaan?",
-      "en": "How are the target groups reached and identified?",
-      "sv": "Hur nås och identifieras målgrupperna?"
-    },
-    "impact_on_participants.title": {
-      "fi": "Miten toiminnan toivotaan vaikuttavan osallistujien elämään?",
-      "en": "How is the activity hoped to affect the participants' lives?",
-      "sv": "Hur hoppas man att verksamheten ska påverka deltagarnas liv?"
-    },
-    "youth_participation_planning.title": {
-      "fi": "Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?",
-      "en": "How do children and young people participate in the planning and decision-making of the activities?",
-      "sv": "Hur deltar barn och unga i planeringen av och beslutsfattandet om verksamheten?"
-    },
     "key_partners.title": {
       "fi": "Kenen kanssa hankkeessa tehdään yhteistyötä? Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.",
       "en": "Who are the project's collaborators? Name the key collaboration partners and their roles in the project. Name separately the partners already agreed upon and those still being planned.",
       "sv": "Med vem samarbetar projektet? Namnge de viktigaste samarbetspartnerna och deras roller i projektet. Namnge separat de partner som redan avtalats och de som ännu planeras."
-    },
-    "new_partnerships.title": {
-      "fi": "Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?",
-      "en": "Does the project test new kinds of partnerships or develop new operating models? What kind?",
-      "sv": "Prövas nya slags partnerskap i projektet eller utvecklas nya verksamhetsmodeller? Hurdana?"
     },
     "establishment_after_project.title": {
       "fi": "Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos on, niin kuvaa tekstikenttään, miten ja millä rahoituksella vakiinnuttaminen aiotaan tehdä?",
@@ -234,11 +149,6 @@
       "fi": "Mitkä ovat olleet projektin keskeiset yhteistyökumppanit tähän mennessä, ja mikä heidän roolinsa on ollut?",
       "en": "Who have been the project's key collaboration partners so far, and what has their role been?",
       "sv": "Vilka har hittills varit projektets viktigaste samarbetspartner och vilken har deras roll varit?"
-    },
-    "youth_participation_report.title": {
-      "fi": "Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon? Mainitse konkreettisia esimerkkejä.",
-      "en": "How have children and young people participated in the planning and decision-making of the activities? Give concrete examples.",
-      "sv": "Hur har barn och unga deltagit i planeringen av och beslutsfattandet om verksamheten? Ge konkreta exempel."
     },
     "project_economy_section.title": {
       "fi": "Projektin talous ja toiminta",

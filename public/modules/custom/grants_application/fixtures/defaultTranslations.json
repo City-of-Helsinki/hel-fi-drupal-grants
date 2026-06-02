@@ -809,6 +809,91 @@
       "en": "Types of grant",
       "fi": "Avustuslajit",
       "sv": "Understödskategorier"
+    },
+    "subventions.49.title": {
+      "en": "Special grant for youth activities 1",
+      "fi": "Nuorison erityisavustus 1",
+      "sv": "Specialunderstöd för ungdomsverksamhet 1"
+    },
+    "start_date.title": {
+      "en": "Start date",
+      "fi": "Alkupäivämäärä",
+      "sv": "Startdatum"
+    },
+    "start_date.printable_title": {
+      "en": "Project start date",
+      "fi": "Hankkeen alkupäivämäärä",
+      "sv": "Projektets startdatum"
+    },
+    "end_date.title": {
+      "en": "End date",
+      "fi": "Loppupäivämäärä",
+      "sv": "Slutdatum"
+    },
+    "end_date.printable_title": {
+      "en": "Project end date",
+      "fi": "Hankkeen loppupäivämäärä",
+      "sv": "Projektets slutdatum"
+    },
+    "target_group_reach.title": {
+      "en": "How are the target groups reached and identified?",
+      "fi": "Miten kohderyhmät tavoitetaan ja tunnistetaan?",
+      "sv": "Hur nås och identifieras målgrupperna?"
+    },
+    "impact_on_participants.title": {
+      "en": "How is the activity hoped to affect the participants' lives?",
+      "fi": "Miten toiminnan toivotaan vaikuttavan osallistujien elämään?",
+      "sv": "Hur hoppas man att verksamheten ska påverka deltagarnas liv?"
+    },
+    "youth_participation_planning.title": {
+      "en": "How do children and young people participate in the planning and decision-making of the activities?",
+      "fi": "Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?",
+      "sv": "Hur deltar barn och unga i planeringen av och beslutsfattandet om verksamheten?"
+    },
+    "new_partnerships.title": {
+      "en": "Does the project test new kinds of partnerships or develop new operating models? What kind?",
+      "fi": "Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?",
+      "sv": "Prövas nya slags partnerskap i projektet eller utvecklas nya verksamhetsmodeller? Hurdana?"
+    },
+    "youth_participation_report.title": {
+      "en": "How have children and young people participated in the planning and decision-making of the activities? Give concrete examples.",
+      "fi": "Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon? Mainitse konkreettisia esimerkkejä.",
+      "sv": "Hur har barn och unga deltagit i planeringen av och beslutsfattandet om verksamheten? Ge konkreta exempel."
+    },
+    "project_name.title": {
+      "en": "Project name",
+      "fi": "Projektin nimi",
+      "sv": "Projektets namn"
+    },
+    "age_group_9_12.title": {
+      "en": "Helsinki residents aged 9 to 12 years",
+      "fi": "9–12-vuotiasta helsinkiläistä",
+      "sv": "9–12-åriga helsingforsare"
+    },
+    "age_group_13_15.title": {
+      "en": "Helsinki residents aged 13 to 15 years",
+      "fi": "13–15-vuotiasta helsinkiläistä",
+      "sv": "13–15-åriga helsingforsare"
+    },
+    "age_group_16_18.title": {
+      "en": "Helsinki residents aged 16 to 18 years",
+      "fi": "16–18-vuotiasta helsinkiläistä",
+      "sv": "16–18-åriga helsingforsare"
+    },
+    "age_group_9_18.title": {
+      "en": "Helsinki residents aged 9 to 18 years",
+      "fi": "9–18-vuotiasta helsinkiläistä",
+      "sv": "9–18-åriga helsingforsare"
+    },
+    "age_group_18_24.title": {
+      "en": "Helsinki residents aged 18 to 24 years",
+      "fi": "18–24-vuotiasta helsinkiläistä",
+      "sv": "18–24-åriga helsingforsare"
+    },
+    "new_participants_count.title": {
+      "en": "How many of these are new, i.e. have not participated in activities previously organised by the operator?",
+      "fi": "Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
+      "sv": "Hur många av dessa är nya, dvs. har inte tidigare deltagit i verksamhet som aktören ordnat?"
     }
   }
 }

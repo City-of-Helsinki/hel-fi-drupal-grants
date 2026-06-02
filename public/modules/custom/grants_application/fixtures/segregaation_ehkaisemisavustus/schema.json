@@ -392,15 +392,15 @@
                         ]
                       },
                       "participant_estimate_9_12": {
-                        "title": "participant_estimate_9_12.title",
+                        "title": "age_group_9_12.title",
                         "type": "integer"
                       },
                       "participant_estimate_18_24": {
-                        "title": "participant_estimate_18_24.title",
+                        "title": "age_group_18_24.title",
                         "type": "integer"
                       },
                       "new_participant_estimate": {
-                        "title": "new_participant_estimate.title",
+                        "title": "new_participants_count.title",
                         "type": "integer"
                       }
                     }
@@ -502,15 +502,15 @@
                         ]
                       },
                       "participants_reached_9_12": {
-                        "title": "participants_reached_9_12.title",
+                        "title": "age_group_9_12.title",
                         "type": "integer"
                       },
                       "participants_reached_18_24": {
-                        "title": "participants_reached_18_24.title",
+                        "title": "age_group_18_24.title",
                         "type": "integer"
                       },
                       "participants_reached_new": {
-                        "title": "participants_reached_new.title",
+                        "title": "new_participants_count.title",
                         "type": "integer"
                       }
                     }
