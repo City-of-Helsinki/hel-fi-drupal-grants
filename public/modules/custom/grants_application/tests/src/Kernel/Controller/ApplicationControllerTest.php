@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\grants_application\Kernel\Controller;
 
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Controller\ApplicationController;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -126,6 +127,7 @@ final class ApplicationControllerTest extends KernelTestBase {
 
     $atvService = $this->createMock(AtvService::class);
     $atvService->expects($this->any())->method('deleteAttachment')->willReturn(TRUE);
+    $atvService->expects($this->any())->method('deleteDocument')->willReturn(TRUE);
 
     $antiVirusService = $this->createMock(AntivirusService::class);
     $antiVirusService->expects($this->any())->method('scan')->willReturn(TRUE);
@@ -166,6 +168,10 @@ final class ApplicationControllerTest extends KernelTestBase {
    * Test file remove.
    */
   public function testFileDelete(): void {
+    $applicationService = $this->createMock(ApplicationService::class);
+    $applicationService->expects($this->any())->method('getSubmissionEntity')->willReturn($this->applicationSubmission);
+    $this->container->set(ApplicationService::class, $applicationService);
+
     $controller = ApplicationController::create($this->container);
     $response = $controller->removeFile($this->applicationNumber, '9595');
 
@@ -178,6 +184,10 @@ final class ApplicationControllerTest extends KernelTestBase {
    * Test application removal.
    */
   public function testRemoveApplication(): void {
+    $applicationService = $this->createMock(ApplicationService::class);
+    $applicationService->expects($this->any())->method('getSubmissionEntity')->willReturn($this->applicationSubmission);
+    $this->container->set(ApplicationService::class, $applicationService);
+
     $controller = ApplicationController::create($this->container);
     $controller->removeApplication($this->applicationNumber);
 
@@ -297,6 +307,10 @@ final class ApplicationControllerTest extends KernelTestBase {
     $eventsService = $this->createMock(EventsService::class);
     $eventsService->method('logEvent')->willReturn([]);
     $this->container->set(EventsService::class, $eventsService);
+
+    $applicationService = $this->createMock(ApplicationService::class);
+    $applicationService->expects($this->any())->method('getSubmissionEntity')->willReturn($this->applicationSubmission);
+    $this->container->set(ApplicationService::class, $applicationService);
 
     $controller = ApplicationController::create($this->container);
     $response = $controller->markMessageRead($this->applicationNumber, $this->messageId);
