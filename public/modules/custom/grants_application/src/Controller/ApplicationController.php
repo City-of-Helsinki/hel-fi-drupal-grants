@@ -19,9 +19,7 @@ use Drupal\file\Entity\File;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2DataParser;
-use Drupal\grants_application\Entity\ApplicationMetadata;
 use Drupal\grants_application\Entity\ApplicationSubmission;
-use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_events\EventsService;
@@ -36,7 +34,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
