@@ -430,12 +430,6 @@
                         "valueType": "string"
                     },
                     {
-                        "ID": "streetAddress",
-                        "label": "Osoite",
-                        "value": "Kauppakatu 20",
-                        "valueType": "string"
-                    },
-                    {
                         "ID": "postCode",
                         "label": "Postinumero",
                         "value": "00100",

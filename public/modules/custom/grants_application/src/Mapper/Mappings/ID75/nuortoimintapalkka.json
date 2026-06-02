@@ -340,12 +340,6 @@
         "value": "",
         "valueType": "string"
       },
-      "premise_street_address": {
-        "ID": "streetAddress",
-        "label": "Osoite",
-        "value": "",
-        "valueType": "string"
-      },
       "premise_postal_code": {
         "ID": "postCode",
         "label": "Postinumero",

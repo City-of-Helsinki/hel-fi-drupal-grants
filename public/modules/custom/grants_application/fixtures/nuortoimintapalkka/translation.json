@@ -145,11 +145,6 @@
       "fi": "Toimipaikan nimi",
       "sv": "Platsens namn"
     },
-    "premise_street_address.title": {
-      "en": "Address",
-      "fi": "Osoite",
-      "sv": "Adress"
-    },
     "premise_postal_code.title": {
       "en": "Postal code",
       "fi": "Postinumero",

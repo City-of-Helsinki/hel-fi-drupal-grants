@@ -85,10 +85,6 @@
           "title": "premise_location.title",
           "type": "string"
         },
-        "premise_street_address": {
-          "title": "premise_street_address.title",
-          "type": "string"
-        },
         "premise_postal_code": {
           "title": "premise_postal_code.title",
           "type": "string"
@@ -96,7 +92,6 @@
       },
       "required": [
         "premise_location",
-        "premise_street_address",
         "premise_postal_code"
       ]
     },
@@ -509,28 +504,12 @@
         "rented_premises_section": {
           "title": "rented_premises_section.title",
           "type": "object",
-          "properties": {
-            "rented_premises": {
-              "type": "array",
-              "title": "rented_premises.title",
-              "items": {
-                "$ref": "#/definitions/_rented_premise_item"
-              },
-              "additionalItems": {
-                "$ref": "#/definitions/_rented_premise_item"
-              }
-            }
-          }
+          "properties": {}
         },
         "rental_additional_information_section": {
           "title": "rental_additional_information_section.title",
           "type": "object",
-          "properties": {
-            "rental_additional_information": {
-              "title": "rental_additional_information.title",
-              "type": "string"
-            }
-          }
+          "properties": {}
         }
       }
     },
@@ -789,5 +768,54 @@
       "title": "attachments_step.title",
       "type": "object"
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "grant_info_step": {
+            "properties": {
+              "subventions_section": {
+                "properties": {
+                  "apply_for_rental_grant": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "rental_info_step": {
+            "properties": {
+              "rented_premises_section": {
+                "properties": {
+                  "rented_premises": {
+                    "type": "array",
+                    "title": "rented_premises.title",
+                    "items": {
+                      "$ref": "#/definitions/_rented_premise_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_rented_premise_item"
+                    }
+                  }
+                }
+              },
+              "rental_additional_information_section": {
+                "properties": {
+                  "rental_additional_information": {
+                    "title": "rental_additional_information.title",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }
