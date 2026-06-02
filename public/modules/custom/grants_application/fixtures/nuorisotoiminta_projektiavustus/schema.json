@@ -566,7 +566,7 @@
       "required": ["members_section"],
       "properties": {
         "members_section": {
-          "title": "members_section.title",
+          "title": "members_active_participants_section.title",
           "type": "object",
           "required": ["members_fieldset"],
           "properties": {
@@ -575,19 +575,19 @@
               "title": "members_fieldset.legend",
               "properties": {
                 "members_0_6": {
-                  "title": "members_0_6.title",
+                  "title": "age_group_0_6.title",
                   "type": "integer"
                 },
                 "members_0_6_helsinki": {
-                  "title": "members_0_6_helsinki.title",
+                  "title": "of_whom_helsinki_residents.title",
                   "type": "integer"
                 },
                 "members_7_28": {
-                  "title": "members_7_28.title",
+                  "title": "age_group_7_28.title",
                   "type": "integer"
                 },
                 "members_7_28_helsinki": {
-                  "title": "members_7_28_helsinki.title",
+                  "title": "of_whom_helsinki_residents.title",
                   "type": "integer"
                 },
                 "members_others": {
@@ -595,7 +595,7 @@
                   "type": "integer"
                 },
                 "members_others_helsinki": {
-                  "title": "members_others_helsinki.title",
+                  "title": "of_whom_helsinki_residents.title",
                   "type": "integer"
                 }
               },

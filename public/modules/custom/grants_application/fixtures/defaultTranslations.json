@@ -809,6 +809,36 @@
       "en": "Types of grant",
       "fi": "Avustuslajit",
       "sv": "Understödskategorier"
+    },
+    "members_others.title": {
+      "en": "Other participants",
+      "fi": "Muut osallistujat",
+      "sv": "Övriga deltagare"
+    },
+    "members_active_participants_section.title": {
+      "en": "People actively participating in activities/members",
+      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
+      "sv": "Personer som aktivt deltar i verksamheten/medlemmar"
+    },
+    "age_group_0_6.title": {
+      "en": "Aged 0–6",
+      "fi": "0 - 6 vuotiaat",
+      "sv": "0–6 år"
+    },
+    "age_group_7_28.title": {
+      "en": "Aged 7–28",
+      "fi": "7 - 28 vuotiaat",
+      "sv": "7–28 år"
+    },
+    "of_whom_helsinki_residents.title": {
+      "en": "Of whom Helsinki residents",
+      "fi": "Joista helsinkiläisiä",
+      "sv": "Av vilka från Helsingfors"
+    },
+    "postal_code.title": {
+      "en": "Postal code",
+      "fi": "Postinumero",
+      "sv": "Postnummer"
     }
   }
 }

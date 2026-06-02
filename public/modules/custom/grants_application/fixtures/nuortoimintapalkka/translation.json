@@ -5,11 +5,6 @@
       "fi": "Nuorisotoiminnan toiminta- ja palkkausavustushakemus",
       "sv": "Ungdomsverksamhet, ansökan om verksamhets- och löneunderstöd"
     },
-    "community_activity_step.title": {
-      "en": "Activities of the community",
-      "fi": "Yhteisön toiminta",
-      "sv": "Samfundets verksamhet"
-    },
     "salary_info_step.title": {
       "en": "Salary information",
       "fi": "Palkkaustiedot",
@@ -54,41 +49,6 @@
       "en": "An advance on the grant may be received by an association that received a grant in the previous year (i.e. the year preceding the application year). The advance may be up to half of the amount of the previous grant. Please note that the advance will be recovered if the association does not receive the actual grant. If you wish to provide additional information related to the advance, you can do so in the additional information section of the application.",
       "fi": "Avustusennakkoa voi saada edellisenä vuonna (tarkoittaa hakuvuotta edeltävää vuotta) avustusta saanut yhdistys. Ennakkoa voi saada enintään puolet edellisen avustuksen määrästä. Huomioithan, että ennakko peritään takaisin, mikäli yhdistys ei saa varsinaista avustusta. Jos haluat kertoa lisätietoja ennakkoon liittyen, sen voi tehdä hakemuksen lisätietokohdassa.",
       "sv": "Förskott på understödet kan beviljas en förening som fått understöd föregående år (avser året före ansökningsåret). Förskottet kan uppgå till högst hälften av det föregående understödets belopp. Observera att förskottet återkrävs om föreningen inte beviljas det egentliga understödet. Om du vill ge ytterligare information om förskottet kan du göra det i ansökans punkt för ytterligare information."
-    },
-    "members_section.title": {
-      "en": "People actively participating in activities/members",
-      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
-      "sv": "Personer som aktivt deltar i verksamheten/medlemmar"
-    },
-    "members_0_6.title": {
-      "en": "Aged 0–6",
-      "fi": "0 - 6 vuotiaat",
-      "sv": "0–6 år"
-    },
-    "members_0_6_helsinki.title": {
-      "en": "Of whom Helsinki residents",
-      "fi": "Joista helsinkiläisiä",
-      "sv": "Av vilka från Helsingfors"
-    },
-    "members_7_28.title": {
-      "en": "Aged 7–28",
-      "fi": "7 - 28 vuotiaat",
-      "sv": "7–28 år"
-    },
-    "members_7_28_helsinki.title": {
-      "en": "Of whom Helsinki residents",
-      "fi": "Joista helsinkiläisiä",
-      "sv": "Av vilka från Helsingfors"
-    },
-    "members_others.title": {
-      "en": "Other participants",
-      "fi": "Muut osallistujat",
-      "sv": "Övriga deltagare"
-    },
-    "members_others_helsinki.title": {
-      "en": "Of whom Helsinki residents",
-      "fi": "Joista helsinkiläisiä",
-      "sv": "Av vilka från Helsingfors"
     },
     "participation_section.title": {
       "en": "Number of times young people participated in the association's activities",
@@ -144,11 +104,6 @@
       "en": "Name of the place",
       "fi": "Toimipaikan nimi",
       "sv": "Platsens namn"
-    },
-    "premise_postal_code.title": {
-      "en": "Postal code",
-      "fi": "Postinumero",
-      "sv": "Postnummer"
     },
     "premises.add": {
       "en": "Add new place",
@@ -255,16 +210,6 @@
       "fi": "Vuokratun tilan tiedot",
       "sv": "Uppgifter om den hyrda lokalen"
     },
-    "rented_premise_address.title": {
-      "en": "Address",
-      "fi": "Osoite",
-      "sv": "Adress"
-    },
-    "rented_premise_postal_code.title": {
-      "en": "Postal code",
-      "fi": "Postinumero",
-      "sv": "Postnummer"
-    },
     "rented_premise_post_office.title": {
       "en": "Postal district",
       "fi": "Postitoimipaikka",
@@ -285,11 +230,6 @@
       "fi": "Vuokranantajan puhelinnumero tai sähköposti",
       "sv": "Uthyrarens telefonnummer eller e-post"
     },
-    "rented_premise_usage.title": {
-      "en": "Purpose of use",
-      "fi": "Käyttötarkoitus",
-      "sv": "Användningsändamål"
-    },
     "rented_premise_days_per_week.title": {
       "en": "Days of use per week",
       "fi": "Käyttöpäiviä viikossa",
@@ -304,16 +244,6 @@
       "en": "Add new rented premises",
       "fi": "Lisää uusi vuokrattu tila",
       "sv": "Lägg till en ny hyrd lokal"
-    },
-    "rental_additional_information_section.title": {
-      "en": "Additional information",
-      "fi": "Lisätiedot",
-      "sv": "Ytterligare information"
-    },
-    "rental_additional_information.title": {
-      "en": "Additional information",
-      "fi": "Lisätiedot",
-      "sv": "Ytterligare information"
     },
     "nuortoimintapalkka_required_attachments_help.value": {
       "en": "The mandatory attachments to the operating and hiring grant application are the association's valid rules, the financial statements for the previous completed accounting period including the comprehensive profit and loss account, the annual report and the audit or performance audit report signed, and the minutes of the meeting at which the financial statements were confirmed and discharge from liability discussed. In addition, the mandatory attachments are the budget and action plan for the year for which the grant is being applied for. The rules must be approved by the Finnish Patent and Registration Office. The attachments to the hiring grant application must also include the names and numbers of members of the departments/groups under the district organisation or a comparable organisation.",
