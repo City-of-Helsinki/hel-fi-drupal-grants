@@ -15,9 +15,6 @@ use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
 
-use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-
 /**
  * Class for retrieving / saving application data.
  */
