@@ -40,21 +40,6 @@
       "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
       "sv": "Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor."
     },
-    "multiple_attachments_help.value": {
-      "en": "If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate \"The attachment has been submitted as a single file or with another application.\"",
-      "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.",
-      "sv": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att \"Bilagan har lämnats in som en fil eller i samband med en annan ansökan\"."
-    },
-    "previously_sent_attachments.title": {
-      "fi": "Helsingin kaupungille aiemmin toimitetut liitteet",
-      "sv": "Bilagor som tidigare lämnats in till Helsingfors stad",
-      "en": "Attachments previously submitted to the City of Helsinki"
-    },
-    "previously_sent_attachments.value": {
-      "fi": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla \"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\".",
-      "sv": "Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att \"Bilagan har lämnats in som en fil eller i samband med en annan ansökan\".",
-      "en": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate \"The attachment has been submitted as a single file or with another application\"."
-    },
     "camp_excel.title": {
       "fi": "Leiri-excel",
       "sv": "Läger-excel",

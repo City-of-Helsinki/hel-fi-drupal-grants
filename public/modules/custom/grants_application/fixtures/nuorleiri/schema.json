@@ -172,11 +172,11 @@
               ]
             },
             "previously_sent_attachments": {
-              "title": "previously_sent_attachments.title",
+              "title": "formerly_provided_attachments_help.title",
               "type": "array",
               "items": [
                 {
-                  "title": "previously_sent_attachments.value",
+                  "title": "formerly_provided_attachments_help.value",
                   "type": "null"
                 }
               ]
