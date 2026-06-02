@@ -49,6 +49,7 @@ We have introduced some custom ways to configure the forms.
 * **misc:file-type** `number` This is a value necessary for Avus2. It's passed during form submit and does nothing else. See `FileInput.tsx`.
 * **misc:max-length** `number` Determines max length for a textarea field. See `Input.tsx`.
 * **misc:variant** `string` Determines a variant of a component to be rendered. See `TextParagraph.tsx`.
+* **misc:exclude-from-submit** `boolean` Strips the field from the data sent to the backend on both submit and draft save. Used for synthetic helper fields (e.g. a `computedSum` that only exists to drive conditional rendering). See `FormWrapper.tsx`.
 
 ### Variants
 
