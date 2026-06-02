@@ -7,6 +7,8 @@ namespace Drupal\Tests\grants_application\Kernel\Entity;
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\grants_application\Controller\ApplicationController;
 use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_application\User\GrantsProfile;
+use Drupal\grants_application\User\UserInformationService;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\Entity\Role;
@@ -111,6 +113,11 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
       'changed' => '1765430954',
     ]);
     $this->applicationSubmission->save();
+
+    $userInformationService = $this->createMock(UserInformationService::class);
+    $userInformationService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
+    $userInformationService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']));
+    $this->container->set(UserInformationService::class, $userInformationService);
 
     $this->controller = ApplicationController::create($this->container);
   }

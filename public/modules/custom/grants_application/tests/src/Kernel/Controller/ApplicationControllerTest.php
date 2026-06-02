@@ -149,6 +149,10 @@ final class ApplicationControllerTest extends KernelTestBase {
    * Test the file upload.
    */
   public function testFileUpload(): void {
+    $applicationService = $this->createMock(ApplicationService::class);
+    $applicationService->expects($this->any())->method('getSubmissionEntity')->willReturn($this->applicationSubmission);
+    $this->container->set(ApplicationService::class, $applicationService);
+
     $userInformationService = $this->createMock(UserInformationService::class);
     $userInformationService->expects($this->any())->method('getUserData')
       ->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
