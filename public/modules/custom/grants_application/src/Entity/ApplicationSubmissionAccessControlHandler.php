@@ -24,7 +24,7 @@ class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandl
    */
   public function __construct(
     EntityTypeInterface $entityTypeInterface,
-    private UserInformationService $userInformationService,
+    private readonly UserInformationService $userInformationService,
   ) {
     parent::__construct($entityTypeInterface);
   }
@@ -32,7 +32,7 @@ class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandl
   /**
    * {@inheritdoc}
    */
-  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type): static {
+  final public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type): static {
     return new static(
       $entity_type,
       $container->get(UserInformationService::class),
@@ -54,7 +54,7 @@ class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandl
     $applicantType = $this->userInformationService->getApplicantType();
     if (!$applicantType) {
       // This used to be possible case.
-      return new AccessResultForbidden();
+      return AccessResult::forbidden('No applicant type selected.');
     }
     try {
       if ($applicantType === 'private_person') {
@@ -66,7 +66,7 @@ class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandl
         return $this->communityApplicationAllowed($entity) ? AccessResult::allowed() : AccessResult::forbidden();
       }
     }
-    catch (\Exception $e) {
+    catch (\Exception) {
       return AccessResult::forbidden('Unable to read user data.');
     }
 
@@ -82,6 +82,8 @@ class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandl
    *   Allowed.
    */
   private function privateApplicationAllowed(EntityInterface $entity): bool {
+    assert($entity instanceof ContentEntityInterface);
+
     $userInformation = $this->userInformationService->getUserData();
 
     // User mandated as private person may not see community applications.
@@ -99,6 +101,8 @@ class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandl
    *   Allowed.
    */
   private function communityApplicationAllowed(EntityInterface $entity): bool {
+    assert($entity instanceof ContentEntityInterface);
+
     $grantsProfileData = $this->userInformationService->getGrantsProfileContent();
     $business_id = $grantsProfileData->getBusinessId();
 

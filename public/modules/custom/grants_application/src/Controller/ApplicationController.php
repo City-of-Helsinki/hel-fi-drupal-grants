@@ -323,12 +323,6 @@ final class ApplicationController extends ControllerBase {
       return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
     }
 
-    if (!$document) {
-      $this->messenger()
-        ->addError($this->t('Your request was not fulfilled due to network error.', [], ['context' => 'grants_handler']));
-      return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
-    }
-
     $form_identifier = $submission->get('form_identifier')->value;
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($submission->get('form_identifier')->value);
     $application_name = $settings->getApplicationName();
@@ -613,7 +607,7 @@ final class ApplicationController extends ControllerBase {
     }
     $document = $this->applicationGetterService->getAtvDocument($id);
 
-    if (!$submission || $submission->get('draft')->value !== "1") {
+    if ($submission->get('draft')->value !== "1") {
       if ($document->getStatus() !== 'DRAFT') {
         $this->messenger()
           ->addError($this->t('Only DRAFT status submissions are deletable', [], $tOpts));
