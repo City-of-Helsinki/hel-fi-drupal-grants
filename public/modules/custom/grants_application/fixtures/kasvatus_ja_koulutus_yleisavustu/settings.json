@@ -1,0 +1,24 @@
+{
+  "title": "Kasvatus ja koulutus, yleisavustushakemus",
+  "description": "KASKOYLEIS",
+  "application_type": "KASKOYLEIS",
+  "application_type_id": 51,
+  "application_industry": "KASKO",
+  "application_open": "2026-01-01T00:00:00",
+  "application_close": "2026-12-31T23:59:59",
+  "applicant_types": [
+    "registered_community"
+  ],
+  "subvention_type": [
+    1,
+    5,
+    36
+  ],
+  "target_group": 21,
+  "acting_years": [
+    2026,
+    2027
+  ],
+  "continuous": false,
+  "disable_copy": false
+}
