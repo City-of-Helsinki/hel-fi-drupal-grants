@@ -1,10 +1,9 @@
 import { Button, ButtonVariant, IconCopy, IconPrinter } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { supplementaryButtonTheme } from '@/react/common/constants/buttonTheme';
-
-import { getFormConfigAtom, getFormTitleAtom, getSummaryDataAtom } from '../store';
 import { useState } from 'react';
+import { supplementaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import { Requests } from '../Requests';
+import { getFormConfigAtom, getFormTitleAtom, getSummaryDataAtom } from '../store';
 
 const getHandlerKey = (index: number) => {
   switch (index) {

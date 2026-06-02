@@ -2,7 +2,7 @@ import { Notification } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 
-import { shiftNotificationsAtom, type SystemNotification, systemNotificationsAtom } from '../store';
+import { type SystemNotification, shiftNotificationsAtom, systemNotificationsAtom } from '../store';
 
 export const ToastStack = () => {
   const notifications = useAtomValue(systemNotificationsAtom);
