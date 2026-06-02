@@ -16,8 +16,8 @@ import { createRef, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorsList } from '../components/ErrorsList';
 import { ActingYear } from '../components/Fields/ActingYear';
+import { ComputedSum } from '../components/Fields/ComputedSum';
 import { GrantDurationRadio } from '../components/Fields/GrantDurationRadio';
-import { SubventionSum } from '../components/Fields/SubventionSum';
 import { SubventionTable } from '../components/Fields/SubventionTable';
 import { TextParagraph } from '../components/Fields/TextParagraph';
 import { FileInput } from '../components/FileInput';
@@ -319,7 +319,7 @@ export const RJSFFormContainer = ({
             atvFile: FileInput,
             grantDuration: GrantDurationRadio,
             subventionTable: SubventionTable,
-            subventionSum: SubventionSum,
+            computedSum: ComputedSum,
             textParagraph: TextParagraph,
           }}
           formData={readFormData() || {}}
