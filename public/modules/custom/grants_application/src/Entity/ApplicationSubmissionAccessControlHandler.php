@@ -3,7 +3,6 @@
 namespace Drupal\grants_application\Entity;
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityAccessControlHandler;
