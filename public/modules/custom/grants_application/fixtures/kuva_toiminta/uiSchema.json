@@ -1,0 +1,112 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
+    "monivuotinen_avustus_section": {
+      "kyseessa_on_monivuotinen_avustus": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        }
+      },
+      "tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta": {
+        "misc:max-length": 100,
+        "ui:options": {
+          "tooltipLabel": "tulevat_vuodet.title",
+          "tooltipButtonLabel": "tulevat_vuodet.title",
+          "tooltipText": "tulevat_vuodet.tooltip"
+        }
+      },
+      "erittely_kullekin_vuodelle_haettavasta_avustussummasta_": {
+        "misc:max-length": 100,
+        "ui:options": {
+          "tooltipLabel": "erittely_kullekin_vuodelle.title",
+          "tooltipButtonLabel": "erittely_kullekin_vuodelle.title",
+          "tooltipText": "erittely_kullekin_vuodelle.tooltip"
+        }
+      }
+    },
+    "ensisijainen_taiteen_ala_section": {
+      "ensisijainen_taiteen_ala": {
+        "ui:options": {
+          "tooltipLabel": "ensisijainen_taiteen_ala.title",
+          "tooltipButtonLabel": "ensisijainen_taiteen_ala.title",
+          "tooltipText": "ensisijainen_taiteen_ala.tooltip"
+        }
+      },
+      "kyseessa_on_festivaali_tai_tapahtuma": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:options": {
+          "tooltipLabel": "kyseessa_on_festivaali_tai_tapahtuma.title",
+          "tooltipButtonLabel": "kyseessa_on_festivaali_tai_tapahtuma.title",
+          "tooltipText": "kyseessa_on_festivaali_tai_tapahtuma.tooltip"
+        }
+      },
+      "hankkeen_tai_toiminnan_lyhyt_esittelyteksti": {
+        "misc:max-length": 700,
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.title",
+          "tooltipButtonLabel": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.title",
+          "tooltipText": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.tooltip"
+        }
+      }
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        }
+      },
+      "other_compensations": {
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    }
+  }
+}

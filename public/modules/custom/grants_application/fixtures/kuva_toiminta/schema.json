@@ -1,0 +1,216 @@
+{
+  "definitions": {
+    "_other_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_compensation_amount": {
+          "format": "decimal-number",
+          "title": "other_compensation_amount.title",
+          "type": "string"
+        },
+        "other_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_compensation_issuer",
+        "other_compensation_issuer_name",
+        "other_compensation_issuer_year",
+        "other_compensation_amount",
+        "other_compensation_description"
+      ]
+    },
+    "grant_info_step": {
+      "required": [
+        "acting_year_section",
+        "ensisijainen_taiteen_ala_section",
+        "other_compensations_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
+            }
+          },
+          "required": ["acting_year"]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 1,
+                  "label": "subventions.1.title"
+                }
+              ]
+            }
+          }
+        },
+        "monivuotinen_avustus_section": {
+          "title": "monivuotinen_avustus_section.title",
+          "type": "object",
+          "properties": {
+            "kyseessa_on_monivuotinen_avustus": {
+              "title": "kyseessa_on_monivuotinen_avustus.title",
+              "description": "kyseessa_on_monivuotinen_avustus.description",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": ["kyseessa_on_monivuotinen_avustus"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kyseessa_on_monivuotinen_avustus": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta": {
+                    "title": "tulevat_vuodet.title",
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "erittely_kullekin_vuodelle_haettavasta_avustussummasta_": {
+                    "title": "erittely_kullekin_vuodelle.title",
+                    "type": "string",
+                    "maxLength": 100
+                  }
+                },
+                "required": [
+                  "tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta",
+                  "erittely_kullekin_vuodelle_haettavasta_avustussummasta_"
+                ]
+              }
+            }
+          ]
+        },
+        "ensisijainen_taiteen_ala_section": {
+          "title": "ensisijainen_taiteen_ala_section.title",
+          "type": "object",
+          "properties": {
+            "ensisijainen_taiteen_ala": {
+              "title": "ensisijainen_taiteen_ala.title",
+              "type": "string",
+              "enum": [
+                "ensisijainen_taiteen_ala.design_ja_kasityo",
+                "ensisijainen_taiteen_ala.elokuva_valokuva_ja_media",
+                "ensisijainen_taiteen_ala.kaupunkikulttuuri",
+                "ensisijainen_taiteen_ala.kirjallisuus",
+                "ensisijainen_taiteen_ala.kuvataide_ja_sarjakuva",
+                "ensisijainen_taiteen_ala.monitaide",
+                "ensisijainen_taiteen_ala.museo",
+                "ensisijainen_taiteen_ala.musiikki",
+                "ensisijainen_taiteen_ala.muu",
+                "ensisijainen_taiteen_ala.sirkus",
+                "ensisijainen_taiteen_ala.tanssi",
+                "ensisijainen_taiteen_ala.teatteri"
+              ]
+            },
+            "kyseessa_on_festivaali_tai_tapahtuma": {
+              "title": "kyseessa_on_festivaali_tai_tapahtuma.title",
+              "description": "kyseessa_on_festivaali_tai_tapahtuma.description",
+              "enum": [
+                true,
+                false
+              ]
+            },
+            "hankkeen_tai_toiminnan_lyhyt_esittelyteksti": {
+              "title": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.title",
+              "type": "string",
+              "maxLength": 700
+            }
+          },
+          "required": [
+            "ensisijainen_taiteen_ala",
+            "kyseessa_on_festivaali_tai_tapahtuma",
+            "hankkeen_tai_toiminnan_lyhyt_esittelyteksti"
+          ]
+        },
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_received_other_compensations": {
+              "title": "other_compensations_section_have_received_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": ["have_received_other_compensations"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    }
+  }
+}

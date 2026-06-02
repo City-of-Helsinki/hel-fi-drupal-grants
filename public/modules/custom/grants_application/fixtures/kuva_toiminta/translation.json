@@ -1,0 +1,144 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Arts and culture grants: Operational grants",
+      "fi": "Taide- ja kulttuuriavustukset: toiminta-avustukset",
+      "sv": "Understöd för konst och kultur: Verksamhetsunderstöd"
+    },
+    "monivuotinen_avustus_section.title": {
+      "en": "I am applying for a multi-year grant",
+      "fi": "Kyseessä on monivuotinen avustus",
+      "sv": "Det är frågan om ett mångårigt stöd"
+    },
+    "ensisijainen_taiteen_ala_section.title": {
+      "en": "Primary field of art",
+      "fi": "Ensisijainen taiteenala",
+      "sv": "Huvudsaklig konstart"
+    },
+    "kyseessa_on_monivuotinen_avustus.title": {
+      "en": "I am applying for a multi-year grant",
+      "fi": "Kyseessä on monivuotinen avustus",
+      "sv": "Det är frågan om ett mångårigt stöd"
+    },
+    "kyseessa_on_monivuotinen_avustus.description": {
+      "en": "For the four year period 2023-2026 multi-year operational grants can be awarded to Helsinki based cultural operators that belong to the central government subsidies system (VOS) in the fields of performing arts or music. The multi-year grant recipients have been decided at the end of 2022.",
+      "fi": "Nelivuotiskaudella 2023-2026 monivuotisia toiminta-avustuksia voidaan myöntää helsinkiläisille rekisteröityneille esittävän taiteen ja musiikin valtionosuusjärjestelmän piirissä oleville taide- ja kulttuuriyhteisöille. Tuen saajat on päätetty vuoden 2022 lopulla.",
+      "sv": "Under den fyraårsperioden 2023-2026 kan mångåriga verksamhetsstöd beviljas till helsingforsiska registrerade konst- och kultursamfund inom scenkonst, som åtnjuter statsandelsstöd för sin verksamhet. Beslut om mottagarna har fattats i slutet av 2022."
+    },
+    "tulevat_vuodet.title": {
+      "en": "The future years that the grant is applied for, or has already been awarded to.",
+      "fi": "Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty",
+      "sv": "Kommande år för vilka ett mångårigt stöd söks eller har beviljats"
+    },
+    "tulevat_vuodet.tooltip": {
+      "en": "Only fill in the future years of the grant period that you are applying the grant for from here on. Do not include previous years of the same or a previous grant period.",
+      "fi": "Täytä vuodet vain tästä eteenpäin haettavan avustuskauden osalta. Älä kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.",
+      "sv": "Fyll enbart i de kommande årtalen för den stödperiod som avses. Skriv inte in tidigare årtal för samma eller tidigare stödperioder."
+    },
+    "erittely_kullekin_vuodelle.title": {
+      "en": "Breakdown of the grant amount applied for each year.",
+      "fi": "Erittely kullekin vuodelle haettavasta avustussummasta.",
+      "sv": "En årsvis specifikation för det stöd, som söks för varje år under perioden."
+    },
+    "erittely_kullekin_vuodelle.tooltip": {
+      "en": "Write per year in the following format: the year: the grant amount",
+      "fi": "Kirjoita vuosikohtaisesti muotoon: vuosi: avustussumma.",
+      "sv": "Skriv årsspecifikt enligt detta: år: stödsumma."
+    },
+    "ensisijainen_taiteen_ala.title": {
+      "en": "Primary field of art",
+      "fi": "Ensisijainen taiteenala",
+      "sv": "Huvudsaklig konstart"
+    },
+    "ensisijainen_taiteen_ala.tooltip": {
+      "en": "Choose the option that best describes your activities.",
+      "fi": "Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.",
+      "sv": "Välj det alternativ, som bäst motsvarar er verksamhet."
+    },
+    "ensisijainen_taiteen_ala.design_ja_kasityo": {
+      "en": "Design and crafts",
+      "fi": "Design ja käsityö",
+      "sv": "Design och hantverk"
+    },
+    "ensisijainen_taiteen_ala.elokuva_valokuva_ja_media": {
+      "en": "Film, photography and media",
+      "fi": "Elokuva, valokuva ja media",
+      "sv": "Film, fotokonst och media"
+    },
+    "ensisijainen_taiteen_ala.kaupunkikulttuuri": {
+      "en": "Urban art and culture",
+      "fi": "Kaupunkikulttuuri",
+      "sv": "Stadskultur"
+    },
+    "ensisijainen_taiteen_ala.kirjallisuus": {
+      "en": "Literature",
+      "fi": "Kirjallisuus",
+      "sv": "Litteratur"
+    },
+    "ensisijainen_taiteen_ala.kuvataide_ja_sarjakuva": {
+      "en": "Visual arts and comics",
+      "fi": "Kuvataide ja sarjakuva",
+      "sv": "Bildkonst och seriekonst"
+    },
+    "ensisijainen_taiteen_ala.monitaide": {
+      "en": "Multidisciplinary art",
+      "fi": "Monitaide",
+      "sv": "Tvärkonstnärlig verksamhet"
+    },
+    "ensisijainen_taiteen_ala.museo": {
+      "en": "Museum",
+      "fi": "Museo",
+      "sv": "Museum"
+    },
+    "ensisijainen_taiteen_ala.musiikki": {
+      "en": "Music",
+      "fi": "Musiikki",
+      "sv": "Musik"
+    },
+    "ensisijainen_taiteen_ala.muu": {
+      "en": "Other",
+      "fi": "Muu",
+      "sv": "Annat"
+    },
+    "ensisijainen_taiteen_ala.sirkus": {
+      "en": "Circus",
+      "fi": "Sirkus",
+      "sv": "Cirkus"
+    },
+    "ensisijainen_taiteen_ala.tanssi": {
+      "en": "Dance",
+      "fi": "Tanssi",
+      "sv": "Dans"
+    },
+    "ensisijainen_taiteen_ala.teatteri": {
+      "en": "Theatre",
+      "fi": "Teatteri",
+      "sv": "Teater"
+    },
+    "kyseessa_on_festivaali_tai_tapahtuma.title": {
+      "en": "Festival or event",
+      "fi": "Kyseessä on festivaali tai tapahtuma",
+      "sv": "Festival eller evenemang"
+    },
+    "kyseessa_on_festivaali_tai_tapahtuma.description": {
+      "en": "This refers to a set of programs that is named as a festival or event, and which takes place within a limited timeframe, but is broader in program and duration than a single concert, play etc.",
+      "fi": "Tässä tarkoitetaan festivaaliksi tai tapahtumaksi nimettyä ohjelmakokonaisuutta, joka tapahtuu tiiviin ajanjakson sisällä, mutta on ohjelmaltaan tai kestoltaan laajempi kuin yksittäinen konsertti, esitys, tms.",
+      "sv": "Detta avser en programhelhet, som betecknas som en festival eller ett evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande."
+    },
+    "kyseessa_on_festivaali_tai_tapahtuma.tooltip": {
+      "en": "A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.",
+      "fi": "Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, kuten esityksiä, joiden välissä yleisö voi myös vaihtua. Festivaaleja tai tapahtumia voivat olla esimerkiksi kaupunginosatapahtumat. Niitä eivät ole esimerkiksi esityssarjat tai laajemmat hankkeet, joita ei markkinoida festivaalina tai yhtenäisenä tapahtumana. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.",
+      "sv": "En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång."
+    },
+    "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.title": {
+      "en": "A short description of the project or the activities",
+      "fi": "Hankkeen tai toiminnan lyhyt esittelyteksti",
+      "sv": "En kort presentationstext om projektet eller verksamheten"
+    },
+    "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.tooltip": {
+      "en": "The text can be published or used as a presentation as such or in a modified form along with the decision.",
+      "fi": "Teksti voidaan julkaista tai sitä voidaan käyttää esittelytekstinä päätöksen yhteydessä sellaisenaan tai muokattuna.",
+      "sv": "Texten kan som sådan eller i förkortad version publiceras eller användas som presentationsunderlag i anslutning till beslutsfattandet om stöd. Max 700 tecken."
+    }
+  }
+}
