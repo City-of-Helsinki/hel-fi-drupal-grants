@@ -57,8 +57,6 @@ class UserInformationService {
    *   The grants profile.
    */
   public function getGrantsProfileContent(): GrantsProfile {
-    // @todo Grants profile should to be a value object,
-    // to make it more obvious what it contains.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $data = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
     return new GrantsProfile($data);
