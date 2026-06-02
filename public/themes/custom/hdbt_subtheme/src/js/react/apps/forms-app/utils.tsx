@@ -339,6 +339,44 @@ export const setNestedProperty = (obj: Record<string, unknown>, path: string, va
 };
 
 /**
+ * Return a deep clone of form data with the given paths removed.
+ *
+ * Used to drop synthetic helper fields (flagged with misc:exclude-from-submit)
+ * from the payload sent to the backend. Paths are root-relative dot notation
+ * with no leading dot, e.g. 'step.section.field'.
+ *
+ * @param {any} data - Form data
+ * @param {string[]} paths - Paths to remove
+ *
+ * @return {any} - Cloned data without the listed paths
+ */
+// biome-ignore lint/suspicious/noExplicitAny: Refactor this
+export const stripExcludedFields = (data: any, paths: string[]): any => {
+  if (!paths.length) {
+    return data;
+  }
+
+  const clone = structuredClone(data);
+
+  paths.forEach((path) => {
+    const keys = path.split('.');
+    const last = keys.pop();
+
+    if (!last) {
+      return;
+    }
+
+    const parent = keys.reduce((acc, key) => (acc == null ? acc : acc[key]), clone);
+
+    if (parent && typeof parent === 'object') {
+      delete parent[last];
+    }
+  });
+
+  return clone;
+};
+
+/**
  * Finds field of a given type in the form schema.
  *
  * @param {any} element - current element
