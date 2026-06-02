@@ -741,11 +741,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
 
 		-
-			message: "#^Left side of && is always true\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
-
-		-
 			message: "#^Method Drupal\\\\grants_application\\\\Controller\\\\ApplicationController\\:\\:formsApp\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
