@@ -405,6 +405,11 @@
       "fi": "Lisäselvitys liitteistä",
       "sv": "Ytterligare information om bilagorna"
     },
+    "grants_compensations_information.value": {
+      "en": "Only apply for one grant type at a time with each application.",
+      "fi": "Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.",
+      "sv": "Ansök alltid endast om en typ av understöd åt gången."
+    },
     "grant_info_step.title": {
       "en": "Grant details",
       "fi": "Avustustiedot",
@@ -770,15 +775,20 @@
       "fi": "Starttiavustus",
       "sv": "Sportunderstöd"
     },
-    "subventions.43.title": {
-      "en": "Targeted sports grant",
-      "fi": "Kohdeavustus",
-      "sv": "Riktat understöd för idrott och motion"
+    "subventions.36.title": {
+      "en": "Liberal adult education",
+      "fi": "Vapaa sivistystyö",
+      "sv": "Fri bildning"
     },
     "subventions.38.title": {
       "en": "Small grant",
       "fi": "Pienavustus",
       "sv": "Litet understöd"
+    },
+    "subventions.43.title": {
+      "en": "Targeted sports grant",
+      "fi": "Kohdeavustus",
+      "sv": "Riktat understöd för idrott och motion"
     },
     "subventions.47.title": {
       "en": "Special grant for culture 1",
