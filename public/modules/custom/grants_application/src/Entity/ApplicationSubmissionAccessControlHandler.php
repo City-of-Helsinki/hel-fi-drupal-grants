@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Access control handler for form submission.
  */
-class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandler implements EntityHandlerInterface {
+final class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandler implements EntityHandlerInterface {
 
   /**
    * The constructor.
