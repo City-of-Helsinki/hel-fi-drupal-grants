@@ -203,8 +203,7 @@ class JsonMapper {
           foreach ($value as $subfield => $subValue) {
             $definitionName = $fieldName . '.' . $subfield;
             $valueArray = $definition['data'][$definitionName];
-            $valueArray['value'] = (string) $subValue ?? "";
-            $values[] = $valueArray;
+            $values[] = $this->applyMultipleValue($valueArray, (string) $subValue);
           }
         }
         else {
@@ -212,13 +211,37 @@ class JsonMapper {
             continue;
           }
           $valueArray = $definition['data'][$fieldName];
-          $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
-          $values[] = $valueArray;
+          $stringValue = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
+          $values[] = $this->applyMultipleValue($valueArray, $stringValue);
         }
       }
       $this->setTargetValue($data, $targetPath, $values, $definition);
     }
 
+  }
+
+  /**
+   * Build a single value entry for a multiple_values row.
+   *
+   * Applies an optional per-field 'value_map', which translates a schema enum
+   * key (a translatable string) into the value Avus2 expects, then strips the
+   * map so it does not leak into the output.
+   *
+   * @param array $valueArray
+   *   The field's value definition (ID, label, value, valueType, ...).
+   * @param string $stringValue
+   *   The stringified source value.
+   *
+   * @return array
+   *   The value entry with the resolved value.
+   */
+  private function applyMultipleValue(array $valueArray, string $stringValue): array {
+    if (isset($valueArray['value_map'])) {
+      $stringValue = $valueArray['value_map'][$stringValue] ?? $stringValue;
+      unset($valueArray['value_map']);
+    }
+    $valueArray['value'] = $stringValue;
+    return $valueArray;
   }
 
   /**

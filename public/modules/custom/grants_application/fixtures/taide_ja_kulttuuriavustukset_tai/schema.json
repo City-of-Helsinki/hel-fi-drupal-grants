@@ -46,6 +46,15 @@
           "title": "art_premise_name.title",
           "type": "string"
         },
+        "art_premise_type": {
+          "title": "art_premise_type.title",
+          "type": "string",
+          "enum": [
+            "art_premise_type.exhibition",
+            "art_premise_type.performance",
+            "art_premise_type.practice"
+          ]
+        },
         "art_premise_postal_code": {
           "title": "art_premise_postal_code.title",
           "type": "string"
@@ -60,6 +69,14 @@
         },
         "art_premise_is_others_use": {
           "title": "art_premise_is_others_use.title",
+          "enum": [
+            true,
+            false
+          ],
+          "default": false
+        },
+        "art_premise_is_owned_by_city": {
+          "title": "art_premise_is_owned_by_city.title",
           "enum": [
             true,
             false

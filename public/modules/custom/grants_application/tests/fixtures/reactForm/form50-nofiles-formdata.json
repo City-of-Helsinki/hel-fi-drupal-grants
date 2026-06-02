@@ -74,9 +74,11 @@
       "art_premises": [
         {
           "art_premise_name": "Pääsali",
+          "art_premise_type": "art_premise_type.performance",
           "art_premise_postal_code": "00100",
           "art_premise_is_owned": true,
-          "art_premise_is_others_use": false
+          "art_premise_is_others_use": false,
+          "art_premise_is_owned_by_city": false
         }
       ]
     }

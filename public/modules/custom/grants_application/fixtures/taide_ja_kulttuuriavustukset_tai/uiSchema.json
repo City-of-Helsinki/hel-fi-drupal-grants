@@ -123,6 +123,9 @@
           "hideNameFromPrint": true
         },
         "items": {
+          "art_premise_type": {
+            "ui:widget": "select"
+          },
           "art_premise_is_owned": {
             "ui:enumNames": [
               "boolean.yes",
@@ -131,6 +134,13 @@
             "ui:widget": "radio"
           },
           "art_premise_is_others_use": {
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ],
+            "ui:widget": "radio"
+          },
+          "art_premise_is_owned_by_city": {
             "ui:enumNames": [
               "boolean.yes",
               "boolean.no"

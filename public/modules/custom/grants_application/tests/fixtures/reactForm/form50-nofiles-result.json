@@ -346,6 +346,12 @@
                         "valueType": "string"
                     },
                     {
+                        "ID": "premiseType",
+                        "label": "Tilan tyyppi",
+                        "value": "Esitystila",
+                        "valueType": "string"
+                    },
+                    {
                         "ID": "postCode",
                         "label": "Postinumero",
                         "value": "00100",
@@ -360,6 +366,12 @@
                     {
                         "ID": "isOthersUse",
                         "label": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+                        "value": "false",
+                        "valueType": "bool"
+                    },
+                    {
+                        "ID": "isOwnedByCity",
+                        "label": "Onko tila kaupungin omistama",
                         "value": "false",
                         "valueType": "bool"
                     }

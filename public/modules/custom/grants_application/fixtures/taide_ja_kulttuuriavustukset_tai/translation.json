@@ -110,10 +110,35 @@
       "fi": "Tilan nimi",
       "sv": "Lokalens namn"
     },
+    "art_premise_type.title": {
+      "en": "Premise type",
+      "fi": "Tilan tyyppi",
+      "sv": "Typ av utrymme"
+    },
+    "art_premise_type.exhibition": {
+      "en": "Exhibition space",
+      "fi": "Näyttelytila",
+      "sv": "Utrymme för utställningar"
+    },
+    "art_premise_type.performance": {
+      "en": "Space for performances or screenings",
+      "fi": "Esitystila",
+      "sv": "Utrymme för föreställningar"
+    },
+    "art_premise_type.practice": {
+      "en": "Separate space for practising or artistic work",
+      "fi": "Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila",
+      "sv": "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
+    },
     "art_premise_postal_code.title": {
       "en": "Postal code",
       "fi": "Postinumero",
       "sv": "Postnummer"
+    },
+    "art_premise_is_owned_by_city.title": {
+      "en": "Premises owned by the city",
+      "fi": "Kyseessä on kaupungin omistama tila",
+      "sv": "Det är fråga om en lokal som ägs av staden"
     },
     "art_premise_is_owned.title": {
       "en": "Is the premises owned by the applicant?",

@@ -227,11 +227,22 @@
         "value": "",
         "valueType": "string"
       },
-      "art_premise_postal_code": {
-        "ID": "postCode",
-        "label": "Postinumero",
+      "art_premise_type": {
+        "ID": "premiseType",
+        "label": "Tilan tyyppi",
         "value": "",
-        "valueType": "string"
+        "valueType": "string",
+        "value_map": {
+          "art_premise_type.exhibition": "Näyttelytila",
+          "art_premise_type.performance": "Esitystila",
+          "art_premise_type.practice": "Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila"
+        }
+      },
+      "art_premise_is_others_use": {
+        "ID": "isOthersUse",
+        "label": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+        "value": "",
+        "valueType": "bool"
       },
       "art_premise_is_owned": {
         "ID": "isOwnedByApplicant",
@@ -239,9 +250,15 @@
         "value": "",
         "valueType": "bool"
       },
-      "art_premise_is_others_use": {
-        "ID": "isOthersUse",
-        "label": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+      "art_premise_postal_code": {
+        "ID": "postCode",
+        "label": "Postinumero",
+        "value": "",
+        "valueType": "string"
+      },
+      "art_premise_is_owned_by_city": {
+        "ID": "isOwnedByCity",
+        "label": "Onko tila kaupungin omistama",
         "value": "",
         "valueType": "bool"
       }
