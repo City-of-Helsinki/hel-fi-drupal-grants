@@ -128,10 +128,6 @@
         "ui:widget": "textarea",
         "misc:max-length": 2500
       },
-      "continuation_info": {
-        "misc:variant": "infobox",
-        "ui:field": "textParagraph"
-      },
       "is_application_extension": {
         "ui:widget": "radio",
         "ui:enumNames": [
@@ -139,6 +135,7 @@
           "boolean.yes"
         ],
         "ui:options": {
+          "affirmativeExpands": true,
           "tooltipLabel": "is_application_extension.title",
           "tooltipButtonLabel": "is_application_extension.title",
           "tooltipText": "is_application_extension.description"
@@ -200,6 +197,13 @@
         },
         "participant_estimate_info": {
           "ui:field": "textParagraph"
+        },
+        "new_participant_estimate": {
+          "ui:options": {
+            "tooltipLabel": "new_participants_count.title",
+            "tooltipButtonLabel": "new_participants_count.title",
+            "tooltipText": "new_participant_estimate.description"
+          }
         }
       },
       "participants_reached": {
@@ -320,11 +324,6 @@
     }
   },
   "budget_step": {
-    "budget_info_section": {
-      "budget_info": {
-        "ui:field": "textParagraph"
-      }
-    },
     "income_section": {
       "incomeGroupName": {
         "ui:widget": "hidden"

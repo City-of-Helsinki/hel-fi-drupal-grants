@@ -281,15 +281,6 @@
               "title": "applicant_summary.title",
               "type": "string"
             },
-            "continuation_info": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "continuation_info.value",
-                  "type": "null"
-                }
-              ]
-            },
             "is_application_extension": {
               "title": "is_application_extension.title",
               "enum": [
@@ -597,23 +588,9 @@
     "budget_step": {
       "type": "object",
       "properties": {
-        "budget_info_section": {
-          "type": "object",
-          "properties": {
-            "budget_info": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "budget_info.value",
-                  "type": "null"
-                }
-              ]
-            }
-          }
-        },
         "income_section": {
           "title": "income_section.title",
-          "description": "economy_forecast.description",
+          "description": "budget_info.value",
           "type": "object",
           "properties": {
             "incomeGroupName": {
