@@ -56,15 +56,20 @@ class ApplicationSubmissionAccessControlHandler extends EntityAccessControlHandl
       // This used to be possible case.
       return new AccessResultForbidden();
     }
+    try {
+      if ($applicantType === 'private_person') {
+        // Private person may see only own applications.
+        return $this->privateApplicationAllowed($entity) ? AccessResult::allowed() : AccessResult::forbidden();
+      }
+      else {
+        // Community user may access the community's applications.
+        return $this->communityApplicationAllowed($entity) ? AccessResult::allowed() : AccessResult::forbidden();
+      }
+    }
+    catch (\Exception $e) {
+      return AccessResult::forbidden('Unable to read user data.');
+    }
 
-    if ($applicantType === 'private_person') {
-      // Private person may see only own applications.
-      return $this->privateApplicationAllowed($entity) ? AccessResult::allowed() : AccessResult::forbidden();
-    }
-    else {
-      // Community user may access the community's applications.
-      return $this->communityApplicationAllowed($entity) ? AccessResult::allowed() : AccessResult::forbidden();
-    }
   }
 
   /**
