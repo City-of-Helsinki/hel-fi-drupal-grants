@@ -178,8 +178,8 @@ class ApplicationService {
    *   The form data array without attachments.
    */
   private function removeAttachmentsFromCopiedDocument(array $form_data): array {
-    if (isset($form_data['attachements_step']['attachments_section'])) {
-      unset($form_data['attachements_step']['attachments_section']);
+    if (isset($form_data['attachments_step']['attachments_section'])) {
+      unset($form_data['attachments_step']['attachments_section']);
     }
     return $form_data;
   }
