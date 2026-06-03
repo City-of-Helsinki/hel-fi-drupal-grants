@@ -123,7 +123,8 @@ export const SubventionTable = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { dataset, value } = event.target;
-    const lastInput = event.nativeEvent.data;
+    const nativeEvent: InputEvent = event.nativeEvent as InputEvent;
+    const lastInput = nativeEvent.data ?? '';
 
     if (numberIsTooLarge(value)) return;
 
