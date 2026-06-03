@@ -304,7 +304,7 @@ final class ApplicationController extends ControllerBase {
     }
 
     try {
-      $submission = $this->applicationService->getSubmissionEntity($user_information->sub);
+      $submission = $this->applicationService->getSubmissionEntity($application_number);
     }
     catch (\Exception) {
       throw new NotFoundHttpException();
