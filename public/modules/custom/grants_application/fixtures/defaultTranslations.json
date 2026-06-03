@@ -765,6 +765,11 @@
       "fi": "Lisäavustus",
       "sv": "Extra understöd"
     },
+    "subventions.17.title": {
+      "en": "Grant for operations development",
+      "fi": "Toiminnan kehittämisavustus",
+      "sv": "Understöd för verksamhetsutveckling"
+    },
     "subventions.31.title": {
       "en": "Start grant",
       "fi": "Starttiavustus",

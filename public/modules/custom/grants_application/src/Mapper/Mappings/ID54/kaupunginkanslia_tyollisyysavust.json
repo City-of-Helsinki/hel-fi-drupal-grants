@@ -18,7 +18,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "amount",
-      "value": "",
+      "value": "0",
       "valueType": "float",
       "label": "Avustussumma"
     }
@@ -42,7 +42,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "amount",
-      "value": "",
+      "value": "0",
       "valueType": "float",
       "label": "Avustussumma"
     }
@@ -70,6 +70,16 @@
     }
   },
   "compensation.compensationInfo.generalInfoArray.2": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions_sum",
+    "mapping_type": "default",
+    "data": {
+      "ID": "totalAmount",
+      "value": "",
+      "valueType": "float"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.3": {
     "datasource": "form_data",
     "source": "grant_info_step.prior_benefits_usage_section.prior_compensations",
     "mapping_type": "default",
@@ -151,6 +161,31 @@
         "label": "Kuvaus käyttötarkoituksesta",
         "value": "",
         "valueType": "string"
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "label": null,
+        "value": "0",
+        "valueType": "double"
       }
     }
   },
@@ -360,20 +395,12 @@
     "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
     "mapping_type": "file",
     "data": {
-      "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
+      "description": {"ID": "description", "value": "Muu liite", "valueType": "string", "label": "Liitteen kuvaus"},
       "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
       "fileType": {"ID": "fileType", "value": "0", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
-    }
-  },
-  "compensation.additionalInformation": {
-    "datasource": "form_data",
-    "source": "attachments_step.additional_information_section.additional_information",
-    "mapping_type": "simple",
-    "data": {
-      "additionalInformation": ""
     }
   }
 }

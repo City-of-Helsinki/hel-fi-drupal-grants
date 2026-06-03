@@ -113,8 +113,13 @@
                   "label": "subventions.17.title"
                 }
               ]
+            },
+            "subventions_sum": {
+              "format": "decimal-number",
+              "type": "string"
             }
-          }
+          },
+          "required": ["subventions_sum"]
         },
         "purpose_section": {
           "title": "purpose_section.title",
@@ -122,6 +127,7 @@
           "properties": {
             "purpose": {
               "title": "purpose_section_purpose.title",
+              "description": "purpose.custom_description",
               "type": "string"
             }
           },
@@ -257,7 +263,6 @@
               "then": {
                 "properties": {
                   "prior_compensations": {
-                    "description": "prior_compensations.description",
                     "title": "prior_compensations.title",
                     "type": "string"
                   }
