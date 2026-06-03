@@ -39,6 +39,49 @@
         "other_compensation_description"
       ]
     },
+    "_space_item": {
+      "type": "object",
+      "properties": {
+        "premiseName": {
+          "title": "premise_name.title",
+          "type": "string"
+        },
+        "premiseType": {
+          "title": "premise_type.title",
+          "type": "string",
+          "enum": [
+            "premise_type.exhibition_space",
+            "premise_type.performance_space",
+            "premise_type.practice_space"
+          ]
+        },
+        "postCode": {
+          "title": "postal_code.title",
+          "type": "string",
+          "maxLength": 8
+        },
+        "isOthersUse": {
+          "title": "is_others_use.title",
+          "enum": [true, false]
+        },
+        "isOwnedByApplicant": {
+          "title": "is_owned_by_applicant.title",
+          "enum": [true, false]
+        },
+        "isOwnedByCity": {
+          "title": "is_owned_by_city.title",
+          "enum": [true, false]
+        }
+      },
+      "required": [
+        "premiseName",
+        "premiseType",
+        "postCode",
+        "isOthersUse",
+        "isOwnedByApplicant",
+        "isOwnedByCity"
+      ]
+    },
     "grant_info_step": {
       "required": [
         "acting_year_section",
@@ -222,6 +265,107 @@
           }
         }
       ]
+    },
+    "community_activity_step": {
+      "type": "object",
+      "properties": {
+        "community_members_section": {
+          "title": "community_members_section.title",
+          "type": "object",
+          "properties": {
+            "members_fieldset": {
+              "type": "object",
+              "title": "community_members_section.title",
+              "properties": {
+                "members_applicant_person_global": {
+                  "title": "members_applicant_person_global.title",
+                  "type": "integer"
+                },
+                "members_applicant_person_local": {
+                  "title": "members_applicant_person_local.title",
+                  "type": "integer"
+                },
+                "members_applicant_community_global": {
+                  "title": "members_applicant_community_global.title",
+                  "type": "integer"
+                },
+                "members_applicant_community_local": {
+                  "title": "members_applicant_community_local.title",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "personnel_section": {
+          "title": "personnel_section.title",
+          "type": "object",
+          "properties": {
+            "personnel_fieldset": {
+              "type": "object",
+              "title": "personnel_fieldset.legend",
+              "properties": {
+                "full_time_persons": {
+                  "title": "full_time_persons.title",
+                  "type": "integer"
+                },
+                "full_time_person_years": {
+                  "title": "full_time_person_years.title",
+                  "format": "decimal-number",
+                  "type": "string"
+                },
+                "part_time_persons": {
+                  "title": "part_time_persons.title",
+                  "type": "integer"
+                },
+                "part_time_person_years": {
+                  "title": "part_time_person_years.title",
+                  "format": "decimal-number",
+                  "type": "string"
+                },
+                "volunteer_persons": {
+                  "title": "volunteer_persons.title",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "artistic_spaces_section": {
+          "title": "artistic_spaces_section.title",
+          "type": "object",
+          "properties": {
+            "owns_artistic_space": {
+              "title": "owns_artistic_space.title",
+              "description": "owns_artistic_space.help",
+              "enum": [true, false]
+            }
+          },
+          "required": ["owns_artistic_space"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "owns_artistic_space": {"const": true}
+                },
+                "required": ["owns_artistic_space"]
+              },
+              "then": {
+                "properties": {
+                  "spaces": {
+                    "title": "spaces.title",
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/_space_item"},
+                    "additionalItems": {"$ref": "#/definitions/_space_item"},
+                    "minItems": 1
+                  }
+                },
+                "required": ["spaces"]
+              }
+            }
+          ]
+        }
+      }
     }
   },
   "description": "",
@@ -232,6 +376,10 @@
       "title": "grant_info_step.title",
       "type": "object",
       "$ref": "#/definitions/grant_info_step"
+    },
+    "community_activity_step": {
+      "$ref": "#/definitions/community_activity_step",
+      "title": "community_activity_step.title"
     }
   }
 }

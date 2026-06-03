@@ -1,5 +1,20 @@
 {
   "translations": {
+    "artistic_spaces_section.title": {
+      "en": "Spaces for artistic activities",
+      "fi": "Taiteellisen toiminnan tilat",
+      "sv": "Lokal för konstnärlig verksamhet"
+    },
+    "community_activity_step.title": {
+      "en": "Information regarding the organization",
+      "fi": "Yhteisön tiedot",
+      "sv": "Uppgifter om den ansökande organisationen"
+    },
+    "community_members_section.title": {
+      "en": "Members",
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemsantal"
+    },
     "form_title": {
       "en": "Arts and culture grants: Operational grants",
       "fi": "Taide- ja kulttuuriavustukset: toiminta-avustukset",
@@ -49,6 +64,106 @@
       "en": "I am applying for a multi-year grant",
       "fi": "Kyseessä on monivuotinen avustus",
       "sv": "Det är frågan om ett mångårigt stöd"
+    },
+    "is_others_use.title": {
+      "en": "The space is available for use by others (either for free or for a charge)",
+      "fi": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+      "sv": "Utrymmen som erbjuds även till andra (att hyra eller gratis)"
+    },
+    "is_owned_by_applicant.title": {
+      "en": "The space is owned by us",
+      "fi": "Tila on omassa omistuksessa",
+      "sv": "Utrymmet ägs av aktören"
+    },
+    "is_owned_by_city.title": {
+      "en": "The space is owned by the City of Helsinki",
+      "fi": "Kyseessä on kaupungin omistama tila",
+      "sv": "Stadens eget utrymme"
+    },
+    "full_time_person_years.title": {
+      "en": "Full-time: Person years",
+      "fi": "Kokoaikaisia: Henkilötyövuosia",
+      "sv": "Heltidsanställda: Personarbetsår"
+    },
+    "full_time_persons.title": {
+      "en": "Full-time: Persons",
+      "fi": "Kokoaikaisia: Henkilöitä",
+      "sv": "Heltidsanställda: Personer"
+    },
+    "multi_year_grant_section.title": {
+      "en": "I am applying for a multi-year grant",
+      "fi": "Kyseessä on monivuotinen avustus",
+      "sv": "Det är frågan om ett mångårigt stöd"
+    },
+    "part_time_person_years.title": {
+      "en": "Part-time: Person years",
+      "fi": "Osa-aikaisia: Henkilötyövuosia",
+      "sv": "Deltidsanställda: Personarbetsår"
+    },
+    "part_time_persons.title": {
+      "en": "Part-time: Persons",
+      "fi": "Osa-aikaisia: Henkilöitä",
+      "sv": "Deltidsanställda: Personer"
+    },
+    "owns_artistic_space.description": {
+      "en": "Here a space for artistic activity is defined as a space for performances, screenings, or exhibitions, or as a separate space for practising or artistic work. Not an office or a storage space.",
+      "fi": "Taiteellisen toiminnan tilalla tarkoitetaan tässä esitystilaa, näyttelytilaa tai erillistä harjoittelutilaa tai muuta taiteellisen työskentelyn tilaa. Ei kuitenkaan esim. toimisto tai varasto.",
+      "sv": "Med utrymmen för den konstnärliga verksamheten avses här utrymmen för föreställningar eller utställningar eller separata repetitionsutrymmen eller övriga utrymmen för konstnärlig verksamhet. Här avses dock inte kontors- eller förrådsutrymmen."
+    },
+    "owns_artistic_space.help": {
+      "en": "Answer according to the situation at the time of applying.",
+      "fi": "Vastaa hakuhetken tilanteen mukaisesti.",
+      "sv": "Svara enligt situationen vid ansökningstillfället."
+    },
+    "owns_artistic_space.title": {
+      "en": "We own or act as a year-round main tenant for a space for artistic activity",
+      "fi": "Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena",
+      "sv": "Utrymmen för den konstnärliga verksamheten, där man äger utrymmena eller är fast huvudhyresgäst"
+    },
+    "personnel_fieldset.description": {
+      "en": "The personnel includes the personnel on salary, but can also include people working for other forms of compensation, like trade income, or as purchased service. The full-time personnel can include temporary staff if they work full-time. The person year depicts a person's workload when converted to full-time work. For example, a person that works full-time for 6 months can be counted as 0,5 person years. Similarly, a person that works part-time with 30% workload for a full year can be counted as 0,3 person years. If you report your person years to the government or to the statistics of some other instance, please use the same method of calculating here, if possible.",
+      "fi": "Henkilöstöön voi sisällyttää muitakin kuin palkattuja työntekijöitä, mm. palkkioilla tai muilla korvauksilla työskenteleviä tai ostopalveluna ostettavaa työtä. Kokoaikaiset työntekijät voivat sisältää myös määräaikaisia työntekijöitä, jos nämä työskentelevät täyspäiväisesti. Henkilötyövuosi kuvaa kokoaikaiseksi muutetun henkilön työpanosta. Esimerkiksi 6kk kokopäiväisesti työskentelevästä henkilöstä voi laskea muodostuvan 0,5 henkilötyövuotta. Vastaavasti koko vuoden osa-aikaisesti 30% työmäärää tekevästä henkilöstä voi laskea muodostuvan 0,3 henkilötyövuotta. Jos toimitatte tietoja henkilötyövuosistanne valtiolle tai muun tahon tilastointiin, niin käyttäkää tässä samaa laskentatapaa jos mahdollista.",
+      "sv": "I personalen kan ingå även andra än anställda personer, t ex personer som lyfter arvoden eller andra ersättningar eller personer som levererar köptjänster. Heltidsanställa kan även omfatta visstidsanställda personer om dessa arbetar heltid. Ett personarbetsår beskriver en persons arbetsinsats under ett helt år. En person som arbetar t.ex. 6 mån. på heltid motsvarar en arbetsinsats på 0,5 personarbetsår. På samma sätt utgör en deltidsanställd person, som arbetar ett helt år med en 30% arbetsinsats, 0,3 personarbetsår. Om ni förmedlar uppgifter om era årsverken till staten eller någon annan instans, så använd här samma räknesätt, om möjligt."
+    },
+    "personnel_fieldset.legend": {
+      "en": "Personnel",
+      "fi": "Henkilöstö",
+      "sv": "Personal"
+    },
+    "personnel_section.title": {
+      "en": "Personnel in the previous completed financial year",
+      "fi": "Henkilöstö edellisenä päättyneenä tilivuonna",
+      "sv": "Personalen under föregående avslutat bokslutsår"
+    },
+    "postal_code.title": {
+      "en": "Postal code",
+      "fi": "Postinumero",
+      "sv": "Postnummer"
+    },
+    "premise_name.title": {
+      "en": "Name",
+      "fi": "Tilan nimi",
+      "sv": "Namn"
+    },
+    "premise_type.exhibition_space": {
+      "en": "Exhibition space",
+      "fi": "Näyttelytila",
+      "sv": "Utrymme för utställningar"
+    },
+    "premise_type.performance_space": {
+      "en": "Space for performances or screenings",
+      "fi": "Esitystila",
+      "sv": "Utrymme för föreställningar"
+    },
+    "premise_type.practice_space": {
+      "en": "Separate space for practising or artistic work",
+      "fi": "Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila",
+      "sv": "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
+    },
+    "premise_type.title": {
+      "en": "Type of space",
+      "fi": "Tilan tyyppi",
+      "sv": "Typ av utrymme"
     },
     "primary_art_field.circus": {
       "en": "Circus",
@@ -120,6 +235,11 @@
       "fi": "Kuvataide ja sarjakuva",
       "sv": "Bildkonst och seriekonst"
     },
+    "primary_art_field_section.title": {
+      "en": "Primary field of art",
+      "fi": "Ensisijainen taiteenala",
+      "sv": "Huvudsaklig konstart"
+    },
     "project_brief_description.title": {
       "en": "A short description of the project or the activities",
       "fi": "Hankkeen tai toiminnan lyhyt esittelyteksti",
@@ -129,6 +249,21 @@
       "en": "The text can be published or used as a presentation as such or in a modified form along with the decision.",
       "fi": "Teksti voidaan julkaista tai sitä voidaan käyttää esittelytekstinä päätöksen yhteydessä sellaisenaan tai muokattuna.",
       "sv": "Texten kan som sådan eller i förkortad version publiceras eller användas som presentationsunderlag i anslutning till beslutsfattandet om stöd. Max 700 tecken."
+    },
+    "spaces.add": {
+      "en": "Add new space",
+      "fi": "Lisää uusi tila",
+      "sv": "Lägg till ny utrymme"
+    },
+    "spaces.title": {
+      "en": "Space",
+      "fi": "Tila",
+      "sv": "Utrymme"
+    },
+    "volunteer_persons.title": {
+      "en": "Volunteer",
+      "fi": "Vapaaehtoisia: Henkilöitä",
+      "sv": "Frivilliga: Personer"
     }
   }
 }

@@ -118,5 +118,74 @@
         }
       }
     }
+  },
+  "community_activity_step": {
+    "community_members_section": {
+      "members_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "members_fieldset.legend",
+          "tooltipButtonLabel": "members_fieldset.legend",
+          "tooltipText": "members_fieldset.description"
+        }
+      }
+    },
+    "personnel_section": {
+      "personnel_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "personnel_fieldset.legend",
+          "tooltipButtonLabel": "personnel_fieldset.legend",
+          "tooltipText": "personnel_fieldset.description"
+        }
+      }
+    },
+    "artistic_spaces_section": {
+      "owns_artistic_space": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true,
+          "tooltipLabel": "owns_artistic_space.title",
+          "tooltipButtonLabel": "owns_artistic_space.title",
+          "tooltipText": "owns_artistic_space.description"
+        }
+      },
+      "spaces": {
+        "ui:options": {
+          "addText": "spaces.add",
+          "hideNameFromPrint": true
+        },
+        "items": {
+          "premiseType": {
+            "ui:widget": "select"
+          },
+          "isOthersUse": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ]
+          },
+          "isOwnedByApplicant": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ]
+          },
+          "isOwnedByCity": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ]
+          }
+        }
+      }
+    }
   }
 }
