@@ -495,7 +495,7 @@ export const getTooltip = (uiSchema: UiSchema | undefined) => {
 export const sanitizeNumericInput = (
   value: string,
   type: 'integer' | 'decimal-number' | 'phone' = 'integer',
-  lastInput: string,
+  lastInput = '',
 ): string => {
   let pattern: RegExp;
 
