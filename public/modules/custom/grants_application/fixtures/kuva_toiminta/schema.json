@@ -42,7 +42,7 @@
     "grant_info_step": {
       "required": [
         "acting_year_section",
-        "ensisijainen_taiteen_ala_section",
+        "primary_art_field_section",
         "other_compensations_section"
       ],
       "properties": {
@@ -72,91 +72,52 @@
             }
           }
         },
-        "monivuotinen_avustus_section": {
-          "title": "monivuotinen_avustus_section.title",
-          "type": "object",
-          "properties": {
-            "kyseessa_on_monivuotinen_avustus": {
-              "title": "kyseessa_on_monivuotinen_avustus.title",
-              "description": "kyseessa_on_monivuotinen_avustus.description",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
-            }
-          },
-          "required": ["kyseessa_on_monivuotinen_avustus"],
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "kyseessa_on_monivuotinen_avustus": {
-                    "const": true
-                  }
-                }
-              },
-              "then": {
-                "properties": {
-                  "tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta": {
-                    "title": "tulevat_vuodet.title",
-                    "type": "string",
-                    "maxLength": 100
-                  },
-                  "erittely_kullekin_vuodelle_haettavasta_avustussummasta_": {
-                    "title": "erittely_kullekin_vuodelle.title",
-                    "type": "string",
-                    "maxLength": 100
-                  }
-                },
-                "required": [
-                  "tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta",
-                  "erittely_kullekin_vuodelle_haettavasta_avustussummasta_"
-                ]
-              }
-            }
-          ]
+        "subventions_total": {
+          "type": "number"
         },
-        "ensisijainen_taiteen_ala_section": {
-          "title": "ensisijainen_taiteen_ala_section.title",
+        "multi_year_grant_section": {
+          "type": "object",
+          "default": {}
+        },
+        "primary_art_field_section": {
           "type": "object",
           "properties": {
-            "ensisijainen_taiteen_ala": {
-              "title": "ensisijainen_taiteen_ala.title",
+            "primary_art_field": {
+              "title": "primary_art_field.title",
               "type": "string",
               "enum": [
-                "ensisijainen_taiteen_ala.design_ja_kasityo",
-                "ensisijainen_taiteen_ala.elokuva_valokuva_ja_media",
-                "ensisijainen_taiteen_ala.kaupunkikulttuuri",
-                "ensisijainen_taiteen_ala.kirjallisuus",
-                "ensisijainen_taiteen_ala.kuvataide_ja_sarjakuva",
-                "ensisijainen_taiteen_ala.monitaide",
-                "ensisijainen_taiteen_ala.museo",
-                "ensisijainen_taiteen_ala.musiikki",
-                "ensisijainen_taiteen_ala.muu",
-                "ensisijainen_taiteen_ala.sirkus",
-                "ensisijainen_taiteen_ala.tanssi",
-                "ensisijainen_taiteen_ala.teatteri"
+                "primary_art_field.design_and_crafts",
+                "primary_art_field.film_photography_and_media",
+                "primary_art_field.urban_culture",
+                "primary_art_field.literature",
+                "primary_art_field.visual_arts_and_comics",
+                "primary_art_field.multidisciplinary_art",
+                "primary_art_field.museum",
+                "primary_art_field.music",
+                "primary_art_field.other",
+                "primary_art_field.circus",
+                "primary_art_field.dance",
+                "primary_art_field.theatre"
               ]
             },
-            "kyseessa_on_festivaali_tai_tapahtuma": {
-              "title": "kyseessa_on_festivaali_tai_tapahtuma.title",
-              "description": "kyseessa_on_festivaali_tai_tapahtuma.description",
+            "is_festival_or_event": {
+              "title": "is_festival_or_event.title",
+              "description": "is_festival_or_event.description",
               "enum": [
                 true,
                 false
               ]
             },
-            "hankkeen_tai_toiminnan_lyhyt_esittelyteksti": {
-              "title": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.title",
+            "project_brief_description": {
+              "title": "project_brief_description.title",
               "type": "string",
               "maxLength": 700
             }
           },
           "required": [
-            "ensisijainen_taiteen_ala",
-            "kyseessa_on_festivaali_tai_tapahtuma",
-            "hankkeen_tai_toiminnan_lyhyt_esittelyteksti"
+            "primary_art_field",
+            "is_festival_or_event",
+            "project_brief_description"
           ]
         },
         "other_compensations_section": {
@@ -200,7 +161,67 @@
             }
           ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "subventions_total": {
+                "minimum": 5001
+              }
+            },
+            "required": ["subventions_total"]
+          },
+          "then": {
+            "properties": {
+              "multi_year_grant_section": {
+                "type": "object",
+                "properties": {
+                  "is_multi_year_grant": {
+                    "title": "is_multi_year_grant.title",
+                    "description": "is_multi_year_grant.description",
+                    "enum": [
+                      false,
+                      true
+                    ],
+                    "default": false
+                  }
+                },
+                "required": ["is_multi_year_grant"],
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "is_multi_year_grant": {
+                          "const": true
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "future_years_for_multi_year_grant": {
+                          "title": "future_years_for_multi_year_grant.title",
+                          "type": "string",
+                          "maxLength": 100
+                        },
+                        "grant_amount_breakdown_per_year": {
+                          "title": "grant_amount_breakdown_per_year.title",
+                          "type": "string",
+                          "maxLength": 100
+                        }
+                      },
+                      "required": [
+                        "future_years_for_multi_year_grant",
+                        "grant_amount_breakdown_per_year"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "description": "",

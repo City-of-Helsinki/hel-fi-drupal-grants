@@ -10,8 +10,18 @@
         "ui:field": "subventionTable"
       }
     },
-    "monivuotinen_avustus_section": {
-      "kyseessa_on_monivuotinen_avustus": {
+    "subventions_total": {
+      "ui:field": "computedSum",
+      "misc:exclude-from-submit": true,
+      "ui:options": {
+        "sourceFields": ["grant_info_step.subventions_section.subventions"],
+        "sourceShape": "subvention",
+        "numericOutput": true,
+        "hidden": true
+      }
+    },
+    "multi_year_grant_section": {
+      "is_multi_year_grant": {
         "ui:widget": "radio",
         "ui:enumNames": [
           "boolean.no",
@@ -21,50 +31,50 @@
           "affirmativeExpands": true
         }
       },
-      "tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta": {
+      "future_years_for_multi_year_grant": {
         "misc:max-length": 100,
         "ui:options": {
-          "tooltipLabel": "tulevat_vuodet.title",
-          "tooltipButtonLabel": "tulevat_vuodet.title",
-          "tooltipText": "tulevat_vuodet.tooltip"
+          "tooltipLabel": "future_years_for_multi_year_grant.title",
+          "tooltipButtonLabel": "future_years_for_multi_year_grant.title",
+          "tooltipText": "future_years_for_multi_year_grant.tooltip"
         }
       },
-      "erittely_kullekin_vuodelle_haettavasta_avustussummasta_": {
+      "grant_amount_breakdown_per_year": {
         "misc:max-length": 100,
         "ui:options": {
-          "tooltipLabel": "erittely_kullekin_vuodelle.title",
-          "tooltipButtonLabel": "erittely_kullekin_vuodelle.title",
-          "tooltipText": "erittely_kullekin_vuodelle.tooltip"
+          "tooltipLabel": "grant_amount_breakdown_per_year.title",
+          "tooltipButtonLabel": "grant_amount_breakdown_per_year.title",
+          "tooltipText": "grant_amount_breakdown_per_year.tooltip"
         }
       }
     },
-    "ensisijainen_taiteen_ala_section": {
-      "ensisijainen_taiteen_ala": {
+    "primary_art_field_section": {
+      "primary_art_field": {
         "ui:options": {
-          "tooltipLabel": "ensisijainen_taiteen_ala.title",
-          "tooltipButtonLabel": "ensisijainen_taiteen_ala.title",
-          "tooltipText": "ensisijainen_taiteen_ala.tooltip"
+          "tooltipLabel": "primary_art_field.title",
+          "tooltipButtonLabel": "primary_art_field.title",
+          "tooltipText": "primary_art_field.tooltip"
         }
       },
-      "kyseessa_on_festivaali_tai_tapahtuma": {
+      "is_festival_or_event": {
         "ui:widget": "radio",
         "ui:enumNames": [
           "boolean.yes",
           "boolean.no"
         ],
         "ui:options": {
-          "tooltipLabel": "kyseessa_on_festivaali_tai_tapahtuma.title",
-          "tooltipButtonLabel": "kyseessa_on_festivaali_tai_tapahtuma.title",
-          "tooltipText": "kyseessa_on_festivaali_tai_tapahtuma.tooltip"
+          "tooltipLabel": "is_festival_or_event.title",
+          "tooltipButtonLabel": "is_festival_or_event.title",
+          "tooltipText": "is_festival_or_event.tooltip"
         }
       },
-      "hankkeen_tai_toiminnan_lyhyt_esittelyteksti": {
+      "project_brief_description": {
         "misc:max-length": 700,
         "ui:widget": "textarea",
         "ui:options": {
-          "tooltipLabel": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.title",
-          "tooltipButtonLabel": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.title",
-          "tooltipText": "hankkeen_tai_toiminnan_lyhyt_esittelyteksti.tooltip"
+          "tooltipLabel": "project_brief_description.title",
+          "tooltipButtonLabel": "project_brief_description.title",
+          "tooltipText": "project_brief_description.tooltip"
         }
       }
     },
