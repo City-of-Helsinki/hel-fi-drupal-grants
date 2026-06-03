@@ -11,6 +11,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\views\EntityViewsData;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
@@ -34,6 +35,7 @@ use Drupal\Core\Url;
   ],
   handlers: [
     "access" => ApplicationSubmissionAccessControlHandler::class,
+    "views_data" => EntityViewsData::class,
   ],
   links: [
     "canonical" => "/application/{id}/render",
