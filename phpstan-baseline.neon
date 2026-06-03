@@ -751,11 +751,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
 
 		-
-			message: "#^Property Drupal\\\\grants_application\\\\Controller\\\\ApplicationController\\:\\:\\$messageService is never read, only written\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
-
-		-
 			message: "#^Call to an undefined method Drupal\\\\Core\\\\Link\\|Drupal\\\\Core\\\\Url\\:\\:getUrl\\(\\)\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Controller/CompletionController.php
