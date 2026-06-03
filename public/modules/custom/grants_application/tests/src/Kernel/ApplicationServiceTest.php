@@ -73,13 +73,6 @@ final class ApplicationServiceTest extends KernelTestBase {
   private AtvDocument $copiedAtvDocument;
 
   /**
-   * The side document.
-   *
-   * @var \Drupal\helfi_atv\AtvDocument
-   */
-  private AtvDocument $sideDocument;
-
-  /**
    * Copied side document.
    *
    * @var \Drupal\helfi_atv\AtvDocument
@@ -205,7 +198,7 @@ final class ApplicationServiceTest extends KernelTestBase {
   /**
    * Test the copying.
    */
-  public function testCreateCopy() {
+  public function testCreateCopy(): void {
     $grantsProfile = new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']);
 
     $userInformationService = $this->createMock(UserInformationService::class);

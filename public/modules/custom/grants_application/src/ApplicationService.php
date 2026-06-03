@@ -39,7 +39,7 @@ class ApplicationService {
    * @param string|null $original_application_number
    *   The application number to copy from.
    *
-   * @return array
+   * @return array<mixed>
    *   The created draft application data.
    */
   public function createCopy(string $form_identifier, string|null $original_application_number = NULL): array {
