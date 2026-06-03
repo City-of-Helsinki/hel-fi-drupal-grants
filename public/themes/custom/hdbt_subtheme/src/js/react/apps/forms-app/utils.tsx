@@ -513,7 +513,7 @@ export const sanitizeNumericInput = (
       pattern = /[^0-9,]/g;
   }
 
-  // Start with the
+  // Start by checking the allowed characters.
   value = value.replace(pattern, '').replace(/ {2,}/g, ' ');
 
   // Prevent multiple commas by replacing the last one.
@@ -524,17 +524,12 @@ export const sanitizeNumericInput = (
       const firstPart = value.substring(0, position);
       const lastPart = value.substring(position + 1);
       value = firstPart + lastPart;
-
-      // Remove characters after comma until there is max 2.
-      // If used decides to put comma in the middle of large number.
-      while (value.match(/,[0-9]{3}/)) {
-        value = value.substring(0, value.length - 1);
-      }
     }
   }
 
-  // Prevent more than two numbers after comma.
-  if (value.match(/,[0-9]{3}/)) {
+  // Remove characters after comma until there is max 2.
+  // If user decides to put comma in the middle of large number.
+  while (value.match(/,[0-9]{3}/)) {
     value = value.substring(0, value.length - 1);
   }
 
