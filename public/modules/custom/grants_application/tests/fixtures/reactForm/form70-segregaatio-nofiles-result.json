@@ -215,7 +215,7 @@
                         "ID": "amount",
                         "label": "Euroa",
                         "value": "5000",
-                        "valueType": "double"
+                        "valueType": "float"
                     }
                 ]
             ],
@@ -276,6 +276,28 @@
                 }
             ]
         },
+        "benefitsInfoArray": [
+            {
+                "ID": "loans",
+                "label": "",
+                "value": "",
+                "valueType": "string"
+            },
+            {
+                "ID": "premises",
+                "label": "",
+                "value": "",
+                "valueType": "string"
+            }
+        ],
+        "activitiesInfoArray": [
+            {
+                "ID": "businessPurpose",
+                "label": "Toiminnan kuvaus",
+                "value": "Tämä on hakuprofiilin tietoa",
+                "valueType": "string"
+            }
+        ],
         "customQuestionsInfo": {
             "customQuestionsArray": [
                 {
@@ -304,13 +326,13 @@
                 },
                 {
                     "ID": "hankkeen_toimenpiteet_alkupvm",
-                    "label": "Aikataulu alkupäivämäärä",
+                    "label": "Alkupäivämäärä",
                     "value": "2026-03-01",
                     "valueType": "datetime"
                 },
                 {
                     "ID": "hankkeen_toimenpiteet_loppupvm",
-                    "label": "Aikataulu loppupäivämäärä",
+                    "label": "Loppupäivämäärä",
                     "value": "2026-12-31",
                     "valueType": "datetime"
                 },
@@ -328,7 +350,7 @@
                 },
                 {
                     "ID": "hankkeen_jo_osallistuneet_9_12",
-                    "label": "9–12-vuotiasta helsinkiläistä",
+                    "label": "9-12-vuotiasta helsinkiläistä",
                     "value": "30",
                     "valueType": "string"
                 },
@@ -382,25 +404,25 @@
                 },
                 {
                     "ID": "hankkeen_kaytetty_avustuksen_maara",
-                    "label": "Selvitys edellisen vuoden erillisavustuksen käytöstä (euroa).",
+                    "label": "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä euroina yhteensä, kuinka paljon myönnettyä avustusta on käytetty.",
                     "value": "4500",
                     "valueType": "string"
                 },
                 {
                     "ID": "hankkeen_edellisen_vuoden_avustuksen_kaytto",
-                    "label": "Kuvaus edellisen vuoden erillisavustuksen käytöstä.",
+                    "label": "Kuvaus edellisen vuoden erillisavustuksen käytöstä. Kerro tässä  tarkemmin avustuksen käytöstä kululajeittain.",
                     "value": "Avustus käytettiin kululajeittain seuraavasti.",
                     "valueType": "string"
                 },
                 {
                     "ID": "hankkeen_talous_toiminta_aikataulu_muutokset",
-                    "label": "Onko projektissa tapahtunut merkittäviä muutoksia talouteen, toimintaan tai aikatauluun liittyen?",
+                    "label": "Onko projektissa tapahtunut merkittäviä muutoksia talouteen, toimintaan tai aikatauluun liittyen, mitä?",
                     "value": "Ei merkittäviä muutoksia.",
                     "valueType": "string"
                 },
                 {
                     "ID": "hankkeen_jatkokausi_suunnitelma",
-                    "label": "Onko projektin jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen suunnitelman mukaan?",
+                    "label": "Onko projektin jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen suunnitelman mukaan? Jos ei, niin miksi?",
                     "value": "Jatkokausi toteutetaan alkuperäisen suunnitelman mukaan.",
                     "valueType": "string"
                 }
