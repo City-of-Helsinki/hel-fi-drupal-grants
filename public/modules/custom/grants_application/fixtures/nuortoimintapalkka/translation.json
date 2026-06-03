@@ -80,16 +80,6 @@
       "fi": "Paikat, joissa yhdistys järjesti toimintaa nuorille edellisen vuoden aikana",
       "sv": "Platser där föreningen ordnade verksamhet för unga under föregående år"
     },
-    "digital_only_info.title": {
-      "en": "A negative answer opens a further question",
-      "fi": "Kieltävä vastaus avaa lisäkysymyksen",
-      "sv": "Ett nekande svar öppnar ytterligare en fråga"
-    },
-    "digital_only_info.value": {
-      "en": "A negative answer opens a further question",
-      "fi": "Kieltävä vastaus avaa lisäkysymyksen",
-      "sv": "Ett nekande svar öppnar ytterligare en fråga"
-    },
     "digital_activity_only.title": {
       "en": "We organised activities only in a digital environment",
       "fi": "Järjestimme toimintaa vain digitaalisessa ympäristössä",

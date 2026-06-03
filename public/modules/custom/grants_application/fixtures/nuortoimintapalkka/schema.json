@@ -388,14 +388,9 @@
           "type": "object",
           "properties": {
             "digital_only_info": {
-              "title": "digital_only_info.title",
+              "title": "negative_expands",
               "type": "array",
-              "items": [
-                {
-                  "title": "digital_only_info.value",
-                  "type": "null"
-                }
-              ]
+              "items": []
             },
             "digital_activity_only": {
               "title": "digital_activity_only.title",
