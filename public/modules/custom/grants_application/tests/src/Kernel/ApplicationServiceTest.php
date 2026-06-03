@@ -108,32 +108,6 @@ final class ApplicationServiceTest extends KernelTestBase {
       ),
     );
 
-    $this->sideDocument = ATVDocument::create([
-      'id' => 'sidedocu-1111-2222-3333-mentidabcdef',
-      'status' => [
-        'value' => 'DRAFT',
-      ],
-      'status_histories' => [
-        'DRAFT',
-      ],
-      'transaction_id' => '1234567890',
-      'business_id' => '1234567-1',
-      'tos_function_id' => '12345',
-      'tos_record_id' => '54321',
-      'draft' => TRUE,
-      'human_readable_type' => ['humanType'],
-      'metadata' => '{"name": "Name", "value": "Value"}',
-      'content' => [],
-      'created_at' => '2024-06-06',
-      'updated_at' => '2024-06-07',
-      'user_id' => 'userId',
-      'locked_after' => '2024-06-08',
-      'deletable' => TRUE,
-      'delete_after' => '2075-01-01',
-      'document_language' => 'fi',
-      'content_schema_url' => 'schemaURL',
-    ]);
-
     $this->copiedSideDocument = ATVDocument::create([
       'id' => 'sidedocu2-1111-2222-3333-mentidabcdef',
       'status' => [
