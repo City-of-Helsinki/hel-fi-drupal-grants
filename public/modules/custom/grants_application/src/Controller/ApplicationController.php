@@ -63,9 +63,6 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationService $applicationService,
     private readonly ContentLockInterface $contentLock,
     private readonly AccountProxyInterface $accountProxy,
-    #[Autowire(service: 'grants_handler.message_service')]
-    private readonly MessageService $messageService,
-    private readonly UserInformationService $userInformationService,
     #[Autowire(service: 'transliteration')]
     private readonly TransliterationInterface $transliteration,
     private readonly Avus2DataParser $avus2DataParser,
