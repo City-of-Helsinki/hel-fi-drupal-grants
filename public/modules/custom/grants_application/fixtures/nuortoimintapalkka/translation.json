@@ -110,6 +110,11 @@
       "fi": "Lisää uusi tila",
       "sv": "Lägg till en ny plats"
     },
+    "members_fieldset.description": {
+      "en": "Indicate here the individuals who actively participate in the association’s activities and/or are members",
+      "fi": "Merkitse tähän yhdistyksen aktiivisesti toimintaan osallistuvat ja/tai jäsenet",
+      "sv": "Ange här de personer som aktivt deltar i föreningens verksamhet och/eller är medlemmar"
+    },
     "memberships_section.title": {
       "en": "Memberships in organisations and other communities",
       "fi": "Jäsenyydet järjestöissä ja muissa yhteisöissä",
