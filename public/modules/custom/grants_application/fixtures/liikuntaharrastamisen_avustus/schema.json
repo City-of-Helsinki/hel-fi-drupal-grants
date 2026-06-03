@@ -80,7 +80,7 @@
     },
      "_income_row_item": {
       "type": "object",
-      "title": "income_row_item.title",
+      "title": "income_type_row_item.title",
       "description": "income_row_item.description",
       "properties": {
         "income_row_description": {

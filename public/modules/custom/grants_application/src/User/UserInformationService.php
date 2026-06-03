@@ -152,7 +152,7 @@ class UserInformationService {
         'communityOfficialName' => $companyData["companyName"],
         'firstname' => $userData->given_name,
         'lastname' => $userData->family_name,
-        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"] ?? '',
         'email' => $userData->email,
         'street' => $companyData["addresses"][0]["street"],
         'city' => $companyData["addresses"][0]["city"],
@@ -178,14 +178,16 @@ class UserInformationService {
   /**
    * Get the applicant type id.
    *
+   * Original values, ApplicantInfoService.
+   *
    * @return int
    *   The applicant type id.
    */
   public function getApplicantTypeId(): int {
     return match($this->getApplicantType()){
+      'private_person' => 0,
       'unregistered_community' => 1,
       'registered_community' => 2,
-      'private_person' => 3,
     };
   }
 

@@ -1,7 +1,8 @@
-import { useAtomValue, useSetAtom } from 'jotai';
-import { Stepper as HDSStepper, StepState } from 'hds-react';
-import { type MouseEvent, type RefObject, useEffect, useRef } from 'react';
 import type Form from '@rjsf/core';
+import { Stepper as HDSStepper, StepState } from 'hds-react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { type MouseEvent, type RefObject, useEffect, useRef } from 'react';
+import { defaultStepperTheme } from '@/react/common/constants/stepperTheme';
 import {
   type FormStep,
   formStepsAtom,
@@ -10,7 +11,6 @@ import {
   getSubmitStatusAtom,
   setStepAtom,
 } from '../store';
-import { defaultStepperTheme } from '@/react/common/constants/stepperTheme';
 
 export const transformSteps = (
   steps: Map<number, FormStep> | undefined,

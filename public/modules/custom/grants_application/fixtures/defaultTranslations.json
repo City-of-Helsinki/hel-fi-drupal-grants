@@ -486,6 +486,11 @@
       "sv": "Skriv ner vilken typ av inkomst det gäller. Inkomster kan till exempel vara andra understöd och inträdes- eller deltagaravgifter. Självfinansiering måste uppges som en inkomst även om den självfinansierade delen finansieras med sökandes övrig verksamhet."
     },
     "income_row_item.title": {
+      "en": "Income item",
+      "fi": "Tulo",
+      "sv": "Inkomst"
+    },
+    "income_type_row_item.title": {
       "en": "Type of income",
       "fi": "Tulon tyyppi",
       "sv": "Typ av inkomst"
@@ -795,6 +800,36 @@
       "fi": "Toiminta-avustus",
       "sv": "Verksamhetsunderstöd"
     },
+    "subventions.4.title": {
+      "en": "Project grant",
+      "fi": "Projektiavustus",
+      "sv": "Projektunderstöd"
+    },
+    "subventions.5.title": {
+      "en": "Rent subsidy",
+      "fi": "Vuokra-avustus",
+      "sv": "Hyresunderstöd"
+    },
+    "subventions.6.title": {
+      "en": "General grant",
+      "fi": "Yleisavustus",
+      "sv": "Allmänt understöd"
+    },
+    "subventions.8.title": {
+      "en": "Interests and installments",
+      "fi": "Korot ja lyhennykset",
+      "sv": "Räntor och amorteringar"
+    },
+    "subventions.9.title": {
+      "en": "Other",
+      "fi": "Muu",
+      "sv": "Annan"
+    },
+    "subventions.12.title": {
+      "en": "Camp grant",
+      "fi": "Leiriavustus",
+      "sv": "Lägerunderstöd"
+    },
     "subventions.14.title": {
       "en": "Extra grant",
       "fi": "Lisäavustus",
@@ -809,11 +844,6 @@
       "en": "Small grant",
       "fi": "Pienavustus",
       "sv": "Litet understöd"
-    },
-    "subventions.4.title": {
-      "en": "Project grant",
-      "fi": "Projektiavustus",
-      "sv": "Projektunderstöd"
     },
     "subventions.43.title": {
       "en": "Targeted sports grant",
@@ -830,11 +860,6 @@
       "fi": "Nuorison erityisavustus 1",
       "sv": "Specialunderstöd för ungdomsverksamhet 1"
     },
-    "subventions.5.title": {
-      "en": "Rent subsidy",
-      "fi": "Vuokra-avustus",
-      "sv": "Hyresunderstöd"
-    },
     "subventions.51.title": {
       "en": "Special grant for sports 1",
       "fi": "Liikunnan erityisavustus 1",
@@ -849,21 +874,6 @@
       "en": "Special grant for sports 3",
       "fi": "Liikunnan erityisavustus 3",
       "sv": "Specialunderstöd för idrott 3"
-    },
-    "subventions.6.title": {
-      "en": "General grant",
-      "fi": "Yleisavustus",
-      "sv": "Allmänt understöd"
-    },
-    "subventions.8.title": {
-      "en": "Interests and installments",
-      "fi": "Korot ja lyhennykset",
-      "sv": "Räntor och amorteringar"
-    },
-    "subventions.9.title": {
-      "en": "Other",
-      "fi": "Muu",
-      "sv": "Annan"
     },
     "subventions.title": {
       "en": "Grants",

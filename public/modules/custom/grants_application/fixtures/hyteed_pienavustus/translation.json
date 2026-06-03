@@ -1,0 +1,14 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Grants for welfare and health promotion: Small grants",
+      "fi": "Hyvinvoinnin ja terveyden edistämisen pienavustus",
+      "sv": "Understöd inom främjandet av välfärd och hälsa: Små understöd"
+    },
+    "purpose_section_purpose.description": {
+      "en": "In addition to the purpose of the grant, please indicate what expenses will be paid from the grant.",
+      "fi": "Käyttötarkoituksen lisäksi, kerro mitä kuluja avustuksesta maksetaan.",
+      "sv": "Utöver användningsändamålet med bidraget, ange vilka kostnader som kommer att betalas med bidraget."
+    }
+  }
+}

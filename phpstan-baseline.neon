@@ -741,11 +741,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
 
 		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
-
-		-
 			message: "#^Left side of && is always true\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
