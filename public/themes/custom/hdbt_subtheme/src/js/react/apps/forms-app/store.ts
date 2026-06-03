@@ -1,94 +1,35 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
+import type { RJSFSchema, RJSFValidationError } from '@rjsf/utils';
 import { atom } from 'jotai';
 import type { ReactNode } from 'react';
-import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
-
-import { findFieldsOfType, findFieldsWithOption, keyErrorsByStep } from './utils';
 import { SubmitStates } from './enum/SubmitStates';
 import { getUrlParts } from './testutils/Helpers';
+import type { Avus2Message } from './types/Avus2';
+import type { FormConfig, ResponseData } from './types/Data';
+import type { RJSFFormData } from './types/RJSFFormData';
+import { findFieldsOfType, findFieldsWithOption, keyErrorsByStep } from './utils';
 
 export type FormStep = { id: string; label: string };
 
-type GrantsProfile = {
-  // Community fields
-  companyNameShort?: string;
-  companyName?: string;
-  companyHome?: string;
-  companyHomePage?: string;
-  companyStatus?: string;
-  companyStatusSpecial?: string;
-  businessPurpose?: string;
-  foundingYear?: string;
-  registrationDate?: string;
-  officials?: Array<any>;
-  businessId?: string;
-  // Private person fields
-  firstName?: string;
-  lastName?: string;
-  socialSecurityNumber?: string;
-  email?: string;
-  phone_number?: string;
-  // Shared
-  addresses: Array<{ address_id: string; street: string; postCode: string; city: string; country: string }>;
-  bankAccounts: Array<{
-    bankAccount: string;
-    confirmationFile: string;
-    bank_account_id: string;
-    ownerName?: string;
-    ownerSsn?: string;
-  }>;
+export type FormState = {
+  currentStep: [number, FormStep];
+  reachedStep: number;
 };
 
-export type FormState = { currentStep: [number, FormStep]; reachedStep: number };
-
-type FormConfig = {
-  actingYears?: string[];
-  applicationNumber: string;
-  grantsProfile: GrantsProfile;
-  persistedData: any;
-  token: string;
-  schema: RJSFSchema;
-  settings: { [key: string]: string };
-  submitState: string;
-  subventionFields: string[];
-  summaryData?: {
-    applicationNumber?: string;
-    applicationSubmitted?: string;
-    attachments?: string[];
-    handlers?: Array<string[]>;
-    statusUpdates?: string[];
-  };
-  requiredFileFields: string[];
-  translations: {
-    [key in 'fi' | 'sv' | 'en']: { [key: string]: string };
-  };
-  uiSchema: UiSchema;
-};
-
-type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
-  applicationNumber: string;
-  grants_profile: GrantsProfile;
-  settings: {
-    acting_years?: string[];
-  };
-  status: string;
-  summary_data?: {
-    application_number?: string;
-    application_submitted?: string;
-    attachments?: string[];
-    handlers?: Array<string[]>;
-    status_updates?: string[];
-  };
-  ui_schema: UiSchema;
-};
-
-const buildFormSteps = ({ schema: { properties } }: any) => {
+const buildFormSteps = ({ properties }: RJSFSchema): Map<number, FormStep> => {
   const steps = new Map();
-  Object.entries(properties).forEach((property: any, index: number) => {
+
+  if (!properties || typeof properties !== 'object') {
+    console.error('Cannot build form steps, properties is not an object');
+    return steps;
+  }
+
+  Object.entries(properties).forEach((property, index: number) => {
     const [key, value] = property;
 
-    steps.set(index, { id: key, label: `${index + 1}. ${value.title}` });
+    steps.set(index, {
+      id: key,
+      label: `${index + 1}. ${typeof value !== 'boolean' && value?.title ? value.title : ''}`,
+    });
   });
 
   const previewIndex = steps.size;
@@ -105,7 +46,7 @@ const buildFormSteps = ({ schema: { properties } }: any) => {
   return steps;
 };
 
-export const createFormDataAtom = (key: string, initialValue: any, timestamp?: number) => {
+export const createFormDataAtom = (key: string, initialValue: RJSFFormData, timestamp?: number) => {
   initialValue = initialValue && Array.isArray(initialValue) && !initialValue.length ? {} : initialValue;
 
   const getInitialValue = () => {
@@ -139,7 +80,7 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
 
   return derivedAtom;
 };
-export const formDataAtomRef = atom<any>(null);
+export const formDataAtomRef = atom<RJSFFormData | null>(null);
 export const formStateAtom = atom<FormState | undefined>(undefined);
 export const formConfigAtom = atom<FormConfig | undefined>(undefined);
 export const formStepsAtom = atom<Map<number, FormStep> | undefined>(undefined);
@@ -150,18 +91,21 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     status,
     summary_data: summaryData,
     ui_schema: uiSchema,
+    schema,
     settings,
     ...rest
   } = formConfig;
-  const { acting_years: actingYears } = settings || {};
-  const steps = buildFormSteps(formConfig);
+  const { acting_years: actingYears, applicant_type: applicantType } = settings || {};
+  const steps = buildFormSteps(schema);
   _set(formStepsAtom, () => steps);
   _set(formConfigAtom, () => ({
     grantsProfile,
     ...rest,
     actingYears,
-    settings: settings as { [key: string]: string },
+    applicantType,
+    settings,
     requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
+    schema,
     submitState: status || SubmitStates.DRAFT,
     subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
     summaryData: summaryData
@@ -175,7 +119,15 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
       : undefined,
     uiSchema,
   }));
-  _set(formStateAtom, () => ({ currentStep: [0, steps.get(0)], reachedStep: 0 }));
+  _set(formStateAtom, () => {
+    const firstStep = steps.get(0);
+    if (!firstStep) {
+      console.error('Cannot initialize form state, no steps defined');
+      return undefined;
+    }
+
+    return { currentStep: [0, firstStep], reachedStep: 0 };
+  });
 
   // Make sure application number is set in url params.
   const { applicationNumber } = formConfig;
@@ -239,7 +191,7 @@ export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError
   const steps = _get(formStepsAtom);
 
   if (!additiveOnly) {
-    _set(errorsAtom, (state) => keyErrorsByStep(errors, steps));
+    _set(errorsAtom, () => keyErrorsByStep(errors, steps));
     return;
   }
 
@@ -325,7 +277,7 @@ export const getFormDataAtom = atom((_get) => {
 
   return _get(formDataAtom);
 });
-export const setFormDataAtom = atom(null, (_get, _set, newData: any) => {
+export const setFormDataAtom = atom(null, (_get, _set, newData: RJSFFormData) => {
   const formDataAtom = _get(formDataAtomRef);
 
   if (!formDataAtom) {
@@ -377,7 +329,7 @@ type avus2Data = {
     timeCreated: string;
     timeUpdated: string;
   }>;
-  messages: any[];
+  messages: Avus2Message[];
   statusUpdates: Array<{
     caseId: string;
     citizenCaseStatus: string;
@@ -427,4 +379,10 @@ export const getActingYearsAtom = atom((_get) => {
   const { actingYears } = _get(getFormConfigAtom);
 
   return actingYears;
+});
+
+export const getUserTypeAtom = atom((_get) => {
+  const { applicantType } = _get(getFormConfigAtom);
+
+  return applicantType;
 });

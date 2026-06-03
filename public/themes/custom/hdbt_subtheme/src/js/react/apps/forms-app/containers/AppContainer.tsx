@@ -1,12 +1,36 @@
-import useSWRImmutable from 'swr/immutable';
 import { LoadingSpinner } from 'hds-react';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-
-import { FormWrapper } from './FormWrapper';
-import { getUrlParts } from '../testutils/Helpers';
+import useSWRImmutable from 'swr/immutable';
 import { BackendError } from '../errors/BackendError';
+import { RedirectError } from '../errors/RedirectError';
 import { Requests } from '../Requests';
+import { getUrlParts } from '../testutils/Helpers';
+import { FormWrapper } from './FormWrapper';
+
+/**
+ * Handle errors from the server response.
+ *
+ * @param {Response} response - The fetch response object.
+ * @throws {RedirectError|BackendError|Error} - Throws a RedirectError (and navigates) if the
+ *                                              response includes a redirect_url, a BackendError
+ *                                              if it includes an error message, otherwise a
+ *                                              generic Error.
+ */
+const handleErrors = async (response: Response) => {
+  const json = await response.json();
+
+  if (json?.redirect_url) {
+    window.location.href = json.redirect_url;
+    throw new RedirectError(json.redirect_url);
+  }
+
+  if (json?.error) {
+    throw new BackendError(json.error);
+  }
+
+  throw new Error('Failed to fetch form config data.');
+};
 
 /**
  * Instantiates a new application draft for the given form.
@@ -16,33 +40,16 @@ import { Requests } from '../Requests';
  *
  * @return {Promise<Object>} - The response from the server.
  *
- * @throws {Error} - If the instantiation request fails.
+ * @throws {BackendError|Error} - If the instantiation request fails.
  */
 const instantiateDocument = async (form_identifier: string, token: string) => {
   const response = await Requests.DRAFT_APPLICATION_CREATE(form_identifier, token);
 
   if (!response.ok) {
-    throw new Error('Failed to instantiate application');
+    await handleErrors(response);
   }
 
   return response.json();
-};
-
-/**
- * Handle errors from the server response.
- *
- * @param {Response} response - The fetch response object.
- * @throws {BackendError|Error} - Throws a BackendError if the response contains an error message,
- *                                otherwise throws a generic Error.
- */
-const handleErrors = async (response: Response) => {
-  const json = await response.json();
-
-  if (json?.error) {
-    throw new BackendError(json.error);
-  }
-
-  throw new Error('Failed to fetch form config data.');
 };
 
 /**

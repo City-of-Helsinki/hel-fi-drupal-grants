@@ -5,33 +5,128 @@ const objectType: JSONSchema7TypeName = 'object';
 const stringType: JSONSchema7TypeName = 'string';
 
 export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
-  { title: 'Omat yhteystiedot', type: objectType, $ref: '#/definitions/applicant_info' },
+  { title: 'applicant_info.title', type: objectType, $ref: '#/definitions/applicant_info' },
   {
     type: objectType,
     properties: {
-      applicant_address_data: {
-        title: 'Osoite',
+      bank_account: {
+        properties: { bank_account: { title: 'bank_account_bank_account.title', type: stringType } },
+        required: ['bank_account'],
+        title: 'bank_account.title',
         type: objectType,
+      },
+    },
+    required: ['bank_account'],
+  },
+  {
+    applicant_info: {
+      bank_account: {
+        bank_account: {
+          'ui:widget': 'bank_account',
+          'ui:options': {
+            hideNameFromPrint: true,
+            tooltipLabel: 'bank_account.title',
+            tooltipButtonLabel: 'bank_account.title',
+            tooltipText: 'bank_account.tooltip',
+          },
+        },
+      },
+    },
+  },
+];
+
+export const unregisteredCommunitySettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
+  { title: 'applicant_info.title', type: objectType, $ref: '#/definitions/applicant_info' },
+  {
+    type: objectType,
+    properties: {
+      bank_account: {
+        properties: { bank_account: { title: 'bank_account_bank_account.title', type: stringType } },
+        required: ['bank_account'],
+        title: 'bank_account.title',
+        type: objectType,
+      },
+      community_officials: {
         properties: {
-          address: {
-            title: 'Henkilökohtainen osoite',
-            type: objectType,
-            properties: {
-              address_name: { title: 'Katuosoite', type: stringType, minLength: 1 },
-              postal_code: { title: 'Postinumero', type: stringType, minLength: 5 },
-              post_area: { title: 'Toimipaikka', type: stringType, minLength: 1 },
+          community_officials: {
+            additionalItems: {
+              title: 'community_officials_community_officials.title',
+              type: objectType,
+              properties: {
+                official: { title: 'community_officials_community_officials_official.title', type: stringType },
+              },
+            },
+            items: [
+              {
+                properties: {
+                  official: { title: 'community_officials_community_officials_official.title', type: stringType },
+                },
+                title: 'community_officials_community_officials.title',
+                type: objectType,
+              },
+            ],
+            title: 'community_officials_community_officials.title',
+            type: 'array',
+            minItems: 1,
+          },
+        },
+        title: 'community_officials.title',
+        type: objectType,
+      },
+    },
+    required: ['bank_account'],
+  },
+  {
+    applicant_info: {
+      bank_account: {
+        bank_account: {
+          'ui:widget': 'bank_account',
+          'ui:options': {
+            hideNameFromPrint: true,
+            tooltipLabel: 'bank_account.title',
+            tooltipButtonLabel: 'bank_account.title',
+            tooltipText: 'bank_account.tooltip',
+          },
+        },
+      },
+      community_officials: {
+        community_officials: {
+          'ui:options': {
+            hideNameFromPrint: true,
+          },
+          additionalItems: {
+            official: {
+              'ui:widget': 'community_officials',
+              'ui:options': {
+                hideNameFromPrint: true,
+              },
+            },
+            'ui:options': {
+              hideNameFromPrint: true,
+              removeText: 'community_officials_community_officials.removeText',
+            },
+          },
+          items: {
+            official: {
+              'ui:options': {
+                hideNameFromPrint: true,
+              },
+              'ui:widget': 'community_officials',
+            },
+            'ui:options': {
+              addable: true,
+              hideNameFromPrint: true,
+              orderable: false,
+              removable: true,
+              tooltipLabel: 'community_officials.title',
+              tooltipButtonLabel: 'community_officials.title',
+              tooltipText: 'community_officials.tooltip',
             },
           },
         },
       },
-      applicant_phone: {
-        title: 'Puhelinnumero',
-        type: objectType,
-        properties: { phone: { title: 'Henkilökohtainen puhelinnumero', type: stringType, minLength: 1 } },
-      },
     },
   },
-  {},
 ];
 
 export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
