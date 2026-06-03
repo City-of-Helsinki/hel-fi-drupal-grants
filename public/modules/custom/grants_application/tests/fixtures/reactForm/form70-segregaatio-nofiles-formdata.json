@@ -1,0 +1,147 @@
+{
+  "applicant_info": {
+    "applicant_email": {
+      "email": "test@example.com"
+    },
+    "contact_person_info": {
+      "contact_person": "Joku Henkilö",
+      "contact_person_phone_number": "040 123 123 12"
+    },
+    "community_address": {
+      "community_address": "Kauppakatu 20"
+    },
+    "bank_account": {
+      "bank_account": "FI4950009420028730"
+    },
+    "community_officials": {
+      "community_officials": [
+        {
+          "official": "a464c2d0-a79a-400e-a9cf-32f583675194"
+        }
+      ]
+    }
+  },
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": "2026"
+    },
+    "subventions_section": {
+      "subventions": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "49",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "5000",
+            "valueType": "float"
+          }
+        ]
+      ]
+    },
+    "purpose_section": {
+      "purpose": "Lyhyt kuvaus haettavan avustuksen käyttötarkoituksesta."
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": true,
+      "other_compensations": [
+        {
+          "other_compensation_issuer": "Valtio",
+          "other_compensation_issuer_name": "Opetus- ja kulttuuriministeriö",
+          "other_compensation_issuer_year": "2025",
+          "other_compensation_amount": 1000,
+          "other_compensation_description": "Myönnetyn avustuksen käyttötarkoitus"
+        }
+      ]
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": false
+    }
+  },
+  "information_in_more_detail_step": {
+    "grant_target_section": {
+      "grant_recipient_type": "Yhdistykselle",
+      "applicant_summary": "Tiivistelmä yhdistyksen toiminnasta ja valmiuksista.",
+      "is_application_extension": true
+    },
+    "project_schedule_section": {
+      "project_name": "Segregaation ehkäisyhanke",
+      "project_schedule": {
+        "start_date": "2026-03-01",
+        "end_date": "2026-12-31"
+      },
+      "past_project_objective": "Projektin aiempi tavoite.",
+      "past_target_group_and_means": "Aiempi kohderyhmä ja käytetyt keinot.",
+      "participants_reached": {
+        "participants_reached_9_12": 30,
+        "participants_reached_18_24": 20,
+        "participants_reached_new": 10
+      },
+      "hours_by_postal_area": "00400: 7h, 00900: 16h"
+    },
+    "project_methods_section": {
+      "achieved_objectives": "Tavoitteiden saavuttaminen tähän mennessä.",
+      "current_year_objectives": "Tämän vuoden toimenpiteet.",
+      "tested_partnerships": "Kokeillut kumppanuudet ja toimintamuodot.",
+      "key_partners_report": "Keskeiset yhteistyökumppanit ja heidän roolinsa.",
+      "youth_participation_report": "Esimerkkejä lasten ja nuorten osallistamisesta."
+    },
+    "project_economy_section": {
+      "previous_grant_amount_used": "4500",
+      "grant_usage_report": "Avustus käytettiin kululajeittain seuraavasti.",
+      "significant_changes": "Ei merkittäviä muutoksia.",
+      "continuation_plan": "Jatkokausi toteutetaan alkuperäisen suunnitelman mukaan."
+    }
+  },
+  "budget_step": {
+    "income_section": {
+      "incomeGroupName": "general",
+      "income_rows": [
+        {
+          "income_row_description": "Osallistumismaksut",
+          "income_row_amount": 1500
+        }
+      ]
+    },
+    "expenditure_section": {
+      "costGroupName": "general",
+      "expenditure_rows": [
+        {
+          "expenditure_row_description": "Henkilöstökulut",
+          "expenditure_row_amount": 6000
+        }
+      ]
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": "Lisätiedot hakemukseen liittyen."
+    },
+    "attachments_section": {
+      "required_attachments_help": [
+        null
+      ],
+      "multiple_attachments_help": [
+        null
+      ],
+      "formerly_provided_attachments_help": [
+        null
+      ],
+      "cant_view_after_help": [
+        null,
+        null
+      ],
+      "further_clarification": "Lisäselvitys liitteistä.",
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "files": [],
+          "description": ""
+        }
+      }
+    }
+  }
+}

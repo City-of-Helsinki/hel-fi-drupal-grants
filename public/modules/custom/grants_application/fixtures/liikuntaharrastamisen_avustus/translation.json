@@ -100,35 +100,10 @@
       "fi": "Merkitse jokainen osallistunut henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi osallistuja). Mikäli hankkeen toimintaan ei osallistunut ketään kyseisestä ikäryhmästä, merkitse kenttään \"0\".",
       "sv": "Räkna varje deltagare endast en gång, även om samma person har deltagit i flera evenemang (en person = en deltagare). Om ingen från den angivna åldersgruppen har deltagit i projektets verksamhet, ange \"0\"."
     },
-    "age_group_9_12.title": {
-      "en": "Helsinki residents aged 9 to 12 years",
-      "fi": "9–12-vuotiasta helsinkiläistä",
-      "sv": "9–12-åriga helsingforsare"
-    },
-    "age_group_13_15.title": {
-      "en": "Helsinki residents aged 13 to 15 years",
-      "fi": "13–15-vuotiasta helsinkiläistä",
-      "sv": "13–15-åriga helsingforsare"
-    },
-    "age_group_16_18.title": {
-      "en": "Helsinki residents aged 16 to 18 years",
-      "fi": "16–18-vuotiasta helsinkiläistä",
-      "sv": "16–18-åriga helsingforsare"
-    },
-    "new_participants_estimate_wrapper.title": {
-      "en": "Estimate how many of these have been new participants, meaning they have not participated in activities organized by the operator before?",
-      "fi": "Arvioi, kuinka moni näistä on uusia eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
-      "sv": "Uppskatta hur många av dessa som har varit nya deltagare, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?"
-    },
     "new_participants_estimate_help.value": {
       "en": "Count each participant only once, even if the same person has participated in multiple events (one person = one participant). If no one from the specified age group has participated in the project activities, enter \"0\".",
       "fi": "Merkitse jokainen osallistunut henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi osallistuja). Mikäli hankkeen toimintaan ei osallistunut ketään kyseisestä ikäryhmästä, merkitse kenttään \"0\".",
       "sv": "Räkna varje deltagare endast en gång, även om samma person har deltagit i flera evenemang (en person = en deltagare). Om ingen från den angivna åldersgruppen har deltagit i projektets verksamhet, ange \"0\"."
-    },
-    "age_group_9_18.title": {
-      "en": "Helsinki residents aged 9 to 18 years",
-      "fi": "9–18-vuotiasta helsinkiläistä",
-      "sv": "9–18-åriga helsingforsare"
     },
     "estimate_basis.title": {
       "en": "Are the figures you provided above based on an estimate or on actual data?",
@@ -174,11 +149,6 @@
       "en": "Who have been the project's key partners so far, and what has their role been?",
       "fi": "Mitkä ovat olleet hankkeen keskeisimmät yhteistyökumppanit tähän mennessä, ja mikä heidän roolinsa on ollut",
       "sv": "Vilka har varit projektets viktigaste samarbetspartner hittills, och vilken roll har de haft?"
-    },
-    "youth_participation_report.title": {
-      "en": "How have children and young people participated in the planning and decision making of the activities? Please provide concrete examples.",
-      "fi": "Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon? Mainitse konkreettisia esimerkkejä.",
-      "sv": "Hur har barn och unga deltagit i planeringen och beslutsfattandet av verksamheten? Ge konkreta exempel."
     },
     "challenges_report.title": {
       "en": "Have any challenges arisen during the implementation of the project? If so, describe what kind and how they have been addressed.",
@@ -280,11 +250,6 @@
       "fi": "Arvioi toimintaan osallistuvien lasten ja nuorten määrä yhteensä koko hankkeen aikana. Mikäli hankkeen toimintaan ei osallistu ketään kyseisestä ikäryhmästä, merkitse kenttään \"0\".",
       "sv": "Uppskatta det totala antalet barn och unga som deltar i verksamheten under hela projektets gång."
     },
-    "new_participant_estimate_wrapper.title": {
-      "en": "How many of them are new, i.e. have not participated in activities organised by the operator before?",
-      "fi": "Kuinka monta näistä on uusia eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
-      "sv": "Hur många av dessa är nya, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?"
-    },
     "accessibility.title": {
       "en": "How has accessibility been taken into account? What kind of equipment and level of skills are required from participants?",
       "fi": "Miten toiminnan saavutettavuus on otettu huomioon? Millaisia omia välineitä ja osaamistasoa toimintaan osallistujilta vaaditaan?",
@@ -305,11 +270,6 @@
       "fi": "Arvioi, kuinka paljon osallistuja maksaa yhdestä harrastuskerrasta. Anna arvio muodossa €/tunti.",
       "sv": "Bedöm hur mycket deltagaren betalar för en gång av hobbyn. Ge bedömningen i formatet €/timme."
     },
-    "impact_on_participants.title": {
-      "en": "What impact do you hope the activities will have on the lives of the participants?",
-      "fi": "Miten toiminnan toivotaan vaikuttavan osallistujien elämään?",
-      "sv": "Hur önskar man att verksamheten ska påverka deltagarnas liv?"
-    },
     "postal_code_areas.title": {
       "en": "In what area(s) will the activities be arranged? Please enter all postal code areas (only postal codes) where the activities are planned to be arranged. Separate the postal code areas with a comma.",
       "fi": "Millä alueella/alueilla toiminta toteutetaan? Kirjaa kenttään pilkulla erotettuna (, ) kaikki postinumeroalueet (vain postinumerot), joilla toimintaa suunnitellaan toteutettavan.",
@@ -325,30 +285,15 @@
       "fi": "Hankkeen menetelmät",
       "sv": "Metoder för projektet"
     },
-    "target_group_reach.title": {
-      "en": "How are target group(s) reached and identified?",
-      "fi": "Miten kohderyhmät tavoitetaan ja tunnistetaan?",
-      "sv": "Hur nås och identifieras målgrupperna?"
-    },
     "target_group_reach.description": {
       "en": "Explain how the target groups of the activities, e.g. children and young people who are less active or at risk of marginalisation, are identified.",
       "fi": "Kerro, miten toiminnan kohderyhmät tunnistetaan, esim. vähän harrastavat tai syrjäytymisriskissä olevat lapset ja nuoret.",
       "sv": "Berätta hur målgrupperna för verksamheten identifieras, till exempel barn och unga som har få hobbyer eller som löper risk för att marginaliseras."
     },
-    "youth_participation_planning.title": {
-      "en": "How are children and young people involved in planning and decision-making?",
-      "fi": "Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?",
-      "sv": "Hur deltar barn och unga i planeringen av och beslutsfattandet om verksamheten?"
-    },
     "key_partners.title": {
       "en": "Specify the main partners and their role in the project. Specify separately partners that have already agreed and partnerships that are in the planning phase.",
       "fi": "Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.",
       "sv": "Namnge de viktigaste samarbetspartnerna och deras roll i projektet. Namnge separat de samarbetsparter som redan överenskommits och de parter som ännu planeras."
-    },
-    "new_partnerships.title": {
-      "en": "Will new types of partnerships or operating models be tested during the project? Please specify what kind?",
-      "fi": "Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?",
-      "sv": "Prövas nya former av partnerskap eller utvecklas nya verksamhetsmodeller i projektet? Vilka?"
     },
     "risks_analysis_section.title": {
       "en": "Risks and analysis",
