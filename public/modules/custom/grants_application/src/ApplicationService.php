@@ -60,7 +60,7 @@ class ApplicationService {
 
     $sideDocumentId = $entity->getSideDocumentId();
     try {
-      $documentToCopy = $this->atvService->getDocument($sideDocumentId);
+      $documentToCopy = $this->atvService->getDocumentById($sideDocumentId);
     }
     catch (\Exception $e) {
       throw new \Exception('Unable to fetch the original document.');
@@ -134,7 +134,7 @@ class ApplicationService {
       $document->getId(),
     );
     $sideDocument->setContent($this->removeAttachmentsFromCopiedDocument($copiedDocumentContent));
-    $this->atvService->saveNewDocument($sideDocument);
+    $sideDocument = $this->atvService->saveNewDocument($sideDocument);
 
     $now = time();
     ApplicationSubmission::create([
@@ -146,6 +146,7 @@ class ApplicationService {
       'application_type_id' => $application_type_id,
       'form_identifier' => $entity->get('form_identifier')->value,
       'application_number' => $new_application_number,
+      'side_document_id' => $sideDocument->getId(),
       'created' => $now,
       'changed' => $now,
     ])
@@ -177,19 +178,10 @@ class ApplicationService {
    *   The form data array without attachments.
    */
   private function removeAttachmentsFromCopiedDocument(array $form_data): array {
-    $removeKeys = function (array $data) use (&$removeKeys) {
-      foreach ($data as $key => $value) {
-        if ($key === 'file') {
-          unset($data[$key]);
-        }
-        elseif (is_array($value)) {
-          $data[$key] = $removeKeys($value);
-        }
-      }
-      return $data;
-    };
-
-    return $removeKeys($form_data);
+    if (isset($form_data['attachements_step']['attachments_section'])) {
+      unset($form_data['attachements_step']['attachments_section']);
+    }
+    return $form_data;
   }
 
   /**
