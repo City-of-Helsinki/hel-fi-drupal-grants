@@ -533,7 +533,7 @@ export const sanitizeNumericInput = (
     value = value.substring(0, value.length - 1);
   }
 
-  return value; // Double comma.
+  return value;
 };
 
 export const numberIsTooLarge = (value: string): boolean => {
