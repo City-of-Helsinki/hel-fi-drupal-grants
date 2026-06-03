@@ -296,14 +296,6 @@ final class ApplicationController extends ControllerBase {
     }
 
     try {
-      $user_information = $this->userInformationService->getUserData();
-    }
-    catch (\Exception $e) {
-      // Unable to fetch user information.
-      throw new NotFoundHttpException();
-    }
-
-    try {
       $submission = $this->applicationService->getSubmissionEntity($application_number);
     }
     catch (\Exception) {
