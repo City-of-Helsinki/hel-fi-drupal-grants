@@ -42,7 +42,7 @@ class ApplicationService {
    * @return array
    *   The created draft application data.
    */
-  public function createDraft(string $form_identifier, string|null $original_application_number = NULL): array {
+  public function createCopy(string $form_identifier, string|null $original_application_number = NULL): array {
     try {
       $entity = $this->getSubmissionEntity(
         $original_application_number,
@@ -58,13 +58,15 @@ class ApplicationService {
       throw new \Exception('Copying applications is disabled for this application type.');
     }
 
-    $application_type_id = $settings->getFormId();
-    $form_data = [];
-    if ($original_application_number) {
-      $copy_document = $this->atvService->getDocument($original_application_number);
-      $copy_content = $copy_document->getContent();
-      $form_data = $copy_content['compensation']['form_data'] ?? [];
+    $sideDocumentId = $entity->getSideDocumentId();
+    try {
+      $documentToCopy = $this->atvService->getDocument($sideDocumentId);
     }
+    catch (\Exception $e) {
+      throw new \Exception('Unable to fetch the original document.');
+    }
+
+    $copiedDocumentContent = $documentToCopy->getContent();
 
     $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
     $selected_company = $this->userInformationService->getSelectedCompany();
@@ -73,22 +75,22 @@ class ApplicationService {
     $application_uuid = $this->uuid->generate();
     $env = Helper::getAppEnv();
 
-    // @todo Application number generation must match the existing shenanigans,
-    // or we must start from application number 1000 or something.
-    $application_number = $this->applicationNumberService
+    $application_type_id = $settings->getFormId();
+    $new_application_number = $this->applicationNumberService
       ->createNewApplicationNumber($env, $application_type_id);
 
     $langcode = $this->languageManager
       ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
       ->getId();
+
     $application_name = $settings->toArray()['settings']['title'];
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
 
-    // @todo Save the react form data in separate atv doc.
+    // The actual ATV-document copy.
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
-      $application_number,
+      $new_application_number,
       $application_name,
       $application_type,
       $application_title,
@@ -103,7 +105,6 @@ class ApplicationService {
     // Grants_events requires the events-array to exist.
     // And compensation must be json-object.
     $document->setContent([
-      'form_data' => $this->removeAttachmentsFromCopiedDocument($form_data),
       'compensation' => [
         'applicantInfoArray' => [],
       ],
@@ -124,6 +125,17 @@ class ApplicationService {
     }
 
     $document = $this->atvService->saveNewDocument($document);
+    // Side document copy containing the react-data.
+    $sideDocument = $this->atvService->createSideDocument(
+      $application_type,
+      $application_title,
+      $user_data->sub,
+      $selected_company,
+      $document->getId(),
+    );
+    $sideDocument->setContent($this->removeAttachmentsFromCopiedDocument($copiedDocumentContent));
+    $this->atvService->saveNewDocument($sideDocument);
+
     $now = time();
     ApplicationSubmission::create([
       'document_id' => $document->getId(),
@@ -132,22 +144,22 @@ class ApplicationService {
       'langcode' => $langcode,
       'draft' => TRUE,
       'application_type_id' => $application_type_id,
-      'form_identifier' => $entity->get('form_identified')->value,
-      'application_number' => $application_number,
+      'form_identifier' => $entity->get('form_identifier')->value,
+      'application_number' => $new_application_number,
       'created' => $now,
       'changed' => $now,
     ])
       ->save();
 
     $result = [
-      'application_number' => $application_number,
+      'application_number' => $new_application_number,
       'document_id' => $document->getId(),
     ];
 
     if ($original_application_number) {
       $result['redirect_url'] = Url::fromRoute(
         'helfi_grants.forms_app',
-        ['form_identifier' => $form_identifier, 'application_number' => $application_number],
+        ['form_identifier' => $form_identifier, 'application_number' => $new_application_number],
         ['absolute' => TRUE],
       )->toString();
     }
