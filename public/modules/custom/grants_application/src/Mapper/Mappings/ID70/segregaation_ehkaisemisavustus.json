@@ -18,7 +18,7 @@
       "ID": "amount",
       "label": "Euroa",
       "value": "0",
-      "valueType": "double"
+      "valueType": "float"
     }
   },
   "compensation.compensationInfo.generalInfoArray.0": {
@@ -135,6 +135,45 @@
     }
   },
 
+  "compensation.benefitsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "loans",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.benefitsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "premises",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.activitiesInfoArray.0": {
+    "datasource": "grants_profile_array",
+    "source": "businessPurpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "businessPurpose",
+      "label": "Toiminnan kuvaus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
   "compensation.customQuestionsInfo.customQuestionsArray.0": {
     "datasource": "form_data",
     "source": "information_in_more_detail_step.grant_target_section.grant_recipient_type",
@@ -190,7 +229,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_toimenpiteet_alkupvm",
-      "label": "Aikataulu alkupäivämäärä",
+      "label": "Alkupäivämäärä",
       "value": "",
       "valueType": "datetime"
     }
@@ -201,7 +240,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_toimenpiteet_loppupvm",
-      "label": "Aikataulu loppupäivämäärä",
+      "label": "Loppupäivämäärä",
       "value": "",
       "valueType": "datetime"
     }
@@ -223,7 +262,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_lapset_9_12",
-      "label": "9–12-vuotiasta helsinkiläistä",
+      "label": "9-12-vuotiasta helsinkiläistä",
       "value": "",
       "valueType": "string"
     }
@@ -245,7 +284,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kohderyhmat_uudet",
-      "label": "Kuinka monta näistä on uusia?",
+      "label": "Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
       "value": "",
       "valueType": "string"
     }
@@ -300,7 +339,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_jo_osallistuneet_9_12",
-      "label": "9–12-vuotiasta helsinkiläistä",
+      "label": "9-12-vuotiasta helsinkiläistä",
       "value": "",
       "valueType": "string"
     }
@@ -465,7 +504,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_kaytetty_avustuksen_maara",
-      "label": "Selvitys edellisen vuoden erillisavustuksen käytöstä (euroa).",
+      "label": "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä euroina yhteensä, kuinka paljon myönnettyä avustusta on käytetty.",
       "value": "",
       "valueType": "string"
     }
@@ -476,7 +515,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_edellisen_vuoden_avustuksen_kaytto",
-      "label": "Kuvaus edellisen vuoden erillisavustuksen käytöstä.",
+      "label": "Kuvaus edellisen vuoden erillisavustuksen käytöstä. Kerro tässä  tarkemmin avustuksen käytöstä kululajeittain.",
       "value": "",
       "valueType": "string"
     }
@@ -487,7 +526,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_talous_toiminta_aikataulu_muutokset",
-      "label": "Onko projektissa tapahtunut merkittäviä muutoksia talouteen, toimintaan tai aikatauluun liittyen?",
+      "label": "Onko projektissa tapahtunut merkittäviä muutoksia talouteen, toimintaan tai aikatauluun liittyen, mitä?",
       "value": "",
       "valueType": "string"
     }
@@ -498,7 +537,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "hankkeen_jatkokausi_suunnitelma",
-      "label": "Onko projektin jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen suunnitelman mukaan?",
+      "label": "Onko projektin jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen suunnitelman mukaan? Jos ei, niin miksi?",
       "value": "",
       "valueType": "string"
     }
@@ -509,7 +548,7 @@
     "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
     "mapping_type": "multiple_files",
     "data": {
-      "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
+      "description": {"ID": "description", "value": "Muu liite", "valueType": "string", "label": "Liitteen kuvaus"},
       "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
       "fileType": {"ID": "fileType", "value": "0", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
