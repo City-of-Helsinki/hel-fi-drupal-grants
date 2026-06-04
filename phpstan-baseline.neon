@@ -681,11 +681,6 @@ parameters:
 			path: public/modules/custom/grants_application/grants_application.module
 
 		-
-			message: "#^Method Drupal\\\\grants_application\\\\ApplicationService\\:\\:createDraft\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/ApplicationService.php
-
-		-
 			message: "#^Method Drupal\\\\grants_application\\\\ApplicationService\\:\\:removeAttachmentsFromCopiedDocument\\(\\) has parameter \\$form_data with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/ApplicationService.php
@@ -741,11 +736,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
 
 		-
-			message: "#^Left side of && is always true\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
-
-		-
 			message: "#^Method Drupal\\\\grants_application\\\\Controller\\\\ApplicationController\\:\\:formsApp\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
@@ -757,11 +747,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\grants_application\\\\Controller\\\\ApplicationController\\:\\:viewApplication\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
-
-		-
-			message: "#^Property Drupal\\\\grants_application\\\\Controller\\\\ApplicationController\\:\\:\\$messageService is never read, only written\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Controller/ApplicationController.php
 

@@ -1,0 +1,23 @@
+{
+  "title": "Taide- ja kulttuuriavustukset: projektiavustukset",
+  "description": "KUVAPROJ",
+  "application_type": "KUVAPROJ",
+  "application_type_id": 48,
+  "application_industry": "KUVA",
+  "application_open": "2026-01-01T00:00:00",
+  "application_close": "2026-12-31T23:59:59",
+  "applicant_types": [
+    "private_person",
+    "registered_community",
+    "unregistered_community"
+  ],
+  "subvention_type": [
+    4
+  ],
+  "target_group": 22,
+  "acting_years": [
+    2026
+  ],
+  "continuous": true,
+  "disable_copy": true
+}
