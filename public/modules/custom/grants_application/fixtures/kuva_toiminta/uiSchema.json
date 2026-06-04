@@ -417,5 +417,127 @@
         "misc:max-length": 1000
       }
     }
+  },
+  "finances_step": {
+    "planned_budget_section": {
+      "planned_budget_info": {
+        "ui:field": "textParagraph"
+      },
+      "belongs_to_vos": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:options": {
+          "tooltipLabel": "belongs_to_vos.title",
+          "tooltipButtonLabel": "belongs_to_vos.title",
+          "tooltipText": "belongs_to_vos.description"
+        }
+      },
+      "planned_income": {
+        "income_group_name": {
+          "ui:widget": "hidden"
+        },
+        "compensation": {
+          "ui:field": "computedSum",
+          "ui:options": {
+            "sourceFields": ["grant_info_step.subventions_section.subventions"],
+            "sourceShape": "subvention"
+          }
+        },
+        "planned_state_operative_subvention": {
+          "ui:options": {
+            "tooltipLabel": "planned_state_operative_subvention.title",
+            "tooltipButtonLabel": "planned_state_operative_subvention.title",
+            "tooltipText": "planned_state_operative_subvention.description"
+          }
+        },
+        "planned_other_compensations": {
+          "ui:options": {
+            "tooltipLabel": "planned_other_compensations.title",
+            "tooltipButtonLabel": "planned_other_compensations.title",
+            "tooltipText": "planned_other_compensations.description"
+          }
+        },
+        "entry_fees": {
+          "ui:options": {
+            "tooltipLabel": "entry_fees.title",
+            "tooltipButtonLabel": "entry_fees.title",
+            "tooltipText": "entry_fees.description"
+          }
+        }
+      },
+      "planned_cost": {
+        "cost_group_name": {
+          "ui:widget": "hidden"
+        }
+      },
+      "other_input_info": {
+        "ui:field": "textParagraph"
+      },
+      "other_valuable_input": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    },
+    "realized_income_expenses_section": {
+      "realized_income_expenses_info": {
+        "ui:field": "textParagraph"
+      },
+      "belonged_to_vos": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:options": {
+          "tooltipLabel": "belonged_to_vos.title",
+          "tooltipButtonLabel": "belonged_to_vos.title",
+          "tooltipText": "belonged_to_vos.description"
+        }
+      },
+      "realized_incomes_info": {
+        "ui:field": "textParagraph"
+      },
+      "realized_income": {
+        "income_group_name": {
+          "ui:widget": "hidden"
+        },
+        "other_compensation_from_city": {
+          "ui:options": {
+            "tooltipLabel": "other_compensation_from_city.title",
+            "tooltipButtonLabel": "other_compensation_from_city.title",
+            "tooltipText": "other_compensation_from_city.description"
+          }
+        },
+        "state_operative_subvention": {
+          "ui:options": {
+            "tooltipLabel": "state_operative_subvention.title",
+            "tooltipButtonLabel": "state_operative_subvention.title",
+            "tooltipText": "state_operative_subvention.description"
+          }
+        },
+        "other_compensations": {
+          "ui:options": {
+            "tooltipLabel": "other_compensations.title",
+            "tooltipButtonLabel": "other_compensations.title",
+            "tooltipText": "other_compensations.description"
+          }
+        },
+        "total_income": {
+          "ui:options": {
+            "tooltipLabel": "total_income.title",
+            "tooltipButtonLabel": "total_income.title",
+            "tooltipText": "total_income.description"
+          }
+        }
+      },
+      "realized_cost": {
+        "cost_group_name": {
+          "ui:widget": "hidden"
+        }
+      }
+    }
   }
 }

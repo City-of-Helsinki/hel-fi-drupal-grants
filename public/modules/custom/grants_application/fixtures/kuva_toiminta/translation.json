@@ -25,6 +25,26 @@
       "fi": "Toiminta",
       "sv": "Aktiviteter"
     },
+    "belongs_to_vos.description": {
+      "en": "Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.",
+      "fi": "Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saavan rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.",
+      "sv": "Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen."
+    },
+    "belongs_to_vos.title": {
+      "en": "The organization belongs to the central government subsidies system (VOS)",
+      "fi": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
+      "sv": "Organisationen får statsandelar (VOS)"
+    },
+    "belonged_to_vos.description": {
+      "en": "Select yes, only if you know for sure that your organization received funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.",
+      "fi": "Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saaneen rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.",
+      "sv": "Välj ja, bara om du med säkerhet vet att din organisation fick finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen."
+    },
+    "belonged_to_vos.title": {
+      "en": "The organization belonged to the central government subsidies system (VOS)",
+      "fi": "Organisaatio kuului valtionosuusjärjestelmään (VOS)",
+      "sv": "Organisationen fick statsandelar (VOS)"
+    },
     "artistic_starting_points.description": {
       "en": "You may also mention, for example, central awards or other notations.",
       "fi": "Voit nostaa myös esiin esimerkisksi keskeisiä palkintoja tai muita noteerauksia.",
@@ -49,6 +69,11 @@
       "en": "How do the activities increase the community spirit and strengthen collaboration and networks? What possibilities do the residents have of participating in the different phases of the activities? What kinds of actions are taken, and resources and expertise available for this purpose?",
       "fi": "Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
       "sv": "Hur stärker ni samhörighet och nätverkande samarbete inom staden genom er verksamhet? Hur kan invånarna delta i olika skeden av er verksamhet? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
+    },
+    "compensation.title": {
+      "en": "The applied grant (€)",
+      "fi": "Haettu avustus (€)",
+      "sv": "Ansökt stöd (€)"
     },
     "count_in_helsinki_fieldset.description": {
       "en": "Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.",
@@ -85,6 +110,16 @@
       "fi": "Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.",
       "sv": "Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras."
     },
+    "entry_fees.description": {
+      "en": "Ticket sales etc.",
+      "fi": "Esim. lipunmyyntitulot",
+      "sv": "Till exempel biljettförsäljningsintäkter"
+    },
+    "entry_fees.title": {
+      "en": "Entry and participation fees (€)",
+      "fi": "Pääsy- ja osallistumismaksut (€)",
+      "sv": "Inträdes- eller deltagaravgifter (€)"
+    },
     "estimated_numbers_info.title": {
       "en": "Estimated numbers",
       "fi": "Arvio määristä",
@@ -104,6 +139,16 @@
       "en": "Exhibitions",
       "fi": "Näyttelyt",
       "sv": "Utställningar"
+    },
+    "finances_step.title": {
+      "en": "Finances",
+      "fi": "Talous",
+      "sv": "Ekonomi"
+    },
+    "financial_funding_and_interests.title": {
+      "en": "Financial income and interest received on loans (€)",
+      "fi": "Rahoitus- ja korkotulot (€)",
+      "sv": "Ränteinkomster och finansiella inkomster (€)"
     },
     "festival_dates.title": {
       "en": "The dates, in case of festivals and events",
@@ -200,6 +245,36 @@
       "fi": "Kyseessä on monivuotinen avustus",
       "sv": "Det är frågan om ett mångårigt stöd"
     },
+    "other_compensation_from_city.description": {
+      "en": "The operational grant that was granted for the same operations for the previous completed financial year.",
+      "fi": "Samaan toimitaan edelliselle päättyneelle tilivuodelle myönnetty avustus.",
+      "sv": "Understöd som beviljats för samma ändamål under föregående räkenskapsår."
+    },
+    "other_compensation_from_city.title": {
+      "en": "Operational grant from the City of Helsinki's cultural services (€)",
+      "fi": "Helsingin kaupungin kulttuuripalveluiden toiminta-avustus (€)",
+      "sv": "Helsingfors stads kulturtjänsters verksamhetsstöd (€)"
+    },
+    "other_compensations.description": {
+      "en": "Including other grants from the City of Helsinki.",
+      "fi": "Myös muut kaupungin avustukset.",
+      "sv": "Även stadens övriga understöd"
+    },
+    "other_compensations.title": {
+      "en": "Other grants (€)",
+      "fi": "Muut avustukset (€)",
+      "sv": "Övriga understöd (€)"
+    },
+    "other_input_info.title": {
+      "en": "Other notable input",
+      "fi": "Muu huomioitava panostus",
+      "sv": "Övrig betydande insats"
+    },
+    "other_valuable_input.title": {
+      "en": "Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?",
+      "fi": "Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?",
+      "sv": "Ingår det i verksamheten någon betydande eller värdefull annan insats eller byteshandel, som inte framgår ur budgeten?"
+    },
     "other_activities_info.title": {
       "en": "Other central forms of activities",
       "fi": "Muut keskeiset toimintamuodot",
@@ -274,6 +349,51 @@
       "en": "Personnel in the previous completed financial year",
       "fi": "Henkilöstö edellisenä päättyneenä tilivuonna",
       "sv": "Personalen under föregående avslutat bokslutsår"
+    },
+    "planned_budget_info.value": {
+      "en": "Regarding the year that the grant is applied for with this application. If the grant only applies to a limited part of the organization's activities, the reported figures should reflect only that part of the activities, in accordance with its designated budget.",
+      "fi": "Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta oman talousarvionsa mukaisesti.",
+      "sv": "Gällande det år, för vilket stöd ansöks med denna ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med den egna budgeten."
+    },
+    "planned_budget_section.title": {
+      "en": "Planned budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
+    },
+    "planned_expenses.title": {
+      "en": "Planned expenses",
+      "fi": "Suunnitellut menot",
+      "sv": "Planerade utgifter"
+    },
+    "planned_income.title": {
+      "en": "Planned incomes",
+      "fi": "Suunnitellut tulot",
+      "sv": "Planerade inkomster"
+    },
+    "planned_other_compensations.description": {
+      "en": "Including other grants from the City of Helsinki.",
+      "fi": "Myös muut kaupungin avustukset.",
+      "sv": "Även stadens övriga understöd"
+    },
+    "planned_other_compensations.title": {
+      "en": "Other grants (€)",
+      "fi": "Muut avustukset (€)",
+      "sv": "Övriga understöd (€)"
+    },
+    "planned_state_operative_subvention.description": {
+      "en": "Including the operational grants from the Finnish Film Foundation (SES) and the Funding Centre for Social Welfare and Health Organisations (STEA). Other than operational grants should be included in the other grants.",
+      "fi": "Myös Suomen elokuvasäätiön ja Sosiaali- ja terveysjärjestöjen avustuskeskuksen (STEA) myöntämät toiminta-avustukset. Kirjaa muut kuin toiminta-avustukset muihin avustuksiin.",
+      "sv": "Inkluderar verksamhetsunderstöd från Finlands filmstiftelse (SES) och Social- och hälsoorganisationernas understödscentral (STEA). Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd."
+    },
+    "planned_state_operative_subvention.title": {
+      "en": "Operational grant from the government (€)",
+      "fi": "Valtion toiminta-avustus (€)",
+      "sv": "Statens verksamhetsunderstöd (€)"
+    },
+    "planned_total_costs.title": {
+      "en": "Expenses in total (€)",
+      "fi": "Menot yhteensä (€)",
+      "sv": "Utgifter sammanlagt (€)"
     },
     "planned_activities_section.title": {
       "en": "Planned activities",
@@ -440,6 +560,31 @@
       "fi": "Yleisölle avoimella toiminnalla tarkoitetaan tässä mm. esityksiä, näyttelyitä ja työpajoja tai muita osallistavia toimintamuotoja.",
       "sv": "Med öppen verksamhet avser vi här t.ex. föreställningar, utställningar, verkstäder eller annan verksamhet, där publiken kan vara delaktig."
     },
+    "realized_expenses_info.title": {
+      "en": "Realized expenses",
+      "fi": "Toteutuneet menot",
+      "sv": "Förverkligade utgifter"
+    },
+    "realized_income_expenses_info.value": {
+      "en": "<p>Regarding the previous completed financial year. As stated in the financial statements. Please include all income (under \"incomes in total\") and all expenses (under \"expenses in total\"), including items such as depreciation as well as financial income and expenses. At the end, please check that the difference between income and expenses matches the surplus/deficit reported in the financial statements.</p><p>If the grant only applies to a limited part of the organization's activities, the reported figures should reflect only that part of the activities, in accordance with a separate cost center report.</p>",
+      "fi": "<p>Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan \"tulot yhteensä\") ja kaikki menot (kohtaan \"menot yhteensä\") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot. Tarkista lopuksi, että tulojen ja menojen erotus vastaa tilinpäätöksen yli/alijäämää.</p><p>Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta kustannuspaikkakohtaisen tuloslaskelman mukaisesti.</p>",
+      "sv": "<p>Föregående avslutade räkenskapsår. Enligt bokslutet. Inkludera alla intäkter (under \"inkomster sammanlagt\") och alla utgifter (under \"utgifter sammanlagt\"), inklusive bland annat: avskrivningar och finansiella kostnader och intäkter. Kontrollera slutligen att skillnaden mellan inkomster och utgifter motsvarar över-/underskottet i bokslutet.</p><p>Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med en separat kostnadsställerapport.</p>"
+    },
+    "realized_income_expenses_section.title": {
+      "en": "Realized incomes and expenses",
+      "fi": "Toteutuneet tulot ja menot",
+      "sv": "Förverkligade inkomster och utgifter"
+    },
+    "realized_incomes_info.title": {
+      "en": "Realized incomes",
+      "fi": "Toteutuneet tulot",
+      "sv": "Realiserade inkomster"
+    },
+    "realized_incomes_info.value": {
+      "en": "In the first three fields you are asked to fill in specific information about the grants you have received. In the last field you are asked to fill in all realized incomes in total, including the grants listed above and all other incomes.",
+      "fi": "Kolmessa ensimmäisessä kohdassa kysytään eritellysti tietoja saaduista avustuksista. Viimeisessä kohdassa kysytään kaikkia toteutuneita tuloja yhteensä sisältäen yllälistatut avustukset ja kaikki muut tulot.",
+      "sv": "I de tre första avsnitten ber vi om detaljerad information om mottagna understöd. Det sista avsnittet avser alla realiserade inkomster sammanlagt, inklusive understöd som anges ovan och alla övriga inkomster."
+    },
     "realized_activities_section.title": {
       "en": "Realized activities",
       "fi": "Toteutunut toiminta",
@@ -475,10 +620,30 @@
       "fi": "Esityksistä",
       "sv": "Om föreställningar"
     },
+    "sales.title": {
+      "en": "Other incomes (€)",
+      "fi": "Muut oman toiminnan tulot (€)",
+      "sv": "Övriga egna inkomster (€)"
+    },
     "self_assessment_methods.title": {
       "en": "What means are used for self-assessment and the development of operations?",
       "fi": "Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?",
       "sv": "Vilka metoder använder ni för självutvärdering och utveckling av verksamheten?"
+    },
+    "sponsorships.title": {
+      "en": "Private funding (sponsors, corporate collaboration, donations, etc.) (€)",
+      "fi": "Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö, lahjoitukset) (€)",
+      "sv": "Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)"
+    },
+    "state_operative_subvention.description": {
+      "en": "Including the operational grants from the Finnish Film Foundation (SES) and the Funding Centre for Social Welfare and Health Organisations (STEA). Other than operational grants should be included in the other grants.",
+      "fi": "Myös Suomen elokuvasäätiön ja Sosiaali- ja terveysjärjestöjen avustuskeskuksen (STEA) myöntämät toiminta-avustukset. Kirjaa muut kuin toiminta-avustukset muihin avustuksiin.",
+      "sv": "Inkluderar verksamhetsunderstöd från Finlands filmstiftelse (SES) och Social- och hälsoorganisationernas understödscentral (STEA). Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd."
+    },
+    "state_operative_subvention.title": {
+      "en": "Operational grant from the government (€)",
+      "fi": "Valtion toiminta-avustus (€)",
+      "sv": "Statens verksamhetsunderstöd (€)"
     },
     "spaces.add": {
       "en": "Add new space",
@@ -489,6 +654,21 @@
       "en": "Space",
       "fi": "Tila",
       "sv": "Utrymme"
+    },
+    "total_costs.title": {
+      "en": "Expenses in total (€)",
+      "fi": "Menot yhteensä (€)",
+      "sv": "Utgifterna sammanlagt (€)"
+    },
+    "total_income.description": {
+      "en": "Include all your incomes in total here, also including the grants from the previous questions.",
+      "fi": "Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.",
+      "sv": "Anteckna samtliga inkomster, även de understöd som uppgetts i tidigare punkter."
+    },
+    "total_income.title": {
+      "en": "Incomes in total (€)",
+      "fi": "Tulot yhteensä (€)",
+      "sv": "Inkomster sammanlagt (€)"
     },
     "target_groups.title": {
       "en": "Who are the target audiences or participants for the activities? How will they be reached, and what expertise is available for working with them?",

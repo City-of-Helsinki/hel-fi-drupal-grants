@@ -631,6 +631,173 @@
           }
         }
       }
+    },
+    "finances_step": {
+      "type": "object",
+      "properties": {
+        "planned_budget_section": {
+          "title": "planned_budget_section.title",
+          "type": "object",
+          "required": ["belongs_to_vos"],
+          "properties": {
+            "planned_budget_info": {
+              "type": "array",
+              "items": [{"title": "planned_budget_info.value", "type": "null"}]
+            },
+            "belongs_to_vos": {
+              "title": "belongs_to_vos.title",
+              "enum": [true, false]
+            },
+            "planned_income": {
+              "title": "planned_income.title",
+              "type": "object",
+              "required": [
+                "planned_state_operative_subvention",
+                "planned_other_compensations",
+                "sponsorships",
+                "entry_fees",
+                "sales",
+                "financial_funding_and_interests"
+              ],
+              "properties": {
+                "income_group_name": {
+                  "type": "string",
+                  "default": "general"
+                },
+                "compensation": {
+                  "format": "decimal-number",
+                  "title": "compensation.title",
+                  "type": "string"
+                },
+                "planned_state_operative_subvention": {
+                  "format": "decimal-number",
+                  "title": "planned_state_operative_subvention.title",
+                  "type": "string"
+                },
+                "planned_other_compensations": {
+                  "format": "decimal-number",
+                  "title": "planned_other_compensations.title",
+                  "type": "string"
+                },
+                "sponsorships": {
+                  "format": "decimal-number",
+                  "title": "sponsorships.title",
+                  "type": "string"
+                },
+                "entry_fees": {
+                  "format": "decimal-number",
+                  "title": "entry_fees.title",
+                  "type": "string"
+                },
+                "sales": {
+                  "format": "decimal-number",
+                  "title": "sales.title",
+                  "type": "string"
+                },
+                "financial_funding_and_interests": {
+                  "format": "decimal-number",
+                  "title": "financial_funding_and_interests.title",
+                  "type": "string"
+                }
+              }
+            },
+            "planned_cost": {
+              "title": "planned_expenses.title",
+              "type": "object",
+              "required": ["planned_total_costs"],
+              "properties": {
+                "cost_group_name": {
+                  "type": "string",
+                  "default": "general"
+                },
+                "planned_total_costs": {
+                  "format": "decimal-number",
+                  "title": "planned_total_costs.title",
+                  "type": "string"
+                }
+              }
+            },
+            "other_input_info": {
+              "title": "other_input_info.title",
+              "type": "array",
+              "items": [{"type": "null"}]
+            },
+            "other_valuable_input": {
+              "title": "other_valuable_input.title",
+              "type": "string",
+              "maxLength": 1000
+            }
+          }
+        },
+        "realized_income_expenses_section": {
+          "title": "realized_income_expenses_section.title",
+          "type": "object",
+          "required": ["belonged_to_vos"],
+          "properties": {
+            "realized_income_expenses_info": {
+              "type": "array",
+              "items": [{"title": "realized_income_expenses_info.value", "type": "null"}]
+            },
+            "belonged_to_vos": {
+              "title": "belonged_to_vos.title",
+              "enum": [true, false]
+            },
+            "realized_income": {
+              "title": "realized_incomes_info.title",
+              "description": "realized_incomes_info.value",
+              "type": "object",
+              "required": [
+                "other_compensation_from_city",
+                "state_operative_subvention",
+                "other_compensations",
+                "total_income"
+              ],
+              "properties": {
+                "income_group_name": {
+                  "type": "string",
+                  "default": "general"
+                },
+                "other_compensation_from_city": {
+                  "format": "decimal-number",
+                  "title": "other_compensation_from_city.title",
+                  "type": "string"
+                },
+                "state_operative_subvention": {
+                  "format": "decimal-number",
+                  "title": "state_operative_subvention.title",
+                  "type": "string"
+                },
+                "other_compensations": {
+                  "format": "decimal-number",
+                  "title": "other_compensations.title",
+                  "type": "string"
+                },
+                "total_income": {
+                  "format": "decimal-number",
+                  "title": "total_income.title",
+                  "type": "string"
+                }
+              }
+            },
+            "realized_cost": {
+              "title": "realized_expenses_info.title",
+              "type": "object",
+              "required": ["total_costs"],
+              "properties": {
+                "cost_group_name": {
+                  "type": "string",
+                  "default": "general"
+                },
+                "total_costs": {
+                  "format": "decimal-number",
+                  "title": "total_costs.title",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "description": "",
@@ -653,6 +820,10 @@
     "activity_basis_step": {
       "$ref": "#/definitions/activity_basis_step",
       "title": "activity_basis_step.title"
+    },
+    "finances_step": {
+      "$ref": "#/definitions/finances_step",
+      "title": "finances_step.title"
     }
   },
   "allOf": [
