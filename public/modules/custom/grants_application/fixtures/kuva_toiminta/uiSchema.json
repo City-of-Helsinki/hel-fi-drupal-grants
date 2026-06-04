@@ -187,5 +187,152 @@
         }
       }
     }
+  },
+  "activity_step": {
+    "planned_activities_section": {
+      "estimated_numbers_info": {
+        "ui:field": "textParagraph"
+      },
+      "count_in_helsinki_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "count_in_helsinki_fieldset.legend",
+          "tooltipButtonLabel": "count_in_helsinki_fieldset.legend",
+          "tooltipText": "count_in_helsinki_fieldset.description"
+        }
+      },
+      "count_in_total_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "count_in_total_fieldset.legend",
+          "tooltipButtonLabel": "count_in_total_fieldset.legend",
+          "tooltipText": "count_in_total_fieldset.description"
+        }
+      },
+      "regarding_performances_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "premieres_count": {
+          "ui:options": {
+            "tooltipLabel": "premieres_count.title",
+            "tooltipButtonLabel": "premieres_count.title",
+            "tooltipText": "premieres_count.description"
+          }
+        },
+        "production_premieres_helsinki": {
+          "ui:options": {
+            "tooltipLabel": "production_premieres_helsinki.title",
+            "tooltipButtonLabel": "production_premieres_helsinki.title",
+            "tooltipText": "production_premieres_helsinki.description"
+          }
+        }
+      },
+      "festival_dates_info": {
+        "ui:field": "textParagraph"
+      },
+      "festival_dates": {
+        "misc:max-length": 100
+      },
+      "other_activities_info": {
+        "ui:field": "textParagraph"
+      },
+      "other_central_activities": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      }
+    },
+    "realized_activities_section": {
+      "previous_year_info": {
+        "ui:field": "textParagraph"
+      },
+      "was_festival_or_event": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:options": {
+          "tooltipLabel": "was_festival_or_event.title",
+          "tooltipButtonLabel": "was_festival_or_event.title",
+          "tooltipText": "was_festival_or_event.description"
+        }
+      },
+      "realized_numbers_info": {
+        "ui:field": "textParagraph"
+      },
+      "realized_count_in_helsinki_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "count_in_helsinki_fieldset.legend",
+          "tooltipButtonLabel": "count_in_helsinki_fieldset.legend",
+          "tooltipText": "count_in_helsinki_fieldset.description"
+        }
+      },
+      "realized_count_in_total_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "count_in_total_fieldset.legend",
+          "tooltipButtonLabel": "count_in_total_fieldset.legend",
+          "tooltipText": "realized_count_in_total_fieldset.description"
+        }
+      },
+      "visitors_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "visitors_count_helsinki": {
+          "ui:options": {
+            "tooltipLabel": "visitors_count_helsinki.title",
+            "tooltipButtonLabel": "visitors_count_helsinki.title",
+            "tooltipText": "visitors_count_helsinki.description"
+          }
+        },
+        "visitors_count_total": {
+          "ui:options": {
+            "tooltipLabel": "visitors_count_total.title",
+            "tooltipButtonLabel": "visitors_count_total.title",
+            "tooltipText": "visitors_count_total.description"
+          }
+        }
+      },
+      "realized_regarding_performances_fieldset": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "realized_premieres_count": {
+          "ui:options": {
+            "tooltipLabel": "premieres_count.title",
+            "tooltipButtonLabel": "premieres_count.title",
+            "tooltipText": "premieres_count.description"
+          }
+        },
+        "realized_production_premieres_helsinki": {
+          "ui:options": {
+            "tooltipLabel": "production_premieres_helsinki.title",
+            "tooltipButtonLabel": "production_premieres_helsinki.title",
+            "tooltipText": "production_premieres_helsinki.description"
+          }
+        }
+      },
+      "public_events_helsinki_info": {
+        "ui:field": "textParagraph"
+      },
+      "realized_spaces": {
+        "ui:options": {
+          "addText": "realized_spaces.add",
+          "hideNameFromPrint": true
+        },
+        "items": {
+          "isOwnedByCity": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ]
+          }
+        }
+      }
+    }
   }
 }

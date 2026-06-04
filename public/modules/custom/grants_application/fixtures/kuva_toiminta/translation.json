@@ -1,5 +1,10 @@
 {
   "translations": {
+    "activity_step.title": {
+      "en": "Activity",
+      "fi": "Toiminta",
+      "sv": "Aktiviteter"
+    },
     "artistic_spaces_section.title": {
       "en": "Spaces for artistic activities",
       "fi": "Taiteellisen toiminnan tilat",
@@ -10,15 +15,70 @@
       "fi": "Yhteisön tiedot",
       "sv": "Uppgifter om den ansökande organisationen"
     },
-    "community_members_section.title": {
-      "en": "Members",
-      "fi": "Jäsenmäärä",
-      "sv": "Medlemsantal"
+    "count_in_helsinki_fieldset.description": {
+      "en": "Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.",
+      "fi": "Valitse, mihin kategoriaan toiminta parhaiten sopii (esitys, näyttely vai työpaja tai muu osallistava toimintamuoto) ja täytä tiedot vain kyseiseen kohtaan. Älä merkitse samaa toimintaa useaan eri kohtaan.",
+      "sv": "Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen."
+    },
+    "count_in_helsinki_fieldset.legend": {
+      "en": "Number in Helsinki",
+      "fi": "Määrä Helsingissä",
+      "sv": "Antal i Helsingfors"
+    },
+    "count_in_total_fieldset.description": {
+      "en": "The number in total should include the numbers in total, both in Finland and possibly internationally. Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.",
+      "fi": "Täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla. Valitse, mihin kategoriaan toiminta parhaiten sopii (esitys, näyttely vai työpaja tai muu osallistava toimintamuoto) ja täytä tiedot vain kyseiseen kohtaan. Älä merkitse samaa toimintaa useaan eri kohtaan.",
+      "sv": "Svaret på estimerad publikmängd totalt innefattar hela verksamheten, i Finland och ev. utomlands. Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen."
+    },
+    "count_in_total_fieldset.legend": {
+      "en": "Number in total",
+      "fi": "Määrä kaikkiaan",
+      "sv": "Antal totalt"
+    },
+    "estimated_numbers_info.title": {
+      "en": "Estimated numbers",
+      "fi": "Arvio määristä",
+      "sv": "En uppskattning av kvantiteter"
+    },
+    "estimated_numbers_info.value": {
+      "en": "Answer regarding your own activities during the year that you are applying the grant for. If the grant only applies to a limited part of the organization's activities, the reported numbers should reflect only that part of the activities. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason we ask for the volumes for Helsinki and of the entire activities, separately.",
+      "fi": "Syötä tiedot koskien omaa toimintaa vuonna, jolle avustusta haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee myös määrien koskea vain tätä osaa toiminnasta. Syötä tiedot vain fyysisten esitysten, näyttelyiden ja työpajojen osalta, älä laske mukaan pelkästään digitaalisina toteutettuja ohjelmasisältöjä. Helsingin kaupungin avustuksissa arvioidaan toiminnan kohdistumista Helsinkiin ja helsinkiläisiin. Tästä syystä osaa tiedoista kysytään eritellysti Helsingin ja kokonaisuuden osalta.",
+      "sv": "Mata in informationen gällande er egen verksamhet under det år som avses i ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska kvantiteter endast beskriva denna del av verksamheten. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet."
+    },
+    "event_days_in_helsinki.title": {
+      "en": "Number of days during which the events take place in Helsinki",
+      "fi": "Tapahtuma- tai esityspäivien määrä Helsingissä",
+      "sv": "Antalet evenemangs- eller föreställningsdagar i Helsingfors"
+    },
+    "exhibitions_count.title": {
+      "en": "Exhibitions",
+      "fi": "Näyttelyt",
+      "sv": "Utställningar"
+    },
+    "festival_dates.title": {
+      "en": "The dates, in case of festivals and events",
+      "fi": "Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät",
+      "sv": "Datum för festivalen eller evenemanget"
+    },
+    "festival_dates_info.title": {
+      "en": "The dates, in case of festivals and events",
+      "fi": "Festivaalin tai tapahtuman päivämäärät",
+      "sv": "Datum för festivalen eller evenemanget"
     },
     "form_title": {
       "en": "Arts and culture grants: Operational grants",
       "fi": "Taide- ja kulttuuriavustukset: toiminta-avustukset",
       "sv": "Understöd för konst och kultur: Verksamhetsunderstöd"
+    },
+    "full_time_person_years.title": {
+      "en": "Full-time: Person years",
+      "fi": "Kokoaikaisia: Henkilötyövuosia",
+      "sv": "Heltidsanställda: Personarbetsår"
+    },
+    "full_time_persons.title": {
+      "en": "Full-time: Persons",
+      "fi": "Kokoaikaisia: Henkilöitä",
+      "sv": "Heltidsanställda: Personer"
     },
     "future_years_for_multi_year_grant.title": {
       "en": "The future years that the grant is applied for, or has already been awarded to.",
@@ -80,30 +140,30 @@
       "fi": "Kyseessä on kaupungin omistama tila",
       "sv": "Stadens eget utrymme"
     },
-    "full_time_person_years.title": {
-      "en": "Full-time: Person years",
-      "fi": "Kokoaikaisia: Henkilötyövuosia",
-      "sv": "Heltidsanställda: Personarbetsår"
-    },
-    "full_time_persons.title": {
-      "en": "Full-time: Persons",
-      "fi": "Kokoaikaisia: Henkilöitä",
-      "sv": "Heltidsanställda: Personer"
+    "members_fieldset.legend": {
+      "en": "Members",
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemmar"
     },
     "multi_year_grant_section.title": {
       "en": "I am applying for a multi-year grant",
       "fi": "Kyseessä on monivuotinen avustus",
       "sv": "Det är frågan om ett mångårigt stöd"
     },
-    "part_time_person_years.title": {
-      "en": "Part-time: Person years",
-      "fi": "Osa-aikaisia: Henkilötyövuosia",
-      "sv": "Deltidsanställda: Personarbetsår"
+    "other_activities_info.title": {
+      "en": "Other central forms of activities",
+      "fi": "Muut keskeiset toimintamuodot",
+      "sv": "Övriga centrala verksamhetsformer"
     },
-    "part_time_persons.title": {
-      "en": "Part-time: Persons",
-      "fi": "Osa-aikaisia: Henkilöitä",
-      "sv": "Deltidsanställda: Personer"
+    "other_activities_info.value": {
+      "en": "If your activities include other central forms of activities, in addition to performances, screenings, exhibitions, workshops, or other participatory activities that are open to the public, please list them here.",
+      "fi": "Jos toiminta sisältää yleisölle avointen esitysten, näyttelyiden ja työpajojen tai muiden osallistavien toimintamuotojen lisäksi muita keskeisiä muotoja, listaa ne tähän.",
+      "sv": "Om verksamheten förutom föreställningar, utställningar, verkstäder eller andra inkluderande program som är öppna för allmänheten omfattar anda verksamhetsformer, så lista dem här."
+    },
+    "other_central_activities.title": {
+      "en": "Other central forms of activities",
+      "fi": "Muut keskeiset toimintamuodot",
+      "sv": "Övriga centrala verksamhetsformer"
     },
     "owns_artistic_space.description": {
       "en": "Here a space for artistic activity is defined as a space for performances, screenings, or exhibitions, or as a separate space for practising or artistic work. Not an office or a storage space.",
@@ -120,6 +180,21 @@
       "fi": "Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena",
       "sv": "Utrymmen för den konstnärliga verksamheten, där man äger utrymmena eller är fast huvudhyresgäst"
     },
+    "part_time_person_years.title": {
+      "en": "Part-time: Person years",
+      "fi": "Osa-aikaisia: Henkilötyövuosia",
+      "sv": "Deltidsanställda: Personarbetsår"
+    },
+    "part_time_persons.title": {
+      "en": "Part-time: Persons",
+      "fi": "Osa-aikaisia: Henkilöitä",
+      "sv": "Deltidsanställda: Personer"
+    },
+    "performances_count.title": {
+      "en": "Performances or screenings",
+      "fi": "Esitykset",
+      "sv": "Föreställningar"
+    },
     "personnel_fieldset.description": {
       "en": "The personnel includes the personnel on salary, but can also include people working for other forms of compensation, like trade income, or as purchased service. The full-time personnel can include temporary staff if they work full-time. The person year depicts a person's workload when converted to full-time work. For example, a person that works full-time for 6 months can be counted as 0,5 person years. Similarly, a person that works part-time with 30% workload for a full year can be counted as 0,3 person years. If you report your person years to the government or to the statistics of some other instance, please use the same method of calculating here, if possible.",
       "fi": "Henkilöstöön voi sisällyttää muitakin kuin palkattuja työntekijöitä, mm. palkkioilla tai muilla korvauksilla työskenteleviä tai ostopalveluna ostettavaa työtä. Kokoaikaiset työntekijät voivat sisältää myös määräaikaisia työntekijöitä, jos nämä työskentelevät täyspäiväisesti. Henkilötyövuosi kuvaa kokoaikaiseksi muutetun henkilön työpanosta. Esimerkiksi 6kk kokopäiväisesti työskentelevästä henkilöstä voi laskea muodostuvan 0,5 henkilötyövuotta. Vastaavasti koko vuoden osa-aikaisesti 30% työmäärää tekevästä henkilöstä voi laskea muodostuvan 0,3 henkilötyövuotta. Jos toimitatte tietoja henkilötyövuosistanne valtiolle tai muun tahon tilastointiin, niin käyttäkää tässä samaa laskentatapaa jos mahdollista.",
@@ -134,6 +209,11 @@
       "en": "Personnel in the previous completed financial year",
       "fi": "Henkilöstö edellisenä päättyneenä tilivuonna",
       "sv": "Personalen under föregående avslutat bokslutsår"
+    },
+    "planned_activities_section.title": {
+      "en": "Planned activities",
+      "fi": "Suunniteltu toiminta",
+      "sv": "Planerad verksamhet"
     },
     "postal_code.title": {
       "en": "Postal code",
@@ -164,6 +244,21 @@
       "en": "Type of space",
       "fi": "Tilan tyyppi",
       "sv": "Typ av utrymme"
+    },
+    "premieres_count.description": {
+      "en": "A premiere means the first public performance of a completely new and previously unseen piece of work.",
+      "fi": "Kantaesityksellä tarkoitetaan ennen esittämätöntä, täysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.",
+      "sv": "Med uruppförande avser vi ett verk, som uppförs för första gången, ett helt nytt verk. En nypremiär är t.ex. inte ett uruppförande."
+    },
+    "premieres_count.title": {
+      "en": "Premieres",
+      "fi": "Kantaesitysten määrä",
+      "sv": "Antalet uruppföranden"
+    },
+    "previous_year_info.value": {
+      "en": "Regarding the previous completed financial year.",
+      "fi": "Edellisenä päättyneenä tilivuonna.",
+      "sv": "Föregående avslutade bokslutsår."
     },
     "primary_art_field.circus": {
       "en": "Circus",
@@ -240,6 +335,16 @@
       "fi": "Ensisijainen taiteenala",
       "sv": "Huvudsaklig konstart"
     },
+    "production_premieres_helsinki.description": {
+      "en": "A premiere of a production means the first public performance of the production in question. Fill in the premieres of productions that take place in Helsinki.",
+      "fi": "Ensi-illalla tarkoitetaan tuotannon ensimmäistä esitystä. Täytä tähän ne ensi-illat, jotka tapahtuvat Helsingissä.",
+      "sv": "Med premiär avser vi den första föreställningen av en produktion. Fyll i de premiärer som sker i Helsingfors."
+    },
+    "production_premieres_helsinki.title": {
+      "en": "Premieres of productions in Helsinki",
+      "fi": "Ensi-iltojen määrä Helsingissä",
+      "sv": "Antal premiärer i Helsingfors"
+    },
     "project_brief_description.title": {
       "en": "A short description of the project or the activities",
       "fi": "Hankkeen tai toiminnan lyhyt esittelyteksti",
@@ -249,6 +354,51 @@
       "en": "The text can be published or used as a presentation as such or in a modified form along with the decision.",
       "fi": "Teksti voidaan julkaista tai sitä voidaan käyttää esittelytekstinä päätöksen yhteydessä sellaisenaan tai muokattuna.",
       "sv": "Texten kan som sådan eller i förkortad version publiceras eller användas som presentationsunderlag i anslutning till beslutsfattandet om stöd. Max 700 tecken."
+    },
+    "public_events_helsinki_info.title": {
+      "en": "The locations of the public events in Helsinki",
+      "fi": "Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin",
+      "sv": "Öppen verksamhet för publik i Helsingfors"
+    },
+    "public_events_helsinki_info.value": {
+      "en": "Here the public events refer to, for example, performances, screenings, exhibitions, and workshops, or other participatory activities.",
+      "fi": "Yleisölle avoimella toiminnalla tarkoitetaan tässä mm. esityksiä, näyttelyitä ja työpajoja tai muita osallistavia toimintamuotoja.",
+      "sv": "Med öppen verksamhet avser vi här t.ex. föreställningar, utställningar, verkstäder eller annan verksamhet, där publiken kan vara delaktig."
+    },
+    "realized_activities_section.title": {
+      "en": "Realized activities",
+      "fi": "Toteutunut toiminta",
+      "sv": "Förverkligad verksamhet"
+    },
+    "realized_count_in_total_fieldset.description": {
+      "en": "The number in total should include the numbers in total, both in Finland and possibly internationally. Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.",
+      "fi": "Täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla. Valitse, mihin kategoriaan toiminta parhaiten sopii (esitys, näyttely vai työpaja tai muu osallistava toimintamuoto) ja täytä tiedot vain kyseiseen kohtaan. Älä merkitse samaa toimintaa useaan eri kohtaan.",
+      "sv": "Svaret på antal totalt innefattar hela verksamheten, i Finland och ev. utomlands. Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen."
+    },
+    "realized_numbers_info.title": {
+      "en": "Realized numbers",
+      "fi": "Toteutuneet määrät",
+      "sv": "Förverkligade antal och mängder"
+    },
+    "realized_numbers_info.value": {
+      "en": "Answer regarding your own activities during the previous completed financial year. If the grant only applies to a limited part of the organization's activities, the reported numbers should reflect only that part of the activities. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason, we ask for the volumes separately for Helsinki and of the entire activities, separately.",
+      "fi": "Syötä tiedot koskien omaa toimintaa edellisenä päättyneenä vuonna. Jos avustus kohdistuu vain osaan toiminnasta, tulee myös määrien koskea vain tätä osaa toiminnasta. Syötä tiedot vain fyysisten esitysten, näyttelyiden ja työpajojen osalta, älä laske mukaan pelkästään digitaalisina toteutettuja ohjelmasisältöjä. Helsingin kaupungin avustuksissa arvioidaan toiminnan kohdistumista Helsinkiin ja helsinkiläisiin. Tästä syystä osaa tiedoista kysytään eritellysti Helsingin ja kokonaisuuden osalta.",
+      "sv": "Mata in information gällande er egen verksamhet under det senaste hela verksamhetsåret. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska antal och mängder endast beskriva denna del av verksamheten. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet."
+    },
+    "realized_spaces.add": {
+      "en": "Add new space",
+      "fi": "Lisää uusi tila",
+      "sv": "Lägg till ny plats"
+    },
+    "realized_spaces.title": {
+      "en": "Space",
+      "fi": "Tila",
+      "sv": "Plats"
+    },
+    "regarding_performances_fieldset.legend": {
+      "en": "Regarding performances",
+      "fi": "Esityksistä",
+      "sv": "Om föreställningar"
     },
     "spaces.add": {
       "en": "Add new space",
@@ -260,10 +410,50 @@
       "fi": "Tila",
       "sv": "Utrymme"
     },
+    "visitors_count_helsinki.description": {
+      "en": "Do not include the same visitors twice, for example do not include the visitors of a workshop in a gallery as both visitors of an exhibition and a workshop.",
+      "fi": "Älä täytä samoja kävijöitä kahteen kertaan, esim. näyttelytilassa järjestettyä työpajaa sekä näyttelyihin että työpajoihin.",
+      "sv": "Fyll inte samma besökare två gånger, t ex en workshop anordnad i utställningslokalen för både utställningar och workshops."
+    },
+    "visitors_count_helsinki.title": {
+      "en": "Number of visitors in Helsinki",
+      "fi": "Kävijämäärä Helsingissä",
+      "sv": "Antal besökare i Helsingfors"
+    },
+    "visitors_count_total.description": {
+      "en": "Do not include the same visitors twice, for example do not include the visitors of a workshop in a gallery as both visitors of an exhibition and a workshop. The number in total should include the numbers in total, both in Finland and possibly internationally.",
+      "fi": "Määrä kaikkiaan -kohdassa täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla.",
+      "sv": "I avsnittet \"Totalt antal besökare\" fyller du i siffrorna inklusive hela verksamheten både i Finland och eventuellt utomlands."
+    },
+    "visitors_count_total.title": {
+      "en": "Number of visitors in total",
+      "fi": "Kävijämäärä kaikkiaan",
+      "sv": "Totalt antal besökare"
+    },
+    "visitors_fieldset.legend": {
+      "en": "Regarding visitors",
+      "fi": "Kävijämääristä",
+      "sv": "Om antalet besökare"
+    },
     "volunteer_persons.title": {
       "en": "Volunteer",
       "fi": "Vapaaehtoisia: Henkilöitä",
       "sv": "Frivilliga: Personer"
+    },
+    "was_festival_or_event.description": {
+      "en": "This refers to a set of programs that is named as a festival or event, and which takes place within a limited timeframe, but is broader in program and duration than a single concert, play etc. A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.",
+      "fi": "Tässä tarkoitetaan festivaaliksi tai tapahtumaksi nimettyä ohjelmakokonaisuutta, joka tapahtuu tiiviin ajanjakson sisällä, mutta on ohjelmaltaan tai kestoltaan laajempi kuin yksittäinen konsertti, esitys, tms. Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, kuten esityksiä, joiden välissä yleisö voi myös vaihtua. Festivaaleja tai tapahtumia voivat olla esimerkiksi kaupunginosatapahtumat. Niitä eivät ole esimerkiksi esityssarjat tai laajemmat hankkeet, joita ei markkinoida festivaalina tai yhtenäisenä tapahtumana. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.",
+      "sv": "Detta avser en uppsättning program som betecknas som en festival eller evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande. En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång."
+    },
+    "was_festival_or_event.title": {
+      "en": "Festival or event",
+      "fi": "Oliko kyseessä festivaali tai tapahtuma?",
+      "sv": "Var det en festival eller ett evenemang?"
+    },
+    "workshops_count.title": {
+      "en": "Workshops, or other participatory activities",
+      "fi": "Työpaja tai muu osallistava toimintamuoto",
+      "sv": "Verkstad eller annan interaktiv verksamhetsform"
     }
   }
 }

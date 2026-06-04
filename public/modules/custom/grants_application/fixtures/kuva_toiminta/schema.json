@@ -82,6 +82,26 @@
         "isOwnedByCity"
       ]
     },
+    "_realized_space_item": {
+      "type": "object",
+      "title": "realized_spaces.title",
+      "properties": {
+        "premiseName": {
+          "title": "premise_name.title",
+          "type": "string"
+        },
+        "postCode": {
+          "title": "postal_code.title",
+          "type": "string",
+          "maxLength": 8
+        },
+        "isOwnedByCity": {
+          "title": "is_owned_by_city.title",
+          "enum": [true, false]
+        }
+      },
+      "required": ["premiseName", "postCode", "isOwnedByCity"]
+    },
     "grant_info_step": {
       "required": [
         "acting_year_section",
@@ -366,6 +386,199 @@
           ]
         }
       }
+    },
+    "activity_step": {
+      "type": "object",
+      "properties": {
+        "planned_activities_section": {
+          "title": "planned_activities_section.title",
+          "type": "object",
+          "required": ["event_days_in_helsinki"],
+          "properties": {
+            "estimated_numbers_info": {
+              "title": "estimated_numbers_info.title",
+              "type": "array",
+              "items": [{"title": "estimated_numbers_info.value", "type": "null"}]
+            },
+            "event_days_in_helsinki": {
+              "title": "event_days_in_helsinki.title",
+              "type": "integer"
+            },
+            "count_in_helsinki_fieldset": {
+              "type": "object",
+              "title": "count_in_helsinki_fieldset.legend",
+              "properties": {
+                "performances_count_helsinki": {
+                  "title": "performances_count.title",
+                  "type": "integer"
+                },
+                "exhibitions_count_helsinki": {
+                  "title": "exhibitions_count.title",
+                  "type": "integer"
+                },
+                "workshops_count_helsinki": {
+                  "title": "workshops_count.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "count_in_total_fieldset": {
+              "type": "object",
+              "title": "count_in_total_fieldset.legend",
+              "properties": {
+                "performances_count_total": {
+                  "title": "performances_count.title",
+                  "type": "integer"
+                },
+                "exhibitions_count_total": {
+                  "title": "exhibitions_count.title",
+                  "type": "integer"
+                },
+                "workshops_count_total": {
+                  "title": "workshops_count.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "regarding_performances_fieldset": {
+              "type": "object",
+              "title": "regarding_performances_fieldset.legend",
+              "properties": {
+                "premieres_count": {
+                  "title": "premieres_count.title",
+                  "type": "integer"
+                },
+                "production_premieres_helsinki": {
+                  "title": "production_premieres_helsinki.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "festival_dates_info": {
+              "title": "festival_dates_info.title",
+              "type": "array",
+              "items": [{}]
+            },
+            "festival_dates": {
+              "title": "festival_dates.title",
+              "type": "string",
+              "maxLength": 100
+            },
+            "other_activities_info": {
+              "title": "other_activities_info.title",
+              "type": "array",
+              "items": [{"title": "other_activities_info.value", "type": "null"}]
+            },
+            "other_central_activities": {
+              "title": "other_central_activities.title",
+              "type": "string",
+              "maxLength": 2500
+            }
+          }
+        },
+        "realized_activities_section": {
+          "title": "realized_activities_section.title",
+          "type": "object",
+          "required": ["was_festival_or_event", "realized_event_days_in_helsinki"],
+          "properties": {
+            "previous_year_info": {
+              "type": "array",
+              "items": [{"title": "previous_year_info.value", "type": "null"}]
+            },
+            "was_festival_or_event": {
+              "title": "was_festival_or_event.title",
+              "enum": [true, false],
+              "default": false
+            },
+            "realized_numbers_info": {
+              "title": "realized_numbers_info.title",
+              "type": "array",
+              "items": [{"title": "realized_numbers_info.value", "type": "null"}]
+            },
+            "realized_event_days_in_helsinki": {
+              "title": "event_days_in_helsinki.title",
+              "type": "integer"
+            },
+            "realized_count_in_helsinki_fieldset": {
+              "type": "object",
+              "title": "count_in_helsinki_fieldset.legend",
+              "properties": {
+                "realized_performances_count_helsinki": {
+                  "title": "performances_count.title",
+                  "type": "integer"
+                },
+                "realized_exhibitions_count_helsinki": {
+                  "title": "exhibitions_count.title",
+                  "type": "integer"
+                },
+                "realized_workshops_count_helsinki": {
+                  "title": "workshops_count.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "realized_count_in_total_fieldset": {
+              "type": "object",
+              "title": "count_in_total_fieldset.legend",
+              "properties": {
+                "realized_performances_count_total": {
+                  "title": "performances_count.title",
+                  "type": "integer"
+                },
+                "realized_exhibitions_count_total": {
+                  "title": "exhibitions_count.title",
+                  "type": "integer"
+                },
+                "realized_workshops_count_total": {
+                  "title": "workshops_count.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "visitors_fieldset": {
+              "type": "object",
+              "title": "visitors_fieldset.legend",
+              "required": ["visitors_count_helsinki", "visitors_count_total"],
+              "properties": {
+                "visitors_count_helsinki": {
+                  "title": "visitors_count_helsinki.title",
+                  "type": "integer"
+                },
+                "visitors_count_total": {
+                  "title": "visitors_count_total.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "realized_regarding_performances_fieldset": {
+              "type": "object",
+              "title": "regarding_performances_fieldset.legend",
+              "properties": {
+                "realized_premieres_count": {
+                  "title": "premieres_count.title",
+                  "type": "integer"
+                },
+                "realized_production_premieres_helsinki": {
+                  "title": "production_premieres_helsinki.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "public_events_helsinki_info": {
+              "title": "public_events_helsinki_info.title",
+              "type": "array",
+              "items": [{"title": "public_events_helsinki_info.value", "type": "null"}]
+            },
+            "realized_spaces": {
+              "title": "realized_spaces.title",
+              "type": "array",
+              "items": {"$ref": "#/definitions/_realized_space_item"},
+              "additionalItems": {"$ref": "#/definitions/_realized_space_item"},
+              "minItems": 1
+            }
+          }
+        }
+      }
     }
   },
   "description": "",
@@ -380,6 +593,10 @@
     "community_activity_step": {
       "$ref": "#/definitions/community_activity_step",
       "title": "community_activity_step.title"
+    },
+    "activity_step": {
+      "$ref": "#/definitions/activity_step",
+      "title": "activity_step.title"
     }
   }
 }
