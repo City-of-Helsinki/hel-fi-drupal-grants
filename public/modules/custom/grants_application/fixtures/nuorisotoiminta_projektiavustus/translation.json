@@ -60,6 +60,11 @@
       "fi": "Aktiiviset osallistujat ja jäsenet",
       "sv": "Aktiva deltagare eller medlemmar"
     },
+    "members_section.title": {
+      "en": "The number of active participants or members of the group / association / housing association",
+      "fi": "Toimintaryhmän / yhdistyksen / talokerhon aktiivisesti toimintaan osallistuvien tai jäsenten määrä",
+      "sv": "Antal aktiva deltagare eller medlemmar i gruppen / föreningen / husklubben"
+    },
     "members_fieldset.legend": {
       "en": "Active participants/members",
       "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
@@ -69,6 +74,31 @@
       "en": "Indicate here the individuals who actively participate in the group's / association's / housing association's activities and/or are members.",
       "fi": "Merkitse tähän toimintaryhmän / yhdistyksen / talokerhon aktiivisesti toimintaan osallistuvat ja/tai jäsenet.",
       "sv": "Ange här de personer som aktivt deltar i verksamhetsgruppens / föreningens / husklubbens verksamhet och/eller är medlemmar."
+    },
+    "members_0_6.title": {
+      "en": "0-6 year olds",
+      "fi": "0-6 -vuotiaat",
+      "sv": "0-6-åringar"
+    },
+    "members_0_6_helsinki.title": {
+      "en": "of whom Helsinki residents",
+      "fi": "joista helsinkiläisiä",
+      "sv": "varav helsingforsare"
+    },
+    "members_7_28.title": {
+      "en": "7-28 year olds",
+      "fi": "7-28 -vuotiaat",
+      "sv": "7-28-åringar"
+    },
+    "members_7_28_helsinki.title": {
+      "en": "of whom Helsinki residents",
+      "fi": "joista helsinkiläisiä",
+      "sv": "varav helsingforsare"
+    },
+    "members_others_helsinki.title": {
+      "en": "of whom Helsinki residents",
+      "fi": "joista helsinkiläisiä",
+      "sv": "varav helsingforsare"
     },
     "project_plan_step.title": {
       "en": "Project plan",

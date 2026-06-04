@@ -266,20 +266,24 @@
       "sv": "De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens gällande stadgar, bokslutet för den föregående avslutade räkenskapsperioden inklusive den omfattande resultaträkningen, verksamhetsberättelsen samt den undertecknade revisionsberättelsen och protokollet från det möte där bokslutet fastställdes och ansvarsfriheten behandlades. Dessutom är budgeten och verksamhetsplanen för det år för vilket understödet ansöks obligatoriska bilagor. Stadgarna ska vara godkända av Patent- och registerstyrelsen. Som bilaga till ansökan om löneunderstöd ska dessutom finnas namn och medlemsantal för de avdelningar/grupper som lyder under distriktsorganisationen eller en jämförbar organisation."
     },
     "members_active_participants_section.title": {
-      "sv": "Antal aktiva deltagare eller medlemmar i föreningen",
-      "en": "The number of active participants or members of the association"
+      "en": "The number of active participants or members of the association",
+      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
+      "sv": "Antal aktiva deltagare eller medlemmar i föreningen"
     },
     "age_group_0_6.title": {
-      "sv": "0-6-åringar",
-      "en": "0-6-year-olds"
+      "en": "0-6-year-olds",
+      "fi": "0 - 6 vuotiaat",
+      "sv": "0-6-åringar"
     },
     "age_group_7_28.title": {
-      "sv": "7-28- åringar",
-      "en": "7-28- year-olds"
+      "en": "7-28- year-olds",
+      "fi": "7 - 28 vuotiaat",
+      "sv": "7-28- åringar"
     },
     "of_whom_helsinki_residents.title": {
-      "sv": "varav helsingforsare",
-      "en": "of whom Helsinki residents"
+      "en": "of whom Helsinki residents",
+      "fi": "Joista helsinkiläisiä",
+      "sv": "varav helsingforsare"
     },
     "negative_expands.title": {
       "sv": "Ett negativt svar öppnar ytterligare en fråga"
