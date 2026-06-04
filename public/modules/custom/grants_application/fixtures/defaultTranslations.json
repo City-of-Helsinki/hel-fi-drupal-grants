@@ -196,9 +196,9 @@
       "sv": "Understöd för lokaler som fåtts från staden"
     },
     "community_activity.description": {
-      "en": "The description of activities is maintained in your data.",
-      "fi": "Tieto haetaan omat tiedot -osiosta.",
-      "sv": "Informationen hämtas från avsnittet med personuppgifter."
+      "en": "The information is retrieved from the My data section.",
+      "fi": "Tieto haetaan Omat tiedot -osiosta.",
+      "sv": "Informationen hämtas från avsnittet Mina uppgifter."
     },
     "community_activity.title": {
       "en": "Description of activities",
