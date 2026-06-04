@@ -20,10 +20,25 @@
       "fi": "Toiminnan sisällöt",
       "sv": "Verksamhetens innehåll"
     },
+    "action_plan.description": {
+      "en": "Attach the entire community action plan here. , in multi-year plans for the entire grant period, including a plan for a self-assessment tool and an equality and equality plan)",
+      "fi": "Liitä tähän koko yhteisön toimintasuunnitelma. , monivuotisissa koko avustuskaudelle sisältäen suunnitelman itsearviointityökalusta ja tasa-arvo- ja yhdenvertaisuussuunnitelmasta)",
+      "sv": "Bifoga hela samhällshandlingsplanen här. , i flerårsplaner för hela bidragsperioden, inklusive en plan för ett självutvärderingsverktyg och en jämställdhets- och jämställdhetsplan)"
+    },
+    "action_plan.title": {
+      "en": "Action plan (for the year for which you apply for a grant, in multi-year cases for the entire grant period, including a plan for the self-assessment tool and the equality and equality plan)",
+      "fi": "Toimintasuunnitelma (sille vuodelle, jolle haet avustusta, monivuotisissa koko avustuskaudelle sisältäen suunnitelman itsearviointityökalusta ja tasa-arvo- ja yhdenvertaisuussuunnitelmasta)",
+      "sv": "Handlingsplan (för det år du ansöker om bidrag, i fleråriga ärenden för hela bidragsperioden, inklusive plan för självvärderingsverktyget och jämställdhets- och jämställdhetsplanen)"
+    },
     "activity_step.title": {
       "en": "Activity",
       "fi": "Toiminta",
       "sv": "Aktiviteter"
+    },
+    "budget.title": {
+      "en": "Budget (for the year for which you apply for a grant, in multi-year cases for the entire grant period)",
+      "fi": "Talousarvio (sille vuodelle jolle haet avustusta, monivuotisissa koko avustuskaudelle)",
+      "sv": "Budget (för det år du ansöker om bidrag, i fleråriga fall för hela bidragsperioden)"
     },
     "belongs_to_vos.description": {
       "en": "Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.",
@@ -64,6 +79,36 @@
       "en": "Information regarding the organization",
       "fi": "Yhteisön tiedot",
       "sv": "Uppgifter om den ansökande organisationen"
+    },
+    "confirmed_annual_report.description": {
+      "en": "The association attaches to this point the activity report approved at the association's members' meeting. If the activity report is part of the financial statements and you already attached it to the form along with the financial statements, it does not need to be attached here separately. In such a situation, select \"The attachment has been submitted as a single file or in connection with another application\" for the activity report.",
+      "fi": "Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun toimintakertomuksen. Jos toimintakertomus on osana tilinpäätöstä ja liititte sen jo tilinpäätöksen mukana lomakkeelle, sitä ei tarvitse liittää tähän erikseen. Valitse tällaisessa tilanteessa toimintakertomuksen kohdalla \"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\".",
+      "sv": "Föreningen bifogar till denna punkt den på föreningens medlemsmöte godkända verksamhetsberättelsen. Om verksamhetsberättelsen är en del av bokslutet och du redan har bifogat den till formuläret tillsammans med bokslutet, behöver den inte bifogas här separat. Välj i en sådan situation \"Bilagan har lämnats in som en fil eller i samband med annan ansökan\" för aktivitetsrapporten."
+    },
+    "confirmed_annual_report.title": {
+      "en": "Confirmed activity report (from the previous completed financial year)",
+      "fi": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilivuodelta)",
+      "sv": "Bekräftad verksamhetsrapport (från föregående avslutade räkenskapsår)"
+    },
+    "confirmed_audit_report.description": {
+      "en": "Attach here a signed account or operational audit report from the entity's previous completed financial year. If the signed account or operational audit report is part of your entity's financial statements and you have already attached it to the form at the financial statements, select in this section \"The attachment has been submitted as one file or in connection with another application\".",
+      "fi": "Liitä tähän allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteisön edelliseltä päättyneeltä tilikaudelta. Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteisönne tilinpäätöstä ja liitit sen jo lomakkeelle tilinpäätöksen kohdalla, valitse tässä kohdassa \"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\".",
+      "sv": "Bifoga här ett undertecknat konto eller verksamhetsrevisionsberättelse från företagets tidigare avslutade räkenskapsår. Om det undertecknade kontot eller verksamhetsrevisionsberättelsen är en del av ditt företags bokslut och du redan har bifogat det till formuläret vid bokslutet, välj i detta avsnitt \"Bilagan har lämnats in som en fil eller i samband med en annan ansökan\"."
+    },
+    "confirmed_audit_report.title": {
+      "en": "Confirmed account or operational audit report (from the previous completed financial year)",
+      "fi": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilivuodelta)",
+      "sv": "Bekräftad redovisning eller verksamhetsrevisionsrapport (från föregående avslutade räkenskapsår)"
+    },
+    "confirmed_financial_statements.description": {
+      "en": "The financial statements must contain at least a profit and loss statement and a balance sheet. The association attaches to this point the financial statement approved and signed at the association's member meeting. The entity's accounting period can be a calendar year or another period. In the case of associations, their own rules state what the association's accounting period is.",
+      "fi": "Tilinpäätöksen täytyy sisältää vähintään tuloslaskelma ja tase. Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun ja allekirjoitetun tilinpäätöksen. Yhteisön tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa säännöissä lukee, mikä on yhdistyksen tilikausi.",
+      "sv": "Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Föreningen bifogar härtill det på föreningens medlemsmöte godkända och undertecknade bokslutet. Enhetens redovisningsperiod kan vara ett kalenderår eller en annan period. När det gäller föreningar anger deras egna stadgar vad föreningens redovisningsperiod är."
+    },
+    "confirmed_financial_statements.title": {
+      "en": "Confirmed financial statements (from the previous ended financial year)",
+      "fi": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilivuodelta)",
+      "sv": "Bekräftade bokslut (från föregående avslutade räkenskapsår)"
     },
     "community_spirit.title": {
       "en": "How do the activities increase the community spirit and strengthen collaboration and networks? What possibilities do the residents have of participating in the different phases of the activities? What kinds of actions are taken, and resources and expertise available for this purpose?",
@@ -584,6 +629,16 @@
       "en": "In the first three fields you are asked to fill in specific information about the grants you have received. In the last field you are asked to fill in all realized incomes in total, including the grants listed above and all other incomes.",
       "fi": "Kolmessa ensimmäisessä kohdassa kysytään eritellysti tietoja saaduista avustuksista. Viimeisessä kohdassa kysytään kaikkia toteutuneita tuloja yhteensä sisältäen yllälistatut avustukset ja kaikki muut tulot.",
       "sv": "I de tre första avsnitten ber vi om detaljerad information om mottagna understöd. Det sista avsnittet avser alla realiserade inkomster sammanlagt, inklusive understöd som anges ovan och alla övriga inkomster."
+    },
+    "required_attachments_help.value": {
+      "en": "For the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting year and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting year are: the financial statements, the annual report, and the audit or performance audit report. For regular operational grants the attachments for the year for which the grant is being applied for are: the budget and action plan. For multi-year operational grants in turn the following are required: the budget and action plan for the entire grant period.",
+      "fi": "Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilivuodelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilivuotta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus. Yksivuotisissa toiminta-avustuksissa liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma. Monivuotisissa toiminta-avustuksissa vaaditaan sen sijaan: talousarvio ja toimintasuunnitelma koko kaudelle, jolle avustusta haetaan.",
+      "sv": "För behandling av ansökan om understöd behövs styrkta bilagor från det föregående räkenskapsåret som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från det föregående räkenskapsåret är: bokslut, verksamhetsberättelse och revisionsberättelse. I ettåriga verksamhetsunderstöd är bilagorna för det år för vilket understödet ansöks: budget och verksamhetsplan. För fleråriga verksamhetsunderstöd krävs istället: budget och verksamhetsplan för hela understödsperioden."
+    },
+    "required_attachments_help.value_2": {
+      "en": "As a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder's name and the account number in the applicant's data. As a new applicant or when the rules of your community have changed since your last application, you are also required to submit the rules of your community.",
+      "fi": "Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin myös tiliote tai vastaava asiakirja, josta selviää tilinomistajan nimi ja tilinumero. Uusilta hakijoilta ja tapauksissa, joissa säännöt ovat muuttuneet edellisen hakemuksen jälkeen, tarvitaan myös yhdistyksen säännöt.",
+      "sv": "För ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter. För ny sökande eller om stadgarna har ändrats sedan föregående ansökan behövs även föreningens stadgar."
     },
     "realized_activities_section.title": {
       "en": "Realized activities",
