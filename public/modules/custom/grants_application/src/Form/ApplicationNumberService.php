@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 /**
  * Form settings class.
  */
-final class ApplicationNumberService {
+class ApplicationNumberService {
 
   public function __construct(
     #[Autowire(service: 'keyvalue.database')]
