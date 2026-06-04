@@ -209,6 +209,29 @@
       "rented_premises": {
         "ui:options": {
           "addText": "rented_premises.add"
+        },
+        "items": {
+          "rented_premise_rent_sum": {
+            "ui:options": {
+              "tooltipLabel": "rented_premise_rent_sum.title",
+              "tooltipButtonLabel": "rented_premise_rent_sum.title",
+              "tooltipText": "rented_premise_rent_sum.description"
+            }
+          },
+          "rented_premise_lessor_contact": {
+            "ui:options": {
+              "tooltipLabel": "rented_premise_lessor_contact.title",
+              "tooltipButtonLabel": "rented_premise_lessor_contact.title",
+              "tooltipText": "rented_premise_lessor_contact.description"
+            }
+          },
+          "rented_premise_usage": {
+            "ui:options": {
+              "tooltipLabel": "purpose_section.title",
+              "tooltipButtonLabel": "purpose_section.title",
+              "tooltipText": "rented_premise_usage.description"
+            }
+          }
         }
       }
     },

@@ -91,9 +91,9 @@
       "sv": "Välj ”Ja” om ni ordnade verksamhet enbart i en digital miljö. Välj ”Nej” om ni ordnade verksamhet endast på en fysisk plats eller ordnade verksamhet i både en digital och en fysisk miljö. Ange de fysiska lokalernas namn och postnummer i fälten som öppnas nedan."
     },
     "premise_location.title": {
-      "en": "Name of the place",
-      "fi": "Toimipaikan nimi",
-      "sv": "Platsens namn"
+      "en": "Location",
+      "fi": "Toimipaikka",
+      "sv": "Verksamhetsställe"
     },
     "premises.add": {
       "en": "Add new place",
@@ -121,9 +121,9 @@
       "sv": "Organisationens eller samfundets namn"
     },
     "membership_fee.title": {
-      "en": "Membership fee",
-      "fi": "Jäsenmaksu",
-      "sv": "Medlemsavgift"
+      "en": "Fee, euros",
+      "fi": "Jäsenmaksu, euroa",
+      "sv": "Medlemsavgift, euro"
     },
     "memberships.add": {
       "en": "Add new membership",
@@ -205,15 +205,25 @@
       "fi": "Vuokratun tilan tiedot",
       "sv": "Uppgifter om den hyrda lokalen"
     },
+    "community_address.title": {
+      "en": "Street address",
+      "fi": "Katuosoite",
+      "sv": "Gatuadress"
+    },
     "rented_premise_post_office.title": {
       "en": "Postal district",
       "fi": "Postitoimipaikka",
       "sv": "Postanstalt"
     },
     "rented_premise_rent_sum.title": {
-      "en": "Rent amount",
-      "fi": "Vuokrasumma",
-      "sv": "Hyresbelopp"
+      "en": "Rent",
+      "fi": "Vuokra",
+      "sv": "Hyra"
+    },
+    "rented_premise_rent_sum.description": {
+      "en": "EUR per month",
+      "fi": "Kuinka monta euroa kuukaudessa",
+      "sv": "Hur många euro per månad"
     },
     "rented_premise_lessor_name.title": {
       "en": "Lessor's name",
@@ -221,19 +231,29 @@
       "sv": "Uthyrarens namn"
     },
     "rented_premise_lessor_contact.title": {
-      "en": "Lessor's phone number or email",
-      "fi": "Vuokranantajan puhelinnumero tai sähköposti",
-      "sv": "Uthyrarens telefonnummer eller e-post"
+      "en": "Lessor's contact information",
+      "fi": "Vuokranantajan yhteystiedot",
+      "sv": "Hyresvärdens kontaktuppgifter"
+    },
+    "rented_premise_lessor_contact.description": {
+      "en": "Email and/or telephone number",
+      "fi": "Sähköpostiosoite ja/tai puhelinnumero",
+      "sv": "E-postadress och/eller telefonnummer"
+    },
+    "rented_premise_usage.description": {
+      "en": "For example, an office, storage, gathering or clubs",
+      "fi": "Esimerkiksi toimisto, varasto, kokoontuminen tai kerhot",
+      "sv": "Till exempel kontor, lager, samling eller klubbar"
     },
     "rented_premise_days_per_week.title": {
-      "en": "Days of use per week",
-      "fi": "Käyttöpäiviä viikossa",
-      "sv": "Användningsdagar per vecka"
+      "en": "How many days per week is the facility used?",
+      "fi": "Kuinka monena päivänä viikossa tilassa on toimintaa?",
+      "sv": "Hur många dagar i veckan ordnas verksamhet i lokalen?"
     },
     "rented_premise_hours_per_day.title": {
-      "en": "Hours of use per day",
-      "fi": "Käyttötunteja päivässä",
-      "sv": "Användningstimmar per dag"
+      "en": "How many hours per day is the facility used?",
+      "fi": "Kuinka monta tuntia päivässä tilassa on toimintaa?",
+      "sv": "Hur många timmar om dagen ordnas verksamhet i lokalen?"
     },
     "rented_premises.add": {
       "en": "Add new rented premises",

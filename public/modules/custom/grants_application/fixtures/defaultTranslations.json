@@ -550,7 +550,7 @@
       "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. ",
       "sv": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
     },
-    "negative_expands": {
+    "negative_expands.title": {
       "en": "A negative answer opens a further question",
       "fi": "Kieltävä vastaus avaa lisäkysymyksen",
       "sv": "Ett nekande svar öppnar ytterligare en fråga"

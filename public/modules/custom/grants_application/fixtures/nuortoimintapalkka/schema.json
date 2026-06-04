@@ -89,11 +89,7 @@
           "title": "postal_code.title",
           "type": "string"
         }
-      },
-      "required": [
-        "premise_location",
-        "premise_postal_code"
-      ]
+      }
     },
     "_membership_item": {
       "type": "object",
@@ -107,10 +103,7 @@
           "title": "membership_fee.title",
           "type": "string"
         }
-      },
-      "required": [
-        "membership_organization_name"
-      ]
+      }
     },
     "_rented_premise_item": {
       "type": "object",
@@ -388,9 +381,8 @@
           "type": "object",
           "properties": {
             "digital_only_info": {
-              "title": "negative_expands",
-              "type": "array",
-              "items": []
+              "title": "negative_expands.title",
+              "type": "array"
             },
             "digital_activity_only": {
               "title": "digital_activity_only.title",
@@ -496,7 +488,10 @@
                     "title": "hired_officials_count.title",
                     "type": "integer"
                   }
-                }
+                },
+                "required": [
+                  "hired_officials_count"
+                ]
               },
               "salary_costs_section": {
                 "title": "salary_costs_section.title",
@@ -518,7 +513,12 @@
                     "title": "travel_and_training_costs.title",
                     "type": "string"
                   }
-                }
+                },
+                "required": [
+                  "salary_costs",
+                  "personnel_side_costs",
+                  "travel_and_training_costs"
+                ]
               }
             }
           }
