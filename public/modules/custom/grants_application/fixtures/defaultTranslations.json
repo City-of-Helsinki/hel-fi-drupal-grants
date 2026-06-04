@@ -97,7 +97,7 @@
     },
     "attachments_section.description": {
       "en": "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
-      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa. ",
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
       "sv": "Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan."
     },
     "attachments_section.title": {
@@ -136,9 +136,9 @@
       "sv": "Ja"
     },
     "budget.description": {
-      "en": "Budget (for the year for which you are applying for a grant)",
+      "en": "Attach the budget for the entire organization.",
       "fi": "Liitä tähän koko yhteisön talousarvio.",
-      "sv": "Budget (för det år du ansöker om understödet)"
+      "sv": "Bifoga hela organisationens budget."
     },
     "budget.title": {
       "en": "Budget (for the year for which you are applying for a grant)",
@@ -278,7 +278,7 @@
     "community_rules.description": {
       "en": "New applicant or changed rules.",
       "fi": "Uusi hakija tai säännöt muuttuneet.",
-      "sv": "Ny sökande eller stadgar som ändrats."
+      "sv": "Ny sökande eller ändrade stadgar."
     },
     "community_rules.title": {
       "en": "Community Rules",
