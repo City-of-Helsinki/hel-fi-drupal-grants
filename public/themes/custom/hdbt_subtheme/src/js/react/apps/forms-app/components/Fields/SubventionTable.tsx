@@ -123,11 +123,13 @@ export const SubventionTable = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { dataset, value } = event.target;
+    const nativeEvent: InputEvent = event.nativeEvent as InputEvent;
+    const lastInput = nativeEvent.data ?? '';
 
     if (numberIsTooLarge(value)) return;
 
     const subventionId = dataset.subventionId as string;
-    const numericValue = sanitizeNumericInput(value, 'decimal-number');
+    const numericValue = sanitizeNumericInput(value, 'decimal-number', lastInput);
     const data = formData && Array.isArray(formData) ? [...formData] : [];
     const newValue = createSubventionDataItem(subventionId, numericValue);
     const index = findIndexForData(subventionId, data);

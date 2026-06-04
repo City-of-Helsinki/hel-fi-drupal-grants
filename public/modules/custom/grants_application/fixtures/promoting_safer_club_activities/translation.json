@@ -40,16 +40,6 @@
       "fi": "Kehitetäänkö hankkeessa rasisminvastaisia toimenpiteitä? Jos kyllä, miten?",
       "sv": "Utvecklas antirasistiska åtgärder inom projektet? Om ja, hur?"
     },
-    "end_date.printable_title": {
-      "en": "Project end date",
-      "fi": "Hankkeen loppupäivämäärä",
-      "sv": "Projektets slutdatum"
-    },
-    "end_date.title": {
-      "en": "End date",
-      "fi": "Loppupäivämäärä",
-      "sv": "Slutdatum"
-    },
     "equality_nondiscrimination_responsibility_plan.description": {
       "en": "Answer only if the project includes the measure set \"drawing up an equality, non-discrimination or responsibility plan and implementing the measures\". At least one optional set of measures must be implemented in the project.",
       "fi": "Vastaa vain, jos hankkeessa toteutetaan toimenpidekokonaisuus \"yhdenvertaisuus-, tasa-arvo- tai vastuullisuussuunnitelman laatiminen ja toimenpiteiden toteuttaminen\". Hankkeessa on toteutettava vähintään yksi valinnaisista toimenpidekokonaisuuksista.",
@@ -194,16 +184,6 @@
       "en": "Project schedule",
       "fi": "Hankkeen aikataulu",
       "sv": "Projektets tidtabell"
-    },
-    "start_date.printable_title": {
-      "en": "Project start date",
-      "fi": "Hankkeen alkupäivämäärä",
-      "sv": "Projektets startdatum"
-    },
-    "start_date.title": {
-      "en": "Start date",
-      "fi": "Alkupäivämäärä",
-      "sv": "Startdatum"
     },
     "under_20_affected.title": {
       "en": "Describe who or what proportion of the club's under-20 participants the project measures will affect",

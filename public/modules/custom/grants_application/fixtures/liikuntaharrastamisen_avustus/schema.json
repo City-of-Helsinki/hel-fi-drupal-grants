@@ -424,7 +424,7 @@
                     "required": ["children_estimate_9_12", "children_estimate_13_15", "children_estimate_16_18"]
                   },
                   "new_participants_estimate_wrapper": {
-                    "title": "new_participants_estimate_wrapper.title",
+                    "title": "new_participants_count.title",
                     "type": "object",
                     "default": {},
                     "properties": {
@@ -521,7 +521,7 @@
                     "required": ["participant_estimate_9_12", "participant_estimate_13_15", "participant_estimate_16_18"]
                   },
                   "new_participant_estimate_wrapper": {
-                    "title": "new_participant_estimate_wrapper.title",
+                    "title": "new_participants_count.title",
                     "type": "object",
                     "default": {},
                     "properties": {
