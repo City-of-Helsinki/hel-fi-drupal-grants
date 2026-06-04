@@ -41,6 +41,7 @@
     },
     "_space_item": {
       "type": "object",
+      "title": "spaces.title",
       "properties": {
         "premiseName": {
           "title": "premise_name.title",
@@ -84,7 +85,7 @@
     },
     "_realized_space_item": {
       "type": "object",
-      "title": "realized_spaces.title",
+      "title": "spaces.title",
       "properties": {
         "premiseName": {
           "title": "premise_name.title",
@@ -570,7 +571,7 @@
               "items": [{"title": "public_events_helsinki_info.value", "type": "null"}]
             },
             "realized_spaces": {
-              "title": "realized_spaces.title",
+              "title": "spaces.title",
               "type": "array",
               "items": {"$ref": "#/definitions/_realized_space_item"},
               "additionalItems": {"$ref": "#/definitions/_realized_space_item"},
