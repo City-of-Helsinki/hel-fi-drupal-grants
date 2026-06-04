@@ -334,5 +334,88 @@
         }
       }
     }
+  },
+  "activity_basis_step": {
+    "activity_contents_section": {
+      "ui:order": [
+        "artistic_starting_points",
+        "diversity_and_equality"
+      ],
+      "artistic_starting_points": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000,
+        "ui:options": {
+          "tooltipLabel": "artistic_starting_points.title",
+          "tooltipButtonLabel": "artistic_starting_points.title",
+          "tooltipText": "artistic_starting_points.description"
+        }
+      },
+      "diversity_and_equality": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    },
+    "accessibility_section": {
+      "ui:order": [
+        "accessibility",
+        "community_spirit",
+        "target_groups"
+      ],
+      "accessibility": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "community_spirit": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "target_groups": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    },
+    "operations_section": {
+      "ui:order": [
+        "professionalism",
+        "ecological_sustainability",
+        "partners"
+      ],
+      "professionalism": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "ecological_sustainability": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "partners": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000,
+        "ui:options": {
+          "tooltipLabel": "partners.title",
+          "tooltipButtonLabel": "partners.title",
+          "tooltipText": "partners.description"
+        }
+      }
+    },
+    "development_section": {
+      "ui:order": [
+        "previous_goals",
+        "self_assessment_methods",
+        "upcoming_changes"
+      ],
+      "previous_goals": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "self_assessment_methods": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "upcoming_changes": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    }
   }
 }

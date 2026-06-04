@@ -579,6 +579,58 @@
           }
         }
       }
+    },
+    "activity_basis_step": {
+      "type": "object",
+      "properties": {
+        "activity_contents_section": {
+          "type": "object",
+          "default": {}
+        },
+        "accessibility_section": {
+          "title": "accessibility_section.title",
+          "type": "object",
+          "properties": {
+            "target_groups": {
+              "title": "target_groups.title",
+              "type": "string",
+              "maxLength": 1000
+            }
+          }
+        },
+        "operations_section": {
+          "title": "operations_section.title",
+          "type": "object",
+          "properties": {
+            "partners": {
+              "title": "partners.title",
+              "type": "string",
+              "maxLength": 1000
+            }
+          }
+        },
+        "development_section": {
+          "title": "development_section.title",
+          "type": "object",
+          "properties": {
+            "previous_goals": {
+              "title": "previous_goals.title",
+              "type": "string",
+              "maxLength": 1000
+            },
+            "self_assessment_methods": {
+              "title": "self_assessment_methods.title",
+              "type": "string",
+              "maxLength": 1000
+            },
+            "upcoming_changes": {
+              "title": "upcoming_changes.title",
+              "type": "string",
+              "maxLength": 1000
+            }
+          }
+        }
+      }
     }
   },
   "description": "",
@@ -597,6 +649,78 @@
     "activity_step": {
       "$ref": "#/definitions/activity_step",
       "title": "activity_step.title"
+    },
+    "activity_basis_step": {
+      "$ref": "#/definitions/activity_basis_step",
+      "title": "activity_basis_step.title"
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "grant_info_step": {
+            "properties": {
+              "subventions_total": {
+                "minimum": 5001
+              }
+            },
+            "required": ["subventions_total"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "activity_basis_step": {
+            "properties": {
+              "activity_contents_section": {
+                "title": "activity_contents_section.title",
+                "type": "object",
+                "properties": {
+                  "artistic_starting_points": {
+                    "title": "artistic_starting_points.title",
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "diversity_and_equality": {
+                    "title": "diversity_and_equality.title",
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                }
+              },
+              "accessibility_section": {
+                "properties": {
+                  "accessibility": {
+                    "title": "accessibility.title",
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "community_spirit": {
+                    "title": "community_spirit.title",
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                }
+              },
+              "operations_section": {
+                "properties": {
+                  "professionalism": {
+                    "title": "professionalism.title",
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "ecological_sustainability": {
+                    "title": "ecological_sustainability.title",
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

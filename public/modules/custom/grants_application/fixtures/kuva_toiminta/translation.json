@@ -1,9 +1,39 @@
 {
   "translations": {
+    "accessibility.title": {
+      "en": "How are the activities made as accessible as possible either socially, culturally, in terms of language, economically, physically, regionally, or otherwise? What kinds of actions are taken, and resources and expertise available for this purpose?",
+      "fi": "Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "sv": "Hur gör ni er verksamhet socialt, kulturellt, språkligt, ekonomiskt, fysiskt, geografiskt eller på annat sätt tillgänglig för helsingforsarna? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
+    },
+    "accessibility_section.title": {
+      "en": "Accessibility",
+      "fi": "Toiminnan tavoittavuus",
+      "sv": "Verksamhetens tillgänglighet"
+    },
+    "activity_basis_step.title": {
+      "en": "The basis for the activities",
+      "fi": "Toiminnan lähtökohdat",
+      "sv": "Utgångspunkten för verksamheten"
+    },
+    "activity_contents_section.title": {
+      "en": "Contents",
+      "fi": "Toiminnan sisällöt",
+      "sv": "Verksamhetens innehåll"
+    },
     "activity_step.title": {
       "en": "Activity",
       "fi": "Toiminta",
       "sv": "Aktiviteter"
+    },
+    "artistic_starting_points.description": {
+      "en": "You may also mention, for example, central awards or other notations.",
+      "fi": "Voit nostaa myös esiin esimerkisksi keskeisiä palkintoja tai muita noteerauksia.",
+      "sv": "Ni kan även lyfta fram eventuella pris och utmärkelser."
+    },
+    "artistic_starting_points.title": {
+      "en": "Describe the artistic starting points and goals of the activities, the level of artistic professionalism, and the position within the field of art.",
+      "fi": "Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.",
+      "sv": "Beskriv de konstnärliga utgångspunkterna och målsättningarna för verksamheten, den konstnärliga professionaliteten och er/ organisationens position på konstfältet."
     },
     "artistic_spaces_section.title": {
       "en": "Spaces for artistic activities",
@@ -14,6 +44,11 @@
       "en": "Information regarding the organization",
       "fi": "Yhteisön tiedot",
       "sv": "Uppgifter om den ansökande organisationen"
+    },
+    "community_spirit.title": {
+      "en": "How do the activities increase the community spirit and strengthen collaboration and networks? What possibilities do the residents have of participating in the different phases of the activities? What kinds of actions are taken, and resources and expertise available for this purpose?",
+      "fi": "Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "sv": "Hur stärker ni samhörighet och nätverkande samarbete inom staden genom er verksamhet? Hur kan invånarna delta i olika skeden av er verksamhet? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
     },
     "count_in_helsinki_fieldset.description": {
       "en": "Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.",
@@ -34,6 +69,21 @@
       "en": "Number in total",
       "fi": "Määrä kaikkiaan",
       "sv": "Antal totalt"
+    },
+    "development_section.title": {
+      "en": "Development",
+      "fi": "Toiminnan kehittyminen",
+      "sv": "Utveckling av verksamheten"
+    },
+    "diversity_and_equality.title": {
+      "en": "How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?",
+      "fi": "Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "sv": "Hur förverkligar ni jämställdheten och mångfalden i er organisation och verksamhet samt i verksamhetens innehåll? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
+    },
+    "ecological_sustainability.title": {
+      "en": "Does the community have an environmental sustainability plan or a corresponding operating model in use? Which, or what kind of model is it? Describe how it is implemented in practice and how compliance is monitored and supervised.",
+      "fi": "Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.",
+      "sv": "Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras."
     },
     "estimated_numbers_info.title": {
       "en": "Estimated numbers",
@@ -165,6 +215,11 @@
       "fi": "Muut keskeiset toimintamuodot",
       "sv": "Övriga centrala verksamhetsformer"
     },
+    "operations_section.title": {
+      "en": "Operations",
+      "fi": "Toiminnan järjestäminen",
+      "sv": "Verksamhetens struktur"
+    },
     "owns_artistic_space.description": {
       "en": "Here a space for artistic activity is defined as a space for performances, screenings, or exhibitions, or as a separate space for practising or artistic work. Not an office or a storage space.",
       "fi": "Taiteellisen toiminnan tilalla tarkoitetaan tässä esitystilaa, näyttelytilaa tai erillistä harjoittelutilaa tai muuta taiteellisen työskentelyn tilaa. Ei kuitenkaan esim. toimisto tai varasto.",
@@ -179,6 +234,16 @@
       "en": "We own or act as a year-round main tenant for a space for artistic activity",
       "fi": "Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena",
       "sv": "Utrymmen för den konstnärliga verksamheten, där man äger utrymmena eller är fast huvudhyresgäst"
+    },
+    "partners.description": {
+      "en": "Name a maximum of approximately five partners.",
+      "fi": "Nimeä maksimissaan noin viisi yhteistyökumppania.",
+      "sv": "Nämn högst cirka fem partners."
+    },
+    "partners.title": {
+      "en": "Name the central partners, and describe the forms and conditions of each collaboration.",
+      "fi": "Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.",
+      "sv": "Namnge era fem mest centrala samarbetsparter och beskriv formen och villkoren för ert samarbete."
     },
     "part_time_person_years.title": {
       "en": "Part-time: Person years",
@@ -254,6 +319,11 @@
       "en": "Premieres",
       "fi": "Kantaesitysten määrä",
       "sv": "Antalet uruppföranden"
+    },
+    "previous_goals.title": {
+      "en": "What were the main goals for the previous year and did you reach them?",
+      "fi": "Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?",
+      "sv": "Vilka var de centrala målsättningarna för senaste verksamhetsår och hur uppfylldes de?"
     },
     "previous_year_info.value": {
       "en": "Regarding the previous completed financial year.",
@@ -345,6 +415,11 @@
       "fi": "Ensi-iltojen määrä Helsingissä",
       "sv": "Antal premiärer i Helsingfors"
     },
+    "professionalism.title": {
+      "en": "Describe the professional level of organizing the activities, and how the operations are organized",
+      "fi": "Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista",
+      "sv": "Beskriv hur er verksamhet är organiserad och på vilket sätt den är professionell."
+    },
     "project_brief_description.title": {
       "en": "A short description of the project or the activities",
       "fi": "Hankkeen tai toiminnan lyhyt esittelyteksti",
@@ -400,6 +475,11 @@
       "fi": "Esityksistä",
       "sv": "Om föreställningar"
     },
+    "self_assessment_methods.title": {
+      "en": "What means are used for self-assessment and the development of operations?",
+      "fi": "Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?",
+      "sv": "Vilka metoder använder ni för självutvärdering och utveckling av verksamheten?"
+    },
     "spaces.add": {
       "en": "Add new space",
       "fi": "Lisää uusi tila",
@@ -409,6 +489,16 @@
       "en": "Space",
       "fi": "Tila",
       "sv": "Utrymme"
+    },
+    "target_groups.title": {
+      "en": "Who are the target audiences or participants for the activities? How will they be reached, and what expertise is available for working with them?",
+      "fi": "Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?",
+      "sv": "Vilka är målgrupperna för er verksamhet? Hur når ni dessa målgrupper och vad har ni för kunnande när det gäller att arbeta med dessa målgrupper?"
+    },
+    "upcoming_changes.title": {
+      "en": "When you look at your the plans for the upcoming year, what are the main changes in the activities and operations, compared to the previous year?",
+      "fi": "Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?",
+      "sv": "Vilka är de centrala förändringar i verksamheten som ni planerat för inkommande år jämfört med tidigare år?"
     },
     "visitors_count_helsinki.description": {
       "en": "Do not include the same visitors twice, for example do not include the visitors of a workshop in a gallery as both visitors of an exhibition and a workshop.",
