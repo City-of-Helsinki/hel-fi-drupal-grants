@@ -647,12 +647,12 @@ msgid "Community for which the grant is being applied for"
 msgstr "Yhteisö, jolle haetaan avustusta"
 
 msgctxt "Grants application"
-msgid "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."
-msgstr "Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata."
-
-msgctxt "Grants application"
 msgid "The data has been fetched from your application profile."
 msgstr "Tiedot on haettu hakuprofiilistasi."
+
+msgctxt "Grants application"
+msgid "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."
+msgstr "Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata."
 
 msgctxt "Grants application"
 msgid "Applicant details"
