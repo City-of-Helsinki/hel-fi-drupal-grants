@@ -150,11 +150,6 @@
       "fi": "Kuvaus tulosta",
       "sv": "Typ av intäkt"
     },
-    "income_row_item.title": {
-      "en": "Income item",
-      "fi": "Tulo",
-      "sv": "Inkomst"
-    },
     "income_section.description": {
       "en": "Itemise the event’s revenue by type. Also record any other grants for the event and the parties that issued them.",
       "fi": "Erittele tapahtuman tulot tulotyypeittäin. Kirjaa tuloihin erikseen myös tapahtumalle myönnetyt muut avustukset sekä niiden myöntäjätaho.",

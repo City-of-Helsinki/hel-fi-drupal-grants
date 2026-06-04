@@ -1,14 +1,14 @@
 {
   "translations": {
-    "acting_year_section_acting_year.title": {
-      "en": "Year for which I am applying for a grant",
-      "fi": "Vuosi, jolle haen avustusta",
-      "sv": "År för vilket jag ansöker om understöd"
-    },
     "acting_year_section.title": {
       "en": "Grant details",
       "fi": "Avustuksen tiedot",
       "sv": "Uppgifter om understödet"
+    },
+    "acting_year_section_acting_year.title": {
+      "en": "Year for which I am applying for a grant",
+      "fi": "Vuosi, jolle haen avustusta",
+      "sv": "År för vilket jag ansöker om understöd"
     },
     "action_plan.description": {
       "en": "Attach here the action plan for the whole community.",
@@ -40,6 +40,31 @@
       "fi": "Myöntävä vastaus avaa lisäkysymyksen",
       "sv": "Ett jakande svar öppnar ytterligare en fråga"
     },
+    "age_group_13_15.title": {
+      "en": "Helsinki residents aged 13 to 15 years",
+      "fi": "13–15-vuotiasta helsinkiläistä",
+      "sv": "13–15-åriga helsingforsare"
+    },
+    "age_group_16_18.title": {
+      "en": "Helsinki residents aged 16 to 18 years",
+      "fi": "16–18-vuotiasta helsinkiläistä",
+      "sv": "16–18-åriga helsingforsare"
+    },
+    "age_group_18_24.title": {
+      "en": "Helsinki residents aged 18 to 24 years",
+      "fi": "18–24-vuotiasta helsinkiläistä",
+      "sv": "18–24-åriga helsingforsare"
+    },
+    "age_group_9_12.title": {
+      "en": "Helsinki residents aged 9 to 12 years",
+      "fi": "9–12-vuotiasta helsinkiläistä",
+      "sv": "9–12-åriga helsingforsare"
+    },
+    "age_group_9_18.title": {
+      "en": "Helsinki residents aged 9 to 18 years",
+      "fi": "9–18-vuotiasta helsinkiläistä",
+      "sv": "9–18-åriga helsingforsare"
+    },
     "applicant_email.description": {
       "en": "Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.",
       "fi": "Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.",
@@ -65,9 +90,14 @@
       "fi": "Haettu avustus (€)",
       "sv": "Önskat understöd (€)"
     },
+    "apply_for_start_grant.title": {
+      "en": "Are you applying for a start grant?",
+      "fi": "Haetko starttiavustusta?",
+      "sv": "Ansöker du om Sportunderstöd?"
+    },
     "attachments_section.description": {
       "en": "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
-      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa. ",
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa. ",
       "sv": "Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan."
     },
     "attachments_section.title": {
@@ -255,6 +285,11 @@
       "fi": "Yhteisön säännöt",
       "sv": "Samfundets stadgar"
     },
+    "confirm_and_submit.title": {
+      "en": "Confirm, preview and submit",
+      "fi": "Vahvista, esikatsele ja lähetä",
+      "sv": "Bekräfta, förhandsgranska och skicka"
+    },
     "confirmed_annual_report.description": {
       "en": "An association must append to this section the annual report confirmed at the association's annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.",
       "fi": "Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun toimintakertomuksen. Jos toimintakertomus on osana tilinpäätöstä ja liititte sen jo tilinpäätöksen mukana lomakkeelle, sitä ei tarvitse liittää tähän erikseen. Valitse tällaisessa tilanteessa toimintakertomuksen kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
@@ -285,11 +320,6 @@
       "fi": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
       "sv": "Fastställt bokslut (för den föregående avslutade räkenskapsperioden)"
     },
-    "contact_person_info_contact_person.title": {
-      "en": "Contact person",
-      "fi": "Yhteyshenkilö",
-      "sv": "Kontaktperson"
-    },
     "contact_person": {
       "en": "Contact person for the application",
       "fi": "Hakemuksen yhteyshenkilö",
@@ -300,25 +330,40 @@
       "fi": "Hakemuksen yhteyshenkilö",
       "sv": "Kontaktperson för ansökan"
     },
-    "contact_person_phone_number": {
-      "en": "Phone number",
-      "fi": "Puhelinnumero",
-      "sv": "Telefonnummer"
+    "contact_person_info_contact_person.title": {
+      "en": "Contact person",
+      "fi": "Yhteyshenkilö",
+      "sv": "Kontaktperson"
     },
     "contact_person_info_contact_person_phone_number.title": {
       "en": "Phone number",
       "fi": "Puhelinnumero",
       "sv": "Telefonnummer"
     },
-    "confirm_and_submit.title": {
-      "en": "Confirm, preview and submit",
-      "fi": "Vahvista, esikatsele ja lähetä",
-      "sv": "Bekräfta, förhandsgranska och skicka"
+    "contact_person_phone_number": {
+      "en": "Phone number",
+      "fi": "Puhelinnumero",
+      "sv": "Telefonnummer"
+    },
+    "duplicate_file.title": {
+      "en": "Duplicate file name",
+      "fi": "Duplikaatti tiedostonnimi",
+      "sv": "Duplicerat filnamn"
     },
     "economy_forecast.description": {
       "en": "Specify the project's income and expenses as accurately as possible.",
       "fi": "Erittele hankkeen tulot ja menot mahdollisimman tarkasti.",
       "sv": "Specificera projektets inkomster och utgifter så noggrant som möjligt."
+    },
+    "end_date.printable_title": {
+      "en": "Project end date",
+      "fi": "Hankkeen loppupäivämäärä",
+      "sv": "Projektets slutdatum"
+    },
+    "end_date.title": {
+      "en": "End date",
+      "fi": "Loppupäivämäärä",
+      "sv": "Slutdatum"
     },
     "expenditure_row_amount.title": {
       "en": "Amount (€)",
@@ -375,20 +420,10 @@
       "fi": "Liitteen poistaminen epäonnistui",
       "sv": "Borttagning av filen misslyckades"
     },
-    "too_many_files.title": {
-      "en": "You cannot upload more than 10 files",
-      "fi": "Voit liittää enintään 10 tiedostoa",
-      "sv": "Du kan inte ladda upp fler än 10 filer"
-    },
     "file_upload_failed.title": {
       "en": "File upload failed",
       "fi": "Tiedoston lataaminen epäonnistui",
       "sv": "Filuppladdning misslyckades"
-    },
-    "duplicate_file.title": {
-      "en": "Duplicate file name",
-      "fi": "Duplikaatti tiedostonnimi",
-      "sv": "Duplicerat filnamn"
     },
     "formerly_provided_attachments_help.title": {
       "en": "Attachments previously submitted to the City of Helsinki",
@@ -420,30 +455,20 @@
       "fi": "Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta",
       "sv": "Vi har ansökt om understöd från annanstans än Helsingfors stad"
     },
-    "apply_for_start_grant.title": {
-      "en": "Are you applying for a start grant?",
-      "fi": "Haetko starttiavustusta?",
-      "sv": "Ansöker du om Sportunderstöd?"
-    },
-    "other_compensations_section_have_received_other_compensations.title": {
-      "en": "We have received other grants",
-      "fi": "Olemme saaneet muita avustuksia",
-      "sv": "Vi har fått andra understöd"
-    },
     "have_received_prior_compensations.no": {
       "en": "I have not received a grant from the City of Helsinki for the same purpose in the previous year.",
       "fi": "En ole saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
       "sv": "Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år."
     },
-    "other_compensations_section_have_received_prior_compensations.title": {
-      "en": "Report on the use of the grant I received in the previous year",
-      "fi": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta",
-      "sv": "Redovisning om understödet som jag fick under det föregående året "
-    },
     "have_received_prior_compensations.yes": {
       "en": "I received a grant from the city of Helsinki for the same purpose last year.",
       "fi": "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
       "sv": "Jag fick ett bidrag från Helsingfors stad för samma ändamål förra året."
+    },
+    "impact_on_participants.title": {
+      "en": "How is the activity hoped to affect the participants' lives?",
+      "fi": "Miten toiminnan toivotaan vaikuttavan osallistujien elämään?",
+      "sv": "Hur hoppas man att verksamheten ska påverka deltagarnas liv?"
     },
     "income_row_amount.title": {
       "en": "Amount (€)",
@@ -461,6 +486,11 @@
       "sv": "Skriv ner vilken typ av inkomst det gäller. Inkomster kan till exempel vara andra understöd och inträdes- eller deltagaravgifter. Självfinansiering måste uppges som en inkomst även om den självfinansierade delen finansieras med sökandes övrig verksamhet."
     },
     "income_row_item.title": {
+      "en": "Income item",
+      "fi": "Tulo",
+      "sv": "Inkomst"
+    },
+    "income_type_row_item.title": {
       "en": "Type of income",
       "fi": "Tulon tyyppi",
       "sv": "Typ av inkomst"
@@ -555,6 +585,16 @@
       "fi": "Kieltävä vastaus avaa lisäkysymyksen",
       "sv": "Ett nekande svar öppnar ytterligare en fråga"
     },
+    "new_participants_count.title": {
+      "en": "How many of these are new, i.e. have not participated in activities previously organised by the operator?",
+      "fi": "Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
+      "sv": "Hur många av dessa är nya, dvs. har inte tidigare deltagit i verksamhet som aktören ordnat?"
+    },
+    "new_partnerships.title": {
+      "en": "Does the project test new kinds of partnerships or develop new operating models? What kind?",
+      "fi": "Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?",
+      "sv": "Prövas nya slags partnerskap i projektet eller utvecklas nya verksamhetsmodeller? Hurdana?"
+    },
     "other_applied_compensation_amount.printable_title": {
       "en": "The amount of the grant applied for (€)",
       "fi": "Haetun avustuksen summa (€)",
@@ -585,14 +625,14 @@
       "fi": "Muut liitteet",
       "sv": "Annan bilagar"
     },
-    "other_attachment_fieldset_multiple_files.ui_help": {
-      "en": "Allowed types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
-      "fi": "Suositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
-      "sv": "Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip. "
-    },
     "other_attachment_fieldset.ui_help": {
       "en": "One file only.\nAllowed types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
       "fi": "Vain yksi tiedosto.\nSuositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
+      "sv": "Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip. "
+    },
+    "other_attachment_fieldset_multiple_files.ui_help": {
+      "en": "Allowed types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
+      "fi": "Suositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
       "sv": "Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip. "
     },
     "other_compensation.add": {
@@ -670,6 +710,16 @@
       "fi": "Muut samaan tarkoitukseen myönnetyt avustukset",
       "sv": "Övriga understöd som beviljats för samma ändamål"
     },
+    "other_compensations_section_have_received_other_compensations.title": {
+      "en": "We have received other grants",
+      "fi": "Olemme saaneet muita avustuksia",
+      "sv": "Vi har fått andra understöd"
+    },
+    "other_compensations_section_have_received_prior_compensations.title": {
+      "en": "Report on the use of the grant I received in the previous year",
+      "fi": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta",
+      "sv": "Redovisning om understödet som jag fick under det föregående året "
+    },
     "prior_benefits_usage_section.title": {
       "en": "Report on the use of the previous grant",
       "fi": "Edellisen avustuksen käyttöselvitys",
@@ -690,20 +740,25 @@
       "fi": "Käyttöselvityksessä tulee kuvata lyhyesti, miten myönnetty avustus on käytetty. Avustuksen saajan on järjestettävä kirjanpitonsa niin, että avustuksen käyttöä voidaan sieltä seurata. Esimerkiksi jos yhteisö on saanut vuokra-avustusta, tilinpäätöksen tuloslaskelmasta tulee käydä ilmi avustuksen toteutuminen sekä tuloissa että menoissa. Lisää tietoja avustuksen käytöstä voi myös kirjoittaa erilliseen liitteeseen, jonka voi ladata ja lähettää Muu-liitteenä.",
       "sv": "I redovisningen ska det kortfattat anges hur det beviljade understödet har använts. Understödstagaren ska ordna sin bokföring så att användningen av understödet kan följas där. Om samfundet till exempel har fått hyresunderstöd ska det av resultaträkningen i bokslutet framgå både intäkter och utgifter vad gäller understödet. Mer information om användningen av understödet kan också skrivas i en separat bilaga som kan lämnas som Annan bilaga."
     },
+    "project_name.title": {
+      "en": "Project name",
+      "fi": "Projektin nimi",
+      "sv": "Projektets namn"
+    },
     "purpose.description": {
       "en": "Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.",
       "fi": "Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet. Kerro myös mitä avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.",
       "sv": "Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten."
     },
-    "purpose_section_purpose.title": {
-      "en": "Brief description of the purpose(s) of the grant(s) applied for",
-      "fi": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista",
-      "sv": "En kort beskrivning av användningsändamålet för det/de understöd som ansöks"
-    },
     "purpose_section.title": {
       "en": "Purpose of use",
       "fi": "Käyttötarkoitus",
       "sv": "Användningsändamål"
+    },
+    "purpose_section_purpose.title": {
+      "en": "Brief description of the purpose(s) of the grant(s) applied for",
+      "fi": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista",
+      "sv": "En kort beskrivning av användningsändamålet för det/de understöd som ansöks"
     },
     "required_attachments_help.title": {
       "en": "Required attachments",
@@ -724,6 +779,16 @@
       "en": "- Select -",
       "fi": "- Valitse -",
       "sv": "- Välj -"
+    },
+    "start_date.printable_title": {
+      "en": "Project start date",
+      "fi": "Hankkeen alkupäivämäärä",
+      "sv": "Projektets startdatum"
+    },
+    "start_date.title": {
+      "en": "Start date",
+      "fi": "Alkupäivämäärä",
+      "sv": "Startdatum"
     },
     "submit": {
       "en": "Submit",
@@ -765,30 +830,45 @@
       "fi": "Muu",
       "sv": "Annan"
     },
+    "subventions.12.title": {
+      "en": "Camp grant",
+      "fi": "Leiriavustus",
+      "sv": "Lägerunderstöd"
+    },
     "subventions.14.title": {
       "en": "Extra grant",
       "fi": "Lisäavustus",
       "sv": "Extra understöd"
+    },
+    "subventions.17.title": {
+      "en": "Grant for operations development",
+      "fi": "Toiminnan kehittämisavustus",
+      "sv": "Understöd för verksamhetsutveckling"
     },
     "subventions.31.title": {
       "en": "Start grant",
       "fi": "Starttiavustus",
       "sv": "Sportunderstöd"
     },
-    "subventions.43.title": {
-      "en": "Targeted sports grant",
-      "fi": "Kohdeavustus",
-      "sv": "Riktat understöd för idrott och motion"
-    },
     "subventions.38.title": {
       "en": "Small grant",
       "fi": "Pienavustus",
       "sv": "Litet understöd"
     },
+    "subventions.43.title": {
+      "en": "Targeted sports grant",
+      "fi": "Kohdeavustus",
+      "sv": "Riktat understöd för idrott och motion"
+    },
     "subventions.47.title": {
       "en": "Special grant for culture 1",
       "fi": "Kulttuurin erityisavustus 1",
       "sv": "Specialunderstöd för kultur 1"
+    },
+    "subventions.49.title": {
+      "en": "Special grant for youth activities 1",
+      "fi": "Nuorison erityisavustus 1",
+      "sv": "Specialunderstöd för ungdomsverksamhet 1"
     },
     "subventions.51.title": {
       "en": "Special grant for sports 1",
@@ -824,6 +904,26 @@
       "en": "Postal code",
       "fi": "Postinumero",
       "sv": "Postnummer"
+    },
+    "target_group_reach.title": {
+      "en": "How are the target groups reached and identified?",
+      "fi": "Miten kohderyhmät tavoitetaan ja tunnistetaan?",
+      "sv": "Hur nås och identifieras målgrupperna?"
+    },
+    "too_many_files.title": {
+      "en": "You cannot upload more than 10 files",
+      "fi": "Voit liittää enintään 10 tiedostoa",
+      "sv": "Du kan inte ladda upp fler än 10 filer"
+    },
+    "youth_participation_planning.title": {
+      "en": "How do children and young people participate in the planning and decision-making of the activities?",
+      "fi": "Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?",
+      "sv": "Hur deltar barn och unga i planeringen av och beslutsfattandet om verksamheten?"
+    },
+    "youth_participation_report.title": {
+      "en": "How have children and young people participated in the planning and decision-making of the activities? Give concrete examples.",
+      "fi": "Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon? Mainitse konkreettisia esimerkkejä.",
+      "sv": "Hur har barn och unga deltagit i planeringen av och beslutsfattandet om verksamheten? Ge konkreta exempel."
     }
   }
 }
