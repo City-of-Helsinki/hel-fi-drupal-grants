@@ -8,12 +8,12 @@
     "salary_info_step.title": {
       "en": "Salary information",
       "fi": "Palkkaustiedot",
-      "sv": "Löneuppgifter"
+      "sv": "Anställningsuppgifter"
     },
     "rental_info_step.title": {
       "en": "Rental grant application information",
       "fi": "Vuokra-avustushakemuksen tiedot",
-      "sv": "Uppgifter om ansökan om hyresunderstöd"
+      "sv": "Uppgifter i ansökan om hyresunderstöd"
     },
     "subventions.2.title": {
       "en": "Hiring grant",
@@ -48,17 +48,17 @@
     "apply_for_salary_advance.description": {
       "en": "An advance on the grant may be received by an association that received a grant in the previous year (i.e. the year preceding the application year). The advance may be up to half of the amount of the previous grant. Please note that the advance will be recovered if the association does not receive the actual grant. If you wish to provide additional information related to the advance, you can do so in the additional information section of the application.",
       "fi": "Avustusennakkoa voi saada edellisenä vuonna (tarkoittaa hakuvuotta edeltävää vuotta) avustusta saanut yhdistys. Ennakkoa voi saada enintään puolet edellisen avustuksen määrästä. Huomioithan, että ennakko peritään takaisin, mikäli yhdistys ei saa varsinaista avustusta. Jos haluat kertoa lisätietoja ennakkoon liittyen, sen voi tehdä hakemuksen lisätietokohdassa.",
-      "sv": "Förskott på understödet kan beviljas en förening som fått understöd föregående år (avser året före ansökningsåret). Förskottet kan uppgå till högst hälften av det föregående understödets belopp. Observera att förskottet återkrävs om föreningen inte beviljas det egentliga understödet. Om du vill ge ytterligare information om förskottet kan du göra det i ansökans punkt för ytterligare information."
+      "sv": "Förskott på understödet kan beviljas till en förening som har fått understöd under föregående år (det vill säga året före ansökningsåret). Förskottet kan uppgå till högst hälften av det tidigare beviljade understödet. Observera att förskottet återkrävs om föreningen inte beviljas det egentliga understödet. Om du vill ge ytterligare information om förskottet, kan du göra det i tilläggsinformationsfältet i ansökan."
     },
     "participation_section.title": {
       "en": "Number of times young people participated in the association's activities",
       "fi": "Nuorten osallistumiskerrat yhdistyksen toimintaan",
-      "sv": "Antal gånger unga deltagit i föreningens verksamhet"
+      "sv": "Antal ungas deltagande i föreningens verksamhet"
     },
     "participation_total.title": {
       "en": "All participation occasions of under-29-year-olds in the previous calendar year",
       "fi": "Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena",
-      "sv": "Alla deltagandetillfällen för personer under 29 år under föregående kalenderår"
+      "sv": "Alla deltaganden av personer under 29 år under föregående kalenderår"
     },
     "participation_total.description": {
       "en": "Record here all participation occasions of under-29-year-olds in the activities of your association/group during the previous year in total. A participation occasion means each visitor to each event, occasion, activity and the like. This figure also includes digital participation occasions.",
@@ -68,7 +68,7 @@
     "participation_digital.title": {
       "en": "Of which digital participation occasions of under-29-year-olds",
       "fi": "Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli",
-      "sv": "Av vilka digitala deltagandetillfällen för personer under 29 år"
+      "sv": "varav digitala deltaganden av personer under 29 år"
     },
     "participation_digital.description": {
       "en": "Specify here all digital participation occasions of under-29-year-olds in total. A digital participation occasion means a young person taking part in an event, occasion, activity or the like that takes place online or in a digital environment. A participation occasion means each participant in each event, occasion, activity or the like.",
@@ -78,12 +78,12 @@
     "premises_section.title": {
       "en": "Places where the association organised activities for young people during the previous year",
       "fi": "Paikat, joissa yhdistys järjesti toimintaa nuorille edellisen vuoden aikana",
-      "sv": "Platser där föreningen ordnade verksamhet för unga under föregående år"
+      "sv": "Platser där föreningen organiserade verksamhet för unga under föregående år"
     },
     "digital_activity_only.title": {
       "en": "We organised activities only in a digital environment",
       "fi": "Järjestimme toimintaa vain digitaalisessa ympäristössä",
-      "sv": "Vi ordnade verksamhet enbart i en digital miljö"
+      "sv": "Vi ordnade endast verksamhet i den digitala miljön"
     },
     "digital_activity_only.description": {
       "en": "Select \"Yes\" if you organised activities only in a digital environment. Select \"No\" if you organised activities only at a physical location or organised activities both in a digital and a physical environment. Enter the names and postal codes of the physical premises in the fields that open below.",
@@ -138,7 +138,7 @@
     "youth_participation.title": {
       "en": "How do young people participate in the planning and decision-making of the association's activities?",
       "fi": "Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?",
-      "sv": "Hur deltar unga i planeringen av och beslutsfattandet om föreningens verksamhet?"
+      "sv": "Hur deltar unga i planeringen av föreningens verksamhet och beslutsfattandet angående verksamheten?"
     },
     "salary_not_applicable_text.title": {
       "en": "You do not need to fill out this page",
@@ -168,17 +168,17 @@
     "hired_officials_count.title": {
       "en": "How many full-time paid employees work in the association?",
       "fi": "Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?",
-      "sv": "Hur många heltidsanställda avlönade arbetstagare arbetar i föreningen?"
+      "sv": "Hur många heltidsanställda arbetar för föreningen?"
     },
     "salary_costs_section.title": {
       "en": "Salary costs for the previous period",
       "fi": "Edellisen kauden palkkauskulut",
-      "sv": "Lönekostnader för den föregående perioden"
+      "sv": "Lönekostnader för föregående period"
     },
     "salary_costs_section.description": {
       "en": "Itemise here the salary costs of the employee or employees for the previous completed accounting period. Acceptable expenses eligible for the use of the hiring grant are the employee's salary costs, the statutory and voluntary social costs arising from employment, statutory insurance and travel costs arising from the employee's work. Include here only the salary costs of the employee or employees for whom you have been able to / would have been able to use the hiring grant. This does not include, for example, various project employees.",
       "fi": "Erittele tähän työntekijän tai työntekijöiden palkkauskulut edelliseltä päättyneeltä tilikaudelta. Palkkausavustuksen käyttöön oikeuttavia hyväksyttäviä menoja ovat työntekijän palkkauskulut, palkkauksesta aiheutuvat lakisääteiset ja vapaaehtoiset sosiaalikulut sekä lakisääteiset vakuutukset ja työntekijän työstä aiheutuvat matkakustannukset. Ota tähän mukaan vain sen työntekijän tai niiden työntekijöiden palkkauskulut, joihin olette voineet /olisitte voineet käyttää palkkausavustusta. Tähän eivät kuulu esimerkiksi erilaiset hanketyöntekijät.",
-      "sv": "Specificera här arbetstagarens eller arbetstagarnas lönekostnader för den föregående avslutade räkenskapsperioden. Godtagbara utgifter som berättigar till användning av löneunderstöd är arbetstagarens lönekostnader, lagstadgade och frivilliga sociala kostnader som föranleds av anställningen samt lagstadgade försäkringar och resekostnader som föranleds av arbetstagarens arbete. Ta här endast med lönekostnaderna för den eller de arbetstagare för vilka ni har kunnat/skulle ha kunnat använda löneunderstöd."
+      "sv": "Specificera här medarbetarens eller medarbetarnas lönekostnader för den senaste avslutade räkenskapsperioden. Godtagbara utgifter som berättigar till nyttjande av lönesubvention är lönekostnader för medarbetare, arbetsgivarens lagstadgade och frivilliga sociala avgifter samt medarbetarens resekostnader i arbetet. Inkludera här endast lönekostnaderna för den eller de medarbetare för vilka ni har/hade kunnat använda lönesubvention. Detta omfattar inte till exempel lönekostnader för olika slags projektanställda."
     },
     "salary_costs.title": {
       "en": "Salary costs",
@@ -188,7 +188,7 @@
     "personnel_side_costs.title": {
       "en": "Statutory and voluntary personnel side costs",
       "fi": "Lakisääteiset ja vapaaehtoiset henkilösivukulut",
-      "sv": "Lagstadgade och frivilliga personalbikostnader"
+      "sv": "Lagstadgade och frivilliga lönebikostnader"
     },
     "travel_and_training_costs.title": {
       "en": "Travel and training costs",
@@ -198,7 +198,7 @@
     "rented_premises_section.title": {
       "en": "Rented premises",
       "fi": "Vuokrattu tila",
-      "sv": "Hyrd lokal"
+      "sv": "Hyreslokal"
     },
     "rented_premises.title": {
       "en": "Information on the rented premises",
@@ -228,7 +228,7 @@
     "rented_premise_lessor_name.title": {
       "en": "Lessor's name",
       "fi": "Vuokranantajan nimi",
-      "sv": "Uthyrarens namn"
+      "sv": "Hyresvärdens namn"
     },
     "rented_premise_lessor_contact.title": {
       "en": "Lessor's contact information",
@@ -264,6 +264,32 @@
       "en": "The mandatory attachments to the operating and hiring grant application are the association's valid rules, the financial statements for the previous completed accounting period including the comprehensive profit and loss account, the annual report and the audit or performance audit report signed, and the minutes of the meeting at which the financial statements were confirmed and discharge from liability discussed. In addition, the mandatory attachments are the budget and action plan for the year for which the grant is being applied for. The rules must be approved by the Finnish Patent and Registration Office. The attachments to the hiring grant application must also include the names and numbers of members of the departments/groups under the district organisation or a comparable organisation.",
       "fi": "Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat säännöt, tilinpäätös edelliseltä päättyneeltä tilikaudelta sisältäen laajan tuloslaskelman, toimintakertomus sekä tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen pöytäkirja, jossa tilinpäätös on vahvistettu ja vastuuvapaus käsitelty. Lisäksi pakollisia liitteitä ovat talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät. Palkkausavustushakemuksen liitteenä tulee lisäksi olla piirijärjestön tai siihen verrattavan järjestön alaisten osastojen /ryhmien nimet ja jäsenmäärät.",
       "sv": "De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens gällande stadgar, bokslutet för den föregående avslutade räkenskapsperioden inklusive den omfattande resultaträkningen, verksamhetsberättelsen samt den undertecknade revisionsberättelsen och protokollet från det möte där bokslutet fastställdes och ansvarsfriheten behandlades. Dessutom är budgeten och verksamhetsplanen för det år för vilket understödet ansöks obligatoriska bilagor. Stadgarna ska vara godkända av Patent- och registerstyrelsen. Som bilaga till ansökan om löneunderstöd ska dessutom finnas namn och medlemsantal för de avdelningar/grupper som lyder under distriktsorganisationen eller en jämförbar organisation."
+    },
+    "members_active_participants_section.title": {
+      "sv": "Antal aktiva deltagare eller medlemmar i föreningen"
+    },
+    "age_group_0_6.title": {
+      "sv": "0-6-åringar"
+    },
+    "age_group_7_28.title": {
+      "sv": "7-28- åringar"
+    },
+    "of_whom_helsinki_residents.title": {
+      "sv": "varav helsingforsare"
+    },
+    "negative_expands.title": {
+      "sv": "Ett negativt svar öppnar ytterligare en fråga"
+    },
+    "purpose_section.title": {
+      "sv": "Användning"
+    },
+    "additional_information.title": {
+      "sv": "Rubrik till tilläggsfrågan"
+    },
+    "members_fieldset.legend": {
+      "en": "Active participants/members",
+      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
+      "sv": "Aktiva deltagare/medlemmar"
     }
   }
 }

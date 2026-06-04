@@ -320,7 +320,7 @@
           "properties": {
             "members_fieldset": {
               "type": "object",
-              "title": "members_active_participants_section.title",
+              "title": "members_fieldset.legend",
               "properties": {
                 "members_0_6": {
                   "title": "age_group_0_6.title",

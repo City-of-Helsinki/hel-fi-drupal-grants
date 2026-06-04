@@ -117,8 +117,8 @@
       "members_fieldset": {
         "ui:options": {
           "hideNameFromPrint": true,
-          "tooltipLabel": "members_active_participants_section.title",
-          "tooltipButtonLabel": "members_active_participants_section.title",
+          "tooltipLabel": "members_fieldset.legend",
+          "tooltipButtonLabel": "members_fieldset.legend",
           "tooltipText": "members_fieldset.description"
         }
       }
