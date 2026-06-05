@@ -431,4 +431,79 @@ final class DraftTest extends KernelTestBase {
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
   }
 
+  /**
+   * Create a draft submission to patch against.
+   */
+  private function createDraftSubmission(): void {
+    ApplicationSubmission::create([
+      'id' => 1,
+      'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
+      'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
+      'sub' => '123345678-abcd-1234-ab12-abcdefgh',
+      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
+      'draft' => TRUE,
+      'langcode' => 'fi',
+      'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
+      'side_document_id' => $this->sideDocumentId,
+      'application_number' => $this->applicationNumber,
+      'created' => '1765430954',
+      'changed' => '1765430954',
+    ])->save();
+  }
+
+  /**
+   * Build and dispatch a PATCH request to the draft endpoint.
+   */
+  private function dispatchPatch(): Response {
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $content = json_encode([
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
+    ]) ?: NULL;
+
+    $uri = "/applications/$form_identifier/$this->applicationNumber";
+    $request = Request::create($uri, "PATCH", [], [], [], [], $content);
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    return $this->container->get('http_kernel')->handle($request);
+  }
+
+  /**
+   * A successful PATCH saves the draft and returns the side document.
+   */
+  public function testDraftPatch(): void {
+    $this->createDraftSubmission();
+
+    // Capture the content of the documents that get saved during the request.
+    $savedContent = [];
+
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->exactly(2))
+      ->method('updateExistingDocument')
+      ->willReturnCallback(function (AtvDocument $document) use (&$savedContent) {
+        $savedContent[$document->getId()] = $document->getContent();
+        return $document;
+      });
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $response = $this->dispatchPatch();
+
+    $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+    $this->assertEquals(200, $response->getStatusCode());
+
+    // Both the side document and the application document were saved.
+    $this->assertEqualsCanonicalizing([$this->sideDocumentId, 'test-id'], array_keys($savedContent));
+
+    // The side document was saved with the form data from the request.
+    $formData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE);
+    $this->assertSame($formData, $savedContent[$this->sideDocumentId]);
+
+    // The response returns the saved side document, carrying the same content.
+    $responseData = json_decode($response->getContent() ?: '', TRUE);
+    $this->assertSame($formData, $responseData['content']);
+  }
+
 }

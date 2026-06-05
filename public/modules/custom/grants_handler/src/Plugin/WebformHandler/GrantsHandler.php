@@ -1338,7 +1338,7 @@ submit the application only after you have provided all the necessary informatio
         $this->applicationNumber
       );
     }
-    catch (\Exception $e) {
+    catch (\throwable $e) {
       // File uploads failed. Halt the submission so the application is not
       // marked SUBMITTED or uploaded to the integration in an inconsistent
       // state. confirmForm() checks this flag, aborts the upload and shows

@@ -2156,16 +2156,6 @@ parameters:
 			path: public/modules/custom/grants_attachments/src/AttachmentHandler.php
 
 		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\AttachmentHandler\\:\\:getSelectedAccount\\(\\) has parameter \\$profileContent with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/AttachmentHandler.php
-
-		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\AttachmentHandler\\:\\:getSelectedAccount\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/AttachmentHandler.php
-
-		-
 			message: "#^Method Drupal\\\\grants_attachments\\\\AttachmentHandler\\:\\:handleAttachment\\(\\) has parameter \\$attachment with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/AttachmentHandler.php
