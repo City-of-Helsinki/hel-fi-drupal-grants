@@ -36,8 +36,7 @@
           "boolean.no",
           "boolean.yes"
         ],
-        "ui:widget": "radio",
-        "ui:help": "is_festival_or_event.help"
+        "ui:widget": "radio"
       },
       "project_short_description": {
         "ui:options": {
