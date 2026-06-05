@@ -2,6 +2,7 @@
   "definitions": {
     "_other_compensation_item": {
       "type": "object",
+      "title": "other_compensation.title",
       "properties": {
         "other_compensation_issuer": {
           "title": "other_compensation_issuer.title",
@@ -41,6 +42,7 @@
     },
     "_other_applied_compensation_item": {
       "type": "object",
+      "title": "other_applied_compensation.title",
       "properties": {
         "other_applied_compensation_issuer": {
           "title": "other_compensation_issuer.title",
@@ -198,28 +200,16 @@
             "apply_for_rental_grant": {
               "title": "apply_for_rental_grant.title",
               "description": "apply_for_rental_grant.description",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": ["true","false"]
             },
             "apply_for_operating_advance": {
               "title": "apply_for_operating_advance.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": [true, false]
             },
             "apply_for_salary_advance": {
               "title": "apply_for_salary_advance.title",
               "description": "apply_for_salary_advance.description",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": [true, false]
             }
           },
           "required": [
@@ -234,11 +224,7 @@
           "properties": {
             "have_received_other_compensations": {
               "title": "other_compensations_section_have_received_other_compensations.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": [true, false]
             }
           },
           "required": ["have_received_other_compensations"],
@@ -249,7 +235,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -263,7 +250,8 @@
                     },
                     "minItems": 1
                   }
-                }
+                },
+                "required": ["other_compensations"]
               }
             }
           ]
@@ -275,11 +263,7 @@
           "properties": {
             "have_applied_other_compensations": {
               "title": "have_applied_other_compensations.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": [true, false]
             }
           },
           "required": ["have_applied_other_compensations"],
@@ -290,7 +274,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -304,7 +289,8 @@
                     },
                     "minItems": 1
                   }
-                }
+                },
+                "required": ["other_applied_compensations"]
               }
             }
           ]
@@ -315,27 +301,27 @@
       "type": "object",
       "properties": {
         "members_section": {
-          "title": "members_active_participants_section.title",
+          "title": "members_active_fieldset.legend",
           "type": "object",
           "properties": {
             "members_fieldset": {
               "type": "object",
-              "title": "members_fieldset.legend",
+              "title": "members_active_fieldset.legend",
               "properties": {
                 "members_0_6": {
-                  "title": "age_group_0_6.title",
+                  "title": "members_0_6.title",
                   "type": "integer"
                 },
                 "members_0_6_helsinki": {
-                  "title": "of_whom_helsinki_residents.title",
+                  "title": "members_helsinki.title",
                   "type": "integer"
                 },
                 "members_7_28": {
-                  "title": "age_group_7_28.title",
+                  "title": "members_7_28.title",
                   "type": "integer"
                 },
                 "members_7_28_helsinki": {
-                  "title": "of_whom_helsinki_residents.title",
+                  "title": "members_helsinki.title",
                   "type": "integer"
                 },
                 "members_others": {
@@ -343,7 +329,7 @@
                   "type": "integer"
                 },
                 "members_others_helsinki": {
-                  "title": "of_whom_helsinki_residents.title",
+                  "title": "members_helsinki.title",
                   "type": "integer"
                 }
               },
@@ -386,11 +372,7 @@
             },
             "digital_activity_only": {
               "title": "digital_activity_only.title",
-              "enum": [
-                true,
-                false
-              ],
-              "default": false
+              "enum": ["true","false"]
             }
           },
           "required": ["digital_activity_only"],
@@ -401,7 +383,8 @@
                   "digital_activity_only": {
                     "const": false
                   }
-                }
+                },
+                "required": ["digital_activity_only"]
               },
               "then": {
                 "properties": {
@@ -415,7 +398,8 @@
                     },
                     "minItems": 1
                   }
-                }
+                },
+                "required": ["premises"]
               }
             }
           ]
@@ -538,7 +522,7 @@
                 "type": "object",
                 "properties": {
                   "salary_not_applicable_text": {
-                    "title": "salary_not_applicable_text.title",
+                    "title": "not_applicable_text.title",
                     "type": "array",
                     "items": [
                       {
@@ -901,7 +885,7 @@
                 "type": "object",
                 "properties": {
                   "rental_not_applicable_text": {
-                    "title": "rental_not_applicable_text.title",
+                    "title": "not_applicable_text.title",
                     "type": "array",
                     "items": [
                       {

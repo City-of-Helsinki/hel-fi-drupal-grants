@@ -15,11 +15,6 @@
       "fi": "Vuokra-avustushakemuksen tiedot",
       "sv": "Uppgifter i ansökan om hyresunderstöd"
     },
-    "subventions.2.title": {
-      "en": "Hiring grant",
-      "fi": "Palkkausavustus",
-      "sv": "Löneunderstöd"
-    },
     "subventions_section.description": {
       "en": "If you also apply for a rental grant, include the amount of the rental grant in the application sum of the operating grant.",
       "fi": "Jos haet myös vuokra-avustusta, sisällytä vuokra-avustuksen määrä toiminta-avustuksen hakusummaan.",
@@ -51,7 +46,7 @@
       "sv": "Förskott på understödet kan beviljas till en förening som har fått understöd under föregående år (det vill säga året före ansökningsåret). Förskottet kan uppgå till högst hälften av det tidigare beviljade understödet. Observera att förskottet återkrävs om föreningen inte beviljas det egentliga understödet. Om du vill ge ytterligare information om förskottet, kan du göra det i tilläggsinformationsfältet i ansökan."
     },
     "participation_section.title": {
-      "en": "Young people’s participation times in the activities of the association",
+      "en": "Young people's participation times in the activities of the association",
       "fi": "Nuorten osallistumiskerrat yhdistyksen toimintaan",
       "sv": "Antal ungas deltagande i föreningens verksamhet"
     },
@@ -140,12 +135,7 @@
       "fi": "Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?",
       "sv": "Hur deltar unga i planeringen av föreningens verksamhet och beslutsfattandet angående verksamheten?"
     },
-    "salary_not_applicable_text.title": {
-      "en": "You do not need to fill out this page",
-      "fi": "Sinun ei tarvitse täyttää tätä sivua",
-      "sv": "Du behöver inte fylla i denna sida"
-    },
-    "rental_not_applicable_text.title": {
+    "not_applicable_text.title": {
       "en": "You do not need to fill out this page",
       "fi": "Sinun ei tarvitse täyttää tätä sivua",
       "sv": "Du behöver inte fylla i denna sida"
@@ -265,26 +255,6 @@
       "fi": "Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat säännöt, tilinpäätös edelliseltä päättyneeltä tilikaudelta sisältäen laajan tuloslaskelman, toimintakertomus sekä tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen pöytäkirja, jossa tilinpäätös on vahvistettu ja vastuuvapaus käsitelty. Lisäksi pakollisia liitteitä ovat talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät. Palkkausavustushakemuksen liitteenä tulee lisäksi olla piirijärjestön tai siihen verrattavan järjestön alaisten osastojen /ryhmien nimet ja jäsenmäärät.",
       "sv": "De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens gällande stadgar, bokslutet för den föregående avslutade räkenskapsperioden inklusive den omfattande resultaträkningen, verksamhetsberättelsen samt den undertecknade revisionsberättelsen och protokollet från det möte där bokslutet fastställdes och ansvarsfriheten behandlades. Dessutom är budgeten och verksamhetsplanen för det år för vilket understödet ansöks obligatoriska bilagor. Stadgarna ska vara godkända av Patent- och registerstyrelsen. Som bilaga till ansökan om löneunderstöd ska dessutom finnas namn och medlemsantal för de avdelningar/grupper som lyder under distriktsorganisationen eller en jämförbar organisation."
     },
-    "members_active_participants_section.title": {
-      "en": "The number of active participants or members of the association",
-      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
-      "sv": "Antal aktiva deltagare eller medlemmar i föreningen"
-    },
-    "age_group_0_6.title": {
-      "en": "0-6-year-olds",
-      "fi": "0 - 6 vuotiaat",
-      "sv": "0-6-åringar"
-    },
-    "age_group_7_28.title": {
-      "en": "7-28- year-olds",
-      "fi": "7 - 28 vuotiaat",
-      "sv": "7-28- åringar"
-    },
-    "of_whom_helsinki_residents.title": {
-      "en": "of whom Helsinki residents",
-      "fi": "Joista helsinkiläisiä",
-      "sv": "varav helsingforsare"
-    },
     "negative_expands.title": {
       "sv": "Ett negativt svar öppnar ytterligare en fråga"
     },
@@ -293,11 +263,6 @@
     },
     "additional_information.title": {
       "sv": "Rubrik till tilläggsfrågan"
-    },
-    "members_fieldset.legend": {
-      "en": "Active participants/members",
-      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
-      "sv": "Aktiva deltagare/medlemmar"
     }
   }
 }

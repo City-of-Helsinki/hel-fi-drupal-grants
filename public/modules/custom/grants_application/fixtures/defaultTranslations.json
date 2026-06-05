@@ -510,6 +510,26 @@
       "fi": "Tarkemmat tiedot",
       "sv": "Mer detaljerad information"
     },
+    "members_0_6.title": {
+      "en": "0-6 year olds",
+      "fi": "0-6 -vuotiaat",
+      "sv": "0-6-åringar"
+    },
+    "members_7_28.title": {
+      "en": "7-28 year olds",
+      "fi": "7-28 -vuotiaat",
+      "sv": "7-28-åringar"
+    },
+    "members_helsinki.title": {
+      "en": "of whom Helsinki residents",
+      "fi": "joista helsinkiläisiä",
+      "sv": "varav helsingforsare"
+    },
+    "members_others.title": {
+      "en": "Other participants",
+      "fi": "Muut osallistujat",
+      "sv": "Övriga deltagare"
+    },
     "members_applicant_community_global.description": {
       "en": "How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
       "fi": "Kuinka monta jäsenmaksun maksanutta yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
@@ -560,6 +580,11 @@
       "fi": "Jäsenmäärä",
       "sv": "Medlemskap"
     },
+    "members_active_fieldset.legend": {
+      "en": "Active participants/members",
+      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
+      "sv": "Aktiva deltagare/medlemmar"
+    },
     "minutes_of_the_annual_meeting.description": {
       "en": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association’s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.",
       "fi": "Liitä tähän yhteisön kokouksen pöytäkirja, jossa edellisen päättyneen tilikauden tilinpäätös on vahvistettu ja vastuuvapaus myönnetty. Yhdistyksillä tilinpäätös vahvistetaan aina yhdistyksen jäsenkokouksessa. Mikäli yhteisöltä ei edellytetä vuosikokousta tai muuta yhteisön kokousta, jossa tilinpäätös tulisi vahvistaa ja vastuuvapaus myöntää, ei tätä liitettä tarvitse toimittaa.",
@@ -594,6 +619,11 @@
       "en": "Does the project test new kinds of partnerships or develop new operating models? What kind?",
       "fi": "Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?",
       "sv": "Prövas nya slags partnerskap i projektet eller utvecklas nya verksamhetsmodeller? Hurdana?"
+    },
+    "other_applied_compensation.title": {
+      "en": "Applied grant",
+      "fi": "Haettu avustus",
+      "sv": "Ansökt understöd"
     },
     "other_applied_compensation_amount.printable_title": {
       "en": "The amount of the grant applied for (€)",
@@ -639,6 +669,11 @@
       "en": "Add new received grant",
       "fi": "Lisää uusi myönnetty avustus",
       "sv": "Lägg till understöd som beviljats"
+    },
+    "other_compensation.title": {
+      "en": "Received grant",
+      "fi": "Myönnetty avustus",
+      "sv": "Bidrag beviljat"
     },
     "other_compensation_amount.printable_title": {
       "en": "Amount of grant granted (€)",
@@ -805,6 +840,11 @@
       "fi": "Toiminta-avustus",
       "sv": "Verksamhetsunderstöd"
     },
+    "subventions.2.title": {
+      "en": "Hiring grant",
+      "fi": "Palkkausavustus",
+      "sv": "Löneunderstöd"
+    },
     "subventions.4.title": {
       "en": "Project grant",
       "fi": "Projektiavustus",
@@ -894,11 +934,6 @@
       "en": "Types of grant",
       "fi": "Avustuslajit",
       "sv": "Understödskategorier"
-    },
-    "members_others.title": {
-      "en": "Other participants",
-      "fi": "Muut osallistujat",
-      "sv": "Övriga deltagare"
     },
     "postal_code.title": {
       "en": "Postal code",
