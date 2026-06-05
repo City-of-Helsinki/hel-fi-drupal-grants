@@ -82,6 +82,7 @@
     },
     "_premise_item": {
       "type": "object",
+      "title": "premises.title",
       "properties": {
         "premise_location": {
           "title": "premise_location.title",
@@ -95,6 +96,7 @@
     },
     "_membership_item": {
       "type": "object",
+      "title": "membership_item.title",
       "properties": {
         "membership_organization_name": {
           "title": "membership_organization_name.title",
@@ -109,6 +111,7 @@
     },
     "_rented_premise_item": {
       "type": "object",
+      "title": "rented_premise_item.title",
       "properties": {
         "rented_premise_address": {
           "title": "community_address.title",
@@ -136,7 +139,7 @@
           "type": "string"
         },
         "rented_premise_usage": {
-          "title": "purpose_section.title",
+          "title": "rented_premise_usage.title",
           "type": "string"
         },
         "rented_premise_days_per_week": {
@@ -200,7 +203,8 @@
             "apply_for_rental_grant": {
               "title": "apply_for_rental_grant.title",
               "description": "apply_for_rental_grant.description",
-              "enum": ["true","false"]
+              "enum": [true, false],
+              "default": false
             },
             "apply_for_operating_advance": {
               "title": "apply_for_operating_advance.title",
@@ -213,6 +217,7 @@
             }
           },
           "required": [
+            "apply_for_rental_grant",
             "apply_for_operating_advance",
             "apply_for_salary_advance"
           ]
@@ -372,7 +377,7 @@
             },
             "digital_activity_only": {
               "title": "digital_activity_only.title",
-              "enum": ["true","false"]
+              "enum": [true, false]
             }
           },
           "required": ["digital_activity_only"],
@@ -581,6 +586,16 @@
               "items": [
                 {
                   "title": "nuortoimintapalkka_required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "multiple_attachments_help.value",
                   "type": "null"
                 }
               ]
@@ -824,9 +839,11 @@
                   "apply_for_rental_grant": {
                     "const": true
                   }
-                }
+                },
+                "required": ["apply_for_rental_grant"]
               }
-            }
+            },
+            "required": ["subventions_section"]
           }
         }
       },
@@ -838,7 +855,6 @@
                 "properties": {
                   "rented_premises": {
                     "type": "array",
-                    "title": "rented_premises.title",
                     "items": {
                       "$ref": "#/definitions/_rented_premise_item"
                     },
@@ -851,7 +867,7 @@
               "rental_additional_information_section": {
                 "properties": {
                   "rental_additional_information": {
-                    "title": "additional_information.title",
+                    "title": "rental_additional_information.title",
                     "type": "string"
                   }
                 }
@@ -871,9 +887,11 @@
                   "apply_for_rental_grant": {
                     "const": false
                   }
-                }
+                },
+                "required": ["apply_for_rental_grant"]
               }
-            }
+            },
+            "required": ["subventions_section"]
           }
         }
       },

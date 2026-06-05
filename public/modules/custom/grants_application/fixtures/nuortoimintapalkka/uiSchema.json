@@ -258,6 +258,9 @@
       "required_attachments_help": {
         "ui:field": "textParagraph"
       },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
       "formerly_provided_attachments_help": {
         "ui:field": "textParagraph"
       },
@@ -266,11 +269,6 @@
         "ui:field": "textParagraph"
       },
       "community_rules": {
-        "ui:options": {
-          "tooltipLabel": "community_rules.title",
-          "tooltipButtonLabel": "community_rules.title",
-          "tooltipText": "community_rules.description"
-        },
         "community_rules_file": {
           "misc:file-type": 0,
           "misc:required": true,

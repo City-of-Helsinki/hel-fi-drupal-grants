@@ -6,7 +6,7 @@
       "sv": "Ungdomsverksamhet, ansökan om verksamhets- och löneunderstöd"
     },
     "salary_info_step.title": {
-      "en": "Salary information",
+      "en": "Hiring information",
       "fi": "Palkkaustiedot",
       "sv": "Anställningsuppgifter"
     },
@@ -16,9 +16,9 @@
       "sv": "Uppgifter i ansökan om hyresunderstöd"
     },
     "subventions_section.description": {
-      "en": "If you also apply for a rental grant, include the amount of the rental grant in the application sum of the operating grant.",
+      "en": "If you are also applying for a facility rent grant, include the rent grant amount in the application amount of the operating grant.",
       "fi": "Jos haet myös vuokra-avustusta, sisällytä vuokra-avustuksen määrä toiminta-avustuksen hakusummaan.",
-      "sv": "Om du också ansöker om hyresunderstöd, inkludera hyresunderstödets belopp i ansökningssumman för verksamhetsunderstödet."
+      "sv": "Om du också ansöker om hyresunderstöd, inkludera hyresunderstödets belopp i verksamhetsunderstödets ansökningsbelopp."
     },
     "apply_for_rental_grant.title": {
       "en": "I am applying for a facility rent grant",
@@ -28,7 +28,7 @@
     "apply_for_rental_grant.description": {
       "en": "A facility rent grant is applied for in connection with an operating grant. Include the applied amount of rent grant in the application amount of the operating grant. Also remember to mark that you are applying for an operating grant.",
       "fi": "Vuokra-avustusta haetaan toiminta-avustuksen yhteydessä. Sisällytä vuokra-avustuksen hakusumma toiminta-avustuksen hakusummaan. Muista myös merkitä hakevasi toiminta-avustusta.",
-      "sv": "Hyresunderstöd ansöks i samband med verksamhetsunderstödet. Inkludera ansökningssumman för hyresunderstödet i ansökningssumman för verksamhetsunderstödet. Kom också ihåg att ansöka om verksamhetsunderstöd."
+      "sv": "Hyresunderstödet söks i samband med verksamhetsunderstödet. Inkludera hyresunderstödets ansökningsbelopp i verksamhetsunderstödets ansökningsbelopp. Kom också ihåg att anteckna att du ansöker om verksamhetsunderstöd."
     },
     "apply_for_operating_advance.title": {
       "en": "I am applying for operating grant advance",
@@ -45,6 +45,11 @@
       "fi": "Avustusennakkoa voi saada edellisenä vuonna (tarkoittaa hakuvuotta edeltävää vuotta) avustusta saanut yhdistys. Ennakkoa voi saada enintään puolet edellisen avustuksen määrästä. Huomioithan, että ennakko peritään takaisin, mikäli yhdistys ei saa varsinaista avustusta. Jos haluat kertoa lisätietoja ennakkoon liittyen, sen voi tehdä hakemuksen lisätietokohdassa.",
       "sv": "Förskott på understödet kan beviljas till en förening som har fått understöd under föregående år (det vill säga året före ansökningsåret). Förskottet kan uppgå till högst hälften av det tidigare beviljade understödet. Observera att förskottet återkrävs om föreningen inte beviljas det egentliga understödet. Om du vill ge ytterligare information om förskottet, kan du göra det i tilläggsinformationsfältet i ansökan."
     },
+    "confirmed_financial_statements.description": {
+      "en": "<p>The association attaches here the financial statements that have been approved and signed at the association's general meeting. The financial statements must include an income statement and a balance sheet. A detailed income statement showing a more specific breakdown of costs must also be included.</p><p>The financial period of the entity may be the calendar year or another defined period. For associations, the financial period is specified in their own rules.</p>",
+      "fi": "<p>Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun ja allekirjoitetun tilinpäätöksen. Tilinpäätöksen täytyy sisältää tuloslaskelma ja tase. Mukana tulee olla myös laaja tuloslaskelma, josta selviää tarkempi kustannusten erittely.</p><p>Yhteisön tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa säännöissä lukee mikä on yhdistyksen tilikausi.</p>",
+      "sv": "<p>Föreningen bifogar här det bokslut som har fastställts och undertecknats vid föreningens medlemsmöte. Bokslutet ska innehålla resultaträkning och balansräkning. En detaljerad resultaträkning som visar en mer specifik kostnadsfördelning ska också ingå.</p><p>Föreningens räkenskapsperiod kan vara ett kalenderår eller någon annan period. I föreningens stadgar anges vilken räkenskapsperiod som gäller.</p>"
+    },
     "participation_section.title": {
       "en": "Young people's participation times in the activities of the association",
       "fi": "Nuorten osallistumiskerrat yhdistyksen toimintaan",
@@ -56,19 +61,19 @@
       "sv": "Alla deltaganden av personer under 29 år under föregående kalenderår"
     },
     "participation_total.description": {
-      "en": "Record here all participation occasions of under-29-year-olds in the activities of your association/group during the previous year in total. A participation occasion means each visitor to each event, occasion, activity and the like. This figure also includes digital participation occasions.",
+      "en": "Record here the total number of times people aged under 29 have attended the activities of your association/group during the previous year. This means every time a person attended an event, activity or something similar. This figure also includes digital attendance.",
       "fi": "Kirjaa tähän kaikki alle 29-vuotiaiden osallistumiskerrat yhdistyksenne/ryhmänne toimintaan edellisen vuoden aikana yhteensä. Osallistumiskerralla tarkoitetaan jokaisen tapahtuman, tilaisuuden, toiminnan ja vastaavan jokaista kävijää. Tähän lukuun sisältyy myös digitaaliset osallistumiskerrat.",
-      "sv": "Anteckna här alla deltagandetillfällen för personer under 29 år i er förenings/grupps verksamhet under föregående år totalt. Med deltagandetillfälle avses varje besökare vid varje evenemang, tillställning, verksamhet och liknande. Denna siffra inkluderar även digitala deltagandetillfällen."
+      "sv": "Anteckna här det sammanlagda antalet deltagartillfällen för personer under 29 år i föreningens/gruppens verksamhet under det föregående året. Med deltagartillfälle avses varje besökare i varje evenemang, tillställning, verksamhet och motsvarande. I siffran ingår också digitalt deltagande."
     },
     "participation_digital.title": {
-      "en": "of which digital participation times of persons under 29 years of age amounted to",
+      "en": "Of which digital participation times of persons under 29 years of age amounted to",
       "fi": "Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli",
-      "sv": "varav digitala deltaganden av personer under 29 år"
+      "sv": "Varav digitala deltaganden av personer under 29 år"
     },
     "participation_digital.description": {
-      "en": "Specify here all digital participation occasions of under-29-year-olds in total. A digital participation occasion means a young person taking part in an event, occasion, activity or the like that takes place online or in a digital environment. A participation occasion means each participant in each event, occasion, activity or the like.",
+      "en": "Specify here the total number of digital attendances by people aged under 29. A single digital attendance means a young person who attended an event or activity held online or in a digital operating environment. This means every time a person attended an event, activity or something similar.",
       "fi": "Erittele tähän kaikki alle 29-vuotiaiden digitaaliset osallistumiskerrat yhteensä. Digitaalisella osallistumiskerralla tarkoitetaan verkossa tai digitaalisessa toimintaympäristössä tapahtuvaan tapahtumaan, tilaisuuteen, toimintaan tai vastaavaan osaa ottavaa nuorta. Osallistumiskerralla tarkoitetaan jokaisen tapahtuman, tilaisuuden, toiminnan tai vastaavan jokaista osanottajaa.",
-      "sv": "Specificera här alla digitala deltagandetillfällen för personer under 29 år totalt. Med digitalt deltagandetillfälle avses en ung person som deltar i ett evenemang, en tillställning, verksamhet eller liknande som sker på nätet eller i en digital verksamhetsmiljö."
+      "sv": "Specificera här det sammanlagda antalet digitala deltagartillfällen för personer under 29 år. Med ett digitalt deltagartillfälle avses ungdomar som deltar i evenemang, tillställningar, verksamhet och motsvarande som anordnas på internet. Med deltagartillfälle avses varje deltagare i varje evenemang, tillställning, verksamhet eller motsvarande."
     },
     "premises_section.title": {
       "en": "Places where the association organised activities for young people during the previous year",
@@ -81,14 +86,19 @@
       "sv": "Vi ordnade endast verksamhet i den digitala miljön"
     },
     "digital_activity_only.description": {
-      "en": "Select \"Yes\" if you organised activities only in a digital environment. Select \"No\" if you organised activities only at a physical location or organised activities both in a digital and a physical environment. Enter the names and postal codes of the physical premises in the fields that open below.",
+      "en": "Select “Yes” if you only organised activities in a digital environment. Select “No” if you only organised activities on a physical site or in both digital and physical environments. Enter the names and postcodes of the physical premises in the fields below.",
       "fi": "Valitse ”Kyllä”, mikäli järjestitte toimintaa ainoastaan digitaalisessa ympäristössä. Valitse ”Ei”, mikäli järjestitte toimintaa vain fyysisessä toimipaikassa tai järjestitte toimintaa sekä digitaalisessa että fyysisessä ympäristössä. Merkitse fyysisten toimitilojen nimet ja postinumerot alle aukeaviin kenttiin.",
-      "sv": "Välj ”Ja” om ni ordnade verksamhet enbart i en digital miljö. Välj ”Nej” om ni ordnade verksamhet endast på en fysisk plats eller ordnade verksamhet i både en digital och en fysisk miljö. Ange de fysiska lokalernas namn och postnummer i fälten som öppnas nedan."
+      "sv": "Välj ”Ja” om ni endast ordnade verksamhet i en digital miljö. Välj ”Nej” om ni endast ordnade verksamhet vid ett fysiskt verksamhetsställe eller ordnade verksamhet både i en digital miljö och vid ett fysiskt verksamhetsställe. Skriv namnen på de fysiska verksamhetsställena och postnumren i fälten som öppnas nedan."
     },
     "premise_location.title": {
       "en": "Location",
       "fi": "Toimipaikka",
       "sv": "Verksamhetsställe"
+    },
+    "premises.title": {
+      "en": "We organised activities for young people at the following locations",
+      "fi": "Järjestimme toimintaa nuorille seuraavissa paikoissa",
+      "sv": "Vi ordnade verksamhet för unga på följande platser"
     },
     "premises.add": {
       "en": "Add new place",
@@ -119,6 +129,11 @@
       "en": "Fee, euros",
       "fi": "Jäsenmaksu, euroa",
       "sv": "Medlemsavgift, euro"
+    },
+    "membership_item.title": {
+      "en": "Membership",
+      "fi": "Jäsenyys",
+      "sv": "Medlemskap"
     },
     "memberships.add": {
       "en": "Add new membership",
@@ -190,10 +205,10 @@
       "fi": "Vuokrattu tila",
       "sv": "Hyreslokal"
     },
-    "rented_premises.title": {
-      "en": "Information on the rented premises",
+    "rented_premise_item.title": {
+      "en": "Details of the rented facility",
       "fi": "Vuokratun tilan tiedot",
-      "sv": "Uppgifter om den hyrda lokalen"
+      "sv": "Uppgifter om hyreslokal"
     },
     "community_address.title": {
       "en": "Street address",
@@ -251,18 +266,19 @@
       "sv": "Lägg till en ny hyrd lokal"
     },
     "nuortoimintapalkka_required_attachments_help.value": {
-      "en": "The mandatory attachments to the operating and hiring grant application are the association's valid rules, the financial statements for the previous completed accounting period including the comprehensive profit and loss account, the annual report and the audit or performance audit report signed, and the minutes of the meeting at which the financial statements were confirmed and discharge from liability discussed. In addition, the mandatory attachments are the budget and action plan for the year for which the grant is being applied for. The rules must be approved by the Finnish Patent and Registration Office. The attachments to the hiring grant application must also include the names and numbers of members of the departments/groups under the district organisation or a comparable organisation.",
+      "en": "<p>The required attachments to the application for an operating and hiring grant are the association's valid rules, the confirmed financial statements from the most recently completed financial period including a detailed income statement, the annual report and the signed audit or performance audit report as well as the minutes of the meeting where the financial statements were confirmed and the discharge from liability processed.</p><p>In addition, a budget and action plan for the year for which the grant is being applied for are mandatory attachments. The rules must be approved by the Finnish Patent and Registration Office.</p><p>For the hiring grant application, a list of the names and membership numbers of the departments/groups under the district organization or a comparable organization must also be attached.</p>",
       "fi": "Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat säännöt, tilinpäätös edelliseltä päättyneeltä tilikaudelta sisältäen laajan tuloslaskelman, toimintakertomus sekä tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen pöytäkirja, jossa tilinpäätös on vahvistettu ja vastuuvapaus käsitelty. Lisäksi pakollisia liitteitä ovat talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät. Palkkausavustushakemuksen liitteenä tulee lisäksi olla piirijärjestön tai siihen verrattavan järjestön alaisten osastojen /ryhmien nimet ja jäsenmäärät.",
-      "sv": "De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens gällande stadgar, bokslutet för den föregående avslutade räkenskapsperioden inklusive den omfattande resultaträkningen, verksamhetsberättelsen samt den undertecknade revisionsberättelsen och protokollet från det möte där bokslutet fastställdes och ansvarsfriheten behandlades. Dessutom är budgeten och verksamhetsplanen för det år för vilket understödet ansöks obligatoriska bilagor. Stadgarna ska vara godkända av Patent- och registerstyrelsen. Som bilaga till ansökan om löneunderstöd ska dessutom finnas namn och medlemsantal för de avdelningar/grupper som lyder under distriktsorganisationen eller en jämförbar organisation."
+      "sv": "<p>De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, bokslutet från den senaste avslutade räkenskapsperioden inklusive en omfattande resultaträkning, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats.</p><p>Övriga obligatoriska bilagor är budgeten och verksamhetsplanen för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.</p><p>Till ansökan om löneunderstöd ska även bifogas namnen på de avdelningar/grupper som hör till distriktsorganisationen eller motsvarande organisation samt deras medlemsantal.</p>"
     },
-    "negative_expands.title": {
-      "sv": "Ett negativt svar öppnar ytterligare en fråga"
-    },
-    "purpose_section.title": {
+    "rented_premise_usage.title": {
+      "en": "Purpose of use",
+      "fi": "Käyttötarkoitus",
       "sv": "Användning"
     },
-    "additional_information.title": {
-      "sv": "Rubrik till tilläggsfrågan"
+    "rental_additional_information.title": {
+      "en": "Additional information",
+      "fi": "Lisätiedot",
+      "sv": "Ytterligare information"
     }
   }
 }
