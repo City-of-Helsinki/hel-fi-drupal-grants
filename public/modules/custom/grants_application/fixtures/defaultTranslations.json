@@ -635,6 +635,11 @@
       "fi": "Lisää uusi myönnetty avustus",
       "sv": "Lägg till understöd som beviljats"
     },
+    "other_compensation.title": {
+      "en": "Received grant",
+      "fi": "Myönnetty avustus",
+      "sv": "Bidrag beviljat"
+    },
     "other_compensation_amount.printable_title": {
       "en": "Amount of grant granted (€)",
       "fi": "Myönnetyn avustuksen summa (€)",
@@ -644,11 +649,6 @@
       "en": "Amount of grant granted",
       "fi": "Myönnetyn avustuksen summa",
       "sv": "Beviljat bidragsbelopp"
-    },
-    "other_compensation.title": {
-      "en": "Received grant",
-      "fi": "Myönnetty avustus",
-      "sv": "Bidrag beviljat"
     },
     "other_compensation_description.description": {
       "en": "Give a brief description, for what purpose has the grant been granted?",
