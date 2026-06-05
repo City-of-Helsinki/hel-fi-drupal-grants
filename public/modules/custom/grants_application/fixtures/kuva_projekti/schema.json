@@ -147,8 +147,8 @@
               "title": "is_festival_or_event.title",
               "description": "is_festival_or_event.help",
               "enum": [
-                true,
-                false
+                false,
+                true
               ]
             },
             "project_short_description": {
