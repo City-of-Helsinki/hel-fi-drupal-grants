@@ -368,7 +368,7 @@
           "type": "object",
           "properties": {
             "first_venue": {
-              "title": "other_venues_fieldset.title",
+              "title": "first_venue_fieldset.title",
               "type": "object",
               "properties": {
                 "premise_name": {

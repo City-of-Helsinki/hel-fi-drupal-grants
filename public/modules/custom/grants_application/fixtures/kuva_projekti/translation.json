@@ -352,6 +352,11 @@
       "en": "City owns the property",
       "sv": "Stadens eget utrymme"
     },
+    "first_venue_fieldset.title": {
+      "fi": "Ensimmäisen yleisölle avoimen tilaisuuden paikka Helsingissä",
+      "en": "Location of the first public event in Helsinki",
+      "sv": "Platsen för det första öppna programmet i Helsingfors"
+    },
     "other_venues_fieldset.title": {
       "fi": "Muut tilat",
       "en": "Other premises",
