@@ -488,6 +488,8 @@
           "then": {
             "properties": {
               "artistic_foundations_section": {
+                "title": "artistic_foundations_section.title",
+                "type": "object",
                 "properties": {
                   "project_artistic_basis": {
                     "title": "project_artistic_basis.title",
@@ -689,6 +691,7 @@
         "attachments_section": {
           "title": "attachments_section.title",
           "type": "object",
+          "description": "attachments_section.description",
           "properties": {
             "required_attachments_help": {
               "title": "required_attachments_help.title",
@@ -706,16 +709,6 @@
               "items": [
                 {
                   "title": "multiple_attachments_help.value",
-                  "type": "null"
-                }
-              ]
-            },
-            "formerly_provided_attachments_help": {
-              "title": "formerly_provided_attachments_help.title",
-              "type": "array",
-              "items": [
-                {
-                  "title": "formerly_provided_attachments_help.value",
                   "type": "null"
                 }
               ]

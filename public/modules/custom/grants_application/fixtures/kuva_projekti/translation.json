@@ -615,10 +615,20 @@
       "en": "Further clarification on attachments",
       "sv": "Ytterligare information om bilagorna"
     },
+    "attachments_section.description": {
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
+      "en": "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
+      "sv": "Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan."
+    },
     "required_attachments_help.value": {
       "fi": "<p>Avustushakemuksen käsittelyä varten tarvitaan työryhmän jäsenten ansioluettelot, kun kyseessä on taiteen ammattilaisten hanke.</p><p>Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin myös tiliote tai vastaava asiakirja, josta selviää tilinomistajan nimi ja tilinumero.</p>",
       "en": "<p>For the processing of the grant application, the required attachments are curricula vitae of the members of the working group in the case of a project by art professionals.</p><p>As a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder's name and the account number in the applicant's my data.</p>",
       "sv": "<p>För behandling av ansökan om understöd behövs meritförteckningar för arbetsgruppens medlemmar när det gäller projekt för yrkesmässiga konstutövare.</p><p>För ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter.</p>"
+    },
+    "multiple_attachments_help.title": {
+      "fi": "Usean liitteen toimittaminen",
+      "en": "Submission of several appendices",
+      "sv": "Inlämning av flera bilagor"
     },
     "multiple_attachments_help.value": {
       "fi": "Voit toimittaa useampia työryhmän jäsenten ansioluetteloita erillisinä tiedostoina liittämällä ne Muu liite -kohtaan. Voit halutessasi myös toimittaa useampia liitteitä yhtenä tiedostona.",
