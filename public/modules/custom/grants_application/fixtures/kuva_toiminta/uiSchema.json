@@ -82,8 +82,8 @@
       "have_received_other_compensations": {
         "ui:widget": "radio",
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true
@@ -91,7 +91,8 @@
       },
       "other_compensations": {
         "ui:options": {
-          "addText": "other_compensation.add"
+          "addText": "other_compensation.add",
+          "hideNameFromPrint": true
         },
         "items": {
           "other_compensation_issuer_name": {
