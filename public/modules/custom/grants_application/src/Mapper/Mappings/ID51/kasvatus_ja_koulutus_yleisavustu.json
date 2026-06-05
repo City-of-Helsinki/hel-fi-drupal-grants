@@ -23,6 +23,18 @@
   },
   "compensation.compensationInfo.generalInfoArray.2": {
     "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "totalAmount",
+        "value": "0",
+        "valueType": "float"
+      }
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.3": {
+    "datasource": "form_data",
     "source": "grant_info_step.prior_benefits_usage_section.prior_compensations",
     "mapping_type": "default",
     "data": {
@@ -32,7 +44,6 @@
       "valueType": "string"
     }
   },
-
   "compensation.compensationInfo.compensationArray.0.0": {
     "datasource": "form_data",
     "source": "",
@@ -131,6 +142,15 @@
         "value": "0",
         "valueType": "double"
       }
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsArray": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "otherCompensationsArray": {}
     }
   },
 
