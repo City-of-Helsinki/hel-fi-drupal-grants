@@ -2,6 +2,7 @@
   "definitions": {
     "_other_compensation_item": {
       "type": "object",
+      "title": "other_compensation.title",
       "properties": {
         "other_compensation_issuer": {
           "title": "other_compensation_issuer.title",
@@ -100,11 +101,7 @@
           "properties": {
             "have_received_other_compensations": {
               "title": "other_compensations_section_have_received_other_compensations.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": [true, false]
             }
           },
           "required": ["have_received_other_compensations"],
@@ -115,21 +112,19 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
                   "other_compensations": {
                     "type": "array",
-                    "items": {
-                      "$ref": "#/definitions/_other_compensation_item"
-                    },
-                    "additionalItems": {
-                      "$ref": "#/definitions/_other_compensation_item"
-                    },
+                    "items": {"$ref": "#/definitions/_other_compensation_item"},
+                    "additionalItems": {"$ref": "#/definitions/_other_compensation_item"},
                     "minItems": 1
                   }
-                }
+                },
+                "required": ["other_compensations"]
               }
             }
           ]
@@ -162,11 +157,7 @@
           "properties": {
             "have_received_prior_compensations": {
               "title": "other_compensations_section_have_received_prior_compensations.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": [true, false]
             }
           },
           "required": ["have_received_prior_compensations"],
@@ -177,7 +168,8 @@
                   "have_received_prior_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_prior_compensations"]
               },
               "then": {
                 "properties": {
@@ -187,9 +179,7 @@
                     "minLength": 1
                   }
                 },
-                "required": [
-                  "prior_compensations"
-                ]
+                "required": ["prior_compensations"]
               }
             }
           ]

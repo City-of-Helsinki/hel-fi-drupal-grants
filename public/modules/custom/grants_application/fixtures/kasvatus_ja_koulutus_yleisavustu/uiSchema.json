@@ -26,8 +26,8 @@
     "other_compensations_section": {
       "have_received_other_compensations": {
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true
@@ -76,8 +76,8 @@
     "prior_benefits_usage_section": {
       "have_received_prior_compensations": {
         "ui:enumNames": [
-          "have_received_prior_compensations.no",
-          "have_received_prior_compensations.yes"
+          "have_received_prior_compensations.yes",
+          "have_received_prior_compensations.no"
         ],
         "ui:widget": "radio",
         "ui:options": {
