@@ -368,7 +368,7 @@
           "type": "object",
           "properties": {
             "first_venue": {
-              "title": "venues_in_helsinki_fieldset.title",
+              "title": "other_venues_fieldset.title",
               "type": "object",
               "properties": {
                 "premise_name": {
@@ -395,7 +395,7 @@
               ]
             },
             "venues_fieldset": {
-              "title": "venues_in_helsinki_fieldset.title",
+              "title": "other_venues_fieldset.title",
               "type": "array",
               "items": {
                 "$ref": "#/definitions/_venue_item"
