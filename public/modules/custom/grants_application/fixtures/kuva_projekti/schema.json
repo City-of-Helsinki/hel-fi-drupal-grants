@@ -216,19 +216,19 @@
               "type": "object",
               "properties": {
                 "members_applicant_person_global": {
-                  "title": "members_applicant_person_global.title",
+                  "title": "members_person_global.title",
                   "type": "integer"
                 },
                 "members_applicant_person_local": {
-                  "title": "members_applicant_person_local.title",
+                  "title": "members_person_local.title",
                   "type": "integer"
                 },
                 "members_applicant_community_global": {
-                  "title": "members_applicant_community_global.title",
+                  "title": "members_community_global.title",
                   "type": "integer"
                 },
                 "members_applicant_community_local": {
-                  "title": "members_applicant_community_local.title",
+                  "title": "members_community_local.title",
                   "type": "integer"
                 }
               },
