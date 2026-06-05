@@ -257,18 +257,23 @@
       }
     },
     "accessibility_section": {
-      "project_accessibility": {
+      "project_community": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
-      "project_community": {
+      "project_accessibility": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
       "project_target_audiece": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
-      }
+      },
+      "ui:order": [
+        "project_accessibility",
+        "project_community",
+        "project_target_audiece"
+      ]
     },
     "operations_section": {
       "operations_professionalism": {
@@ -288,7 +293,12 @@
         },
         "ui:widget": "textarea",
         "misc:max-length": 1000
-      }
+      },
+      "ui:order": [
+        "operations_professionalism",
+        "operations_ecology",
+        "operations_partners"
+      ]
     }
   },
   "budget_step": {
