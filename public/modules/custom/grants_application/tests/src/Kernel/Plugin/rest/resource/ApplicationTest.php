@@ -19,6 +19,8 @@ use Drupal\rest\RequestHandler;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,50 +28,38 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\Plugin\rest\resource\Application
- *
- * @group grants_application
  */
+#[Group('grants_application')]
+#[RunTestsInSeparateProcesses]
 final class ApplicationTest extends KernelTestBase {
 
   /**
    * The application submission.
-   *
-   * @var \Drupal\grants_application\Entity\ApplicationSubmission
    */
   private ApplicationSubmission $applicationSubmission;
 
   /**
    * The application number.
-   *
-   * @var string
    */
   private string $applicationNumber = "KERNELTEST-058-0000001";
 
   /**
    * The side document id.
-   *
-   * @var string
    */
   private string $sideDocumentId = 'sidedocu-1111-2222-3333-mentidabcdef';
 
   /**
    * The atv document.
-   *
-   * @var \Drupal\helfi_atv\AtvDocument
    */
   private AtvDocument $atvDocument;
 
   /**
    * The side document.
-   *
-   * @var \Drupal\helfi_atv\AtvDocument
    */
   private AtvDocument $sideDocument;
 
   /**
    * The request handler.
-   *
-   * @var \Drupal\rest\RequestHandler
    */
   protected RequestHandler $requestHandler;
 
@@ -285,7 +275,7 @@ final class ApplicationTest extends KernelTestBase {
     $this->container->set(JsonMapperService::class, $jsonMapperService);
 
     $integration = $this->createMock(Avus2Integration::class);
-    $integration->expects($this->any())->method('sendToAvus2')->willReturn(TRUE);
+    $integration->expects($this->any())->method('sendToAvus2');
     $this->container->set(Avus2Integration::class, $integration);
 
     $eventDispatcher = $this->createMock(EventDispatcherInterface::class);

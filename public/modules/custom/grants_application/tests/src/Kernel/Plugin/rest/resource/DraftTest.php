@@ -18,6 +18,8 @@ use Drupal\rest\RequestHandler;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,50 +27,33 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\Plugin\rest\resource\Application
- *
- * @group grants_application
  */
+#[Group('grants_application')]
+#[RunTestsInSeparateProcesses]
 final class DraftTest extends KernelTestBase {
 
   /**
-   * The application submission.
-   *
-   * @var \Drupal\grants_application\Entity\ApplicationSubmission
-   */
-  private ApplicationSubmission $applicationSubmission;
-
-  /**
    * The application number.
-   *
-   * @var string
    */
   private string $applicationNumber = "KERNELTEST-058-0000001";
 
   /**
    * The side document id.
-   *
-   * @var string
    */
   private string $sideDocumentId = 'sidedocu-1111-2222-3333-mentidabcdef';
 
   /**
    * The atv document.
-   *
-   * @var \Drupal\helfi_atv\AtvDocument
    */
   private AtvDocument $atvDocument;
 
   /**
    * The side document.
-   *
-   * @var \Drupal\helfi_atv\AtvDocument
    */
   private AtvDocument $sideDocument;
 
   /**
    * The request handler.
-   *
-   * @var \Drupal\rest\RequestHandler
    */
   protected RequestHandler $requestHandler;
 
@@ -284,7 +269,7 @@ final class DraftTest extends KernelTestBase {
     $this->container->set(JsonMapperService::class, $jsonMapperService);
 
     $integration = $this->createMock(Avus2Integration::class);
-    $integration->expects($this->any())->method('sendToAvus2')->willReturn(TRUE);
+    $integration->expects($this->any())->method('sendToAvus2');
     $this->container->set(Avus2Integration::class, $integration);
 
     $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
@@ -301,7 +286,7 @@ final class DraftTest extends KernelTestBase {
    */
   public function testDraftSideDocumentLogic(): void {
     // When we get an atv-document, make sure the side document exists as well.
-    $this->applicationSubmission = ApplicationSubmission::create([
+    $applicationSubmission = ApplicationSubmission::create([
       'id' => 1,
       'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
       'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
@@ -315,7 +300,7 @@ final class DraftTest extends KernelTestBase {
       'created' => '1765430954',
       'changed' => '1765430954',
     ]);
-    $this->applicationSubmission->save();
+    $applicationSubmission->save();
 
     $helfiAtvService = $this->createMock(HelfiAtvService::class);
     $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);

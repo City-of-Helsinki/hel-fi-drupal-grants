@@ -22,7 +22,6 @@ use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
 use Drupal\grants_application\User\UserInformationService;
-use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationSubmitType;
@@ -71,7 +70,6 @@ final class Application extends ResourceBase {
     private EventDispatcherInterface $dispatcher,
     private Avus2Integration $integration,
     private EventsService $eventsService,
-    private AttachmentHandler $attachmentHandler,
     private ApplicationStatusService $applicationStatusService,
     private JsonSchemaValidator $jsonSchemaValidator,
     private ContentLockInterface $contentLock,
@@ -104,7 +102,6 @@ final class Application extends ResourceBase {
       $container->get(EventDispatcherInterface::class),
       $container->get(Avus2Integration::class),
       $container->get('grants_events.events_service'),
-      $container->get('grants_attachments.attachment_handler'),
       $container->get('grants_handler.application_status_service'),
       $container->get(JsonSchemaValidator::class),
       $container->get('content_lock'),
@@ -411,8 +408,9 @@ final class Application extends ResourceBase {
         $document = $this->atvService->getDocument($application_number);
         $bankFileIsSet = $this->jsonMapperService->documentBankFileIsSet($document);
       }
-      catch(\throwable) {
+      catch(\throwable $e) {
         // Just to be safe.
+        Error::logException($this->logger, $e);
         return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
 
