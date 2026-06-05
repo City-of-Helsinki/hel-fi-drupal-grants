@@ -239,7 +239,8 @@
                 "members_applicant_community_local"
               ]
             }
-          }
+          },
+          "required": ["members_fieldset"]
         },
         "personnel_section": {
           "title": "personnel_section.title",
@@ -267,8 +268,8 @@
                   "title": "parttime_personnel_worktime.title",
                   "type": "string"
                 },
-                "voluenteer_personnel": {
-                  "title": "voluenteer_personnel.title",
+                "volunteer_personnel": {
+                  "title": "volunteer_personnel.title",
                   "type": "integer"
                 }
               },
@@ -277,10 +278,11 @@
                 "fulltime_personnel_worktime",
                 "parttime_personnel",
                 "parttime_personnel_worktime",
-                "voluenteer_personnel"
+                "volunteer_personnel"
               ]
             }
-          }
+          },
+          "required": ["personnel_fieldset"]
         }
       }
     },
@@ -449,18 +451,18 @@
           "type": "number"
         },
         "artistic_foundations_section": {
-          "title": "artistic_foundations_section.title",
+          "type": "object",
+          "properties": {}
+        },
+        "accessibility_section": {
+          "title": "accessibility_section.title",
           "type": "object",
           "properties": {
-            "project_equality": {
-              "title": "project_equality.title",
+            "project_target_audiece": {
+              "title": "project_target_audiece.title",
               "type": "string"
             }
           }
-        },
-        "accessibility_section": {
-          "type": "object",
-          "default": {}
         },
         "operations_section": {
           "title": "operations_section.title",
@@ -489,6 +491,10 @@
                 "properties": {
                   "project_artistic_basis": {
                     "title": "project_artistic_basis.title",
+                    "type": "string"
+                  },
+                  "project_equality": {
+                    "title": "project_equality.title",
                     "type": "string"
                   }
                 }

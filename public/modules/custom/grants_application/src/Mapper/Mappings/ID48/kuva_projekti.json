@@ -182,7 +182,7 @@
   },
   "compensation.communityInfo.generalCommunityInfoArray.2": {
     "datasource": "form_data",
-    "source": "community_info_step.personnel_section.personnel_fieldset.voluenteer_personnel",
+    "source": "community_info_step.personnel_section.personnel_fieldset.volunteer_personnel",
     "mapping_type": "default",
     "data": {
       "ID": "staffPeopleVoluntary",
