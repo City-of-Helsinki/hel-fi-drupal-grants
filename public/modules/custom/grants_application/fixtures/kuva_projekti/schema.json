@@ -73,8 +73,8 @@
         "is_owned_by_city": {
           "title": "venue_is_owned_by_city.title",
           "enum": [
-            false,
-            true
+            true,
+            false
           ],
           "default": false
         }
@@ -147,8 +147,8 @@
               "title": "is_festival_or_event.title",
               "description": "is_festival_or_event.help",
               "enum": [
-                false,
-                true
+                true,
+                false
               ]
             },
             "project_short_description": {
@@ -171,8 +171,8 @@
             "have_received_other_compensations": {
               "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             }
@@ -382,8 +382,8 @@
                 "is_owned_by_city": {
                   "title": "venue_is_owned_by_city.title",
                   "enum": [
-                    false,
-                    true
+                    true,
+                    false
                   ],
                   "default": false
                 }
@@ -548,8 +548,8 @@
             "organization_subsidities": {
               "title": "organization_subsidities.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ]
             },
             "budget_income": {

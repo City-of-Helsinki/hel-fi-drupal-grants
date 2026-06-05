@@ -33,8 +33,8 @@
           "tooltipText": "is_festival_or_event.tooltip"
         },
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:widget": "radio"
       },
@@ -51,8 +51,8 @@
     "other_compensations_section": {
       "have_received_other_compensations": {
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true
@@ -182,8 +182,8 @@
       "first_venue": {
         "is_owned_by_city": {
           "ui:enumNames": [
-            "boolean.no",
-            "boolean.yes"
+            "boolean.yes",
+            "boolean.no"
           ],
           "ui:widget": "radio"
         }
@@ -192,8 +192,8 @@
         "items": {
           "is_owned_by_city": {
             "ui:enumNames": [
-              "boolean.no",
-              "boolean.yes"
+              "boolean.yes",
+              "boolean.no"
             ],
             "ui:widget": "radio"
           }
@@ -303,8 +303,8 @@
           "tooltipText": "organization_subsidities.tooltip"
         },
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:widget": "radio"
       },
