@@ -728,8 +728,8 @@
                 }
               ]
             },
-            "extra_info": {
-              "title": "extra_info.title",
+            "further_clarification": {
+              "title": "further_clarification.title",
               "type": "string"
             },
             "other_attachment_fieldset": {
