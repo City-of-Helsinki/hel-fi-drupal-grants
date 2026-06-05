@@ -149,7 +149,6 @@
       },
       "helsinki_counts_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "helsinki_counts_fieldset.title",
           "tooltipButtonLabel": "helsinki_counts_fieldset.title",
           "tooltipText": "helsinki_counts_fieldset.tooltip"
@@ -157,7 +156,6 @@
       },
       "total_counts_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "total_counts_fieldset.title",
           "tooltipButtonLabel": "total_counts_fieldset.title",
           "tooltipText": "total_counts_fieldset.tooltip"
@@ -166,7 +164,6 @@
       "premieres_fieldset": {
         "premiere_count": {
           "ui:options": {
-            "hideNameFromPrint": true,
             "tooltipLabel": "premiere_count.title",
             "tooltipButtonLabel": "premiere_count.title",
             "tooltipText": "premiere_count.tooltip"
@@ -174,7 +171,6 @@
         },
         "premiere_helsinki_count": {
           "ui:options": {
-            "hideNameFromPrint": true,
             "tooltipLabel": "premiere_helsinki_count.title",
             "tooltipButtonLabel": "premiere_helsinki_count.title",
             "tooltipText": "premiere_helsinki_count.tooltip"
