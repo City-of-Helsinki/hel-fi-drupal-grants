@@ -11,7 +11,41 @@
       }
     },
     "purpose_section": {
+      "subventions_total": {
+        "ui:field": "computedSum",
+        "misc:exclude-from-submit": true,
+        "ui:options": {
+          "sourceFields": ["grant_info_step.subventions_section.subventions"],
+          "sourceShape": "subvention",
+          "numericOutput": true,
+          "hidden": true
+        }
+      },
       "purpose": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
+          "tooltipText": "purpose.custom_description"
+        }
+      },
+      "who_benefits": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
+          "tooltipText": "purpose.custom_description"
+        }
+      },
+      "changes_on_success": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
+          "tooltipText": "purpose.custom_description"
+        }
+      },
+      "results_of_activities": {
         "ui:widget": "textarea",
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
