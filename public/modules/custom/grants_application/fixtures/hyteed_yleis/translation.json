@@ -14,6 +14,36 @@
       "en": "<p>Provide a short description of the scope and nature of the activities to be carried out with the grant e.g. as follows:</p><ul><li>How much or how often will you organise groups, events or other activities during the period of the grant?</li><li>How many target group representatives do you expect to reach?</li><li>In what areas of Helsinki will the activities be arranged?</li><li>What kind of cooperation do you pursue with other operators in Helsinki?</li></ul>",
       "fi": "<p>Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:</p><ul><li>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana?</li><li>Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne?</li><li>Missä Helsingin alueilla toimintaa järjestetään?</li><li>Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?</li></ul>",
       "sv": "<p>Beskriv den verksamhet som ska genomföras med hjälp av understödet och verksamhetens omfattning i korthet exempelvis på följande sätt:</p><ul><li>Hur mycket eller ofta ordnar ni grupper, evenemang eller annan verksamhet under den understödda perioden?</li><li>Hur många representanter för målgruppen kommer ni att nå enligt er uppskattning?</li><li>Inom vilka områden i Helsingfors kommer verksamheten att ordnas?</li><li>På vilka sätt samarbetar ni med andra aktörer i Helsingfors?</li></ul>"
+    },
+    "purpose_who_benefits.title": {
+      "en": "Who are the main beneficiaries of your activities?",
+      "fi": "Ketkä toiminnastanne erityisesti hyötyvät?",
+      "sv": "Vilka får särskild nytta av er verksamhet?"
+    },
+    "purpose_who_benefits.tooltip": {
+      "en": "Describe who belong to your target group and possibly also how many target group members there are in your operational area. It is important that the target group description shows what kind of people you want and can reach or what kind of people and in what situation will benefit most from your activities.",
+      "fi": "Kuvaa keitä kohderyhmäänne kuuluu ja mahdollisesti myös kuinka paljon kohderyhmään kuuluvia toiminta-alueellanne on. Kohderyhmän kuvauksessa on tärkeää, että siitä käy ilmi minkälaisia ihmisiä juuri te haluatte ja osaatte kohdata, tai millaisessa tilanteessa olevat hyötyvät toiminnastanne eniten.",
+      "sv": "Beskriv vem som hör till er målgrupp och eventuellt också hur många av dem som hör till er målgrupp det finns i ert verksamhetsområde. I beskrivningen av målgruppen är det viktigt att det framgår vilka slags människor just ni önskar och kan bemöta, eller de situationer i vilka människor får den största nyttan av er verksamhet."
+    },
+    "purpose_changes_on_success.title": {
+      "en": "What kind of changes will take place if you succeed?",
+      "fi": "Minkälaisia muutoksia tapahtuu, jos onnistutte?",
+      "sv": "Vilka slags förändringar sker om ni lyckas?"
+    },
+    "purpose_changes_on_success.tooltip": {
+      "en": "Your activities may have many goals. Describe and assess the key changes you are seeking to achieve in your target group&#39;s functioning and in their everyday life, relationships or other aspects related to well-being and health or involvement, for example. So what will change if you have succeeded or what kind of phenomena do your activities prevent?",
+      "fi": "Toiminnallanne voi olla monia tavoitteita. Kuvatkaa ja arvioikaa tässä keskeiset muutokset, joita tavoittelette esimerkiksi kohderyhmänne toimintakyvyssä, arjessa, ihmissuhteissa tai muussa hyvinvointiin ja terveyteen tai osallisuuteen liittyvässä asiassa. Mikä siis muuttuu, jos olette onnistuneet tai minkälaisia ilmiöitä toimintanne ennaltaehkäisee?",
+      "sv": "Er verksamhet kan ha flera mål. Beskriv och bedöm här de centrala förändringar som ni eftersträvar exempelvis i er målgrupps funktionsförmåga, vardag, människorelationer eller andra aspekter som anknyter till välfärd och hälsa eller delaktighet. Vilka slags förändringar kommer det alltså att ske om ni lyckas eller vilka slags fenomen förebygger er verksamhet?"
+    },
+    "purpose_result_of_activities.title": {
+      "en": "What are the benefits of the activities to be supported?",
+      "fi": "Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?",
+      "sv": "Vilken nytta uppstår till följd av den verksamhet som understöds?"
+    },
+    "purpose_result_of_activities.tooltip": {
+      "en": "Briefly describe the effects of the activities and how they are achieved. You can describe the effects in the order in which they occur: which effects occur first and which after a little longer time. However, focus on the immediate effects of the activities.<br>You can indicate what is special about your activities or what (quality) factors need to be taken care of in order to achieve the desired effects. You can also describe how any cooperation you have pursued will contribute to achieving the effects.",
+      "fi": "Kuvaa lyhyesti, mitä vaikutuksia toiminnalla saadaan aikaan ja millä tavoin ne syntyvät. Voit kuvata vaikutukset niiden tapahtumisjärjestyksessä: mitä vaikutuksia syntyy ensin, ja mitä vähän pidemmän ajan kuluttua. Keskity kuitenkin toiminnan välittömiin vaikutuksiin.<br>Voit myös kertoa, mikä toiminnassanne on erityistä tai mistä (laatu)tekijöistä on erityisesti huolehdittava, että tavoiteltavia vaikutuksia saavutetaan. Voit myös kuvata, miten jokin tekemänne yhteistyö edistää vaikutusten saavuttamista.",
+      "sv": "Beskriv kort vilka effekter som uppnås genom verksamheten och på vilket sätt de uppstår. Du kan beskriva effekterna i den ordning de sker: vilka effekter uppstår först och vilka efter en längre tid. Koncentrera dig dock på verksamhetens omedelbara effekter.<br>Du kan även berätta vad som är speciellt med er verksamhet eller vilka (kvalitets)faktorer som bör beaktas särskilt för att de effekter som eftersträvas ska uppnås. Du kan även beskriva hur något samarbete ni har främjar uppnåendet av effekterna."
     }
   }
 }
