@@ -65,19 +65,19 @@
           "addText": "other_compensation.add"
         },
         "items": {
-          "other_compensation_issuer_name": {
+          "issuer_name": {
             "ui:options": {
               "tooltipLabel": "other_compensation_issuer.title",
               "tooltipButtonLabel": "other_compensation_issuer.title",
               "tooltipText": "other_compensation_issuer.description"
             }
           },
-          "other_compensation_amount": {
+          "amount": {
             "ui:options": {
               "printableName": "other_compensation_amount.printable_title"
             }
           },
-          "other_compensation_description": {
+          "purpose": {
             "ui:widget": "textarea",
             "misc:max-length": 1000,
             "ui:options": {
