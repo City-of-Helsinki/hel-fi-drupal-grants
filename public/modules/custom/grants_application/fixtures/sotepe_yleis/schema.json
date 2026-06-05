@@ -163,7 +163,7 @@
               "then": {
                 "properties": {
                   "results_of_activities": {
-                    "title": "purpose_result_of_activities.title",
+                    "title": "purpose_results_of_activities.title",
                     "type": "string"
                   }
                 },

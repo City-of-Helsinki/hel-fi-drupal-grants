@@ -36,8 +36,8 @@
       "results_of_activities": {
         "ui:widget": "textarea",
         "ui:options": {
-          "tooltipButtonLabel": "purpose_result_of_activities.title",
-          "tooltipText": "purpose_result_of_activities.tooltip"
+          "tooltipButtonLabel": "purpose_results_of_activities.title",
+          "tooltipText": "purpose_results_of_activities.tooltip"
         }
       }
     },

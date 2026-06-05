@@ -34,7 +34,7 @@
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
-          "tooltipText": "purpose.custom_description"
+          "tooltipText": "purpose_who_benefits.tooltip"
         }
       },
       "changes_on_success": {
@@ -42,7 +42,7 @@
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
-          "tooltipText": "purpose.custom_description"
+          "tooltipText": "purpose_changes_on_success.tooltip"
         }
       },
       "results_of_activities": {
@@ -50,7 +50,7 @@
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
-          "tooltipText": "purpose.custom_description"
+          "tooltipText": "purpose_results_of_activities.tooltip"
         }
       }
     },
