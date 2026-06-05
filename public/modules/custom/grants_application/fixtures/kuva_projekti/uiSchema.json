@@ -238,9 +238,8 @@
     "artistic_foundations_section": {
       "project_artistic_basis": {
         "ui:options": {
-          "hideNameFromPrint": true,
-          "tooltipLabel": "comprehensive_description.title",
-          "tooltipButtonLabel": "comprehensive_description.title",
+          "tooltipLabel": "project_artistic_basis.title",
+          "tooltipButtonLabel": "project_artistic_basis.title",
           "tooltipText": "project_artistic_basis.tooltip"
         },
         "ui:widget": "textarea",
@@ -281,9 +280,8 @@
       },
       "operations_partners": {
         "ui:options": {
-          "hideNameFromPrint": true,
-          "tooltipLabel": "comprehensive_description.title",
-          "tooltipButtonLabel": "comprehensive_description.title",
+          "tooltipLabel": "operations_partners.title",
+          "tooltipButtonLabel": "operations_partners.title",
           "tooltipText": "operations_partners.tooltip"
         },
         "ui:widget": "textarea",
@@ -300,7 +298,6 @@
     "budget_section": {
       "organization_subsidities": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "organization_subsidities.title",
           "tooltipButtonLabel": "organization_subsidities.title",
           "tooltipText": "organization_subsidities.tooltip"
