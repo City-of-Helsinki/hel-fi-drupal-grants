@@ -375,6 +375,61 @@ final class ApplicationTest extends KernelTestBase {
   }
 
   /**
+   * Test that a failing bank account confirmation file upload returns an error.
+   */
+  public function testApplicationPostBankFileFailure(): void {
+    $this->applicationSubmission = ApplicationSubmission::create([
+      'id' => 1,
+      'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
+      'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
+      'sub' => '123345678-abcd-1234-ab12-abcdefgh',
+      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
+      'draft' => TRUE,
+      'langcode' => 'fi',
+      'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
+      'side_document_id' => 'sidedocu-1111-2222-3333-mentidabcdef',
+      'application_number' => $this->applicationNumber,
+      'created' => '1765430954',
+      'changed' => '1765430954',
+    ]);
+    $this->applicationSubmission->save();
+
+    // The bank file is not yet attached to the document, so the resource
+    // attempts to fetch and upload it.
+    $jsonMapperService = $this->createMock(JsonMapperService::class);
+    $jsonMapperService->expects($this->any())->method('getSelectedBankFile')->willReturn([
+      'href' => 'foobar',
+      'filename' => 'bank-confirmation.pdf',
+    ]);
+    $jsonMapperService->expects($this->any())->method('documentBankFileIsSet')->willReturn(FALSE);
+    $this->container->set(JsonMapperService::class, $jsonMapperService);
+
+    // Fetching the bank confirmation attachment fails.
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->any())->method('getAttachment')->willThrowException(new \Exception('Failed to fetch attachment'));
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $content = json_encode([
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
+    ]);
+    $content = $content ?: NULL;
+
+    $uri = "/applications/$form_identifier/application/$this->applicationNumber";
+    $request = Request::create($uri, "POST", [], [], [], [], $content);
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    $http_kernel = $this->container->get('http_kernel');
+    $response = $http_kernel->handle($request);
+
+    $this->assertEquals(500, $response->getStatusCode());
+  }
+
+  /**
    * Override the user information service with a custom applicant type/profile.
    */
   private function overrideUserService(string $applicantType, GrantsProfile $profile): void {
