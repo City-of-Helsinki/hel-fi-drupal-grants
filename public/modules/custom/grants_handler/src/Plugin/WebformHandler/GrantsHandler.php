@@ -1544,7 +1544,7 @@ submit the application only after you have provided all the necessary informatio
     // A required file operation failed during postSaveSubmit().
     if ($this->attachmentUploadFailed) {
       $this->messenger()->addError(
-        $this->t('application could not be submitted because a required file could not be saved. Please try again or contact support.')
+        $this->t('An error occurred while sending the application. Please try again in a moment')
       );
       return;
     }
