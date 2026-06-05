@@ -594,23 +594,23 @@
     },
     "budget_cost_transport_costs.title": {
       "fi": "Kuljetus (sis. autovuokrat) (€)",
-      "en": "Transport costs (€)",
-      "sv": "Transportkostnader (€)"
+      "en": "Transportation costs (incl. car rentals)",
+      "sv": "Transportkostnader (inkl. hyrbil)"
     },
     "budget_cost_equipment.title": {
       "fi": "Tekniikka, laitevuokrat ja sähkö (€)",
       "en": "Technology, equipment rentals and electricity (€)",
-      "sv": "Teknik, utrustningsuthyrning och el (€)"
+      "sv": "Teknik, hyra för utrustning, elektricitet (€)"
     },
     "budget_cost_premises.title": {
       "fi": "Kiinteistöjen käyttökulut ja vuokrat (€)",
-      "en": "Premise operating costs and rents (€)",
-      "sv": "Lokaldriftskostnader och hyror (€)"
+      "en": "Operating costs for properties, rents (€)",
+      "sv": "Fastighetskostnader, hyror (€)"
     },
     "budget_cost_marketing.title": {
       "fi": "Tiedotus, markkinointi ja painatus (€)",
-      "en": "Information, marketing and printing (€)",
-      "sv": "Information, marknadsföring och tryck (€)"
+      "en": "Publicity, marketing, and printing (€)",
+      "sv": "Information, marknadsföring och tryckkostnader (€)"
     },
     "budget_other_cost.title": {
       "fi": "Muut kulut",
