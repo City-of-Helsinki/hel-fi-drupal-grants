@@ -305,7 +305,7 @@
                   "type": "integer"
                 },
                 "active_participants_local": {
-                  "title": "active_participants_local.title",
+                  "title": "members_helsinki.title",
                   "type": "integer"
                 }
               },

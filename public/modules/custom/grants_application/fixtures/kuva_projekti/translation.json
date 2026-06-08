@@ -310,12 +310,6 @@
       "en": "Premise name",
       "sv": "Namn"
     },
-    "venue_post_code.title": {
-      "#todo": "common",
-      "fi": "Postinumero",
-      "en": "Postal code",
-      "sv": "Postnummer"
-    },
     "venue_is_owned_by_city.title": {
       "fi": "Kyseessä on kaupungin omistama tila",
       "en": "City owns the property",

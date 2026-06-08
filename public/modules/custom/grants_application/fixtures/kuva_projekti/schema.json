@@ -67,7 +67,7 @@
           "type": "string"
         },
         "post_code": {
-          "title": "venue_post_code.title",
+          "title": "postal_code.title",
           "type": "string"
         },
         "is_owned_by_city": {
@@ -373,7 +373,7 @@
                   "type": "string"
                 },
                 "post_code": {
-                  "title": "venue_post_code.title",
+                  "title": "postal_code.title",
                   "type": "string"
                 },
                 "is_owned_by_city": {

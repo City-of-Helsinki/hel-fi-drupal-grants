@@ -1,0 +1,568 @@
+{
+    "compensation": {
+        "applicantInfoArray": [
+            {
+                "ID": "applicantType",
+                "label": "Hakijan tyyppi",
+                "value": "2",
+                "valueType": "string"
+            },
+            {
+                "ID": "companyNumber",
+                "label": "Y-Tunnus",
+                "value": "7769480-5",
+                "valueType": "string"
+            },
+            {
+                "ID": "registrationDate",
+                "label": "Rekister\u00f6imisp\u00e4iv\u00e4",
+                "value": "21.5.2023",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "foundingYear",
+                "label": "Perustamisvuosi",
+                "value": "2020",
+                "valueType": "string"
+            },
+            {
+                "ID": "home",
+                "label": "Kotipaikka",
+                "value": "HELSINKI",
+                "valueType": "string"
+            },
+            {
+                "ID": "homePage",
+                "label": "www-sivut",
+                "value": "www.google.com",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityOfficialName",
+                "label": "Yhteis\u00f6n nimi",
+                "value": "Activenakusteri Oy",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityOfficialNameShort",
+                "label": "Yhteis\u00f6n lyhenne",
+                "value": "Akt",
+                "valueType": "string"
+            },
+            {
+                "ID": "email",
+                "label": "S\u00e4hk\u00f6postiosoite",
+                "value": "test@example.com",
+                "valueType": "string"
+            }
+        ],
+        "currentAddressInfoArray": [
+            {
+                "ID": "contactPerson",
+                "label": "Yhteyshenkil\u00f6",
+                "value": "Joku Henkil\u00f6",
+                "valueType": "string"
+            },
+            {
+                "ID": "phoneNumber",
+                "label": "Puhelinnumero",
+                "value": "040 123 123 12",
+                "valueType": "string"
+            },
+            {
+                "ID": "street",
+                "label": "L\u00e4hiosoite",
+                "value": "Mannerheimintie 12",
+                "valueType": "string"
+            },
+            {
+                "ID": "city",
+                "label": "Kaupunki",
+                "value": "Helsinki",
+                "valueType": "string"
+            },
+            {
+                "ID": "postCode",
+                "label": "Postinumero",
+                "value": "00100",
+                "valueType": "string"
+            },
+            {
+                "ID": "country",
+                "label": "Maa",
+                "value": "Suomi",
+                "valueType": "string"
+            }
+        ],
+        "applicationInfoArray": [
+            {
+                "ID": "applicationType",
+                "value": "NUORTOIMINTAPALKKA",
+                "valueType": "string"
+            },
+            {
+                "ID": "applicationTypeID",
+                "value": "75",
+                "valueType": "string"
+            },
+            {
+                "ID": "formTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "createdFormTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "submittedFormTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "applicationNumber",
+                "value": "ABCDE-123-0001009",
+                "valueType": "string"
+            },
+            {
+                "ID": "status",
+                "label": "Hakemuksen tila",
+                "value": "DRAFT",
+                "valueType": "string"
+            },
+            {
+                "ID": "actingYear",
+                "label": "Vuosi, jolle haen avustusta",
+                "value": "2026",
+                "valueType": "string"
+            }
+        ],
+        "applicantOfficialsArray": [
+            [
+                {
+                    "ID": "name",
+                    "label": "Nimi",
+                    "value": "Teppo Testaaja",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "role",
+                    "label": "Rooli",
+                    "value": "2",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "email",
+                    "label": "S\u00e4hk\u00f6posti",
+                    "value": "teppo.testaaja@noreply.com",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "phone",
+                    "label": "Puhelinnumero",
+                    "value": "+358451234657",
+                    "valueType": "string"
+                }
+            ]
+        ],
+        "bankAccountArray": [
+            {
+                "ID": "accountNumber",
+                "label": "Tilinumero",
+                "value": "FI4950009420028730",
+                "valueType": "string"
+            }
+        ],
+        "senderInfoArray": [
+            {
+                "ID": "firstname",
+                "value": "Nordea",
+                "valueType": "string"
+            },
+            {
+                "ID": "lastname",
+                "value": "Demo",
+                "valueType": "string"
+            },
+            {
+                "ID": "personID",
+                "value": "010101A0101",
+                "valueType": "string"
+            },
+            {
+                "ID": "userID",
+                "value": "123345678-abcd-1234-ab12-abcdefgh",
+                "valueType": "string"
+            },
+            {
+                "ID": "email",
+                "value": "user_no_mail@hel.fi",
+                "valueType": "string"
+            }
+        ],
+        "additionalInformation": "lis\u00e4tiedot",
+        "compensationInfo": {
+            "compensationArray": [
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "1",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Avustussumma",
+                        "value": "5000",
+                        "valueType": "float"
+                    }
+                ],
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "2",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Avustussumma",
+                        "value": "3000",
+                        "valueType": "float"
+                    }
+                ]
+            ],
+            "generalInfoArray": [
+                {
+                    "ID": "operativeSubventionApplied",
+                    "label": "Haen toiminta-avustusennakkoa",
+                    "value": "false",
+                    "valueType": "bool"
+                },
+                {
+                    "ID": "salarySubventionApplied",
+                    "label": "Haen palkkausavustusennakkoa",
+                    "value": "true",
+                    "valueType": "bool"
+                },
+                {
+                    "ID": "rentalApplied",
+                    "label": "Haen vuokra-avustusta",
+                    "value": "true",
+                    "valueType": "bool"
+                }
+            ]
+        },
+        "otherCompensationsInfo": {
+            "otherCompensationsInfoArray": [
+                {
+                    "ID": "otherCompensationsTotal",
+                    "value": "0",
+                    "valueType": "double"
+                },
+                {
+                    "ID": "otherAppliedCompensationsTotal",
+                    "value": "0",
+                    "valueType": "double"
+                }
+            ],
+            "otherCompensationsArray": [
+                [
+                    {
+                        "ID": "issuer",
+                        "label": "Avustuksen my\u00f6nt\u00e4j\u00e4",
+                        "value": "Valtio",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "issuerName",
+                        "label": "My\u00f6nt\u00e4j\u00e4n nimi",
+                        "value": "Opetusministeri\u00f6",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "year",
+                        "label": "Vuosi",
+                        "value": "2021",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "My\u00f6nnetyn avustuksen summa",
+                        "value": "1000",
+                        "valueType": "float"
+                    },
+                    {
+                        "ID": "purpose",
+                        "label": "Kuvaus k\u00e4ytt\u00f6tarkoituksesta",
+                        "value": "Lyhyt kuvaus my\u00f6nnetyn avustuksen k\u00e4ytt\u00f6tarkoituksesta",
+                        "valueType": "string"
+                    }
+                ]
+            ],
+            "otherAppliedCompensationsArray": [
+                [
+                    {
+                        "ID": "issuer",
+                        "label": "Avustuksen my\u00f6nt\u00e4j\u00e4",
+                        "value": "S\u00e4\u00e4ti\u00f6",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "issuerName",
+                        "label": "My\u00f6nt\u00e4j\u00e4n nimi",
+                        "value": "Haettu avustus s\u00e4\u00e4ti\u00f6",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "year",
+                        "label": "Vuosi",
+                        "value": "2022",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Haetun avustuksen summa",
+                        "value": "2000",
+                        "valueType": "float"
+                    },
+                    {
+                        "ID": "purpose",
+                        "label": "Kuvaus k\u00e4ytt\u00f6tarkoituksesta",
+                        "value": "haetun avustuksen k\u00e4ytt\u00f6tarkoitus",
+                        "valueType": "string"
+                    }
+                ]
+            ]
+        },
+        "benefitsInfoArray": [
+            {
+                "ID": "loans",
+                "label": "",
+                "value": "",
+                "valueType": "string"
+            },
+            {
+                "ID": "premises",
+                "label": "",
+                "value": "",
+                "valueType": "string"
+            }
+        ],
+        "activitiesInfoArray": [
+            {
+                "ID": "businessPurpose",
+                "label": "Toiminnan kuvaus",
+                "value": "T\u00e4m\u00e4 on hakuprofiilin tietoa",
+                "valueType": "string"
+            },
+            {
+                "ID": "membersAge0to6YearsGlobal",
+                "label": "0 - 6 vuotiaat",
+                "value": "10",
+                "valueType": "int"
+            },
+            {
+                "ID": "membersAge0to6YearsLocal",
+                "label": "Joista helsinkil\u00e4isi\u00e4",
+                "value": "5",
+                "valueType": "int"
+            },
+            {
+                "ID": "membersAge7to28YearsGlobal",
+                "label": "7 - 28 vuotiaat",
+                "value": "20",
+                "valueType": "int"
+            },
+            {
+                "ID": "membersAge7to28YearsLocal",
+                "label": "Joista helsinkil\u00e4isi\u00e4",
+                "value": "12",
+                "valueType": "int"
+            },
+            {
+                "ID": "membersOthersGlobal",
+                "label": "Muut osallistujat",
+                "value": "8",
+                "valueType": "int"
+            },
+            {
+                "ID": "membersOthersLocal",
+                "label": "Joista helsinkil\u00e4isi\u00e4",
+                "value": "4",
+                "valueType": "int"
+            },
+            {
+                "ID": "lastYearYoungPeopleParticipation",
+                "label": "Alle 29-vuotiaiden kaikki osallistumiskerrat edellisen\u00e4 kalenterivuotena",
+                "value": "1500",
+                "valueType": "int"
+            },
+            {
+                "ID": "lastYearYoungPeopleParticipationDigital",
+                "label": "Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli",
+                "value": "300",
+                "valueType": "int"
+            },
+            {
+                "ID": "youngPeopleParticipation",
+                "label": "Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja p\u00e4\u00e4t\u00f6ksentekoon?",
+                "value": "Nuoret osallistuvat suunnitteluun s\u00e4\u00e4nn\u00f6llisiss\u00e4 kokouksissa.",
+                "valueType": "string"
+            }
+        ],
+        "premisesInfo": {
+            "premiseSummaryArray": [
+                {
+                    "ID": "digitalPremises",
+                    "label": "J\u00e4rjestimme toimintaa vain digitaalisessa ymp\u00e4rist\u00f6ss\u00e4",
+                    "value": "false",
+                    "valueType": "bool"
+                }
+            ],
+            "premisesArray": [
+                [
+                    {
+                        "ID": "location",
+                        "label": "Toimipaikan nimi",
+                        "value": "Nuorisotalo",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "postCode",
+                        "label": "Postinumero",
+                        "value": "00100",
+                        "valueType": "string"
+                    }
+                ]
+            ]
+        },
+        "membershipsInfo": {
+            "membershipsArray": [
+                [
+                    {
+                        "ID": "organizationName",
+                        "label": "J\u00e4rjest\u00f6n tai yhteis\u00f6n nimi",
+                        "value": "Nuorisoyhdistysten liitto",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "fee",
+                        "label": "J\u00e4senmaksu",
+                        "value": "150",
+                        "valueType": "double"
+                    }
+                ]
+            ]
+        },
+        "hiredOfficialsInfo": [
+            {
+                "ID": "amountOfHiredOfficials",
+                "value": "2",
+                "valueType": "int",
+                "label": "Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?"
+            }
+        ],
+        "budgetInfo": {
+            "budgetInfoArray": [
+                {
+                    "ID": "employeeSalaries",
+                    "label": "Palkkauskulut",
+                    "value": "60000",
+                    "valueType": "double"
+                },
+                {
+                    "ID": "mandatoryAndOptionalPersonelCosts",
+                    "label": "Lakis\u00e4\u00e4teiset ja vapaaehtoiset henkil\u00f6sivukulut",
+                    "value": "15000",
+                    "valueType": "double"
+                },
+                {
+                    "ID": "travelAndTrainingCosts",
+                    "label": "Matka- ja koulutuskulut",
+                    "value": "3000",
+                    "valueType": "double"
+                }
+            ]
+        },
+        "rentsInfo": {
+            "rentedPremisesArray": [
+                [
+                    {
+                        "ID": "premiseAddress",
+                        "label": "Osoite",
+                        "value": "Vuokrakatu 5",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "premisePostalCode",
+                        "label": "Postinumero",
+                        "value": "00200",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "premisePostOffice",
+                        "label": "Postitoimipaikka",
+                        "value": "Helsinki",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "rentSum",
+                        "label": "Vuokrasumma",
+                        "value": "1200",
+                        "valueType": "double"
+                    },
+                    {
+                        "ID": "lessorName",
+                        "label": "Vuokranantajan nimi",
+                        "value": "Kiinteist\u00f6 Oy",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "lessorPhoneOrEmail",
+                        "label": "Vuokranantajan puhelinnumero tai s\u00e4hk\u00f6posti",
+                        "value": "vuokraus@example.com",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "usage",
+                        "label": "K\u00e4ytt\u00f6tarkoitus",
+                        "value": "Harjoitustila",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "daysPerWeek",
+                        "label": "K\u00e4ytt\u00f6p\u00e4ivi\u00e4 viikossa",
+                        "value": "3",
+                        "valueType": "int"
+                    },
+                    {
+                        "ID": "hoursPerDay",
+                        "label": "K\u00e4ytt\u00f6tunteja p\u00e4iv\u00e4ss\u00e4",
+                        "value": "4",
+                        "valueType": "int"
+                    }
+                ]
+            ],
+            "rentsSummaryArray": [
+                {
+                    "ID": "rentsInformation",
+                    "label": "Lis\u00e4tiedot",
+                    "value": "Lis\u00e4tietoja vuokra-avustuksesta.",
+                    "valueType": "string"
+                }
+            ]
+        }
+    },
+    "attachmentsInfo": {
+        "generalInfoArray": [
+            {
+                "ID": "extraInfo",
+                "label": "Lis\u00e4selvitys liitteist\u00e4",
+                "value": "Liitteiden lis\u00e4selvitys",
+                "valueType": "string"
+            }
+        ]
+    }
+}
