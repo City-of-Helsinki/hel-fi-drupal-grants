@@ -570,6 +570,11 @@
       "fi": "Tulot yhteensä (€)",
       "sv": "Inkomster sammanlagt (€)"
     },
+    "total_income.tooltip": {
+      "en": "Include all your incomes in total here, also including the grants from the previous questions.",
+      "fi": "Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.",
+      "sv": "Anteckna samtliga inkomster, även de understöd som uppgetts i tidigare punkter."
+    },
     "was_part_of_vos.title": {
       "en": "The organization belonged to the central government subsidies system (VOS)",
       "fi": "Organisaatio kuului valtionosuusjärjestelmään (VOS)",

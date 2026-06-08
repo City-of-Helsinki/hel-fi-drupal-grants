@@ -145,6 +145,13 @@
           "hideNameFromPrint": true
         },
         "items": {
+          "ui:order": [
+            "realized_premise_name",
+            "realized_premise_postal_code",
+            "realized_premise_is_owned_by_city",
+            "realized_premise_city_section",
+            "realized_premise_suitability"
+          ],
           "realized_premise_is_owned_by_city": {
             "ui:enumNames": [
               "boolean.yes",
@@ -313,6 +320,13 @@
           "tooltipLabel": "other_compensations_realized.title",
           "tooltipButtonLabel": "other_compensations_realized.title",
           "tooltipText": "other_compensations_realized.tooltip"
+        }
+      },
+      "total_income": {
+        "ui:options": {
+          "tooltipLabel": "total_income.title",
+          "tooltipButtonLabel": "total_income.title",
+          "tooltipText": "total_income.tooltip"
         }
       }
     },
