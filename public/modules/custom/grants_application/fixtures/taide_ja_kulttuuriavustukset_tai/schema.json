@@ -59,16 +59,16 @@
           "title": "postal_code.title",
           "type": "string"
         },
-        "art_premise_is_owned": {
-          "title": "art_premise_is_owned.title",
+        "art_premise_is_others_use": {
+          "title": "art_premise_is_others_use.title",
           "enum": [
             true,
             false
           ],
           "default": false
         },
-        "art_premise_is_others_use": {
-          "title": "art_premise_is_others_use.title",
+        "art_premise_is_owned": {
+          "title": "art_premise_is_owned.title",
           "enum": [
             true,
             false
@@ -83,7 +83,12 @@
           ],
           "default": false
         }
-      }
+      },
+      "required": [
+        "art_premise_name",
+        "art_premise_postal_code",
+        "art_premise_is_owned_by_city"
+      ]
     },
     "_realized_premises_item": {
       "type": "object",
@@ -117,12 +122,16 @@
             "Huonosti"
           ]
         }
-      }
+      },
+      "required": [
+        "realized_premise_name",
+        "realized_premise_postal_code",
+        "realized_premise_is_owned_by_city"
+      ]
     },
     "grant_info_step": {
       "required": [
         "acting_year_section",
-        "purpose_section",
         "other_compensations_section"
       ],
       "properties": {
@@ -133,14 +142,7 @@
             "acting_year": {
               "title": "acting_year_section_acting_year.title",
               "type": "string"
-            }
-          },
-          "required": ["acting_year"]
-        },
-        "subventions_section": {
-          "title": "subventions_section.title",
-          "type": "object",
-          "properties": {
+            },
             "subventions": {
               "title": "subventions.title",
               "options": [
@@ -149,13 +151,7 @@
                   "label": "subventions.34.title"
                 }
               ]
-            }
-          }
-        },
-        "primary_art_section": {
-          "title": "primary_art_section.title",
-          "type": "object",
-          "properties": {
+            },
             "primary_art": {
               "title": "primary_art.title",
               "type": "string",
@@ -171,21 +167,13 @@
                 "primary_art.dance",
                 "primary_art.theatre"
               ]
-            }
-          },
-          "required": ["primary_art"]
-        },
-        "purpose_section": {
-          "title": "purpose_section.title",
-          "type": "object",
-          "properties": {
+            },
             "purpose": {
-              "title": "purpose_section_purpose.title",
-              "type": "string",
-              "description": "purpose.description"
+              "title": "purpose.title",
+              "type": "string"
             }
           },
-          "required": ["purpose"]
+          "required": ["acting_year", "subventions", "primary_art", "purpose"]
         },
         "other_compensations_section": {
           "title": "other_compensations_section.title",
@@ -236,23 +224,28 @@
         "community_members_section": {
           "title": "community_members_section.title",
           "type": "object",
-          "description": "members_fieldset.description",
           "properties": {
-            "members_applicant_person_global": {
-              "title": "members_applicant_person_global.title",
-              "type": "integer"
-            },
-            "members_applicant_person_local": {
-              "title": "members_applicant_person_local.title",
-              "type": "integer"
-            },
-            "members_applicant_community_global": {
-              "title": "members_applicant_community_global.title",
-              "type": "integer"
-            },
-            "members_applicant_community_local": {
-              "title": "members_applicant_community_local.title",
-              "type": "integer"
+            "members_fieldset": {
+              "title": "members_fieldset.title",
+              "type": "object",
+              "properties": {
+                "members_applicant_person_global": {
+                  "title": "members_applicant_person_global.title",
+                  "type": "integer"
+                },
+                "members_applicant_person_local": {
+                  "title": "members_applicant_person_local.title",
+                  "type": "integer"
+                },
+                "members_applicant_community_global": {
+                  "title": "members_applicant_community_global.title",
+                  "type": "integer"
+                },
+                "members_applicant_community_local": {
+                  "title": "members_applicant_community_local.title",
+                  "type": "integer"
+                }
+              }
             }
           }
         },
@@ -510,7 +503,6 @@
             },
             "is_part_of_vos": {
               "title": "is_part_of_vos.title",
-              "description": "affirmative_expands",
               "enum": [
                 true,
                 false
@@ -563,7 +555,16 @@
               "title": "financial_funding_and_interests.title",
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "applied_grant",
+            "planned_state_operative_subvention",
+            "planned_other_compensations",
+            "sponsorships",
+            "entry_fees",
+            "sales",
+            "financial_funding_and_interests"
+          ]
         },
         "planned_cost_section": {
           "title": "planned_cost_section.title",
@@ -578,7 +579,8 @@
               "title": "planned_total_costs.title",
               "type": "string"
             }
-          }
+          },
+          "required": ["planned_total_costs"]
         },
         "realized_budget_section": {
           "title": "realized_budget_section.title",
@@ -595,7 +597,6 @@
             },
             "was_part_of_vos": {
               "title": "was_part_of_vos.title",
-              "description": "affirmative_expands",
               "enum": [
                 true,
                 false
@@ -607,6 +608,7 @@
         },
         "realized_income_section": {
           "title": "realized_income_section.title",
+          "description": "realized_income_section.description",
           "type": "object",
           "properties": {
             "incomeGroupName": {
@@ -633,7 +635,13 @@
               "title": "total_income.title",
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "other_compensation_from_city",
+            "state_operative_subvention",
+            "other_compensations_realized",
+            "total_income"
+          ]
         },
         "realized_cost_section": {
           "title": "realized_cost_section.title",
@@ -648,7 +656,8 @@
               "title": "total_costs.title",
               "type": "string"
             }
-          }
+          },
+          "required": ["total_costs"]
         }
       }
     },

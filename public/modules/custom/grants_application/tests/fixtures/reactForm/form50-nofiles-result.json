@@ -358,15 +358,15 @@
                         "valueType": "string"
                     },
                     {
-                        "ID": "isOwnedByApplicant",
-                        "label": "Onko tila hakijan omistuksessa",
-                        "value": "true",
-                        "valueType": "bool"
-                    },
-                    {
                         "ID": "isOthersUse",
                         "label": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
                         "value": "false",
+                        "valueType": "bool"
+                    },
+                    {
+                        "ID": "isOwnedByApplicant",
+                        "label": "Onko tila hakijan omistuksessa",
+                        "value": "true",
                         "valueType": "bool"
                     },
                     {

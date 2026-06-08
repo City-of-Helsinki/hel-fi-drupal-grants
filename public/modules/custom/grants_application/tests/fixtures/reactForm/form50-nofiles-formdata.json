@@ -23,9 +23,7 @@
   },
   "grant_info_step": {
     "acting_year_section": {
-      "acting_year": "2026"
-    },
-    "subventions_section": {
+      "acting_year": "2026",
       "subventions": [
         [
           {
@@ -41,12 +39,8 @@
             "valueType": "double"
           }
         ]
-      ]
-    },
-    "primary_art_section": {
-      "primary_art": "primary_art.music"
-    },
-    "purpose_section": {
+      ],
+      "primary_art": "primary_art.music",
       "purpose": "Lyhyt esittelyteksti taiteen perusopetuksen toiminnasta."
     },
     "other_compensations_section": {
@@ -64,10 +58,12 @@
   },
   "community_info_step": {
     "community_members_section": {
-      "members_applicant_person_global": "120",
-      "members_applicant_person_local": "90",
-      "members_applicant_community_global": "5",
-      "members_applicant_community_local": "3"
+      "members_fieldset": {
+        "members_applicant_person_global": "120",
+        "members_applicant_person_local": "90",
+        "members_applicant_community_global": "5",
+        "members_applicant_community_local": "3"
+      }
     },
     "art_premises_section": {
       "is_owner_of_art_premises": true,
@@ -76,8 +72,8 @@
           "art_premise_name": "Pääsali",
           "art_premise_type": "art_premise_type.performance",
           "art_premise_postal_code": "00100",
-          "art_premise_is_owned": true,
           "art_premise_is_others_use": false,
+          "art_premise_is_owned": true,
           "art_premise_is_owned_by_city": false
         }
       ]

@@ -1,7 +1,7 @@
 {
   "compensation.compensationInfo.compensationArray.0.0": {
     "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.0.0.value",
+    "source": "grant_info_step.acting_year_section.subventions.0.0.value",
     "mapping_type": "default",
     "data": {
       "ID": "subventionType",
@@ -12,7 +12,7 @@
   },
   "compensation.compensationInfo.compensationArray.0.1": {
     "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "source": "grant_info_step.acting_year_section.subventions.0.1.value",
     "mapping_type": "default",
     "data": {
       "ID": "amount",
@@ -24,7 +24,7 @@
 
   "compensation.compensationInfo.generalInfoArray.0": {
     "datasource": "form_data",
-    "source": "grant_info_step.primary_art_section.primary_art",
+    "source": "grant_info_step.acting_year_section.primary_art",
     "mapping_type": "custom",
     "custom_handler": "enumToLabel",
     "value_map": {
@@ -47,7 +47,7 @@
   },
   "compensation.compensationInfo.generalInfoArray.1": {
     "datasource": "form_data",
-    "source": "grant_info_step.purpose_section.purpose",
+    "source": "grant_info_step.acting_year_section.purpose",
     "mapping_type": "default",
     "data": {
       "ID": "purpose",
@@ -162,7 +162,7 @@
 
   "compensation.communityInfo.generalCommunityInfoArray.0": {
     "datasource": "form_data",
-    "source": "community_info_step.community_members_section.members_applicant_person_global",
+    "source": "community_info_step.community_members_section.members_fieldset.members_applicant_person_global",
     "mapping_type": "default",
     "data": {
       "ID": "membersPersonGlobal",
@@ -173,7 +173,7 @@
   },
   "compensation.communityInfo.generalCommunityInfoArray.1": {
     "datasource": "form_data",
-    "source": "community_info_step.community_members_section.members_applicant_person_local",
+    "source": "community_info_step.community_members_section.members_fieldset.members_applicant_person_local",
     "mapping_type": "default",
     "data": {
       "ID": "membersPersonLocal",
@@ -184,7 +184,7 @@
   },
   "compensation.communityInfo.generalCommunityInfoArray.2": {
     "datasource": "form_data",
-    "source": "community_info_step.community_members_section.members_applicant_community_global",
+    "source": "community_info_step.community_members_section.members_fieldset.members_applicant_community_global",
     "mapping_type": "default",
     "data": {
       "ID": "membersCommunityGlobal",
@@ -195,7 +195,7 @@
   },
   "compensation.communityInfo.generalCommunityInfoArray.3": {
     "datasource": "form_data",
-    "source": "community_info_step.community_members_section.members_applicant_community_local",
+    "source": "community_info_step.community_members_section.members_fieldset.members_applicant_community_local",
     "mapping_type": "default",
     "data": {
       "ID": "membersCommunityLocal",
@@ -616,7 +616,7 @@
 
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.0": {
     "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "source": "grant_info_step.acting_year_section.subventions.0.1.value",
     "mapping_type": "default",
     "data": {
       "ID": "compensation",
