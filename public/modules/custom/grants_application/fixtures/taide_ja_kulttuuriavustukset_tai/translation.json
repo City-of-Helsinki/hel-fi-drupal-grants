@@ -1,19 +1,354 @@
 {
   "translations": {
+    "acting_year_section.title": {
+      "en": "Grant details",
+      "fi": "Avustuksen tiedot",
+      "sv": "Preciserad information"
+    },
+    "acting_year_section_acting_year.title": {
+      "en": "The year I’m applying the grant for",
+      "fi": "Vuosi, jolle haen avustusta",
+      "sv": "År för vilket man ansöker om stöd"
+    },
+    "activity_accessibility.title": {
+      "en": "How are the activities made as accessible as possible either socially, culturally, in terms of language, economically, physically, regionally, or otherwise? What kinds of actions are taken, and resources and expertise available for this purpose?",
+      "fi": "Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "sv": "Hur gör ni er verksamhet socialt, kulturellt, språkligt, ekonomiskt, fysiskt, geografiskt eller på annat sätt tillgänglig för helsingforsarna? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
+    },
+    "activity_basis_step.title": {
+      "en": "The basis for the activities",
+      "fi": "Toiminnan lähtökohdat",
+      "sv": "Utgångspunkten för verksamheten"
+    },
+    "activity_content_section.title": {
+      "en": "Contents",
+      "fi": "Toiminnan sisällöt",
+      "sv": "Verksamhetens innehåll"
+    },
+    "activity_development_section.title": {
+      "en": "Development",
+      "fi": "Toiminnan kehittyminen",
+      "sv": "Utveckling av verksamheten"
+    },
+    "activity_ecology.title": {
+      "en": "Does the community have an environmental sustainability plan or a corresponding operating model in use? Which, or what kind of model is it? Describe how it is implemented in practice and how compliance is monitored and supervised.",
+      "fi": "Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.",
+      "sv": "Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras."
+    },
+    "activity_equality.title": {
+      "en": "How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?",
+      "fi": "Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "sv": "Hur förverkligar ni jämställdheten och mångfalden i er organisation och verksamhet samt i verksamhetens innehåll? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
+    },
+    "activity_future_changes.title": {
+      "en": "What are the main changes in the activities and operations, in relation to the previous activities and operations, that have been planned for the coming year?",
+      "fi": "Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?",
+      "sv": "Vilka är de centrala förändringar i verksamheten som ni planerat för inkommande år jämfört med tidigare år?"
+    },
+    "activity_goals.title": {
+      "en": "What were the main goals for the previous year and did you reach them?",
+      "fi": "Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?",
+      "sv": "Vilka var de centrala målsättningarna för senaste verksamhetsår och hur uppfylldes de?"
+    },
+    "activity_methods.title": {
+      "en": "What means are used for self-assesment and the development of operations?",
+      "fi": "Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?",
+      "sv": "Vilka metoder använder ni för självutvärdering och utveckling av verksamheten?"
+    },
+    "activity_organising_section.title": {
+      "en": "Operations",
+      "fi": "Toiminnan järjestäminen",
+      "sv": "Verksamhetens struktur"
+    },
+    "activity_reach_section.title": {
+      "en": "Accessibility",
+      "fi": "Toiminnan tavoittavuus",
+      "sv": "Verksamhetens tillgänglighet"
+    },
+    "applied_benefits.title": {
+      "en": "The applied grant (€)",
+      "fi": "Haettu avustus (€)",
+      "sv": "Ansökt stöd (€)"
+    },
+    "art_premise_is_others_use.title": {
+      "en": "The space is available for use by others (either for free or for a charge)",
+      "fi": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+      "sv": "Utrymmen som erbjuds även till andra (att hyra eller gratis)"
+    },
+    "art_premise_is_owned.title": {
+      "en": "The space is owned by us",
+      "fi": "Tila on omassa omistuksessa",
+      "sv": "Utrymmet ägs av aktören"
+    },
+    "art_premise_is_owned_by_city.title": {
+      "en": "The space is owned by the City of Helsinki",
+      "fi": "Kyseessä on kaupungin omistama tila",
+      "sv": "Stadens eget utrymme"
+    },
+    "art_premise_name.title": {
+      "en": "Name",
+      "fi": "Tilan nimi",
+      "sv": "Namn"
+    },
+    "art_premise_type.exhibition": {
+      "en": "Exhibition space",
+      "fi": "Näyttelytila",
+      "sv": "Utrymme för utställningar"
+    },
+    "art_premise_type.performance": {
+      "en": "Space for performances or screenings",
+      "fi": "Esitystila",
+      "sv": "Utrymme för föreställningar"
+    },
+    "art_premise_type.practice": {
+      "en": "Separate space for practising or artistic work",
+      "fi": "Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila",
+      "sv": "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
+    },
+    "art_premise_type.title": {
+      "en": "Type of space",
+      "fi": "Tilan tyyppi",
+      "sv": "Typ av utrymme"
+    },
+    "art_premises.add": {
+      "en": "Add new space",
+      "fi": "Lisää uusi tila",
+      "sv": "Lägg till ny plats"
+    },
+    "art_premises.title": {
+      "en": "Premises",
+      "fi": "Tila",
+      "sv": "Lokal"
+    },
+    "art_premises_section.title": {
+      "en": "Spaces for artistic activities",
+      "fi": "Taiteellisen toiminnan tilat",
+      "sv": "Lokal för konstnärlig verksamhet"
+    },
+    "budget_step.title": {
+      "en": "Finances",
+      "fi": "Talous",
+      "sv": "Ekonomi"
+    },
+    "childhood_studies_fieldset.title": {
+      "en": "Early education",
+      "fi": "Varhaisiän opinnot",
+      "sv": "Förberedande undervisning för småbarn"
+    },
+    "community_info_step.title": {
+      "en": "Information regarding the organization",
+      "fi": "Yhteisön tiedot",
+      "sv": "Uppgifter om den ansökande organisationen"
+    },
+    "community_members_section.title": {
+      "en": "Members",
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemsantal"
+    },
+    "entry_fees.title": {
+      "en": "Entry and participation fees (€)",
+      "fi": "Pääsy- ja osallistumismaksut (€)",
+      "sv": "Inträdes- eller deltagaravgifter (€)"
+    },
+    "entry_fees.tooltip": {
+      "en": "Ticket sales etc.",
+      "fi": "Esim. lipunmyyntitulot",
+      "sv": "Till exempel biljettförsäljningsintäkter"
+    },
+    "financial_funding_and_interests.title": {
+      "en": "Financial income and interest received on loans (€)",
+      "fi": "Rahoitus- ja korkotulot (€)",
+      "sv": "Ränteinkomster och finansiella inkomster (€)"
+    },
     "form_title": {
       "en": "Basic arts education grants",
       "fi": "Taiteen perusopetuksen avustukset",
       "sv": "Stöd för grundläggande konstundervisning"
     },
-    "subventions.34.title": {
-      "en": "Basic arts education",
-      "fi": "Taiteen perusopetus",
-      "sv": "Grundläggande konstundervisning"
+    "free_students.title": {
+      "en": "Are there non-paying student places, and if so, how many?",
+      "fi": "Onko vapaaoppilaspaikkoja? Jos on, niin kuinka monta?",
+      "sv": "Finns det frielevsplatser, hur många?"
     },
-    "primary_art.title": {
-      "en": "Primary field of art",
-      "fi": "Ensisijainen taiteenala",
-      "sv": "Huvudsaklig konstart"
+    "general_studies_fieldset.title": {
+      "en": "General syllabus",
+      "fi": "Yleinen oppimäärä",
+      "sv": "Allmän lärokurs"
+    },
+    "is_owner_of_art_premises.description": {
+      "en": "Answer according to the situation at the time of application.",
+      "fi": "Vastaa hakuhetken tilanteen mukaisesti.",
+      "sv": "Svara enligt situationen vid ansökningstillfället."
+    },
+    "is_owner_of_art_premises.title": {
+      "en": "We own or act as a year-round main tenant for a space for artistic activity",
+      "fi": "Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena",
+      "sv": "Utrymmen för den konstnärliga verksamheten, där man äger utrymmena eller är fast huvudhyresgäst."
+    },
+    "is_owner_of_art_premises.tooltip": {
+      "en": "Here a space for artistic activity is defined as a space for performances, screenings, or exhibitions, or as a separate space for practising or artistic work. Not an office or a storage space.",
+      "fi": "Taiteellisen toiminnan tilalla tarkoitetaan tässä esitystilaa, näyttelytilaa tai erillistä harjoittelutilaa tai muuta taiteellisen työskentelyn tilaa. Ei kuitenkaan esim. toimisto tai varasto.",
+      "sv": "Med utrymmen för den konstnärliga verksamheten avses här utrymmen för föreställningar eller utställningar eller separata repetitionsutrymmen eller övriga utrymmen för konstnärlig verksamhet. Här avses dock inte kontors- eller förrådsutrymmen."
+    },
+    "is_part_of_vos.title": {
+      "en": "The organization belongs to the central government subsidies system (VOS)",
+      "fi": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
+      "sv": "Organisationen får statsandelar (VOS)"
+    },
+    "is_part_of_vos.tooltip": {
+      "en": "Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.",
+      "fi": "Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saavan rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.",
+      "sv": "Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen."
+    },
+    "lessons_childhood.title": {
+      "en": "Early education",
+      "fi": "Varhaisiän opinnot",
+      "sv": "Förberedande undervisning för småbarn"
+    },
+    "lessons_fieldset.title": {
+      "en": "Classes in Helsinki in the previous calendar year",
+      "fi": "Opetustunnit Helsingissä edellisenä päättyneenä tilivuonna",
+      "sv": "Undervisningstimmar i Helsingfors föregående kalenderår."
+    },
+    "lessons_general.title": {
+      "en": "General syllabus",
+      "fi": "Yleinen oppimäärä",
+      "sv": "Allmän lärokurs"
+    },
+    "lessons_wide_advanced.title": {
+      "en": "Extensive syllabus: advanced studies",
+      "fi": "Laaja oppimäärä syventävät opinnot",
+      "sv": "Fördjupade studier inom den fördjupade lärokursen"
+    },
+    "lessons_wide_basic.title": {
+      "en": "Extensive syllabus: basic studies",
+      "fi": "Laaja oppimäärä perusopinnot",
+      "sv": "Grundläggande undervisning inom den fördjupade lärokursen"
+    },
+    "members_applicant_community_global.title": {
+      "en": "Organizational members",
+      "fi": "Yhteisöjäseniä",
+      "sv": "Samfundsmedlemmar"
+    },
+    "members_applicant_community_local.title": {
+      "en": "Of which are registered in Helsinki",
+      "fi": "Helsinkiläisiä yhteisöjäseniä yhteensä",
+      "sv": "Andel helsingforsiska samfund"
+    },
+    "members_applicant_person_global.title": {
+      "en": "Members",
+      "fi": "Henkilöjäseniä yhteensä",
+      "sv": "Medlemmar"
+    },
+    "members_applicant_person_local.title": {
+      "en": "Of which residents of Helsinki",
+      "fi": "Helsinkiläisiä henkilöjäseniä yhteensä",
+      "sv": "Andel helsingforsare"
+    },
+    "members_fieldset.help": {
+      "en": "If your organization has members, mark their numbers here.",
+      "fi": "Jos yhteisöllä on jäseniä, merkitse ne tähän.",
+      "sv": "Om samfundet har medlemmar, ange dem här"
+    },
+    "members_fieldset.title": {
+      "en": "Members",
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemmar"
+    },
+    "other_compensation_from_city.title": {
+      "en": "Operational grant from the City of Helsinki's cultural services (€)",
+      "fi": "Helsingin kaupungin kulttuuripalveluiden toiminta-avustus (€)",
+      "sv": "Helsingfors stads kulturtjänsters verksamhetsstöd (€)"
+    },
+    "other_compensation_from_city.tooltip": {
+      "en": "The operational grant that was granted for the same operations for the previous completed financial year.",
+      "fi": "Samaan toimitaan edelliselle päättyneelle tilivuodelle myönnetty avustus.",
+      "sv": "Understöd som beviljats för samma ändamål under föregående räkenskapsår."
+    },
+    "other_compensations_realized.title": {
+      "en": "Other grants (€)",
+      "fi": "Muut avustukset (€)",
+      "sv": "Övriga understöd (€)"
+    },
+    "other_compensations_realized.tooltip": {
+      "en": "Including other grants from the City of Helsinki.",
+      "fi": "Myös muut kaupungin avustukset.",
+      "sv": "Även stadens övriga understöd."
+    },
+    "other_compensations_section.description": {
+      "en": "List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.",
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.",
+      "sv": "Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren."
+    },
+    "other_compensations_section.title": {
+      "en": "Other grants awarded for the same purpose",
+      "fi": "Muut samaan tarkoitukseen myönnetyt avustukset",
+      "sv": "Övriga stöd som beviljats för samma ändamål"
+    },
+    "other_compensations_section_have_received_other_compensations.title": {
+      "en": "We have received other grants",
+      "fi": "Olemme saaneet muita avustuksia",
+      "sv": "Vi har fått andra stöd för samma ändamål"
+    },
+    "personal_teaching.title": {
+      "en": "Does your school carry out personalisation measures for the syllabus or instruction if needed, such as personal study plans?",
+      "fi": "Tehdäänkö oppilaitoksessanne tarvittaessa oppimäärän tai opetuksen yksilöllistämistä?",
+      "sv": "Erbjuder er läroanstalt vid behov individualiserad lärokurs eller undervisning, t.ex. individuella läroplaner?"
+    },
+    "planned_budget_section.title": {
+      "en": "Planned budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
+    },
+    "planned_budget_section_info.value": {
+      "en": "Regarding the year that the grant is applied for with this application. If the grant only applies to a limited part of the organization's activities, the reported figures should reflect only that part of the activities, in accordance with its designated budget.",
+      "fi": "Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta oman talousarvionsa mukaisesti.",
+      "sv": "Gällande det år, för vilket stöd ansöks med denna ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med den egna budgeten."
+    },
+    "planned_cost_section.title": {
+      "en": "Planned expenses",
+      "fi": "Suunnitellut menot",
+      "sv": "Planerade utgifter"
+    },
+    "planned_income_section.title": {
+      "en": "Planned incomes",
+      "fi": "Suunnitellut tulot",
+      "sv": "Planerade inkomster"
+    },
+    "planned_other_compensations.title": {
+      "en": "Other grants (€)",
+      "fi": "Muut avustukset (€)",
+      "sv": "Övriga understöd (€)"
+    },
+    "planned_other_compensations.tooltip": {
+      "en": "Including other grants from the City of Helsinki.",
+      "fi": "Myös muut kaupungin avustukset.",
+      "sv": "Även stadens övriga understöd."
+    },
+    "planned_state_operative_subvention.title": {
+      "en": "Operational grant from the government (€)",
+      "fi": "Valtion toiminta-avustus (€)",
+      "sv": "Statens verksamhetsunderstöd (€)"
+    },
+    "planned_state_operative_subvention.tooltip": {
+      "en": "Other than operational grants should be included in the other grants.",
+      "fi": "Kirjaa muut kuin toiminta-avustukset muihin avustuksiin.",
+      "sv": "Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd."
+    },
+    "planned_total_costs.title": {
+      "en": "Expenses in total (€)",
+      "fi": "Menot yhteensä (€)",
+      "sv": "Utgifter sammanlagt (€)"
+    },
+    "primary_art.circus": {
+      "en": "Circus",
+      "fi": "Sirkus",
+      "sv": "Cirkus"
+    },
+    "primary_art.dance": {
+      "en": "Dance",
+      "fi": "Tanssi",
+      "sv": "Dans"
     },
     "primary_art.description": {
       "en": "Choose the option that best describes your activities.",
@@ -35,11 +370,6 @@
       "fi": "Kirjallisuus",
       "sv": "Litteratur"
     },
-    "primary_art.visual_arts": {
-      "en": "Visual arts and comics",
-      "fi": "Kuvataide ja sarjakuva",
-      "sv": "Bildkonst och seriekonst"
-    },
     "primary_art.multidisciplinary": {
       "en": "Multidisciplinary art",
       "fi": "Monitaide",
@@ -50,20 +380,25 @@
       "fi": "Musiikki",
       "sv": "Musik"
     },
-    "primary_art.circus": {
-      "en": "Circus",
-      "fi": "Sirkus",
-      "sv": "Cirkus"
-    },
-    "primary_art.dance": {
-      "en": "Dance",
-      "fi": "Tanssi",
-      "sv": "Dans"
-    },
     "primary_art.theatre": {
       "en": "Theatre",
       "fi": "Teatteri",
       "sv": "Teater"
+    },
+    "primary_art.title": {
+      "en": "Primary field of art",
+      "fi": "Ensisijainen taiteenala",
+      "sv": "Huvudsaklig konstart"
+    },
+    "primary_art.visual_arts": {
+      "en": "Visual arts and comics",
+      "fi": "Kuvataide ja sarjakuva",
+      "sv": "Bildkonst och seriekonst"
+    },
+    "pupils_all.title": {
+      "en": "All",
+      "fi": "Kaikki",
+      "sv": "Alla"
     },
     "purpose.title": {
       "en": "A short description of the project or the activities",
@@ -75,380 +410,10 @@
       "fi": "Teksti voidaan julkaista tai sitä voidaan käyttää esittelytekstinä päätöksen yhteydessä sellaisenaan tai muokattuna.",
       "sv": "Texten kan som sådan eller i förkortad version publiceras eller användas som presentationsunderlag i anslutning till beslutsfattandet om stöd. Max 700 tecken."
     },
-    "members_fieldset.title": {
-      "en": "Members",
-      "fi": "Jäsenmäärä",
-      "sv": "Medlemmar"
-    },
-    "members_fieldset.help": {
-      "en": "If your organization has members, mark their numbers here.",
-      "fi": "Jos yhteisöllä on jäseniä, merkitse ne tähän.",
-      "sv": "Om samfundet har medlemmar, ange dem här"
-    },
-    "community_info_step.title": {
-      "en": "Information regarding the organization",
-      "fi": "Yhteisön tiedot",
-      "sv": "Uppgifter om den ansökande organisationen"
-    },
-    "art_premises_section.title": {
-      "en": "Spaces for artistic activities",
-      "fi": "Taiteellisen toiminnan tilat",
-      "sv": "Lokal för konstnärlig verksamhet"
-    },
-    "is_owner_of_art_premises.title": {
-      "en": "We own or act as a year-round main tenant for a space for artistic activity",
-      "fi": "Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena",
-      "sv": "Utrymmen för den konstnärliga verksamheten, där man äger utrymmena eller är fast huvudhyresgäst."
-    },
-    "is_owner_of_art_premises.description": {
-      "en": "Answer according to the situation at the time of application.",
-      "fi": "Vastaa hakuhetken tilanteen mukaisesti.",
-      "sv": "Svara enligt situationen vid ansökningstillfället."
-    },
-    "is_owner_of_art_premises.tooltip": {
-      "en": "Here a space for artistic activity is defined as a space for performances, screenings, or exhibitions, or as a separate space for practising or artistic work. Not an office or a storage space.",
-      "fi": "Taiteellisen toiminnan tilalla tarkoitetaan tässä esitystilaa, näyttelytilaa tai erillistä harjoittelutilaa tai muuta taiteellisen työskentelyn tilaa. Ei kuitenkaan esim. toimisto tai varasto.",
-      "sv": "Med utrymmen för den konstnärliga verksamheten avses här utrymmen för föreställningar eller utställningar eller separata repetitionsutrymmen eller övriga utrymmen för konstnärlig verksamhet. Här avses dock inte kontors- eller förrådsutrymmen."
-    },
-    "art_premises.title": {
-      "en": "Premises",
-      "fi": "Tila",
-      "sv": "Lokal"
-    },
-    "art_premises.add": {
-      "en": "Add new space",
-      "fi": "Lisää uusi tila",
-      "sv": "Lägg till ny plats"
-    },
-    "art_premise_name.title": {
-      "en": "Name",
-      "fi": "Tilan nimi",
-      "sv": "Namn"
-    },
-    "art_premise_type.title": {
-      "en": "Type of space",
-      "fi": "Tilan tyyppi",
-      "sv": "Typ av utrymme"
-    },
-    "art_premise_type.exhibition": {
-      "en": "Exhibition space",
-      "fi": "Näyttelytila",
-      "sv": "Utrymme för utställningar"
-    },
-    "art_premise_type.performance": {
-      "en": "Space for performances or screenings",
-      "fi": "Esitystila",
-      "sv": "Utrymme för föreställningar"
-    },
-    "art_premise_type.practice": {
-      "en": "Separate space for practising or artistic work",
-      "fi": "Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila",
-      "sv": "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
-    },
-    "art_premise_is_owned_by_city.title": {
-      "en": "The space is owned by the City of Helsinki",
-      "fi": "Kyseessä on kaupungin omistama tila",
-      "sv": "Stadens eget utrymme"
-    },
-    "art_premise_is_owned.title": {
-      "en": "The space is owned by us",
-      "fi": "Tila on omassa omistuksessa",
-      "sv": "Utrymmet ägs av aktören"
-    },
-    "art_premise_is_others_use.title": {
-      "en": "The space is available for use by others (either for free or for a charge)",
-      "fi": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
-      "sv": "Utrymmen som erbjuds även till andra (att hyra eller gratis)"
-    },
     "realized_activity_step.title": {
       "en": "Realized activities",
       "fi": "Toteutunut toiminta",
       "sv": "Förverkligad verksamhet"
-    },
-    "students_section.title": {
-      "en": "Information regarding the basic arts education",
-      "fi": "Tiedot opetuksesta",
-      "sv": "Uppgifter om undervisningen"
-    },
-    "students_section.description": {
-      "en": "Students on September 20th. Only students from 0 to 19 years of age from Helsinki.",
-      "fi": "Oppilaat 20.9. Vain helsinkiläiset 0-19 vuotiaat oppilaat.",
-      "sv": "Elever 20.9. Endast Helsingforselever i åldern 0-19 år."
-    },
-    "childhood_studies_fieldset.title": {
-      "en": "Early education",
-      "fi": "Varhaisiän opinnot",
-      "sv": "Förberedande undervisning för småbarn"
-    },
-    "wide_basic_studies_fieldset.title": {
-      "en": "Extensive syllabus: basic studies",
-      "fi": "Laaja oppimäärä perusopinnot",
-      "sv": "Grundläggande undervisning inom den fördjupade lärokursen"
-    },
-    "wide_advanced_studies_fieldset.title": {
-      "en": "Extensive syllabus: advanced studies",
-      "fi": "Laaja oppimäärä syventävät opinnot",
-      "sv": "Fördjupade studier inom den fördjupade lärokursen"
-    },
-    "general_studies_fieldset.title": {
-      "en": "General syllabus",
-      "fi": "Yleinen oppimäärä",
-      "sv": "Allmän lärokurs"
-    },
-    "pupils_all.title": {
-      "en": "All",
-      "fi": "Kaikki",
-      "sv": "Alla"
-    },
-    "teaching_personnel.title": {
-      "en": "The total number of teaching staff on September 20th",
-      "fi": "Koko opetushenkilöstön lukumäärä 20.9",
-      "sv": "Sammanlagt antal undervisningspersonal 20.9."
-    },
-    "way_of_selection.title": {
-      "en": "Describe the student acceptance procedure",
-      "fi": "Kuvaile oppilaaksi ottamisen tapaa",
-      "sv": "Beskriv sättet för intagning av elever."
-    },
-    "personal_teaching.title": {
-      "en": "Does your school carry out personalisation measures for the syllabus or instruction if needed, such as personal study plans?",
-      "fi": "Tehdäänkö oppilaitoksessanne tarvittaessa oppimäärän tai opetuksen yksilöllistämistä?",
-      "sv": "Erbjuder er läroanstalt vid behov individualiserad lärokurs eller undervisning, t.ex. individuella läroplaner?"
-    },
-    "free_students.title": {
-      "en": "Are there non-paying student places, and if so, how many?",
-      "fi": "Onko vapaaoppilaspaikkoja? Jos on, niin kuinka monta?",
-      "sv": "Finns det frielevsplatser, hur många?"
-    },
-    "lessons_fieldset.title": {
-      "en": "Classes in Helsinki in the previous calendar year",
-      "fi": "Opetustunnit Helsingissä edellisenä päättyneenä tilivuonna",
-      "sv": "Undervisningstimmar i Helsingfors föregående kalenderår."
-    },
-    "lessons_childhood.title": {
-      "en": "Early education",
-      "fi": "Varhaisiän opinnot",
-      "sv": "Förberedande undervisning för småbarn"
-    },
-    "lessons_wide_basic.title": {
-      "en": "Extensive syllabus: basic studies",
-      "fi": "Laaja oppimäärä perusopinnot",
-      "sv": "Grundläggande undervisning inom den fördjupade lärokursen"
-    },
-    "lessons_wide_advanced.title": {
-      "en": "Extensive syllabus: advanced studies",
-      "fi": "Laaja oppimäärä syventävät opinnot",
-      "sv": "Fördjupade studier inom den fördjupade lärokursen"
-    },
-    "lessons_general.title": {
-      "en": "General syllabus",
-      "fi": "Yleinen oppimäärä",
-      "sv": "Allmän lärokurs"
-    },
-    "realized_premises_section.title": {
-      "en": "The teaching locations in Helsinki",
-      "fi": "Helsingissä järjestettävä opetus toteutettiin",
-      "sv": "Platser för undervisning i Helsingfors"
-    },
-    "realized_premises_section.description": {
-      "en": "List all different teaching locations in Helsinki in the previous calendar year. Only list teaching locations, not locations for student performances or events, for example.",
-      "fi": "Kirjaa kaikkien eri Helsingissä olevien opetuspaikkojen tiedot edellisenä päättyneenä tilivuonna. Kirjaa vain opetuspaikat, ei esim. oppilasnäytösten tai tapahtumien paikkoja.",
-      "sv": "Anteckna information om alla platser för undervisning i Helsingfors föregående kalenderår. Anteckna endast platser för undervisning, inte t.ex. platser för elevframträdanden eller olika evenemang."
-    },
-    "realized_premises.title": {
-      "en": "Premises",
-      "fi": "Tila",
-      "sv": "Lokal"
-    },
-    "realized_premises.add": {
-      "en": "Add new space",
-      "fi": "Lisää uusi tila",
-      "sv": "Lägg till ny plats"
-    },
-    "realized_premise_name.title": {
-      "en": "Name",
-      "fi": "Tilan nimi",
-      "sv": "Namn"
-    },
-    "realized_premise_is_owned_by_city.title": {
-      "en": "The space is owned by the City of Helsinki",
-      "fi": "Kyseessä on kaupungin omistama tila",
-      "sv": "Stadens eget utrymme"
-    },
-    "realized_premise_city_section.title": {
-      "en": "City division that owns the premise",
-      "fi": "Tilan omistava toimiala",
-      "sv": "Sektorn som äger lokalen"
-    },
-    "realized_premise_city_section.urban_environment": {
-      "en": "Urban Environment Division",
-      "fi": "Kaupunkiympäristön toimiala",
-      "sv": "Stadsmiljösektorn"
-    },
-    "realized_premise_city_section.culture_and_leisure": {
-      "en": "Culture and Leisure Division",
-      "fi": "Kulttuurin ja vapaa-ajan toimiala",
-      "sv": "Kultur- och fritidssektorn"
-    },
-    "realized_premise_city_section.education": {
-      "en": "Education Division",
-      "fi": "Kasvatuksen ja koulutuksen toimiala",
-      "sv": "Fostrans- och utbildningssektorn"
-    },
-    "realized_premise_city_section.other": {
-      "en": "Other premise owned by the city",
-      "fi": "Muu kaupungin omistama tila",
-      "sv": "Övriga utrymmen som ägs av staden"
-    },
-    "realized_premise_city_section.description": {
-      "en": "Premises of the Urban Environment Division include, for example, schools' teaching facilities. Premises of the Culture and Leisure Division include, for example, facilities administered by cultural, library, youth or sports services. Premises of the Education Division include, for example, the facilities of the adult education centre.",
-      "fi": "Kaupunkiympäristön toimialan tiloja ovat esimerkiksi koulujen opetustilat. Kulttuurin ja vapaa-ajan toimialan tiloja ovat esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat. Kasvatuksen ja koulutuksen toimialan tiloja ovat esimerkiksi työväenopiston tilat.",
-      "sv": "Stadsmiljösektorns lokaler är till exempel skolornas undervisningslokaler. Kultur- och fritidssektorns lokaler är till exempel lokaler som förvaltas av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Fostrans- och utbildningssektorns lokaler är till exempel arbetarinstitutets lokaler."
-    },
-    "realized_premise_suitability.title": {
-      "en": "How well are the premises suited for the purpose?",
-      "fi": "Kuinka hyvin tila soveltuu toimintaan?",
-      "sv": "Hur väl lämpar sig utrymmena för undervisning?"
-    },
-    "realized_premise_suitability.well": {
-      "en": "Well",
-      "fi": "Hyvin",
-      "sv": "Väl"
-    },
-    "realized_premise_suitability.partially": {
-      "en": "Partially",
-      "fi": "Osittain",
-      "sv": "Partiskt"
-    },
-    "realized_premise_suitability.poorly": {
-      "en": "Poorly",
-      "fi": "Huonosti",
-      "sv": "Dåligt"
-    },
-    "activity_basis_step.title": {
-      "en": "The basis for the activities",
-      "fi": "Toiminnan lähtökohdat",
-      "sv": "Utgångspunkten för verksamheten"
-    },
-    "activity_content_section.title": {
-      "en": "Contents",
-      "fi": "Toiminnan sisällöt",
-      "sv": "Verksamhetens innehåll"
-    },
-    "activity_equality.title": {
-      "en": "How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?",
-      "fi": "Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
-      "sv": "Hur förverkligar ni jämställdheten och mångfalden i er organisation och verksamhet samt i verksamhetens innehåll? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
-    },
-    "activity_reach_section.title": {
-      "en": "Accessibility",
-      "fi": "Toiminnan tavoittavuus",
-      "sv": "Verksamhetens tillgänglighet"
-    },
-    "activity_accessibility.title": {
-      "en": "How are the activities made as accessible as possible either socially, culturally, in terms of language, economically, physically, regionally, or otherwise? What kinds of actions are taken, and resources and expertise available for this purpose?",
-      "fi": "Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
-      "sv": "Hur gör ni er verksamhet socialt, kulturellt, språkligt, ekonomiskt, fysiskt, geografiskt eller på annat sätt tillgänglig för helsingforsarna? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
-    },
-    "activity_organising_section.title": {
-      "en": "Operations",
-      "fi": "Toiminnan järjestäminen",
-      "sv": "Verksamhetens struktur"
-    },
-    "activity_ecology.title": {
-      "en": "Does the community have an environmental sustainability plan or a corresponding operating model in use? Which, or what kind of model is it? Describe how it is implemented in practice and how compliance is monitored and supervised.",
-      "fi": "Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.",
-      "sv": "Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras."
-    },
-    "activity_development_section.title": {
-      "en": "Development",
-      "fi": "Toiminnan kehittyminen",
-      "sv": "Utveckling av verksamheten"
-    },
-    "activity_goals.title": {
-      "en": "What were the main goals for the previous year and did you reach them?",
-      "fi": "Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?",
-      "sv": "Vilka var de centrala målsättningarna för senaste verksamhetsår och hur uppfylldes de?"
-    },
-    "activity_methods.title": {
-      "en": "What means are used for self-assesment and the development of operations?",
-      "fi": "Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?",
-      "sv": "Vilka metoder använder ni för självutvärdering och utveckling av verksamheten?"
-    },
-    "activity_future_changes.title": {
-      "en": "What are the main changes in the activities and operations, in relation to the previous activities and operations, that have been planned for the coming year?",
-      "fi": "Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?",
-      "sv": "Vilka är de centrala förändringar i verksamheten som ni planerat för inkommande år jämfört med tidigare år?"
-    },
-    "budget_step.title": {
-      "en": "Finances",
-      "fi": "Talous",
-      "sv": "Ekonomi"
-    },
-    "planned_budget_section.title": {
-      "en": "Planned budget",
-      "fi": "Talousarvio",
-      "sv": "Budget"
-    },
-    "planned_budget_section_info.value": {
-      "en": "Regarding the year that the grant is applied for with this application. If the grant only applies to a limited part of the organization's activities, the reported figures should reflect only that part of the activities, in accordance with its designated budget.",
-      "fi": "Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta oman talousarvionsa mukaisesti.",
-      "sv": "Gällande det år, för vilket stöd ansöks med denna ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med den egna budgeten."
-    },
-    "is_part_of_vos.title": {
-      "en": "The organization belongs to the central government subsidies system (VOS)",
-      "fi": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
-      "sv": "Organisationen får statsandelar (VOS)"
-    },
-    "is_part_of_vos.tooltip": {
-      "en": "Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.",
-      "fi": "Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saavan rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.",
-      "sv": "Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen."
-    },
-    "planned_income_section.title": {
-      "en": "Planned incomes",
-      "fi": "Suunnitellut tulot",
-      "sv": "Planerade inkomster"
-    },
-    "planned_state_operative_subvention.title": {
-      "en": "Operational grant from the government (€)",
-      "fi": "Valtion toiminta-avustus (€)",
-      "sv": "Statens verksamhetsunderstöd (€)"
-    },
-    "planned_other_compensations.title": {
-      "en": "Other grants (€)",
-      "fi": "Muut avustukset (€)",
-      "sv": "Övriga understöd (€)"
-    },
-    "sponsorships.title": {
-      "en": "Private funding (sponsors, corporate collaboration, donations, etc.) (€)",
-      "fi": "Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€)",
-      "sv": "Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)"
-    },
-    "entry_fees.title": {
-      "en": "Entry and participation fees (€)",
-      "fi": "Pääsy- ja osallistumismaksut (€)",
-      "sv": "Inträdes- eller deltagaravgifter (€)"
-    },
-    "sales.title": {
-      "en": "Other incomes (€)",
-      "fi": "Muut oman toiminnan tulot (€)",
-      "sv": "Övriga egna inkomster (€)"
-    },
-    "financial_funding_and_interests.title": {
-      "en": "Financial income and interest received on loans (€)",
-      "fi": "Rahoitus- ja korkotulot (€)",
-      "sv": "Ränteinkomster och finansiella inkomster (€)"
-    },
-    "planned_cost_section.title": {
-      "en": "Planned expenses",
-      "fi": "Suunnitellut menot",
-      "sv": "Planerade utgifter"
-    },
-    "planned_total_costs.title": {
-      "en": "Expenses in total (€)",
-      "fi": "Menot yhteensä (€)",
-      "sv": "Utgifter sammanlagt (€)"
     },
     "realized_budget_section.title": {
       "en": "Realized incomes and expenses",
@@ -460,6 +425,151 @@
       "fi": "<p>Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan \"tulot yhteensä\") ja kaikki menot (kohtaan \"menot yhteensä\") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot. Tarkista lopuksi, että tulojen ja menojen erotus vastaa tilinpäätöksen yli/alijäämää.</p><p>Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta kustannuspaikkakohtaisen tuloslaskelman mukaisesti.</p>",
       "sv": "<p>Föregående avslutade räkenskapsår. Enligt bokslutet. Inkludera alla intäkter (under \"inkomster sammanlagt\") och alla utgifter (under \"utgifter sammanlagt\"), inklusive bland annat: avskrivningar och finansiella kostnader och intäkter. Kontrollera slutligen att skillnaden mellan inkomster och utgifter motsvarar över-/underskottet i bokslutet.</p><p>Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med en separat kostnadsställerapport.</p>"
     },
+    "realized_cost_section.title": {
+      "en": "Realized expenses",
+      "fi": "Toteutuneet menot",
+      "sv": "Förverkligade utgifter"
+    },
+    "realized_income_section.description": {
+      "en": "In the first three fields you are asked to fill in specific information about the grants you have received. In the last field you are asked to fill in all realized incomes in total, including the grants listed above and all other incomes.",
+      "fi": "Kolmessa ensimmäisessä kohdassa kysytään eritellysti tietoja saaduista avustuksista. Viimeisessä kohdassa kysytään kaikkia toteutuneita tuloja yhteensä sisältäen yllälistatut avustukset ja kaikki muut tulot.",
+      "sv": "I de tre första avsnitten ber vi om detaljerad information om mottagna understöd. Det sista avsnittet avser alla realiserade inkomster sammanlagt, inklusive understöd som anges ovan och alla övriga inkomster."
+    },
+    "realized_income_section.title": {
+      "en": "Realized incomes",
+      "fi": "Toteutuneet tulot",
+      "sv": "Realiserade inkomster"
+    },
+    "realized_premise_city_section.culture_and_leisure": {
+      "en": "Culture and Leisure Division",
+      "fi": "Kulttuurin ja vapaa-ajan toimiala",
+      "sv": "Kultur- och fritidssektorn"
+    },
+    "realized_premise_city_section.description": {
+      "en": "Premises of the Urban Environment Division include, for example, schools' teaching facilities. Premises of the Culture and Leisure Division include, for example, facilities administered by cultural, library, youth or sports services. Premises of the Education Division include, for example, the facilities of the adult education centre.",
+      "fi": "Kaupunkiympäristön toimialan tiloja ovat esimerkiksi koulujen opetustilat. Kulttuurin ja vapaa-ajan toimialan tiloja ovat esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat. Kasvatuksen ja koulutuksen toimialan tiloja ovat esimerkiksi työväenopiston tilat.",
+      "sv": "Stadsmiljösektorns lokaler är till exempel skolornas undervisningslokaler. Kultur- och fritidssektorns lokaler är till exempel lokaler som förvaltas av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Fostrans- och utbildningssektorns lokaler är till exempel arbetarinstitutets lokaler."
+    },
+    "realized_premise_city_section.education": {
+      "en": "Education Division",
+      "fi": "Kasvatuksen ja koulutuksen toimiala",
+      "sv": "Fostrans- och utbildningssektorn"
+    },
+    "realized_premise_city_section.other": {
+      "en": "Other premise owned by the city",
+      "fi": "Muu kaupungin omistama tila",
+      "sv": "Övriga utrymmen som ägs av staden"
+    },
+    "realized_premise_city_section.title": {
+      "en": "City division that owns the premise",
+      "fi": "Tilan omistava toimiala",
+      "sv": "Sektorn som äger lokalen"
+    },
+    "realized_premise_city_section.urban_environment": {
+      "en": "Urban Environment Division",
+      "fi": "Kaupunkiympäristön toimiala",
+      "sv": "Stadsmiljösektorn"
+    },
+    "realized_premise_is_owned_by_city.title": {
+      "en": "The space is owned by the City of Helsinki",
+      "fi": "Kyseessä on kaupungin omistama tila",
+      "sv": "Stadens eget utrymme"
+    },
+    "realized_premise_name.title": {
+      "en": "Name",
+      "fi": "Tilan nimi",
+      "sv": "Namn"
+    },
+    "realized_premise_suitability.partially": {
+      "en": "Partially",
+      "fi": "Osittain",
+      "sv": "Partiskt"
+    },
+    "realized_premise_suitability.poorly": {
+      "en": "Poorly",
+      "fi": "Huonosti",
+      "sv": "Dåligt"
+    },
+    "realized_premise_suitability.title": {
+      "en": "How well are the premises suited for the purpose?",
+      "fi": "Kuinka hyvin tila soveltuu toimintaan?",
+      "sv": "Hur väl lämpar sig utrymmena för undervisning?"
+    },
+    "realized_premise_suitability.well": {
+      "en": "Well",
+      "fi": "Hyvin",
+      "sv": "Väl"
+    },
+    "realized_premises.add": {
+      "en": "Add new space",
+      "fi": "Lisää uusi tila",
+      "sv": "Lägg till ny plats"
+    },
+    "realized_premises.title": {
+      "en": "Premises",
+      "fi": "Tila",
+      "sv": "Lokal"
+    },
+    "realized_premises_section.description": {
+      "en": "List all different teaching locations in Helsinki in the previous calendar year. Only list teaching locations, not locations for student performances or events, for example.",
+      "fi": "Kirjaa kaikkien eri Helsingissä olevien opetuspaikkojen tiedot edellisenä päättyneenä tilivuonna. Kirjaa vain opetuspaikat, ei esim. oppilasnäytösten tai tapahtumien paikkoja.",
+      "sv": "Anteckna information om alla platser för undervisning i Helsingfors föregående kalenderår. Anteckna endast platser för undervisning, inte t.ex. platser för elevframträdanden eller olika evenemang."
+    },
+    "realized_premises_section.title": {
+      "en": "The teaching locations in Helsinki",
+      "fi": "Helsingissä järjestettävä opetus toteutettiin",
+      "sv": "Platser för undervisning i Helsingfors"
+    },
+    "sales.title": {
+      "en": "Other incomes (€)",
+      "fi": "Muut oman toiminnan tulot (€)",
+      "sv": "Övriga egna inkomster (€)"
+    },
+    "sponsorships.title": {
+      "en": "Private funding (sponsors, corporate collaboration, donations, etc.) (€)",
+      "fi": "Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€)",
+      "sv": "Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)"
+    },
+    "state_operative_subvention.title": {
+      "en": "Operational grant from the government (€)",
+      "fi": "Valtion toiminta-avustus (€)",
+      "sv": "Statens verksamhetsunderstöd (€)"
+    },
+    "state_operative_subvention.tooltip": {
+      "en": "Other than operational grants should be included in the other grants.",
+      "fi": "Kirjaa muut kuin toiminta-avustukset muihin avustuksiin.",
+      "sv": "Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd."
+    },
+    "students_section.description": {
+      "en": "Students on September 20th. Only students from 0 to 19 years of age from Helsinki.",
+      "fi": "Oppilaat 20.9. Vain helsinkiläiset 0-19 vuotiaat oppilaat.",
+      "sv": "Elever 20.9. Endast Helsingforselever i åldern 0-19 år."
+    },
+    "students_section.title": {
+      "en": "Information regarding the basic arts education",
+      "fi": "Tiedot opetuksesta",
+      "sv": "Uppgifter om undervisningen"
+    },
+    "subventions.34.title": {
+      "en": "Basic arts education",
+      "fi": "Taiteen perusopetus",
+      "sv": "Grundläggande konstundervisning"
+    },
+    "teaching_personnel.title": {
+      "en": "The total number of teaching staff on September 20th",
+      "fi": "Koko opetushenkilöstön lukumäärä 20.9",
+      "sv": "Sammanlagt antal undervisningspersonal 20.9."
+    },
+    "total_costs.title": {
+      "en": "Expenses in total (€)",
+      "fi": "Menot yhteensä (€)",
+      "sv": "Utgifterna sammanlagt (€)"
+    },
+    "total_income.title": {
+      "en": "Incomes in total (€)",
+      "fi": "Tulot yhteensä (€)",
+      "sv": "Inkomster sammanlagt (€)"
+    },
     "was_part_of_vos.title": {
       "en": "The organization belonged to the central government subsidies system (VOS)",
       "fi": "Organisaatio kuului valtionosuusjärjestelmään (VOS)",
@@ -470,130 +580,20 @@
       "fi": "Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saaneen rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.",
       "sv": "Välj ja, bara om du med säkerhet vet att din organisation fick finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen."
     },
-    "realized_income_section.title": {
-      "en": "Realized incomes",
-      "fi": "Toteutuneet tulot",
-      "sv": "Realiserade inkomster"
+    "way_of_selection.title": {
+      "en": "Describe the student acceptance procedure",
+      "fi": "Kuvaile oppilaaksi ottamisen tapaa",
+      "sv": "Beskriv sättet för intagning av elever."
     },
-    "realized_income_section.description": {
-      "en": "In the first three fields you are asked to fill in specific information about the grants you have received. In the last field you are asked to fill in all realized incomes in total, including the grants listed above and all other incomes.",
-      "fi": "Kolmessa ensimmäisessä kohdassa kysytään eritellysti tietoja saaduista avustuksista. Viimeisessä kohdassa kysytään kaikkia toteutuneita tuloja yhteensä sisältäen yllälistatut avustukset ja kaikki muut tulot.",
-      "sv": "I de tre första avsnitten ber vi om detaljerad information om mottagna understöd. Det sista avsnittet avser alla realiserade inkomster sammanlagt, inklusive understöd som anges ovan och alla övriga inkomster."
+    "wide_advanced_studies_fieldset.title": {
+      "en": "Extensive syllabus: advanced studies",
+      "fi": "Laaja oppimäärä syventävät opinnot",
+      "sv": "Fördjupade studier inom den fördjupade lärokursen"
     },
-    "other_compensation_from_city.title": {
-      "en": "Operational grant from the City of Helsinki's cultural services (€)",
-      "fi": "Helsingin kaupungin kulttuuripalveluiden toiminta-avustus (€)",
-      "sv": "Helsingfors stads kulturtjänsters verksamhetsstöd (€)"
-    },
-    "state_operative_subvention.title": {
-      "en": "Operational grant from the government (€)",
-      "fi": "Valtion toiminta-avustus (€)",
-      "sv": "Statens verksamhetsunderstöd (€)"
-    },
-    "other_compensations_realized.title": {
-      "en": "Other grants (€)",
-      "fi": "Muut avustukset (€)",
-      "sv": "Övriga understöd (€)"
-    },
-    "total_income.title": {
-      "en": "Incomes in total (€)",
-      "fi": "Tulot yhteensä (€)",
-      "sv": "Inkomster sammanlagt (€)"
-    },
-    "realized_cost_section.title": {
-      "en": "Realized expenses",
-      "fi": "Toteutuneet menot",
-      "sv": "Förverkligade utgifter"
-    },
-    "total_costs.title": {
-      "en": "Expenses in total (€)",
-      "fi": "Menot yhteensä (€)",
-      "sv": "Utgifterna sammanlagt (€)"
-    },
-    "members_applicant_community_global.title": {
-      "en": "Organizational members",
-      "fi": "Yhteisöjäseniä",
-      "sv": "Samfundsmedlemmar"
-    },
-    "members_applicant_person_global.title": {
-      "en": "Members",
-      "fi": "Henkilöjäseniä yhteensä",
-      "sv": "Medlemmar"
-    },
-    "members_applicant_person_local.title": {
-      "en": "Of which residents of Helsinki",
-      "fi": "Helsinkiläisiä henkilöjäseniä yhteensä",
-      "sv": "Andel helsingforsare"
-    },
-    "members_applicant_community_local.title": {
-      "en": "Of which are registered in Helsinki",
-      "fi": "Helsinkiläisiä yhteisöjäseniä yhteensä",
-      "sv": "Andel helsingforsiska samfund"
-    },
-    "acting_year_section.title": {
-      "en": "Grant details",
-      "fi": "Avustuksen tiedot",
-      "sv": "Preciserad information"
-    },
-    "acting_year_section_acting_year.title": {
-      "en": "The year I’m applying the grant for",
-      "fi": "Vuosi, jolle haen avustusta",
-      "sv": "År för vilket man ansöker om stöd"
-    },
-    "other_compensations_section.title": {
-      "en": "Other grants awarded for the same purpose",
-      "fi": "Muut samaan tarkoitukseen myönnetyt avustukset",
-      "sv": "Övriga stöd som beviljats för samma ändamål"
-    },
-    "other_compensations_section_have_received_other_compensations.title": {
-      "en": "We have received other grants",
-      "fi": "Olemme saaneet muita avustuksia",
-      "sv": "Vi har fått andra stöd för samma ändamål"
-    },
-    "applied_benefits.title": {
-      "en": "The applied grant (€)",
-      "fi": "Haettu avustus (€)",
-      "sv": "Ansökt stöd (€)"
-    },
-    "other_compensations_section.description": {
-      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.",
-      "sv": "Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren.",
-      "en": "List only grants from other instances than the City of Helsinki in the current year and the two previous years before that."
-    },
-    "community_members_section.title": {
-      "fi": "Jäsenmäärä",
-      "sv": "Medlemsantal",
-      "en": "Members"
-    },
-    "planned_state_operative_subvention.tooltip": {
-      "fi": "Kirjaa muut kuin toiminta-avustukset muihin avustuksiin.",
-      "sv": "Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.",
-      "en": "Other than operational grants should be included in the other grants."
-    },
-    "planned_other_compensations.tooltip": {
-      "fi": "Myös muut kaupungin avustukset.",
-      "sv": "Även stadens övriga understöd.",
-      "en": "Including other grants from the City of Helsinki."
-    },
-    "entry_fees.tooltip": {
-      "fi": "Esim. lipunmyyntitulot",
-      "sv": "Till exempel biljettförsäljningsintäkter",
-      "en": "Ticket sales etc."
-    },
-    "other_compensation_from_city.tooltip": {
-      "fi": "Samaan toimitaan edelliselle päättyneelle tilivuodelle myönnetty avustus.",
-      "sv": "Understöd som beviljats för samma ändamål under föregående räkenskapsår.",
-      "en": "The operational grant that was granted for the same operations for the previous completed financial year."
-    },
-    "state_operative_subvention.tooltip": {
-      "fi": "Kirjaa muut kuin toiminta-avustukset muihin avustuksiin.",
-      "sv": "Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.",
-      "en": "Other than operational grants should be included in the other grants."
-    },
-    "other_compensations_realized.tooltip": {
-      "fi": "Myös muut kaupungin avustukset.",
-      "sv": "Även stadens övriga understöd.",
-      "en": "Including other grants from the City of Helsinki."
+    "wide_basic_studies_fieldset.title": {
+      "en": "Extensive syllabus: basic studies",
+      "fi": "Laaja oppimäärä perusopinnot",
+      "sv": "Grundläggande undervisning inom den fördjupade lärokursen"
     }
   }
 }
