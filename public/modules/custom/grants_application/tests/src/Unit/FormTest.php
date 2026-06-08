@@ -27,6 +27,7 @@ final class FormTest extends UnitTestCase {
       // ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-file-formdata', 'result' => 'form58-file-result'],
       ['id' => 'ID70', 'form_identifier' => 'promoting_safer_club_activities', 'form_data' => 'form70-safer-nofiles-formdata', 'result' => 'form70-safer-nofiles-result', 'settings' => 'form70-settings'],
       ['id' => 'ID50', 'form_identifier' => 'taide_ja_kulttuuriavustukset_tai', 'form_data' => 'form50-nofiles-formdata', 'result' => 'form50-nofiles-result', 'settings' => 'form50-settings', 'files' => 'form50-nofiles-files'],
+      ['id' => 'ID75', 'form_identifier' => 'nuortoimintapalkka', 'form_data' => 'form75-nofiles-formdata', 'result' => 'form75-nofiles-result', 'settings' => 'form75-settings'],
       ['id' => 'ID70', 'form_identifier' => 'segregaation_ehkaisemisavustus', 'form_data' => 'form70-segregaatio-nofiles-formdata', 'result' => 'form70-segregaatio-nofiles-result', 'settings' => 'form70-segregaatio-settings'],
     ];
     // phpcs:enable

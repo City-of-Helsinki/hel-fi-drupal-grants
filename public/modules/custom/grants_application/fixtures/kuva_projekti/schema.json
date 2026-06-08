@@ -67,14 +67,14 @@
           "type": "string"
         },
         "post_code": {
-          "title": "venue_post_code.title",
+          "title": "postal_code.title",
           "type": "string"
         },
         "is_owned_by_city": {
           "title": "venue_is_owned_by_city.title",
           "enum": [
-            false,
-            true
+            true,
+            false
           ],
           "default": false
         }
@@ -145,6 +145,7 @@
             },
             "is_festival_or_event": {
               "title": "is_festival_or_event.title",
+              "description": "is_festival_or_event.help",
               "enum": [
                 true,
                 false
@@ -170,8 +171,8 @@
             "have_received_other_compensations": {
               "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             }
@@ -216,19 +217,19 @@
               "type": "object",
               "properties": {
                 "members_applicant_person_global": {
-                  "title": "members_applicant_person_global.title",
+                  "title": "members_person_global.title",
                   "type": "integer"
                 },
                 "members_applicant_person_local": {
-                  "title": "members_applicant_person_local.title",
+                  "title": "members_person_local.title",
                   "type": "integer"
                 },
                 "members_applicant_community_global": {
-                  "title": "members_applicant_community_global.title",
+                  "title": "members_community_global.title",
                   "type": "integer"
                 },
                 "members_applicant_community_local": {
-                  "title": "members_applicant_community_local.title",
+                  "title": "members_community_local.title",
                   "type": "integer"
                 }
               },
@@ -239,7 +240,8 @@
                 "members_applicant_community_local"
               ]
             }
-          }
+          },
+          "required": ["members_fieldset"]
         },
         "personnel_section": {
           "title": "personnel_section.title",
@@ -267,8 +269,8 @@
                   "title": "parttime_personnel_worktime.title",
                   "type": "string"
                 },
-                "voluenteer_personnel": {
-                  "title": "voluenteer_personnel.title",
+                "volunteer_personnel": {
+                  "title": "volunteer_personnel.title",
                   "type": "integer"
                 }
               },
@@ -277,10 +279,11 @@
                 "fulltime_personnel_worktime",
                 "parttime_personnel",
                 "parttime_personnel_worktime",
-                "voluenteer_personnel"
+                "volunteer_personnel"
               ]
             }
-          }
+          },
+          "required": ["personnel_fieldset"]
         }
       }
     },
@@ -365,7 +368,7 @@
           "type": "object",
           "properties": {
             "first_venue": {
-              "title": "venues_in_helsinki_fieldset.title",
+              "title": "first_venue_fieldset.title",
               "type": "object",
               "properties": {
                 "premise_name": {
@@ -373,14 +376,14 @@
                   "type": "string"
                 },
                 "post_code": {
-                  "title": "venue_post_code.title",
+                  "title": "postal_code.title",
                   "type": "string"
                 },
                 "is_owned_by_city": {
                   "title": "venue_is_owned_by_city.title",
                   "enum": [
-                    false,
-                    true
+                    true,
+                    false
                   ],
                   "default": false
                 }
@@ -392,7 +395,7 @@
               ]
             },
             "venues_fieldset": {
-              "title": "venues_in_helsinki_fieldset.title",
+              "title": "other_venues_fieldset.title",
               "type": "array",
               "items": {
                 "$ref": "#/definitions/_venue_item"
@@ -449,18 +452,18 @@
           "type": "number"
         },
         "artistic_foundations_section": {
-          "title": "artistic_foundations_section.title",
+          "type": "object",
+          "properties": {}
+        },
+        "accessibility_section": {
+          "title": "accessibility_section.title",
           "type": "object",
           "properties": {
-            "project_equality": {
-              "title": "project_equality.title",
+            "project_target_audiece": {
+              "title": "project_target_audiece.title",
               "type": "string"
             }
           }
-        },
-        "accessibility_section": {
-          "type": "object",
-          "default": {}
         },
         "operations_section": {
           "title": "operations_section.title",
@@ -486,9 +489,15 @@
           "then": {
             "properties": {
               "artistic_foundations_section": {
+                "title": "artistic_foundations_section.title",
+                "type": "object",
                 "properties": {
                   "project_artistic_basis": {
                     "title": "project_artistic_basis.title",
+                    "type": "string"
+                  },
+                  "project_equality": {
+                    "title": "project_equality.title",
                     "type": "string"
                   }
                 }
@@ -539,8 +548,8 @@
             "organization_subsidities": {
               "title": "organization_subsidities.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ]
             },
             "budget_income": {
@@ -683,6 +692,7 @@
         "attachments_section": {
           "title": "attachments_section.title",
           "type": "object",
+          "description": "attachments_section.description",
           "properties": {
             "required_attachments_help": {
               "title": "required_attachments_help.title",
@@ -704,16 +714,6 @@
                 }
               ]
             },
-            "formerly_provided_attachments_help": {
-              "title": "formerly_provided_attachments_help.title",
-              "type": "array",
-              "items": [
-                {
-                  "title": "formerly_provided_attachments_help.value",
-                  "type": "null"
-                }
-              ]
-            },
             "cant_view_after_help": {
               "title": "cant_view_after_help.title",
               "type": "array",
@@ -728,8 +728,8 @@
                 }
               ]
             },
-            "extra_info": {
-              "title": "extra_info.title",
+            "further_clarification": {
+              "title": "further_clarification.title",
               "type": "string"
             },
             "other_attachment_fieldset": {
