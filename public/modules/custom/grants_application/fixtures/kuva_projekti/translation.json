@@ -359,8 +359,7 @@
     "other_cost_item.title": {
       "en": "Cost",
       "fi": "Kulu",
-      "sv": "Kostnad",
-      "todo": "common"
+      "sv": "Kostnad"
     },
     "other_cost_item_label.title": {
       "en": "Cost explanation",
