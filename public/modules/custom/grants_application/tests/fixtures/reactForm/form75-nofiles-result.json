@@ -213,9 +213,9 @@
                     },
                     {
                         "ID": "amount",
-                        "label": "Euroa",
+                        "label": "Avustussumma",
                         "value": "5000",
-                        "valueType": "double"
+                        "valueType": "float"
                     }
                 ],
                 [
@@ -227,9 +227,9 @@
                     },
                     {
                         "ID": "amount",
-                        "label": "Euroa",
+                        "label": "Avustussumma",
                         "value": "3000",
-                        "valueType": "double"
+                        "valueType": "float"
                     }
                 ]
             ],
@@ -456,9 +456,14 @@
                 ]
             ]
         },
-        "hiredOfficialsInfo": {
-            "amountOfHiredOfficials": "2"
-        },
+        "hiredOfficialsInfo": [
+            {
+                "ID": "amountOfHiredOfficials",
+                "value": "2",
+                "valueType": "int",
+                "label": "Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?"
+            }
+        ],
         "budgetInfo": {
             "budgetInfoArray": [
                 {
