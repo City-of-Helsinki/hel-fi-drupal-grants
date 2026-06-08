@@ -227,12 +227,12 @@ class JsonMapper {
    * key (a translatable string) into the value Avus2 expects, then strips the
    * map so it does not leak into the output.
    *
-   * @param array $valueArray
+   * @param array<string, mixed> $valueArray
    *   The field's value definition (ID, label, value, valueType, ...).
    * @param string $stringValue
    *   The stringified source value.
    *
-   * @return array
+   * @return array<string, mixed>
    *   The value entry with the resolved value.
    */
   private function applyMultipleValue(array $valueArray, string $stringValue): array {

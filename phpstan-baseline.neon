@@ -1046,11 +1046,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Mapper/JsonMapper.php
 
 		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Mapper/JsonMapper.php
-
-		-
 			message: "#^Method Drupal\\\\grants_application\\\\Mapper\\\\JsonMapper\\:\\:findFileFieldValue\\(\\) has parameter \\$singleFileFields with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Mapper/JsonMapper.php
@@ -1677,7 +1672,7 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-			count: 5
+			count: 6
 			path: public/modules/custom/grants_application/tests/src/Unit/FormTest.php
 
 		-
