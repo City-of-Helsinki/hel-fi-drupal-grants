@@ -245,6 +245,52 @@ final class JsonMapperTest extends UnitTestCase {
   }
 
   /**
+   * Double values should be mapped with dot.
+   */
+  public function testDoubleCommaToDotMapping(): void {
+    $mapping = [
+      "compensation.my_numbers.double_with_dot" => [
+        'datasource' => 'form_data',
+        'source' => 'number_data.double_with_comma',
+        'mapping_type' => 'default',
+        'data' => [
+          'ID' => 'justADoubleField',
+          'valueType' => 'double',
+          'value' => '',
+          'label' => 'Comma should be replaced by dot',
+        ],
+      ],
+      "compensation.my_numbers.float_with_comma" => [
+        'datasource' => 'form_data',
+        'source' => 'number_data.float_with_comma',
+        'mapping_type' => 'default',
+        'data' => [
+          'ID' => 'justAnotherNumericValue',
+          'valueType' => 'float',
+          'value' => '',
+          'label' => 'Comma should be replaced by dot',
+        ],
+      ],
+    ];
+
+    $formData = [
+      'form_data' => [
+        'number_data' => [
+          'double_with_comma' => '133,7',
+          'float_with_comma' => '12,0',
+        ],
+      ],
+    ];
+
+    $mapper = new JsonMapper();
+    $mapper->setMappings($mapping);
+    $mappedData = $mapper->map($formData);
+
+    $this->assertEquals('133.7', $mappedData['compensation']['my_numbers']['double_with_dot']['value']);
+    $this->assertEquals('12,0', $mappedData['compensation']['my_numbers']['float_with_comma']['value']);
+  }
+
+  /**
    * Combine the common data sources and the actual form into one.
    *
    * The end result contains data from react-form, user profile,...
