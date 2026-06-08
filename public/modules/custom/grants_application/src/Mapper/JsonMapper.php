@@ -154,6 +154,7 @@ class JsonMapper {
       $value = $definition['data']['value'];
     }
     else if ($value && $definition['data']['valueType'] === 'double') {
+      // Fields mapped as double should not have commas, replace with dot.
       $value = str_replace(',', '.', rtrim($value, ','));
     }
 
