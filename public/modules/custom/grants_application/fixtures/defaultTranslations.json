@@ -40,6 +40,16 @@
       "fi": "Myöntävä vastaus avaa lisäkysymyksen",
       "sv": "Ett jakande svar öppnar ytterligare en fråga"
     },
+    "age_group_9_12.title": {
+      "en": "Helsinki residents aged 9 to 12 years",
+      "fi": "9–12-vuotiasta helsinkiläistä",
+      "sv": "9–12-åriga helsingforsare"
+    },
+    "age_group_9_18.title": {
+      "en": "Helsinki residents aged 9 to 18 years",
+      "fi": "9–18-vuotiasta helsinkiläistä",
+      "sv": "9–18-åriga helsingforsare"
+    },
     "age_group_13_15.title": {
       "en": "Helsinki residents aged 13 to 15 years",
       "fi": "13–15-vuotiasta helsinkiläistä",
@@ -54,16 +64,6 @@
       "en": "Helsinki residents aged 18 to 24 years",
       "fi": "18–24-vuotiasta helsinkiläistä",
       "sv": "18–24-åriga helsingforsare"
-    },
-    "age_group_9_12.title": {
-      "en": "Helsinki residents aged 9 to 12 years",
-      "fi": "9–12-vuotiasta helsinkiläistä",
-      "sv": "9–12-åriga helsingforsare"
-    },
-    "age_group_9_18.title": {
-      "en": "Helsinki residents aged 9 to 18 years",
-      "fi": "9–18-vuotiasta helsinkiläistä",
-      "sv": "9–18-åriga helsingforsare"
     },
     "applicant_email.description": {
       "en": "Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.",
@@ -855,6 +855,36 @@
       "fi": "Toiminta-avustus",
       "sv": "Verksamhetsunderstöd"
     },
+    "subventions.2.title": {
+      "en": "Hiring grant",
+      "fi": "Palkkausavustus",
+      "sv": "Löneunderstöd"
+    },
+    "subventions.4.title": {
+      "en": "Project grant",
+      "fi": "Projektiavustus",
+      "sv": "Projektunderstöd"
+    },
+    "subventions.5.title": {
+      "en": "Rent subsidy",
+      "fi": "Vuokra-avustus",
+      "sv": "Hyresunderstöd"
+    },
+    "subventions.6.title": {
+      "en": "General grant",
+      "fi": "Yleisavustus",
+      "sv": "Allmänt understöd"
+    },
+    "subventions.8.title": {
+      "en": "Interests and installments",
+      "fi": "Korot ja lyhennykset",
+      "sv": "Räntor och amorteringar"
+    },
+    "subventions.9.title": {
+      "en": "Other",
+      "fi": "Muu",
+      "sv": "Annan"
+    },
     "subventions.12.title": {
       "en": "Camp grant",
       "fi": "Leiriavustus",
@@ -870,11 +900,6 @@
       "fi": "Toiminnan kehittämisavustus",
       "sv": "Understöd för verksamhetsutveckling"
     },
-    "subventions.2.title": {
-      "en": "Hiring grant",
-      "fi": "Palkkausavustus",
-      "sv": "Löneunderstöd"
-    },
     "subventions.31.title": {
       "en": "Start grant",
       "fi": "Starttiavustus",
@@ -884,11 +909,6 @@
       "en": "Small grant",
       "fi": "Pienavustus",
       "sv": "Litet understöd"
-    },
-    "subventions.4.title": {
-      "en": "Project grant",
-      "fi": "Projektiavustus",
-      "sv": "Projektunderstöd"
     },
     "subventions.43.title": {
       "en": "Targeted sports grant",
@@ -905,11 +925,6 @@
       "fi": "Nuorison erityisavustus 1",
       "sv": "Specialunderstöd för ungdomsverksamhet 1"
     },
-    "subventions.5.title": {
-      "en": "Rent subsidy",
-      "fi": "Vuokra-avustus",
-      "sv": "Hyresunderstöd"
-    },
     "subventions.51.title": {
       "en": "Special grant for sports 1",
       "fi": "Liikunnan erityisavustus 1",
@@ -924,21 +939,6 @@
       "en": "Special grant for sports 3",
       "fi": "Liikunnan erityisavustus 3",
       "sv": "Specialunderstöd för idrott 3"
-    },
-    "subventions.6.title": {
-      "en": "General grant",
-      "fi": "Yleisavustus",
-      "sv": "Allmänt understöd"
-    },
-    "subventions.8.title": {
-      "en": "Interests and installments",
-      "fi": "Korot ja lyhennykset",
-      "sv": "Räntor och amorteringar"
-    },
-    "subventions.9.title": {
-      "en": "Other",
-      "fi": "Muu",
-      "sv": "Annan"
     },
     "subventions.title": {
       "en": "Grants",
