@@ -150,9 +150,19 @@
               "boolean.yes",
               "boolean.no"
             ],
-            "ui:widget": "radio"
+            "ui:widget": "radio",
+            "ui:options": {
+              "affirmativeExpands": true
+            }
           },
           "realized_premise_city_section": {
+            "ui:widget": "select",
+            "ui:enumNames": [
+              "realized_premise_city_section.urban_environment",
+              "realized_premise_city_section.culture_and_leisure",
+              "realized_premise_city_section.education",
+              "realized_premise_city_section.other"
+            ],
             "ui:options": {
               "tooltipLabel": "realized_premise_city_section.title",
               "tooltipButtonLabel": "realized_premise_city_section.title",
@@ -229,7 +239,11 @@
         "ui:widget": "hidden"
       },
       "applied_grant": {
-        "ui:field": "subventionSum"
+        "ui:field": "computedSum",
+        "ui:options": {
+          "sourceFields": ["grant_info_step.acting_year_section.subventions"],
+          "sourceShape": "subvention"
+        }
       }
     },
     "planned_cost_section": {

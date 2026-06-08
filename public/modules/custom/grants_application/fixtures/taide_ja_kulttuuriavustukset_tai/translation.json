@@ -116,14 +116,14 @@
       "sv": "Lokal"
     },
     "art_premises.add": {
-      "en": "Add new premises",
+      "en": "Add new space",
       "fi": "Lisää uusi tila",
-      "sv": "Lägg till en ny lokal"
+      "sv": "Lägg till ny plats"
     },
     "art_premise_name.title": {
-      "en": "Premise name",
+      "en": "Name",
       "fi": "Tilan nimi",
-      "sv": "Utrymmets namn"
+      "sv": "Namn"
     },
     "art_premise_type.title": {
       "en": "Premise type",
@@ -146,7 +146,7 @@
       "sv": "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
     },
     "art_premise_is_owned_by_city.title": {
-      "en": "City owns the property",
+      "en": "The space is owned by the City of Helsinki",
       "fi": "Kyseessä on kaupungin omistama tila",
       "sv": "Stadens eget utrymme"
     },
@@ -156,9 +156,9 @@
       "sv": "Utrymmet ägs av aktören"
     },
     "art_premise_is_others_use.title": {
-      "en": "Is other use",
+      "en": "The space is available for use by others (either for free or for a charge)",
       "fi": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
-      "sv": "Är annan användning"
+      "sv": "Utrymmen som erbjuds även till andra (att hyra eller gratis)"
     },
     "realized_activity_step.title": {
       "en": "Realized activities",
@@ -261,14 +261,14 @@
       "sv": "Lokal"
     },
     "realized_premises.add": {
-      "en": "Add new premises",
+      "en": "Add new space",
       "fi": "Lisää uusi tila",
-      "sv": "Lägg till en ny lokal"
+      "sv": "Lägg till ny plats"
     },
     "realized_premise_name.title": {
-      "en": "Premise name",
+      "en": "Name",
       "fi": "Tilan nimi",
-      "sv": "Utrymmets namn"
+      "sv": "Namn"
     },
     "realized_premise_is_owned_by_city.title": {
       "en": "City owns the property",
@@ -276,9 +276,29 @@
       "sv": "Stadens eget utrymme"
     },
     "realized_premise_city_section.title": {
-      "en": "City division",
-      "fi": "Kaupungin toimiala",
-      "sv": "Stadens sektor"
+      "en": "City division that owns the premise",
+      "fi": "Tilan omistava toimiala",
+      "sv": "Sektorn som äger lokalen"
+    },
+    "realized_premise_city_section.urban_environment": {
+      "en": "Urban Environment Division",
+      "fi": "Kaupunkiympäristön toimiala",
+      "sv": "Stadsmiljösektorn"
+    },
+    "realized_premise_city_section.culture_and_leisure": {
+      "en": "Culture and Leisure Division",
+      "fi": "Kulttuurin ja vapaa-ajan toimiala",
+      "sv": "Kultur- och fritidssektorn"
+    },
+    "realized_premise_city_section.education": {
+      "en": "Education Division",
+      "fi": "Kasvatuksen ja koulutuksen toimiala",
+      "sv": "Fostrans- och utbildningssektorn"
+    },
+    "realized_premise_city_section.other": {
+      "en": "Other premise owned by the city",
+      "fi": "Muu kaupungin omistama tila",
+      "sv": "Övriga utrymmen som ägs av staden"
     },
     "realized_premise_city_section.description": {
       "en": "Premises of the Urban Environment Division include, for example, schools' teaching facilities. Premises of the Culture and Leisure Division include, for example, facilities administered by cultural, library, youth or sports services. Premises of the Education Division include, for example, the facilities of the adult education centre.",
@@ -391,9 +411,9 @@
       "sv": "Planerade inkomster"
     },
     "planned_state_operative_subvention.title": {
-      "en": "Other state subsidies (€)",
-      "fi": "Muut valtionavustukset (€)",
-      "sv": "Övriga statsunderstöd (€)"
+      "en": "Operational grant from the government (€)",
+      "fi": "Valtion toiminta-avustus (€)",
+      "sv": "Statens verksamhetsunderstöd (€)"
     },
     "planned_other_compensations.title": {
       "en": "Other grants (€)",
@@ -401,24 +421,24 @@
       "sv": "Övriga understöd (€)"
     },
     "sponsorships.title": {
-      "en": "Sponsorships (€)",
-      "fi": "Sponsorointi (€)",
-      "sv": "Sponsring (€)"
+      "en": "Private funding (sponsors, corporate collaboration, donations, etc.) (€)",
+      "fi": "Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€)",
+      "sv": "Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)"
     },
     "entry_fees.title": {
-      "en": "Entry fees (€)",
-      "fi": "Pääsymaksut (€)",
-      "sv": "Inträdesavgifter (€)"
+      "en": "Entry and participation fees (€)",
+      "fi": "Pääsy- ja osallistumismaksut (€)",
+      "sv": "Inträdes- eller deltagaravgifter (€)"
     },
     "sales.title": {
-      "en": "Sales (€)",
-      "fi": "Myyntitulot (€)",
-      "sv": "Försäljningsintäkter (€)"
+      "en": "Other incomes (€)",
+      "fi": "Muut oman toiminnan tulot (€)",
+      "sv": "Övriga egna inkomster (€)"
     },
     "financial_funding_and_interests.title": {
-      "en": "Financial funding and interests (€)",
+      "en": "Financial income and interest received on loans (€)",
       "fi": "Rahoitus- ja korkotulot (€)",
-      "sv": "Finansiell finansiering och intressen (€)"
+      "sv": "Ränteinkomster och finansiella inkomster (€)"
     },
     "planned_cost_section.title": {
       "en": "Planned expenses",
@@ -426,7 +446,7 @@
       "sv": "Planerade utgifter"
     },
     "planned_total_costs.title": {
-      "en": "Planned total costs (€)",
+      "en": "Expenses in total (€)",
       "fi": "Menot yhteensä (€)",
       "sv": "Utgifter sammanlagt (€)"
     },
@@ -436,9 +456,9 @@
       "sv": "Förverkligade inkomster och utgifter"
     },
     "realized_budget_section_info.value": {
-      "en": "Regarding the previous completed financial year. As stated in the financial statements. Please include all income (under \"incomes in total\") and all expenses (under \"expenses in total\"), including items such as depreciation as well as financial income and expenses. At the end, please check that the difference between income and expenses matches the surplus/deficit reported in the financial statements. If the grant only applies to a limited part of the organization's activities, the reported figures should reflect only that part of the activities, in accordance with a separate cost center report.",
-      "fi": "Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan \"tulot yhteensä) ja kaikki menot (kohtaan \"menot yhteensä\") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot. Tarkista lopuksi, että tulojen ja menojen erotus vastaa tilinpäätöksen yli/alijäämää. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta kustannuspaikkakohtaisen tuloslaskelman mukaisesti.",
-      "sv": "Föregående avslutade räkenskapsår. Enligt bokslutet. Inkludera alla intäkter (under \"inkomster sammanlagt\") och alla utgifter (under \"utgifter sammanlagt\"), inklusive bland annat: avskrivningar och finansiella kostnader och intäkter. Kontrollera slutligen att skillnaden mellan inkomster och utgifter motsvarar över-/underskottet i bokslutet. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med en separat kostnadsställerapport."
+      "en": "<p>Regarding the previous completed financial year. As stated in the financial statements. Please include all income (under \"incomes in total\") and all expenses (under \"expenses in total\"), including items such as depreciation as well as financial income and expenses. At the end, please check that the difference between income and expenses matches the surplus/deficit reported in the financial statements.</p><p>If the grant only applies to a limited part of the organization's activities, the reported figures should reflect only that part of the activities, in accordance with a separate cost center report.</p>",
+      "fi": "<p>Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan \"tulot yhteensä\") ja kaikki menot (kohtaan \"menot yhteensä\") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot. Tarkista lopuksi, että tulojen ja menojen erotus vastaa tilinpäätöksen yli/alijäämää.</p><p>Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta kustannuspaikkakohtaisen tuloslaskelman mukaisesti.</p>",
+      "sv": "<p>Föregående avslutade räkenskapsår. Enligt bokslutet. Inkludera alla intäkter (under \"inkomster sammanlagt\") och alla utgifter (under \"utgifter sammanlagt\"), inklusive bland annat: avskrivningar och finansiella kostnader och intäkter. Kontrollera slutligen att skillnaden mellan inkomster och utgifter motsvarar över-/underskottet i bokslutet.</p><p>Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med en separat kostnadsställerapport.</p>"
     },
     "was_part_of_vos.title": {
       "en": "The organization belonged to the central government subsidies system (VOS)",
@@ -461,12 +481,12 @@
       "sv": "I de tre första avsnitten ber vi om detaljerad information om mottagna understöd. Det sista avsnittet avser alla realiserade inkomster sammanlagt, inklusive understöd som anges ovan och alla övriga inkomster."
     },
     "other_compensation_from_city.title": {
-      "en": "Grant from the City of Helsinki for the same activities (€)",
-      "fi": "Helsingin kaupungin avustus samaan toimintaan (€)",
-      "sv": "Helsingfors stads understöd för samma verksamhet (€)"
+      "en": "Operational grant from the City of Helsinki's cultural services (€)",
+      "fi": "Helsingin kaupungin kulttuuripalveluiden toiminta-avustus (€)",
+      "sv": "Helsingfors stads kulturtjänsters verksamhetsstöd (€)"
     },
     "state_operative_subvention.title": {
-      "en": "State operating subvention (€)",
+      "en": "Operational grant from the government (€)",
       "fi": "Valtion toiminta-avustus (€)",
       "sv": "Statens verksamhetsunderstöd (€)"
     },
@@ -476,7 +496,7 @@
       "sv": "Övriga understöd (€)"
     },
     "total_income.title": {
-      "en": "Total income (€)",
+      "en": "Incomes in total (€)",
       "fi": "Tulot yhteensä (€)",
       "sv": "Inkomster sammanlagt (€)"
     },
@@ -486,9 +506,54 @@
       "sv": "Förverkligade utgifter"
     },
     "total_costs.title": {
-      "en": "Total costs (€)",
+      "en": "Expenses in total (€)",
       "fi": "Menot yhteensä (€)",
-      "sv": "Utgifter sammanlagt (€)"
+      "sv": "Utgifterna sammanlagt (€)"
+    },
+    "members_applicant_community_global.title": {
+      "en": "Organizational members",
+      "fi": "Yhteisöjäseniä",
+      "sv": "Samfundsmedlemmar"
+    },
+    "members_applicant_person_global.title": {
+      "en": "Members",
+      "fi": "Henkilöjäseniä yhteensä",
+      "sv": "Medlemmar"
+    },
+    "members_applicant_person_local.title": {
+      "en": "Of which residents of Helsinki",
+      "fi": "Helsinkiläisiä henkilöjäseniä yhteensä",
+      "sv": "Andel helsingforsare"
+    },
+    "members_applicant_community_local.title": {
+      "en": "Of which are registered in Helsinki",
+      "fi": "Helsinkiläisiä yhteisöjäseniä yhteensä",
+      "sv": "Andel helsingforsiska samfund"
+    },
+    "acting_year_section.title": {
+      "en": "Grant details",
+      "fi": "Avustuksen tiedot",
+      "sv": "Preciserad information"
+    },
+    "acting_year_section_acting_year.title": {
+      "en": "The year I’m applying the grant for",
+      "fi": "Vuosi, jolle haen avustusta",
+      "sv": "År för vilket man ansöker om stöd"
+    },
+    "other_compensations_section.title": {
+      "en": "Other grants awarded for the same purpose",
+      "fi": "Muut samaan tarkoitukseen myönnetyt avustukset",
+      "sv": "Övriga stöd som beviljats för samma ändamål"
+    },
+    "other_compensations_section_have_received_other_compensations.title": {
+      "en": "We have received other grants",
+      "fi": "Olemme saaneet muita avustuksia",
+      "sv": "Vi har fått andra stöd för samma ändamål"
+    },
+    "applied_benefits.title": {
+      "en": "The applied grant (€)",
+      "fi": "Haettu avustus (€)",
+      "sv": "Ansökt stöd (€)"
     }
   }
 }

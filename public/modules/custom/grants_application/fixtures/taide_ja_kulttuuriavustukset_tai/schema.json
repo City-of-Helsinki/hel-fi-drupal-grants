@@ -109,10 +109,6 @@
           ],
           "default": false
         },
-        "realized_premise_city_section": {
-          "title": "realized_premise_city_section.title",
-          "type": "string"
-        },
         "realized_premise_suitability": {
           "title": "realized_premise_suitability.title",
           "type": "string",
@@ -127,6 +123,31 @@
         "realized_premise_name",
         "realized_premise_postal_code",
         "realized_premise_is_owned_by_city"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "realized_premise_is_owned_by_city": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "realized_premise_city_section": {
+                "title": "realized_premise_city_section.title",
+                "type": "string",
+                "enum": [
+                  "Kaupunkiympäristön toimiala",
+                  "Kulttuurin ja vapaa-ajan toimiala",
+                  "Kasvatuksen ja koulutuksen toimiala",
+                  "Muu kaupungin omistama tila"
+                ]
+              }
+            }
+          }
+        }
       ]
     },
     "grant_info_step": {
@@ -155,7 +176,6 @@
             "primary_art": {
               "title": "primary_art.title",
               "type": "string",
-              "description": "primary_art.description",
               "enum": [
                 "primary_art.design",
                 "primary_art.film",
