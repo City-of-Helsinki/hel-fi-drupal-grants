@@ -11,6 +11,16 @@
       }
     },
     "purpose_section": {
+      "subventions_total": {
+        "ui:field": "computedSum",
+        "misc:exclude-from-submit": true,
+        "ui:options": {
+          "sourceFields": ["grant_info_step.subventions_section.subventions"],
+          "sourceShape": "subvention",
+          "numericOutput": true,
+          "hidden": true
+        }
+      },
       "purpose": {
         "ui:widget": "textarea",
         "ui:options": {
