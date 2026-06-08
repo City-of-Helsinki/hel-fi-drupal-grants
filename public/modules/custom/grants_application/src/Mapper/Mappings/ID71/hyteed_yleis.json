@@ -18,9 +18,9 @@
     "mapping_type": "default",
     "data": {
       "ID": "amount",
-      "value": "",
-      "valueType": "float",
-      "label": "Avustussumma"
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "float"
     }
   },
   "compensation.compensationInfo.generalInfoArray.0": {
@@ -54,6 +54,39 @@
       "value": "",
       "valueType": "string",
       "label": "Selvitys avustuksen käytöstä"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.3": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.who_benefits",
+    "mapping_type": "default",
+    "data": {
+      "ID": "whoBenefits",
+      "value": "",
+      "valueType": "string",
+      "label": "Ketkä toiminnastanne erityisesti hyötyvät"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.4": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.changes_on_success",
+    "mapping_type": "default",
+    "data": {
+      "ID": "changesOnSuccess",
+      "value": "",
+      "valueType": "string",
+      "label": "Minkälaisia muutoksia tapahtuu, jos onnistutte?"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.5": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.results_of_success",
+    "mapping_type": "default",
+    "data": {
+      "ID": "resultsOfActivities",
+      "value": "",
+      "valueType": "string",
+      "label": "Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?"
     }
   },
   "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {

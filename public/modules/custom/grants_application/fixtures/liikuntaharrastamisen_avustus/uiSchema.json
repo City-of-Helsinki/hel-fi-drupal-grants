@@ -118,7 +118,11 @@
       },
       "requested_grant_amount": {
         "requested_amount_first_year": {
-          "ui:field": "subventionSum"
+          "ui:field": "computedSum",
+          "ui:options": {
+            "sourceFields": ["grant_info_step.subventions_section.subventions"],
+            "sourceShape": "subvention"
+          }
         }
       }
     },
@@ -362,7 +366,11 @@
         "ui:widget": "hidden"
       },
       "applied_benefits": {
-        "ui:field": "subventionSum"
+        "ui:field": "computedSum",
+        "ui:options": {
+          "sourceFields": ["grant_info_step.subventions_section.subventions"],
+          "sourceShape": "subvention"
+        }
       },
       "income_rows": {
         "ui:options": {

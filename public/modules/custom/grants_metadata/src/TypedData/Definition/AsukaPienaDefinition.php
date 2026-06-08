@@ -27,8 +27,8 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
-      $info['members_applicant_person_local'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
+      $info['members_applicant_person_local'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -39,7 +39,8 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
           'membersApplicantPersonLocal',
         ]);
 
-      $info['members_applicant_person_global'] = DataDefinition::create('string')
+      $info['members_applicant_person_global'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -50,8 +51,8 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
           'membersApplicantPersonGlobal',
         ]);
 
-      $info['members_applicant_community_local'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
+      $info['members_applicant_community_local'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -62,7 +63,8 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
           'membersApplicantCommunityLocal',
         ]);
 
-      $info['members_applicant_community_global'] = DataDefinition::create('string')
+      $info['members_applicant_community_global'] = DataDefinition::create('integer')
+        ->setSetting('defaultValue', "0")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',

@@ -11,6 +11,7 @@ parameters:
     - ./public/themes/custom
   excludePaths:
     - vendor
+    - ./public/themes/custom/hdbt_subtheme/node_modules
   level: 7
   treatPhpDocTypesAsCertain: false
   scanFiles:

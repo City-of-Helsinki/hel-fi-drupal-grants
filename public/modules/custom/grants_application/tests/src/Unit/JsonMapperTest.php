@@ -212,6 +212,39 @@ final class JsonMapperTest extends UnitTestCase {
   }
 
   /**
+   * Tests enumToLabel custom handler mapping for a string enum value.
+   */
+  public function testEnumToLabelMapping(): void {
+    $defaultMappings = $this->getMapping('mappings.json');
+    $dataSources = $this->getAllDatasources('enumLabelForm.json');
+
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
+    $mappedData = $mapper->map($dataSources);
+
+    $this->assertTrue(isset($mappedData['compensation']['grantDuration']['value']), 'enumToLabel result exists');
+    $this->assertEquals('1-3 vuotta', $mappedData['compensation']['grantDuration']['value'], 'Enum value "2" maps to label');
+  }
+
+  /**
+   * Tests enumToLabel custom handler mapping for boolean true and false values.
+   */
+  public function testEnumToLabelBoolMapping(): void {
+    $defaultMappings = $this->getMapping('mappings.json');
+
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
+
+    $trueData = $this->getAllDatasources('enumLabelForm.json');
+    $trueMapped = $mapper->map($trueData);
+    $this->assertEquals('Kyllä', $trueMapped['compensation']['isExtension']['value'], 'Bool "1" maps to Kyllä');
+
+    $falseData = $this->getAllDatasources('enumLabelBoolForm.json');
+    $falseMapped = $mapper->map($falseData);
+    $this->assertEquals('Ei', $falseMapped['compensation']['isExtension']['value'], 'Bool "" maps to Ei');
+  }
+
+  /**
    * Combine the common data sources and the actual form into one.
    *
    * The end result contains data from react-form, user profile,...

@@ -1,6 +1,6 @@
-import { describe, expect, test } from 'vitest';
 import { render } from '@testing-library/react';
 import { useAtomValue } from 'jotai';
+import { describe, expect, test } from 'vitest';
 import { getFormConfigAtom } from '../store';
 
 const Uninitialized = () => {

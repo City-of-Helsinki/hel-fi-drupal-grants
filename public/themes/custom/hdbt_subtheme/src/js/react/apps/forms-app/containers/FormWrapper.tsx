@@ -17,7 +17,13 @@ import {
   pushNotificationAtom,
 } from '../store';
 import type { ATVFile } from '../types/ATVFile';
-import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from '../utils';
+import {
+  addApplicantInfoStep,
+  findFieldsWithOption,
+  getNestedSchemaProperty,
+  setNestedProperty,
+  stripExcludedFields,
+} from '../utils';
 import { RJSFFormContainer } from './RJSFFormContainer';
 
 /**
@@ -104,9 +110,9 @@ const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
  * @return {object} - Resulting data
  */
 const transformData = (data: any) => {
-  const { grants_profile, form_data: formData, schema: originalSchema, ui_schema: originalUiSchema } = data;
+  const { settings, form_data: formData, schema: originalSchema, ui_schema: originalUiSchema } = data;
 
-  const [schema, ui_schema] = addApplicantInfoStep(originalSchema, originalUiSchema, grants_profile);
+  const [schema, ui_schema] = addApplicantInfoStep(originalSchema, originalUiSchema, settings?.applicant_type);
   const { definitions, properties } = schema;
   const transformedProperties: any = {};
 
@@ -127,8 +133,10 @@ const transformData = (data: any) => {
 
       if (key.charAt(0) !== '_') {
         Object.entries((definitionValue as any).properties).forEach((subProperty: any) => {
-          const [subKey] = subProperty;
-          (definitions[key] as any).properties[subKey]._isSection = true;
+          const [subKey, subValue] = subProperty;
+          if ((subValue as any)?.type === 'object') {
+            (definitions[key] as any).properties[subKey]._isSection = true;
+          }
         });
       }
     });
@@ -172,6 +180,8 @@ export const FormWrapper = ({
 
   initializeForm(translatedData);
 
+  const excludedFields = Array.from(findFieldsWithOption(translatedData.ui_schema, 'misc:exclude-from-submit'));
+
   const { currentLanguage } = drupalSettings.path;
 
   const handleResponseError = async (response: Response, actionType: 'submit' | 'draft'): Promise<void> => {
@@ -192,14 +202,16 @@ export const FormWrapper = ({
   const submitData = async (submittedData: any): Promise<void> => {
     setIsSubmitting(true);
 
+    const cleanedData = stripExcludedFields(submittedData, excludedFields);
+
     const response = await fetch(
       `/${currentLanguage}/applications/${formIdentifier}/application/${readApplicationNumber()}`,
       {
         body: JSON.stringify({
           application_number: readApplicationNumber() || '',
           application_type_id: applicationTypeId,
-          attachments: Array.from(getAttachments(submittedData)),
-          form_data: submittedData,
+          attachments: Array.from(getAttachments(cleanedData)),
+          form_data: cleanedData,
           langcode: 'en',
         }),
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
@@ -235,12 +247,14 @@ export const FormWrapper = ({
   }
 
   const saveDraft = async (submittedData: any) => {
+    const cleanedData = stripExcludedFields(submittedData, excludedFields);
+
     const response = await fetch(`/${currentLanguage}/applications/${formIdentifier}/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,
-        attachments: Array.from(getAttachments(submittedData)),
-        form_data: submittedData,
+        attachments: Array.from(getAttachments(cleanedData)),
+        form_data: cleanedData,
         langcode: 'en',
       }),
       headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },

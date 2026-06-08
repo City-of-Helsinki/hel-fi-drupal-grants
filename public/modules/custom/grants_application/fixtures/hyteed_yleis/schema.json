@@ -115,14 +115,64 @@
         "purpose_section": {
           "title": "purpose_section.title",
           "type": "object",
+          "required": ["purpose"],
           "properties": {
+            "subventions_total": {
+              "type": "number"
+            },
             "purpose": {
               "title": "purpose_section_modified.title",
               "type": "string",
               "description": ""
             }
           },
-          "required": ["purpose"]
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "subventions_total": {
+                    "minimum": 10000
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "who_benefits": {
+                    "title": "purpose_who_benefits.title",
+                    "type": "string"
+                  },
+                  "changes_on_success": {
+                    "title": "purpose_changes_on_success.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "who_benefits",
+                  "changes_on_success"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "subventions_total": {
+                    "minimum": 50000
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "results_of_activities": {
+                    "title": "purpose_results_of_activities.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "results_of_activities"
+                ]
+              }
+            }
+          ]
         },
         "other_compensations_section": {
           "title": "other_compensations_section.title",

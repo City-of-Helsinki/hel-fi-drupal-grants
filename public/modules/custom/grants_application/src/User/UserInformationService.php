@@ -57,8 +57,6 @@ class UserInformationService {
    *   The grants profile.
    */
   public function getGrantsProfileContent(): GrantsProfile {
-    // @todo Grants profile should to be a value object,
-    // to make it more obvious what it contains.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $data = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
     return new GrantsProfile($data);
@@ -152,7 +150,7 @@ class UserInformationService {
         'communityOfficialName' => $companyData["companyName"],
         'firstname' => $userData->given_name,
         'lastname' => $userData->family_name,
-        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"] ?? '',
         'email' => $userData->email,
         'street' => $companyData["addresses"][0]["street"],
         'city' => $companyData["addresses"][0]["city"],
@@ -178,14 +176,16 @@ class UserInformationService {
   /**
    * Get the applicant type id.
    *
+   * Original values, ApplicantInfoService.
+   *
    * @return int
    *   The applicant type id.
    */
   public function getApplicantTypeId(): int {
     return match($this->getApplicantType()){
+      'private_person' => 0,
       'unregistered_community' => 1,
       'registered_community' => 2,
-      'private_person' => 3,
     };
   }
 
