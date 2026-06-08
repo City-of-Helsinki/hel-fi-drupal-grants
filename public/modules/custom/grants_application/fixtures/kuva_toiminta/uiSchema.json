@@ -124,7 +124,6 @@
     "community_members_section": {
       "members_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "members_fieldset.legend",
           "tooltipButtonLabel": "members_fieldset.legend",
           "tooltipText": "members_fieldset.description"
@@ -134,7 +133,6 @@
     "personnel_section": {
       "personnel_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "personnel_fieldset.legend",
           "tooltipButtonLabel": "personnel_fieldset.legend",
           "tooltipText": "personnel_fieldset.description"
@@ -196,7 +194,6 @@
       },
       "count_in_helsinki_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "count_in_helsinki_fieldset.legend",
           "tooltipButtonLabel": "count_in_helsinki_fieldset.legend",
           "tooltipText": "count_in_helsinki_fieldset.description"
@@ -204,16 +201,12 @@
       },
       "count_in_total_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "count_in_total_fieldset.legend",
           "tooltipButtonLabel": "count_in_total_fieldset.legend",
           "tooltipText": "count_in_total_fieldset.description"
         }
       },
       "regarding_performances_fieldset": {
-        "ui:options": {
-          "hideNameFromPrint": true
-        },
         "premieres_count": {
           "ui:options": {
             "tooltipLabel": "premieres_count.title",
@@ -264,7 +257,6 @@
       },
       "realized_count_in_helsinki_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "count_in_helsinki_fieldset.legend",
           "tooltipButtonLabel": "count_in_helsinki_fieldset.legend",
           "tooltipText": "count_in_helsinki_fieldset.description"
@@ -272,16 +264,12 @@
       },
       "realized_count_in_total_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "count_in_total_fieldset.legend",
           "tooltipButtonLabel": "count_in_total_fieldset.legend",
           "tooltipText": "realized_count_in_total_fieldset.description"
         }
       },
       "visitors_fieldset": {
-        "ui:options": {
-          "hideNameFromPrint": true
-        },
         "visitors_count_helsinki": {
           "ui:options": {
             "tooltipLabel": "visitors_count_helsinki.title",
@@ -298,9 +286,6 @@
         }
       },
       "realized_regarding_performances_fieldset": {
-        "ui:options": {
-          "hideNameFromPrint": true
-        },
         "realized_premieres_count": {
           "ui:options": {
             "tooltipLabel": "premieres_count.title",
