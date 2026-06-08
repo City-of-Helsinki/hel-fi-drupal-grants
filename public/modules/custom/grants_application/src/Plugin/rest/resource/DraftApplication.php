@@ -127,10 +127,6 @@ final class DraftApplication extends ResourceBase {
     string $form_identifier,
     string $application_number,
   ): RedirectResponse|JsonResponse {
-    if (!$application_number) {
-      return new JsonResponse([], 400);
-    }
-
     try {
       $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
@@ -151,6 +147,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     if (!$settings->isAllowedApplicantType($applicantType)) {
+      // User gets bad error and is not redirected.
       return $this->applicantTypeDeniedResponse();
     }
 
@@ -355,6 +352,11 @@ final class DraftApplication extends ResourceBase {
     catch (\Exception $e) {
       // Saving failed.
       return new JsonResponse([], 500);
+    }
+
+    $business_id = '';
+    if ($this->userInformationService->getApplicantType() !== 'private_person') {
+      $business_id = $grants_profile_data->getBusinessId();
     }
 
     $now = time();

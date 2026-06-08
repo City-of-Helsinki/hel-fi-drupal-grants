@@ -443,13 +443,21 @@ export const formatErrors = (rawErrors: string[] | undefined) => {
  * @param {array} subventionFields - Array of subvention field paths
  * @return {number} - Total sum
  */
-export const getSubventionSum = (formData: RJSFFormData, subventionFields: string[]) =>
+export const getSubventionSum = (formData: RJSFFormData, subventionFields: string[], subventionType?: string) =>
   subventionFields.reduce((total, field) => {
     const values = getNestedSchemaProperty(formData, field);
     let totalNumericValue = Number(String(total).replace(',', '.'));
 
     if (values?.length) {
       Object.entries(values).forEach(([, curr]) => {
+        // When a subventionType is given, only sum rows matching that type.
+        if (subventionType != null) {
+          const typeEntry = Array.isArray(curr) ? curr.find((entry) => entry?.ID === 'subventionType') : undefined;
+          if (String(typeEntry?.value) !== String(subventionType)) {
+            return;
+          }
+        }
+
         const amount = Number(String(curr[1].value).replace(',', '.'));
 
         if (!Number.isNaN(amount)) {
@@ -495,6 +503,7 @@ export const getTooltip = (uiSchema: UiSchema | undefined) => {
 export const sanitizeNumericInput = (
   value: string,
   type: 'integer' | 'decimal-number' | 'phone' = 'integer',
+  lastInput = '',
 ): string => {
   let pattern: RegExp;
 
@@ -512,7 +521,27 @@ export const sanitizeNumericInput = (
       pattern = /[^0-9,]/g;
   }
 
-  return value.replace(pattern, '').replace(/ {2,}/g, ' ');
+  // Start by checking the allowed characters.
+  value = value.replace(pattern, '').replace(/ {2,}/g, ' ');
+
+  // Prevent multiple commas by replacing the last one.
+  if (lastInput === ',') {
+    const commaCount = value.match(/[,]/g)?.length ?? 0;
+    if (commaCount > 1) {
+      const position = value.lastIndexOf(',');
+      const firstPart = value.substring(0, position);
+      const lastPart = value.substring(position + 1);
+      value = firstPart + lastPart;
+    }
+  }
+
+  // Remove characters after comma until there is max 2.
+  // If user decides to put comma in the middle of large number.
+  while (value.match(/,[0-9]{3}/)) {
+    value = value.substring(0, value.length - 1);
+  }
+
+  return value;
 };
 
 export const numberIsTooLarge = (value: string): boolean => {

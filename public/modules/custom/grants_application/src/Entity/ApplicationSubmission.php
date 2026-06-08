@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Drupal\grants_application\Entity;
 
 use Drupal\Component\Render\MarkupInterface;
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\views\EntityViewsData;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
@@ -18,31 +20,29 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 
 /**
- * Defines the Application submission entity.
- *
- * @ContentEntityType(
- *   id = "application_submission",
- *   label = @Translation("Grants application submission"),
- *   base_table = "application_submission",
- *   entity_keys = {
- *     "id" = "id",
- *     "uuid" = "uuid",
- *     "owner" = "uid",
- *     "published" = "status",
- *     "created" = "created",
- *     "changed" = "changed",
- *   },
- *   fieldable = FALSE,
- *   admin_permission = "administer content",
- *   handlers = {
- *     "access" = "Drupal\grants_application\ApplicationSubmissionAccessControlHandler",
- *     "views_data" = "Drupal\views\EntityViewsData",
- *   },
- *   links = {
- *     "canonical" = "/application/{id}/render"
- *   }
- * )
+ * The application submission class.
  */
+#[ContentEntityType(
+  id: "application_submission",
+  label: new TranslatableMarkup("Grants application submission"),
+  entity_keys: [
+    "id" => "id",
+    "uuid" => "uuid",
+    "owner" => "uid",
+    "published" => "status",
+    "created" => "created",
+    "changed" => "changed",
+  ],
+  handlers: [
+    "access" => ApplicationSubmissionAccessControlHandler::class,
+    "views_data" => EntityViewsData::class,
+  ],
+  links: [
+    "canonical" => "/application/{id}/render",
+  ],
+  admin_permission: "administer content",
+  base_table: "application_submission"
+)]
 class ApplicationSubmission extends ContentEntityBase implements ContentEntityInterface, EntityChangedInterface {
   use EntityChangedTrait;
   use StringTranslationTrait;
@@ -213,7 +213,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   }
 
   /**
-   * Get the delete url.
+   * Get delete url.
    *
    * @return \Drupal\Core\Url
    *   The delete url.
@@ -282,12 +282,6 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function getPrintApplicationUrl(): Url {
     $parameters = ['application_number' => $this->get('application_number')->value];
-    /* $attributes = [
-    'attributes' => [
-    'data-drupal-selector' => 'application-print-link',
-    'class' => ['hds-button', 'hds-button--supplementary'],
-    ],
-    ]; */
 
     return Url::fromRoute(
       'helfi_grants.print_view',

@@ -115,11 +115,6 @@
       "fi": "Joista erityisoppilaiden pienryhmiä",
       "sv": "Varav små grupper för elever med särskilda behov"
     },
-    "location_postal_code.title": {
-      "en": "Postal code",
-      "fi": "Postinumero",
-      "sv": "Postnummer"
-    },
     "location_pupil_number.title": {
       "en": "Student Count",
       "fi": "Oppilaiden lukumäärä",

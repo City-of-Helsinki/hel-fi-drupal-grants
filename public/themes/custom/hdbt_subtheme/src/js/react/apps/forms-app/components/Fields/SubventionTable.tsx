@@ -123,11 +123,13 @@ export const SubventionTable = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { dataset, value } = event.target;
+    const nativeEvent: InputEvent = event.nativeEvent as InputEvent;
+    const lastInput = nativeEvent.data ?? '';
 
     if (numberIsTooLarge(value)) return;
 
     const subventionId = dataset.subventionId as string;
-    const numericValue = sanitizeNumericInput(value, 'decimal-number');
+    const numericValue = sanitizeNumericInput(value, 'decimal-number', lastInput);
     const data = formData && Array.isArray(formData) ? [...formData] : [];
     const newValue = createSubventionDataItem(subventionId, numericValue);
     const index = findIndexForData(subventionId, data);
@@ -163,7 +165,7 @@ export const SubventionTable = ({
   return (
     <>
       <div className='array-item'>
-        <Fieldset className='hdbt-form--fieldset hdbt-form--fieldset--border' heading={`${schema.title}`}>
+        <Fieldset className='hdbt-form--fieldset hdbt-form--fieldset--border' heading={`${schema.title} *`}>
           {(schema.options as SubventionOption[]).map((item) => {
             const { id: itemId, label } = item;
             const key = `${id}-${itemId}`;
