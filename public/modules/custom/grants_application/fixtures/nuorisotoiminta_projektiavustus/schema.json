@@ -572,14 +572,14 @@
           "properties": {
             "members_fieldset": {
               "type": "object",
-              "title": "members_fieldset.legend",
+              "title": "members_active_fieldset.legend",
               "properties": {
                 "members_0_6": {
                   "title": "members_0_6.title",
                   "type": "integer"
                 },
                 "members_0_6_helsinki": {
-                  "title": "members_0_6_helsinki.title",
+                  "title": "members_helsinki.title",
                   "type": "integer"
                 },
                 "members_7_28": {
@@ -587,7 +587,7 @@
                   "type": "integer"
                 },
                 "members_7_28_helsinki": {
-                  "title": "members_7_28_helsinki.title",
+                  "title": "members_helsinki.title",
                   "type": "integer"
                 },
                 "members_others": {
@@ -595,7 +595,7 @@
                   "type": "integer"
                 },
                 "members_others_helsinki": {
-                  "title": "members_others_helsinki.title",
+                  "title": "members_helsinki.title",
                   "type": "integer"
                 }
               },

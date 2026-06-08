@@ -31,16 +31,19 @@
     </div>
     <div>
       <h5>{{ "Application statuses"|t }}</h5>
-      {% for event in history %}
-        <div>{{ event }}</div>
-      {% endfor %}
+      <ul className='application-status-history'>
+        {% for event in history %}
+          <li>{{ event }}</li>
+        {% endfor %}
+      </ul>
     </div>
     <div>
       <h5>{{ "Application attachments"|t }}</h5>
-      {% for attachment in attachments %}
-        {{ attachment }}
-        {{ (attachment === attachments|last) ? '': '</br>'  }}
-      {% endfor %}
+      <ul className='application-attachment-list'>
+        {% for attachment in attachments %}
+          <li>{{ attachment }}</li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
   {% if is_editable %}
