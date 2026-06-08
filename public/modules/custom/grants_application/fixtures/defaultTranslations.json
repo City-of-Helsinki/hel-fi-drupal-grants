@@ -83,7 +83,7 @@
     "applicant_info.title": {
       "en": "Applicant details",
       "fi": "Hakijan tiedot",
-      "sv": "Den sökandes uppgifter"
+      "sv": "Sökandens uppgifter"
     },
     "applied_benefits.title": {
       "en": "Requested grants (€)",
@@ -236,7 +236,7 @@
       "sv": "Medlemsavgifter"
     },
     "community_members_section.title": {
-      "en": "Numbers of members",
+      "en": "Members",
       "fi": "Jäsenmäärä",
       "sv": "Antal medlemmar"
     },
