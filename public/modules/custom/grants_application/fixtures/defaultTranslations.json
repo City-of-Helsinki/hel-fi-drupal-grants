@@ -431,9 +431,9 @@
       "sv": "Bilagor som tidigare lämnats in till Helsingfors stad"
     },
     "formerly_provided_attachments_help.value": {
-      "en": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”.",
-      "fi": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-      "sv": "Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+      "en": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate \"The attachment has been submitted as a single file or with another application\". The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.",
+      "fi": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla \"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\".",
+      "sv": "Om de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att \"Bilagan har lämnats in som en fil eller i samband med en annan ansökan\". Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna."
     },
     "further_clarification.title": {
       "en": "Further clarification on attachments",
@@ -510,6 +510,11 @@
       "fi": "Tarkemmat tiedot",
       "sv": "Mer detaljerad information"
     },
+    "is_festival_or_event.tooltip": {
+      "en": "A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.",
+      "fi": "Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, kuten esityksiä, joiden välissä yleisö voi myös vaihtua. Festivaaleja tai tapahtumia voivat olla esimerkiksi kaupunginosatapahtumat. Niitä eivät ole esimerkiksi esityssarjat tai laajemmat hankkeet, joita ei markkinoida festivaalina tai yhtenäisenä tapahtumana. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.",
+      "sv": "En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång."
+    },
     "members_applicant_community_global.description": {
       "en": "How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
       "fi": "Kuinka monta jäsenmaksun maksanutta yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
@@ -561,7 +566,7 @@
       "sv": "Medlemskap"
     },
     "minutes_of_the_annual_meeting.description": {
-      "en": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association’s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.",
+      "en": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association's annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.",
       "fi": "Liitä tähän yhteisön kokouksen pöytäkirja, jossa edellisen päättyneen tilikauden tilinpäätös on vahvistettu ja vastuuvapaus myönnetty. Yhdistyksillä tilinpäätös vahvistetaan aina yhdistyksen jäsenkokouksessa. Mikäli yhteisöltä ei edellytetä vuosikokousta tai muuta yhteisön kokousta, jossa tilinpäätös tulisi vahvistaa ja vastuuvapaus myöntää, ei tätä liitettä tarvitse toimittaa.",
       "sv": "Bifoga protokollet från samfundets möte här, där bokslutet för den föregående avslutade räkenskapsperioden har godkänts och ansvarsfrihet beviljats. Samfundens bokslut fastställs alltid vid samfundets medlemsmöte. Om samfundet inte är skyldigt att ha ett årsmöte eller annat samfundsmöte där bokslutet bör godkännas och ansvarsfrihet beviljas, behöver denna bilaga inte lämnas in."
     },

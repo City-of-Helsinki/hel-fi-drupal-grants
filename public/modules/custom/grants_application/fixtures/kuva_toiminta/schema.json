@@ -237,10 +237,7 @@
                   "is_multi_year_grant": {
                     "title": "is_multi_year_grant.title",
                     "description": "is_multi_year_grant.description",
-                    "enum": [
-                      false,
-                      true
-                    ]
+                    "enum": [true, false]
                   }
                 },
                 "required": ["is_multi_year_grant"]
@@ -256,9 +253,7 @@
               },
               "multi_year_grant_section": {
                 "properties": {
-                  "is_multi_year_grant": {
-                    "const": true
-                  }
+                  "is_multi_year_grant": {"const": true}
                 },
                 "required": ["is_multi_year_grant"]
               }

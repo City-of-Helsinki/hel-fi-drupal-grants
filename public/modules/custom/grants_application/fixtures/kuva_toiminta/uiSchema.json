@@ -24,8 +24,8 @@
       "is_multi_year_grant": {
         "ui:widget": "radio",
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true

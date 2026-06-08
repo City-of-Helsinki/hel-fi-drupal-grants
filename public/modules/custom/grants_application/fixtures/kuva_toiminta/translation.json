@@ -250,11 +250,6 @@
       "fi": "Kyseessä on festivaali tai tapahtuma",
       "sv": "Festival eller evenemang"
     },
-    "is_festival_or_event.tooltip": {
-      "en": "A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.",
-      "fi": "Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, kuten esityksiä, joiden välissä yleisö voi myös vaihtua. Festivaaleja tai tapahtumia voivat olla esimerkiksi kaupunginosatapahtumat. Niitä eivät ole esimerkiksi esityssarjat tai laajemmat hankkeet, joita ei markkinoida festivaalina tai yhtenäisenä tapahtumana. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.",
-      "sv": "En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång."
-    },
     "is_multi_year_grant.description": {
       "en": "For the four year period 2023-2026 multi-year operational grants can be awarded to Helsinki based cultural operators that belong to the central government subsidies system (VOS) in the fields of performing arts or music. The multi-year grant recipients have been decided at the end of 2022.",
       "fi": "Nelivuotiskaudella 2023-2026 monivuotisia toiminta-avustuksia voidaan myöntää helsinkiläisille rekisteröityneille esittävän taiteen ja musiikin valtionosuusjärjestelmän piirissä oleville taide- ja kulttuuriyhteisöille. Tuen saajat on päätetty vuoden 2022 lopulla.",
@@ -284,11 +279,6 @@
       "en": "Members",
       "fi": "Jäsenmäärä",
       "sv": "Medlemmar"
-    },
-    "multi_year_grant_section.title": {
-      "en": "I am applying for a multi-year grant",
-      "fi": "Kyseessä on monivuotinen avustus",
-      "sv": "Det är frågan om ett mångårigt stöd"
     },
     "other_compensation_from_city.description": {
       "en": "The operational grant that was granted for the same operations for the previous completed financial year.",
@@ -363,7 +353,7 @@
     "partners.title": {
       "en": "Name the central partners, and describe the forms and conditions of each collaboration.",
       "fi": "Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.",
-      "sv": "Namnge era fem mest centrala samarbetsparter och beskriv formen och villkoren för ert samarbete."
+      "sv": "Namnge era fem mest centrala samarbetspartner och beskriv formen och villkoren för ert samarbete."
     },
     "part_time_person_years.title": {
       "en": "Part-time: Person years",
