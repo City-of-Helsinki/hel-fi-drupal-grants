@@ -244,6 +244,27 @@
           "sourceFields": ["grant_info_step.acting_year_section.subventions"],
           "sourceShape": "subvention"
         }
+      },
+      "planned_state_operative_subvention": {
+        "ui:options": {
+          "tooltipLabel": "planned_state_operative_subvention.title",
+          "tooltipButtonLabel": "planned_state_operative_subvention.title",
+          "tooltipText": "planned_state_operative_subvention.tooltip"
+        }
+      },
+      "planned_other_compensations": {
+        "ui:options": {
+          "tooltipLabel": "planned_other_compensations.title",
+          "tooltipButtonLabel": "planned_other_compensations.title",
+          "tooltipText": "planned_other_compensations.tooltip"
+        }
+      },
+      "entry_fees": {
+        "ui:options": {
+          "tooltipLabel": "entry_fees.title",
+          "tooltipButtonLabel": "entry_fees.title",
+          "tooltipText": "entry_fees.tooltip"
+        }
       }
     },
     "planned_cost_section": {
@@ -272,6 +293,27 @@
     "realized_income_section": {
       "incomeGroupName": {
         "ui:widget": "hidden"
+      },
+      "other_compensation_from_city": {
+        "ui:options": {
+          "tooltipLabel": "other_compensation_from_city.title",
+          "tooltipButtonLabel": "other_compensation_from_city.title",
+          "tooltipText": "other_compensation_from_city.tooltip"
+        }
+      },
+      "state_operative_subvention": {
+        "ui:options": {
+          "tooltipLabel": "state_operative_subvention.title",
+          "tooltipButtonLabel": "state_operative_subvention.title",
+          "tooltipText": "state_operative_subvention.tooltip"
+        }
+      },
+      "other_compensations_realized": {
+        "ui:options": {
+          "tooltipLabel": "other_compensations_realized.title",
+          "tooltipButtonLabel": "other_compensations_realized.title",
+          "tooltipText": "other_compensations_realized.tooltip"
+        }
       }
     },
     "realized_cost_section": {

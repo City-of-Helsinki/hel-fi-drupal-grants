@@ -126,7 +126,7 @@
       "sv": "Namn"
     },
     "art_premise_type.title": {
-      "en": "Premise type",
+      "en": "Type of space",
       "fi": "Tilan tyyppi",
       "sv": "Typ av utrymme"
     },
@@ -271,7 +271,7 @@
       "sv": "Namn"
     },
     "realized_premise_is_owned_by_city.title": {
-      "en": "City owns the property",
+      "en": "The space is owned by the City of Helsinki",
       "fi": "Kyseessä on kaupungin omistama tila",
       "sv": "Stadens eget utrymme"
     },
@@ -306,7 +306,7 @@
       "sv": "Stadsmiljösektorns lokaler är till exempel skolornas undervisningslokaler. Kultur- och fritidssektorns lokaler är till exempel lokaler som förvaltas av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Fostrans- och utbildningssektorns lokaler är till exempel arbetarinstitutets lokaler."
     },
     "realized_premise_suitability.title": {
-      "en": "How well premises suit for the action?",
+      "en": "How well are the premises suited for the purpose?",
       "fi": "Kuinka hyvin tila soveltuu toimintaan?",
       "sv": "Hur väl lämpar sig utrymmena för undervisning?"
     },
@@ -471,7 +471,7 @@
       "sv": "Välj ja, bara om du med säkerhet vet att din organisation fick finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen."
     },
     "realized_income_section.title": {
-      "en": "Realised income",
+      "en": "Realized incomes",
       "fi": "Toteutuneet tulot",
       "sv": "Realiserade inkomster"
     },
@@ -554,6 +554,46 @@
       "en": "The applied grant (€)",
       "fi": "Haettu avustus (€)",
       "sv": "Ansökt stöd (€)"
+    },
+    "other_compensations_section.description": {
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.",
+      "sv": "Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren.",
+      "en": "List only grants from other instances than the City of Helsinki in the current year and the two previous years before that."
+    },
+    "community_members_section.title": {
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemsantal",
+      "en": "Members"
+    },
+    "planned_state_operative_subvention.tooltip": {
+      "fi": "Kirjaa muut kuin toiminta-avustukset muihin avustuksiin.",
+      "sv": "Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.",
+      "en": "Other than operational grants should be included in the other grants."
+    },
+    "planned_other_compensations.tooltip": {
+      "fi": "Myös muut kaupungin avustukset.",
+      "sv": "Även stadens övriga understöd.",
+      "en": "Including other grants from the City of Helsinki."
+    },
+    "entry_fees.tooltip": {
+      "fi": "Esim. lipunmyyntitulot",
+      "sv": "Till exempel biljettförsäljningsintäkter",
+      "en": "Ticket sales etc."
+    },
+    "other_compensation_from_city.tooltip": {
+      "fi": "Samaan toimitaan edelliselle päättyneelle tilivuodelle myönnetty avustus.",
+      "sv": "Understöd som beviljats för samma ändamål under föregående räkenskapsår.",
+      "en": "The operational grant that was granted for the same operations for the previous completed financial year."
+    },
+    "state_operative_subvention.tooltip": {
+      "fi": "Kirjaa muut kuin toiminta-avustukset muihin avustuksiin.",
+      "sv": "Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.",
+      "en": "Other than operational grants should be included in the other grants."
+    },
+    "other_compensations_realized.tooltip": {
+      "fi": "Myös muut kaupungin avustukset.",
+      "sv": "Även stadens övriga understöd.",
+      "en": "Including other grants from the City of Helsinki."
     }
   }
 }
