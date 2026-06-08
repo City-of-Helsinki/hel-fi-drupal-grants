@@ -268,7 +268,7 @@ final class JsonMapperTest extends UnitTestCase {
           'ID' => 'justAnotherNumericValue',
           'valueType' => 'float',
           'value' => '',
-          'label' => 'Comma should be replaced by dot',
+          'label' => 'Float should not be affected',
         ],
       ],
     ];
