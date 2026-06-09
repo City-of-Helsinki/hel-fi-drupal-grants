@@ -125,7 +125,7 @@ class Avus2Integration {
         'headers' => $headers,
       ]);
 
-      if ($res->getStatusCode() === 200) {
+      if ($res->getStatusCode() !== 200) {
         throw new Avus2Exception('Avus2 integration failed: ' . $res->getBody()->getContents());
       }
     }
