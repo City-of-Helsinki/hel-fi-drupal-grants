@@ -442,7 +442,7 @@
                         {
                             "ID": "talous_tulon_tyyppi_0",
                             "label": "Osallistumismaksut",
-                            "value": 1500,
+                            "value": "1500",
                             "valueType": "double"
                         }
                     ],
@@ -456,7 +456,7 @@
                         {
                             "ID": "talous_menon_tyyppi_0",
                             "label": "Henkilöstökulut",
-                            "value": 6000,
+                            "value": "6000",
                             "valueType": "double"
                         }
                     ],
