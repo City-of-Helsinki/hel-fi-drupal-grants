@@ -304,7 +304,9 @@ final class JsonMapperTest extends UnitTestCase {
           'float_with_comma' => '12,0',
           'income_section' => [
             'income' => [
-              ['label' => 'the label', 'amount' => '123,45']
+              ['label' => 'the label', 'amount' => '123,45'],
+              ['label' => 'the label 2', 'amount' => 123],
+              ['label' => 'the label 3', 'amount' => ""]
             ]
           ]
         ],
@@ -319,6 +321,9 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertEquals('12,0', $mappedData['compensation']['my_numbers']['float_with_comma']['value']);
     $this->assertEquals('123.45', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['value']);
     $this->assertEquals('the label', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['label']);
+    $this->assertEquals('123', $mappedData['compensation']['my_numbers']['income_with_dot'][1]['value']);
+    $this->assertEquals('0', $mappedData['compensation']['my_numbers']['income_with_dot'][2]['value']);
+
     // Float is still comma, only double is changed to dot.
     $this->assertEquals('123,45', $mappedData['compensation']['my_numbers']['income_with_comma'][0]['value']);
   }
