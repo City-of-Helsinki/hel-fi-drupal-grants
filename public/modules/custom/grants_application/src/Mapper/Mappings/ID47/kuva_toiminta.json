@@ -1,0 +1,1045 @@
+{
+  "compensation.compensationInfo.compensationArray.0.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.0.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "subventionType",
+      "label": "Avustuslajin koodi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.0.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Avustussumma",
+      "value": "",
+      "valueType": "float"
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "label": null,
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_compensations_section.other_compensations",
+    "mapping_type": "multiple_values",
+    "data": {
+      "other_compensation_issuer": {
+        "ID": "issuer",
+        "label": "Avustuksen myöntäjä",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_name": {
+        "ID": "issuerName",
+        "label": "Myöntäjän nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_year": {
+        "ID": "year",
+        "label": "Vuosi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_amount": {
+        "ID": "amount",
+        "label": "Myönnetyn avustuksen summa",
+        "value": "",
+        "valueType": "float"
+      },
+      "other_compensation_description": {
+        "ID": "purpose",
+        "label": "Kuvaus käyttötarkoituksesta",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.benefitsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "loans",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.benefitsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "premises",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.activitiesInfoArray.0": {
+    "datasource": "grants_profile_array",
+    "source": "businessPurpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "businessPurpose",
+      "label": "Toiminnan kuvaus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.compensationInfo.generalInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.primary_art_field_section.primary_art_field",
+    "mapping_type": "default",
+    "data": {
+      "ID": "primaryArt",
+      "label": "Ensisijainen taiteenala",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.primary_art_field_section.is_festival_or_event",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isFestival",
+      "label": "Kyseessä on festivaali tai tapahtuma",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.2": {
+    "datasource": "form_data",
+    "source": "grant_info_step.primary_art_field_section.project_brief_description",
+    "mapping_type": "default",
+    "data": {
+      "ID": "purpose",
+      "label": "Hankkeen tai toiminnan lyhyt esittelyteksti",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.3": {
+    "datasource": "form_data",
+    "source": "grant_info_step.multi_year_grant_section.future_years_for_multi_year_grant",
+    "mapping_type": "default",
+    "data": {
+      "ID": "yearsForMultiYearApplication",
+      "label": "Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.4": {
+    "datasource": "form_data",
+    "source": "grant_info_step.multi_year_grant_section.grant_amount_breakdown_per_year",
+    "mapping_type": "default",
+    "data": {
+      "ID": "breakdownOfYearlySums",
+      "label": "Erittely kullekin vuodelle haettavasta avustussummasta",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.communityInfo.generalCommunityInfoArray.0": {
+    "datasource": "form_data",
+    "source": "community_activity_step.personnel_section.personnel_fieldset.full_time_persons",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffPeopleFulltime",
+      "label": "Kokoaikaisia: Henkilöitä",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.1": {
+    "datasource": "form_data",
+    "source": "community_activity_step.personnel_section.personnel_fieldset.part_time_persons",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffPeopleParttime",
+      "label": "Osa-aikaisia: Henkilöitä",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.2": {
+    "datasource": "form_data",
+    "source": "community_activity_step.personnel_section.personnel_fieldset.volunteer_persons",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffPeopleVoluntary",
+      "label": "Vapaaehtoisia: Henkilöitä",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.3": {
+    "datasource": "form_data",
+    "source": "community_activity_step.personnel_section.personnel_fieldset.full_time_person_years",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffManyearsFulltime",
+      "label": "Kokoaikaisia: Henkilötyövuosia",
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.4": {
+    "datasource": "form_data",
+    "source": "community_activity_step.personnel_section.personnel_fieldset.part_time_person_years",
+    "mapping_type": "default",
+    "data": {
+      "ID": "staffManyearsParttime",
+      "label": "Osa-aikaisia: Henkilötyövuosia",
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.5": {
+    "datasource": "form_data",
+    "source": "community_activity_step.community_members_section.members_fieldset.members_applicant_person_local",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersPersonLocal",
+      "label": "Henkilöjäsenet, Helsinki",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.6": {
+    "datasource": "form_data",
+    "source": "community_activity_step.community_members_section.members_fieldset.members_applicant_person_global",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersPersonGlobal",
+      "label": "Henkilöjäsenet yhteensä",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.7": {
+    "datasource": "form_data",
+    "source": "community_activity_step.community_members_section.members_fieldset.members_applicant_community_local",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersCommunityLocal",
+      "label": "Yhteisöjäsenet, Helsinki",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.8": {
+    "datasource": "form_data",
+    "source": "community_activity_step.community_members_section.members_fieldset.members_applicant_community_global",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersCommunityGlobal",
+      "label": "Yhteisöjäsenet yhteensä",
+      "value": "0",
+      "valueType": "int"
+    }
+  },
+  "compensation.communityInfo.generalCommunityInfoArray.9": {
+    "datasource": "form_data",
+    "source": "community_activity_step.artistic_spaces_section.owns_artistic_space",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isOwnerOrPrimaryTenantOfArtpremises",
+      "label": "Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+
+  "compensation.communityInfo.artPremisesArray.0.n": {
+    "datasource": "form_data",
+    "source": "community_activity_step.artistic_spaces_section.spaces",
+    "mapping_type": "multiple_values",
+    "data": {
+      "premiseName": {
+        "ID": "premiseName",
+        "label": "Tilan nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "premiseType": {
+        "ID": "premiseType",
+        "label": "Tilan tyyppi",
+        "value": "",
+        "valueType": "string"
+      },
+      "postCode": {
+        "ID": "postCode",
+        "label": "Postinumero",
+        "value": "",
+        "valueType": "string"
+      },
+      "isOthersUse": {
+        "ID": "isOthersUse",
+        "label": "Tilaa tarjotaan muiden käyttöön",
+        "value": "",
+        "valueType": "bool"
+      },
+      "isOwnedByApplicant": {
+        "ID": "isOwnedByApplicant",
+        "label": "Tila on omassa omistuksessa",
+        "value": "",
+        "valueType": "bool"
+      },
+      "isOwnedByCity": {
+        "ID": "isOwnedByCity",
+        "label": "Kyseessä on kaupungin omistama tila",
+        "value": "",
+        "valueType": "bool"
+      }
+    }
+  },
+
+  "compensation.activityInfo.plannedActivityInfoArray.0": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.event_days_in_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventDaysCountHki",
+      "label": "Tapahtuma- tai esityspäivien määrä Helsingissä",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.1": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.count_in_helsinki_fieldset.performances_count_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "performanceCountHki",
+      "label": "Esitykset, Helsinki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.2": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.count_in_total_fieldset.performances_count_total",
+    "mapping_type": "default",
+    "data": {
+      "ID": "performanceCountAll",
+      "label": "Esitykset, kaikki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.3": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.count_in_helsinki_fieldset.exhibitions_count_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "exhibitionCountHki",
+      "label": "Näyttelyt, Helsinki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.4": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.count_in_total_fieldset.exhibitions_count_total",
+    "mapping_type": "default",
+    "data": {
+      "ID": "exhibitionCountAll",
+      "label": "Näyttelyt, kaikki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.5": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.count_in_helsinki_fieldset.workshops_count_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "workshopCountHki",
+      "label": "Työpajat, Helsinki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.6": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.count_in_total_fieldset.workshops_count_total",
+    "mapping_type": "default",
+    "data": {
+      "ID": "workshopCountAll",
+      "label": "Työpajat, kaikki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.7": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.regarding_performances_fieldset.premieres_count",
+    "mapping_type": "default",
+    "data": {
+      "ID": "firstPublicPerformancesCount",
+      "label": "Kantaesitysten määrä",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.8": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.regarding_performances_fieldset.production_premieres_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "premiereCountHki",
+      "label": "Ensi-iltojen määrä Helsingissä",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.9": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.festival_dates",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventOrFestivalDates",
+      "label": "Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityInfo.plannedActivityInfoArray.10": {
+    "datasource": "form_data",
+    "source": "activity_step.planned_activities_section.other_central_activities",
+    "mapping_type": "default",
+    "data": {
+      "ID": "otherKeyActivities",
+      "label": "Muut keskeiset toimintamuodot",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.activityInfo.realizedActivityInfoArray.0": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.was_festival_or_event",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isEventOrFestival",
+      "label": "Oliko kyseessä festivaali tai tapahtuma",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.1": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_event_days_in_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventDaysCount",
+      "label": "Tapahtuma- tai esityspäivien määrä Helsingissä (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.2": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_count_in_helsinki_fieldset.realized_performances_count_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "performanceCountHki",
+      "label": "Esitykset, Helsinki (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.3": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_count_in_total_fieldset.realized_performances_count_total",
+    "mapping_type": "default",
+    "data": {
+      "ID": "performanceCountAll",
+      "label": "Esitykset, kaikki (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.4": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_count_in_helsinki_fieldset.realized_exhibitions_count_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "exhibitionCountHki",
+      "label": "Näyttelyt, Helsinki (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.5": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_count_in_total_fieldset.realized_exhibitions_count_total",
+    "mapping_type": "default",
+    "data": {
+      "ID": "exhibitionCountAll",
+      "label": "Näyttelyt, kaikki (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.6": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_count_in_helsinki_fieldset.realized_workshops_count_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "workshopCountHki",
+      "label": "Työpajat, Helsinki (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.7": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_count_in_total_fieldset.realized_workshops_count_total",
+    "mapping_type": "default",
+    "data": {
+      "ID": "workshopCountAll",
+      "label": "Työpajat, kaikki (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.8": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_regarding_performances_fieldset.realized_premieres_count",
+    "mapping_type": "default",
+    "data": {
+      "ID": "firstPublicPerformancesCount",
+      "label": "Kantaesitysten määrä (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.9": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_regarding_performances_fieldset.realized_production_premieres_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "premiereCountHki",
+      "label": "Ensi-iltojen määrä Helsingissä (toteutuneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.10": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.visitors_fieldset.visitors_count_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventsVisitorsHkiTotal",
+      "label": "Kävijämäärä Helsingissä",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activityInfo.realizedActivityInfoArray.11": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.visitors_fieldset.visitors_count_total",
+    "mapping_type": "default",
+    "data": {
+      "ID": "eventsVisitorsTotal",
+      "label": "Kävijämäärä kaikkiaan",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+
+  "compensation.activityInfo.realizedPremisesArray.0.n": {
+    "datasource": "form_data",
+    "source": "activity_step.realized_activities_section.realized_spaces",
+    "mapping_type": "multiple_values",
+    "data": {
+      "premiseName": {
+        "ID": "premiseName",
+        "label": "Tilan nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "postCode": {
+        "ID": "postCode",
+        "label": "Postinumero",
+        "value": "",
+        "valueType": "string"
+      },
+      "isOwnedByCity": {
+        "ID": "isOwnedByCity",
+        "label": "Kyseessä on kaupungin omistama tila",
+        "value": "",
+        "valueType": "bool"
+      }
+    }
+  },
+
+  "compensation.activityBasisInfo.activityBasisArray.0": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.activity_contents_section.artistic_starting_points",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_taiteelliset_lahtokohdat",
+      "label": "Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.1": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.activity_contents_section.diversity_and_equality",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_tasa_arvo",
+      "label": "Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.2": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.accessibility_section.accessibility",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_saavutettavuus",
+      "label": "Miten toiminta tehdään kaupunkilaiselle mahdollisimman saavutettavaksi?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.3": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.accessibility_section.community_spirit",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_yhteisollisyys",
+      "label": "Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.4": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.accessibility_section.target_groups",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_kohderyhmat",
+      "label": "Keitä toiminnalla tavoitellaan?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.5": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.operations_section.professionalism",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_ammattimaisuus",
+      "label": "Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.6": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.operations_section.ecological_sustainability",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_ekologisuus",
+      "label": "Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.7": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.operations_section.partners",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_yhteistyokumppanit",
+      "label": "Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.8": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.development_section.previous_goals",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_tavoitteet",
+      "label": "Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.9": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.development_section.self_assessment_methods",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_kaytetyt_keinot",
+      "label": "Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activityBasisInfo.activityBasisArray.10": {
+    "datasource": "form_data",
+    "source": "activity_basis_step.development_section.upcoming_changes",
+    "mapping_type": "default",
+    "data": {
+      "ID": "toiminta_tulevat_muutokset",
+      "label": "Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.budgetInfo.budgetInfoArray.0": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.belongs_to_vos",
+    "mapping_type": "default",
+    "data": {
+      "ID": "isPartOfVOS",
+      "label": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.budgetInfo.budgetInfoArray.1": {
+    "datasource": "form_data",
+    "source": "finances_step.realized_income_expenses_section.belonged_to_vos",
+    "mapping_type": "default",
+    "data": {
+      "ID": "wasPartOfVOS",
+      "label": "Organisaatio kuului valtionosuusjärjestelmään (VOS)",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.budgetInfo.budgetInfoArray.2": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.other_valuable_input",
+    "mapping_type": "default",
+    "data": {
+      "ID": "otherValuables",
+      "label": "Muu huomioitava panostus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "compensation",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.1": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.planned_income.planned_state_operative_subvention",
+    "mapping_type": "default",
+    "data": {
+      "ID": "plannedStateOperativeSubvention",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.2": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.planned_income.planned_other_compensations",
+    "mapping_type": "default",
+    "data": {
+      "ID": "plannedOtherCompensations",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.3": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.planned_income.sponsorships",
+    "mapping_type": "default",
+    "data": {
+      "ID": "sponsorships",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.4": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.planned_income.entry_fees",
+    "mapping_type": "default",
+    "data": {
+      "ID": "entryFees",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.5": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.planned_income.sales",
+    "mapping_type": "default",
+    "data": {
+      "ID": "sales",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.6": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.planned_income.financial_funding_and_interests",
+    "mapping_type": "default",
+    "data": {
+      "ID": "financialFundingAndInterests",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.7": {
+    "datasource": "form_data",
+    "source": "finances_step.realized_income_expenses_section.realized_income.other_compensation_from_city",
+    "mapping_type": "default",
+    "data": {
+      "ID": "otherCompensationFromCity",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.8": {
+    "datasource": "form_data",
+    "source": "finances_step.realized_income_expenses_section.realized_income.state_operative_subvention",
+    "mapping_type": "default",
+    "data": {
+      "ID": "stateOperativeSubvention",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.9": {
+    "datasource": "form_data",
+    "source": "finances_step.realized_income_expenses_section.realized_income.other_compensations",
+    "mapping_type": "default",
+    "data": {
+      "ID": "otherCompensations",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.10": {
+    "datasource": "form_data",
+    "source": "finances_step.realized_income_expenses_section.realized_income.total_income",
+    "mapping_type": "default",
+    "data": {
+      "ID": "totalIncome",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "otherIncomeRowsArrayStatic": {}
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeGroupName": {
+    "datasource": "form_data",
+    "source": null,
+    "mapping_type": "hardcoded",
+    "data": {
+      "incomeGroupName": "general"
+    }
+  },
+
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.0": {
+    "datasource": "form_data",
+    "source": "finances_step.realized_income_expenses_section.realized_cost.total_costs",
+    "mapping_type": "default",
+    "data": {
+      "ID": "totalCosts",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.1": {
+    "datasource": "form_data",
+    "source": "finances_step.planned_budget_section.planned_cost.planned_total_costs",
+    "mapping_type": "default",
+    "data": {
+      "ID": "plannedTotalCosts",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "otherCostRowsArrayStatic": {}
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {
+    "datasource": "form_data",
+    "source": null,
+    "mapping_type": "hardcoded",
+    "data": {
+      "costGroupName": "general"
+    }
+  },
+
+  "attachmentsInfo.attachmentsArray.0": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.community_rules.community_rules_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Yhteisön säännöt", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "7", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.1": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.confirmed_financial_statements.confirmed_financial_statements_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilivuodelta)", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "43", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.2": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.confirmed_annual_report.confirmed_annual_report_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilivuodelta)", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "4", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.3": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.confirmed_audit_report.confirmed_audit_report_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilivuodelta)", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "5", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.4": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.action_plan.action_plan_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.5": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.budget.budget_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Talousarvio (sille vuodelle jolle haet avustusta)", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "2", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.n": {
+    "#tip": "multiple other attachments",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
+    "mapping_type": "multiple_files",
+    "data": {
+      "description": {"ID": "description", "value": "Muu liite", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "0", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  }
+}

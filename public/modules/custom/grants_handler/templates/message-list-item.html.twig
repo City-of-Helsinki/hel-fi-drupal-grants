@@ -1,6 +1,6 @@
   {% if (message.messageStatus == 'UNREAD' and message.sentBy == 'Avustusten kasittelyjarjestelma') %}
     <div class="webform-submission-messages__new-message">
-      <i class="hds-icon icon hds-icon--alert-circle hel-icon--size-s vertical-align-small-or-medium-icon" aria-hidden="true"></i>
+      <span class="hel-icon icon hel-icon--alert-circle" aria-hidden="true"></span>
       <span>{{ "New message"|t({}, {'context': 'grants_handler'})}}</span>
     </div>
   {% endif %}
