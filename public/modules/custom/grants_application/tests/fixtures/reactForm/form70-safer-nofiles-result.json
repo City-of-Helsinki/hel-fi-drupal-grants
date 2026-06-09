@@ -430,7 +430,7 @@
             {
               "ID": "tulot_field_0_0",
               "label": "tulon tyyppi",
-              "value": 1111,
+              "value": "1111",
               "valueType": "double"
             }
           ]
@@ -443,7 +443,7 @@
             {
               "ID": "menot_field_0_0",
               "label": "Menon tyyppi",
-              "value": 2222,
+              "value": "2222",
               "valueType": "double"
             }
           ]
