@@ -1,0 +1,804 @@
+{
+  "definitions": {
+    "_other_compensation_item": {
+      "type": "object",
+      "properties": {
+        "issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "amount": {
+          "format": "decimal-number",
+          "title": "other_compensation_amount.title",
+          "type": "string"
+        },
+        "purpose": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "issuer",
+        "issuer_name",
+        "year",
+        "amount",
+        "purpose"
+      ]
+    },
+    "_other_cost_item": {
+      "type": "object",
+      "title": "other_cost_item.title",
+      "properties": {
+        "label": {
+          "title": "other_cost_item_label.title",
+          "type": "string"
+        },
+        "value": {
+          "format": "decimal-number",
+          "title": "other_cost_item_value.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "value"
+      ]
+    },
+    "_venue_item": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "premise_name": {
+          "title": "venue_name.title",
+          "type": "string"
+        },
+        "post_code": {
+          "title": "postal_code.title",
+          "type": "string"
+        },
+        "is_owned_by_city": {
+          "title": "venue_is_owned_by_city.title",
+          "enum": [
+            true,
+            false
+          ],
+          "default": false
+        }
+      },
+      "required": [
+        "premise_name",
+        "post_code",
+        "is_owned_by_city"
+      ]
+    },
+    "grant_info_step": {
+      "required": [
+        "acting_year_section",
+        "grant_details_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
+            }
+          },
+          "required": ["acting_year"]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 4,
+                  "label": "subventions.4.title"
+                }
+              ]
+            }
+          }
+        },
+        "grant_details_section": {
+          "title": "grant_details_section.title",
+          "type": "object",
+          "properties": {
+            "primary_art_field": {
+              "title": "primary_art_field.title",
+              "type": "string",
+              "enum": [
+                "primary_art_field.design_kasityo",
+                "primary_art_field.elokuva_valokuva_media",
+                "primary_art_field.kaupunkikulttuuri",
+                "primary_art_field.kirjallisuus",
+                "primary_art_field.kuvataide_sarjakuva",
+                "primary_art_field.monitaide",
+                "primary_art_field.museo",
+                "primary_art_field.musiikki",
+                "primary_art_field.muu",
+                "primary_art_field.sirkus",
+                "primary_art_field.tanssi",
+                "primary_art_field.teatteri"
+              ]
+            },
+            "project_name": {
+              "title": "project_name.title",
+              "type": "string"
+            },
+            "is_festival_or_event": {
+              "title": "is_festival_or_event.title",
+              "description": "is_festival_or_event.help",
+              "enum": [
+                true,
+                false
+              ]
+            },
+            "project_short_description": {
+              "title": "project_short_description.title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "primary_art_field",
+            "project_name",
+            "is_festival_or_event",
+            "project_short_description"
+          ]
+        },
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_received_other_compensations": {
+              "title": "other_compensations_section_have_received_other_compensations.title",
+              "enum": [
+                true,
+                false
+              ],
+              "default": false
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "community_info_step": {
+      "type": "object",
+      "properties": {
+        "members_section": {
+          "title": "members_section.title",
+          "type": "object",
+          "properties": {
+            "members_fieldset": {
+              "title": "members_fieldset.legend",
+              "type": "object",
+              "properties": {
+                "members_applicant_person_global": {
+                  "title": "members_person_global.title",
+                  "type": "integer"
+                },
+                "members_applicant_person_local": {
+                  "title": "members_person_local.title",
+                  "type": "integer"
+                },
+                "members_applicant_community_global": {
+                  "title": "members_community_global.title",
+                  "type": "integer"
+                },
+                "members_applicant_community_local": {
+                  "title": "members_community_local.title",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "members_applicant_person_global",
+                "members_applicant_person_local",
+                "members_applicant_community_global",
+                "members_applicant_community_local"
+              ]
+            }
+          },
+          "required": ["members_fieldset"]
+        },
+        "personnel_section": {
+          "title": "personnel_section.title",
+          "type": "object",
+          "properties": {
+            "personnel_fieldset": {
+              "title": "personnel_fieldset.legend",
+              "type": "object",
+              "properties": {
+                "fulltime_personnel": {
+                  "title": "fulltime_personnel.title",
+                  "type": "integer"
+                },
+                "fulltime_personnel_worktime": {
+                  "format": "decimal-number",
+                  "title": "fulltime_personnel_worktime.title",
+                  "type": "string"
+                },
+                "parttime_personnel": {
+                  "title": "parttime_personnel.title",
+                  "type": "integer"
+                },
+                "parttime_personnel_worktime": {
+                  "format": "decimal-number",
+                  "title": "parttime_personnel_worktime.title",
+                  "type": "string"
+                },
+                "volunteer_personnel": {
+                  "title": "volunteer_personnel.title",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "fulltime_personnel",
+                "fulltime_personnel_worktime",
+                "parttime_personnel",
+                "parttime_personnel_worktime",
+                "volunteer_personnel"
+              ]
+            }
+          },
+          "required": ["personnel_fieldset"]
+        }
+      }
+    },
+    "planned_activity_step": {
+      "type": "object",
+      "properties": {
+        "activity_counts_section": {
+          "title": "activity_counts_section.title",
+          "description": "activity_counts_section.text",
+          "type": "object",
+          "properties": {
+            "event_days_count_helsinki": {
+              "title": "event_days_count_helsinki.title",
+              "type": "integer"
+            },
+            "helsinki_counts_fieldset": {
+              "title": "helsinki_counts_fieldset.title",
+              "type": "object",
+              "properties": {
+                "show_count_helsinki": {
+                  "title": "show_count_helsinki.title",
+                  "type": "integer"
+                },
+                "exhibition_count_helsinki": {
+                  "title": "exhibition_count_helsinki.title",
+                  "type": "integer"
+                },
+                "workshop_count_helsinki": {
+                  "title": "workshop_count_helsinki.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "total_counts_fieldset": {
+              "title": "total_counts_fieldset.title",
+              "type": "object",
+              "properties": {
+                "show_count_all": {
+                  "title": "show_count_all.title",
+                  "type": "integer"
+                },
+                "exhibition_count_all": {
+                  "title": "exhibition_count_all.title",
+                  "type": "integer"
+                },
+                "workshop_count_all": {
+                  "title": "workshop_count_all.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "visitor_count_helsinki": {
+              "title": "visitor_count_helsinki.title",
+              "type": "integer"
+            },
+            "visitor_count_all": {
+              "title": "visitor_count_all.title",
+              "type": "integer"
+            },
+            "premieres_fieldset": {
+              "title": "premieres_fieldset.title",
+              "type": "object",
+              "properties": {
+                "premiere_count": {
+                  "title": "premiere_count.title",
+                  "type": "integer"
+                },
+                "premiere_helsinki_count": {
+                  "title": "premiere_helsinki_count.title",
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "required": [
+            "event_days_count_helsinki"
+          ]
+        },
+        "venues_section": {
+          "title": "venues_section.title",
+          "description": "venues_section.text",
+          "type": "object",
+          "properties": {
+            "first_venue": {
+              "title": "first_venue_fieldset.title",
+              "type": "object",
+              "properties": {
+                "premise_name": {
+                  "title": "venue_name.title",
+                  "type": "string"
+                },
+                "post_code": {
+                  "title": "postal_code.title",
+                  "type": "string"
+                },
+                "is_owned_by_city": {
+                  "title": "venue_is_owned_by_city.title",
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "default": false
+                }
+              },
+              "required": [
+                "premise_name",
+                "post_code",
+                "is_owned_by_city"
+              ]
+            },
+            "venues_fieldset": {
+              "title": "other_venues_fieldset.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_venue_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_venue_item"
+              }
+            }
+          }
+        },
+        "schedule_section": {
+          "title": "schedule_section.title",
+          "type": "object",
+          "properties": {
+            "first_open_event_date": {
+              "title": "first_open_event_date.title",
+              "type": "string"
+            },
+            "festival_dates": {
+              "title": "festival_dates.title",
+              "type": "string"
+            },
+            "project_begins": {
+              "title": "project_begins.title",
+              "type": "string"
+            },
+            "project_ends": {
+              "title": "project_ends.title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "first_open_event_date",
+            "project_begins",
+            "project_ends"
+          ]
+        },
+        "project_description_section": {
+          "title": "project_description_section.title",
+          "type": "object",
+          "properties": {
+            "comprehensive_description": {
+              "title": "comprehensive_description.title",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "activity_foundations_step": {
+      "type": "object",
+      "properties": {
+        "subventions_total": {
+          "type": "number"
+        },
+        "artistic_foundations_section": {
+          "type": "object",
+          "properties": {}
+        },
+        "accessibility_section": {
+          "title": "accessibility_section.title",
+          "type": "object",
+          "properties": {
+            "project_target_audiece": {
+              "title": "project_target_audiece.title",
+              "type": "string"
+            }
+          }
+        },
+        "operations_section": {
+          "title": "operations_section.title",
+          "type": "object",
+          "properties": {
+            "operations_partners": {
+              "title": "operations_partners.title",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "subventions_total": {
+                "minimum": 5000
+              }
+            },
+            "required": ["subventions_total"]
+          },
+          "then": {
+            "properties": {
+              "artistic_foundations_section": {
+                "title": "artistic_foundations_section.title",
+                "type": "object",
+                "properties": {
+                  "project_artistic_basis": {
+                    "title": "project_artistic_basis.title",
+                    "type": "string"
+                  },
+                  "project_equality": {
+                    "title": "project_equality.title",
+                    "type": "string"
+                  }
+                }
+              },
+              "accessibility_section": {
+                "title": "accessibility_section.title",
+                "type": "object",
+                "properties": {
+                  "project_accessibility": {
+                    "title": "project_accessibility.title",
+                    "type": "string"
+                  },
+                  "project_community": {
+                    "title": "project_community.title",
+                    "type": "string"
+                  },
+                  "project_target_audiece": {
+                    "title": "project_target_audiece.title",
+                    "type": "string"
+                  }
+                }
+              },
+              "operations_section": {
+                "properties": {
+                  "operations_professionalism": {
+                    "title": "operations_professionalism.title",
+                    "type": "string"
+                  },
+                  "operations_ecology": {
+                    "title": "operations_ecology.title",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "budget_step": {
+      "type": "object",
+      "properties": {
+        "budget_section": {
+          "title": "budget_section.title",
+          "description": "budget_section.text",
+          "type": "object",
+          "properties": {
+            "organization_subsidities": {
+              "title": "organization_subsidities.title",
+              "enum": [
+                true,
+                false
+              ]
+            },
+            "budget_income": {
+              "title": "budget_income.title",
+              "description": "budget_income.text",
+              "type": "object",
+              "properties": {
+                "income_group_name": {
+                  "type": "string",
+                  "default": "general"
+                },
+                "compensation": {
+                  "format": "decimal-number",
+                  "title": "budget_income_compensation.title",
+                  "type": "string"
+                },
+                "planned_other_compensations": {
+                  "format": "decimal-number",
+                  "title": "budget_income_planned_other_compensations.title",
+                  "type": "string"
+                },
+                "sponsorships": {
+                  "format": "decimal-number",
+                  "title": "budget_income_sponsorships.title",
+                  "type": "string"
+                },
+                "entry_fees": {
+                  "format": "decimal-number",
+                  "title": "budget_income_entry_fees.title",
+                  "type": "string"
+                },
+                "sales": {
+                  "format": "decimal-number",
+                  "title": "budget_income_sales.title",
+                  "type": "string"
+                },
+                "own_funding": {
+                  "format": "decimal-number",
+                  "title": "budget_income_own_funding.title",
+                  "type": "string"
+                }
+              }
+            },
+            "budget_cost": {
+              "title": "budget_cost.title",
+              "description": "budget_cost.text",
+              "type": "object",
+              "properties": {
+                "cost_group_name": {
+                  "type": "string",
+                  "default": "general"
+                },
+                "performer_fees": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_performer_fees.title",
+                  "type": "string"
+                },
+                "other_fees": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_other_fees.title",
+                  "type": "string"
+                },
+                "personnel_side_costs": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_personnel_side_costs.title",
+                  "type": "string"
+                },
+                "show_costs": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_show_costs.title",
+                  "type": "string"
+                },
+                "travel_costs": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_travel_costs.title",
+                  "type": "string"
+                },
+                "transport_costs": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_transport_costs.title",
+                  "type": "string"
+                },
+                "equipment": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_equipment.title",
+                  "type": "string"
+                },
+                "premises": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_premises.title",
+                  "type": "string"
+                },
+                "marketing": {
+                  "format": "decimal-number",
+                  "title": "budget_cost_marketing.title",
+                  "type": "string"
+                }
+              }
+            },
+            "budget_other_cost": {
+              "title": "budget_other_cost.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_other_cost_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_other_cost_item"
+              }
+            }
+          },
+          "required": [
+            "organization_subsidities"
+          ]
+        },
+        "other_input_section": {
+          "title": "other_input_section.title",
+          "type": "object",
+          "properties": {
+            "other_financing": {
+              "title": "other_financing.title",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "additional_information.title",
+              "type": "string"
+            }
+          }
+        },
+        "attachments_section": {
+          "title": "attachments_section.title",
+          "type": "object",
+          "description": "attachments_section.description",
+          "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "multiple_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "other_attachment_fieldset_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "file_id": { "type": "integer" },
+                          "fileName": { "type": "string" },
+                          "fileType": { "type": "integer" },
+                          "integrationID": { "type": "string" },
+                          "isDeliveredLater": { "type": "boolean" },
+                          "isIncludedInOtherFile": { "type": "boolean" },
+                          "isNewAttachment": { "type": "boolean" },
+                          "size": { "type": "integer" }
+                        }
+                      }
+                    },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    },
+    "community_info_step": {
+      "title": "community_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/community_info_step"
+    },
+    "planned_activity_step": {
+      "title": "planned_activity_step.title",
+      "type": "object",
+      "$ref": "#/definitions/planned_activity_step"
+    },
+    "activity_foundations_step": {
+      "title": "activity_foundations_step.title",
+      "type": "object",
+      "$ref": "#/definitions/activity_foundations_step"
+    },
+    "budget_step": {
+      "title": "budget_step.title",
+      "type": "object",
+      "$ref": "#/definitions/budget_step"
+    },
+    "attachments_step": {
+      "title": "attachments_step.title",
+      "type": "object",
+      "$ref": "#/definitions/attachments_step"
+    }
+  }
+}

@@ -81,6 +81,7 @@ trait AtvDocumentTrait {
         ],
       ],
     ]);
+    $document->setMetadata(['applicationnumber' => $application_number]);
     return $document;
   }
 

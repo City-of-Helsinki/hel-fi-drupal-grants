@@ -339,6 +339,44 @@ export const setNestedProperty = (obj: Record<string, unknown>, path: string, va
 };
 
 /**
+ * Return a deep clone of form data with the given paths removed.
+ *
+ * Used to drop synthetic helper fields (flagged with misc:exclude-from-submit)
+ * from the payload sent to the backend. Paths are root-relative dot notation
+ * with no leading dot, e.g. 'step.section.field'.
+ *
+ * @param {any} data - Form data
+ * @param {string[]} paths - Paths to remove
+ *
+ * @return {any} - Cloned data without the listed paths
+ */
+// biome-ignore lint/suspicious/noExplicitAny: Refactor this
+export const stripExcludedFields = (data: any, paths: string[]): any => {
+  if (!paths.length) {
+    return data;
+  }
+
+  const clone = structuredClone(data);
+
+  paths.forEach((path) => {
+    const keys = path.split('.');
+    const last = keys.pop();
+
+    if (!last) {
+      return;
+    }
+
+    const parent = keys.reduce((acc, key) => (acc == null ? acc : acc[key]), clone);
+
+    if (parent && typeof parent === 'object') {
+      delete parent[last];
+    }
+  });
+
+  return clone;
+};
+
+/**
  * Finds field of a given type in the form schema.
  *
  * @param {any} element - current element
@@ -405,13 +443,21 @@ export const formatErrors = (rawErrors: string[] | undefined) => {
  * @param {array} subventionFields - Array of subvention field paths
  * @return {number} - Total sum
  */
-export const getSubventionSum = (formData: RJSFFormData, subventionFields: string[]) =>
+export const getSubventionSum = (formData: RJSFFormData, subventionFields: string[], subventionType?: string) =>
   subventionFields.reduce((total, field) => {
     const values = getNestedSchemaProperty(formData, field);
     let totalNumericValue = Number(String(total).replace(',', '.'));
 
     if (values?.length) {
       Object.entries(values).forEach(([, curr]) => {
+        // When a subventionType is given, only sum rows matching that type.
+        if (subventionType != null) {
+          const typeEntry = Array.isArray(curr) ? curr.find((entry) => entry?.ID === 'subventionType') : undefined;
+          if (String(typeEntry?.value) !== String(subventionType)) {
+            return;
+          }
+        }
+
         const amount = Number(String(curr[1].value).replace(',', '.'));
 
         if (!Number.isNaN(amount)) {
@@ -430,7 +476,7 @@ export const getSubventionSum = (formData: RJSFFormData, subventionFields: strin
  */
 export const isDraft = () => drupalSettings.grants_react_form.use_draft;
 
-export const ALLOWED_HTML_TAGS = ['p', 'ul', 'ol', 'li', 'strong'];
+export const ALLOWED_HTML_TAGS = ['p', 'ul', 'ol', 'li', 'strong', 'a'];
 
 /**
  * Get the tooltip component.
@@ -457,6 +503,7 @@ export const getTooltip = (uiSchema: UiSchema | undefined) => {
 export const sanitizeNumericInput = (
   value: string,
   type: 'integer' | 'decimal-number' | 'phone' = 'integer',
+  lastInput = '',
 ): string => {
   let pattern: RegExp;
 
@@ -474,7 +521,27 @@ export const sanitizeNumericInput = (
       pattern = /[^0-9,]/g;
   }
 
-  return value.replace(pattern, '').replace(/ {2,}/g, ' ');
+  // Start by checking the allowed characters.
+  value = value.replace(pattern, '').replace(/ {2,}/g, ' ');
+
+  // Prevent multiple commas by replacing the last one.
+  if (lastInput === ',') {
+    const commaCount = value.match(/[,]/g)?.length ?? 0;
+    if (commaCount > 1) {
+      const position = value.lastIndexOf(',');
+      const firstPart = value.substring(0, position);
+      const lastPart = value.substring(position + 1);
+      value = firstPart + lastPart;
+    }
+  }
+
+  // Remove characters after comma until there is max 2.
+  // If user decides to put comma in the middle of large number.
+  while (value.match(/,[0-9]{3}/)) {
+    value = value.substring(0, value.length - 1);
+  }
+
+  return value;
 };
 
 export const numberIsTooLarge = (value: string): boolean => {

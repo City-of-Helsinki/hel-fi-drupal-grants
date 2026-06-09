@@ -597,6 +597,14 @@ msgid "Community for which the grant is being applied for"
 msgstr "Samfund för vilket understödet ansöks"
 
 msgctxt "Grants application"
+msgid "The data has been fetched from your application profile."
+msgstr "Uppgifterna har hämtats från din ansökningsprofil."
+
+msgctxt "Grants application"
+msgid "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."
+msgstr "De markerade uppgifterna har hämtats från Patent- och registerstyrelsens register (PRH) och det är endast möjligt att ändra uppgifterna i nättjänsten i fråga."
+
+msgctxt "Grants application"
 msgid "Applicant details"
 msgstr "Den sökandes uppgifter"
 
@@ -651,7 +659,3 @@ msgstr "Adress"
 msgctxt "Grants application"
 msgid "Phone number"
 msgstr "Telefonnummer"
-
-msgctxt "Grants application"
-msgid "The data has been fetched from your application profile."
-msgstr "Uppgifterna har hämtats från din ansökningsprofil."
