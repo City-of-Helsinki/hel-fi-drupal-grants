@@ -78,7 +78,9 @@ class JsonHandler {
     foreach ($data as $key => $item) {
       $mappedItem = self::setLabelAndValue($item, $definition);
       $mappedItem['ID'] .= "_$key";
-      $mappedItem['value'] = str_replace(',', '.', rtrim($mappedItem['value'], ','));
+      if ($definition['data']['valueType'] === 'double') {
+        $mappedItem['value'] = str_replace(',', '.', rtrim($mappedItem['value'], ','));
+      }
       $result[] = $mappedItem;
     }
 

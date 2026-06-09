@@ -278,6 +278,18 @@ final class JsonMapperTest extends UnitTestCase {
         'custom_handler' => 'income',
         'data' => [
           'ID' => 'incomeLabel',
+          'valueType' => 'double',
+          'value' => '',
+          'label' => 'This is overwritten',
+        ],
+      ],
+      "compensation.my_numbers.income_with_comma" => [
+        'datasource' => 'form_data',
+        'source' => 'number_data.income_section.income',
+        'mapping_type' => 'custom',
+        'custom_handler' => 'income',
+        'data' => [
+          'ID' => 'incomeLabel',
           'valueType' => 'float',
           'value' => '',
           'label' => 'This is overwritten',
@@ -307,6 +319,8 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertEquals('12,0', $mappedData['compensation']['my_numbers']['float_with_comma']['value']);
     $this->assertEquals('123.45', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['value']);
     $this->assertEquals('the label', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['label']);
+    // Float is still comma, only double is changed to dot.
+    $this->assertEquals('123,45', $mappedData['compensation']['my_numbers']['income_with_comma'][0]['value']);
   }
 
   /**
