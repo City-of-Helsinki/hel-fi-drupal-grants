@@ -284,7 +284,6 @@
           "properties": {
             "members_fieldset": {
               "title": "members_count_fieldset.legend",
-              "description": "members_count_fieldset.description",
               "type": "object",
               "properties": {
                 "members_applicant_person_global": {
@@ -313,7 +312,6 @@
           "properties": {
             "personnel_fieldset": {
               "title": "personnel_fieldset.legend",
-              "description": "personnel_fieldset.description",
               "type": "object",
               "properties": {
                 "full_time_personnel": {
@@ -491,15 +489,6 @@
           "title": "income_section.title",
           "type": "object",
           "properties": {
-            "income_header": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "income_header.value",
-                  "type": "null"
-                }
-              ]
-            },
             "incomeGroupName": {
               "type": "string",
               "default": "general"
@@ -541,15 +530,6 @@
           "description": "expenditure_section.description",
           "type": "object",
           "properties": {
-            "expenditure_header": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "expenditure_header.value",
-                  "type": "null"
-                }
-              ]
-            },
             "costGroupName": {
               "type": "string",
               "default": "general"

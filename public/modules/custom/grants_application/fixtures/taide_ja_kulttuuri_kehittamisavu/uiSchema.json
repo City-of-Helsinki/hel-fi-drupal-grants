@@ -132,14 +132,20 @@
     "members_section": {
       "members_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true
+          "hideNameFromPrint": true,
+          "tooltipLabel": "members_count_fieldset.legend",
+          "tooltipButtonLabel": "members_count_fieldset.legend",
+          "tooltipText": "members_count_fieldset.description"
         }
       }
     },
     "personnel_section": {
       "personnel_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true
+          "hideNameFromPrint": true,
+          "tooltipLabel": "personnel_fieldset.legend",
+          "tooltipButtonLabel": "personnel_fieldset.legend",
+          "tooltipText": "personnel_fieldset.description"
         }
       }
     }
@@ -256,11 +262,11 @@
       }
     },
     "income_section": {
-      "income_header": {
-        "ui:field": "textParagraph"
-      },
       "incomeGroupName": {
         "ui:widget": "hidden"
+      },
+      "compensation": {
+        "ui:field": "subventionSum"
       },
       "planned_other_compensations": {
         "ui:options": {
@@ -278,9 +284,6 @@
       }
     },
     "expenditure_section": {
-      "expenditure_header": {
-        "ui:field": "textParagraph"
-      },
       "costGroupName": {
         "ui:widget": "hidden"
       },

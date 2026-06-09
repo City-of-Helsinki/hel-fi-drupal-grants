@@ -105,15 +105,15 @@
       "fi": "Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät",
       "sv": "Datum för festivalen eller evenemanget"
     },
-    "expenditure_header.value": {
-      "en": "Planned expenses",
-      "fi": "Suunnitellut menot",
-      "sv": "Planerade utgifter"
-    },
     "expenditure_section.description": {
       "en": "Add below all the project's planned expenses by expense category.",
       "fi": "Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.",
       "sv": "Lägg till alla projektets planerade utgifter per utgiftskategori nedan."
+    },
+    "expenditure_section.title": {
+      "en": "Planned expenses",
+      "fi": "Suunnitellut menot",
+      "sv": "Planerade utgifter"
     },
     "form_title": {
       "en": "Development grants for culture",
@@ -140,7 +140,7 @@
       "fi": "Olemme saaneet muita avustuksia",
       "sv": "Vi har fått andra stöd för samma ändamål"
     },
-    "income_header.value": {
+    "income_section.title": {
       "en": "Planned income",
       "fi": "Suunnitellut tulot",
       "sv": "Planerade inkomster"
@@ -293,12 +293,12 @@
     "premise_name.title": {
       "en": "Premise name",
       "fi": "Tilan nimi",
-      "sv": "Lokalens namn"
+      "sv": "Namn"
     },
     "premise_owned_by_city.title": {
       "en": "City owns the property",
-      "fi": "Onko tila kaupungin omistama",
-      "sv": "Ägs lokalen av staden"
+      "fi": "Kyseessä on kaupungin omistama tila",
+      "sv": "Stadens eget utrymme"
     },
     "premise_post_code.title": {
       "en": "Postal code",
