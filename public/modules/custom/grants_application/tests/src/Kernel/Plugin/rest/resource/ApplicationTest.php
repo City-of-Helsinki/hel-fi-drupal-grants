@@ -17,6 +17,7 @@ use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\RequestHandler;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
+use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
 use PHPUnit\Framework\Attributes\Group;
@@ -32,6 +33,8 @@ use Symfony\Component\HttpFoundation\Response;
 #[Group('grants_application')]
 #[RunTestsInSeparateProcesses]
 final class ApplicationTest extends KernelTestBase {
+
+  use ApiTestTrait;
 
   /**
    * The application submission.
@@ -413,18 +416,11 @@ final class ApplicationTest extends KernelTestBase {
     $this->container->set(HelfiAtvService::class, $helfiAtvService);
 
     $form_identifier = 'liikunta_suunnistuskartta_avustu';
-    $content = json_encode([
+    $request = $this->getMockedRequest("/applications/$form_identifier/application/$this->applicationNumber", 'POST', document: [
       'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
     ]);
-    $content = $content ?: NULL;
 
-    $uri = "/applications/$form_identifier/application/$this->applicationNumber";
-    $request = Request::create($uri, "POST", [], [], [], [], $content);
-    $request->headers->set('Content-Type', 'application/json');
-    $request->headers->set('Accept', 'application/json');
-
-    $http_kernel = $this->container->get('http_kernel');
-    $response = $http_kernel->handle($request);
+    $response = $this->processRequest($request);
 
     $this->assertEquals(500, $response->getStatusCode());
   }
