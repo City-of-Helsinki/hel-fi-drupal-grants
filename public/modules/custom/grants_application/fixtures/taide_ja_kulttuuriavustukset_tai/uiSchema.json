@@ -430,8 +430,7 @@
       "budget": {
         "ui:options": {
           "tooltipLabel": "budget.title",
-          "tooltipButtonLabel": "budget.title",
-          "tooltipText": "budget.description"
+          "tooltipButtonLabel": "budget.title"
         },
         "budget_file": {
           "misc:file-type": 2,
