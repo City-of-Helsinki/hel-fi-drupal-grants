@@ -1386,21 +1386,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Mapper/JsonMapperService.php
 
 		-
-			message: "#^Method Drupal\\\\grants_application\\\\Mapper\\\\JsonMapperService\\:\\:patchMappedFiles\\(\\) has parameter \\$newFiles with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Mapper/JsonMapperService.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Mapper\\\\JsonMapperService\\:\\:patchMappedFiles\\(\\) has parameter \\$oldFiles with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Mapper/JsonMapperService.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\Mapper\\\\JsonMapperService\\:\\:patchMappedFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Mapper/JsonMapperService.php
-
-		-
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
 			count: 4
 			path: public/modules/custom/grants_application/src/Mapper/JsonMapperService.php

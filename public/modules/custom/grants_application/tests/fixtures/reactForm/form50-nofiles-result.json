@@ -628,32 +628,26 @@
                             "ID": "financialFundingAndInterests",
                             "value": "100",
                             "valueType": "double"
-                        }
-                    ],
-                    "otherIncomeRowsArrayStatic": [],
-                    "incomeGroupName": "general"
-                },
-                {
-                    "incomeRowsArrayStatic": [
-                        {
-                            "ID": "otherCompensationFromCity",
-                            "value": "12000",
-                            "valueType": "double"
                         },
                         {
-                            "ID": "stateOperativeSubvention",
-                            "value": "3000",
-                            "valueType": "double"
+                          "ID": "otherCompensationFromCity",
+                          "value": "12000",
+                          "valueType": "double"
                         },
                         {
-                            "ID": "otherCompensations",
-                            "value": "1000",
-                            "valueType": "double"
+                          "ID": "stateOperativeSubvention",
+                          "value": "3000",
+                          "valueType": "double"
                         },
                         {
-                            "ID": "totalIncome",
-                            "value": "20000",
-                            "valueType": "double"
+                          "ID": "otherCompensations",
+                          "value": "1000",
+                          "valueType": "double"
+                        },
+                        {
+                          "ID": "totalIncome",
+                          "value": "20000",
+                          "valueType": "double"
                         }
                     ],
                     "otherIncomeRowsArrayStatic": [],
@@ -664,19 +658,13 @@
                 {
                     "costRowsArrayStatic": [
                         {
-                            "ID": "plannedTotalCosts",
-                            "value": "23100",
-                            "valueType": "double"
-                        }
-                    ],
-                    "otherCostRowsArrayStatic": [],
-                    "costGroupName": "general"
-                },
-                {
-                    "costRowsArrayStatic": [
-                        {
                             "ID": "totalCosts",
                             "value": "19000",
+                            "valueType": "double"
+                        },
+                        {
+                            "ID": "plannedTotalCosts",
+                            "value": "23100",
                             "valueType": "double"
                         }
                     ],
