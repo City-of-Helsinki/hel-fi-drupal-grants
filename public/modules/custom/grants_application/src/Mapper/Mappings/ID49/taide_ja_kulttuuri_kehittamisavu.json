@@ -21,6 +21,50 @@
       "valueType": "double"
     }
   },
+  "compensation.compensationInfo.compensationArray.1.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.1.0.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "subventionType",
+      "label": "Avustuslaji",
+      "value": "45",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.1.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.1.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.2.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.2.0.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "subventionType",
+      "label": "Avustuslaji",
+      "value": "46",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.compensationArray.2.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.2.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "double"
+    }
+  },
 
   "compensation.compensationInfo.generalInfoArray.0": {
     "datasource": "form_data",

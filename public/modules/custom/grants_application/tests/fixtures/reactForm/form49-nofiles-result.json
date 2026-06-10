@@ -217,6 +217,34 @@
                         "value": "12000",
                         "valueType": "double"
                     }
+                ],
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "45",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Euroa",
+                        "value": "3000",
+                        "valueType": "double"
+                    }
+                ],
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "46",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Euroa",
+                        "value": "2000",
+                        "valueType": "double"
+                    }
                 ]
             ],
             "generalInfoArray": [
