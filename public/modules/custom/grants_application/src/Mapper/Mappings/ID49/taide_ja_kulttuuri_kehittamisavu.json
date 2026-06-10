@@ -18,7 +18,7 @@
       "ID": "amount",
       "label": "Euroa",
       "value": "0",
-      "valueType": "double"
+      "valueType": "float"
     }
   },
   "compensation.compensationInfo.compensationArray.1.0": {
@@ -40,7 +40,7 @@
       "ID": "amount",
       "label": "Euroa",
       "value": "0",
-      "valueType": "double"
+      "valueType": "float"
     }
   },
   "compensation.compensationInfo.compensationArray.2.0": {
@@ -62,7 +62,7 @@
       "ID": "amount",
       "label": "Euroa",
       "value": "0",
-      "valueType": "double"
+      "valueType": "float"
     }
   },
 

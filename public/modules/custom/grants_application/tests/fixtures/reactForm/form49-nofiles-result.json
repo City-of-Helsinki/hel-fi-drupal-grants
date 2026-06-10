@@ -215,7 +215,7 @@
                         "ID": "amount",
                         "label": "Euroa",
                         "value": "12000",
-                        "valueType": "double"
+                        "valueType": "float"
                     }
                 ],
                 [
@@ -229,7 +229,7 @@
                         "ID": "amount",
                         "label": "Euroa",
                         "value": "3000",
-                        "valueType": "double"
+                        "valueType": "float"
                     }
                 ],
                 [
@@ -243,7 +243,7 @@
                         "ID": "amount",
                         "label": "Euroa",
                         "value": "2000",
-                        "valueType": "double"
+                        "valueType": "float"
                     }
                 ]
             ],
