@@ -101,6 +101,39 @@ describe('Utils.ts', () => {
       };
       expect(getSubventionSum(formData, ['.step1.subventionTable'])).toBe('0');
     });
+
+    test('sums only rows matching the given subventionType', () => {
+      const formData = {
+        step1: {
+          subventionTable: [
+            [
+              { ID: 'subventionType', value: '1' },
+              { ID: 'amount', value: '5000' },
+            ],
+            [
+              { ID: 'subventionType', value: '2' },
+              { ID: 'amount', value: '1200' },
+            ],
+          ],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'], '2')).toBe('1200');
+      expect(getSubventionSum(formData, ['.step1.subventionTable'], '1')).toBe('5000');
+    });
+
+    test('returns "0" when no rows match the given subventionType', () => {
+      const formData = {
+        step1: {
+          subventionTable: [
+            [
+              { ID: 'subventionType', value: '1' },
+              { ID: 'amount', value: '5000' },
+            ],
+          ],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'], '2')).toBe('0');
+    });
   });
 
   test('addApplicantInfoStep', () => {

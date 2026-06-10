@@ -1,7 +1,7 @@
 import type { FieldProps } from '@rjsf/utils';
 import { TextInput } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { useEffect, useRef, type ComponentPropsWithRef } from 'react';
+import { useEffect, type ComponentPropsWithRef } from 'react';
 
 import { formDataAtomRef, shouldRenderPreviewAtom } from '../../store';
 import { getNestedSchemaProperty, getSubventionSum, sanitizeNumericInput } from '../../utils';
@@ -19,7 +19,7 @@ const sumScalarFields = (formData: unknown, sourceFields: string[]): string => {
   return total.toString().replace('.', ',');
 };
 
-export const ComputedSum = ({ idSchema, name, onChange, schema, uiSchema }: FieldProps) => {
+export const ComputedSum = ({ formData, idSchema, name, onChange, schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const formDataAtom = useAtomValue(formDataAtomRef);
   const data = useAtomValue(formDataAtom);
@@ -28,6 +28,7 @@ export const ComputedSum = ({ idSchema, name, onChange, schema, uiSchema }: Fiel
   const sourceShape = (uiSchema?.['ui:options']?.sourceShape as SourceShape | undefined) ?? 'scalar';
   const numericOutput = (uiSchema?.['ui:options']?.numericOutput as boolean | undefined) ?? false;
   const hidden = (uiSchema?.['ui:options']?.hidden as boolean | undefined) ?? false;
+  const subventionType = uiSchema?.['ui:options']?.subventionType as string | undefined;
 
   if (!sourceFields.length) {
     console.error(`ComputedSum field "${name}" is missing ui:options.sourceFields`);
@@ -38,18 +39,22 @@ export const ComputedSum = ({ idSchema, name, onChange, schema, uiSchema }: Fiel
       ? getSubventionSum(
           data,
           sourceFields.map((field) => `.${field}`),
+          subventionType,
         )
       : sumScalarFields(data, sourceFields);
 
   const valueToWrite = numericOutput ? Number(sum.replace(',', '.')) : sum;
 
-  const prevSumRef = useRef<string>('0');
+  // Sync the computed value into form data whenever it diverges from the stored
+  // value. Comparing against the stored value (rather than a mount-local ref)
+  // ensures the value is corrected back down — e.g. when the source field is
+  // cleared after the dependent step was already visited — so conditional gates
+  // driven by this sum re-close instead of sticking on a stale value.
   useEffect(() => {
-    if (prevSumRef.current !== sum) {
-      prevSumRef.current = sum;
+    if (formData !== valueToWrite) {
       onChange(valueToWrite);
     }
-  }, [sum, valueToWrite, onChange]);
+  }, [formData, valueToWrite, onChange]);
 
   if (hidden) {
     return null;

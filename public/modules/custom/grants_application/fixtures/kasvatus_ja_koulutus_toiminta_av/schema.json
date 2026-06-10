@@ -72,7 +72,7 @@
           "type": "string"
         },
         "location_postal_code": {
-          "title": "location_postal_code.title",
+          "title": "postal_code.title",
           "type": "string"
         },
         "location_pupil_number": {

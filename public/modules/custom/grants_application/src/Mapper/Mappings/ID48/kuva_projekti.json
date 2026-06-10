@@ -182,7 +182,7 @@
   },
   "compensation.communityInfo.generalCommunityInfoArray.2": {
     "datasource": "form_data",
-    "source": "community_info_step.personnel_section.personnel_fieldset.voluenteer_personnel",
+    "source": "community_info_step.personnel_section.personnel_fieldset.volunteer_personnel",
     "mapping_type": "default",
     "data": {
       "ID": "staffPeopleVoluntary",
@@ -647,7 +647,7 @@
   },
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.3": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_income.entryFees",
+    "source": "budget_step.budget_section.budget_income.entry_fees",
     "mapping_type": "default",
     "data": {
       "ID": "entryFees",
@@ -669,7 +669,7 @@
   },
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.5": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_income.ownFunding",
+    "source": "budget_step.budget_section.budget_income.own_funding",
     "mapping_type": "default",
     "data": {
       "ID": "ownFunding",
@@ -796,33 +796,16 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_other_cost",
+    "source": "budget_step.budget_section.budget_other_cost.costs",
     "mapping_type": "custom",
     "custom_handler": "income",
     "data": {
-      "ID": "other_cost_field_0",
+      "ID": "budget_other_cost",
       "label": "Muu kulu",
       "value": "0",
       "valueType": "double"
     }
   },
-
-
-
-
-  "": {
-    "datasource": "",
-    "source": "",
-    "mapping_type": "",
-    "data": {
-      "ID": "",
-      "label": "",
-      "value": "",
-      "valueType": ""
-    }
-  },
-
-
 
   "compensation.activitiesInfoArray.6": {
     "datasource": "form_data",

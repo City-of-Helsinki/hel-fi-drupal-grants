@@ -33,11 +33,10 @@
           "tooltipText": "is_festival_or_event.tooltip"
         },
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
-        "ui:widget": "radio",
-        "ui:help": "is_festival_or_event.help"
+        "ui:widget": "radio"
       },
       "project_short_description": {
         "ui:options": {
@@ -52,8 +51,8 @@
     "other_compensations_section": {
       "have_received_other_compensations": {
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true
@@ -65,19 +64,19 @@
           "addText": "other_compensation.add"
         },
         "items": {
-          "other_compensation_issuer_name": {
+          "issuer_name": {
             "ui:options": {
               "tooltipLabel": "other_compensation_issuer.title",
               "tooltipButtonLabel": "other_compensation_issuer.title",
               "tooltipText": "other_compensation_issuer.description"
             }
           },
-          "other_compensation_amount": {
+          "amount": {
             "ui:options": {
               "printableName": "other_compensation_amount.printable_title"
             }
           },
-          "other_compensation_description": {
+          "purpose": {
             "ui:widget": "textarea",
             "misc:max-length": 1000,
             "ui:options": {
@@ -150,7 +149,6 @@
       },
       "helsinki_counts_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "helsinki_counts_fieldset.title",
           "tooltipButtonLabel": "helsinki_counts_fieldset.title",
           "tooltipText": "helsinki_counts_fieldset.tooltip"
@@ -158,7 +156,6 @@
       },
       "total_counts_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "total_counts_fieldset.title",
           "tooltipButtonLabel": "total_counts_fieldset.title",
           "tooltipText": "total_counts_fieldset.tooltip"
@@ -167,7 +164,6 @@
       "premieres_fieldset": {
         "premiere_count": {
           "ui:options": {
-            "hideNameFromPrint": true,
             "tooltipLabel": "premiere_count.title",
             "tooltipButtonLabel": "premiere_count.title",
             "tooltipText": "premiere_count.tooltip"
@@ -175,7 +171,6 @@
         },
         "premiere_helsinki_count": {
           "ui:options": {
-            "hideNameFromPrint": true,
             "tooltipLabel": "premiere_helsinki_count.title",
             "tooltipButtonLabel": "premiere_helsinki_count.title",
             "tooltipText": "premiere_helsinki_count.tooltip"
@@ -187,8 +182,8 @@
       "first_venue": {
         "is_owned_by_city": {
           "ui:enumNames": [
-            "boolean.no",
-            "boolean.yes"
+            "boolean.yes",
+            "boolean.no"
           ],
           "ui:widget": "radio"
         }
@@ -197,8 +192,8 @@
         "items": {
           "is_owned_by_city": {
             "ui:enumNames": [
-              "boolean.no",
-              "boolean.yes"
+              "boolean.yes",
+              "boolean.no"
             ],
             "ui:widget": "radio"
           }
@@ -243,9 +238,8 @@
     "artistic_foundations_section": {
       "project_artistic_basis": {
         "ui:options": {
-          "hideNameFromPrint": true,
-          "tooltipLabel": "comprehensive_description.title",
-          "tooltipButtonLabel": "comprehensive_description.title",
+          "tooltipLabel": "project_artistic_basis.title",
+          "tooltipButtonLabel": "project_artistic_basis.title",
           "tooltipText": "project_artistic_basis.tooltip"
         },
         "ui:widget": "textarea",
@@ -257,18 +251,23 @@
       }
     },
     "accessibility_section": {
-      "project_accessibility": {
+      "project_community": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
-      "project_community": {
+      "project_accessibility": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
       },
       "project_target_audiece": {
         "ui:widget": "textarea",
         "misc:max-length": 1000
-      }
+      },
+      "ui:order": [
+        "project_accessibility",
+        "project_community",
+        "project_target_audiece"
+      ]
     },
     "operations_section": {
       "operations_professionalism": {
@@ -281,28 +280,31 @@
       },
       "operations_partners": {
         "ui:options": {
-          "hideNameFromPrint": true,
-          "tooltipLabel": "comprehensive_description.title",
-          "tooltipButtonLabel": "comprehensive_description.title",
+          "tooltipLabel": "operations_partners.title",
+          "tooltipButtonLabel": "operations_partners.title",
           "tooltipText": "operations_partners.tooltip"
         },
         "ui:widget": "textarea",
         "misc:max-length": 1000
-      }
+      },
+      "ui:order": [
+        "operations_professionalism",
+        "operations_ecology",
+        "operations_partners"
+      ]
     }
   },
   "budget_step": {
     "budget_section": {
       "organization_subsidities": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "organization_subsidities.title",
           "tooltipButtonLabel": "organization_subsidities.title",
           "tooltipText": "organization_subsidities.tooltip"
         },
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:widget": "radio"
       },
@@ -351,12 +353,14 @@
         }
       },
       "budget_other_cost": {
-        "ui:options": {
-          "addText": "budget_other_cost.add"
-        },
-        "items": {
+        "costs": {
+          "items": {
+            "ui:options": {
+              "hideNameFromPrint": true
+            }
+          },
           "ui:options": {
-            "hideNameFromPrint": true
+            "addText": "budget_other_cost.add"
           }
         }
       }
@@ -396,6 +400,10 @@
         "ui:field": "textParagraph"
       },
       "extra_info": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      },
+      "further_clarification": {
         "ui:widget": "textarea",
         "misc:max-length": 5000
       },

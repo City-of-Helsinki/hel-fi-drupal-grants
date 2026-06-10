@@ -1471,11 +1471,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
 
 		-
-			message: "#^Property Drupal\\\\grants_application\\\\Plugin\\\\rest\\\\resource\\\\Application\\:\\:\\$attachmentHandler is never read, only written\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
 			message: "#^Property Drupal\\\\grants_application\\\\Plugin\\\\rest\\\\resource\\\\Application\\:\\:\\$languageManager is never read, only written\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
@@ -2157,16 +2152,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\grants_attachments\\\\AttachmentHandler\\:\\:getAttachmentFileIds\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/AttachmentHandler.php
-
-		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\AttachmentHandler\\:\\:getSelectedAccount\\(\\) has parameter \\$profileContent with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/AttachmentHandler.php
-
-		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\AttachmentHandler\\:\\:getSelectedAccount\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/AttachmentHandler.php
 

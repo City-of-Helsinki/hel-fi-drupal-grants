@@ -83,7 +83,7 @@
     "applicant_info.title": {
       "en": "Applicant details",
       "fi": "Hakijan tiedot",
-      "sv": "Den sökandes uppgifter"
+      "sv": "Sökandens uppgifter"
     },
     "applied_benefits.title": {
       "en": "Requested grants (€)",
@@ -97,7 +97,7 @@
     },
     "attachments_section.description": {
       "en": "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
-      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa. ",
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
       "sv": "Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan."
     },
     "attachments_section.title": {
@@ -136,9 +136,9 @@
       "sv": "Ja"
     },
     "budget.description": {
-      "en": "Budget (for the year for which you are applying for a grant)",
+      "en": "Attach the budget for the entire organization.",
       "fi": "Liitä tähän koko yhteisön talousarvio.",
-      "sv": "Budget (för det år du ansöker om understödet)"
+      "sv": "Bifoga hela organisationens budget."
     },
     "budget.title": {
       "en": "Budget (for the year for which you are applying for a grant)",
@@ -196,9 +196,9 @@
       "sv": "Understöd för lokaler som fåtts från staden"
     },
     "community_activity.description": {
-      "en": "The description of activities is maintained in your data.",
-      "fi": "Tieto haetaan omat tiedot -osiosta.",
-      "sv": "Informationen hämtas från avsnittet med personuppgifter."
+      "en": "The information is retrieved from the My data section.",
+      "fi": "Tieto haetaan Omat tiedot -osiosta.",
+      "sv": "Informationen hämtas från avsnittet Mina uppgifter."
     },
     "community_activity.title": {
       "en": "Description of activities",
@@ -236,7 +236,7 @@
       "sv": "Medlemsavgifter"
     },
     "community_members_section.title": {
-      "en": "Numbers of members",
+      "en": "Members",
       "fi": "Jäsenmäärä",
       "sv": "Antal medlemmar"
     },
@@ -278,7 +278,7 @@
     "community_rules.description": {
       "en": "New applicant or changed rules.",
       "fi": "Uusi hakija tai säännöt muuttuneet.",
-      "sv": "Ny sökande eller stadgar som ändrats."
+      "sv": "Ny sökande eller ändrade stadgar."
     },
     "community_rules.title": {
       "en": "Community Rules",
@@ -431,14 +431,19 @@
       "sv": "Bilagor som tidigare lämnats in till Helsingfors stad"
     },
     "formerly_provided_attachments_help.value": {
-      "en": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”.",
-      "fi": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-      "sv": "Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+      "en": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate \"The attachment has been submitted as a single file or with another application\". The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.",
+      "fi": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla \"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\".",
+      "sv": "Om de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att \"Bilagan har lämnats in som en fil eller i samband med en annan ansökan\". Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna."
     },
     "further_clarification.title": {
       "en": "Further clarification on attachments",
       "fi": "Lisäselvitys liitteistä",
       "sv": "Ytterligare information om bilagorna"
+    },
+    "grants_compensations_information.value": {
+      "en": "Only apply for one grant type at a time with each application.",
+      "fi": "Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.",
+      "sv": "Ansök alltid endast om en typ av understöd åt gången."
     },
     "grant_info_step.title": {
       "en": "Grant details",
@@ -510,6 +515,31 @@
       "fi": "Tarkemmat tiedot",
       "sv": "Mer detaljerad information"
     },
+    "is_festival_or_event.tooltip": {
+      "en": "A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.",
+      "fi": "Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, kuten esityksiä, joiden välissä yleisö voi myös vaihtua. Festivaaleja tai tapahtumia voivat olla esimerkiksi kaupunginosatapahtumat. Niitä eivät ole esimerkiksi esityssarjat tai laajemmat hankkeet, joita ei markkinoida festivaalina tai yhtenäisenä tapahtumana. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.",
+      "sv": "En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång."
+    },
+    "members_0_6.title": {
+      "en": "0-6 year olds",
+      "fi": "0-6 -vuotiaat",
+      "sv": "0-6-åringar"
+    },
+    "members_7_28.title": {
+      "en": "7-28 year olds",
+      "fi": "7-28 -vuotiaat",
+      "sv": "7-28-åringar"
+    },
+    "members_helsinki.title": {
+      "en": "Of whom Helsinki residents",
+      "fi": "Joista helsinkiläisiä",
+      "sv": "Varav helsingforsare"
+    },
+    "members_others.title": {
+      "en": "Other participants",
+      "fi": "Muut osallistujat",
+      "sv": "Övriga deltagare"
+    },
     "members_applicant_community_global.description": {
       "en": "How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
       "fi": "Kuinka monta jäsenmaksun maksanutta yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
@@ -560,10 +590,15 @@
       "fi": "Jäsenmäärä",
       "sv": "Medlemskap"
     },
+    "members_active_fieldset.legend": {
+      "en": "Active participants/members",
+      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
+      "sv": "Aktiva deltagare/medlemmar"
+    },
     "minutes_of_the_annual_meeting.description": {
-      "en": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association’s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.",
-      "fi": "Liitä tähän yhteisön kokouksen pöytäkirja, jossa edellisen päättyneen tilikauden tilinpäätös on vahvistettu ja vastuuvapaus myönnetty. Yhdistyksillä tilinpäätös vahvistetaan aina yhdistyksen jäsenkokouksessa. Mikäli yhteisöltä ei edellytetä vuosikokousta tai muuta yhteisön kokousta, jossa tilinpäätös tulisi vahvistaa ja vastuuvapaus myöntää, ei tätä liitettä tarvitse toimittaa.",
-      "sv": "Bifoga protokollet från samfundets möte här, där bokslutet för den föregående avslutade räkenskapsperioden har godkänts och ansvarsfrihet beviljats. Samfundens bokslut fastställs alltid vid samfundets medlemsmöte. Om samfundet inte är skyldigt att ha ett årsmöte eller annat samfundsmöte där bokslutet bör godkännas och ansvarsfrihet beviljas, behöver denna bilaga inte lämnas in."
+      "en": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability discussed. For associations, the financial statements are always confirmed at the association's annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability discussed, this attachment does not need to be submitted.",
+      "fi": "Liitä tähän yhteisön kokouksen pöytäkirja, jossa edellisen päättyneen tilikauden tilinpäätös on vahvistettu ja vastuuvapauden myöntäminen käsitelty. Yhdistyksillä tilinpäätös vahvistetaan aina yhdistyksen kokouksessa. Mikäli yhteisöltä ei edellytetä vuosikokousta tai muuta yhteisön kokousta, jossa tilinpäätös tulisi vahvistaa ja vastuuvapaus käsitellä, ei tätä liitettä tarvitse toimittaa.",
+      "sv": "Bifoga protokollet från samfundets möte här, där bokslutet för den föregående avslutade räkenskapsperioden har godkänts och beviljandet av ansvarsfrihet behandlats. Samfundens bokslut fastställs alltid vid samfundets årsmöte. Om samfundet inte är skyldigt att ha ett årsmöte eller annat samfundsmöte där bokslutet bör godkännas och ansvarsfriheten behandlas, behöver denna bilaga inte lämnas in."
     },
     "minutes_of_the_annual_meeting.title": {
       "en": "Minutes of the annual meeting confirming the financial statements for the previous accounting period",
@@ -580,6 +615,11 @@
       "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. ",
       "sv": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
     },
+    "negative_expands.title": {
+      "en": "A negative answer opens a further question",
+      "fi": "Kieltävä vastaus avaa lisäkysymyksen",
+      "sv": "Ett nekande svar öppnar ytterligare en fråga"
+    },
     "new_participants_count.title": {
       "en": "How many of these are new, i.e. have not participated in activities previously organised by the operator?",
       "fi": "Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?",
@@ -589,6 +629,11 @@
       "en": "Does the project test new kinds of partnerships or develop new operating models? What kind?",
       "fi": "Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?",
       "sv": "Prövas nya slags partnerskap i projektet eller utvecklas nya verksamhetsmodeller? Hurdana?"
+    },
+    "other_applied_compensation.title": {
+      "en": "Applied grant",
+      "fi": "Haettu avustus",
+      "sv": "Ansökt understöd"
     },
     "other_applied_compensation_amount.printable_title": {
       "en": "The amount of the grant applied for (€)",
@@ -634,6 +679,11 @@
       "en": "Add new received grant",
       "fi": "Lisää uusi myönnetty avustus",
       "sv": "Lägg till understöd som beviljats"
+    },
+    "other_compensation.title": {
+      "en": "Received grant",
+      "fi": "Myönnetty avustus",
+      "sv": "Bidrag beviljat"
     },
     "other_compensation_amount.printable_title": {
       "en": "Amount of grant granted (€)",
@@ -800,6 +850,11 @@
       "fi": "Toiminta-avustus",
       "sv": "Verksamhetsunderstöd"
     },
+    "subventions.2.title": {
+      "en": "Hiring grant",
+      "fi": "Palkkausavustus",
+      "sv": "Löneunderstöd"
+    },
     "subventions.4.title": {
       "en": "Project grant",
       "fi": "Projektiavustus",
@@ -844,6 +899,11 @@
       "en": "Start grant",
       "fi": "Starttiavustus",
       "sv": "Sportunderstöd"
+    },
+    "subventions.36.title": {
+      "en": "Liberal adult education",
+      "fi": "Vapaa sivistystyö",
+      "sv": "Fri bildning"
     },
     "subventions.38.title": {
       "en": "Small grant",
@@ -890,6 +950,11 @@
       "fi": "Avustuslajit",
       "sv": "Understödskategorier"
     },
+    "postal_code.title": {
+      "en": "Postal code",
+      "fi": "Postinumero",
+      "sv": "Postnummer"
+    },
     "target_group_reach.title": {
       "en": "How are the target groups reached and identified?",
       "fi": "Miten kohderyhmät tavoitetaan ja tunnistetaan?",
@@ -909,6 +974,36 @@
       "en": "How have children and young people participated in the planning and decision-making of the activities? Give concrete examples.",
       "fi": "Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon? Mainitse konkreettisia esimerkkejä.",
       "sv": "Hur har barn och unga deltagit i planeringen av och beslutsfattandet om verksamheten? Ge konkreta exempel."
+    },
+    "purpose_who_benefits.title": {
+      "en": "Who are the main beneficiaries of your activities?",
+      "fi": "Ketkä toiminnastanne erityisesti hyötyvät?",
+      "sv": "Vilka får särskild nytta av er verksamhet?"
+    },
+    "purpose_who_benefits.tooltip": {
+      "en": "Describe who belong to your target group and possibly also how many target group members there are in your operational area. It is important that the target group description shows what kind of people you want and can reach or what kind of people and in what situation will benefit most from your activities.",
+      "fi": "Kuvaa keitä kohderyhmäänne kuuluu ja mahdollisesti myös kuinka paljon kohderyhmään kuuluvia toiminta-alueellanne on. Kohderyhmän kuvauksessa on tärkeää, että siitä käy ilmi minkälaisia ihmisiä juuri te haluatte ja osaatte kohdata, tai millaisessa tilanteessa olevat hyötyvät toiminnastanne eniten.",
+      "sv": "Beskriv vem som hör till er målgrupp och eventuellt också hur många av dem som hör till er målgrupp det finns i ert verksamhetsområde. I beskrivningen av målgruppen är det viktigt att det framgår vilka slags människor just ni önskar och kan bemöta, eller de situationer i vilka människor får den största nyttan av er verksamhet."
+    },
+    "purpose_changes_on_success.title": {
+      "en": "What kind of changes will take place if you succeed?",
+      "fi": "Minkälaisia muutoksia tapahtuu, jos onnistutte?",
+      "sv": "Vilka slags förändringar sker om ni lyckas?"
+    },
+    "purpose_changes_on_success.tooltip": {
+      "en": "Your activities may have many goals. Describe and assess the key changes you are seeking to achieve in your target group&#39;s functioning and in their everyday life, relationships or other aspects related to well-being and health or involvement, for example. So what will change if you have succeeded or what kind of phenomena do your activities prevent?",
+      "fi": "Toiminnallanne voi olla monia tavoitteita. Kuvatkaa ja arvioikaa tässä keskeiset muutokset, joita tavoittelette esimerkiksi kohderyhmänne toimintakyvyssä, arjessa, ihmissuhteissa tai muussa hyvinvointiin ja terveyteen tai osallisuuteen liittyvässä asiassa. Mikä siis muuttuu, jos olette onnistuneet tai minkälaisia ilmiöitä toimintanne ennaltaehkäisee?",
+      "sv": "Er verksamhet kan ha flera mål. Beskriv och bedöm här de centrala förändringar som ni eftersträvar exempelvis i er målgrupps funktionsförmåga, vardag, människorelationer eller andra aspekter som anknyter till välfärd och hälsa eller delaktighet. Vilka slags förändringar kommer det alltså att ske om ni lyckas eller vilka slags fenomen förebygger er verksamhet?"
+    },
+    "purpose_results_of_activities.title": {
+      "en": "What are the benefits of the activities to be supported?",
+      "fi": "Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?",
+      "sv": "Vilken nytta uppstår till följd av den verksamhet som understöds?"
+    },
+    "purpose_results_of_activities.tooltip": {
+      "en": "Briefly describe the effects of the activities and how they are achieved. You can describe the effects in the order in which they occur: which effects occur first and which after a little longer time. However, focus on the immediate effects of the activities. You can indicate what is special about your activities or what (quality) factors need to be taken care of in order to achieve the desired effects. You can also describe how any cooperation you have pursued will contribute to achieving the effects.",
+      "fi": "Kuvaa lyhyesti, mitä vaikutuksia toiminnalla saadaan aikaan ja millä tavoin ne syntyvät. Voit kuvata vaikutukset niiden tapahtumisjärjestyksessä: mitä vaikutuksia syntyy ensin, ja mitä vähän pidemmän ajan kuluttua. Keskity kuitenkin toiminnan välittömiin vaikutuksiin. Voit myös kertoa, mikä toiminnassanne on erityistä tai mistä (laatu)tekijöistä on erityisesti huolehdittava, että tavoiteltavia vaikutuksia saavutetaan. Voit myös kuvata, miten jokin tekemänne yhteistyö edistää vaikutusten saavuttamista.",
+      "sv": "Beskriv kort vilka effekter som uppnås genom verksamheten och på vilket sätt de uppstår. Du kan beskriva effekterna i den ordning de sker: vilka effekter uppstår först och vilka efter en längre tid. Koncentrera dig dock på verksamhetens omedelbara effekter. Du kan även berätta vad som är speciellt med er verksamhet eller vilka (kvalitets)faktorer som bör beaktas särskilt för att de effekter som eftersträvas ska uppnås. Du kan även beskriva hur något samarbete ni har främjar uppnåendet av effekterna."
     }
   }
 }
