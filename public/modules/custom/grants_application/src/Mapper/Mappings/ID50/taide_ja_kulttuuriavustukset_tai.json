@@ -691,6 +691,50 @@
       "valueType": "double"
     }
   },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.7": {
+    "datasource": "form_data",
+    "source": "budget_step.realized_income_section.other_compensation_from_city",
+    "mapping_type": "default",
+    "data": {
+      "ID": "otherCompensationFromCity",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.8": {
+    "datasource": "form_data",
+    "source": "budget_step.realized_income_section.state_operative_subvention",
+    "mapping_type": "default",
+    "data": {
+      "ID": "stateOperativeSubvention",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.9": {
+    "datasource": "form_data",
+    "source": "budget_step.realized_income_section.other_compensations_realized",
+    "mapping_type": "default",
+    "data": {
+      "ID": "otherCompensations",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.10": {
+    "datasource": "form_data",
+    "source": "budget_step.realized_income_section.total_income",
+    "mapping_type": "default",
+    "data": {
+      "ID": "totalIncome",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic": {
     "datasource": "form_data",
     "source": "hardcoded",
@@ -708,68 +752,18 @@
     }
   },
 
-  "compensation.budgetInfo.incomeGroupsArrayStatic.1.incomeRowsArrayStatic.0": {
-    "datasource": "form_data",
-    "source": "budget_step.realized_income_section.other_compensation_from_city",
-    "mapping_type": "default",
-    "data": {
-      "ID": "otherCompensationFromCity",
-      "label": null,
-      "value": "0",
-      "valueType": "double"
-    }
-  },
-  "compensation.budgetInfo.incomeGroupsArrayStatic.1.incomeRowsArrayStatic.1": {
-    "datasource": "form_data",
-    "source": "budget_step.realized_income_section.state_operative_subvention",
-    "mapping_type": "default",
-    "data": {
-      "ID": "stateOperativeSubvention",
-      "label": null,
-      "value": "0",
-      "valueType": "double"
-    }
-  },
-  "compensation.budgetInfo.incomeGroupsArrayStatic.1.incomeRowsArrayStatic.2": {
-    "datasource": "form_data",
-    "source": "budget_step.realized_income_section.other_compensations_realized",
-    "mapping_type": "default",
-    "data": {
-      "ID": "otherCompensations",
-      "label": null,
-      "value": "0",
-      "valueType": "double"
-    }
-  },
-  "compensation.budgetInfo.incomeGroupsArrayStatic.1.incomeRowsArrayStatic.3": {
-    "datasource": "form_data",
-    "source": "budget_step.realized_income_section.total_income",
-    "mapping_type": "default",
-    "data": {
-      "ID": "totalIncome",
-      "label": null,
-      "value": "0",
-      "valueType": "double"
-    }
-  },
-  "compensation.budgetInfo.incomeGroupsArrayStatic.1.otherIncomeRowsArrayStatic": {
-    "datasource": "form_data",
-    "source": "hardcoded",
-    "mapping_type": "hardcoded",
-    "data": {
-      "otherIncomeRowsArrayStatic": {}
-    }
-  },
-  "compensation.budgetInfo.incomeGroupsArrayStatic.1.incomeGroupName": {
-    "datasource": "form_data",
-    "source": null,
-    "mapping_type": "hardcoded",
-    "data": {
-      "incomeGroupName": "general"
-    }
-  },
-
   "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.0": {
+    "datasource": "form_data",
+    "source": "budget_step.realized_cost_section.total_costs",
+    "mapping_type": "default",
+    "data": {
+      "ID": "totalCosts",
+      "label": null,
+      "value": "0",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.1": {
     "datasource": "form_data",
     "source": "budget_step.planned_cost_section.planned_total_costs",
     "mapping_type": "default",
@@ -789,34 +783,6 @@
     }
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {
-    "datasource": "form_data",
-    "source": null,
-    "mapping_type": "hardcoded",
-    "data": {
-      "costGroupName": "general"
-    }
-  },
-
-  "compensation.budgetInfo.costGroupsArrayStatic.1.costRowsArrayStatic.0": {
-    "datasource": "form_data",
-    "source": "budget_step.realized_cost_section.total_costs",
-    "mapping_type": "default",
-    "data": {
-      "ID": "totalCosts",
-      "label": null,
-      "value": "0",
-      "valueType": "double"
-    }
-  },
-  "compensation.budgetInfo.costGroupsArrayStatic.1.otherCostRowsArrayStatic": {
-    "datasource": "form_data",
-    "source": "hardcoded",
-    "mapping_type": "hardcoded",
-    "data": {
-      "otherCostRowsArrayStatic": {}
-    }
-  },
-  "compensation.budgetInfo.costGroupsArrayStatic.1.costGroupName": {
     "datasource": "form_data",
     "source": null,
     "mapping_type": "hardcoded",
@@ -903,7 +869,7 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-  "attachmentsInfo.attachmentsArray.6": {
+  "attachmentsInfo.attachmentsArray.n": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
     "mapping_type": "multiple_files",
