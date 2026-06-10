@@ -658,14 +658,14 @@
                 {
                     "costRowsArrayStatic": [
                         {
-                            "ID": "plannedTotalCosts",
-                            "value": "23100",
+                            "ID": "totalCosts",
+                            "value": "19000",
                             "valueType": "double"
                         },
                         {
-                          "ID": "totalCosts",
-                          "value": "19000",
-                          "valueType": "double"
+                            "ID": "plannedTotalCosts",
+                            "value": "23100",
+                            "valueType": "double"
                         }
                     ],
                     "otherCostRowsArrayStatic": [],
