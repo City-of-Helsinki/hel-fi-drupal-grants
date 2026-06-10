@@ -1,6 +1,7 @@
 {
   "definitions": {
     "_received_compensation_item": {
+      "title": "other_compensation.title",
       "type": "object",
       "properties": {
         "received_compensation_issuer": {
@@ -40,6 +41,7 @@
       ]
     },
     "_premise_item": {
+      "title": "premises.title",
       "type": "object",
       "properties": {
         "premise_name": {
@@ -53,8 +55,8 @@
         "premise_owned_by_city": {
           "title": "premise_owned_by_city.title",
           "enum": [
-            false,
-            true
+            true,
+            false
           ],
           "default": false
         }
@@ -142,8 +144,8 @@
             "is_multi_year_grant": {
               "title": "is_multi_year_grant.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             }
@@ -219,8 +221,8 @@
               "title": "is_festival_or_event.title",
               "description": "is_festival_or_event.description",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             },
@@ -239,10 +241,10 @@
           ],
           "properties": {
             "have_received_other_compensations": {
-              "title": "have_received_other_compensations.title",
+              "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             }
@@ -478,8 +480,8 @@
             "belongs_to_vos": {
               "title": "belongs_to_vos.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             }

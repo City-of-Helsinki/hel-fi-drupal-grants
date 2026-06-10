@@ -17,8 +17,8 @@
       "is_multi_year_grant": {
         "ui:widget": "radio",
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true
@@ -68,8 +68,8 @@
       "is_festival_or_event": {
         "ui:widget": "radio",
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "tooltipLabel": "is_festival_or_event.title",
@@ -91,8 +91,8 @@
       "have_received_other_compensations": {
         "ui:widget": "radio",
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true
@@ -132,7 +132,6 @@
     "members_section": {
       "members_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "members_count_fieldset.legend",
           "tooltipButtonLabel": "members_count_fieldset.legend",
           "tooltipText": "members_count_fieldset.description"
@@ -142,7 +141,6 @@
     "personnel_section": {
       "personnel_fieldset": {
         "ui:options": {
-          "hideNameFromPrint": true,
           "tooltipLabel": "personnel_fieldset.legend",
           "tooltipButtonLabel": "personnel_fieldset.legend",
           "tooltipText": "personnel_fieldset.description"
@@ -163,8 +161,8 @@
           "premise_owned_by_city": {
             "ui:widget": "radio",
             "ui:enumNames": [
-              "boolean.no",
-              "boolean.yes"
+              "boolean.yes",
+              "boolean.no"
             ]
           }
         }
@@ -251,8 +249,8 @@
       "belongs_to_vos": {
         "ui:widget": "radio",
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "tooltipLabel": "belongs_to_vos.title",
@@ -266,7 +264,11 @@
         "ui:widget": "hidden"
       },
       "compensation": {
-        "ui:field": "subventionSum"
+        "ui:field": "computedSum",
+        "ui:options": {
+          "sourceFields": ["grant_info_step.subventions_section.subventions"],
+          "sourceShape": "subvention"
+        }
       },
       "planned_other_compensations": {
         "ui:options": {

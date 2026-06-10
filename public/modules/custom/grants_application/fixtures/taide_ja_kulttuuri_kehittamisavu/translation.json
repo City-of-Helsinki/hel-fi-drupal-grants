@@ -135,11 +135,6 @@
       "fi": "Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan. Kirjaa tähän avustussumma vain sen vuoden osalta, jolle haet avustusta tällä hakemuksella.",
       "sv": "Ansök alltid endast om en typ av understöd åt gången. Ange här endast stödsumman för det år, för vilket du nu ansöker om stöd."
     },
-    "have_received_other_compensations.title": {
-      "en": "We have received other grants",
-      "fi": "Olemme saaneet muita avustuksia",
-      "sv": "Vi har fått andra stöd för samma ändamål"
-    },
     "income_section.title": {
       "en": "Planned income",
       "fi": "Suunnitellut tulot",
