@@ -322,7 +322,6 @@
     },
     "attachments_section": {
       "required_attachments_help": {
-        "misc:variant": "infobox",
         "ui:field": "textParagraph"
       },
       "multiple_attachments_help": {
@@ -333,17 +332,27 @@
         "ui:field": "textParagraph"
       },
       "project_plan_fieldset": {
+        "ui:options": {
+          "tooltipLabel": "project_plan_attachment.title",
+          "tooltipButtonLabel": "project_plan_attachment.title",
+          "tooltipText": "project_plan_attachment.description"
+        },
         "project_plan_fieldset_file": {
           "misc:file-type": 19,
-          "misc:variant": "simple",
+          "misc:required": true,
           "ui:field": "atvFile",
           "ui:help": "other_attachment_fieldset.ui_help"
         }
       },
       "budget_attachment_fieldset": {
+        "ui:options": {
+          "tooltipLabel": "budget_attachment.title",
+          "tooltipButtonLabel": "budget_attachment.title",
+          "tooltipText": "budget_attachment.description"
+        },
         "budget_attachment_fieldset_file": {
           "misc:file-type": 22,
-          "misc:variant": "simple",
+          "misc:required": true,
           "ui:field": "atvFile",
           "ui:help": "other_attachment_fieldset.ui_help"
         }

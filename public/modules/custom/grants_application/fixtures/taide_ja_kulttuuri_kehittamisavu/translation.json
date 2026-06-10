@@ -35,6 +35,11 @@
       "fi": "Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saavan rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.",
       "sv": "Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen."
     },
+    "budget_attachment.description": {
+      "en": "Budget for the requested period",
+      "fi": "Budjetti haetulle ajanjaksolle",
+      "sv": "Budget för den tid som ansökan gäller"
+    },
     "budget_attachment.title": {
       "en": "Budget",
       "fi": "Talousarvio",
@@ -419,6 +424,11 @@
       "en": "Name of the project",
       "fi": "Hankkeen nimi",
       "sv": "Projektets namn"
+    },
+    "project_plan_attachment.description": {
+      "en": "Project plan for the requested period",
+      "fi": "Projektisuunnitelma haetulle ajanjaksolle",
+      "sv": "Projektplan för den tid som ansökan gäller"
     },
     "project_plan_attachment.title": {
       "en": " Project plan",
