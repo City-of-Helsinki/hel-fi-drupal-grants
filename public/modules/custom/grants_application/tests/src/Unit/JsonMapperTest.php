@@ -245,6 +245,90 @@ final class JsonMapperTest extends UnitTestCase {
   }
 
   /**
+   * Double values should be mapped with dot.
+   */
+  public function testDoubleCommaToDotMapping(): void {
+    $mapping = [
+      "compensation.my_numbers.double_with_dot" => [
+        'datasource' => 'form_data',
+        'source' => 'number_data.double_with_comma',
+        'mapping_type' => 'default',
+        'data' => [
+          'ID' => 'justADoubleField',
+          'valueType' => 'double',
+          'value' => '',
+          'label' => 'Comma should be replaced by dot',
+        ],
+      ],
+      "compensation.my_numbers.float_with_comma" => [
+        'datasource' => 'form_data',
+        'source' => 'number_data.float_with_comma',
+        'mapping_type' => 'default',
+        'data' => [
+          'ID' => 'justAnotherNumericValue',
+          'valueType' => 'float',
+          'value' => '',
+          'label' => 'Float should not be affected',
+        ],
+      ],
+      "compensation.my_numbers.income_with_dot" => [
+        'datasource' => 'form_data',
+        'source' => 'number_data.income_section.income',
+        'mapping_type' => 'custom',
+        'custom_handler' => 'income',
+        'data' => [
+          'ID' => 'incomeLabel',
+          'valueType' => 'double',
+          'value' => '',
+          'label' => 'This is overwritten',
+        ],
+      ],
+      "compensation.my_numbers.income_with_comma" => [
+        'datasource' => 'form_data',
+        'source' => 'number_data.income_section.income',
+        'mapping_type' => 'custom',
+        'custom_handler' => 'income',
+        'data' => [
+          'ID' => 'incomeLabel',
+          'valueType' => 'float',
+          'value' => '',
+          'label' => 'This is overwritten',
+        ],
+      ],
+    ];
+
+    $formData = [
+      'form_data' => [
+        'number_data' => [
+          'double_with_comma' => '133,7',
+          'float_with_comma' => '12,0',
+          'income_section' => [
+            'income' => [
+              ['label' => 'the label', 'amount' => '123,45'],
+              ['label' => 'the label 2', 'amount' => 123],
+              ['label' => 'the label 3', 'amount' => ""]
+            ]
+          ]
+        ],
+      ],
+    ];
+
+    $mapper = new JsonMapper();
+    $mapper->setMappings($mapping);
+    $mappedData = $mapper->map($formData);
+
+    $this->assertEquals('133.7', $mappedData['compensation']['my_numbers']['double_with_dot']['value']);
+    $this->assertEquals('12,0', $mappedData['compensation']['my_numbers']['float_with_comma']['value']);
+    $this->assertEquals('123.45', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['value']);
+    $this->assertEquals('the label', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['label']);
+    $this->assertEquals('123', $mappedData['compensation']['my_numbers']['income_with_dot'][1]['value']);
+    $this->assertEquals('0', $mappedData['compensation']['my_numbers']['income_with_dot'][2]['value']);
+
+    // Float is still comma, only double is changed to dot.
+    $this->assertEquals('123,45', $mappedData['compensation']['my_numbers']['income_with_comma'][0]['value']);
+  }
+
+  /**
    * Combine the common data sources and the actual form into one.
    *
    * The end result contains data from react-form, user profile,...

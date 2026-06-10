@@ -7,55 +7,27 @@
     },
     "subventions_section": {
       "subventions": {
-        "ui:field": "subventionTable"
+        "ui:field": "subventionTable",
+        "ui:options": {
+          "useSingleSubvention": true
+        }
       }
     },
     "purpose_section": {
-      "subventions_total": {
-        "ui:field": "computedSum",
-        "misc:exclude-from-submit": true,
-        "ui:options": {
-          "sourceFields": ["grant_info_step.subventions_section.subventions"],
-          "sourceShape": "subvention",
-          "numericOutput": true,
-          "hidden": true
-        }
-      },
       "purpose": {
         "ui:widget": "textarea",
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
-          "tooltipText": "purpose.custom_description"
-        }
-      },
-      "who_benefits": {
-        "ui:widget": "textarea",
-        "ui:options": {
-          "tooltipButtonLabel": "purpose_who_benefits.title",
-          "tooltipText": "purpose_who_benefits.tooltip"
-        }
-      },
-      "changes_on_success": {
-        "ui:widget": "textarea",
-        "ui:options": {
-          "tooltipButtonLabel": "purpose_changes_on_success.title",
-          "tooltipText": "purpose_changes_on_success.tooltip"
-        }
-      },
-      "results_of_activities": {
-        "ui:widget": "textarea",
-        "ui:options": {
-          "tooltipButtonLabel": "purpose_results_of_activities.title",
-          "tooltipText": "purpose_results_of_activities.tooltip"
+          "tooltipText": "purpose.description"
         }
       }
     },
     "other_compensations_section": {
       "have_received_other_compensations": {
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true
@@ -91,11 +63,21 @@
         }
       }
     },
+    "city_benefits_loans_section": {
+      "city_benefits_loans": {
+        "ui:widget": "textarea"
+      }
+    },
+    "city_premises_benefits_section": {
+      "city_premises_benefits": {
+        "ui:widget": "textarea"
+      }
+    },
     "prior_benefits_usage_section": {
       "have_received_prior_compensations": {
         "ui:enumNames": [
-          "have_received_prior_compensations.no",
-          "have_received_prior_compensations.yes"
+          "have_received_prior_compensations.yes",
+          "have_received_prior_compensations.no"
         ],
         "ui:widget": "radio",
         "ui:options": {
@@ -215,7 +197,6 @@
         },
         "community_rules_file": {
           "misc:file-type": 0,
-          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }

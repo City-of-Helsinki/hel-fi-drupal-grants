@@ -2,6 +2,7 @@
   "definitions": {
     "_other_compensation_item": {
       "type": "object",
+      "title": "other_compensation.title",
       "properties": {
         "other_compensation_issuer": {
           "title": "other_compensation_issuer.title",
@@ -39,45 +40,6 @@
         "other_compensation_description"
       ]
     },
-    "_other_applied_compensation_item": {
-      "type": "object",
-      "properties": {
-        "other_applied_compensation_issuer": {
-          "title": "other_compensation_issuer.title",
-          "type": "string",
-          "enum": [
-            "other_compensation_issuer.state",
-            "other_compensation_issuer.eu",
-            "other_compensation_issuer.other",
-            "other_compensation_issuer.insitute"
-          ]
-        },
-        "other_applied_compensation_issuer_name": {
-          "title": "other_compensation_issuer_name.title",
-          "type": "string"
-        },
-        "other_applied_compensation_issuer_year": {
-          "title": "other_compensation_issuer_year.title",
-          "type": "string"
-        },
-        "other_applied_compensation_amount": {
-          "format": "decimal-number",
-          "title": "other_applied_compensation_amount.title",
-          "type": "string"
-        },
-        "other_applied_compensation_description": {
-          "title": "other_compensation_description.title",
-          "type": "string"
-        }
-      },
-      "required": [
-        "other_applied_compensation_issuer",
-        "other_applied_compensation_issuer_name",
-        "other_applied_compensation_issuer_year",
-        "other_applied_compensation_amount",
-        "other_applied_compensation_description"
-      ]
-    },
     "grant_info_step": {
       "required": [
         "acting_year_section",
@@ -99,14 +61,23 @@
         },
         "subventions_section": {
           "title": "subventions_section.title",
+          "description": "grants_compensations_information.value",
           "type": "object",
           "properties": {
             "subventions": {
               "title": "subventions.title",
               "options": [
                 {
-                  "id": 6,
-                  "label": "subventions.6.title"
+                  "id": 1,
+                  "label": "subventions.1.title"
+                },
+                {
+                  "id": 5,
+                  "label": "subventions.5.title"
+                },
+                {
+                  "id": 36,
+                  "label": "subventions.36.title"
                 }
               ]
             }
@@ -115,64 +86,13 @@
         "purpose_section": {
           "title": "purpose_section.title",
           "type": "object",
-          "required": ["purpose"],
           "properties": {
-            "subventions_total": {
-              "type": "number"
-            },
             "purpose": {
-              "title": "purpose_section_modified.title",
-              "type": "string",
-              "description": ""
+              "title": "purpose_section_purpose.title",
+              "type": "string"
             }
           },
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "subventions_total": {
-                    "minimum": 10000
-                  }
-                }
-              },
-              "then": {
-                "properties": {
-                  "who_benefits": {
-                    "title": "purpose_who_benefits.title",
-                    "type": "string"
-                  },
-                  "changes_on_success": {
-                    "title": "purpose_changes_on_success.title",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "who_benefits",
-                  "changes_on_success"
-                ]
-              }
-            },
-            {
-              "if": {
-                "properties": {
-                  "subventions_total": {
-                    "minimum": 50000
-                  }
-                }
-              },
-              "then": {
-                "properties": {
-                  "results_of_activities": {
-                    "title": "purpose_results_of_activities.title",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "results_of_activities"
-                ]
-              }
-            }
-          ]
+          "required": ["purpose"]
         },
         "other_compensations_section": {
           "title": "other_compensations_section.title",
@@ -181,11 +101,7 @@
           "properties": {
             "have_received_other_compensations": {
               "title": "other_compensations_section_have_received_other_compensations.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": [true, false]
             }
           },
           "required": ["have_received_other_compensations"],
@@ -196,24 +112,44 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
                   "other_compensations": {
                     "type": "array",
-                    "items": {
-                      "$ref": "#/definitions/_other_compensation_item"
-                    },
-                    "additionalItems": {
-                      "$ref": "#/definitions/_other_compensation_item"
-                    },
+                    "items": {"$ref": "#/definitions/_other_compensation_item"},
+                    "additionalItems": {"$ref": "#/definitions/_other_compensation_item"},
                     "minItems": 1
                   }
-                }
+                },
+                "required": ["other_compensations"]
               }
             }
           ]
+        },
+        "city_benefits_loans_section": {
+          "title": "city_benefits_loans_section.title",
+          "type": "object",
+          "description": "city_benefits_loans_section.description",
+          "properties": {
+            "city_benefits_loans": {
+              "title": "city_benefits_loans.title",
+              "type": "string"
+            }
+          }
+        },
+        "city_premises_benefits_section": {
+          "title": "city_premises_benefits_section.title",
+          "type": "object",
+          "description": "city_premises_benefits_section.description",
+          "properties": {
+            "city_premises_benefits": {
+              "title": "city_premises_benefits.title",
+              "type": "string"
+            }
+          }
         },
         "prior_benefits_usage_section": {
           "title": "prior_benefits_usage_section.title",
@@ -221,11 +157,7 @@
           "properties": {
             "have_received_prior_compensations": {
               "title": "other_compensations_section_have_received_prior_compensations.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
+              "enum": [true, false]
             }
           },
           "required": ["have_received_prior_compensations"],
@@ -236,14 +168,15 @@
                   "have_received_prior_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_prior_compensations"]
               },
               "then": {
                 "properties": {
                   "prior_compensations": {
-                    "description": "prior_compensations.description",
                     "title": "prior_compensations.title",
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1
                   }
                 },
                 "required": ["prior_compensations"]
@@ -353,8 +286,8 @@
               "type": "array",
               "items": [
                 {
-                 "title": "multiple_attachments_help.value",
-                 "type": "null"
+                  "title": "multiple_attachments_help.value",
+                  "type": "null"
                 }
               ]
             },
@@ -363,8 +296,8 @@
               "type": "array",
               "items": [
                 {
-                 "title": "formerly_provided_attachments_help.value",
-                 "type": "null"
+                  "title": "formerly_provided_attachments_help.value",
+                  "type": "null"
                 }
               ]
             },
@@ -390,33 +323,15 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
                   }
                 }
               }
@@ -429,33 +344,15 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
                   }
                 }
               }
@@ -468,33 +365,15 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
                   }
                 }
               }
@@ -507,33 +386,15 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
                   }
                 }
               }
@@ -546,33 +407,15 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
                   }
                 }
               }
@@ -585,33 +428,15 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
                   }
                 }
               }
@@ -624,33 +449,15 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
                   }
                 }
               }
@@ -667,33 +474,15 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
                   }
                 }
               }

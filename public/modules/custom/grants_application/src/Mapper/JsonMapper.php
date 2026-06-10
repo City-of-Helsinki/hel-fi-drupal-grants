@@ -141,15 +141,21 @@ class JsonMapper {
     $value = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
 
     if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'bool') {
+      // Bool values always true/false instead of 0/1.
       $value = $value ? 'true' : 'false';
     }
     else if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'string' && $value === "") {
+      // Empty strings can usually be excluded from the submission.
       return;
     }
-    else if (!$value && $definition['data']['value'] !== ""){
-      // The mapping contains a default value and datasource does not
-      // have a value, we use the mapped default value.
+    else if (!$value && $definition['data']['value'] !== "") {
+      // Allow adding a default value to the mapping-file which is used
+      // if end user sent empty value.
       $value = $definition['data']['value'];
+    }
+    else if ($value && is_string($value) && $definition['data']['valueType'] === 'double') {
+      // Fields mapped as double should not have commas, replace with dot.
+      $value = str_replace(',', '.', rtrim($value, ','));
     }
 
     $this->setTargetValue($data, $targetPath, $value, $definition);
