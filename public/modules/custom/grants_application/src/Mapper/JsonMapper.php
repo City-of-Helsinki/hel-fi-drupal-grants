@@ -790,6 +790,80 @@ class JsonMapper {
   }
 
   /**
+   * Get complete list of files to send to Avus2.
+   *
+   * When user sends patch-request, the files must be handled correctly.
+   * User may not delete files but may add new files. Also, the bank file must
+   * exist. Therefore, we pick all unique files from both old and new
+   * submission to make sure we have everything.
+   *
+   * The submission must have bank file (filetype 1).
+   * Bank file is added on initial submission automatically.
+   *
+   * The submission must have all required files, max one file per filetype.
+   * Required files can be set as "will be sent later" or
+   * "part of another file".
+   *
+   * The submission can have up to 10 "other attachments" of filetype 0
+   * New "other attachments" can be added if the application is editable.
+   *
+   * @param array $oldFiles
+   *   The mapped files from old atv-document.
+   * @param array $newFiles
+   *   The freshly mapped files.
+   *
+   * @return array
+   *   The files array that should be put to attachmentsInfo.attachmentsArray.
+   */
+  public function patchMappedFiles(array $oldFiles, array $newFiles): array {
+    // To keep track already mapped files.
+    $fileTypes = [];
+    $otherAttachmentsIntegrationIds = [];
+
+    // Already sent and new files.
+    $uniqueFiles = [];
+
+    // Check all already set files by filetype and integration id.
+    foreach ($oldFiles as $fileFieldArray) {
+      $fileTypeArray = array_find($fileFieldArray, fn($item) => $item['ID'] === 'fileType');
+      $integrationIdArray = array_find($fileFieldArray, fn($item) => $item['ID'] === 'integrationID');
+      // The file is actually uploaded stays mapped.
+      if ($fileTypeArray && $integrationIdArray) {
+        $fileTypes[] = $fileTypeArray['value'];
+        $uniqueFiles[] = $fileFieldArray;
+        if ($fileTypeArray['value'] === '0') {
+          $otherAttachmentsIntegrationIds[] = $integrationIdArray['value'];
+        }
+      }
+    }
+
+    // Loop through the set of files sent from form.
+    foreach ($newFiles as $fileFieldArray) {
+      $fileTypeArray = array_find($fileFieldArray, fn($item) => $item['ID'] === 'fileType');
+      $integrationIdArray = array_find($fileFieldArray, fn($item) => $item['ID'] === 'integrationID');
+
+      // Skip already mapped other files, add the new ones.
+      if ($fileTypeArray &&
+          $fileTypeArray['value'] === '0' &&
+          in_array($integrationIdArray['value'], $otherAttachmentsIntegrationIds)
+      ) {
+        continue;
+      }
+      elseif ($fileTypeArray
+        && $fileTypeArray['value'] !== '0' &&
+        in_array($fileTypeArray['value'], $fileTypes)) {
+        // The filetype exists already. Multiple filetype 0s allowed.
+        continue;
+      }
+
+      $uniqueFiles[] = $fileFieldArray;
+    }
+
+    return $uniqueFiles;
+  }
+
+
+  /**
    * Find a file field value.
    *
    * Files are sent as 5-7 different fields.

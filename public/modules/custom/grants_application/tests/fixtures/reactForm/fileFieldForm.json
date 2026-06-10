@@ -2,6 +2,10 @@
   "attachments_step" : {
     "attachments_section" : {
       "other_attachment_fieldset" : {
+        "required_file_without_upload": {
+          "isDeliveredLater" : true,
+          "isIncludedInOtherFile" : false
+        },
         "file" : {
           "description" : "kuvaus liitetiedostosta tulee tänne",
           "fileName" : "testfile.pdf",
