@@ -807,12 +807,12 @@ class JsonMapper {
    * The submission can have up to 10 "other attachments" of filetype 0
    * New "other attachments" can be added if the application is editable.
    *
-   * @param array $oldFiles
+   * @param array<mixed> $oldFiles
    *   The mapped files from old atv-document.
-   * @param array $newFiles
+   * @param array<mixed> $newFiles
    *   The freshly mapped files.
    *
-   * @return array
+   * @return array<mixed>
    *   The files array that should be put to attachmentsInfo.attachmentsArray.
    */
   public function patchMappedFiles(array $oldFiles, array $newFiles): array {
