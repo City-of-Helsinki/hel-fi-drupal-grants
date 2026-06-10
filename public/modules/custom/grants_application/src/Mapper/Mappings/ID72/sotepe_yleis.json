@@ -36,7 +36,7 @@
   },
   "compensation.compensationInfo.generalInfoArray.1": {
     "datasource": "form_data",
-    "source": "grant_info_step.other_compensations_section.have_received_other_compensations",
+    "source": "grant_info_step.prior_benefits_usage_section.have_received_prior_compensations",
     "mapping_type": "default",
     "data": {
       "ID": "compensationPreviousYear",

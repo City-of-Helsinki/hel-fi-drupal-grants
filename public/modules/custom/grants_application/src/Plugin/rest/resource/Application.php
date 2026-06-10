@@ -12,15 +12,16 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2DataParser;
+use Drupal\grants_application\Avus2Exception;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
 use Drupal\grants_application\User\UserInformationService;
-use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationSubmitType;
@@ -30,10 +31,13 @@ use Drupal\rest\Plugin\ResourceBase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
+use Sentry\Breadcrumb;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
+
+use function Sentry\addBreadcrumb;
 
 /**
  * Handle the ready applications.
@@ -66,7 +70,6 @@ final class Application extends ResourceBase {
     private EventDispatcherInterface $dispatcher,
     private Avus2Integration $integration,
     private EventsService $eventsService,
-    private AttachmentHandler $attachmentHandler,
     private ApplicationStatusService $applicationStatusService,
     private JsonSchemaValidator $jsonSchemaValidator,
     private ContentLockInterface $contentLock,
@@ -99,7 +102,6 @@ final class Application extends ResourceBase {
       $container->get(EventDispatcherInterface::class),
       $container->get(Avus2Integration::class),
       $container->get('grants_events.events_service'),
-      $container->get('grants_attachments.attachment_handler'),
       $container->get('grants_handler.application_status_service'),
       $container->get(JsonSchemaValidator::class),
       $container->get('content_lock'),
@@ -131,6 +133,18 @@ final class Application extends ResourceBase {
     if (!$application_number) {
       return new JsonResponse([], 400);
     }
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'GET application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
+
     // @todo Parse the last STATUS_UPDATE event here.
     // It can be used to determinate if this is editable.
     try {
@@ -283,6 +297,17 @@ final class Application extends ResourceBase {
       'form_data' => $form_data,
     ] = $content;
 
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'POST application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
+
     // phpcs:enable
     try {
       $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
@@ -363,7 +388,7 @@ final class Application extends ResourceBase {
         $actualFile = $this->atvService->getAttachment($bankFile['href']);
       }
       catch (\Exception $e) {
-        $this->logger->error("Unable to get bank file: {$e->getMessage()}");
+        Error::logException($this->logger, $e);
         return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
 
@@ -383,8 +408,9 @@ final class Application extends ResourceBase {
         $document = $this->atvService->getDocument($application_number);
         $bankFileIsSet = $this->jsonMapperService->documentBankFileIsSet($document);
       }
-      catch(\throwable) {
+      catch(\throwable $e) {
         // Just to be safe.
+        Error::logException($this->logger, $e);
         return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
 
@@ -467,17 +493,11 @@ final class Application extends ResourceBase {
     );
     $this->eventsService->addNewEventForApplication($latestDocument, $event);
 
-    $success = FALSE;
     try {
-      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, $integrationError);
+      $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, $integrationError);
     }
-    catch (\Exception $e) {
+    catch (Avus2Exception $e) {
       $this->logger->error('Avus2 -POST-request failed: ' . $e->getMessage());
-      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
-    }
-
-    if (!$success) {
-      $this->logger->error('Avus2 -POST-request returned non-200 response');
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
@@ -533,6 +553,17 @@ final class Application extends ResourceBase {
       'form_data' => $form_data,
       'attachments' => $attachments,
     ] = $content;
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'PATCH application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
 
     try {
       $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
@@ -636,17 +667,11 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
-    $success = FALSE;
     try {
-      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, FALSE);
+      $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, FALSE);
     }
-    catch (\Exception $e) {
+    catch (Avus2Exception $e) {
       $this->logger->error('Avus2 -PATCH-request failed: ' . $e->getMessage());
-      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
-    }
-
-    if (!$success) {
-      $this->logger->error('Avus2 -PATCH-request returned non-200 response');
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 

@@ -570,6 +570,11 @@ input[type='radio']+label.form-required::after {
   }
 }
 
+// Fields with tooltips need spacing between label and tooltip container.
+.hdbt-form--section__content .field:has(.hdbt-react-form__tooltip-container) label {
+  margin-inline-end: $spacing-and-half;
+}
+
 .hdbt-form--description,
 .help-block {
   color: $color-black-60;

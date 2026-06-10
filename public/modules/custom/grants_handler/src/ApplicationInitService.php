@@ -6,21 +6,19 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
-use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Init applications service.
@@ -303,8 +301,8 @@ class ApplicationInitService {
       $newDocument->setContent($appDocumentContent);
       $newDocument = $this->atvService->patchDocument($newDocumentId, $newDocument->toArray());
     }
-    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | EventException | GuzzleException $e) {
-      $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
+    catch (\throwable $e) {
+      Error::logException($this->logger, $e);
     }
     return $newDocument;
   }

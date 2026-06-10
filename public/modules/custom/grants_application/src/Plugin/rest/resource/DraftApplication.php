@@ -26,11 +26,13 @@ use Drupal\rest\Plugin\ResourceBase;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use Sentry\Breadcrumb;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
+use function Sentry\addBreadcrumb;
 
 /**
  * Handle the draft applications.
@@ -134,6 +136,17 @@ final class DraftApplication extends ResourceBase {
       // Cannot find form by application type id.
       return new JsonResponse([], 404);
     }
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'GET application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
 
     try {
       $applicantType = $this->userInformationService->getApplicantType();
@@ -294,6 +307,17 @@ final class DraftApplication extends ResourceBase {
     $application_number = $this->applicationNumberService
       ->createNewApplicationNumber($env, $application_type_id);
 
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'POST application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
+
     $langcode = $this->languageManager
       ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
       ->getId();
@@ -423,6 +447,17 @@ final class DraftApplication extends ResourceBase {
       // 'attachments' => $attachments,
       'form_data' => $form_data,
     ] = $content;
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'PATCH application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
 
     try {
       $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
