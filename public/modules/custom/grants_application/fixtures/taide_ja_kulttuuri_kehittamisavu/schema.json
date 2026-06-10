@@ -581,6 +581,10 @@
                 {
                   "title": "required_attachments_help.value",
                   "type": "null"
+                },
+                {
+                  "title": "required_attachments_help.value_2",
+                  "type": "null"
                 }
               ]
             },

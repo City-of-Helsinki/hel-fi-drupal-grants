@@ -220,6 +220,11 @@
       "fi": "Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty",
       "sv": "Kommande år för vilka ett mångårigt stöd söks eller har beviljats"
     },
+    "multiple_attachments_help.value": {
+      "en": "If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”",
+      "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+      "sv": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+    },
     "operations_section.title": {
       "en": "Operations",
       "fi": "Toiminnan järjestäminen",
@@ -519,6 +524,16 @@
       "en": "Other grants awarded for the same purpose",
       "fi": "Muut samaan tarkoitukseen myönnetyt avustukset",
       "sv": "Övriga stöd som beviljats för samma ändamål"
+    },
+    "required_attachments_help.value": {
+      "en": "For the processing of the grant application, the required attachments are a project plan for the applied period and a budget for the applied period.",
+      "fi": "Avustushakemuksen käsittelyä varten tarvitaan projektisuunnitelma haetulle ajanjaksolle sekä budjetti haetulle ajanjaksolle.",
+      "sv": "För behandling av ansökan om understöd behövs projektplan för den tid som ansökan gäller och budget för den tid som ansökan gäller."
+    },
+    "required_attachments_help.value_2": {
+      "en": "As a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder’s name and the account number in the applicant’s my data.",
+      "fi": "Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin myös tiliote tai vastaava asiakirja, josta selviää tilinomistajan nimi ja tilinumero.",
+      "sv": "För ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter."
     },
     "sales.title": {
       "en": "Other incomes (€)",
