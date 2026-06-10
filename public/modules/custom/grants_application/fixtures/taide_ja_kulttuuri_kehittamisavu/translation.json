@@ -1,0 +1,579 @@
+{
+  "translations": {
+    "accessibility.title": {
+      "en": "How are the activities made as accessible as possible either socially, culturally, in terms of language, economically, physically, regionally, or otherwise? What kinds of actions are taken, and resources and expertise available for this purpose?",
+      "fi": "Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "sv": "Hur gör ni er verksamhet socialt, kulturellt, språkligt, ekonomiskt, fysiskt, geografiskt eller på annat sätt tillgänglig för helsingforsarna? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta? "
+    },
+    "accessibility_section.title": {
+      "en": "Accessibility",
+      "fi": "Toiminnan tavoittavuus",
+      "sv": "Verksamhetens tillgänglighet"
+    },
+    "activity_basis_step.title": {
+      "en": "The basis for the activities",
+      "fi": "Toiminnan lähtökohdat",
+      "sv": "Utgångspunkten för verksamheten"
+    },
+    "artistic_starting_points.description": {
+      "en": "You may also mention, for example, central awards or other notations.",
+      "fi": "Voit nostaa myös esiin esimerkisksi keskeisiä palkintoja tai muita noteerauksia.",
+      "sv": "Ni kan även lyfta fram eventuella pris och utmärkelser."
+    },
+    "artistic_starting_points.title": {
+      "en": "Describe the artistic starting points and goals of the activities, the level of artistic professionalism, and the position within the field of art.",
+      "fi": "Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.",
+      "sv": "Beskriv de konstnärliga utgångspunkterna och målsättningarna för verksamheten, den konstnärliga professionaliteten och er/ organisationens position på konstfältet."
+    },
+    "belongs_to_vos.title": {
+      "en": "The organization belongs to the central government subsidies system (VOS)",
+      "fi": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
+      "sv": "Organisationen får statsandelar (VOS)"
+    },
+    "belongs_to_vos.tooltip": {
+      "en": "Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.",
+      "fi": "Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saavan rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.",
+      "sv": "Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen."
+    },
+    "budget_attachment.description": {
+      "en": "Budget for the requested period",
+      "fi": "Budjetti haetulle ajanjaksolle",
+      "sv": "Budget för den tid som ansökan gäller"
+    },
+    "budget_attachment.title": {
+      "en": "Budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
+    },
+    "budget_info.value": {
+      "en": "Regarding the project in the year that the grant is applied for with this application.",
+      "fi": "Koskien hankkeen sitä vuotta, jolle avustusta tällä hakemuksella haetaan.",
+      "sv": "Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd."
+    },
+    "budget_info_section.title": {
+      "en": "Planned budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
+    },
+    "community_info_step.title": {
+      "en": "Information regarding the organization",
+      "fi": "Yhteisön tiedot",
+      "sv": "Uppgifter om den ansökande organisationen"
+    },
+    "community_spirit.title": {
+      "en": "How do the activities increase the community spirit and strengthen collaboration and networks? What possibilities do the residents have of participating in the different phases of the activities? What kinds of actions are taken, and resources and expertise available for this purpose?",
+      "fi": "Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "sv": "Hur stärker ni samhörighet och nätverkande samarbete inom staden genom er verksamhet? Hur kan invånarna delta i olika skeden av er verksamhet? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
+    },
+    "compensation.title": {
+      "en": "The applied grant (€)",
+      "fi": "Haettu avustus (€)",
+      "sv": "Ansökt stöd (€)"
+    },
+    "contents_section.title": {
+      "en": "Contents",
+      "fi": "Toiminnan sisällöt",
+      "sv": "Verksamhetens innehåll"
+    },
+    "detailed_project_description.description": {
+      "en": "Describe the project in brief, for example, why, what, for whom, how, and what are the goals.",
+      "fi": "Kerro hankkeesta tiiviisti. Esim. miksi, mitä, kenelle, miten ja mitkä ovat tavoitteet.",
+      "sv": "Berätta kort och koncist om projektet. Varför, vad, för vem, hur och med vilka målsättningar?"
+    },
+    "detailed_project_description.title": {
+      "en": "A more comprehensive project description",
+      "fi": "Laajempi hankekuvaus",
+      "sv": "En mer ingående projektbeskrivning"
+    },
+    "diversity_and_equality.title": {
+      "en": "How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?",
+      "fi": "Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+      "sv": "Hur förverkligar ni jämställdheten och mångfalden i er organisation och verksamhet samt i verksamhetens innehåll? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?"
+    },
+    "ecology.title": {
+      "en": "Does the community have an environmental sustainability plan or a corresponding operating model in use? Which, or what kind of model is it? Describe how it is implemented in practice and how compliance is monitored and supervised.",
+      "fi": "Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.",
+      "sv": "Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras."
+    },
+    "entry_fees.title": {
+      "en": "Entry and participation fees (€)",
+      "fi": "Pääsy- ja osallistumismaksut (€)",
+      "sv": "Inträdes- eller deltagaravgifter (€)"
+    },
+    "entry_fees.tooltip": {
+      "en": "Ticket sales etc.",
+      "fi": "Esim. lipunmyyntitulot",
+      "sv": "Till exempel biljettförsäljningsintäkter"
+    },
+    "event_dates.title": {
+      "en": "The dates, in case of festivals and events",
+      "fi": "Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät",
+      "sv": "Datum för festivalen eller evenemanget"
+    },
+    "expenditure_section.description": {
+      "en": "Add below all the project's planned expenses by expense category.",
+      "fi": "Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.",
+      "sv": "Lägg till alla projektets planerade utgifter per utgiftskategori nedan."
+    },
+    "expenditure_section.title": {
+      "en": "Planned expenses",
+      "fi": "Suunnitellut menot",
+      "sv": "Planerade utgifter"
+    },
+    "form_title": {
+      "en": "Development grants for culture",
+      "fi": "Kulttuurin kehittämisavustukset",
+      "sv": "Utvecklingsstöd för kultur"
+    },
+    "full_time_person_years.title": {
+      "en": "Full-time: Person years",
+      "fi": "Kokoaikaisia: Henkilötyövuosia",
+      "sv": "Heltidsanställda: Personarbetsår"
+    },
+    "full_time_personnel.title": {
+      "en": "Full-time: Persons",
+      "fi": "Kokoaikaisia: Henkilöitä",
+      "sv": "Heltidsanställda: Personer"
+    },
+    "grants_compensations_information.value": {
+      "en": "Only apply for one grant type at a time with each application. Enter the amount only regarding the year that you are applying the grant for with this application.",
+      "fi": "Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan. Kirjaa tähän avustussumma vain sen vuoden osalta, jolle haet avustusta tällä hakemuksella.",
+      "sv": "Ansök alltid endast om en typ av understöd åt gången. Ange här endast stödsumman för det år, för vilket du nu ansöker om stöd."
+    },
+    "income_section.title": {
+      "en": "Planned income",
+      "fi": "Suunnitellut tulot",
+      "sv": "Planerade inkomster"
+    },
+    "is_festival_or_event.description": {
+      "en": "This refers to a set of programs that is named as a festival or event, and which takes place within a limited timeframe, but is broader in program and duration than a single concert, play etc.",
+      "fi": "Tässä tarkoitetaan festivaaliksi tai tapahtumaksi nimettyä ohjelmakokonaisuutta, joka tapahtuu tiiviin ajanjakson sisällä, mutta on ohjelmaltaan tai kestoltaan laajempi kuin yksittäinen konsertti, esitys, tms.",
+      "sv": "Detta avser en programhelhet, som betecknas som en festival eller ett evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande."
+    },
+    "is_festival_or_event.title": {
+      "en": "Festival or event",
+      "fi": "Kyseessä on festivaali tai tapahtuma",
+      "sv": "Festival eller evenemang"
+    },
+    "is_festival_or_event.tooltip": {
+      "en": "A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.",
+      "fi": "Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, kuten esityksiä, joiden välissä yleisö voi myös vaihtua. Festivaaleja tai tapahtumia voivat olla esimerkiksi kaupunginosatapahtumat. Niitä eivät ole esimerkiksi esityssarjat tai laajemmat hankkeet, joita ei markkinoida festivaalina tai yhtenäisenä tapahtumana. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.",
+      "sv": "En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång."
+    },
+    "is_multi_year_grant.title": {
+      "en": "I am applying for a multi-year grant",
+      "fi": "Kyseessä on monivuotinen avustus",
+      "sv": "Det är frågan om ett mångårigt stöd"
+    },
+    "members_community_global.title": {
+      "en": "Organizational members",
+      "fi": "Yhteisöjäseniä",
+      "sv": "Samfundsmedlemmar"
+    },
+    "members_community_local.title": {
+      "en": "Of which are registered in Helsinki",
+      "fi": "Helsinkiläisiä yhteisöjäseniä yhteensä",
+      "sv": "Andel helsingforsiska samfund"
+    },
+    "members_count_fieldset.description": {
+      "en": "If your organization has members, mark their numbers here.",
+      "fi": "Jos yhteisöllä on jäseniä, merkitse ne tähän.",
+      "sv": "Om samfundet har medlemmar, ange dem här"
+    },
+    "members_count_fieldset.legend": {
+      "en": "Members",
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemmar"
+    },
+    "members_person_global.title": {
+      "en": "Members",
+      "fi": "Henkilöjäseniä yhteensä",
+      "sv": "Medlemmar"
+    },
+    "members_person_local.title": {
+      "en": "Of which residents of Helsinki",
+      "fi": "Helsinkiläisiä henkilöjäseniä yhteensä",
+      "sv": "Andel helsingforsare"
+    },
+    "members_section.title": {
+      "en": "Members",
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemsantal"
+    },
+    "multi_year_grant_breakdown.description": {
+      "en": "Write per year in the following format: the year: the grant amount",
+      "fi": "Kirjoita vuosikohtaisesti muotoon: vuosi: avustussumma.",
+      "sv": "Skriv årsspecifikt enligt detta: år: stödsumma."
+    },
+    "multi_year_grant_breakdown.title": {
+      "en": "Breakdown of the grant amount applied for each year",
+      "fi": "Erittely kullekin vuodelle haettavasta avustussummasta",
+      "sv": "En årsvis specifikation för det stöd, som söks för varje år under perioden."
+    },
+    "multi_year_grant_years.description": {
+      "en": "Only fill in the future years of the grant period that you are applying the grant for from here on. Do not include previous years of the same or a previous grant period.",
+      "fi": "Täytä vuodet vain tästä eteenpäin haettavan avustuskauden osalta. Älä kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.",
+      "sv": "Fyll enbart i de kommande årtalen för den stödperiod som avses. Skriv inte in tidigare årtal för samma eller tidigare stödperioder."
+    },
+    "multi_year_grant_years.title": {
+      "en": "The future years that the grant is applied for, or has already been awarded to.",
+      "fi": "Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty",
+      "sv": "Kommande år för vilka ett mångårigt stöd söks eller har beviljats"
+    },
+    "multiple_attachments_help.value": {
+      "en": "If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”",
+      "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+      "sv": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+    },
+    "operations_section.title": {
+      "en": "Operations",
+      "fi": "Toiminnan järjestäminen",
+      "sv": "Verksamhetens struktur"
+    },
+    "other_input_section.title": {
+      "en": "Other notable input",
+      "fi": "Muu huomioitava panostus",
+      "sv": "Övrig betydande insats"
+    },
+    "other_valuable_input.title": {
+      "en": "Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?",
+      "fi": "Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?",
+      "sv": "Ingår det i verksamheten någon betydande eller värdefull annan insats eller byteshandel, som inte framgår ur budgeten?"
+    },
+    "own_funding.title": {
+      "en": "The organizer’s own funding (€)",
+      "fi": "Järjestäjän oma rahoitus (€)",
+      "sv": "Egenfinansiering (€)"
+    },
+    "part_time_person_years.title": {
+      "en": "Part-time: Person years",
+      "fi": "Osa-aikaisia: Henkilötyövuosia",
+      "sv": "Deltidsanställda: Personarbetsår"
+    },
+    "part_time_personnel.title": {
+      "en": "Part-time: Persons",
+      "fi": "Osa-aikaisia: Henkilöitä",
+      "sv": "Deltidsanställda: Personer"
+    },
+    "partners.description": {
+      "en": "Name a maximum of approximately five partners.",
+      "fi": "Nimeä maksimissaan noin viisi yhteistyökumppania.",
+      "sv": "Nämn högst cirka fem partners."
+    },
+    "partners.title": {
+      "en": "Name the central partners, and describe the forms and conditions of each collaboration.",
+      "fi": "Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.",
+      "sv": "Namnge era fem mest centrala samarbetsparter och beskriv formen och villkoren för ert samarbete. "
+    },
+    "personnel_fieldset.description": {
+      "en": "The personnel includes the personnel on salary, but can also include people working for other forms of compensation, like trade income, or as purchased service. The full-time personnel can include temporary staff if they work full-time. The person year depicts a person’s workload when converted to full-time work. For example, a person that works full-time for 6 months can be counted as 0,5 person years. Similarly, a person that works part-time with 30% workload for a full year can be counted as 0,3 person years. The numbers are viewed as estimates that give a general outline of the workload of the personnel involved in the project.",
+      "fi": "Henkilöstöön voi sisällyttää muitakin kuin palkattuja työntekijöitä, mm. palkkioilla tai muilla korvauksilla työskenteleviä tai ostopalveluna ostettavaa työtä. Kokoaikaiset työntekijät voivat sisältää myös määräaikaisia työntekijöitä, jos nämä työskentelevät täyspäiväisesti. Henkilötyövuosi kuvaa kokoaikaiseksi muutetun henkilön työpanosta. Esimerkiksi 6kk kokopäiväisesti työskentelevästä henkilöstä voi laskea muodostuvan 0,5 henkilötyövuotta. Vastaavasti koko vuoden osa-aikaisesti 30% työmäärää tekevästä henkilöstä voi laskea muodostuvan 0,3 henkilötyövuotta. Kyseessä on arvio, joka kuvaa suuntaa-antavasti projektiin osallistuvan henkilöstön työpanosta.",
+      "sv": "I personalen kan ingå även andra än anställda personer, t ex personer som lyfter arvoden eller andra ersättningar eller personer som levererar köptjänster. Heltidsanställa kan även omfatta visstidsanställda personer om dessa arbetar heltid. Ett personarbetsår beskriver en persons arbetsinsats under ett helt år. En person som arbetar t.ex. 6 mån. på heltid motsvarar en arbetsinsats på 0,5 personarbetsår. På samma sätt utgör en deltidsanställd person, som arbetar ett helt år med en 30% arbetsinsats, 0,3 personarbetsår. Det är alltså fråga om en riktgivande uppskattning av arbetstiden för de personer, som arbetar inom och för projektet."
+    },
+    "personnel_fieldset.legend": {
+      "en": "Personnel",
+      "fi": "Henkilöstö",
+      "sv": "Personer"
+    },
+    "personnel_section.title": {
+      "en": "Personnel in the project in the year that you are applying the grant for with this application.",
+      "fi": "Henkilöstö hankkeessa sinä vuonna, jolle avustusta tällä hakemuksella haetaan.",
+      "sv": "Personalen inom verksamheten under det år, för vilket man här ansöker om stöd."
+    },
+    "planned_activities_step.title": {
+      "en": "Planned activities",
+      "fi": "Suunniteltu toiminta",
+      "sv": "Planerad verksamhet"
+    },
+    "planned_other_compensations.title": {
+      "en": "Other grants (€)",
+      "fi": "Muut avustukset (€)",
+      "sv": "Övriga understöd (€)"
+    },
+    "planned_other_compensations.tooltip": {
+      "en": "Including other grants from the City of Helsinki.",
+      "fi": "Myös muut kaupungin avustukset.",
+      "sv": "Även stadens övriga understöd"
+    },
+    "premise_name.title": {
+      "en": "Premise name",
+      "fi": "Tilan nimi",
+      "sv": "Namn"
+    },
+    "premise_owned_by_city.title": {
+      "en": "City owns the property",
+      "fi": "Kyseessä on kaupungin omistama tila",
+      "sv": "Stadens eget utrymme"
+    },
+    "premise_post_code.title": {
+      "en": "Postal code",
+      "fi": "Postinumero",
+      "sv": "Postnummer"
+    },
+    "premises.add": {
+      "en": "Add new premise",
+      "fi": "Lisää uusi tila",
+      "sv": "Lägg till ny plats"
+    },
+    "premises.title": {
+      "en": "Premises",
+      "fi": "Tilat",
+      "sv": "Plats"
+    },
+    "premises_info.value": {
+      "en": "If the project includes public events in Helsinki, please indicate here the planned locations known at this point.",
+      "fi": "Jos hankkeeseen sisältyy Helsingissä järjestettävää yleisölle avointa toimintaa, ilmoita jo tiedossa olevat suunnitellut paikat tähän.",
+      "sv": "Om projektet omfattar öppen verksamhet för publik i Helsingfors, vänligen ange på vilka konkreta ställen verksamheten är tänkt att ske."
+    },
+    "premises_section.title": {
+      "en": "The locations of the public events in Helsinki",
+      "fi": "Yleisölle avoin toiminta Helsingissä toteutetaan",
+      "sv": "Öppen verksamhet för publik i Helsingfors"
+    },
+    "primary_art.circus": {
+      "en": "Circus",
+      "fi": "Sirkus",
+      "sv": "Cirkus"
+    },
+    "primary_art.dance": {
+      "en": "Dance",
+      "fi": "Tanssi",
+      "sv": "Dans"
+    },
+    "primary_art.description": {
+      "en": "Choose the option that best describes your activities.",
+      "fi": "Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.",
+      "sv": "Välj det alternativ, som bäst motsvarar er verksamhet"
+    },
+    "primary_art.design_and_crafts": {
+      "en": "Design and crafts",
+      "fi": "Design ja käsityö",
+      "sv": "Design och hantverk"
+    },
+    "primary_art.film_photography_media": {
+      "en": "Film, photography and media",
+      "fi": "Elokuva, valokuva ja media",
+      "sv": "Film, foto och media"
+    },
+    "primary_art.literature": {
+      "en": " Literature",
+      "fi": "Kirjallisuus",
+      "sv": "Litteratur"
+    },
+    "primary_art.multidisciplinary": {
+      "en": "Multidisciplinary art",
+      "fi": "Monitaide",
+      "sv": "Tvärkonstnärlig verksamhet"
+    },
+    "primary_art.museum": {
+      "en": "Museum",
+      "fi": "Museo",
+      "sv": "Museum"
+    },
+    "primary_art.music": {
+      "en": "Music",
+      "fi": "Musiikki",
+      "sv": "Musik"
+    },
+    "primary_art.other": {
+      "en": "Other",
+      "fi": "Muu",
+      "sv": "Annat"
+    },
+    "primary_art.theatre": {
+      "en": "Theatre",
+      "fi": "Teatteri",
+      "sv": "Teater"
+    },
+    "primary_art.title": {
+      "en": " Primary field of art",
+      "fi": "Ensisijainen taiteenala",
+      "sv": "Huvudsaklig konstart"
+    },
+    "primary_art.urban_culture": {
+      "en": "Urban art and culture",
+      "fi": "Kaupunkikulttuuri",
+      "sv": "Stadskultur"
+    },
+    "primary_art.visual_arts_comics": {
+      "en": "Visual arts and comics",
+      "fi": "Kuvataide ja sarjakuva",
+      "sv": "Bildkonst och seriekonst"
+    },
+    "professionalism.title": {
+      "en": "Describe the professional level of organizing the activities, and how the operations are organized.",
+      "fi": "Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista",
+      "sv": "Beskriv hur er verksamhet är organiserad och på vilket sätt den är professionell"
+    },
+    "project_description_section.title": {
+      "en": "Project description",
+      "fi": "Hankekuvaus",
+      "sv": "Beskrivning av projektet"
+    },
+    "project_end_date.title": {
+      "en": "The project ends",
+      "fi": "Hanke loppuu",
+      "sv": "Projektet avslutas"
+    },
+    "project_info_section.title": {
+      "en": "Project information",
+      "fi": "Hankkeen tiedot",
+      "sv": "Projekt Information"
+    },
+    "project_name.description": {
+      "en": "Choose a name for the project that can be published along with the decision.",
+      "fi": "Valitse hankkeelle nimi, joka voidaan julkaista päätöksen yhteydessä.",
+      "sv": "Välj ett projektnamn, som kan publiceras i samband med att beslutet om stöd fattas"
+    },
+    "project_name.title": {
+      "en": "Name of the project",
+      "fi": "Hankkeen nimi",
+      "sv": "Projektets namn"
+    },
+    "project_plan_attachment.description": {
+      "en": "Project plan for the requested period",
+      "fi": "Projektisuunnitelma haetulle ajanjaksolle",
+      "sv": "Projektplan för den tid som ansökan gäller"
+    },
+    "project_plan_attachment.title": {
+      "en": " Project plan",
+      "fi": "Projektisuunnitelma",
+      "sv": "Projekt plan"
+    },
+    "project_short_description.description": {
+      "en": "The text can be published or used as a presentation as such or in a modified form along with the decision. Max 700 characters.",
+      "fi": "Teksti voidaan julkaista tai sitä voidaan käyttää esittelytekstinä päätöksen yhteydessä sellaisenaan tai muokattuna.",
+      "sv": "Texten kan som sådan eller i förkortad version publiceras eller användas som presentationsunderlag i anslutning till beslutsfattandet om stöd. Max 700 tecken."
+    },
+    "project_short_description.title": {
+      "en": "A short description of the project or the activities",
+      "fi": "Hankkeen tai toiminnan lyhyt esittelyteksti",
+      "sv": "En kort presentationstext om projektet eller verksamheten"
+    },
+    "project_start_date.title": {
+      "en": "The project begins",
+      "fi": "Hanke alkaa",
+      "sv": "Projektet inleds"
+    },
+    "received_compensation_amount.printable_title": {
+      "en": "Amount of grant received (€)",
+      "fi": "Myönnetyn avustuksen summa (€)",
+      "sv": "Beviljat bidragsbelopp (€)"
+    },
+    "received_compensation_amount.title": {
+      "en": "Amount of grant received",
+      "fi": "Myönnetyn avustuksen summa",
+      "sv": "Beviljat bidragsbelopp"
+    },
+    "received_compensation_description.description": {
+      "en": "Give a brief description, for what purpose has the grant been granted?",
+      "fi": "Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?",
+      "sv": "Ge en kort beskrivning, i vilket syfte har bidraget beviljats?"
+    },
+    "received_compensation_description.title": {
+      "en": " Description of intended use",
+      "fi": "Kuvaus käyttötarkoituksesta",
+      "sv": "Beskrivning av avsedd användning"
+    },
+    "received_compensation_issuer.eu": {
+      "en": "EU",
+      "fi": "EU",
+      "sv": "EU"
+    },
+    "received_compensation_issuer.insitute": {
+      "en": "Foundation",
+      "fi": "Säätiö",
+      "sv": "Fundament"
+    },
+    "received_compensation_issuer.other": {
+      "en": "Other",
+      "fi": "Muu",
+      "sv": "Övrig"
+    },
+    "received_compensation_issuer.state": {
+      "en": "State",
+      "fi": "Valtio",
+      "sv": "Stat"
+    },
+    "received_compensation_issuer.title": {
+      "en": "Grant issuer",
+      "fi": "Avustuksen myöntäjä",
+      "sv": "Bidragsgivare"
+    },
+    "received_compensation_issuer_name.description": {
+      "en": "Which body has granted the grant (e.g. name of the ministry)",
+      "fi": "Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)",
+      "sv": "Vilket organ har beviljat bidraget (t.ex. namnet på departementet)"
+    },
+    "received_compensation_issuer_name.title": {
+      "en": " Issuer's name",
+      "fi": "Myöntäjän nimi",
+      "sv": "Emittentens namn"
+    },
+    "received_compensation_issuer_year.title": {
+      "en": "Year",
+      "fi": "Vuosi",
+      "sv": "År"
+    },
+    "received_compensations_section.description": {
+      "en": "List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.",
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.",
+      "sv": "Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren."
+    },
+    "received_compensations_section.title": {
+      "en": "Other grants awarded for the same purpose",
+      "fi": "Muut samaan tarkoitukseen myönnetyt avustukset",
+      "sv": "Övriga stöd som beviljats för samma ändamål"
+    },
+    "required_attachments_help.value": {
+      "en": "For the processing of the grant application, the required attachments are a project plan for the applied period and a budget for the applied period.",
+      "fi": "Avustushakemuksen käsittelyä varten tarvitaan projektisuunnitelma haetulle ajanjaksolle sekä budjetti haetulle ajanjaksolle.",
+      "sv": "För behandling av ansökan om understöd behövs projektplan för den tid som ansökan gäller och budget för den tid som ansökan gäller."
+    },
+    "required_attachments_help.value_2": {
+      "en": "As a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder’s name and the account number in the applicant’s my data.",
+      "fi": "Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin myös tiliote tai vastaava asiakirja, josta selviää tilinomistajan nimi ja tilinumero.",
+      "sv": "För ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter."
+    },
+    "sales.title": {
+      "en": "Other incomes (€)",
+      "fi": "Muut tulot (€)",
+      "sv": "Övriga egna inkomster (€)"
+    },
+    "schedule_section.title": {
+      "en": "Schedule",
+      "fi": "Aikataulu",
+      "sv": "Tidtabell"
+    },
+    "sponsorships.title": {
+      "en": "Private funding (sponsors, corporate collaboration, donations, etc.) (€)",
+      "fi": "Yksityinen rahoitus (sponsorit, yritysyhteistyö, lahjoitukset yms.) (€)",
+      "sv": "Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)"
+    },
+    "subventions.44.title": {
+      "en": "Development grant",
+      "fi": "Kehittämisavustus",
+      "sv": "Utvecklingsunderstöd"
+    },
+    "subventions.45.title": {
+      "en": "Development grant for the Helsinki Model",
+      "fi": "Helsingin mallin kehittämisavustus",
+      "sv": "Utvecklingsunderstöd för Helsingforsmodellen"
+    },
+    "subventions.46.title": {
+      "en": "Development grant for basic arts education",
+      "fi": "Taiteen perusopetuksen kehittämisavustus",
+      "sv": "Utvecklingsunderstöd för grundläggande konstundervisning"
+    },
+    "target_audiences.title": {
+      "en": "Who are the target audiences or participants for the activities? How will they be reached, and what expertise is available for working with them?",
+      "fi": "Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?",
+      "sv": "Vilka är målgrupperna för er verksamhet? Hur når ni dessa målgrupper och vad har ni för kunnande när det gäller att arbeta med dessa målgrupper?"
+    },
+    "volunteers.title": {
+      "en": "Volunteers: Persons",
+      "fi": "Vapaaehtoisia",
+      "sv": "Frivilliga: Personer"
+    }
+  }
+}

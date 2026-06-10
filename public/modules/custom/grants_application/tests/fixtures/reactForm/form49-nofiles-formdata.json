@@ -1,0 +1,215 @@
+{
+  "applicant_info": {
+    "applicant_email": {
+      "email": "test@example.com"
+    },
+    "contact_person_info": {
+      "contact_person": "Joku Henkilö",
+      "contact_person_phone_number": "040 123 123 12"
+    },
+    "community_address": {
+      "community_address": "Kauppakatu 20"
+    },
+    "bank_account": {
+      "bank_account": "FI4950009420028730"
+    },
+    "community_officials": {
+      "community_officials": [
+        {
+          "official": "a464c2d0-a79a-400e-a9cf-32f583675194"
+        }
+      ]
+    }
+  },
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": "2026"
+    },
+    "subventions_section": {
+      "subventions": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "44",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "12000",
+            "valueType": "double"
+          }
+        ],
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "45",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "3000",
+            "valueType": "double"
+          }
+        ],
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "46",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "2000",
+            "valueType": "double"
+          }
+        ]
+      ]
+    },
+    "multi_year_section": {
+      "is_multi_year_grant": true,
+      "multi_year_grant_years": "2027, 2028",
+      "multi_year_grant_breakdown": "2027: 5000, 2028: 5000"
+    },
+    "primary_art_section": {
+      "primary_art": "primary_art.design_and_crafts"
+    },
+    "project_info_section": {
+      "project_name": "Yksikkötestaus",
+      "is_festival_or_event": false,
+      "project_short_description": "Testausta"
+    },
+    "received_compensations_section": {
+      "have_received_other_compensations": true,
+      "received_compensations": [
+        {
+          "received_compensation_issuer": "Valtio",
+          "received_compensation_issuer_name": "Ministeriö",
+          "received_compensation_issuer_year": "2024",
+          "received_compensation_amount": 5000,
+          "received_compensation_description": "Aiempi avustus"
+        }
+      ]
+    }
+  },
+  "community_info_step": {
+    "members_section": {
+      "members_fieldset": {
+        "members_applicant_person_global": 700,
+        "members_applicant_person_local": 600,
+        "members_applicant_community_global": 7,
+        "members_applicant_community_local": 6
+      }
+    },
+    "personnel_section": {
+      "personnel_fieldset": {
+        "full_time_personnel": 7,
+        "full_time_person_years": "6",
+        "part_time_personnel": 7,
+        "part_time_person_years": "6"
+      },
+      "volunteers": 67
+    }
+  },
+  "planned_activities_step": {
+    "premises_section": {
+      "premises_info": [
+        null
+      ],
+      "premises": [
+        {
+          "premise_name": "Testitila",
+          "premise_post_code": "00100",
+          "premise_owned_by_city": true
+        }
+      ]
+    },
+    "schedule_section": {
+      "event_dates": "Testiajot",
+      "project_start_date": "2026-06-29",
+      "project_end_date": "2026-06-30"
+    },
+    "project_description_section": {
+      "detailed_project_description": "Pitkä kuvaus"
+    }
+  },
+  "activity_basis_step": {
+    "contents_section": {
+      "artistic_starting_points": "Kuvauskenttä 1",
+      "diversity_and_equality": "Kuvauskenttä 2"
+    },
+    "accessibility_section": {
+      "accessibility": "Kuvauskenttä 3",
+      "community_spirit": "Kuvauskenttä 4",
+      "target_audiences": "Kuvauskenttä 5"
+    },
+    "operations_section": {
+      "professionalism": "Kuvauskenttä 6",
+      "ecology": "Kuvauskenttä 7",
+      "partners": "Kuvauskenttä 8"
+    }
+  },
+  "budget_step": {
+    "budget_info_section": {
+      "budget_info": [
+        null
+      ],
+      "belongs_to_vos": false
+    },
+    "income_section": {
+      "income_header": [
+        null
+      ],
+      "incomeGroupName": "general",
+      "planned_other_compensations": "2300",
+      "sponsorships": "3400",
+      "entry_fees": "4500",
+      "sales": "5600",
+      "own_funding": "6700"
+    },
+    "expenditure_section": {
+      "expenditure_header": [
+        null
+      ],
+      "costGroupName": "general",
+      "expenditure_rows": [
+        {
+          "expenditure_row_description": "Juomat",
+          "expenditure_row_amount": "10000"
+        }
+      ]
+    },
+    "other_input_section": {
+      "other_valuable_input": "Nope"
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": "Lisätiedot"
+    },
+    "attachments_section": {
+      "required_attachments_help": [
+        null
+      ],
+      "multiple_attachments_help": [
+        null
+      ],
+      "cant_view_after_help": [
+        null,
+        null
+      ],
+      "further_clarification": "Liitteiden lisäselvitys",
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "files": [],
+          "description": ""
+        }
+      }
+    }
+  }
+}
