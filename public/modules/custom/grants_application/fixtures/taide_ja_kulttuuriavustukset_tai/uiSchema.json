@@ -28,8 +28,8 @@
     "other_compensations_section": {
       "have_received_other_compensations": {
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:options": {
           "affirmativeExpands": true

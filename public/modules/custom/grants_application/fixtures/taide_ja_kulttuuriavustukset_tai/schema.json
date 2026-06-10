@@ -203,8 +203,8 @@
             "have_received_other_compensations": {
               "title": "other_compensations_section_have_received_other_compensations.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             }
