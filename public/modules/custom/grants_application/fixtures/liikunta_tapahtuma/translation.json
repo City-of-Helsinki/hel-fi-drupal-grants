@@ -160,11 +160,6 @@
       "fi": "Tapahtuman tulot",
       "sv": "Evenemangets intäkter"
     },
-    "minor_men.title": {
-      "en": "Boys",
-      "fi": "Pojat",
-      "sv": "Pojkar"
-    },
     "minor_other.title": {
       "en": "Others",
       "fi": "Muut",
@@ -174,11 +169,6 @@
       "en": "Participants under the age of 20",
       "fi": "Alle 20-vuotiaat osallistujat",
       "sv": "Deltagare under 20 år"
-    },
-    "minor_women.title": {
-      "en": "Girls",
-      "fi": "Tytöt",
-      "sv": "Flickor"
     },
     "participants_section.title": {
       "en": "Participants",

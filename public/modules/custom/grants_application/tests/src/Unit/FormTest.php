@@ -26,6 +26,7 @@ final class FormTest extends UnitTestCase {
       ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-nofiles-formdata', 'result' => 'form58-nofiles-result'],
       // ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-file-formdata', 'result' => 'form58-file-result'],
       ['id' => 'ID70', 'form_identifier' => 'promoting_safer_club_activities', 'form_data' => 'form70-safer-nofiles-formdata', 'result' => 'form70-safer-nofiles-result', 'settings' => 'form70-settings'],
+      ['id' => 'ID50', 'form_identifier' => 'taide_ja_kulttuuriavustukset_tai', 'form_data' => 'form50-nofiles-formdata', 'result' => 'form50-nofiles-result', 'settings' => 'form50-settings', 'files' => 'form50-nofiles-files'],
       ['id' => 'ID49', 'form_identifier' => 'taide_ja_kulttuuri_kehittamisavu', 'form_data' => 'form49-nofiles-formdata', 'result' => 'form49-nofiles-result', 'settings' => 'form49-settings'],
       ['id' => 'ID75', 'form_identifier' => 'nuortoimintapalkka', 'form_data' => 'form75-nofiles-formdata', 'result' => 'form75-nofiles-result', 'settings' => 'form75-settings'],
       ['id' => 'ID70', 'form_identifier' => 'segregaation_ehkaisemisavustus', 'form_data' => 'form70-segregaatio-nofiles-formdata', 'result' => 'form70-segregaatio-nofiles-result', 'settings' => 'form70-segregaatio-settings'],
@@ -51,7 +52,17 @@ final class FormTest extends UnitTestCase {
       // Running mapper should always return same values.
       $originalResult = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $info['result'] . '.json'), TRUE);
       $this->assertEquals($originalResult, $fields, "asserting {$info['form_identifier']}, {$info['result']}");
-      $this->assertCount(0, $files);
+
+      // Forms with required attachments always emit their attachment entries
+      // (matching the legacy webform), even when no file is uploaded. For those
+      // a golden files-fixture is provided. Otherwise no files are expected.
+      if (isset($info['files'])) {
+        $expectedFiles = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $info['files'] . '.json'), TRUE);
+        $this->assertEquals($expectedFiles, $files, "asserting files {$info['form_identifier']}, {$info['files']}");
+      }
+      else {
+        $this->assertCount(0, $files);
+      }
     }
   }
 
