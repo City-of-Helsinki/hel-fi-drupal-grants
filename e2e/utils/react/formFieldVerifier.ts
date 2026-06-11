@@ -34,6 +34,45 @@ import { logCurrentUrl, waitForTextWithInterval } from "../helpers";
 export type FilledFields = Map<string, string>;
 
 /**
+ * A custom fill value: a plain string, or a function returning one,
+ * so an author can supply a faker expression like () => faker.lorem.words(30).
+ */
+export type FieldInputValue = string | (() => string);
+
+/**
+ * Custom fill values for a form, nested to mirror the form tree:
+ * step -> section -> field. A leaf value replaces the auto-generated value
+ * for that field. Example:
+ *  information_in_more_detail_step: {
+ *    grant_target_section: {
+ *      safety_practices: 'text'
+ *    }
+ *  }
+ */
+export type FieldInputs = { [key: string]: FieldInputValue | FieldInputs };
+
+/**
+ * Looks up a field's custom value by walking its path through the nested
+ * fieldInputs tree.
+ *
+ * @param fieldInputs
+ *   The nested custom values for the form.
+ * @param fieldPath
+ *   The field's path segments, e.g. [step, section, field].
+ */
+function resolveFieldInput(
+  fieldInputs: FieldInputs | undefined,
+  fieldPath: string[],
+): FieldInputValue | undefined {
+  let node: FieldInputValue | FieldInputs | undefined = fieldInputs;
+  for (const segment of fieldPath) {
+    if (!node || typeof node !== 'object') return undefined;
+    node = node[segment];
+  }
+  return typeof node === 'string' || typeof node === 'function' ? node : undefined;
+}
+
+/**
  * Options shared by the main form test functions.
  */
 export type VerifyFormFieldsOptions = {
@@ -45,6 +84,8 @@ export type VerifyFormFieldsOptions = {
   formCompletionURL?: string;
   /** Map of filled fields */
   filledFields?: FilledFields;
+  /** Custom fill values, keyed by field id. */
+  fieldInputs?: FieldInputs;
 };
 
 /**
@@ -86,6 +127,8 @@ const COMPLETION_TEXT: Record<'heading' | 'sent' | 'received', Record<string, st
  * @param triggeredConditions
  * @param addedArrays
  * @param filledFields
+ * @param fieldInputs
+ * @param usedFieldInputs
  */
 async function handleField(
   page: Page,
@@ -99,6 +142,8 @@ async function handleField(
   triggeredConditions: Set<string>,
   addedArrays: Set<string>,
   filledFields?: FilledFields,
+  fieldInputs?: FieldInputs,
+  usedFieldInputs?: Set<string>,
 ): Promise<void> {
   // Some fields are hidden behind a yes/no toggle. Click "yes" once
   // to make those fields appear before we try to interact with them.
@@ -230,12 +275,19 @@ async function handleField(
     // Fill the field only if it is enabled and we are in the fill pass.
     if (shouldFill && !await fieldDOM.isDisabled()) {
       const tag = await fieldDOM.evaluate((el: HTMLElement) => el.tagName.toLowerCase());
+      const customInput = resolveFieldInput(fieldInputs, field.fieldPath);
       let value: string;
 
       // Native HTML select: pick index 1 to skip the placeholder option.
       if (tag === 'select') {
         await page.selectOption(`#${fieldId}`, { index: 1 });
         value = await fieldDOM.inputValue();
+      }
+      // A custom value was provided for this field.
+      else if (customInput !== undefined) {
+        value = typeof customInput === 'function' ? customInput() : customInput;
+        await page.fill(`#${fieldId}`, value);
+        usedFieldInputs?.add(fieldId);
       }
       // Date fields need a Finnish date format, e.g. "30.4.2026".
       else if (field.fieldName.endsWith('_date')) {
@@ -305,6 +357,10 @@ async function handleField(
  *   Set to true to fill fields, false to only check labels.
  * @param filledFields
  *   Map to store entered values in when shouldFill is true.
+ * @param fieldInputs
+ *   Custom fill values, keyed by field id.
+ * @param usedFieldInputs
+ *   Set that collects the field ids whose custom value was applied.
  */
 export async function verifyStep(
   page: Page,
@@ -314,6 +370,8 @@ export async function verifyStep(
   t: (key: string) => string,
   shouldFill = false,
   filledFields?: FilledFields,
+  fieldInputs?: FieldInputs,
+  usedFieldInputs?: Set<string>,
 ): Promise<void> {
   for (const [sectionIndex, [section, fields]] of Object.entries(sections).entries()) {
     const sectionTitle = t(`${section}.title`);
@@ -340,6 +398,7 @@ export async function verifyStep(
           page, field, fieldId, fieldTitle,
           step, section, t, shouldFill,
           triggeredConditions, addedArrays, filledFields,
+          fieldInputs, usedFieldInputs,
         )
       );
     }
@@ -500,6 +559,50 @@ async function verifyPreviewStep(
 }
 
 /**
+ * Builds field IDs from every string or function value found in a nested
+ * fieldInputs object.
+ *
+ * For example:
+ * "root_information_in_more_detail_step_grant_target_section_safety_practices".
+ *
+ * @param node
+ *   The nested custom values (or a subtree during recursion).
+ * @param prefix
+ *   The path segments accumulated so far.
+ */
+function collectFieldInputIds(node: FieldInputs, prefix: string[] = []): string[] {
+  const ids: string[] = [];
+  for (const [key, value] of Object.entries(node)) {
+    const path = [...prefix, key];
+    if (typeof value === 'string' || typeof value === 'function') {
+      ids.push(`root_${path.join('_')}`);
+    } else if (value && typeof value === 'object') {
+      ids.push(...collectFieldInputIds(value, path));
+    }
+  }
+  return ids;
+}
+
+/**
+ * Validates that all provided field inputs were used.
+ *
+ * @param fieldInputs
+ *   The custom values supplied for this form.
+ * @param used
+ *   The field ids whose custom value was applied during the fill pass.
+ */
+function assertAllFieldInputsUsed(fieldInputs: FieldInputs | undefined, used: Set<string>): void {
+  if (!fieldInputs) return;
+  const unused = collectFieldInputIds(fieldInputs).filter((id) => !used.has(id));
+  if (unused.length > 0) {
+    throw new Error(
+      `Unused field inputs in formInputs.ts: ${unused.join(', ')}. ` +
+      `Check for invalid paths or fields that were not reached during form filling.`
+    );
+  }
+}
+
+/**
  * Goes through every step and fills all fields with valid values.
  *
  * Only fills in Finnish. Also verifies field labels as it goes.
@@ -521,6 +624,7 @@ export async function fillFormFields(
   const languages = options.languages ?? ['fi', 'sv', 'en'];
   const tree = buildFormTree(formData as any);
   const filledFields:FilledFields = options.filledFields ?? new Map();
+  const usedFieldInputs = new Set<string>();
 
   // Submit the empty form first to trigger all required field errors.
   // This lets us verify that every required field shows an error message.
@@ -563,11 +667,13 @@ export async function fillFormFields(
           await waitForFormLoad(page);
           await clickOnStep(page, 0);
         }
+        // The fill pass is done, so every custom input should have been used.
+        if (fill) assertAllFieldInputsUsed(options.fieldInputs, usedFieldInputs);
         return;
       }
 
       // Fill or verify this step's fields depending on the current pass.
-      await verifyStep(page, language, step, sections, t, fill, filledFields);
+      await verifyStep(page, language, step, sections, t, fill, filledFields, options.fieldInputs, usedFieldInputs);
       await clickNext(page);
     }
   }

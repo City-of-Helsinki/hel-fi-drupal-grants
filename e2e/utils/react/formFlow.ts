@@ -1,5 +1,6 @@
 import {type Page, test} from '@playwright/test';
 import {
+  type FieldInputs,
   type FilledFields,
   fillFormFields, verifyAnswers,
   verifyFormAndSubmit,
@@ -25,6 +26,8 @@ import {
  *   The form identifier.
  * @param FORM_ROLE
  *   The user role used during the flow.
+ * @param fieldInputs
+ *   Custom fill values for specific fields, keyed by field id.
  *
  * @return Promise<FilledFields>
  *   The collected field values used during the test.
@@ -33,6 +36,7 @@ export async function executeFormFlow(
   page: Page,
   FORM_ID: string,
   FORM_ROLE: Role,
+  fieldInputs?: FieldInputs,
 ): Promise<FilledFields> {
   const FORM_URL = `/fi/application/new/${FORM_ID}`;
   const FORM_JSON = `/fi/application/preview/${FORM_ID}`;
@@ -71,6 +75,7 @@ export async function executeFormFlow(
       formURL: `${FORM_URL}/${applicationNumber}`,
       languages: ['fi'],
       filledFields: filledFields,
+      fieldInputs: fieldInputs,
     });
   });
 
