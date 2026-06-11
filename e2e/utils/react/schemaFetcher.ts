@@ -1,6 +1,5 @@
 import { communitySettings, confirmAndSubmitSettings } from './formConstants';
 import { expect } from '@playwright/test';
-import { logger } from "../logger";
 import { fetchJsonApiRequest } from "./fetchJsonApiRequest";
 
 /**
@@ -49,12 +48,10 @@ export async function craftSchema(
 ): Promise<Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>> {
   const data = await fetchJsonApiRequest<FormPreviewResponse>(pathToJson);
   expect(data).toHaveProperty('settings');
-  expect(data.settings.form_identifier).toBe(formID);
-
-  if (data.settings.form_identifier !== formID) {
-    logger(`Wrong form, expected ${formID}, got ${data.settings.form_identifier}`);
-    return;
-  }
+  expect(
+    data.settings.form_identifier,
+    `Wrong form loaded: expected "${formID}", got "${data.settings.form_identifier}"`,
+  ).toBe(formID);
 
   // Inject the applicant info and confirmation steps into the schema.
   // The API does not return these, so we add them from local constants.
