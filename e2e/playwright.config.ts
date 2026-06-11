@@ -13,6 +13,9 @@ export default defineConfig({
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
+  /* Retry once on CI, so f.e. a network error doesn't fail the whole run. */
+  /* This also makes `trace: 'on-first-retry'` below actually produce a trace. */
+  retries: process.env.CI ? 1 : 0,
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI ? [
