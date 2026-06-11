@@ -209,8 +209,7 @@ class JsonMapper {
           foreach ($value as $subfield => $subValue) {
             $definitionName = $fieldName . '.' . $subfield;
             $valueArray = $definition['data'][$definitionName];
-            $valueArray['value'] = (string) $subValue ?? "";
-            $values[] = $valueArray;
+            $values[] = $this->applyMultipleValue($valueArray, (string) $subValue);
           }
         }
         else {
@@ -218,13 +217,37 @@ class JsonMapper {
             continue;
           }
           $valueArray = $definition['data'][$fieldName];
-          $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
-          $values[] = $valueArray;
+          $stringValue = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
+          $values[] = $this->applyMultipleValue($valueArray, $stringValue);
         }
       }
       $this->setTargetValue($data, $targetPath, $values, $definition);
     }
 
+  }
+
+  /**
+   * Build a single value entry for a multiple_values row.
+   *
+   * Applies an optional per-field 'value_map', which translates a schema enum
+   * key (a translatable string) into the value Avus2 expects, then strips the
+   * map so it does not leak into the output.
+   *
+   * @param array<string, mixed> $valueArray
+   *   The field's value definition (ID, label, value, valueType, ...).
+   * @param string $stringValue
+   *   The stringified source value.
+   *
+   * @return array<string, mixed>
+   *   The value entry with the resolved value.
+   */
+  private function applyMultipleValue(array $valueArray, string $stringValue): array {
+    if (isset($valueArray['value_map'])) {
+      $stringValue = $valueArray['value_map'][$stringValue] ?? $stringValue;
+      unset($valueArray['value_map']);
+    }
+    $valueArray['value'] = $stringValue;
+    return $valueArray;
   }
 
   /**
@@ -765,6 +788,80 @@ class JsonMapper {
     }
     return NULL;
   }
+
+  /**
+   * Get complete list of files to send to Avus2.
+   *
+   * When user sends patch-request, the files must be handled correctly.
+   * User may not delete files but may add new files. Also, the bank file must
+   * exist. Therefore, we pick all unique files from both old and new
+   * submission to make sure we have everything.
+   *
+   * The submission must have bank file (filetype 1).
+   * Bank file is added on initial submission automatically.
+   *
+   * The submission must have all required files, max one file per filetype.
+   * Required files can be set as "will be sent later" or
+   * "part of another file".
+   *
+   * The submission can have up to 10 "other attachments" of filetype 0
+   * New "other attachments" can be added if the application is editable.
+   *
+   * @param array<mixed> $oldFiles
+   *   The mapped files from old atv-document.
+   * @param array<mixed> $newFiles
+   *   The freshly mapped files.
+   *
+   * @return array<mixed>
+   *   The files array that should be put to attachmentsInfo.attachmentsArray.
+   */
+  public function patchMappedFiles(array $oldFiles, array $newFiles): array {
+    // To keep track already mapped files.
+    $fileTypes = [];
+    $otherAttachmentsIntegrationIds = [];
+
+    // Already sent and new files.
+    $uniqueFiles = [];
+
+    // Check all already set files by filetype and integration id.
+    foreach ($oldFiles as $fileFieldArray) {
+      $fileTypeArray = array_find($fileFieldArray, fn($item) => $item['ID'] === 'fileType');
+      $integrationIdArray = array_find($fileFieldArray, fn($item) => $item['ID'] === 'integrationID');
+      // The file is actually uploaded stays mapped.
+      if ($fileTypeArray && $integrationIdArray) {
+        $fileTypes[] = $fileTypeArray['value'];
+        $uniqueFiles[] = $fileFieldArray;
+        if ($fileTypeArray['value'] === '0') {
+          $otherAttachmentsIntegrationIds[] = $integrationIdArray['value'];
+        }
+      }
+    }
+
+    // Loop through the set of files sent from form.
+    foreach ($newFiles as $fileFieldArray) {
+      $fileTypeArray = array_find($fileFieldArray, fn($item) => $item['ID'] === 'fileType');
+      $integrationIdArray = array_find($fileFieldArray, fn($item) => $item['ID'] === 'integrationID');
+
+      // Skip already mapped other files, add the new ones.
+      if ($fileTypeArray &&
+          $fileTypeArray['value'] === '0' &&
+          in_array($integrationIdArray['value'], $otherAttachmentsIntegrationIds)
+      ) {
+        continue;
+      }
+      elseif ($fileTypeArray
+        && $fileTypeArray['value'] !== '0' &&
+        in_array($fileTypeArray['value'], $fileTypes)) {
+        // The filetype exists already. Multiple filetype 0s allowed.
+        continue;
+      }
+
+      $uniqueFiles[] = $fileFieldArray;
+    }
+
+    return $uniqueFiles;
+  }
+
 
   /**
    * Find a file field value.

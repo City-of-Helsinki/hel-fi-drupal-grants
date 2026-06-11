@@ -1,0 +1,458 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      },
+      "subventions": {
+        "ui:field": "subventionTable"
+      },
+      "primary_art": {
+        "ui:widget": "select",
+        "ui:options": {
+          "tooltipLabel": "primary_art.title",
+          "tooltipButtonLabel": "primary_art.title",
+          "tooltipText": "primary_art.description"
+        }
+      },
+      "purpose": {
+        "ui:widget": "textarea",
+        "misc:max-length": 700,
+        "ui:options": {
+          "tooltipLabel": "purpose.title",
+          "tooltipButtonLabel": "purpose.title",
+          "tooltipText": "purpose.tooltip"
+        }
+      }
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_compensations": {
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    }
+  },
+  "community_info_step": {
+    "community_members_section": {
+      "members_fieldset": {
+        "ui:options": {
+          "tooltipLabel": "members_fieldset.title",
+          "tooltipButtonLabel": "members_fieldset.title",
+          "tooltipText": "members_fieldset.help"
+        }
+      }
+    },
+    "art_premises_section": {
+      "is_owner_of_art_premises": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true,
+          "tooltipLabel": "is_owner_of_art_premises.title",
+          "tooltipButtonLabel": "is_owner_of_art_premises.title",
+          "tooltipText": "is_owner_of_art_premises.tooltip"
+        }
+      },
+      "art_premises": {
+        "ui:options": {
+          "addText": "art_premises.add",
+          "hideNameFromPrint": true
+        },
+        "items": {
+          "art_premise_type": {
+            "ui:widget": "select"
+          },
+          "art_premise_is_others_use": {
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ],
+            "ui:widget": "radio"
+          },
+          "art_premise_is_owned": {
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ],
+            "ui:widget": "radio"
+          },
+          "art_premise_is_owned_by_city": {
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ],
+            "ui:widget": "radio"
+          }
+        }
+      }
+    }
+  },
+  "realized_activity_step": {
+    "students_section": {
+      "way_of_selection": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "personal_teaching": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "free_students": {
+        "ui:widget": "textarea"
+      }
+    },
+    "realized_premises_section": {
+      "realized_premises": {
+        "ui:options": {
+          "addText": "realized_premises.add",
+          "hideNameFromPrint": true
+        },
+        "items": {
+          "ui:order": [
+            "realized_premise_name",
+            "realized_premise_postal_code",
+            "realized_premise_is_owned_by_city",
+            "realized_premise_city_section",
+            "realized_premise_suitability"
+          ],
+          "realized_premise_is_owned_by_city": {
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ],
+            "ui:widget": "radio",
+            "ui:options": {
+              "affirmativeExpands": true
+            }
+          },
+          "realized_premise_city_section": {
+            "ui:widget": "select",
+            "ui:enumNames": [
+              "realized_premise_city_section.urban_environment",
+              "realized_premise_city_section.culture_and_leisure",
+              "realized_premise_city_section.education",
+              "realized_premise_city_section.other"
+            ],
+            "ui:options": {
+              "tooltipLabel": "realized_premise_city_section.title",
+              "tooltipButtonLabel": "realized_premise_city_section.title",
+              "tooltipText": "realized_premise_city_section.description"
+            }
+          },
+          "realized_premise_suitability": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "realized_premise_suitability.well",
+              "realized_premise_suitability.partially",
+              "realized_premise_suitability.poorly"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "activity_basis_step": {
+    "activity_content_section": {
+      "activity_equality": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    },
+    "activity_reach_section": {
+      "activity_accessibility": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    },
+    "activity_organising_section": {
+      "activity_ecology": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    },
+    "activity_development_section": {
+      "activity_goals": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "activity_methods": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "activity_future_changes": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    }
+  },
+  "budget_step": {
+    "planned_budget_section": {
+      "planned_budget_section_info": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "is_part_of_vos": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "tooltipLabel": "is_part_of_vos.title",
+          "tooltipButtonLabel": "is_part_of_vos.title",
+          "tooltipText": "is_part_of_vos.tooltip"
+        }
+      }
+    },
+    "planned_income_section": {
+      "incomeGroupName": {
+        "ui:widget": "hidden"
+      },
+      "applied_grant": {
+        "ui:field": "computedSum",
+        "ui:options": {
+          "sourceFields": ["grant_info_step.acting_year_section.subventions"],
+          "sourceShape": "subvention"
+        }
+      },
+      "planned_state_operative_subvention": {
+        "ui:options": {
+          "tooltipLabel": "planned_state_operative_subvention.title",
+          "tooltipButtonLabel": "planned_state_operative_subvention.title",
+          "tooltipText": "planned_state_operative_subvention.tooltip"
+        }
+      },
+      "planned_other_compensations": {
+        "ui:options": {
+          "tooltipLabel": "planned_other_compensations.title",
+          "tooltipButtonLabel": "planned_other_compensations.title",
+          "tooltipText": "planned_other_compensations.tooltip"
+        }
+      },
+      "entry_fees": {
+        "ui:options": {
+          "tooltipLabel": "entry_fees.title",
+          "tooltipButtonLabel": "entry_fees.title",
+          "tooltipText": "entry_fees.tooltip"
+        }
+      }
+    },
+    "planned_cost_section": {
+      "costGroupName": {
+        "ui:widget": "hidden"
+      }
+    },
+    "realized_budget_section": {
+      "realized_budget_section_info": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "was_part_of_vos": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "tooltipLabel": "was_part_of_vos.title",
+          "tooltipButtonLabel": "was_part_of_vos.title",
+          "tooltipText": "was_part_of_vos.tooltip"
+        }
+      }
+    },
+    "realized_income_section": {
+      "incomeGroupName": {
+        "ui:widget": "hidden"
+      },
+      "other_compensation_from_city": {
+        "ui:options": {
+          "tooltipLabel": "other_compensation_from_city.title",
+          "tooltipButtonLabel": "other_compensation_from_city.title",
+          "tooltipText": "other_compensation_from_city.tooltip"
+        }
+      },
+      "state_operative_subvention": {
+        "ui:options": {
+          "tooltipLabel": "state_operative_subvention.title",
+          "tooltipButtonLabel": "state_operative_subvention.title",
+          "tooltipText": "state_operative_subvention.tooltip"
+        }
+      },
+      "other_compensations_realized": {
+        "ui:options": {
+          "tooltipLabel": "other_compensations_realized.title",
+          "tooltipButtonLabel": "other_compensations_realized.title",
+          "tooltipText": "other_compensations_realized.tooltip"
+        }
+      },
+      "total_income": {
+        "ui:options": {
+          "tooltipLabel": "total_income.title",
+          "tooltipButtonLabel": "total_income.title",
+          "tooltipText": "total_income.tooltip"
+        }
+      }
+    },
+    "realized_cost_section": {
+      "costGroupName": {
+        "ui:widget": "hidden"
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000,
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "community_rules": {
+        "ui:options": {
+          "tooltipLabel": "community_rules.title",
+          "tooltipButtonLabel": "community_rules.title",
+          "tooltipText": "community_rules.description"
+        },
+        "community_rules_file": {
+          "misc:file-type": 7,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_financial_statements": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_financial_statements.title",
+          "tooltipButtonLabel": "confirmed_financial_statements.title",
+          "tooltipText": "confirmed_financial_statements.description"
+        },
+        "confirmed_financial_statements_file": {
+          "misc:file-type": 43,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_annual_report": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_annual_report.title",
+          "tooltipButtonLabel": "confirmed_annual_report.title",
+          "tooltipText": "confirmed_annual_report.description"
+        },
+        "confirmed_annual_report_file": {
+          "misc:file-type": 4,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_audit_report": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_audit_report.title",
+          "tooltipButtonLabel": "confirmed_audit_report.title",
+          "tooltipText": "confirmed_audit_report.description"
+        },
+        "confirmed_audit_report_file": {
+          "misc:file-type": 5,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "action_plan": {
+        "ui:options": {
+          "tooltipLabel": "action_plan.title",
+          "tooltipButtonLabel": "action_plan.title",
+          "tooltipText": "action_plan.description"
+        },
+        "action_plan_file": {
+          "misc:file-type": 1,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "budget": {
+        "ui:options": {
+          "tooltipLabel": "budget.title",
+          "tooltipButtonLabel": "budget.title"
+        },
+        "budget_file": {
+          "misc:file-type": 2,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "further_clarification": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:variant": "simple",
+          "misc:multiple": "true",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help",
+          "ui:field": "atvFile"
+        }
+      }
+    }
+  }
+}

@@ -40,6 +40,16 @@
       "fi": "Myöntävä vastaus avaa lisäkysymyksen",
       "sv": "Ett jakande svar öppnar ytterligare en fråga"
     },
+    "age_group_9_12.title": {
+      "en": "Helsinki residents aged 9 to 12 years",
+      "fi": "9–12-vuotiasta helsinkiläistä",
+      "sv": "9–12-åriga helsingforsare"
+    },
+    "age_group_9_18.title": {
+      "en": "Helsinki residents aged 9 to 18 years",
+      "fi": "9–18-vuotiasta helsinkiläistä",
+      "sv": "9–18-åriga helsingforsare"
+    },
     "age_group_13_15.title": {
       "en": "Helsinki residents aged 13 to 15 years",
       "fi": "13–15-vuotiasta helsinkiläistä",
@@ -54,16 +64,6 @@
       "en": "Helsinki residents aged 18 to 24 years",
       "fi": "18–24-vuotiasta helsinkiläistä",
       "sv": "18–24-åriga helsingforsare"
-    },
-    "age_group_9_12.title": {
-      "en": "Helsinki residents aged 9 to 12 years",
-      "fi": "9–12-vuotiasta helsinkiläistä",
-      "sv": "9–12-åriga helsingforsare"
-    },
-    "age_group_9_18.title": {
-      "en": "Helsinki residents aged 9 to 18 years",
-      "fi": "9–18-vuotiasta helsinkiläistä",
-      "sv": "9–18-åriga helsingforsare"
     },
     "applicant_email.description": {
       "en": "Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.",
@@ -134,6 +134,11 @@
       "en": "Yes",
       "fi": "Kyllä",
       "sv": "Ja"
+    },
+    "boys.title": {
+      "en": "Boys",
+      "fi": "Pojat",
+      "sv": "Pojkar"
     },
     "budget.description": {
       "en": "Attach the budget for the entire organization.",
@@ -440,6 +445,11 @@
       "fi": "Lisäselvitys liitteistä",
       "sv": "Ytterligare information om bilagorna"
     },
+    "girls.title": {
+      "en": "Girls",
+      "fi": "Tytöt",
+      "sv": "Flickor"
+    },
     "grants_compensations_information.value": {
       "en": "Only apply for one grant type at a time with each application.",
       "fi": "Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.",
@@ -495,11 +505,6 @@
       "fi": "Tulo",
       "sv": "Inkomst"
     },
-    "income_type_row_item.title": {
-      "en": "Type of income",
-      "fi": "Tulon tyyppi",
-      "sv": "Typ av inkomst"
-    },
     "income_rows.add": {
       "en": "Add new income",
       "fi": "Lisää uusi tulo",
@@ -509,6 +514,11 @@
       "en": "Income",
       "fi": "Tulot",
       "sv": "Inkomster"
+    },
+    "income_type_row_item.title": {
+      "en": "Type of income",
+      "fi": "Tulon tyyppi",
+      "sv": "Typ av inkomst"
     },
     "information_in_more_detail_step.title": {
       "en": "Information in more detail",
@@ -530,15 +540,10 @@
       "fi": "7-28 -vuotiaat",
       "sv": "7-28-åringar"
     },
-    "members_helsinki.title": {
-      "en": "Of whom Helsinki residents",
-      "fi": "Joista helsinkiläisiä",
-      "sv": "Varav helsingforsare"
-    },
-    "members_others.title": {
-      "en": "Other participants",
-      "fi": "Muut osallistujat",
-      "sv": "Övriga deltagare"
+    "members_active_fieldset.legend": {
+      "en": "Active participants/members",
+      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
+      "sv": "Aktiva deltagare/medlemmar"
     },
     "members_applicant_community_global.description": {
       "en": "How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
@@ -590,10 +595,15 @@
       "fi": "Jäsenmäärä",
       "sv": "Medlemskap"
     },
-    "members_active_fieldset.legend": {
-      "en": "Active participants/members",
-      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
-      "sv": "Aktiva deltagare/medlemmar"
+    "members_helsinki.title": {
+      "en": "Of whom Helsinki residents",
+      "fi": "Joista helsinkiläisiä",
+      "sv": "Varav helsingforsare"
+    },
+    "members_others.title": {
+      "en": "Other participants",
+      "fi": "Muut osallistujat",
+      "sv": "Övriga deltagare"
     },
     "minutes_of_the_annual_meeting.description": {
       "en": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability discussed. For associations, the financial statements are always confirmed at the association's annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability discussed, this attachment does not need to be submitted.",
@@ -763,7 +773,12 @@
     "other_compensations_section_have_received_prior_compensations.title": {
       "en": "Report on the use of the grant I received in the previous year",
       "fi": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta",
-      "sv": "Redovisning om understödet som jag fick under det föregående året "
+      "sv": "Redovisning om understödet som jag fick under det föregående året"
+    },
+    "postal_code.title": {
+      "en": "Postal code",
+      "fi": "Postinumero",
+      "sv": "Postnummer"
     },
     "prior_benefits_usage_section.title": {
       "en": "Report on the use of the previous grant",
@@ -949,11 +964,6 @@
       "en": "Types of grant",
       "fi": "Avustuslajit",
       "sv": "Understödskategorier"
-    },
-    "postal_code.title": {
-      "en": "Postal code",
-      "fi": "Postinumero",
-      "sv": "Postnummer"
     },
     "target_group_reach.title": {
       "en": "How are the target groups reached and identified?",

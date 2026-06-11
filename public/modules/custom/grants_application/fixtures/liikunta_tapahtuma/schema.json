@@ -291,11 +291,11 @@
               "type": "object",
               "properties": {
                 "minor_men": {
-                  "title": "minor_men.title",
+                  "title": "boys.title",
                   "type": "integer"
                 },
                 "minor_women": {
-                  "title": "minor_women.title",
+                  "title": "girls.title",
                   "type": "integer"
                 },
                 "minor_other": {

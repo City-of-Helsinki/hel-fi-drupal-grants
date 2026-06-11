@@ -1,0 +1,202 @@
+{
+  "applicant_info": {
+    "applicant_email": {
+      "email": "test@example.com"
+    },
+    "contact_person_info": {
+      "contact_person": "Joku Henkilö",
+      "contact_person_phone_number": "040 123 123 12"
+    },
+    "community_address": {
+      "community_address": "Kauppakatu 20"
+    },
+    "bank_account": {
+      "bank_account": "FI4950009420028730"
+    },
+    "community_officials": {
+      "community_officials": [
+        {
+          "official": "a464c2d0-a79a-400e-a9cf-32f583675194"
+        }
+      ]
+    }
+  },
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": "2026",
+      "subventions": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "34",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "15000",
+            "valueType": "double"
+          }
+        ]
+      ],
+      "primary_art": "primary_art.music",
+      "purpose": "Lyhyt esittelyteksti taiteen perusopetuksen toiminnasta."
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": true,
+      "other_compensations": [
+        {
+          "other_compensation_issuer": "Valtio",
+          "other_compensation_issuer_name": "Opetus- ja kulttuuriministeriö",
+          "other_compensation_issuer_year": "2024",
+          "other_compensation_amount": 5000,
+          "other_compensation_description": "Toiminta-avustus"
+        }
+      ]
+    }
+  },
+  "community_info_step": {
+    "community_members_section": {
+      "members_fieldset": {
+        "members_applicant_person_global": "120",
+        "members_applicant_person_local": "90",
+        "members_applicant_community_global": "5",
+        "members_applicant_community_local": "3"
+      }
+    },
+    "art_premises_section": {
+      "is_owner_of_art_premises": true,
+      "art_premises": [
+        {
+          "art_premise_name": "Pääsali",
+          "art_premise_type": "art_premise_type.performance",
+          "art_premise_postal_code": "00100",
+          "art_premise_is_others_use": false,
+          "art_premise_is_owned": true,
+          "art_premise_is_owned_by_city": false
+        }
+      ]
+    }
+  },
+  "realized_activity_step": {
+    "students_section": {
+      "childhood_studies_fieldset": {
+        "pupils_childhood_all": "30",
+        "pupils_childhood_girls": "18",
+        "pupils_childhood_boys": "12"
+      },
+      "wide_basic_studies_fieldset": {
+        "pupils_wide_basic_all": "40",
+        "pupils_wide_basic_girls": "22",
+        "pupils_wide_basic_boys": "18"
+      },
+      "wide_advanced_studies_fieldset": {
+        "pupils_wide_advanced_all": "20",
+        "pupils_wide_advanced_girls": "11",
+        "pupils_wide_advanced_boys": "9"
+      },
+      "general_studies_fieldset": {
+        "pupils_general_all": "10",
+        "pupils_general_girls": "6",
+        "pupils_general_boys": "4"
+      },
+      "teaching_personnel": "8",
+      "way_of_selection": "Oppilaat valitaan ilmoittautumisjärjestyksessä.",
+      "personal_teaching": "Kyllä, tarvittaessa.",
+      "free_students": "Ei vapaaoppilaspaikkoja.",
+      "lessons_fieldset": {
+        "lessons_childhood": "200",
+        "lessons_wide_basic": "300",
+        "lessons_wide_advanced": "150",
+        "lessons_general": "100"
+      }
+    },
+    "realized_premises_section": {
+      "realized_premises": [
+        {
+          "realized_premise_name": "Koulun sali",
+          "realized_premise_postal_code": "00200",
+          "realized_premise_is_owned_by_city": true,
+          "realized_premise_city_section": "Kasvatuksen ja koulutuksen toimiala",
+          "realized_premise_suitability": "Hyvin"
+        }
+      ]
+    }
+  },
+  "activity_basis_step": {
+    "activity_content_section": {
+      "activity_equality": "Tasa-arvo toteutuu monin tavoin."
+    },
+    "activity_reach_section": {
+      "activity_accessibility": "Toiminta on saavutettavaa."
+    },
+    "activity_organising_section": {
+      "activity_ecology": "Ympäristövastuusuunnitelma on käytössä."
+    },
+    "activity_development_section": {
+      "activity_goals": "Tavoitteet saavutettiin pääosin.",
+      "activity_methods": "Itsearviointia tehdään säännöllisesti.",
+      "activity_future_changes": "Toimintaa laajennetaan."
+    }
+  },
+  "budget_step": {
+    "planned_budget_section": {
+      "is_part_of_vos": false
+    },
+    "planned_income_section": {
+      "incomeGroupName": "general",
+      "planned_state_operative_subvention": "3000",
+      "planned_other_compensations": "1000",
+      "sponsorships": "500",
+      "entry_fees": "2000",
+      "sales": "1500",
+      "financial_funding_and_interests": "100"
+    },
+    "planned_cost_section": {
+      "costGroupName": "general",
+      "planned_total_costs": "23100"
+    },
+    "realized_budget_section": {
+      "was_part_of_vos": false
+    },
+    "realized_income_section": {
+      "incomeGroupName": "general",
+      "other_compensation_from_city": "12000",
+      "state_operative_subvention": "3000",
+      "other_compensations_realized": "1000",
+      "total_income": "20000"
+    },
+    "realized_cost_section": {
+      "costGroupName": "general",
+      "total_costs": "19000"
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": "Lisätietoja hakemukseen liittyen."
+    },
+    "attachments_section": {
+      "required_attachments_help": [
+        null
+      ],
+      "multiple_attachments_help": [
+        null
+      ],
+      "formerly_provided_attachments_help": [
+        null
+      ],
+      "cant_view_after_help": [
+        null,
+        null
+      ],
+      "further_clarification": "Liitteiden lisäselvitys.",
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "files": [],
+          "description": ""
+        }
+      }
+    }
+  }
+}
