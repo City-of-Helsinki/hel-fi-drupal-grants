@@ -1,0 +1,1042 @@
+{
+  "definitions": {
+    "_other_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_compensation_amount": {
+          "format": "decimal-number",
+          "title": "other_compensation_amount.title",
+          "type": "string"
+        },
+        "other_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_compensation_issuer",
+        "other_compensation_issuer_name",
+        "other_compensation_issuer_year",
+        "other_compensation_amount",
+        "other_compensation_description"
+      ]
+    },
+    "_other_applied_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_applied_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_applied_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_applied_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_applied_compensation_amount": {
+          "format": "decimal-number",
+          "title": "other_applied_compensation_amount.title",
+          "type": "string"
+        },
+        "other_applied_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_applied_compensation_issuer",
+        "other_applied_compensation_issuer_name",
+        "other_applied_compensation_issuer_year",
+        "other_applied_compensation_amount",
+        "other_applied_compensation_description"
+      ]
+    },
+    "_location_select": {
+      "type": "string",
+      "default": "location_select.none",
+      "enum": [
+        "location_select.none",
+        "location_select.Kluuvi",
+        "location_select.Etu-Töölö",
+        "location_select.Punavuori",
+        "location_select.Kaartinkaupunki",
+        "location_select.Ullanlinna",
+        "location_select.Eira",
+        "location_select.Hernesaari",
+        "location_select.Katajanokka",
+        "location_select.Kruununhaka",
+        "location_select.Kamppi",
+        "location_select.Ruoholahti",
+        "location_select.Lapinlahti",
+        "location_select.Kaivopuisto",
+        "location_select.Suomenlinna",
+        "location_select.Kotkavuori",
+        "location_select.Myllykallio",
+        "location_select.Koivusaari",
+        "location_select.Vattuniemi",
+        "location_select.Jätkäsaari",
+        "location_select.Länsi-Pasila",
+        "location_select.Pohjois-Pasila",
+        "location_select.Keski-Pasila",
+        "location_select.Taka-Töölö",
+        "location_select.Meilahti",
+        "location_select.Laakso",
+        "location_select.Vanha Ruskeasuo",
+        "location_select.Pikku Huopalahti",
+        "location_select.Kivihaka",
+        "location_select.Etelä-Haaga",
+        "location_select.Vanha Munkkiniemi",
+        "location_select.Kuusisaari",
+        "location_select.Lehtisaari",
+        "location_select.Munkkivuori",
+        "location_select.Niemenmäki",
+        "location_select.Talinranta",
+        "location_select.Tali",
+        "location_select.Pajamäki",
+        "location_select.Reimarla",
+        "location_select.Marttila",
+        "location_select.Pitäjänmäen yritysalue",
+        "location_select.Konala",
+        "location_select.Honkasuo",
+        "location_select.Pohjois-Haaga",
+        "location_select.Malminkartano",
+        "location_select.Kannelmäki",
+        "location_select.Maununneva",
+        "location_select.Hakuninmaa",
+        "location_select.Kuninkaantammi",
+        "location_select.Lassila",
+        "location_select.Torkkelinmäki",
+        "location_select.Harju",
+        "location_select.Alppila",
+        "location_select.Vallila",
+        "location_select.Itä-Pasila",
+        "location_select.Vilhonvuori",
+        "location_select.Siltasaari",
+        "location_select.Linjat",
+        "location_select.Sompasaari",
+        "location_select.Hanasaari",
+        "location_select.Toukola",
+        "location_select.Arabianranta",
+        "location_select.Kumpula",
+        "location_select.Vanhakaupunki",
+        "location_select.Viikinranta",
+        "location_select.Mustikkamaa-Korkeasaari",
+        "location_select.Kulosaari",
+        "location_select.Kalasatama",
+        "location_select.Hermanninmäki",
+        "location_select.Hermanninranta",
+        "location_select.Kyläsaari",
+        "location_select.Tullisaari",
+        "location_select.Kruunuvuorenranta",
+        "location_select.Koskela",
+        "location_select.Käpylä",
+        "location_select.Metsälä",
+        "location_select.Pirkkola",
+        "location_select.Maunula",
+        "location_select.Maunulanpuisto",
+        "location_select.Patola",
+        "location_select.Veräjämäki",
+        "location_select.Veräjälaakso",
+        "location_select.Länsi-Pakila",
+        "location_select.Paloheinä",
+        "location_select.Itä-Pakila",
+        "location_select.Torpparinmäki",
+        "location_select.Haltiala",
+        "location_select.Tuomarinkartano",
+        "location_select.Ylä-Malmi",
+        "location_select.Ala-Malmi",
+        "location_select.Tattariharju",
+        "location_select.Malmin lentokenttä",
+        "location_select.Viikinmäki",
+        "location_select.Pihlajamäki",
+        "location_select.Pihlajisto",
+        "location_select.Pukinmäki",
+        "location_select.Tapanila",
+        "location_select.Töyrynummi",
+        "location_select.Siltamäki",
+        "location_select.Tapulikaupunki",
+        "location_select.Puistola",
+        "location_select.Heikinlaakso",
+        "location_select.Tattarisuo",
+        "location_select.Alppikylä",
+        "location_select.Jakomäki",
+        "location_select.Tapaninvainio",
+        "location_select.Latokartano",
+        "location_select.Viikin tiedepuisto",
+        "location_select.Länsi-Herttoniemi",
+        "location_select.Herttoniemenranta",
+        "location_select.Roihuvuori",
+        "location_select.Tammisalo",
+        "location_select.Vartiosaari",
+        "location_select.Yliskylä",
+        "location_select.Jollas",
+        "location_select.Villinki",
+        "location_select.Itäsaaret",
+        "location_select.Santahamina",
+        "location_select.Hevossalmi",
+        "location_select.Herttoniemen yritysalue",
+        "location_select.Roihupelto",
+        "location_select.Östersundom",
+        "location_select.Salmenkallio",
+        "location_select.Talosaari",
+        "location_select.Karhusaari",
+        "location_select.Landbo",
+        "location_select.Puroniitty",
+        "location_select.Puotinharju",
+        "location_select.Puotila",
+        "location_select.Myllypuro",
+        "location_select.Marjaniemi",
+        "location_select.Itäkeskus",
+        "location_select.Kontula",
+        "location_select.Vesala",
+        "location_select.Kivikko",
+        "location_select.Kurkimäki",
+        "location_select.Vartioharju",
+        "location_select.Mustavuori",
+        "location_select.Mellunmäki",
+        "location_select.Keski-Vuosaari",
+        "location_select.Nordsjön kartano",
+        "location_select.Meri-Rastila",
+        "location_select.Kallahti",
+        "location_select.Rastila",
+        "location_select.Niinisaari",
+        "location_select.Uutela",
+        "location_select.Aurinkolahti"
+      ]
+    },
+    "_income_row_item": {
+      "type": "object",
+      "title": "income_type_row_item.title",
+      "description": "income_row_item.description",
+      "properties": {
+        "income_row_description": {
+          "title": "income_row_description.title",
+          "type": "string"
+        },
+        "income_row_amount": {
+          "format": "decimal-number",
+          "title": "income_row_amount.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "income_row_description",
+        "income_row_amount"
+      ]
+    },
+    "_expenditure_row_item": {
+      "type": "object",
+      "title": "expenditure_row_item.title",
+      "description": "expenditure_row_item.description",
+      "properties": {
+        "expenditure_row_description": {
+          "title": "expenditure_row_description.title",
+          "type": "string"
+        },
+        "expenditure_row_amount": {
+          "format": "decimal-number",
+          "title": "expenditure_row_amount.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "expenditure_row_description",
+        "expenditure_row_amount"
+      ]
+    },
+    "grant_info_step": {
+      "required": [
+        "acting_year_section",
+        "subventions_section",
+        "purpose_section",
+        "other_compensations_section",
+        "other_applied_compensations_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "acting_year"
+          ]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "description": "grants_compensations_information.value",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 47,
+                  "label": "subventions.47.title"
+                },
+                {
+                  "id": 51,
+                  "label": "subventions.51.title"
+                }
+              ]
+            }
+          }
+        },
+        "purpose_section": {
+          "title": "purpose_section.title",
+          "description": "compensation_purpose_information.value",
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "title": "purpose_section_purpose.title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "purpose"
+          ]
+        },
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_received_other_compensations": {
+              "title": "other_compensations_section_have_received_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": [
+            "have_received_other_compensations"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "other_applied_compensations_section": {
+          "title": "other_applied_compensations_section.title",
+          "description": "other_applied_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_applied_other_compensations": {
+              "title": "have_applied_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": [
+            "have_applied_other_compensations"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_applied_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_applied_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "information_in_more_detail_step": {
+      "type": "object",
+      "required": [
+        "information_in_more_detail_section",
+        "project_plan_section",
+        "target_groups_section",
+        "risks_section"
+      ],
+      "properties": {
+        "information_in_more_detail_section": {
+          "type": "object",
+          "required": [
+            "project_plan_grant_duration",
+            "applied_grant_amount"
+          ],
+          "properties": {
+            "project_plan_grant_duration": {
+              "title": "project_plan_grant_duration.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ],
+              "default": "1"
+            },
+            "applied_grant_amount": {
+              "title": "applied_grant_amount.title",
+              "type": "object",
+              "required": [
+                "applied_grant_amount_2026"
+              ],
+              "properties": {
+                "applied_grant_amount_2026": {
+                  "format": "decimal-number",
+                  "title": "applied_grant_amount_2026.title",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "project_plan_grant_duration": {
+                    "enum": [
+                      "2",
+                      "3"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "applied_grant_amount": {
+                    "properties": {
+                      "applied_grant_amount_2027": {
+                        "format": "decimal-number",
+                        "title": "applied_grant_amount_2027.title",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "applied_grant_amount_2027"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "project_plan_grant_duration": {
+                    "const": "3"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "applied_grant_amount": {
+                    "properties": {
+                      "applied_grant_amount_2028": {
+                        "format": "decimal-number",
+                        "title": "applied_grant_amount_2028.title",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "applied_grant_amount_2028"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "project_plan_section": {
+          "title": "project_plan_section.title",
+          "type": "object",
+          "required": [
+            "project_name",
+            "project_purpose_goals",
+            "is_application_extension",
+            "actions_and_timeline"
+          ],
+          "properties": {
+            "project_name": {
+              "title": "project_name.title",
+              "type": "string"
+            },
+            "project_purpose_goals": {
+              "title": "project_purpose_goals.title",
+              "type": "string"
+            },
+            "is_application_extension": {
+              "title": "is_application_extension.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            },
+            "actions_and_timeline": {
+              "title": "actions_and_timeline.title",
+              "type": "object",
+              "required": [
+                "project_actions_timeline_2026"
+              ],
+              "properties": {
+                "actions_timeline_info": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "title": "actions_timeline_info.value",
+                      "type": "null"
+                    }
+                  ]
+                },
+                "project_actions_timeline_2026": {
+                  "title": "project_actions_timeline_2026.title",
+                  "type": "string"
+                }
+              }
+            },
+            "grant_goals_fieldset": {
+              "title": "grant_goals_fieldset.title",
+              "type": "object",
+              "properties": {
+                "goals_info": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "title": "goals_info.value",
+                      "type": "null"
+                    }
+                  ]
+                },
+                "grant_goals_1": {
+                  "title": "grant_goals_1.title",
+                  "type": "string"
+                },
+                "grant_goals_2": {
+                  "title": "grant_goals_2.title",
+                  "type": "string"
+                },
+                "grant_goals_3": {
+                  "title": "grant_goals_3.title",
+                  "type": "string"
+                },
+                "grant_goals_4": {
+                  "title": "grant_goals_4.title",
+                  "type": "string"
+                },
+                "grant_goals_5": {
+                  "title": "grant_goals_5.title",
+                  "type": "string"
+                },
+                "grant_goals_6": {
+                  "title": "grant_goals_6.title",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "is_application_extension": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "grant_interim_report_2025": {
+                    "title": "grant_interim_report_2025.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "grant_interim_report_2025"
+                ]
+              }
+            }
+          ]
+        },
+        "target_groups_section": {
+          "title": "target_groups_section.title",
+          "type": "object",
+          "required": [
+            "target_groups_participation",
+            "target_groups_skills",
+            "assesment_1_fieldset",
+            "assesment_2_fieldset",
+            "project_partners"
+          ],
+          "properties": {
+            "target_groups_for_who": {
+              "title": "target_groups_for_who.title",
+              "type": "string"
+            },
+            "target_groups_participation": {
+              "title": "target_groups_participation.title",
+              "type": "string"
+            },
+            "target_groups_skills": {
+              "title": "target_groups_skills.title",
+              "type": "string"
+            },
+            "assesment_1_fieldset": {
+              "title": "assesment_1_fieldset.title",
+              "type": "object",
+              "required": [
+                "target_groups_reached_in_helsinki",
+                "event_count_total"
+              ],
+              "properties": {
+                "target_groups_reached_in_helsinki": {
+                  "title": "target_groups_reached_in_helsinki.title",
+                  "type": "integer"
+                },
+                "event_count_total": {
+                  "title": "event_count_total.title",
+                  "type": "integer"
+                }
+              }
+            },
+            "assesment_2_fieldset": {
+              "title": "assesment_2_fieldset.title",
+              "type": "object",
+              "required": [
+                "project_area_selection_criterion"
+              ],
+              "properties": {
+                "assesment_2_info": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "title": "assesment_2_info.value",
+                      "type": "null"
+                    }
+                  ]
+                },
+                "location_1": {
+                  "title": "location_1.title",
+                  "$ref": "#/definitions/_location_select"
+                },
+                "location_2": {
+                  "title": "location_2.title",
+                  "$ref": "#/definitions/_location_select"
+                },
+                "location_3": {
+                  "title": "location_3.title",
+                  "$ref": "#/definitions/_location_select"
+                },
+                "location_4": {
+                  "title": "location_4.title",
+                  "$ref": "#/definitions/_location_select"
+                },
+                "location_5": {
+                  "title": "location_5.title",
+                  "$ref": "#/definitions/_location_select"
+                },
+                "project_area_selection_criterion": {
+                  "title": "project_area_selection_criterion.title",
+                  "type": "string"
+                }
+              }
+            },
+            "project_partners": {
+              "title": "project_partners.title",
+              "type": "string"
+            }
+          }
+        },
+        "risks_section": {
+          "title": "risks_section.title",
+          "type": "object",
+          "required": [
+            "key_risks",
+            "monitoring_of_project_implementation"
+          ],
+          "properties": {
+            "key_risks": {
+              "title": "key_risks.title",
+              "type": "string"
+            },
+            "monitoring_of_project_implementation": {
+              "title": "monitoring_of_project_implementation.title",
+              "type": "string"
+            },
+            "project_establishment": {
+              "title": "project_establishment.title",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "project_plan_grant_duration": {
+                    "enum": [
+                      "2",
+                      "3"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_plan_section": {
+                "properties": {
+                  "actions_and_timeline": {
+                    "properties": {
+                      "project_actions_timeline_2027": {
+                        "title": "project_actions_timeline_2027.title",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "project_actions_timeline_2027"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "project_plan_grant_duration": {
+                    "const": "3"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_plan_section": {
+                "properties": {
+                  "actions_and_timeline": {
+                    "properties": {
+                      "project_actions_timeline_2028": {
+                        "title": "project_actions_timeline_2028.title",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "project_actions_timeline_2028"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "applied_grant_amount": {
+                    "properties": {
+                      "applied_grant_amount_2026": {
+                        "pattern": "^([5-9][0-9]{4}|[0-9]{6,})(,[0-9]+)?$"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "risks_section": {
+                "properties": {
+                  "project_solved_problem": {
+                    "title": "project_solved_problem.title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "project_solved_problem"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "budget_step": {
+      "type": "object",
+      "properties": {
+        "budget_info_section": {
+          "type": "object",
+          "required": [
+            "budget_info"
+          ],
+          "properties": {
+            "budget_info": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "budget_info.value",
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "income_section": {
+          "title": "income_section.title",
+          "type": "object",
+          "properties": {
+            "incomeGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "applied_benefits": {
+              "format": "decimal-number",
+              "title": "applied_benefits.title",
+              "type": "string"
+            },
+            "income_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_income_row_item"
+              }
+            }
+          }
+        },
+        "expenditure_section": {
+          "title": "expenditure_section.title",
+          "type": "object",
+          "properties": {
+            "costGroupName": {
+              "type": "string",
+              "default": "subventionUseCosts"
+            },
+            "expenditure_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_expenditure_row_item"
+              }
+            }
+          }
+        }
+      }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "additional_information.title",
+              "type": "string"
+            }
+          }
+        },
+        "attachments_section": {
+          "description": "attachments_section.description",
+          "title": "attachments_section.title",
+          "type": "object",
+          "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "multiple_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "formerly_provided_attachments_help": {
+              "title": "formerly_provided_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "formerly_provided_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "other_attachment_fieldset_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "file_id": {
+                            "type": "integer"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "fileType": {
+                            "type": "integer"
+                          },
+                          "integrationID": {
+                            "type": "string"
+                          },
+                          "isDeliveredLater": {
+                            "type": "boolean"
+                          },
+                          "isIncludedInOtherFile": {
+                            "type": "boolean"
+                          },
+                          "isNewAttachment": {
+                            "type": "boolean"
+                          },
+                          "size": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    },
+    "information_in_more_detail_step": {
+      "title": "information_in_more_detail_step.title",
+      "type": "object",
+      "$ref": "#/definitions/information_in_more_detail_step"
+    },
+    "budget_step": {
+      "title": "budget_step.title",
+      "type": "object",
+      "$ref": "#/definitions/budget_step"
+    },
+    "attachments_step": {
+      "title": "attachments_step.title",
+      "type": "object",
+      "$ref": "#/definitions/attachments_step"
+    }
+  }
+}

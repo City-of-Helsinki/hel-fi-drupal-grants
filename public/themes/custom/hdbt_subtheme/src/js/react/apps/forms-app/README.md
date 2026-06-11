@@ -43,12 +43,14 @@ We have introduced some custom ways to configure the forms.
       }
   ```
 * **textParagraph** used to render a simple text paragraph without input element. See `TextParagraph.tsx`.
+* **computedSum** renders (or, with `ui:options.hidden`, just computes) a sum derived from other fields and writes it back into form data so it can drive conditional rendering. `ui:options`: `sourceFields` `string[]` (root-relative dot paths), `sourceShape` `'scalar' | 'subvention'`, `subventionType` `string` (with `sourceShape: 'subvention'`, sums only rows matching this subvention type code), `numericOutput` `boolean`, `hidden` `boolean`. Typically paired with `misc:exclude-from-submit`. See `ComputedSum.tsx`.
 
 ### UiSchema
 
 * **misc:file-type** `number` This is a value necessary for Avus2. It's passed during form submit and does nothing else. See `FileInput.tsx`.
 * **misc:max-length** `number` Determines max length for a textarea field. See `Input.tsx`.
 * **misc:variant** `string` Determines a variant of a component to be rendered. See `TextParagraph.tsx`.
+* **misc:exclude-from-submit** `boolean` Strips the field from the data sent to the backend on both submit and draft save. Used for synthetic helper fields (e.g. a `computedSum` that only exists to drive conditional rendering). See `FormWrapper.tsx`.
 
 ### Variants
 

@@ -1,0 +1,157 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear",
+        "ui:options": {
+          "tooltipLabel": "acting_year_section_acting_year.title",
+          "tooltipButtonLabel": "acting_year_section_acting_year.title",
+          "tooltipText": "acting_year_section_acting_year.description"
+        }
+      }
+    },
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
+    "camp_information": {
+      "ui:options": {
+        "hideFromPreview": true
+      },
+      "camp_information_markup": {
+        "ui:field": "textParagraph"
+      }
+    }
+  },
+  "budget_step": {
+    "income_section": {
+      "incomeGroupName": {
+        "ui:widget": "hidden"
+      },
+      "income_rows": {
+        "ui:options": {
+          "addText": "income_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true,
+            "tooltipLabel": "income_section.title",
+            "tooltipButtonLabel": "income_section.title",
+            "tooltipText": "income_section.tooltip"
+          }
+        }
+      }
+    },
+    "expenditure_section": {
+      "expenditureGroupName": {
+        "ui:widget": "hidden"
+      },
+      "expenditure_rows": {
+        "ui:options": {
+          "addText": "expenditure_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true,
+            "tooltipLabel": "expenditure_section.title",
+            "tooltipButtonLabel": "expenditure_section.title",
+            "tooltipText": "expenditure_section.tooltip"
+          }
+        }
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000,
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "previously_sent_attachments": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "community_rules": {
+        "ui:options": {
+          "tooltipLabel": "community_rules.title",
+          "tooltipButtonLabel": "community_rules.title",
+          "tooltipText": "community_rules.description"
+        },
+        "community_rules_file": {
+          "misc:file-type": 7,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "camp_excel": {
+        "ui:options": {
+          "tooltipLabel": "camp_excel.title",
+          "tooltipButtonLabel": "camp_excel.title",
+          "tooltipText": "camp_excel.tooltip"
+        },
+        "camp_excel_file": {
+          "misc:file-type": 36,
+          "misc:variant": "simple",
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "action_plan": {
+        "ui:options": {
+          "tooltipLabel": "action_plan.title",
+          "tooltipButtonLabel": "action_plan.title",
+          "tooltipText": "action_plan.description"
+        },
+        "action_plan_file": {
+          "misc:file-type": 1,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "budget": {
+        "ui:options": {
+          "tooltipLabel": "budget.title",
+          "tooltipButtonLabel": "budget.title",
+          "tooltipText": "budget.description"
+        },
+        "budget_file": {
+          "misc:file-type": 2,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "further_clarification": {
+        "ui:widget": "textarea"
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:variant": "simple",
+          "misc:multiple": "true",
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      }
+    }
+  }
+}

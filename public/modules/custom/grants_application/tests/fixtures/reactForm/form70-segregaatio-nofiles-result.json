@@ -1,0 +1,478 @@
+{
+    "compensation": {
+        "applicantInfoArray": [
+            {
+                "ID": "applicantType",
+                "label": "Hakijan tyyppi",
+                "value": "2",
+                "valueType": "string"
+            },
+            {
+                "ID": "companyNumber",
+                "label": "Y-Tunnus",
+                "value": "7769480-5",
+                "valueType": "string"
+            },
+            {
+                "ID": "registrationDate",
+                "label": "Rekisteröimispäivä",
+                "value": "21.5.2023",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "foundingYear",
+                "label": "Perustamisvuosi",
+                "value": "2020",
+                "valueType": "string"
+            },
+            {
+                "ID": "home",
+                "label": "Kotipaikka",
+                "value": "HELSINKI",
+                "valueType": "string"
+            },
+            {
+                "ID": "homePage",
+                "label": "www-sivut",
+                "value": "www.google.com",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityOfficialName",
+                "label": "Yhteisön nimi",
+                "value": "Activenakusteri Oy",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityOfficialNameShort",
+                "label": "Yhteisön lyhenne",
+                "value": "Akt",
+                "valueType": "string"
+            },
+            {
+                "ID": "email",
+                "label": "Sähköpostiosoite",
+                "value": "test@example.com",
+                "valueType": "string"
+            }
+        ],
+        "currentAddressInfoArray": [
+            {
+                "ID": "contactPerson",
+                "label": "Yhteyshenkilö",
+                "value": "Joku Henkilö",
+                "valueType": "string"
+            },
+            {
+                "ID": "phoneNumber",
+                "label": "Puhelinnumero",
+                "value": "040 123 123 12",
+                "valueType": "string"
+            },
+            {
+                "ID": "street",
+                "label": "Lähiosoite",
+                "value": "Mannerheimintie 12",
+                "valueType": "string"
+            },
+            {
+                "ID": "city",
+                "label": "Kaupunki",
+                "value": "Helsinki",
+                "valueType": "string"
+            },
+            {
+                "ID": "postCode",
+                "label": "Postinumero",
+                "value": "00100",
+                "valueType": "string"
+            },
+            {
+                "ID": "country",
+                "label": "Maa",
+                "value": "Suomi",
+                "valueType": "string"
+            }
+        ],
+        "applicationInfoArray": [
+            {
+                "ID": "applicationType",
+                "value": "KUVAERILLIS",
+                "valueType": "string"
+            },
+            {
+                "ID": "applicationTypeID",
+                "value": "70",
+                "valueType": "string"
+            },
+            {
+                "ID": "formTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "createdFormTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "submittedFormTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "applicationNumber",
+                "value": "ABCDE-123-0001009",
+                "valueType": "string"
+            },
+            {
+                "ID": "status",
+                "label": "Hakemuksen tila",
+                "value": "DRAFT",
+                "valueType": "string"
+            },
+            {
+                "ID": "actingYear",
+                "label": "Vuosi, jolle haen avustusta",
+                "value": "2026",
+                "valueType": "string"
+            }
+        ],
+        "applicantOfficialsArray": [
+            [
+                {
+                    "ID": "name",
+                    "label": "Nimi",
+                    "value": "Teppo Testaaja",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "role",
+                    "label": "Rooli",
+                    "value": "2",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "email",
+                    "label": "Sähköposti",
+                    "value": "teppo.testaaja@noreply.com",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "phone",
+                    "label": "Puhelinnumero",
+                    "value": "+358451234657",
+                    "valueType": "string"
+                }
+            ]
+        ],
+        "bankAccountArray": [
+            {
+                "ID": "accountNumber",
+                "label": "Tilinumero",
+                "value": "FI4950009420028730",
+                "valueType": "string"
+            }
+        ],
+        "senderInfoArray": [
+            {
+                "ID": "firstname",
+                "value": "Nordea",
+                "valueType": "string"
+            },
+            {
+                "ID": "lastname",
+                "value": "Demo",
+                "valueType": "string"
+            },
+            {
+                "ID": "personID",
+                "value": "010101A0101",
+                "valueType": "string"
+            },
+            {
+                "ID": "userID",
+                "value": "123345678-abcd-1234-ab12-abcdefgh",
+                "valueType": "string"
+            },
+            {
+                "ID": "email",
+                "value": "user_no_mail@hel.fi",
+                "valueType": "string"
+            }
+        ],
+        "additionalInformation": "Lisätiedot hakemukseen liittyen.",
+        "compensationInfo": {
+            "compensationArray": [
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "49",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Euroa",
+                        "value": "5000",
+                        "valueType": "float"
+                    }
+                ]
+            ],
+            "generalInfoArray": [
+                {
+                    "ID": "purpose",
+                    "value": "Lyhyt kuvaus haettavan avustuksen käyttötarkoituksesta.",
+                    "valueType": "string",
+                    "label": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista"
+                }
+            ]
+        },
+        "otherCompensationsInfo": {
+            "otherCompensationsArray": [
+                [
+                    {
+                        "ID": "issuer",
+                        "label": "Avustuksen myöntäjä",
+                        "value": "Valtio",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "issuerName",
+                        "label": "Myöntäjän nimi",
+                        "value": "Opetus- ja kulttuuriministeriö",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "year",
+                        "label": "Vuosi",
+                        "value": "2025",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Myönnetyn avustuksen summa",
+                        "value": "1000",
+                        "valueType": "float"
+                    },
+                    {
+                        "ID": "purpose",
+                        "label": "Kuvaus käyttötarkoituksesta",
+                        "value": "Myönnetyn avustuksen käyttötarkoitus",
+                        "valueType": "string"
+                    }
+                ]
+            ],
+            "otherCompensationsInfoArray": [
+                {
+                    "ID": "otherCompensationsTotal",
+                    "value": "0",
+                    "valueType": "double"
+                },
+                {
+                    "ID": "otherAppliedCompensationsTotal",
+                    "value": "0",
+                    "valueType": "double"
+                }
+            ]
+        },
+        "benefitsInfoArray": [
+            {
+                "ID": "loans",
+                "label": "",
+                "value": "",
+                "valueType": "string"
+            },
+            {
+                "ID": "premises",
+                "label": "",
+                "value": "",
+                "valueType": "string"
+            }
+        ],
+        "activitiesInfoArray": [
+            {
+                "ID": "businessPurpose",
+                "label": "Toiminnan kuvaus",
+                "value": "Tämä on hakuprofiilin tietoa",
+                "valueType": "string"
+            }
+        ],
+        "customQuestionsInfo": {
+            "customQuestionsArray": [
+                {
+                    "ID": "avustuksen_kohde_yhdistys_toimintaryhma",
+                    "label": "Haetaanko avustusta yhdistykselle vai nuorten toimintaryhmälle?",
+                    "value": "Yhdistykselle",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "avustuksen_kohde_tiivistelma",
+                    "label": "Kerro tiivistettynä yhdistyksestänne/nuorten toimintaryhmästänne.",
+                    "value": "Tiivistelmä yhdistyksen toiminnasta ja valmiuksista.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "onko_kyseessa_jatkohakemus",
+                    "label": "Onko kyseessä jatkohakemus",
+                    "value": "Kyllä",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_nimi",
+                    "label": "Projektin nimi",
+                    "value": "Segregaation ehkäisyhanke",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_toimenpiteet_alkupvm",
+                    "label": "Alkupäivämäärä",
+                    "value": "2026-03-01",
+                    "valueType": "datetime"
+                },
+                {
+                    "ID": "hankkeen_toimenpiteet_loppupvm",
+                    "label": "Loppupäivämäärä",
+                    "value": "2026-12-31",
+                    "valueType": "datetime"
+                },
+                {
+                    "ID": "hankkeen_mennyt_tavoite",
+                    "label": "Mikä on ollut projektin tavoite?",
+                    "value": "Projektin aiempi tavoite.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_kohderyhma_ja_keinot",
+                    "label": "Mikä on ollut projektin kohderyhmä ja mitä keinoja kohderyhmän tavoittamiseen on käytetty?",
+                    "value": "Aiempi kohderyhmä ja käytetyt keinot.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_jo_osallistuneet_9_12",
+                    "label": "9-12-vuotiasta helsinkiläistä",
+                    "value": "30",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_jo_osallistuneet_18_24",
+                    "label": "18-24-vuotiasta helsinkiläistä",
+                    "value": "20",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_jo_osalistuneet_uudet",
+                    "label": "Kuinka monta näistä on uusia?",
+                    "value": "10",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_kaytetyt_tunnit_per_postinumero",
+                    "label": "Kuinka monta tuntia harrastustoimintaa projektissa on järjestetty kullakin postinumeroalueella?",
+                    "value": "00400: 7h, 00900: 16h",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankeen_toteutuneet_tavoitteet",
+                    "label": "Miten projektissa on onnistuttu saavuttamaan tavoitteita?",
+                    "value": "Tavoitteiden saavuttaminen tähän mennessä.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_tulevan_vuoden_tavoitteet",
+                    "label": "Mitä projektissa tullaan tekemään tämän vuoden aikana?",
+                    "value": "Tämän vuoden toimenpiteet.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_kumppanuudet_ja_toimintamuodot",
+                    "label": "Minkälaisia kumppanuuksia ja uudenlaisia toimintamuotoja projektissa on kokeiltu tai kehitetty?",
+                    "value": "Kokeillut kumppanuudet ja toimintamuodot.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_vanhat_yhteistyokumppanit",
+                    "label": "Mitkä ovat olleet projektin keskeiset yhteistyökumppanit tähän mennessä?",
+                    "value": "Keskeiset yhteistyökumppanit ja heidän roolinsa.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun",
+                    "label": "Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon?",
+                    "value": "Esimerkkejä lasten ja nuorten osallistamisesta.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_kaytetty_avustuksen_maara",
+                    "label": "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä euroina yhteensä, kuinka paljon myönnettyä avustusta on käytetty.",
+                    "value": "4500",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_edellisen_vuoden_avustuksen_kaytto",
+                    "label": "Kuvaus edellisen vuoden erillisavustuksen käytöstä. Kerro tässä  tarkemmin avustuksen käytöstä kululajeittain.",
+                    "value": "Avustus käytettiin kululajeittain seuraavasti.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_talous_toiminta_aikataulu_muutokset",
+                    "label": "Onko projektissa tapahtunut merkittäviä muutoksia talouteen, toimintaan tai aikatauluun liittyen, mitä?",
+                    "value": "Ei merkittäviä muutoksia.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "hankkeen_jatkokausi_suunnitelma",
+                    "label": "Onko projektin jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen suunnitelman mukaan? Jos ei, niin miksi?",
+                    "value": "Jatkokausi toteutetaan alkuperäisen suunnitelman mukaan.",
+                    "valueType": "string"
+                }
+            ]
+        },
+        "budgetInfo": {
+            "incomeGroupsArrayStatic": [
+                {
+                    "incomeRowsArrayStatic": [
+                        {
+                            "ID": "compensation",
+                            "value": "5000",
+                            "valueType": "double"
+                        }
+                    ],
+                    "otherIncomeRowsArrayStatic": [
+                        {
+                            "ID": "talous_tulon_tyyppi_0",
+                            "label": "Osallistumismaksut",
+                            "value": "1500",
+                            "valueType": "double"
+                        }
+                    ],
+                    "incomeGroupName": "general"
+                }
+            ],
+            "costGroupsArrayStatic": [
+                {
+                    "costRowsArrayStatic": [],
+                    "otherCostRowsArrayStatic": [
+                        {
+                            "ID": "talous_menon_tyyppi_0",
+                            "label": "Henkilöstökulut",
+                            "value": "6000",
+                            "valueType": "double"
+                        }
+                    ],
+                    "costGroupName": "general"
+                }
+            ]
+        }
+    },
+    "attachmentsInfo": {
+        "generalInfoArray": [
+            {
+                "ID": "extraInfo",
+                "label": "Lisäselvitys liitteistä",
+                "value": "Lisäselvitys liitteistä.",
+                "valueType": "string"
+            }
+        ]
+    }
+}

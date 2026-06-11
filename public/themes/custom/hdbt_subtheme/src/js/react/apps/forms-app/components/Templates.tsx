@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: This file has many references to form data that is always any
 
+import { getDefaultRegistry } from '@rjsf/core';
 import type {
   ArrayFieldTemplateProps,
   FieldTemplateProps,
@@ -7,11 +8,11 @@ import type {
   ObjectFieldTemplatePropertyType,
   ObjectFieldTemplateProps,
 } from '@rjsf/utils';
-import { getDefaultRegistry } from '@rjsf/core';
-import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus, type AccordionTheme } from 'hds-react';
-import type { ReactNode } from 'react';
+import { Accordion, type AccordionTheme, Button, Fieldset, IconCross, IconPlus, Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
-
+import type { ReactNode } from 'react';
+import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
+import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import {
   formStepsAtom,
   getApplicantTypeAtom,
@@ -19,10 +20,9 @@ import {
   isEmptyPreviewAtom,
   shouldRenderPreviewAtom,
 } from '../store';
-import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
-import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
-import { getTooltip } from '../utils';
 import type { UiSchema } from '../types/UiSchema';
+import { ALLOWED_HTML_TAGS, getTooltip } from '../utils';
+import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -67,7 +67,7 @@ export const ArrayFieldTemplate = ({
 
   return (
     <div>
-      {description && <div className='hdbt-form--description'>{description}</div>}
+      {description && <div className='hdbt-form--description'>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
       {items.map((item) => (
         // biome-ignore lint/correctness/useJsxKeyInIterable: Item contains key already
         <ArrayFieldItemTemplate {...item} />
@@ -143,10 +143,10 @@ const PreviewSection = ({
   uiSchema: UiSchema;
 }) => {
   const printableName = uiSchema?.['ui:options']?.printableName;
-
+  const hideFromPreview = uiSchema?.['ui:options']?.hideFromPreview;
   const visibleProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
 
-  if (!visibleProperties.length) {
+  if (hideFromPreview || !visibleProperties.length) {
     return null;
   }
 
@@ -169,6 +169,14 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     applicantType === 'registered_community'
       ? Drupal.t('Community for which the grant is being applied for', {}, { context: 'Grants application' })
       : Drupal.t('Applicant details', {}, { context: 'Grants application' });
+  const prhBlockDescription =
+    applicantType === 'registered_community'
+      ? Drupal.t(
+          'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
+          {},
+          { context: 'Grants application' },
+        )
+      : Drupal.t('The data has been fetched from your application profile.', {}, { context: 'Grants application' });
 
   if (idSchema.$id === 'root') {
     const className = shouldRenderPreview ? 'hdbt-form__preview form-wrapper' : 'form-wrapper';
@@ -224,16 +232,12 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
         {stepId === 'applicant_info' && !isEmptyPreview && (
           <section className='prh-content-block'>
             <h3 className='prh-content-block__title'>{prhBlockTitle}</h3>
-            <p>
-              {Drupal.t(
-                'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.',
-              )}
-            </p>
+            <p>{prhBlockDescription}</p>
             <ApplicantInfo />
           </section>
         )}
         <div className='hdbt-form--page'>
-          {description && <div>{description}</div>}
+          {description && <div>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
           {properties.map((field) => field.content)}
         </div>
       </>
@@ -252,9 +256,13 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
 
     return (
       <section className='hdbt-form--section'>
-        <h3 className='hdbt-form--section__title'>{title}</h3>
+        {title ? (
+          <h3 className='hdbt-form--section__title'>{title}</h3>
+        ) : (
+          <span className='hdbt-form--section__spacer' />
+        )}
         <div className='hdbt-form--section__content'>
-          {description && <div className='hdbt-form--description'>{description}</div>}
+          {description && <div className='hdbt-form--description'>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
           {properties.map((field) => field.content)}
         </div>
       </section>
@@ -305,7 +313,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       style={{ marginInline: '0' }}
       tooltip={getTooltip(uiSchema)}
     >
-      {description && <div className='hdbt-form--description'>{description}</div>}
+      {description && <div className='hdbt-form--description'>{htmlToReact(description, ALLOWED_HTML_TAGS)}</div>}
       {properties.map((field) => field.content)}
     </Fieldset>
   );

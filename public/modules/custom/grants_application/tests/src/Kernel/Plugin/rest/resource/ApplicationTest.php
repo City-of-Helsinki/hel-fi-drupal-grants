@@ -17,58 +17,52 @@ use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\RequestHandler;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
+use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\Plugin\rest\resource\Application
- *
- * @group grants_application
  */
+#[Group('grants_application')]
+#[RunTestsInSeparateProcesses]
 final class ApplicationTest extends KernelTestBase {
+
+  use ApiTestTrait;
 
   /**
    * The application submission.
-   *
-   * @var \Drupal\grants_application\Entity\ApplicationSubmission
    */
   private ApplicationSubmission $applicationSubmission;
 
   /**
    * The application number.
-   *
-   * @var string
    */
   private string $applicationNumber = "KERNELTEST-058-0000001";
 
   /**
    * The side document id.
-   *
-   * @var string
    */
   private string $sideDocumentId = 'sidedocu-1111-2222-3333-mentidabcdef';
 
   /**
    * The atv document.
-   *
-   * @var \Drupal\helfi_atv\AtvDocument
    */
   private AtvDocument $atvDocument;
 
   /**
    * The side document.
-   *
-   * @var \Drupal\helfi_atv\AtvDocument
    */
   private AtvDocument $sideDocument;
 
   /**
    * The request handler.
-   *
-   * @var \Drupal\rest\RequestHandler
    */
   protected RequestHandler $requestHandler;
 
@@ -270,6 +264,7 @@ final class ApplicationTest extends KernelTestBase {
 
     $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
     $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
     $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
     $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
     $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
@@ -283,7 +278,7 @@ final class ApplicationTest extends KernelTestBase {
     $this->container->set(JsonMapperService::class, $jsonMapperService);
 
     $integration = $this->createMock(Avus2Integration::class);
-    $integration->expects($this->any())->method('sendToAvus2')->willReturn(TRUE);
+    $integration->expects($this->any())->method('sendToAvus2');
     $this->container->set(Avus2Integration::class, $integration);
 
     $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
@@ -380,6 +375,117 @@ final class ApplicationTest extends KernelTestBase {
     $response = $http_kernel->handle($request);
 
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+  }
+
+  /**
+   * Test that a failing bank account confirmation file upload returns an error.
+   */
+  public function testApplicationPostBankFileFailure(): void {
+    $this->applicationSubmission = ApplicationSubmission::create([
+      'id' => 1,
+      'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
+      'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
+      'sub' => '123345678-abcd-1234-ab12-abcdefgh',
+      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
+      'draft' => TRUE,
+      'langcode' => 'fi',
+      'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
+      'side_document_id' => 'sidedocu-1111-2222-3333-mentidabcdef',
+      'application_number' => $this->applicationNumber,
+      'created' => '1765430954',
+      'changed' => '1765430954',
+    ]);
+    $this->applicationSubmission->save();
+
+    // The bank file is not yet attached to the document, so the resource
+    // attempts to fetch and upload it.
+    $jsonMapperService = $this->createMock(JsonMapperService::class);
+    $jsonMapperService->expects($this->any())->method('getSelectedBankFile')->willReturn([
+      'href' => 'foobar',
+      'filename' => 'bank-confirmation.pdf',
+    ]);
+    $jsonMapperService->expects($this->any())->method('documentBankFileIsSet')->willReturn(FALSE);
+    $this->container->set(JsonMapperService::class, $jsonMapperService);
+
+    // Fetching the bank confirmation attachment fails.
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->any())->method('getAttachment')->willThrowException(new \Exception('Failed to fetch attachment'));
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $request = $this->getMockedRequest("/applications/$form_identifier/application/$this->applicationNumber", 'POST', document: [
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
+    ]);
+
+    $response = $this->processRequest($request);
+
+    $this->assertEquals(500, $response->getStatusCode());
+  }
+
+  /**
+   * Override the user information service with a custom applicant type/profile.
+   */
+  private function overrideUserService(string $applicantType, GrantsProfile $profile): void {
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn($applicantType);
+    $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn($profile);
+    $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
+    $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
+    $this->container->set(UserInformationService::class, $userService);
+  }
+
+  /**
+   * Build and dispatch a GET request to the application endpoint.
+   */
+  private function dispatchGet(): Response {
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $uri = "/applications/$form_identifier/application/$this->applicationNumber";
+    $request = Request::create($uri, "GET", [], [], [], [], '');
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    return $this->container->get('http_kernel')->handle($request);
+  }
+
+  /**
+   * Applicant type not allowed by the form yields a 403.
+   */
+  public function testApplicationGetDeniedApplicantType(): void {
+    // Form 58 only allows registered_community.
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $this->overrideUserService('private_person', new GrantsProfile($userData['grants_profile_array']));
+
+    $response = $this->dispatchGet();
+    $this->assertEquals(403, $response->getStatusCode());
+  }
+
+  /**
+   * An empty profile redirects to the profile edit page.
+   */
+  public function testApplicationGetEmptyProfileRedirect(): void {
+    $this->overrideUserService('registered_community', new GrantsProfile([]));
+
+    $response = $this->dispatchGet();
+    $this->assertEquals(403, $response->getStatusCode());
+    $this->assertStringContainsString('redirect_url', $response->getContent() ?: '');
+  }
+
+  /**
+   * A profile missing addresses or bank accounts redirects.
+   */
+  public function testApplicationGetIncompleteProfileRedirect(): void {
+    $this->overrideUserService('registered_community', new GrantsProfile([
+      'businessId' => '1234567-1',
+      'addresses' => [],
+      'bankAccounts' => [],
+    ]));
+
+    $response = $this->dispatchGet();
+    $this->assertEquals(403, $response->getStatusCode());
   }
 
   /**

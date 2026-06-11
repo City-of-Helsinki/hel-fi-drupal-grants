@@ -545,7 +545,8 @@ input[type='radio']+label.form-required::after {
   }
 }
 
-.hdbt-form--section__title {
+.hdbt-form--section__title,
+.hdbt-form--section__spacer {
   margin-block: 0 $spacing;
 
   @include breakpoint($breakpoint-m) {
@@ -567,6 +568,11 @@ input[type='radio']+label.form-required::after {
   @include breakpoint($breakpoint-m) {
     width: 67%;
   }
+}
+
+// Fields with tooltips need spacing between label and tooltip container.
+.hdbt-form--section__content .field:has(.hdbt-react-form__tooltip-container) label {
+  margin-inline-end: $spacing-and-half;
 }
 
 .hdbt-form--description,
@@ -594,6 +600,7 @@ input[type='radio']+label.form-required::after {
   padding: 0;
 
   legend {
+    font-weight: 500;
     margin-block: 0 $spacing;
   }
 }

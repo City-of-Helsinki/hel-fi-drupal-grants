@@ -112,6 +112,7 @@ final class ViewsHooksUnitTest extends UnitTestCase {
       public function getField(string $id): object {
         return new class($id) {
           public function __construct(private string $id) {}
+          /** @return array<string> */
           public function getValues(): array {
             return $this->id === 'foo' ? ['a', 'b'] : [];
           }
@@ -249,6 +250,7 @@ final class ViewsHooksUnitTest extends UnitTestCase {
 
     $viewsField = new class {
       // phpcs:disable
+      /** @return array<array<string, int|string|null>> */
       public function getValue(ResultRow $row): array {
         return [
           ['target_id' => 1],
@@ -280,6 +282,7 @@ final class ViewsHooksUnitTest extends UnitTestCase {
 
     $viewsField = new class {
       // phpcs:disable
+      /** @return array<array<string, int>> */
       public function getValue(ResultRow $row): array {
         return [
           ['target_id' => 1],
@@ -326,7 +329,7 @@ final class ViewsHooksUnitTest extends UnitTestCase {
   /**
    * Build a Search API item.
    *
-   * @param array $field_map
+   * @param array<string, array<mixed>> $field_map
    *   Field mapping for building search API item.
    *
    * @return object
@@ -335,6 +338,7 @@ final class ViewsHooksUnitTest extends UnitTestCase {
   private function buildSearchApiItem(array $field_map): object {
     return new class($field_map) {
       // phpcs:disable
+      /** @param array<string, array<mixed>> $field_map */
       public function __construct(private array $field_map) {}
 
       public function getField(string $id): ?object {
@@ -344,7 +348,9 @@ final class ViewsHooksUnitTest extends UnitTestCase {
         $values = $this->field_map[$id];
 
         return new class($values) {
+          /** @param array<mixed> $values */
           public function __construct(private array $values) {}
+          /** @return array<mixed> */
           public function getValues(): array {
             return $this->values;
           }

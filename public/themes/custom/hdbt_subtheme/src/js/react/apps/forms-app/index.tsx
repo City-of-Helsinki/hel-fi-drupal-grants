@@ -1,14 +1,14 @@
 import { ErrorBoundary, type FallbackRender } from '@sentry/react';
+import { LoadingSpinner, Notification } from 'hds-react';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { LoadingSpinner, Notification } from 'hds-react';
-
+import initSentry from '@/react/common/helpers/Sentry';
 import { GeneralError } from './components/GeneralError';
 import { ToastStack } from './components/ToastStack';
-import initSentry from '@/react/common/helpers/Sentry';
 import { AppContainer } from './containers/AppContainer';
-import { InvalidSchemaError } from './errors/InvalidSchemaError';
 import { BackendError } from './errors/BackendError';
+import { InvalidSchemaError } from './errors/InvalidSchemaError';
+import { RedirectError } from './errors/RedirectError';
 
 initSentry();
 
@@ -33,6 +33,10 @@ const isDevEnvironment = window.location.hostname.includes('docker.so');
 const handleErrorFallback: FallbackRender = ({ error }) => {
   if (error instanceof InvalidSchemaError && isDevEnvironment) {
     return <div style={{ backgroundColor: 'salmon', padding: '28px' }}>{formatSchemaErrors(error.message)}</div>;
+  }
+
+  if (error instanceof RedirectError) {
+    return <LoadingSpinner className='hdbt-react-form__loading-spinner' />;
   }
 
   if (error instanceof BackendError) {

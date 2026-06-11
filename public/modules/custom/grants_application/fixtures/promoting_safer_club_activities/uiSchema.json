@@ -259,7 +259,11 @@
         "ui:widget": "hidden"
       },
       "applied_benefits": {
-        "ui:field": "subventionSum"
+        "ui:field": "computedSum",
+        "ui:options": {
+          "sourceFields": ["grant_info_step.subventions_section.subventions"],
+          "sourceShape": "subvention"
+        }
       },
       "income_rows": {
         "ui:options": {

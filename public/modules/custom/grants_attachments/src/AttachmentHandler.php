@@ -10,7 +10,6 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\TempStore\TempStoreException;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationHelpers;
@@ -272,6 +271,8 @@ class AttachmentHandler {
   /**
    * Parse attachments from submitted data and create schema structured data.
    *
+   * WARNING: This method is ment to be called only from GrantsHandler.
+   *
    * @param array $form
    *   Form in question.
    * @param array $submittedFormData
@@ -280,8 +281,8 @@ class AttachmentHandler {
    * @param string $applicationNumber
    *   Generated application number.
    *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Drupal\grants_handler\EventException
+   * @throws \throwable
+   *   On failure.
    */
   public function parseAttachments(
     array $form,
@@ -325,18 +326,13 @@ class AttachmentHandler {
     }
 
     if (isset($submittedFormData["account_number"])) {
-      try {
-        $this->handleBankAccountConfirmation(
-          $submittedFormData["account_number"],
-          $applicationNumber,
-          $submittedFormData
-        );
-      }
-      catch (TempStoreException | GuzzleException $e) {
-        $this->logger->error('Error: %msg', [
-          '%msg' => $e->getMessage(),
-        ]);
-      }
+      // Let any exceptions fall through. They are caught
+      // by GrantsHandler::postSaveSubmit().
+      $this->handleBankAccountConfirmation(
+        $submittedFormData["account_number"],
+        $applicationNumber,
+        $submittedFormData
+      );
     }
   }
 
@@ -411,6 +407,9 @@ class AttachmentHandler {
    * @param bool $copyingProcess
    *   A boolean indicating if the method has been
    *   called when copying an application.
+   *
+   * @throws \throwable
+   *   If anything goes wrong.
    */
   public function handleBankAccountConfirmation(
     string $accountNumber,
@@ -428,28 +427,32 @@ class AttachmentHandler {
       $profileContent = $grantsProfileDocument->getContent();
     }
     catch (GrantsProfileException $e) {
-      $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
       $this->messenger->addError($this->t('Failed to load user.', [], ['context' => 'grants_attachments']));
-      return;
+      throw new \RuntimeException("Failed to load user", previous: $e);
     }
 
     // Get the selected account.
-    $selectedAccount = $this->getSelectedAccount($profileContent, $accountNumber);
+    $selectedAccount = NULL;
+    foreach ($profileContent['bankAccounts'] as $account) {
+      if ($account['bankAccount'] == $accountNumber) {
+        $selectedAccount = $account;
+        break;
+      }
+    }
     if (!$selectedAccount || !isset($selectedAccount['confirmationFile'])) {
-      return;
+      throw new \RuntimeException("Selected account not found");
     }
 
     // Get the selected accounts bank account attachment.
     $accountConfirmation = $grantsProfileDocument->getAttachmentForFilename($selectedAccount['confirmationFile']);
     if (!$accountConfirmation) {
-      return;
+      throw new \RuntimeException("Bank account confirmation not found");
     }
 
     // Load the ATV document.
     $applicationDocument = $this->getAtvDocument($applicationNumber);
-
     if (!$applicationDocument) {
-      return;
+      throw new \RuntimeException("Failed to load ATV document");
     }
 
     // Check if a user changed the bank account in the application.
@@ -742,30 +745,6 @@ class AttachmentHandler {
     $integrationId = rtrim(end($parts), '/');
     if (filter_var($integrationId, FILTER_VALIDATE_INT)) {
       return $integrationId;
-    }
-    return FALSE;
-  }
-
-  /**
-   * The getSelectedAccount method.
-   *
-   * This method loops through all the accounts on a
-   * profile and returns the one whose bank account number
-   * matches $accountNumber.
-   *
-   * @param array $profileContent
-   *   An array of profile data.
-   * @param string $accountNumber
-   *   An account number.
-   *
-   * @return array|bool
-   *   The found account or FALSE.
-   */
-  protected function getSelectedAccount(array $profileContent, string $accountNumber): array|bool {
-    foreach ($profileContent['bankAccounts'] as $account) {
-      if ($account['bankAccount'] == $accountNumber) {
-        return $account;
-      }
     }
     return FALSE;
   }

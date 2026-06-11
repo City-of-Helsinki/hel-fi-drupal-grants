@@ -81,15 +81,6 @@
     }
   },
 
-  "compensation.additionalInformation": {
-    "datasource": "form_data",
-    "source": "attachments_step.additional_info_section.additional_info",
-    "mapping_type": "simple",
-    "data": {
-      "additionalInformation": ""
-    }
-  },
-
   "compensation.compensationInfo.generalInfoArray.0": {
     "datasource": "form_data",
     "source": "grant_info_step.purpose_section.purpose",

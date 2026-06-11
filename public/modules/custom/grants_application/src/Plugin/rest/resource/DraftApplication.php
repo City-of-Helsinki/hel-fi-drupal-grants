@@ -26,11 +26,13 @@ use Drupal\rest\Plugin\ResourceBase;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use Sentry\Breadcrumb;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
+use function Sentry\addBreadcrumb;
 
 /**
  * Handle the draft applications.
@@ -127,10 +129,6 @@ final class DraftApplication extends ResourceBase {
     string $form_identifier,
     string $application_number,
   ): RedirectResponse|JsonResponse {
-    if (!$application_number) {
-      return new JsonResponse([], 400);
-    }
-
     try {
       $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
@@ -139,7 +137,19 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 404);
     }
 
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'GET application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
+
     try {
+      $applicantType = $this->userInformationService->getApplicantType();
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_information = $this->userInformationService->getUserData();
@@ -147,6 +157,15 @@ final class DraftApplication extends ResourceBase {
     catch (\Exception $e) {
       // Unable to fetch user information.
       return new JsonResponse([], 500);
+    }
+
+    if (!$settings->isAllowedApplicantType($applicantType)) {
+      // User gets bad error and is not redirected.
+      return $this->applicantTypeDeniedResponse();
+    }
+
+    if ($redirect = $this->profileIncompleteRedirect($grants_profile_data->toArray())) {
+      return $redirect;
     }
 
     try {
@@ -203,19 +222,25 @@ final class DraftApplication extends ResourceBase {
 
     }
 
+    $grantsProfile = $grants_profile_data->toArray();
+    if ($applicantType === 'private_person' || $applicantType === 'unregistered_community') {
+      $userProfileData = $this->userInformationService->getUserProfileData()['myProfile'] ?? [];
+      $grantsProfile['firstName'] = $userProfileData['firstName'] ?? '';
+      $grantsProfile['lastName'] = $userProfileData['lastName'] ?? '';
+      $grantsProfile['socialSecurityNumber'] = $userProfileData['verifiedPersonalInformation']['nationalIdentificationNumber'] ?? '';
+    }
+
     $response = [];
 
     // @todo Only return required user data to frontend
     $response['form_data'] = $sideDocument->getContent();
-    $response['grants_profile'] = $grants_profile_data->toArray();
+    $response['grants_profile'] = $grantsProfile;
     $response['user_data'] = $user_information;
     $response['status'] = $document->getStatus();
     $response['token'] = $this->csrfTokenGenerator->get('rest');
     $response['last_changed'] = $submission->get('changed')->value;
-    $response['form_settings'] = [
-      'acting_years' => $settings->getActingYears(),
-    ];
     $response = array_merge($response, $settings->toArray());
+    $response['settings']['applicant_type'] = $applicantType;
 
     return new JsonResponse($response);
   }
@@ -259,6 +284,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
+      $applicantType = $this->userInformationService->getApplicantType();
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_data = $this->userInformationService->getUserData();
@@ -267,11 +293,30 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    if (!$settings->isAllowedApplicantType($applicantType)) {
+      return $this->applicantTypeDeniedResponse();
+    }
+
+    if ($redirect = $this->profileIncompleteRedirect($grants_profile_data->toArray())) {
+      return $redirect;
+    }
+
     $application_uuid = $this->uuid->generate();
     $env = Helper::getAppEnv();
 
     $application_number = $this->applicationNumberService
       ->createNewApplicationNumber($env, $application_type_id);
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'POST application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
 
     $langcode = $this->languageManager
       ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
@@ -331,6 +376,11 @@ final class DraftApplication extends ResourceBase {
     catch (\Exception $e) {
       // Saving failed.
       return new JsonResponse([], 500);
+    }
+
+    $business_id = '';
+    if ($this->userInformationService->getApplicantType() !== 'private_person') {
+      $business_id = $grants_profile_data->getBusinessId();
     }
 
     $now = time();
@@ -397,6 +447,17 @@ final class DraftApplication extends ResourceBase {
       // 'attachments' => $attachments,
       'form_data' => $form_data,
     ] = $content;
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'PATCH application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
 
     try {
       $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
@@ -485,6 +546,76 @@ final class DraftApplication extends ResourceBase {
   }
 
   /**
+   * Build a denied JSON response that redirects the user to the front page.
+   */
+  private function applicantTypeDeniedResponse(): JsonResponse {
+    $message = $this->t('This application is not available for your user role.');
+    $this->messenger()->addError($message);
+
+    return $this->redirectJsonResponse(
+      Url::fromRoute('<front>', [], ['absolute' => TRUE]),
+      $message,
+    );
+  }
+
+  /**
+   * Build a redirect to the grants profile edit page if the profile is
+   * incomplete (no profile, or missing addresses / bank accounts).
+   *
+   * Mirrors the old webform behavior in GrantsHandler::prepareForm. Applies
+   * uniformly to all applicant types; warnings stack into the messenger.
+   *
+   * @param array<string, mixed> $profileContent
+   *   The grants profile content array (from GrantsProfile::toArray()).
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse|null
+   *   Redirect response when the profile is incomplete, NULL otherwise.
+   */
+  private function profileIncompleteRedirect(array $profileContent): ?JsonResponse {
+    $tOpts = ['context' => 'grants_handler'];
+
+    if (empty($profileContent)) {
+      $this->messenger()->addWarning($this->t('You must have grants profile created.', [], $tOpts));
+      return $this->redirectJsonResponse(
+        Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE]),
+        $this->t('Your profile is incomplete.', [], $tOpts),
+      );
+    }
+
+    $needsRedirect = FALSE;
+    if (empty($profileContent['addresses'])) {
+      $this->messenger()->addWarning($this->t('You must have address saved to your profile.', [], $tOpts));
+      $needsRedirect = TRUE;
+    }
+    if (empty($profileContent['bankAccounts'])) {
+      $this->messenger()->addWarning($this->t('You must have bank account saved to your profile.', [], $tOpts));
+      $needsRedirect = TRUE;
+    }
+
+    if (!$needsRedirect) {
+      return NULL;
+    }
+
+    return $this->redirectJsonResponse(
+      Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE]),
+      $this->t('Your profile is incomplete.', [], $tOpts),
+    );
+  }
+
+  /**
+   * Build a JSON response carrying an error message and a redirect URL.
+   *
+   * The frontend's handleErrors detects redirect_url and navigates instead of
+   * rendering the error notification.
+   */
+  private function redirectJsonResponse(Url $target, string|TranslatableMarkup $errorMessage): JsonResponse {
+    return new JsonResponse([
+      'error' => $errorMessage,
+      'redirect_url' => $target->toString(),
+    ], 403);
+  }
+
+  /**
    * Shows a status message to the user when saving.
    *
    * @param string $application_number
@@ -527,13 +658,13 @@ final class DraftApplication extends ResourceBase {
    *   User uuid.
    * @param string $application_number
    *   The application number.
-   * @param string $business_id
-   *   The business id.
+   * @param string|null $business_id
+   *   The business id or NULL.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
    */
-  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
+  private function getSubmissionEntity(string $sub, string $application_number, string|null $business_id): ApplicationSubmission {
     // @todo Duplicated, put this in better place.
     $ids = $this->entityTypeManager
       ->getStorage('application_submission')
@@ -545,6 +676,10 @@ final class DraftApplication extends ResourceBase {
 
     if ($ids) {
       return ApplicationSubmission::load(reset($ids));
+    }
+
+    if (!$business_id) {
+      throw new \Exception('Application not found');
     }
 
     // Check for business id as well.

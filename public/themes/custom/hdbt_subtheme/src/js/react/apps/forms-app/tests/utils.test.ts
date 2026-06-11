@@ -1,13 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import {
-  addApplicantInfoStep,
-  getIndicesWithErrors,
-  getSubventionSum,
-  isValidFormResponse,
-  keyErrorsByStep,
-} from '../utils';
-import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
+import { UserType } from '../enum/UserType';
 import { communitySettings } from '../formConstants';
+import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
+import { addApplicantInfoStep, getIndicesWithErrors, getSubventionSum, keyErrorsByStep } from '../utils';
 
 describe('Utils.ts', () => {
   test('getIndicesWithErrors', () => {
@@ -20,11 +15,6 @@ describe('Utils.ts', () => {
   test('keyErrorsByStep', () => {
     expect(keyErrorsByStep(undefined)).toEqual([]);
     expect(keyErrorsByStep(testErrors, testSteps)).toEqual(testKeyedErrors);
-  });
-
-  // @todo implement actual test once this function is actually implemented
-  test('isValidFormResponse', () => {
-    expect(isValidFormResponse({})).toEqual([true, undefined]);
   });
 
   describe('getSubventionSum', () => {
@@ -111,11 +101,45 @@ describe('Utils.ts', () => {
       };
       expect(getSubventionSum(formData, ['.step1.subventionTable'])).toBe('0');
     });
+
+    test('sums only rows matching the given subventionType', () => {
+      const formData = {
+        step1: {
+          subventionTable: [
+            [
+              { ID: 'subventionType', value: '1' },
+              { ID: 'amount', value: '5000' },
+            ],
+            [
+              { ID: 'subventionType', value: '2' },
+              { ID: 'amount', value: '1200' },
+            ],
+          ],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'], '2')).toBe('1200');
+      expect(getSubventionSum(formData, ['.step1.subventionTable'], '1')).toBe('5000');
+    });
+
+    test('returns "0" when no rows match the given subventionType', () => {
+      const formData = {
+        step1: {
+          subventionTable: [
+            [
+              { ID: 'subventionType', value: '1' },
+              { ID: 'amount', value: '5000' },
+            ],
+          ],
+        },
+      };
+      expect(getSubventionSum(formData, ['.step1.subventionTable'], '2')).toBe('0');
+    });
   });
 
   test('addApplicantInfoStep', () => {
     const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
-    const result = addApplicantInfoStep({}, {}, { business_id: '123' });
+
+    const result = addApplicantInfoStep({}, {}, UserType.REGISTERED_COMMUNITY);
 
     expect(result[0]).toEqual({
       definitions: { applicant_info: definition },

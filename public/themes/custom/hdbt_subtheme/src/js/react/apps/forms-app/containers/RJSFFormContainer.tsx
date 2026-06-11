@@ -1,20 +1,28 @@
+import Form, { getDefaultRegistry, type IChangeEvent } from '@rjsf/core';
 import type {
   CustomValidator,
   ErrorTransformer,
+  RegistryWidgetsType,
   RJSFSchema,
   RJSFValidationError,
-  RegistryWidgetsType,
   UiSchema,
 } from '@rjsf/utils';
+import { customizeValidator } from '@rjsf/validator-ajv8';
+import { Notification, NotificationSize } from 'hds-react';
 import { useAtomValue, useSetAtom, type WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import { useDebounceCallback } from '../hooks/useDebounceCallback';
-import Form, { getDefaultRegistry, type IChangeEvent } from '@rjsf/core';
-import type { ReactNode, FormEvent } from 'react';
+import type { FormEvent, ReactNode } from 'react';
 import { createRef, useCallback, useEffect, useState } from 'react';
-import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
-
+import { ErrorsList } from '../components/ErrorsList';
+import { ActingYear } from '../components/Fields/ActingYear';
+import { ComputedSum } from '../components/Fields/ComputedSum';
+import { GrantDurationRadio } from '../components/Fields/GrantDurationRadio';
+import { SubventionTable } from '../components/Fields/SubventionTable';
+import { TextParagraph } from '../components/Fields/TextParagraph';
+import { FileInput } from '../components/FileInput';
+import { FormActions } from '../components/FormActions/FormActions';
+import { FormSummary } from '../components/FormSummary';
 import {
   AddressSelect,
   BankAccountSelect,
@@ -26,34 +34,26 @@ import {
   TextArea,
   TextInput,
 } from '../components/Input';
+import { Stepper } from '../components/Stepper';
 import { ArrayFieldTemplate, FieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
-import { ErrorsList } from '../components/ErrorsList';
-import { FileInput } from '../components/FileInput';
-import { FormActions } from '../components/FormActions/FormActions';
-import { FormSummary } from '../components/FormSummary';
+import { Terms } from '../components/Terms';
+import { InvalidSchemaError } from '../errors/InvalidSchemaError';
+import { useDebounceCallback } from '../hooks/useDebounceCallback';
+import { localizeErrors } from '../localizeErrors';
 import {
   getCurrentStepAtom,
   getReachedStepAtom,
-  getStepsAtom,
-  setErrorsAtom,
-  getSubventionFieldsAtom,
   getRequiredFileFieldsAtom,
-  isReadOnlyAtom,
-  setStepAtom,
+  getStepsAtom,
+  getSubventionFieldsAtom,
   isEmptyPreviewAtom,
+  isReadOnlyAtom,
+  setErrorsAtom,
+  setStepAtom,
 } from '../store';
-import { InvalidSchemaError } from '../errors/InvalidSchemaError';
+import type { RJSFFormData } from '../types/RJSFFormData';
 import { expandConditionalRequiredErrors, isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
-import { Stepper } from '../components/Stepper';
-import { SubventionSum } from '../components/Fields/SubventionSum';
-import { SubventionTable } from '../components/Fields/SubventionTable';
-import { Terms } from '../components/Terms';
-import { TextParagraph } from '../components/Fields/TextParagraph';
-import { localizeErrors } from '../localizeErrors';
-import { Notification, NotificationSize } from 'hds-react';
-import type { RJSFFormData } from '../types/RJSFFormData';
-import { ActingYear } from '../components/Fields/ActingYear';
 
 const widgets: RegistryWidgetsType = {
   address: AddressSelect,
@@ -218,10 +218,10 @@ export const RJSFFormContainer = ({
         | { addError: (msg: string) => void }
         | undefined;
       const hasValues = values
-        ? Object.entries(values).reduce(
-            (acc, [, curr]) => acc || (curr?.[1]?.value?.toString().trim().length ?? 0) > 0,
-            false,
-          )
+        ? Object.entries(values).reduce((acc, [, curr]) => {
+            const value = curr?.[1]?.value?.toString().trim();
+            return acc || (!!value && value !== '0' && value !== '0,0' && value !== '0,00');
+          }, false)
         : false;
 
       if (_field && !hasValues) {
@@ -317,8 +317,9 @@ export const RJSFFormContainer = ({
             ...getDefaultRegistry().fields,
             actingYear: ActingYear,
             atvFile: FileInput,
+            grantDuration: GrantDurationRadio,
             subventionTable: SubventionTable,
-            subventionSum: SubventionSum,
+            computedSum: ComputedSum,
             textParagraph: TextParagraph,
           }}
           formData={readFormData() || {}}

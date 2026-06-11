@@ -19,7 +19,7 @@
     "data": {
       "ID": "amount",
       "label": "Euroa",
-      "value": "",
+      "value": "0",
       "valueType": "float"
     }
   },
@@ -126,7 +126,7 @@
     }
   },
 
-    "compensation.benefitsInfoArray.0": {
+  "compensation.benefitsInfoArray.0": {
     "datasource": "form_data",
     "source": "hardcoded",
     "mapping_type": "hardcoded",

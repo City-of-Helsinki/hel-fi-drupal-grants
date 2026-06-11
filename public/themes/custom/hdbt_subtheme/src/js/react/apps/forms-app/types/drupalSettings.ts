@@ -1,5 +1,4 @@
 declare namespace drupalSettings {
-  // eslint-disable-line @typescript-eslint/no-unused-vars
   const grants_react_form: {
     // TODO this one contains application type id aka form id.
     application_number: string;

@@ -12,15 +12,16 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2DataParser;
+use Drupal\grants_application\Avus2Exception;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
 use Drupal\grants_application\User\UserInformationService;
-use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationSubmitType;
@@ -30,10 +31,13 @@ use Drupal\rest\Plugin\ResourceBase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
+use Sentry\Breadcrumb;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
+
+use function Sentry\addBreadcrumb;
 
 /**
  * Handle the ready applications.
@@ -66,7 +70,6 @@ final class Application extends ResourceBase {
     private EventDispatcherInterface $dispatcher,
     private Avus2Integration $integration,
     private EventsService $eventsService,
-    private AttachmentHandler $attachmentHandler,
     private ApplicationStatusService $applicationStatusService,
     private JsonSchemaValidator $jsonSchemaValidator,
     private ContentLockInterface $contentLock,
@@ -99,7 +102,6 @@ final class Application extends ResourceBase {
       $container->get(EventDispatcherInterface::class),
       $container->get(Avus2Integration::class),
       $container->get('grants_events.events_service'),
-      $container->get('grants_attachments.attachment_handler'),
       $container->get('grants_handler.application_status_service'),
       $container->get(JsonSchemaValidator::class),
       $container->get('content_lock'),
@@ -131,6 +133,18 @@ final class Application extends ResourceBase {
     if (!$application_number) {
       return new JsonResponse([], 400);
     }
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'GET application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
+
     // @todo Parse the last STATUS_UPDATE event here.
     // It can be used to determinate if this is editable.
     try {
@@ -142,6 +156,7 @@ final class Application extends ResourceBase {
     }
 
     try {
+      $applicantType = $this->userInformationService->getApplicantType();
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_information = $this->userInformationService->getUserData();
@@ -149,6 +164,20 @@ final class Application extends ResourceBase {
     catch (\Exception $e) {
       // Unable to fetch user information.
       return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
+    }
+
+    if (!$settings->isAllowedApplicantType($applicantType)) {
+      $message = $this->t('This application is not available for your user role.');
+      $this->messenger()->addError($message);
+
+      return new JsonResponse([
+        'error' => $message,
+        'redirect_url' => Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString(),
+      ], 403);
+    }
+
+    if ($redirect = $this->profileIncompleteRedirect($grants_profile_data->toArray())) {
+      return $redirect;
     }
 
     try {
@@ -221,6 +250,13 @@ final class Application extends ResourceBase {
     $attachment_data = $this->avus2DataParser->getSubmittedAttachments($document);
     $history = $this->avus2DataParser->getHistory($document);
 
+    $grantsProfile = $grants_profile_data->toArray();
+    if ($applicantType === 'private_person') {
+      $grantsProfile['firstName'] = 'asd';
+      $grantsProfile['lastName'] = 'asd';
+      $grantsProfile['socialSecurityNumber'] = 'asd';
+    }
+
     // @todo Only return required user data to frontend.
     $response = [
       'form_data' => $sideDocument->getContent(),
@@ -231,16 +267,14 @@ final class Application extends ResourceBase {
         'status_updates' => $history,
         'attachments' => $attachment_data,
       ],
-      'grants_profile' => $grants_profile_data->toArray(),
+      'grants_profile' => $grantsProfile,
       'last_changed' => $changeTime->getTimestamp(),
       'status' => $document->getStatus(),
       'token' => $this->csrfTokenGenerator->get('rest'),
       'user_data' => $user_information,
     ];
-    $response['form_settings'] = [
-      'acting_years' => $settings->getActingYears(),
-    ];
     $response = array_merge($response, $settings->toArray());
+    $response['settings']['applicant_type'] = $applicantType;
 
     return new JsonResponse($response);
   }
@@ -262,6 +296,17 @@ final class Application extends ResourceBase {
     [
       'form_data' => $form_data,
     ] = $content;
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'POST application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
 
     // phpcs:enable
     try {
@@ -343,7 +388,7 @@ final class Application extends ResourceBase {
         $actualFile = $this->atvService->getAttachment($bankFile['href']);
       }
       catch (\Exception $e) {
-        $this->logger->error("Unable to get bank file: {$e->getMessage()}");
+        Error::logException($this->logger, $e);
         return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
 
@@ -363,8 +408,9 @@ final class Application extends ResourceBase {
         $document = $this->atvService->getDocument($application_number);
         $bankFileIsSet = $this->jsonMapperService->documentBankFileIsSet($document);
       }
-      catch(\throwable) {
+      catch(\throwable $e) {
         // Just to be safe.
+        Error::logException($this->logger, $e);
         return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
 
@@ -447,17 +493,11 @@ final class Application extends ResourceBase {
     );
     $this->eventsService->addNewEventForApplication($latestDocument, $event);
 
-    $success = FALSE;
     try {
-      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, $integrationError);
+      $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, $integrationError);
     }
-    catch (\Exception $e) {
+    catch (Avus2Exception $e) {
       $this->logger->error('Avus2 -POST-request failed: ' . $e->getMessage());
-      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
-    }
-
-    if (!$success) {
-      $this->logger->error('Avus2 -POST-request returned non-200 response');
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
@@ -513,6 +553,17 @@ final class Application extends ResourceBase {
       'form_data' => $form_data,
       'attachments' => $attachments,
     ] = $content;
+
+    addBreadcrumb(new Breadcrumb(
+      Breadcrumb::LEVEL_INFO,
+      Breadcrumb::TYPE_HTTP,
+      'grants_application',
+      'PATCH application request received',
+      [
+        'form_identifier' => $form_identifier,
+        'application_number' => $application_number,
+      ],
+    ));
 
     try {
       $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
@@ -616,17 +667,11 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
-    $success = FALSE;
     try {
-      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, FALSE);
+      $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, FALSE);
     }
-    catch (\Exception $e) {
+    catch (Avus2Exception $e) {
       $this->logger->error('Avus2 -PATCH-request failed: ' . $e->getMessage());
-      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
-    }
-
-    if (!$success) {
-      $this->logger->error('Avus2 -PATCH-request returned non-200 response');
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
@@ -661,6 +706,48 @@ final class Application extends ResourceBase {
         ['absolute' => TRUE],
       )->toString(),
     ], 200);
+  }
+
+  /**
+   * Build a redirect to the grants profile edit page if the profile is
+   * incomplete. Mirrors the old webform behavior in
+   * GrantsHandler::prepareForm. Applies uniformly to all applicant types.
+   *
+   * @param array<string, mixed> $profileContent
+   *   The grants profile content array (from GrantsProfile::toArray()).
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse|null
+   *   Redirect response when the profile is incomplete, NULL otherwise.
+   */
+  private function profileIncompleteRedirect(array $profileContent): ?JsonResponse {
+    $tOpts = ['context' => 'grants_handler'];
+
+    if (empty($profileContent)) {
+      $this->messenger()->addWarning($this->t('You must have grants profile created.', [], $tOpts));
+      return new JsonResponse([
+        'error' => $this->t('Your profile is incomplete.', [], $tOpts),
+        'redirect_url' => Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE])->toString(),
+      ], 403);
+    }
+
+    $needsRedirect = FALSE;
+    if (empty($profileContent['addresses'])) {
+      $this->messenger()->addWarning($this->t('You must have address saved to your profile.', [], $tOpts));
+      $needsRedirect = TRUE;
+    }
+    if (empty($profileContent['bankAccounts'])) {
+      $this->messenger()->addWarning($this->t('You must have bank account saved to your profile.', [], $tOpts));
+      $needsRedirect = TRUE;
+    }
+
+    if (!$needsRedirect) {
+      return NULL;
+    }
+
+    return new JsonResponse([
+      'error' => $this->t('Your profile is incomplete.', [], $tOpts),
+      'redirect_url' => Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE])->toString(),
+    ], 403);
   }
 
   /**

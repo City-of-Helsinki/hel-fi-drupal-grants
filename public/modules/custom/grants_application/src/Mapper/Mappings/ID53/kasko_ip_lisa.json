@@ -1,4 +1,12 @@
 {
+  "compensation.otherCompensationsInfo.otherCompensationsArray": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "otherCompensationsArray": {}
+    }
+  },
   "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
     "datasource": "form_data",
     "source": "hardcoded",
@@ -24,6 +32,43 @@
       }
     }
   },
+  "compensation.benefitsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "loans",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.benefitsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "premises",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.activitiesInfoArray.0": {
+    "datasource": "grants_profile_array",
+    "source": "businessPurpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "businessPurpose",
+      "label": "Toiminnan kuvaus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
 
   "compensation.compensationInfo.compensationArray.0.0": {
     "datasource": "form_data",
@@ -45,7 +90,7 @@
     "data": {
       "ID": "amount",
       "label": "Euroa",
-      "value": "",
+      "value": "0",
       "valueType": "float"
     }
   },

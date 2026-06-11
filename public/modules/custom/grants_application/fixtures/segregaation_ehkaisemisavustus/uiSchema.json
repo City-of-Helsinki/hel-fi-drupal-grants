@@ -1,0 +1,407 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable",
+        "ui:options": {
+          "useSingleSubvention": true
+        }
+      }
+    },
+    "purpose_section": {
+      "purpose": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000,
+        "ui:options": {
+          "tooltipLabel": "purpose_section_purpose.title",
+          "tooltipButtonLabel": "purpose_section_purpose.title",
+          "tooltipText": "purpose.description"
+        }
+      }
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_compensations": {
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer_name.title",
+              "tooltipButtonLabel": "other_compensation_issuer_name.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_applied_compensations": {
+        "ui:options": {
+          "addText": "other_applied_compensations.add"
+        },
+        "items": {
+          "other_applied_compensation_issuer": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_applied_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    }
+  },
+  "information_in_more_detail_step": {
+    "grant_target_section": {
+      "ui:order": [
+        "grant_recipient_type",
+        "applicant_summary",
+        "continuation_info",
+        "is_application_extension"
+      ],
+      "grant_recipient_type": {
+        "ui:widget": "textarea",
+        "misc:max-length": 100,
+        "ui:options": {
+          "tooltipLabel": "grant_recipient_type.title",
+          "tooltipButtonLabel": "grant_recipient_type.title",
+          "tooltipText": "grant_recipient_type.description"
+        }
+      },
+      "applicant_summary": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "is_application_extension": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true,
+          "tooltipLabel": "is_application_extension.title",
+          "tooltipButtonLabel": "is_application_extension.title",
+          "tooltipText": "is_application_extension.description"
+        }
+      }
+    },
+    "project_schedule_section": {
+      "ui:order": [
+        "project_name",
+        "project_schedule",
+        "target_group_description",
+        "past_project_objective",
+        "past_target_group_and_means",
+        "participant_estimate",
+        "participants_reached",
+        "hours_by_postal_area",
+        "postal_code_areas",
+        "area_need"
+      ],
+      "project_name": {
+        "ui:widget": "textarea",
+        "misc:max-length": 300
+      },
+      "project_schedule": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "project_schedule_info": {
+          "ui:field": "textParagraph"
+        },
+        "start_date": {
+          "ui:widget": "date",
+          "ui:options": {
+            "printableName": "start_date.printable_title"
+          }
+        },
+        "end_date": {
+          "ui:widget": "date",
+          "ui:options": {
+            "printableName": "end_date.printable_title"
+          }
+        }
+      },
+      "target_group_description": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1250
+      },
+      "past_project_objective": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "past_target_group_and_means": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "participant_estimate": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "participant_estimate_info": {
+          "ui:field": "textParagraph"
+        },
+        "new_participant_estimate": {
+          "ui:options": {
+            "tooltipLabel": "new_participants_count.title",
+            "tooltipButtonLabel": "new_participants_count.title",
+            "tooltipText": "new_participant_estimate.description"
+          }
+        }
+      },
+      "participants_reached": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "participants_reached_info": {
+          "ui:field": "textParagraph"
+        }
+      },
+      "hours_by_postal_area": {
+        "ui:widget": "textarea",
+        "misc:max-length": 500
+      },
+      "postal_code_areas": {
+        "ui:widget": "textarea",
+        "misc:max-length": 500
+      },
+      "area_need": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      }
+    },
+    "project_methods_section": {
+      "ui:order": [
+        "target_group_reach",
+        "impact_on_participants",
+        "youth_participation_planning",
+        "key_partners",
+        "new_partnerships",
+        "establishment_after_project",
+        "achieved_objectives",
+        "current_year_objectives",
+        "tested_partnerships",
+        "key_partners_report",
+        "youth_participation_report"
+      ],
+      "target_group_reach": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "impact_on_participants": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1250
+      },
+      "youth_participation_planning": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "key_partners": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "new_partnerships": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "establishment_after_project": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "achieved_objectives": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500,
+        "ui:options": {
+          "tooltipLabel": "achieved_objectives.title",
+          "tooltipButtonLabel": "achieved_objectives.title",
+          "tooltipText": "achieved_objectives.description"
+        }
+      },
+      "current_year_objectives": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "tested_partnerships": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500,
+        "ui:options": {
+          "tooltipLabel": "tested_partnerships.title",
+          "tooltipButtonLabel": "tested_partnerships.title",
+          "tooltipText": "tested_partnerships.description"
+        }
+      },
+      "key_partners_report": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "youth_participation_report": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      }
+    },
+    "project_economy_section": {
+      "previous_grant_amount_used": {
+        "ui:options": {
+          "tooltipLabel": "previous_grant_amount_used.title",
+          "tooltipButtonLabel": "previous_grant_amount_used.title",
+          "tooltipText": "previous_grant_amount_used.description"
+        }
+      },
+      "grant_usage_report": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500,
+        "ui:options": {
+          "tooltipLabel": "grant_usage_report.title",
+          "tooltipButtonLabel": "grant_usage_report.title",
+          "tooltipText": "grant_usage_report.description"
+        }
+      },
+      "significant_changes": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      },
+      "continuation_plan": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2500
+      }
+    }
+  },
+  "budget_step": {
+    "income_section": {
+      "incomeGroupName": {
+        "ui:widget": "hidden"
+      },
+      "applied_benefits": {
+        "ui:field": "computedSum",
+        "ui:options": {
+          "sourceFields": ["grant_info_step.subventions_section.subventions"],
+          "sourceShape": "subvention"
+        }
+      },
+      "income_rows": {
+        "ui:options": {
+          "addText": "income_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    },
+    "expenditure_section": {
+      "costGroupName": {
+        "ui:widget": "hidden"
+      },
+      "expenditure_rows": {
+        "ui:options": {
+          "addText": "expenditure_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000,
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "further_clarification": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:multiple": "true",
+          "misc:variant": "simple",
+          "ui:field": "atvFile",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help"
+        }
+      }
+    }
+  }
+}

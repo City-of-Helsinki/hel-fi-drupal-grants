@@ -1,10 +1,11 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { TestProvider } from '../../testutils/TestProvider';
+import { describe, expect, it } from 'vitest';
 import { FormActions } from '../../components/FormActions/FormActions';
-import { errorsAtom, formStateAtom, formStepsAtom } from '../../store';
-import { initializeFormState } from '../../testutils/Helpers';
+import { SubmitStates } from '../../enum/SubmitStates';
+import { errorsAtom, formConfigAtom, formStateAtom, formStepsAtom } from '../../store';
 import { testKeyedErrors, testSteps } from '../../testutils/Data';
+import { initializeFormState } from '../../testutils/Helpers';
+import { TestProvider } from '../../testutils/TestProvider';
 
 describe('FormActions.tsx tests', () => {
   render(
@@ -13,6 +14,7 @@ describe('FormActions.tsx tests', () => {
         [errorsAtom, testKeyedErrors],
         [formStateAtom, initializeFormState({ currentStep: [0, { id: 'step-1', label: 'Step 1' }], reachedStep: 0 })],
         [formStepsAtom, testSteps],
+        [formConfigAtom, { submitState: SubmitStates.DRAFT }],
       ]}
     >
       <FormActions saveDraft={() => Promise.resolve()} validatePartialForm={() => undefined} />

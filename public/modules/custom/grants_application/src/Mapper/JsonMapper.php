@@ -68,12 +68,26 @@ class JsonMapper {
         continue;
       }
 
+      if (isset($definition['skip']) && $definition['skip']) {
+        continue;
+      }
+
+      // If source data does not exist, we should skip unless a default value
+      // is given in mapping file.
       if (
-        (isset($definition['skip']) && $definition['skip']) ||
         !$definition['source'] ||
         !$this->sourcePathExists($allDataSources, $dataSourceType, $sourcePath)
       ) {
-        continue;
+        // If something else than default, skip if the value is not sent.
+        if ($definition['mapping_type'] !== 'default') {
+          continue;
+        }
+
+        // No default value given in mapping and React does not send the value,
+        // we can skip.
+        if (isset($definition['data']['value']) && $definition['data']['value'] === '') {
+          continue;
+        }
       }
 
       match($definition['mapping_type']) {
@@ -106,10 +120,7 @@ class JsonMapper {
    */
   private function sourcePathExists(array $dataSources, string $sourceType, string $sourcePath): bool {
     $value = $this->getValue($dataSources[$sourceType], $sourcePath);
-    if ($value === NULL) {
-      return FALSE;
-    }
-    return TRUE;
+    return !($value === NULL);
   }
 
   /**
@@ -130,7 +141,21 @@ class JsonMapper {
     $value = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
 
     if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'bool') {
+      // Bool values always true/false instead of 0/1.
       $value = $value ? 'true' : 'false';
+    }
+    else if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'string' && $value === "") {
+      // Empty strings can usually be excluded from the submission.
+      return;
+    }
+    else if (!$value && $definition['data']['value'] !== "") {
+      // Allow adding a default value to the mapping-file which is used
+      // if end user sent empty value.
+      $value = $definition['data']['value'];
+    }
+    else if ($value && is_string($value) && $definition['data']['valueType'] === 'double') {
+      // Fields mapped as double should not have commas, replace with dot.
+      $value = str_replace(',', '.', rtrim($value, ','));
     }
 
     $this->setTargetValue($data, $targetPath, $value, $definition);
@@ -262,13 +287,18 @@ class JsonMapper {
         $definition
       );
 
-    if (!$val) {
+    if ($val === NULL || $val === FALSE || $val === []) {
       return;
     }
 
-    $definition['data'] = $val;
-    $sourceValue = $definition['data'];
+    if (is_string($val)) {
+      $definition['data']['value'] = $val;
+    }
+    else {
+      $definition['data'] = $val;
+    }
 
+    $sourceValue = $definition['data'];
     $this->setTargetValue($data, $targetPath, $sourceValue, $definition);
   }
 

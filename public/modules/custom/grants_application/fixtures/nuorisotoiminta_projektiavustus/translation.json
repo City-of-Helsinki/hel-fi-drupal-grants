@@ -65,45 +65,10 @@
       "fi": "Toimintaryhmän / yhdistyksen / talokerhon aktiivisesti toimintaan osallistuvien tai jäsenten määrä",
       "sv": "Antal aktiva deltagare eller medlemmar i gruppen / föreningen / husklubben"
     },
-    "members_fieldset.legend": {
-      "en": "Active participants/members",
-      "fi": "Aktiivisesti toimintaan osallistuvat/jäsenet",
-      "sv": "Aktiva deltagare/medlemmar"
-    },
     "members_fieldset.description": {
       "en": "Indicate here the individuals who actively participate in the group's / association's / housing association's activities and/or are members.",
       "fi": "Merkitse tähän toimintaryhmän / yhdistyksen / talokerhon aktiivisesti toimintaan osallistuvat ja/tai jäsenet.",
       "sv": "Ange här de personer som aktivt deltar i verksamhetsgruppens / föreningens / husklubbens verksamhet och/eller är medlemmar."
-    },
-    "members_0_6.title": {
-      "en": "0-6 year olds",
-      "fi": "0-6 -vuotiaat",
-      "sv": "0-6-åringar"
-    },
-    "members_0_6_helsinki.title": {
-      "en": "of whom Helsinki residents",
-      "fi": "joista helsinkiläisiä",
-      "sv": "varav helsingforsare"
-    },
-    "members_7_28.title": {
-      "en": "7-28 year olds",
-      "fi": "7-28 -vuotiaat",
-      "sv": "7-28-åringar"
-    },
-    "members_7_28_helsinki.title": {
-      "en": "of whom Helsinki residents",
-      "fi": "joista helsinkiläisiä",
-      "sv": "varav helsingforsare"
-    },
-    "members_others.title": {
-      "en": "Other participants",
-      "fi": "Muut osallistujat",
-      "sv": "Övriga deltagare"
-    },
-    "members_others_helsinki.title": {
-      "en": "of whom Helsinki residents",
-      "fi": "joista helsinkiläisiä",
-      "sv": "varav helsingforsare"
     },
     "project_plan_step.title": {
       "en": "Project plan",
@@ -119,11 +84,6 @@
       "en": "You can either write the project plan on this form in the fields below or you can append the project plan to the application. If you submit the plan as an attachment, please include at least the project name, objectives and contents. If you are applying for a start-up grant using this form, please complete the fields as applicable.",
       "fi": "Voit joko kertoa projektisuunnitelman tällä lomakkeella alla oleviin kohtiin tai voit liittää projektisuunnitelman hakemuksen liitteeksi. Jos toimitat suunnitelman liitteenä, kerro siinä ainakin projektin nimi, tavoitteet ja sisältö. Jos haet lomakkeella starttiavustusta täytä kentät soveltuvin osin.",
       "sv": "Du kan antingen ange projektplanen i punkterna nedan eller bifoga projektplanen som en bilaga till ansökan. Om du skickar in planen som en bilaga, ange åtminstone projektets namn, mål och innehåll. Om du ansöker om startunderstöd med denna blankett, fyll i fälten i tillämpliga delar."
-    },
-    "project_name.title": {
-      "en": "Project name",
-      "fi": "Projektin nimi",
-      "sv": "Projektets namn"
     },
     "project_goals.title": {
       "en": "Project objectives",
