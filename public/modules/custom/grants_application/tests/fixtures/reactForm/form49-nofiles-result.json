@@ -1,0 +1,591 @@
+{
+    "compensation": {
+        "applicantInfoArray": [
+            {
+                "ID": "applicantType",
+                "label": "Hakijan tyyppi",
+                "value": "2",
+                "valueType": "string"
+            },
+            {
+                "ID": "companyNumber",
+                "label": "Y-Tunnus",
+                "value": "7769480-5",
+                "valueType": "string"
+            },
+            {
+                "ID": "registrationDate",
+                "label": "Rekisteröimispäivä",
+                "value": "21.5.2023",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "foundingYear",
+                "label": "Perustamisvuosi",
+                "value": "2020",
+                "valueType": "string"
+            },
+            {
+                "ID": "home",
+                "label": "Kotipaikka",
+                "value": "HELSINKI",
+                "valueType": "string"
+            },
+            {
+                "ID": "homePage",
+                "label": "www-sivut",
+                "value": "www.google.com",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityOfficialName",
+                "label": "Yhteisön nimi",
+                "value": "Activenakusteri Oy",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityOfficialNameShort",
+                "label": "Yhteisön lyhenne",
+                "value": "Akt",
+                "valueType": "string"
+            },
+            {
+                "ID": "email",
+                "label": "Sähköpostiosoite",
+                "value": "test@example.com",
+                "valueType": "string"
+            }
+        ],
+        "currentAddressInfoArray": [
+            {
+                "ID": "contactPerson",
+                "label": "Yhteyshenkilö",
+                "value": "Joku Henkilö",
+                "valueType": "string"
+            },
+            {
+                "ID": "phoneNumber",
+                "label": "Puhelinnumero",
+                "value": "040 123 123 12",
+                "valueType": "string"
+            },
+            {
+                "ID": "street",
+                "label": "Lähiosoite",
+                "value": "Mannerheimintie 12",
+                "valueType": "string"
+            },
+            {
+                "ID": "city",
+                "label": "Kaupunki",
+                "value": "Helsinki",
+                "valueType": "string"
+            },
+            {
+                "ID": "postCode",
+                "label": "Postinumero",
+                "value": "00100",
+                "valueType": "string"
+            },
+            {
+                "ID": "country",
+                "label": "Maa",
+                "value": "Suomi",
+                "valueType": "string"
+            }
+        ],
+        "applicationInfoArray": [
+            {
+                "ID": "applicationType",
+                "value": "KUVAKEHA",
+                "valueType": "string"
+            },
+            {
+                "ID": "applicationTypeID",
+                "value": "49",
+                "valueType": "string"
+            },
+            {
+                "ID": "formTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "createdFormTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "submittedFormTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "applicationNumber",
+                "value": "ABCDE-123-0001009",
+                "valueType": "string"
+            },
+            {
+                "ID": "status",
+                "label": "Hakemuksen tila",
+                "value": "DRAFT",
+                "valueType": "string"
+            },
+            {
+                "ID": "actingYear",
+                "label": "Vuosi, jolle haen avustusta",
+                "value": "2026",
+                "valueType": "string"
+            }
+        ],
+        "applicantOfficialsArray": [
+            [
+                {
+                    "ID": "name",
+                    "label": "Nimi",
+                    "value": "Teppo Testaaja",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "role",
+                    "label": "Rooli",
+                    "value": "2",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "email",
+                    "label": "Sähköposti",
+                    "value": "teppo.testaaja@noreply.com",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "phone",
+                    "label": "Puhelinnumero",
+                    "value": "+358451234657",
+                    "valueType": "string"
+                }
+            ]
+        ],
+        "bankAccountArray": [
+            {
+                "ID": "accountNumber",
+                "label": "Tilinumero",
+                "value": "FI4950009420028730",
+                "valueType": "string"
+            }
+        ],
+        "senderInfoArray": [
+            {
+                "ID": "firstname",
+                "value": "Nordea",
+                "valueType": "string"
+            },
+            {
+                "ID": "lastname",
+                "value": "Demo",
+                "valueType": "string"
+            },
+            {
+                "ID": "personID",
+                "value": "010101A0101",
+                "valueType": "string"
+            },
+            {
+                "ID": "userID",
+                "value": "123345678-abcd-1234-ab12-abcdefgh",
+                "valueType": "string"
+            },
+            {
+                "ID": "email",
+                "value": "user_no_mail@hel.fi",
+                "valueType": "string"
+            }
+        ],
+        "additionalInformation": "Lisätiedot",
+        "compensationInfo": {
+            "compensationArray": [
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "44",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Euroa",
+                        "value": "12000",
+                        "valueType": "float"
+                    }
+                ],
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "45",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Euroa",
+                        "value": "3000",
+                        "valueType": "float"
+                    }
+                ],
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "46",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Euroa",
+                        "value": "2000",
+                        "valueType": "float"
+                    }
+                ]
+            ],
+            "generalInfoArray": [
+                {
+                    "ID": "primaryArt",
+                    "label": "Ensisijainen taiteenala",
+                    "value": "Design ja käsityö",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "nameOfEvent",
+                    "label": "Hankkeen nimi",
+                    "value": "Yksikkötestaus",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "purpose",
+                    "label": "Hankkeen tai toiminnan lyhyt esittelyteksti",
+                    "value": "Testausta",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "isFestival",
+                    "label": "Kyseessä on festivaali tai tapahtuma",
+                    "value": "false",
+                    "valueType": "bool"
+                },
+                {
+                    "ID": "yearsForMultiYearApplication",
+                    "label": "Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty",
+                    "value": "2027, 2028",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "breakdownOfYearlySums",
+                    "label": "Erittely kullekin vuodelle haettavasta avustussummasta",
+                    "value": "2027: 5000, 2028: 5000",
+                    "valueType": "string"
+                }
+            ]
+        },
+        "otherCompensationsInfo": {
+            "otherCompensationsArray": [
+                [
+                    {
+                        "ID": "issuer",
+                        "label": "Avustuksen myöntäjä",
+                        "value": "Valtio",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "issuerName",
+                        "label": "Myöntäjän nimi",
+                        "value": "Ministeriö",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "year",
+                        "label": "Vuosi",
+                        "value": "2024",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Myönnetyn avustuksen summa",
+                        "value": "5000",
+                        "valueType": "float"
+                    },
+                    {
+                        "ID": "purpose",
+                        "label": "Kuvaus käyttötarkoituksesta",
+                        "value": "Aiempi avustus",
+                        "valueType": "string"
+                    }
+                ]
+            ],
+            "otherCompensationsInfoArray": [
+                {
+                    "ID": "otherCompensationsTotal",
+                    "value": "0",
+                    "valueType": "double"
+                }
+            ]
+        },
+        "benefitsInfoArray": [
+            {
+                "ID": "loans",
+                "label": "",
+                "value": "",
+                "valueType": "string"
+            },
+            {
+                "ID": "premises",
+                "label": "",
+                "value": "",
+                "valueType": "string"
+            }
+        ],
+        "activitiesInfoArray": [
+            {
+                "ID": "businessPurpose",
+                "label": "Toiminnan kuvaus",
+                "value": "Tämä on hakuprofiilin tietoa",
+                "valueType": "string"
+            }
+        ],
+        "communityInfo": {
+            "generalCommunityInfoArray": [
+                {
+                    "ID": "membersPersonGlobal",
+                    "label": "Henkilöjäseniä yhteensä",
+                    "value": "700",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "membersPersonLocal",
+                    "label": "Helsinkiläisiä henkilöjäseniä yhteensä",
+                    "value": "600",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "membersCommunityGlobal",
+                    "label": "Yhteisöjäseniä",
+                    "value": "7",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "membersCommunityLocal",
+                    "label": "Helsinkiläisiä yhteisöjäseniä yhteensä",
+                    "value": "6",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "staffPeopleFulltime",
+                    "label": "Kokoaikaisia: Henkilöitä",
+                    "value": "7",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "staffManyearsFulltime",
+                    "label": "Kokoaikaisia: Henkilötyövuosia",
+                    "value": "6",
+                    "valueType": "double"
+                },
+                {
+                    "ID": "staffPeopleParttime",
+                    "label": "Osa-aikaisia: Henkilöitä",
+                    "value": "7",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "staffManyearsParttime",
+                    "label": "Osa-aikaisia: Henkilötyövuosia",
+                    "value": "6",
+                    "valueType": "double"
+                },
+                {
+                    "ID": "staffPeopleVoluntary",
+                    "label": "Vapaaehtoisia",
+                    "value": "67",
+                    "valueType": "int"
+                }
+            ]
+        },
+        "activityInfo": {
+            "plannedActivityInfoArray": [
+                {
+                    "ID": "eventOrFestivalDates",
+                    "label": "Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät",
+                    "value": "Testiajot",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "projectStartDate",
+                    "label": "Hanke alkaa",
+                    "value": "2026-06-29",
+                    "valueType": "datetime"
+                },
+                {
+                    "ID": "projectEndDate",
+                    "label": "Hanke loppuu",
+                    "value": "2026-06-30",
+                    "valueType": "datetime"
+                },
+                {
+                    "ID": "detailedProjectDescription",
+                    "label": "Laajempi hankekuvaus",
+                    "value": "Pitkä kuvaus",
+                    "valueType": "string"
+                }
+            ],
+            "plannedPremisesArray": [
+                [
+                    {
+                        "ID": "premiseName",
+                        "label": "Tilan nimi",
+                        "value": "Testitila",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "postCode",
+                        "label": "Postinumero",
+                        "value": "00100",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "isOwnedByCity",
+                        "label": "Onko tila kaupungin omistama",
+                        "value": "true",
+                        "valueType": "bool"
+                    }
+                ]
+            ]
+        },
+        "activityBasisInfo": {
+            "activityBasisArray": [
+                {
+                    "ID": "toiminta_taiteelliset_lahtokohdat",
+                    "label": "Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.",
+                    "value": "Kuvauskenttä 1",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "toiminta_tasa_arvo",
+                    "label": "Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+                    "value": "Kuvauskenttä 2",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "toiminta_saavutettavuus",
+                    "label": "Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+                    "value": "Kuvauskenttä 3",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "toiminta_yhteisollisyys",
+                    "label": "Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?",
+                    "value": "Kuvauskenttä 4",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "toiminta_kohderyhmat",
+                    "label": "Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?",
+                    "value": "Kuvauskenttä 5",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "toiminta_ammattimaisuus",
+                    "label": "Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista",
+                    "value": "Kuvauskenttä 6",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "toiminta_ekologisuus",
+                    "label": "Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.",
+                    "value": "Kuvauskenttä 7",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "toiminta_yhteistyokumppanit",
+                    "label": "Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.",
+                    "value": "Kuvauskenttä 8",
+                    "valueType": "string"
+                }
+            ]
+        },
+        "budgetInfo": {
+            "budgetInfoArray": [
+                {
+                    "ID": "isPartOfVOS",
+                    "label": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
+                    "value": "false",
+                    "valueType": "bool"
+                },
+                {
+                    "ID": "otherValuables",
+                    "label": "Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?",
+                    "value": "Nope",
+                    "valueType": "string"
+                }
+            ],
+            "incomeGroupsArrayStatic": [
+                {
+                    "incomeGroupName": "general",
+                    "incomeRowsArrayStatic": [
+                        {
+                            "ID": "compensation",
+                            "value": "12000",
+                            "valueType": "double"
+                        },
+                        {
+                            "ID": "plannedOtherCompensations",
+                            "value": "2300",
+                            "valueType": "double"
+                        },
+                        {
+                            "ID": "sponsorships",
+                            "value": "3400",
+                            "valueType": "double"
+                        },
+                        {
+                            "ID": "entryFees",
+                            "value": "4500",
+                            "valueType": "double"
+                        },
+                        {
+                            "ID": "sales",
+                            "value": "5600",
+                            "valueType": "double"
+                        },
+                        {
+                            "ID": "ownFunding",
+                            "value": "6700",
+                            "valueType": "double"
+                        }
+                    ]
+                }
+            ],
+            "costGroupsArrayStatic": [
+                {
+                    "costGroupName": "general",
+                    "otherCostRowsArrayStatic": [
+                        {
+                            "ID": "menot_field_0_0",
+                            "label": "Juomat",
+                            "value": "10000",
+                            "valueType": "double"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "attachmentsInfo": {
+        "generalInfoArray": [
+            {
+                "ID": "extraInfo",
+                "label": "Lisäselvitys liitteistä",
+                "value": "Liitteiden lisäselvitys",
+                "valueType": "string"
+            }
+        ]
+    }
+}
