@@ -48,6 +48,27 @@ export type VerifyFormFieldsOptions = {
 };
 
 /**
+ * Text shown on the application completion page after a successful submit.
+ */
+const COMPLETION_TEXT: Record<'heading' | 'sent' | 'received', Record<string, string>> = {
+  heading: {
+    en: 'Grant application sent successfully',
+    fi: 'Avustushakemus lähetetty onnistuneesti',
+    sv: 'Anslagsansökan har skickats'
+  },
+  sent: {
+    en: 'Sent - waiting for confirmation',
+    fi: 'Lähetetty - odotetaan vahvistusta',
+    sv: 'Skickad - väntar på bekräftelse'
+  },
+  received: {
+    en: 'Received',
+    fi: 'Vastaanotettu',
+    sv: 'Mottagen'
+  },
+};
+
+/**
  * Handle a single field.
  *
  * Checks that field label, tooltip and description is visible.
@@ -619,7 +640,9 @@ export async function verifyFormAndSubmit(
     await page.goto(options.formURL);
     // Expect the React application to load.
     await waitForFormLoad(page);
-    const t = createTranslator(formData as FormPreviewResponse, 'fi');
+    // Set the translations language to Finnish, as form submissions are only tested in Finnish.
+    const language = 'fi';
+    const t = createTranslator(formData as FormPreviewResponse, language);
     const step = 'confirm_and_submit';
 
     // Go to last step and check that the form can be submitted.
@@ -645,12 +668,12 @@ export async function verifyFormAndSubmit(
     // Verify the completion.
     await logCurrentUrl(page);
     await page.waitForURL(options.formCompletionURL);
-    await expect(page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
-    await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
+    await expect(page.getByRole('heading', {name: COMPLETION_TEXT.heading[language]})).toBeVisible();
+    await expect(page.getByText(COMPLETION_TEXT.sent[language]).first()).toBeVisible();
 
     // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
     // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
-    const applicationReceived = await waitForTextWithInterval(page, 'Vastaanotettu');
+    const applicationReceived = await waitForTextWithInterval(page, COMPLETION_TEXT.received[language]);
     if (!applicationReceived) {
       logger('WARNING: Failed to validate that the application was received.');
       return;
