@@ -325,7 +325,10 @@ const {
 
 // Convert a camelCase/snake_case token to kebab-case for class names.
 const toKebab = (value: string) =>
-  value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').replace(/_/g, '-').toLowerCase();
+  value
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/_/g, '-')
+    .toLowerCase();
 
 // Map classes to field types.
 const fieldTypeToken = (schema: any, uiSchema: any): string | null => {
