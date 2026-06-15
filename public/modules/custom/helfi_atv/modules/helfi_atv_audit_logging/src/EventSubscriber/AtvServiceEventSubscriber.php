@@ -7,6 +7,7 @@ namespace Drupal\helfi_atv_audit_logging\EventSubscriber;
 use Drupal\helfi_atv\Event\AtvServiceExceptionEvent;
 use Drupal\helfi_atv\Event\AtvServiceOperationEvent;
 use Drupal\helfi_api_base\AuditLog\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -36,16 +37,14 @@ class AtvServiceEventSubscriber implements EventSubscriberInterface {
    */
   public function onException(AtvServiceExceptionEvent $event) {
     $exception = $event->getException();
-    $message = [
-      'operation' => 'ATV_QUERY',
-      'status' => 'EXCEPTION',
-      'target' => [
+    $this->auditLogService->logOperation(new AuditLogEvent(
+      operation: 'ATV_QUERY',
+      message: 'EXCEPTION',
+      target: [
         'name' => $exception->getMessage(),
         'type' => get_class($exception),
       ],
-    ];
-
-    $this->auditLogService->dispatchEvent($message);
+    ));
   }
 
   /**
@@ -57,16 +56,14 @@ class AtvServiceEventSubscriber implements EventSubscriberInterface {
   public function onOperation(AtvServiceOperationEvent $event) {
     $method = $event->getMethod();
     $url = $event->getUrl();
-    $message = [
-      'operation' => 'ATV_QUERY',
-      'status' => 'SUCCESS',
-      'target' => [
+    $this->auditLogService->logOperation(new AuditLogEvent(
+      operation: 'ATV_QUERY',
+      message: 'SUCCESS',
+      target: [
         'name' => $url,
         'type' => $method,
       ],
-    ];
-
-    $this->auditLogService->dispatchEvent($message);
+    ));
   }
 
 }

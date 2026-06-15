@@ -219,7 +219,7 @@ class GrantsProfileServiceTest extends UnitTestCase {
     $atv->deleteAttachment($doc->getId(), '321')->shouldBeCalled();
 
     // Should dispatch audit log event.
-    $auditLog->dispatchEvent(Argument::any())->shouldBeCalled();
+    $auditLog->logOperation(Argument::any())->shouldBeCalled();
 
     // Should remove existing attachments since
     // update does not contain documents.

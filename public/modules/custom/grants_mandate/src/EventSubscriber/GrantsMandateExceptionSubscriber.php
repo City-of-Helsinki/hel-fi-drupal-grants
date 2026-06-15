@@ -8,6 +8,7 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\helfi_api_base\AuditLog\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -53,16 +54,15 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
       $this->messenger->addError($this->t('Mandate process failed, error has been logged'));
       $this->logger->error('Error getting mandate: @error', ['@error' => $ex->getMessage()]);
 
-      $message = [
-        "operation" => "GRANTS_MANDATE_VALIDATE",
-        "status" => "ERROR",
-        "target" => [
+      $this->auditLogService->logOperation(new AuditLogEvent(
+        operation: "GRANTS_MANDATE_VALIDATE",
+        message: "ERROR",
+        target: [
           "id" => "GRANTS_MANDATE",
           "type" => "USER",
           "name" => "MANDATE_ERROR",
         ],
-      ];
-      $this->auditLogService->dispatchEvent($message);
+      ));
 
       // Redirect back to mandate form.
       $url = Url::fromRoute('grants_mandate.mandateform');

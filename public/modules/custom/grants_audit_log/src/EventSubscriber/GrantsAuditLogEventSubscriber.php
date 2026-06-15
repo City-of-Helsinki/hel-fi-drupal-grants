@@ -1,27 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_audit_log\EventSubscriber;
 
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Subscribes to AuditLogEvent::LOG events.
+ * Adds grants specific data to audit log events.
  */
 class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
 
-  const AUDIT_LOG_PROVIDER_ORIGIN = 'HELFI-GRANTS';
-
-  /**
-   * Constrictor for thee class.
-   */
   public function __construct(
-    protected AccountProxyInterface $currentUser,
-    protected RequestStack $requestStack,
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {}
 
@@ -29,127 +22,40 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents(): array {
-    $events[AuditLogEvent::LOG][] = ['validate', 0];
-    $events[AuditLogEvent::LOG][] = ['addUser', -10];
-
-    return $events;
+    return [
+      AuditLogEvent::class => 'addProfiiliUser',
+    ];
   }
 
   /**
-   * Validate message in AuditEvent::LOG event.
+   * Sets the Helsinki profiili user id on the event.
    *
-   * @param \Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent $event
-   *   Event to validate.
-   */
-  public function validate(AuditLogEvent $event): void {
-    if (!$event->isValid()) {
-      // Event is invalid based on previous handlers.
-      return;
-    }
-    // Validate message.
-    $message = $event->getMessage();
-    $isValid = $this->validateMessage($message);
-    $event->setValid($isValid);
-    // Set origin.
-    $event->setOrigin(self::AUDIT_LOG_PROVIDER_ORIGIN);
-  }
-
-  /**
-   * Add user data to event data.
-   *
-   * This method is called whenever the AuditEvent::LOG event is
-   * dispatched.
+   * The base actor is added by helfi_api_base AuditLogActorSubscriber.
+   * here we append the session id from profiili jwt token.
    *
    * @param \Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent $event
    *   Event to handle.
+   *
+   * @see \Drupal\helfi_api_base\AuditLog\EventSubscriber\AuditLogActorSubscriber
    */
-  public function addUser(AuditLogEvent $event): void {
-    // Determine user role based on if user has admin role.
-    $role = in_array("admin", $this->currentUser->getRoles()) ? "ADMIN" : "USER";
-    $userId = $this->currentUser->id();
-    // Get current user.
-    if ($role == 'USER') {
-      try {
-        $data = $this->helsinkiProfiiliUserData->getUserData();
+  public function addProfiiliUser(AuditLogEvent $event): void {
+    try {
+      $data = $this->helsinkiProfiiliUserData->getUserData();
 
-        if ($data->sid !== NULL) {
-          $userId = $data->sid;
-        }
-      }
-      catch (ProfiiliException) {
-        // If present, replace user id with sid field from tunnistamo jwt
-        // token. HelsinkiProfiiliUserData::getUserData throws if the helsinki
-        // profiili token is not available. In that case, something has
-        // probably gone very wrong already, but I don't think this should
-        // prevent logging here.
+      if ($data->sid !== NULL) {
+        // Add sid field from tunnistamo jwt token. Only users authenticated
+        // via Helsinki profiili have a session, so admins keep
+        // the user id set by the generic actor subscriber.
+        $event->setActor(array_merge($event->getActor(), [
+          'user_id' => $data->sid,
+        ]));
       }
     }
-    $message = $event->getMessage();
-    $message["actor"] = [
-      "role" => $role,
-      "user_id" => $userId,
-      "ip_address" => $this->requestStack->getCurrentRequest()->getClientIp(),
-    ];
-    $event->setMessage($message);
-  }
-
-  /**
-   * Validate event message.
-   *
-   * @param array $message
-   *   The message array.
-   * @param array $structure
-   *   Expected keys in message.
-   */
-  protected function validateKeysRecursive(array $message, array $structure) : bool {
-    $isValid = TRUE;
-    foreach ($message as $key => $value) {
-      if (!isset($structure[$key])) {
-        $isValid = FALSE;
-        break;
-      }
-      if (is_array($value)) {
-        if (!is_array($structure[$key])) {
-          $isValid = FALSE;
-          break;
-        }
-        $isValid = $this->validateKeysRecursive($value, $structure[$key]);
-        if (!$isValid) {
-          break;
-        }
-      }
+    catch (ProfiiliException) {
+      // HelsinkiProfiiliUserData::getUserData throws if the helsinki profiili
+      // token is not available. In that case, something has probably gone very
+      // wrong already, but that should not prevent logging here.
     }
-    return $isValid;
-  }
-
-  /**
-   * Message validation.
-   *
-   * @param array $message
-   *   The message array.
-   */
-  public function validateMessage(array $message) : bool {
-    $structure = $this->getLogStructure();
-
-    $isValid = $this->validateKeysRecursive($message, $structure);
-
-    return $isValid;
-  }
-
-  /**
-   * Return expected keys for event message.
-   */
-  public function getLogStructure(): array {
-    return [
-      'operation' => 1,
-      'status' => 1,
-      'target' => [
-        'id' => 1,
-        'type' => 1,
-        'name' => 1,
-        'diff' => 1,
-      ],
-    ];
   }
 
 }

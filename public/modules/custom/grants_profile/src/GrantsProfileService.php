@@ -13,6 +13,7 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_api_base\AuditLog\AuditLogServiceInterface;
+use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use GuzzleHttp\Exception\ConnectException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -239,28 +240,31 @@ class GrantsProfileService {
       $keep = array_map(static fn (array $account) => $account['confirmationFile'], $documentContent['bankAccounts']);
       $remove = array_filter($result->getAttachments(), static fn (array $attachment) => !in_array($attachment['filename'], $keep));
 
-      try {
-        $message = [
-          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-          "status" => "SUCCESS",
-          "target" => [
-            "id" => $result->getId(),
-            "type" => $result->getType(),
-            "name" => $result->getTransactionId(),
-          ],
-        ];
+      $target = [
+        "id" => $result->getId(),
+        "type" => $result->getType(),
+        "name" => $result->getTransactionId(),
+      ];
 
+      try {
         foreach ($remove as $attachment) {
           $this->atvService->deleteAttachment($result->getId(), $attachment['id']);
-          $this->auditLogService->dispatchEvent($message);
+          $this->auditLogService->logOperation(new AuditLogEvent(
+            operation: "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+            message: "SUCCESS",
+            target: $target,
+          ));
         }
       }
       catch (\Exception $e) {
         // Failed to clean all attachments.
         Error::logException($this->logger, $e);
 
-        $message['status'] = 'FAILURE';
-        $this->auditLogService->dispatchEvent($message);
+        $this->auditLogService->logOperation(new AuditLogEvent(
+          operation: "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          message: "FAILURE",
+          target: $target,
+        ));
       }
     }
 
