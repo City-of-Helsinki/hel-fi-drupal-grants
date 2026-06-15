@@ -11,6 +11,7 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\helfi_api_base\AuditLog\AuditLogService;
 use Drupal\user\UserInterface;
 
 /**
@@ -29,7 +30,7 @@ function grants_audit_log_openid_connect_post_authorize(UserInterface $account, 
 
   // Do we need to log this separately? Hook `grants_audit_log_user_login`
   // is fired for helsinki profiili logins too.
-  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  \Drupal::service(AuditLogService::class)->dispatchEvent($message);
 }
 
 /**
@@ -45,7 +46,7 @@ function grants_audit_log_user_login(AccountInterface $account): void {
       "name" => "User Login",
     ],
   ];
-  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  \Drupal::service(AuditLogService::class)->dispatchEvent($message);
 }
 
 /**
@@ -61,7 +62,7 @@ function grants_audit_log_user_logout(AccountInterface $account): void {
       "name" => "User Logout",
     ],
   ];
-  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  \Drupal::service(AuditLogService::class)->dispatchEvent($message);
 }
 
 /**
@@ -81,7 +82,7 @@ function grants_audit_log_entity_view(array &$build, EntityInterface $entity): v
         "name" => "Form Viewed",
       ],
     ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+    \Drupal::service(AuditLogService::class)->dispatchEvent($message);
   }
 }
 
@@ -102,7 +103,7 @@ function grants_audit_log_entity_insert(EntityInterface $entity): void {
         "name" => "Entity Created",
       ],
     ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+    \Drupal::service(AuditLogService::class)->dispatchEvent($message);
   }
 }
 
@@ -123,7 +124,7 @@ function grants_audit_log_entity_delete(EntityInterface $entity): void {
         "name" => "Entity Deleted",
       ],
     ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+    \Drupal::service(AuditLogService::class)->dispatchEvent($message);
   }
 }
 
@@ -144,6 +145,6 @@ function grants_audit_log__entity_update(EntityInterface $entity): void {
         "name" => "Entity Updated",
       ],
     ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+    \Drupal::service(AuditLogService::class)->dispatchEvent($message);
   }
 }

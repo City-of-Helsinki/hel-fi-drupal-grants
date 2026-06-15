@@ -12,7 +12,7 @@ use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
-use Drupal\helfi_audit_log\AuditLogServiceInterface;
+use Drupal\helfi_api_base\AuditLog\AuditLogServiceInterface;
 use GuzzleHttp\Exception\ConnectException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -52,7 +52,7 @@ class GrantsProfileService {
    *   Cache.
    * @param \Drupal\Component\Uuid\UuidInterface $uuid
    *   Uuid generator.
-   * @param \Drupal\helfi_audit_log\AuditLogServiceInterface $auditLogService
+   * @param \Drupal\helfi_api_base\AuditLog\AuditLogServiceInterface $auditLogService
    *   The audit log service.
    */
   public function __construct(
@@ -64,7 +64,6 @@ class GrantsProfileService {
     private readonly LoggerInterface $logger,
     private readonly GrantsProfileCache $grantsProfileCache,
     private readonly UuidInterface $uuid,
-    #[Autowire(service: 'helfi_audit_log.audit_log')]
     private readonly AuditLogServiceInterface $auditLogService,
   ) {
   }

@@ -2,7 +2,7 @@
 
 namespace Drupal\helfi_helsinki_profiili_audit_logging\EventSubscriber;
 
-use Drupal\helfi_audit_log\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\AuditLogService;
 use Drupal\helfi_helsinki_profiili\Event\HelsinkiProfiiliExceptionEvent;
 use Drupal\helfi_helsinki_profiili\Event\HelsinkiProfiiliOperationEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

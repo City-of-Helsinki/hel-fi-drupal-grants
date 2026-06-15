@@ -3,7 +3,7 @@
 namespace Drupal\grants_audit_log\EventSubscriber;
 
 use Drupal\Core\Session\AccountProxyInterface;
-use Drupal\helfi_audit_log\Event\AuditLogEvent;
+use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -38,7 +38,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
   /**
    * Validate message in AuditEvent::LOG event.
    *
-   * @param \Drupal\helfi_audit_log\Event\AuditLogEvent $event
+   * @param \Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent $event
    *   Event to validate.
    */
   public function validate(AuditLogEvent $event): void {
@@ -60,7 +60,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
    * This method is called whenever the AuditEvent::LOG event is
    * dispatched.
    *
-   * @param \Drupal\helfi_audit_log\Event\AuditLogEvent $event
+   * @param \Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent $event
    *   Event to handle.
    */
   public function addUser(AuditLogEvent $event): void {

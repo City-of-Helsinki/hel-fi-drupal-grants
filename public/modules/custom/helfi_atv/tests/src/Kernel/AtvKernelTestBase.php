@@ -32,7 +32,6 @@ abstract class AtvKernelTestBase extends KernelTestBase {
     'helfi_atv_test',
     'helfi_helsinki_profiili',
     // Helsinki profiili requires audit log unnecessarily.
-    'helfi_audit_log',
   ];
 
   /**

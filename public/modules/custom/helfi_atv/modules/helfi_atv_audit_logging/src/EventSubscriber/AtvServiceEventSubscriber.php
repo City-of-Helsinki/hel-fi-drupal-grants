@@ -6,7 +6,7 @@ namespace Drupal\helfi_atv_audit_logging\EventSubscriber;
 
 use Drupal\helfi_atv\Event\AtvServiceExceptionEvent;
 use Drupal\helfi_atv\Event\AtvServiceOperationEvent;
-use Drupal\helfi_audit_log\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\AuditLogService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

@@ -24,7 +24,7 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
-use Drupal\helfi_audit_log\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\AuditLogService;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use GuzzleHttp\Exception\GuzzleException;
@@ -87,7 +87,7 @@ class AttachmentHandler {
    *   Profile service.
    * @param \Drupal\grants_metadata\AtvSchema $atvSchema
    *   ATV schema.
-   * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
+   * @param \Drupal\helfi_api_base\AuditLog\AuditLogService $auditLogService
    *   Audit log mandate errors.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.

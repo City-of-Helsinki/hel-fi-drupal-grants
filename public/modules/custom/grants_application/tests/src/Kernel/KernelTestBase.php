@@ -30,7 +30,6 @@ class KernelTestBase extends CoreKernelTestBase {
     'grants_profile',
     'helfi_atv',
     'helfi_av',
-    'helfi_audit_log',
     'helfi_api_base',
     'helfi_helsinki_profiili',
     'helfi_yjdh',

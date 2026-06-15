@@ -39,7 +39,6 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'openid_connect',
     'openid_connect_logout_redirect',
     // Contrib hel.fi modules.
-    'helfi_audit_log',
     'helfi_helsinki_profiili',
     'helfi_atv',
     'helfi_api_base',

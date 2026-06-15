@@ -4,4 +4,4 @@ services:
     tags:
       - { name: event_subscriber }
     arguments:
-      - '@helfi_audit_log.audit_log'
+      - '@Drupal\helfi_api_base\AuditLog\AuditLogService'

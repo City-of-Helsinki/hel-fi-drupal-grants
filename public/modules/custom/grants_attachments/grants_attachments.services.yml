@@ -34,7 +34,7 @@ services:
       '@helfi_atv.atv_service',
       '@grants_profile.service',
       '@grants_metadata.atv_schema',
-      '@helfi_audit_log.audit_log',
+      '@Drupal\helfi_api_base\AuditLog\AuditLogService',
       '@entity_type.manager',
       '@grants_metadata.application_data_service'
     ]
