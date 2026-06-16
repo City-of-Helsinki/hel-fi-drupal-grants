@@ -1,124 +1,32 @@
 verbose: true
 types:
-  crop: {  }
-  file: {  }
-  menu_link_content: {  }
   node:
     '*': '*'
   paragraphs_library_item:
     '*': '*'
-  path_alias: {  }
-  redirect: {  }
   taxonomy_term:
     '*': '*'
-  user: {  }
-  paragraph: {  }
-  tpr_service_channel: {  }
-  tpr_errand_service: {  }
-  tpr_ontology_word_details: {  }
   tpr_service:
     '*': '*'
   tpr_unit:
     '*': '*'
-  media: {  }
-  block_content: {  }
-  radioactivity: {  }
-  search_api_task: {  }
-  webform_submission: {  }
-  helfi_announcements: {  }
-  helfi_hearings: {  }
-  helfi_news: {  }
-  helfi_news_groups: {  }
-  helfi_news_neighbourhoods: {  }
-  helfi_news_tags: {  }
-  helfi_surveys: {  }
-  linkedevents_event: {  }
   application_submission:
     '*': '*'
 types_translation_lock: {  }
 form_op_lock:
-  crop:
-    mode: 0
-    values: {  }
-  file:
-    mode: 0
-    values: {  }
-  menu_link_content:
-    mode: 0
-    values: {  }
   node:
     mode: 0
     values: {  }
   paragraphs_library_item:
     mode: 0
     values: {  }
-  path_alias:
-    mode: 0
-    values: {  }
-  redirect:
-    mode: 0
-    values: {  }
   taxonomy_term:
-    mode: 0
-    values: {  }
-  user:
-    mode: 0
-    values: {  }
-  paragraph:
-    mode: 0
-    values: {  }
-  tpr_service_channel:
-    mode: 0
-    values: {  }
-  tpr_errand_service:
-    mode: 0
-    values: {  }
-  tpr_ontology_word_details:
     mode: 0
     values: {  }
   tpr_service:
     mode: 0
     values: {  }
   tpr_unit:
-    mode: 0
-    values: {  }
-  media:
-    mode: 0
-    values: {  }
-  block_content:
-    mode: 0
-    values: {  }
-  radioactivity:
-    mode: null
-    values: {  }
-  search_api_task:
-    mode: null
-    values: {  }
-  webform_submission:
-    mode: 0
-    values: {  }
-  helfi_announcements:
-    mode: 0
-    values: {  }
-  helfi_hearings:
-    mode: 0
-    values: {  }
-  helfi_news:
-    mode: 0
-    values: {  }
-  helfi_news_groups:
-    mode: 0
-    values: {  }
-  helfi_news_neighbourhoods:
-    mode: 0
-    values: {  }
-  helfi_news_tags:
-    mode: 0
-    values: {  }
-  helfi_surveys:
-    mode: 0
-    values: {  }
-  linkedevents_event:
     mode: 0
     values: {  }
   application_submission:
