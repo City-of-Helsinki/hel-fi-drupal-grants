@@ -197,7 +197,6 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       // Object fields are containers, step into their children.
       if (fieldSchema?.type === 'object' && fieldSchema.properties) {
         const nestedRequiredFields = new Set<string>(fieldSchema.required ?? []);
-        const nestedUiSchema = fieldUiSchema;
 
         // Walk each child property of the nested object.
         for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
@@ -226,7 +225,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
           pushField(
             childName,
             childRawSchema,
-            nestedUiSchema[childName] ?? {},
+            fieldUiSchema[childName] ?? {},
             nestedRequiredFields.has(childName),
             [step, sectionName, fieldName],
             sectionName,

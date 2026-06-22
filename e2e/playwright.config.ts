@@ -8,6 +8,8 @@ export default defineConfig({
   globalTeardown: require.resolve('./tests/global.teardown.ts'),
   globalSetup: require.resolve('./tests/init.setup.ts'),
   testDir: './tests',
+  /* Ignore form helper files. */
+  testIgnore: ['**/formInputs.ts', '**/formLogic.ts'],
   timeout: 300 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -114,6 +116,11 @@ export default defineConfig({
     {
       name: 'forms-70',
       testMatch: '/forms/70_promoting_safer_club_activities/*',
+      dependencies: ['profile-registered_community'],
+    },
+    {
+      name: 'forms-70-iakkaiden',
+      testMatch: '/forms/70_iakkaiden_kulttuuri_ja_liikunta/*',
       dependencies: ['profile-registered_community'],
     },
     /* Webforms. */

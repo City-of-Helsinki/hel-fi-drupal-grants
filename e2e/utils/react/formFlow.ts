@@ -2,6 +2,7 @@ import {type Page, test} from '@playwright/test';
 import {
   type FieldInputs,
   type FilledFields,
+  type FormLogic,
   fillFormFields, verifyAnswers,
   verifyFormAndSubmit,
   verifyFormFieldTranslations
@@ -28,6 +29,8 @@ import {
  *   The user role used during the flow.
  * @param fieldInputs
  *   Custom fill values for specific fields, keyed by field id.
+ * @param formLogic
+ *   Custom logic for a particular form.
  *
  * @return Promise<FilledFields>
  *   The collected field values used during the test.
@@ -37,6 +40,7 @@ export async function executeFormFlow(
   FORM_ID: string,
   FORM_ROLE: Role,
   fieldInputs?: FieldInputs,
+  formLogic?: FormLogic,
 ): Promise<FilledFields> {
   const FORM_URL = `/fi/application/new/${FORM_ID}`;
   const FORM_JSON = `/fi/application/preview/${FORM_ID}`;
@@ -66,6 +70,7 @@ export async function executeFormFlow(
     await verifyFormFieldTranslations(page, formData, {
       formURL: `${FORM_URL}/${applicationNumber}`,
       languages: ['fi', 'en', 'sv'],
+      formLogic: formLogic,
     });
   });
 
@@ -76,6 +81,7 @@ export async function executeFormFlow(
       languages: ['fi'],
       filledFields: filledFields,
       fieldInputs: fieldInputs,
+      formLogic: formLogic,
     });
   });
 
