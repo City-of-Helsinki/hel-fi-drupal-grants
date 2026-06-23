@@ -1,5 +1,5 @@
 import path from 'path';
-import { expect, type Page, test } from '@playwright/test';
+import { expect, type Locator, type Page, test } from '@playwright/test';
 import { fakerFI as faker } from "@faker-js/faker/locale/index";
 import { buildFormTree, type FormTree, type StepField } from './stepInspector';
 import type { FormPreviewResponse } from './schemaFetcher';
@@ -189,6 +189,23 @@ async function getFieldTypeToken(page: Page, fieldId: string): Promise<string | 
 }
 
 /**
+ * Returns true if the input is disabled, waiting briefly for a debounced change.
+ *
+ * @param input
+ *   The input locator.
+ * @param timeout
+ *   How long to wait for the input to become disabled.
+ */
+async function waitOptionDisabled(input: Locator, timeout: number): Promise<boolean> {
+  try {
+    await expect(input).toBeDisabled({ timeout });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Handle a single field.
  *
  * Checks that field label, tooltip and description is visible.
@@ -290,8 +307,12 @@ async function handleField(
       // Single-subvention fields allow only one option to have a value.
       if (field.singleSubvention && hasFilledOption) break;
 
-      // Skip inputs whose value is controlled by the application.
-      if (await optionInput.isDisabled()) continue;
+      // A start grant sets one option and disables the rest after debounce,
+      // so wait for the disabled state to settle before filling.
+      const disabled = field.startGrant
+        ? await waitOptionDisabled(optionInput, 3000)
+        : await optionInput.isDisabled();
+      if (disabled) continue;
 
       // Fill the input with a random amount.
       const fieldValue = faker.number.int({ min: 1, max: 99999 }).toString();

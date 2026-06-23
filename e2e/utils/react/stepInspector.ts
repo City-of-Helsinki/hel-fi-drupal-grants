@@ -30,6 +30,7 @@ export type StepField = {
   required: boolean;
   options?: Array<{ id: number | string; label: string }>;
   singleSubvention?: boolean;
+  startGrant?: boolean;
   conditional?: boolean;
   conditionField?: string;
   isArrayItem?: boolean;
@@ -173,6 +174,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       required,
       options: rawOptions?.length ? rawOptions : undefined,
       singleSubvention: uiOptions.useSingleSubvention === true,
+      startGrant: uiOptions.startGrant != null,
       tooltipLabel: uiOptions.tooltipLabel ? translate(uiOptions.tooltipLabel) : undefined,
       tooltipButtonLabel: uiOptions.tooltipButtonLabel ? translate(uiOptions.tooltipButtonLabel) : undefined,
       tooltipText: uiOptions.tooltipText ? translate(uiOptions.tooltipText) : undefined,

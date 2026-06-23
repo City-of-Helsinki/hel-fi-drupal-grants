@@ -114,6 +114,11 @@ export default defineConfig({
     },
     /* React forms. */
     {
+      name: 'forms-56-yleisavustus',
+      testMatch: '/forms/56_liikunta_yleisavustushakemus/*',
+      dependencies: ['profile-registered_community'],
+    },
+    {
       name: 'forms-70',
       testMatch: '/forms/70_promoting_safer_club_activities/*',
       dependencies: ['profile-registered_community'],
