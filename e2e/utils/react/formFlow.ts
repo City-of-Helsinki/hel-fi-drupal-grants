@@ -39,8 +39,8 @@ export async function executeFormFlow(
   page: Page,
   FORM_ID: string,
   FORM_ROLE: Role,
-  fieldInputs?: FieldInputs,
   formLogic?: FormLogic,
+  fieldInputs?: FieldInputs,
 ): Promise<FilledFields> {
   const FORM_URL = `/fi/application/new/${FORM_ID}`;
   const FORM_JSON = `/fi/application/preview/${FORM_ID}`;

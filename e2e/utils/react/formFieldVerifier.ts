@@ -73,6 +73,57 @@ function resolveFieldInput(
 }
 
 /**
+ * Context passed to a field-specific logic handler.
+ */
+export type FieldLogicContext = {
+  page: Page;
+  field: StepField;
+  fieldId: string;
+  shouldFill: boolean;
+  t: (key: string) => string;
+  filledFields?: FilledFields;
+};
+
+/**
+ * Handles custom logic for a single field.
+ *
+ * Returning TRUE indicates that the field was handled and generic processing
+ * should be skipped.
+ */
+export type FieldLogicHandler = (ctx: FieldLogicContext) => Promise<boolean>;
+
+/**
+ * Custom form logic for fields that the generic engine cannot handle.
+ *
+ * The structure is nested by field path, like FieldInputs. Handler functions
+ * are placed at "leaf" nodes. Use this only for true one-off widgets or
+ * interactions; recurring patterns belong in the engine.
+ */
+export type FormLogic = { [key: string]: FieldLogicHandler | FormLogic };
+
+/**
+ * Resolves a custom logic handler for a field path.
+ *
+ * Walks the nested formLogic tree using the given field path segments.
+ *
+ * @param formLogic
+ *   The nested custom logic for the form.
+ * @param fieldPath
+ *   The field path segments, for example [step, section, field].
+ */
+function resolveFormLogic(
+  formLogic: FormLogic | undefined,
+  fieldPath: string[],
+): FieldLogicHandler | undefined {
+  let node: FieldLogicHandler | FormLogic | undefined = formLogic;
+  for (const segment of fieldPath) {
+    if (!node || typeof node !== 'object') return undefined;
+    node = node[segment];
+  }
+  return typeof node === 'function' ? node : undefined;
+}
+
+/**
  * Options shared by the main form test functions.
  */
 export type VerifyFormFieldsOptions = {
@@ -86,6 +137,8 @@ export type VerifyFormFieldsOptions = {
   filledFields?: FilledFields;
   /** Custom fill values, keyed by field id. */
   fieldInputs?: FieldInputs;
+  /** Custom field logic keyed by field path. */
+  formLogic?: FormLogic;
 };
 
 /**
@@ -110,6 +163,32 @@ const COMPLETION_TEXT: Record<'heading' | 'sent' | 'received', Record<string, st
 };
 
 /**
+ * Resolves a field's type token from its rendered DOM wrapper.
+ *
+ * Field wrappers include a hdbt-form--field--<token> CSS class, where the
+ * token identifies the field type (for example date, decimal-number, or
+ * select).
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param fieldId
+ *   The field DOM id.
+ *
+ * @returns
+ *   The field type token, or null if it cannot be resolved.
+ */
+async function getFieldTypeToken(page: Page, fieldId: string): Promise<string | null> {
+  const field = page.locator(`#${fieldId}`);
+  if ((await field.count()) === 0) return null;
+  const wrapper = field.locator('xpath=ancestor-or-self::*[contains(@class, "hdbt-form--field--")][1]');
+  if ((await wrapper.count()) === 0) return null;
+  const className = (await wrapper.getAttribute('class')) ?? '';
+  const prefix = 'hdbt-form--field--';
+  const typeClass = className.split(' ').find((c) => c.startsWith(prefix));
+  return typeClass ? typeClass.slice(prefix.length) : null;
+}
+
+/**
  * Handle a single field.
  *
  * Checks that field label, tooltip and description is visible.
@@ -129,6 +208,7 @@ const COMPLETION_TEXT: Record<'heading' | 'sent' | 'received', Record<string, st
  * @param filledFields
  * @param fieldInputs
  * @param usedFieldInputs
+ * @param formLogic
  */
 async function handleField(
   page: Page,
@@ -144,11 +224,22 @@ async function handleField(
   filledFields?: FilledFields,
   fieldInputs?: FieldInputs,
   usedFieldInputs?: Set<string>,
+  formLogic?: FormLogic,
 ): Promise<void> {
-  // Some fields are hidden behind a yes/no toggle. Click "yes" once
-  // to make those fields appear before we try to interact with them.
+  // Custom field logic can override the generic engine for a specific field.
+  // If the handler reports the field as handled, skip further processing.
+  const logicHandler = resolveFormLogic(formLogic, field.fieldPath);
+  if (logicHandler && await logicHandler({ page, field, fieldId, shouldFill, t, filledFields })) {
+    return;
+  }
+
+  // Some conditional fields are revealed by a boolean toggle.
+  // Activate the condition once before interacting with the field.
   if (field.conditional && field.conditionField && !triggeredConditions.has(field.conditionField)) {
-    await page.click(`label[for="root_${step}_${section}_${field.conditionField}_true"]`);
+    const toggle = page.locator(`label[for="root_${step}_${section}_${field.conditionField}_true"]`);
+    if (await toggle.count() > 0) {
+      await toggle.click();
+    }
     triggeredConditions.add(field.conditionField);
   }
 
@@ -187,18 +278,27 @@ async function handleField(
   // Subvention fields are a set of amount inputs, one per funding
   // option. Each option has its own input, so loop through them all.
   if (field.options?.length) {
+    let hasFilledOption = false;
     for (const option of field.options) {
       const optionId = `${fieldId}-${option.id}`;
-      await expect(page.locator(`#${optionId}`)).toBeVisible();
+      const optionInput = page.locator(`#${optionId}`);
+      await expect(optionInput).toBeVisible();
       await expect(page.locator(`label[for="${optionId}"]`)).toBeVisible();
 
-      // Fill each amount input with a random number.
-      if (shouldFill) {
-        const fieldValue = faker.number.int({ min: 1, max: 99999 }).toString();
-        const decimal = faker.number.int({ min: 10, max: 99 }).toString();
-        await page.fill(`#${optionId}`, `${fieldValue},${decimal}`);
-        filledFields?.set(optionId, fieldValue);
-      }
+      if (!shouldFill) continue;
+
+      // Single-subvention fields allow only one option to have a value.
+      if (field.singleSubvention && hasFilledOption) break;
+
+      // Skip inputs whose value is controlled by the application.
+      if (await optionInput.isDisabled()) continue;
+
+      // Fill the input with a random amount.
+      const fieldValue = faker.number.int({ min: 1, max: 99999 }).toString();
+      const decimal = faker.number.int({ min: 10, max: 99 }).toString();
+      await page.fill(`#${optionId}`, `${fieldValue},${decimal}`);
+      filledFields?.set(optionId, fieldValue);
+      hasFilledOption = true;
     }
     return;
   }
@@ -247,7 +347,31 @@ async function handleField(
   }
 
   const fieldDOM = page.locator(`#${fieldId}`);
+
+  // Conditional fields are skipped when their condition is not active.
+  if (field.conditional) {
+    if (!shouldFill) {
+      if ((await fieldDOM.count()) === 0) return;
+    } else {
+      // Filling may reveal the field after a short React debounce.
+      try {
+        await fieldDOM.waitFor({ state: 'visible', timeout: 3000 });
+      } catch {
+        return;
+      }
+    }
+  }
+
   await expect(fieldDOM).toBeVisible();
+
+  // Throw an error if the field is missing the type class.
+  const typeToken = await getFieldTypeToken(page, fieldId);
+  if (shouldFill && !typeToken) {
+    throw new Error(
+      `Field "${fieldId}" has no "hdbt-form--field--<type>" class. ` +
+      `Add the type class in the React form app so the test can detect this field.`
+    );
+  }
 
   // The HDS dropdown has a different structure than a plain input,
   // so detect it and handle it separately from regular text inputs.
@@ -290,8 +414,9 @@ async function handleField(
         usedFieldInputs?.add(fieldId);
       }
       // Date fields need a Finnish date format, e.g. "30.4.2026".
-      else if (field.fieldName.endsWith('_date')) {
-        value = finnishDate(field.fieldName === 'end_date' ? 2 : 1);
+      else if (typeToken === 'date') {
+        const isEndDate = field.fieldName.includes('_end');
+        value = finnishDate(isEndDate ? 2 : 1);
         await page.fill(`#${fieldId}`, value);
       }
       // Year fields get a random year.
@@ -361,6 +486,8 @@ async function handleField(
  *   Custom fill values, keyed by field id.
  * @param usedFieldInputs
  *   Set that collects the field ids whose custom value was applied.
+ * @param formLogic
+ *   Custom form logic for fields that the generic engine cannot handle.
  */
 export async function verifyStep(
   page: Page,
@@ -372,15 +499,20 @@ export async function verifyStep(
   filledFields?: FilledFields,
   fieldInputs?: FieldInputs,
   usedFieldInputs?: Set<string>,
+  formLogic?: FormLogic,
 ): Promise<void> {
-  for (const [sectionIndex, [section, fields]] of Object.entries(sections).entries()) {
-    const sectionTitle = t(`${section}.title`);
+  for (const [section, fields] of Object.entries(sections)) {
+    const titleKey = `${section}.title`;
+    const sectionTitle = t(titleKey);
+    // A section can be without a title.
+    const hasTitle = sectionTitle !== titleKey;
     const playwrightStepLabel = shouldFill ? 'Filling' : `Verifying (${language}) translations for`;
-    await test.step(`${playwrightStepLabel} section: ${sectionTitle}...`, async () => {
-      if (!sectionTitle) throw new Error(`No translation found for ${section}.title`);
-      await expect(
-        page.locator('h3.hdbt-form--section__title').nth(Number(sectionIndex))
-      ).toContainText(sectionTitle);
+    await test.step(`${playwrightStepLabel} section: ${hasTitle ? sectionTitle : section}...`, async () => {
+      if (hasTitle) {
+        await expect(
+          page.locator('h3.hdbt-form--section__title').filter({ hasText: sectionTitle }).first()
+        ).toBeVisible();
+      }
     });
 
     // Track which conditional toggles and array groups have been handled
@@ -398,7 +530,7 @@ export async function verifyStep(
           page, field, fieldId, fieldTitle,
           step, section, t, shouldFill,
           triggeredConditions, addedArrays, filledFields,
-          fieldInputs, usedFieldInputs,
+          fieldInputs, usedFieldInputs, formLogic,
         )
       );
     }
@@ -463,7 +595,7 @@ export async function verifyFormFieldTranslations(
         }
 
         // For all other steps, check field labels without filling anything.
-        await verifyStep(page, language, step, sections, t, false);
+        await verifyStep(page, language, step, sections, t, false, undefined, undefined, undefined, options.formLogic);
         await clickOnStep(page, stepIndex + 1);
       }
     });
@@ -673,7 +805,7 @@ export async function fillFormFields(
       }
 
       // Fill or verify this step's fields depending on the current pass.
-      await verifyStep(page, language, step, sections, t, fill, filledFields, options.fieldInputs, usedFieldInputs);
+      await verifyStep(page, language, step, sections, t, fill, filledFields, options.fieldInputs, usedFieldInputs, options.formLogic);
       await clickNext(page);
     }
   }
