@@ -29,6 +29,7 @@ export type StepField = {
   widget?: string;
   required: boolean;
   options?: Array<{ id: number | string; label: string }>;
+  singleSubvention?: boolean;
   conditional?: boolean;
   conditionField?: string;
   isArrayItem?: boolean;
@@ -171,15 +172,65 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       widget: fieldUiSchema?.['ui:widget'] ?? fieldUiSchema?.['ui:field'],
       required,
       options: rawOptions?.length ? rawOptions : undefined,
+      singleSubvention: uiOptions.useSingleSubvention === true,
       tooltipLabel: uiOptions.tooltipLabel ? translate(uiOptions.tooltipLabel) : undefined,
       tooltipButtonLabel: uiOptions.tooltipButtonLabel ? translate(uiOptions.tooltipButtonLabel) : undefined,
       tooltipText: uiOptions.tooltipText ? translate(uiOptions.tooltipText) : undefined,
     });
   };
 
-  // Walk each section of the step.
+  // Step-level "allOf" rules can add conditional fields to existing sections.
+  // Merge those fields into the section schemas and track the added fields.
+  const conditionalKeys = new Set<string>();
+
+  // Tracks fields added by conditional schema fragments.
+  const recordAddedFields = (schema: any, name: string, sectionName: string): void => {
+    const resolved = resolveSchema(schema);
+    if (resolved?.properties) {
+      for (const [childName, childSchema] of Object.entries<any>(resolved.properties)) {
+        recordAddedFields(childSchema, childName, sectionName);
+      }
+    } else {
+      conditionalKeys.add(`${sectionName}::${name}`);
+    }
+  };
+
+  // Merge conditional properties into the target section schema.
+  const deepMergeProps = (targetProps: any, additionProps: any, sectionName: string): void => {
+    for (const [name, rawAdd] of Object.entries<any>(additionProps)) {
+      const add = resolveSchema(rawAdd);
+      const existing = name in targetProps ? resolveSchema(targetProps[name]) : undefined;
+      if (existing?.properties && add?.properties) {
+        const mergedChildren = { ...existing.properties };
+        targetProps[name] = { ...existing, properties: mergedChildren };
+        deepMergeProps(mergedChildren, add.properties, sectionName);
+      } else if (!(name in targetProps)) {
+        targetProps[name] = rawAdd;
+        recordAddedFields(rawAdd, name, sectionName);
+      }
+    }
+  };
+
+  // Section schemas after applying step-level conditional fields.
+  const sectionSchemas: Record<string, any> = {};
+
+  // Build the base section schemas.
   for (const [sectionName, rawSectionSchema] of Object.entries<any>(stepDefinition.properties ?? {})) {
-    const sectionSchema = resolveSchema(rawSectionSchema);
+    const resolved = resolveSchema(rawSectionSchema);
+    sectionSchemas[sectionName] = { ...resolved, properties: { ...(resolved?.properties ?? {}) } };
+  }
+
+  // Merge conditional fields from "allOf" / "then" rules into the sections.
+  for (const conditionalSchema of stepDefinition.allOf ?? []) {
+    for (const [sectionName, rawThenSection] of Object.entries<any>(conditionalSchema?.then?.properties ?? {})) {
+      const target = sectionSchemas[sectionName];
+      if (!target) continue;
+      deepMergeProps(target.properties, resolveSchema(rawThenSection)?.properties ?? {}, sectionName);
+    }
+  }
+
+  // Walk each section of the step.
+  for (const [sectionName, sectionSchema] of Object.entries<any>(sectionSchemas)) {
     const sectionTitle = translate(sectionSchema.title) ?? sectionName;
     const sectionUiSchema = stepUiSchema[sectionName] ?? {};
     const sectionRequiredFields = new Set<string>(sectionSchema.required ?? []);
@@ -337,6 +388,15 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
           field.conditionField = conditionField;
         }
       }
+    }
+  }
+
+  // Fields added by step-level conditional schemas are conditionally rendered,
+  // but are not associated with a specific conditionField toggle.
+  // Mark fields added from allOf/then schema branches as conditional.
+  for (const field of fields) {
+    if (conditionalKeys.has(`${field.section}::${field.fieldName}`)) {
+      field.conditional = true;
     }
   }
 
