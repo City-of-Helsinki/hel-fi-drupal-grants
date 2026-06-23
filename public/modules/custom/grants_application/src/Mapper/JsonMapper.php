@@ -209,7 +209,7 @@ class JsonMapper {
           foreach ($value as $subfield => $subValue) {
             $definitionName = $fieldName . '.' . $subfield;
             $valueArray = $definition['data'][$definitionName];
-            $valueArray['value'] = (string) $subValue ?? "";
+            $valueArray['value'] = (string) $subValue;
 
             if ($definition['data'][$definitionName]['valueType'] === 'bool') {
               $valueArray['value'] = is_bool($subValue) ? ($subValue ? "true" : "false") : (string) $subValue;
@@ -225,7 +225,7 @@ class JsonMapper {
             continue;
           }
           $valueArray = $definition['data'][$fieldName];
-          $valueArray['value'] = (string) $value ?? "";
+          $valueArray['value'] = (string) $value;
           if ($definition['data'][$fieldName]['valueType'] === 'bool') {
             $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
           }
