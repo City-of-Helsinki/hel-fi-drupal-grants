@@ -153,8 +153,8 @@ class JsonMapper {
       // if end user sent empty value.
       $value = $definition['data']['value'];
     }
-    else if ($value && is_string($value) && $definition['data']['valueType'] === 'double') {
-      // Fields mapped as double should not have commas, replace with dot.
+    else if ($value && is_string($value) && in_array($definition['data']['valueType'], ['float', 'double'])) {
+      // Fields mapped as double or float should not have commas, replace with dot.
       $value = str_replace(',', '.', rtrim($value, ','));
     }
 
@@ -210,6 +210,13 @@ class JsonMapper {
             $definitionName = $fieldName . '.' . $subfield;
             $valueArray = $definition['data'][$definitionName];
             $valueArray['value'] = (string) $subValue ?? "";
+
+            if ($definition['data'][$definitionName]['valueType'] === 'bool') {
+              $valueArray['value'] = is_bool($subValue) ? ($subValue ? "true" : "false") : (string) $subValue;
+            }
+            else if (in_array($definition['data'][$definitionName]['valueType'], ['float', 'double'])) {
+              $valueArray['value'] = str_replace(',','.', (string) $subValue);
+            }
             $values[] = $valueArray;
           }
         }
@@ -218,7 +225,13 @@ class JsonMapper {
             continue;
           }
           $valueArray = $definition['data'][$fieldName];
-          $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
+          $valueArray['value'] = (string) $value ?? "";
+          if ($definition['data'][$fieldName]['valueType'] === 'bool') {
+            $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
+          }
+          else if (in_array($definition['data'][$fieldName]['valueType'], ['float', 'double'])) {
+            $valueArray['value'] = str_replace(',','.', (string) $value);
+          }
           $values[] = $valueArray;
         }
       }

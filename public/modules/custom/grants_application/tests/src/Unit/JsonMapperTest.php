@@ -268,7 +268,7 @@ final class JsonMapperTest extends UnitTestCase {
           'ID' => 'justAnotherNumericValue',
           'valueType' => 'float',
           'value' => '',
-          'label' => 'Float should not be affected',
+          'label' => 'Float should also be affected',
         ],
       ],
       "compensation.my_numbers.income_with_dot" => [
@@ -318,7 +318,7 @@ final class JsonMapperTest extends UnitTestCase {
     $mappedData = $mapper->map($formData);
 
     $this->assertEquals('133.7', $mappedData['compensation']['my_numbers']['double_with_dot']['value']);
-    $this->assertEquals('12,0', $mappedData['compensation']['my_numbers']['float_with_comma']['value']);
+    $this->assertEquals('12.0', $mappedData['compensation']['my_numbers']['float_with_comma']['value']);
     $this->assertEquals('123.45', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['value']);
     $this->assertEquals('the label', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['label']);
     $this->assertEquals('123', $mappedData['compensation']['my_numbers']['income_with_dot'][1]['value']);
