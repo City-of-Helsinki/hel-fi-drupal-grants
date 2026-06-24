@@ -324,16 +324,20 @@ async function handleField(
     return;
   }
 
-  // Handle the radio buttons by selecting "Yes", to expand the extra
-  // questions. Note! This might clash with conditional fields.
+  // When handling a radio-button, pick the "truthy" option when there is one,
+  // otherwise pick the first option.
   if (field.widget === 'radio') {
-    await expect(page.locator(`#${fieldId}_true`)).toBeVisible();
-    await expect(page.locator(`#${fieldId}_false`)).toBeVisible();
-    await expect(page.locator(`fieldset:has(#${fieldId}_true) legend`)).toContainText(t(fieldTitle));
+    const trueOption = page.locator(`#${fieldId}_true`);
+    const option = (await trueOption.count()) > 0
+      ? trueOption
+      : page.locator(`input[type="radio"][id^="${fieldId}_"]`).first();
+    await expect(option).toBeVisible();
+    const optionId = (await option.getAttribute('id')) ?? '';
+    await expect(page.locator(`fieldset:has(#${optionId}) legend`)).toContainText(t(fieldTitle));
     if (shouldFill) {
-      await page.click(`label[for="${fieldId}_true"]`);
+      await page.click(`label[for="${optionId}"]`);
       await assertFieldErrorGone(page, fieldId);
-      filledFields?.set(fieldId, 'true');
+      if (optionId === `${fieldId}_true`) filledFields?.set(fieldId, 'true');
     }
     return;
   }
@@ -440,16 +444,16 @@ async function handleField(
         value = finnishDate(isEndDate ? 2 : 1);
         await page.fill(`#${fieldId}`, value);
       }
-      // Year fields get a random year.
-      else if (field.fieldName.endsWith('_year')) {
-        value = faker.number.int({ min: 1980, max: 2020 }).toString();
-        await page.fill(`#${fieldId}`, value);
-      }
       // Amount fields get a random number with decimals.
       else if (field?.format === 'decimal-number') {
         const decimal = faker.number.int({ min: 10, max: 99 }).toString();
         value = faker.number.int({ min: 1, max: 99999 }).toString();
         await page.fill(`#${fieldId}`, `${value},${decimal}`);
+      }
+      // Year fields get a random year.
+      else if (field.fieldName.endsWith('_year')) {
+        value = faker.number.int({ min: 1980, max: 2020 }).toString();
+        await page.fill(`#${fieldId}`, value);
       }
       // Integer and number fields get a random whole number.
       else if (field.type === 'integer' || field.type === 'number') {
@@ -459,6 +463,11 @@ async function handleField(
       // Everything else gets random filler text.
       else {
         value = faker.lorem.sentences(4);
+        // Keep the value within the field's allowed length so the saved
+        // value matches what we verify later in the preview.
+        if (field.maxLength && value.length > field.maxLength) {
+          value = value.slice(0, field.maxLength);
+        }
         await page.fill(`#${fieldId}`, value);
       }
 
@@ -527,12 +536,27 @@ export async function verifyStep(
     const sectionTitle = t(titleKey);
     // A section can be without a title.
     const hasTitle = sectionTitle !== titleKey;
+    const sectionHeading = page.locator('h3.hdbt-form--section__title').filter({ hasText: sectionTitle }).first();
+
+    // Skip a conditional section when it is not on the page.
+    const sectionFields = Object.values(fields);
+    const conditionalSection = sectionFields.length > 0 && sectionFields.every((field) => field.conditional);
+    if (hasTitle && conditionalSection) {
+      if (shouldFill) {
+        try {
+          await sectionHeading.waitFor({ state: 'visible', timeout: 3000 });
+        } catch {
+          continue;
+        }
+      } else if ((await sectionHeading.count()) === 0) {
+        continue;
+      }
+    }
+
     const playwrightStepLabel = shouldFill ? 'Filling' : `Verifying (${language}) translations for`;
     await test.step(`${playwrightStepLabel} section: ${hasTitle ? sectionTitle : section}...`, async () => {
       if (hasTitle) {
-        await expect(
-          page.locator('h3.hdbt-form--section__title').filter({ hasText: sectionTitle }).first()
-        ).toBeVisible();
+        await expect(sectionHeading).toBeVisible();
       }
     });
 

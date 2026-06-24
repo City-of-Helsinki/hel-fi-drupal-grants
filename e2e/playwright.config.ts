@@ -114,18 +114,23 @@ export default defineConfig({
     },
     /* React forms. */
     {
-      name: 'forms-56-yleisavustus',
+      name: 'forms-56-liikuntayleisavustus',
       testMatch: '/forms/56_liikunta_yleisavustushakemus/*',
-      dependencies: ['profile-registered_community'],
-    },
-    {
-      name: 'forms-70',
-      testMatch: '/forms/70_promoting_safer_club_activities/*',
       dependencies: ['profile-registered_community'],
     },
     {
       name: 'forms-70-iakkaiden',
       testMatch: '/forms/70_iakkaiden_kulttuuri_ja_liikunta/*',
+      dependencies: ['profile-registered_community'],
+    },
+    {
+      name: 'forms-70-liikuntaharrastus',
+      testMatch: '/forms/70_liikuntaharrastamisen_avustus/*',
+      dependencies: ['profile-registered_community'],
+    },
+    {
+      name: 'forms-70-promoting',
+      testMatch: '/forms/70_promoting_safer_club_activities/*',
       dependencies: ['profile-registered_community'],
     },
     /* Webforms. */

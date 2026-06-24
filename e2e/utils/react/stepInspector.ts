@@ -29,6 +29,7 @@ export type StepField = {
   widget?: string;
   required: boolean;
   options?: Array<{ id: number | string; label: string }>;
+  maxLength?: number;
   singleSubvention?: boolean;
   startGrant?: boolean;
   conditional?: boolean;
@@ -173,6 +174,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       widget: fieldUiSchema?.['ui:widget'] ?? fieldUiSchema?.['ui:field'],
       required,
       options: rawOptions?.length ? rawOptions : undefined,
+      maxLength: fieldUiSchema?.['misc:max-length'],
       singleSubvention: uiOptions.useSingleSubvention === true,
       startGrant: uiOptions.startGrant != null,
       tooltipLabel: uiOptions.tooltipLabel ? translate(uiOptions.tooltipLabel) : undefined,
@@ -185,15 +187,14 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
   // Merge those fields into the section schemas and track the added fields.
   const conditionalKeys = new Set<string>();
 
-  // Tracks fields added by conditional schema fragments.
+  // Record a conditional field and all its nested children.
   const recordAddedFields = (schema: any, name: string, sectionName: string): void => {
+    conditionalKeys.add(`${sectionName}::${name}`);
     const resolved = resolveSchema(schema);
     if (resolved?.properties) {
       for (const [childName, childSchema] of Object.entries<any>(resolved.properties)) {
         recordAddedFields(childSchema, childName, sectionName);
       }
-    } else {
-      conditionalKeys.add(`${sectionName}::${name}`);
     }
   };
 
@@ -206,6 +207,10 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
         const mergedChildren = { ...existing.properties };
         targetProps[name] = { ...existing, properties: mergedChildren };
         deepMergeProps(mergedChildren, add.properties, sectionName);
+      } else if (add?.properties) {
+        // The base field is empty, so use the conditional schema instead.
+        targetProps[name] = rawAdd;
+        recordAddedFields(rawAdd, name, sectionName);
       } else if (!(name in targetProps)) {
         targetProps[name] = rawAdd;
         recordAddedFields(rawAdd, name, sectionName);
@@ -227,7 +232,12 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
     for (const [sectionName, rawThenSection] of Object.entries<any>(conditionalSchema?.then?.properties ?? {})) {
       const target = sectionSchemas[sectionName];
       if (!target) continue;
-      deepMergeProps(target.properties, resolveSchema(rawThenSection)?.properties ?? {}, sectionName);
+      const thenProps = resolveSchema(rawThenSection)?.properties ?? {};
+      deepMergeProps(target.properties, thenProps, sectionName);
+      // These fields only appear when their condition is met.
+      for (const [name, childSchema] of Object.entries<any>(thenProps)) {
+        recordAddedFields(childSchema, name, sectionName);
+      }
     }
   }
 
@@ -346,8 +356,35 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
         const fieldSchema = resolveSchema(rawFieldSchema);
         const fieldUiSchema = sectionUiSchema[fieldName] ?? {};
 
+        // If the type is a conditional object, step into it
+        // to handle its children.
+        if (fieldSchema?.type === 'object' && fieldSchema.properties) {
+          const nestedRequiredFields = new Set<string>(fieldSchema.required ?? []);
+
+          for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
+            const childSchema = resolveSchema(childRawSchema);
+
+            if (childSchema?.type === 'null') {
+              continue;
+            }
+
+            pushField(
+              childName,
+              childRawSchema,
+              fieldUiSchema[childName] ?? {},
+              nestedRequiredFields.has(childName),
+              [step, sectionName, fieldName],
+              sectionName,
+              sectionTitle,
+            );
+
+            const field = fields[fields.length - 1];
+            field.conditional = true;
+            field.conditionField = conditionField;
+          }
+        }
         // Conditional array, collect its row fields too.
-        if (fieldSchema?.type === 'array') {
+        else if (fieldSchema?.type === 'array') {
           const addButtonTextKey: string | undefined = fieldUiSchema?.['ui:options']?.addText;
           const itemSchema = resolveSchema(Array.isArray(fieldSchema.items) ? fieldSchema.items[0] : fieldSchema.items);
           const itemUiSchema = fieldUiSchema.items ?? {};
