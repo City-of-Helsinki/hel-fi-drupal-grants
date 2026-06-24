@@ -24,7 +24,7 @@ export default defineConfig({
       ['junit', {outputFile: 'test-results/e2e-junit-results.xml'}],
       ['html']
     ]
-    : 'html',
+    : [['list'], ['html']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Wait for maximum of 120 seconds. Drop the timeout to 60s when */

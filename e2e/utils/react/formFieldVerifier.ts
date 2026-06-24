@@ -572,6 +572,7 @@ export async function verifyStep(
       const fieldId = `root_${field.fieldPath.join('_')}`;
       const fieldTitle = field.titleKey;
 
+      logger(`${shouldFill ? 'Fill' : `Check ${language}`}: ${section} / ${field.fieldName}`);
       await test.step(`${playwrightStepLabel} field: ${t(fieldTitle)}`, () =>
         handleField(
           page, field, fieldId, fieldTitle,
@@ -606,6 +607,7 @@ export async function verifyFormFieldTranslations(
 
   // Loop through each language and open the form in that language.
   for (const [languageIndex, language] of languages.entries()) {
+    logger(`Verifying translations for language: ${language}`);
     await test.step(`Verifying form for language: ${language}`, async () => {
       const t = createTranslator(formData as FormPreviewResponse, language);
 
@@ -618,6 +620,7 @@ export async function verifyFormFieldTranslations(
       // Go through each step in the form and verify its labels.
       for (const [stepIndex, [step, sections]] of Object.entries(tree).entries()) {
         const stepTitle = t(`${step}.title`);
+        logger(`Step: ${stepTitle}`);
 
         await test.step(`Verifying translations for step: ${stepTitle}...`, async () => {
           if (!stepTitle) throw new Error(`No translation found for ${step}.title`);
@@ -955,6 +958,7 @@ export async function fillFormFields(
 
     for (const [, [step, sections]] of Object.entries(tree).entries()) {
       const stepTitle = t(`${step}.title`);
+      logger(`Filling step: ${stepTitle}`);
       await test.step(`Checking step: ${stepTitle}...`, async () => {
         if (!stepTitle) throw new Error(`No translation found for ${step}.title`);
         await expect(page.locator('button[aria-current="step"] p')).toContainText(stepTitle);

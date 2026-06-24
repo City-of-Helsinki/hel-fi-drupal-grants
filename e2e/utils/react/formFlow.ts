@@ -22,6 +22,11 @@ import {
 } from './utils';
 
 /**
+ * Skip submitting and the post submit checks when SKIP_SUBMIT is set.
+ */
+const SKIP_SUBMIT = ['1', 'true'].includes(process.env.SKIP_SUBMIT ?? '');
+
+/**
  * Map a form's applicant type to the role used to access it.
  */
 const APPLICANT_TYPE_ROLES: Record<string, Role> = {
@@ -117,30 +122,37 @@ export async function executeFormFlow(
     await assertApplicationInList(page, applicationNumber, 'drafts');
   });
 
-  // Submit the form and wait for the successful completion.
-  let applicationReceived = false;
-  await test.step('Submit the form and wait for completion.', async () => {
-    applicationReceived = await verifyFormAndSubmit(page, formData, {
-      formURL: `${FORM_URL}/${applicationNumber}`,
-      formCompletionURL: `/fi/application/${applicationNumber}/completion`,
+  // Submit the form and verify the submission unless skipping is requested.
+  if (!SKIP_SUBMIT) {
+    let applicationReceived = false;
+    await test.step('Submit the form and wait for completion.', async () => {
+      applicationReceived = await verifyFormAndSubmit(page, formData, {
+        formURL: `${FORM_URL}/${applicationNumber}`,
+        formCompletionURL: `/fi/application/${applicationNumber}/completion`,
+      });
+      recordReactReceived(FORM_ID, applicationReceived);
     });
-    recordReactReceived(FORM_ID, applicationReceived);
-  });
 
-  // Confirm the submitted application appears in the "sent" list.
-  await test.step('Verify the application is in the sent list', async () => {
-    await assertApplicationInList(page, applicationNumber, 'sent');
-  });
+    // Confirm the submitted application appears in the "sent" list.
+    await test.step('Verify the application is in the sent list', async () => {
+      await assertApplicationInList(page, applicationNumber, 'sent');
+    });
 
-  // Confirm the "sent" application still shows the same filled values.
-  await test.step('Verify the sent application values', async () => {
-    await verifySentApplication(page, formData, applicationNumber, filledFields);
-  });
+    // Confirm the "sent" application still shows the same filled values.
+    await test.step('Verify the sent application values', async () => {
+      await verifySentApplication(page, formData, applicationNumber, filledFields);
+    });
 
-  // Editing is only possible once the application has been received.
-  if (applicationReceived) {
-    await test.step('Modify the submitted application', async () => {
-      await modifySubmittedApplication(page, formData, applicationNumber, filledFields);
+    // Editing is only possible once the application has been received.
+    if (applicationReceived) {
+      await test.step('Modify the submitted application', async () => {
+        await modifySubmittedApplication(page, formData, applicationNumber, filledFields);
+      });
+    }
+  } else {
+    // Remove the draft so skipped runs do not accumulate drafts.
+    await test.step('Delete the draft', async () => {
+      await deleteDraft(page, applicationNumber);
     });
   }
 
