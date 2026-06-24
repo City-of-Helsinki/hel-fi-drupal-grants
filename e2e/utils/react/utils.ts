@@ -188,6 +188,23 @@ export async function saveDraft(page: Page, t: (key: string) => string) {
 }
 
 /**
+ * Remove a draft application from oma-asiointi and verify it is gone.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param applicationNumber
+ *   The application number of the draft to remove.
+ */
+export async function deleteDraft(page: Page, applicationNumber: string) {
+  await page.goto('/fi/oma-asiointi');
+  await page.waitForURL('**/oma-asiointi');
+  await page.locator(`.application-delete-link-${applicationNumber}`).click();
+  await page.locator('#helfi-dialog__action-button').click();
+  await page.waitForURL('**/oma-asiointi');
+  await expect(page.locator(`.application-delete-link-${applicationNumber}`)).toHaveCount(0);
+}
+
+/**
  * Clicks the "Next" or "Preview" button to move to the next step.
  *
  * @param page

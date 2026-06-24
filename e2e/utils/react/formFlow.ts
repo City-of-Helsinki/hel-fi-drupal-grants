@@ -7,19 +7,22 @@ import {
   verifyFormAndSubmit,
   verifyFormFieldTranslations
 } from './formFieldVerifier';
-import { craftSchema } from './schemaFetcher';
+import { craftSchema, type FormPreviewResponse } from './schemaFetcher';
 import { Role, selectRole} from "../auth_helpers";
 import {
   captureApplicationNumber,
+  createTranslator,
+  deleteDraft,
+  saveDraft,
   waitForFormLoad
 } from './utils';
 
 /**
- * Runs the full form flow.
+ * Run the full form flow.
  *
- * Logs in, validates field labels/tooltips/required indicators in all
- * languages, fills the form in Finnish, verifies answers in all translations,
- * and finally submits the form and verifies it has been received.
+ * Log in, validate field labels/tooltips/required indicators in all
+ * languages, fill the form in Finnish, verify answers in all translations,
+ * and finally submit the form and verify it has been received.
  *
  * @param page
  *   The Playwright page instance.
@@ -101,4 +104,42 @@ export async function executeFormFlow(
       formCompletionURL: `/fi/application/${applicationNumber}/completion`,
     });
   });
+}
+
+/**
+ * Check that a profile can access the form and save it as a draft.
+ *
+ * Select the unregistered community or private role, open the form,
+ * save an empty draft and then try to remove it.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param FORM_ID
+ *   The form identifier.
+ * @param FORM_ROLE
+ *   The user role used during the flow.
+ */
+export async function verifyFormAccessAsDraft(
+  page: Page,
+  FORM_ID: string,
+  FORM_ROLE: Role,
+): Promise<void> {
+  const FORM_URL = `/fi/application/new/${FORM_ID}`;
+  const FORM_JSON = `/fi/application/preview/${FORM_ID}`;
+
+  await selectRole(page, FORM_ROLE);
+
+  const formData = await craftSchema(FORM_ID, FORM_JSON);
+  const t = createTranslator(formData as FormPreviewResponse, 'fi');
+
+  // Open the form and confirm the React application loads for this profile.
+  const applicationNumberPromise = captureApplicationNumber(page);
+  await page.goto(FORM_URL);
+  await waitForFormLoad(page);
+  const applicationNumber = await applicationNumberPromise;
+
+  // Save the form as a draft and then remove it.
+  await saveDraft(page, t);
+  await page.waitForURL('**/oma-asiointi/hakemukset', { timeout: 30_000 });
+  await deleteDraft(page, applicationNumber);
 }
