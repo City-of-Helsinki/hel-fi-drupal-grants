@@ -8,6 +8,7 @@ import {
   verifyFormFieldTranslations
 } from './formFieldVerifier';
 import { craftSchema, type FormPreviewResponse } from './schemaFetcher';
+import { recordReactReceived } from './receivedStatus';
 import { Role, selectRole} from "../auth_helpers";
 import {
   captureApplicationNumber,
@@ -99,10 +100,16 @@ export async function executeFormFlow(
 
   // Submit the form and wait for the successful completion.
   await test.step('Submit the form and wait for completion.', async () => {
-    await verifyFormAndSubmit(page, formData, {
+    const applicationReceived = await verifyFormAndSubmit(page, formData, {
       formURL: `${FORM_URL}/${applicationNumber}`,
       formCompletionURL: `/fi/application/${applicationNumber}/completion`,
     });
+    recordReactReceived(FORM_ID, applicationReceived);
+  });
+
+  // Confirm the submitted application appears in the sent list.
+  await test.step('Verify the application is in the sent list', async () => {
+    await assertApplicationInList(page, applicationNumber, 'sent');
   });
 }
 

@@ -915,7 +915,8 @@ export async function verifyFormAndSubmit(
   page: Page,
   formData: Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>,
   options: VerifyFormFieldsOptions = {},
-): Promise<void> {
+): Promise<boolean> {
+  let applicationReceived = false;
 
   // Open the form, navigate to the final step, accept the terms,
   // submit, and verify the confirmation page is shown.
@@ -958,10 +959,10 @@ export async function verifyFormAndSubmit(
 
     // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
     // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
-    const applicationReceived = await waitForTextWithInterval(page, COMPLETION_TEXT.received[language]);
+    applicationReceived = await waitForTextWithInterval(page, COMPLETION_TEXT.received[language]);
     if (!applicationReceived) {
       logger('WARNING: Failed to validate that the application was received.');
-      return;
     }
   });
+  return applicationReceived;
 }
