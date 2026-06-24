@@ -5,7 +5,8 @@ import {
   type FormLogic,
   fillFormFields, verifyAnswers,
   verifyFormAndSubmit,
-  verifyFormFieldTranslations
+  verifyFormFieldTranslations,
+  verifySentApplication
 } from './formFieldVerifier';
 import { craftSchema, type FormPreviewResponse } from './schemaFetcher';
 import { recordReactReceived } from './receivedStatus';
@@ -117,6 +118,11 @@ export async function executeFormFlow(
   // Confirm the submitted application appears in the "sent" list.
   await test.step('Verify the application is in the sent list', async () => {
     await assertApplicationInList(page, applicationNumber, 'sent');
+  });
+
+  // Confirm the "sent" application still shows the same filled values.
+  await test.step('Verify the sent application values', async () => {
+    await verifySentApplication(page, formData, applicationNumber, filledFields);
   });
 }
 

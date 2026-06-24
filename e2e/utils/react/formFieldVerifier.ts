@@ -676,6 +676,27 @@ async function verifyPreviewStep(
   await clickOnStepWithTitle(page, t, `${step}.title`);
   await expect(page.locator('h2.grants-form__page-title')).toContainText(t(`${step}.title`));
 
+  await verifyPreviewValues(page, tree, t, filledFields);
+}
+
+/**
+ * Check that every filled value appears in the preview rendered on the page.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param tree
+ *   The form structure built from the schema.
+ * @param t
+ *   The translation function for the current language.
+ * @param filledFields
+ *   The values that were filled in during the Finnish fill pass.
+ */
+async function verifyPreviewValues(
+  page: Page,
+  tree: FormTree,
+  t: (key: string) => string,
+  filledFields: FilledFields,
+): Promise<void> {
   const preview = page.locator('.hdbt-form__preview');
   await expect(preview).toBeVisible();
 
@@ -735,6 +756,40 @@ async function verifyPreviewStep(
       }
     }
   }
+}
+
+/**
+ * Open the submitted application from "oma-asiointi" and verify its values.
+ *
+ * The "sent" application renders the same preview, so this confirms the stored
+ * values still match the inputs after the round trip through the backend.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param formData
+ *   The form schema and translations fetched from the server.
+ * @param applicationNumber
+ *   The submitted application number.
+ * @param filledFields
+ *   The values that were filled in during the Finnish fill pass.
+ */
+export async function verifySentApplication(
+  page: Page,
+  formData: Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>,
+  applicationNumber: string,
+  filledFields: FilledFields,
+): Promise<void> {
+  const tree = buildFormTree(formData as any);
+  const t = createTranslator(formData as FormPreviewResponse, 'fi');
+
+  await page.goto('/fi/oma-asiointi');
+  await page.waitForURL('**/oma-asiointi');
+
+  // Open the application from the "sent" list.
+  const row = page.locator('#oma-asiointi__sent .application-list__item', { hasText: applicationNumber });
+  await row.locator('.application-list__item__link a').first().click();
+
+  await verifyPreviewValues(page, tree, t, filledFields);
 }
 
 /**
