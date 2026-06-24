@@ -114,6 +114,17 @@ export default defineConfig({
     },
     /* React forms. */
     {
+      name: 'forms-react',
+      testMatch: [
+        '/forms/56_liikunta_yleisavustushakemus/*',
+        '/forms/70_iakkaiden_kulttuuri_ja_liikunta/*',
+        '/forms/70_liikuntaharrastamisen_avustus/*',
+        '/forms/70_promoting_safer_club_activities/*',
+        '/forms/70_segregaation_ehkaisemisavustus/*',
+      ],
+      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community'],
+    },
+    {
       name: 'forms-56-liikuntayleisavustus',
       testMatch: '/forms/56_liikunta_yleisavustushakemus/*',
       dependencies: ['profile-registered_community'],
