@@ -11,6 +11,7 @@ import { craftSchema, type FormPreviewResponse } from './schemaFetcher';
 import { recordReactReceived } from './receivedStatus';
 import { Role, selectRole} from "../auth_helpers";
 import {
+  assertApplicationInList,
   captureApplicationNumber,
   createTranslator,
   deleteDraft,
@@ -51,7 +52,6 @@ export async function executeFormFlow(
 
   // Log in and select the role before opening the form.
   await selectRole(page, FORM_ROLE);
-  await page.goto(FORM_URL);
 
   let applicationNumber;
   // Track filled field values during the form filling for later verification.
@@ -96,6 +96,11 @@ export async function executeFormFlow(
       languages: ['fi', 'en', 'sv'],
       filledFields: filledFields,
     });
+  });
+
+  // Confirm the saved draft appears in the drafts list.
+  await test.step('Verify the draft is in the drafts list', async () => {
+    await assertApplicationInList(page, applicationNumber, 'drafts');
   });
 
   // Submit the form and wait for the successful completion.

@@ -1,5 +1,6 @@
 import { expect, type Page, test } from "@playwright/test";
 import { type FormPreviewResponse } from './schemaFetcher';
+import { logger } from "../logger";
 
 /**
  * Returns a function that looks up translated text by key.
@@ -23,11 +24,22 @@ export function createTranslator(data: FormPreviewResponse, language: string = '
  *
  * @param page
  *   The Playwright page instance.
+ * @param attempts
+ *   How many times to attempt the reload.
  */
-export async function waitForFormLoad(page: Page) {
+export async function waitForFormLoad(page: Page, attempts = 3) {
   await test.step('Wait for React form to load', async () => {
-    await page.waitForSelector('#grants-react-form .grants-form');
-    await expect(page.locator('#grants-react-form .grants-form')).toBeVisible();
+    const form = page.locator('#grants-react-form .grants-form');
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+      try {
+        await form.waitFor({ state: 'visible', timeout: 15_000 });
+        return;
+      } catch {
+        if (attempt === attempts) throw new Error('React form did not load.');
+        logger(`React form did not load, reloading. Attempt ${attempt} of ${attempts}.`);
+        await page.reload();
+      }
+    }
   });
 }
 
@@ -185,6 +197,27 @@ export async function saveDraft(page: Page, t: (key: string) => string) {
   await expect(button).toBeVisible();
   await button.click();
   await page.waitForLoadState('domcontentloaded');
+}
+
+/**
+ * Verify an application appears in an oma-asiointi list.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param applicationNumber
+ *   The application number to find.
+ * @param list
+ *   The list to search, drafts or sent.
+ */
+export async function assertApplicationInList(
+  page: Page,
+  applicationNumber: string,
+  list: 'drafts' | 'sent',
+) {
+  await page.goto('/fi/oma-asiointi');
+  await page.waitForURL('**/oma-asiointi');
+  const row = page.locator(`#oma-asiointi__${list} .application-list__item`, { hasText: applicationNumber });
+  await expect(row).toBeVisible();
 }
 
 /**
