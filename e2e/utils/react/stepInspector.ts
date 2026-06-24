@@ -32,6 +32,7 @@ export type StepField = {
   maxLength?: number;
   singleSubvention?: boolean;
   startGrant?: boolean;
+  affirmativeExpands?: boolean;
   conditional?: boolean;
   conditionField?: string;
   isArrayItem?: boolean;
@@ -177,6 +178,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       maxLength: fieldUiSchema?.['misc:max-length'],
       singleSubvention: uiOptions.useSingleSubvention === true,
       startGrant: uiOptions.startGrant != null,
+      affirmativeExpands: uiOptions.affirmativeExpands === true,
       tooltipLabel: uiOptions.tooltipLabel ? translate(uiOptions.tooltipLabel) : undefined,
       tooltipButtonLabel: uiOptions.tooltipButtonLabel ? translate(uiOptions.tooltipButtonLabel) : undefined,
       tooltipText: uiOptions.tooltipText ? translate(uiOptions.tooltipText) : undefined,

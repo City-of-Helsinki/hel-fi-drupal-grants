@@ -567,6 +567,24 @@ export async function verifyStep(
     const triggeredConditions = new Set<string>();
     const addedArrays = new Set<string>();
 
+    // On the translation pass, set the yes option on affirmative radios so
+    // their revealed fields render and their labels can be verified.
+    if (!shouldFill) {
+      for (const expander of Object.values(fields)) {
+        if (!expander.affirmativeExpands) continue;
+        const expanderId = `root_${expander.fieldPath.join('_')}`;
+        const yesOption = page.locator(`label[for="${expanderId}_true"]`);
+        if ((await yesOption.count()) === 0) continue;
+        await yesOption.click();
+        triggeredConditions.add(expander.fieldName);
+        const dependent = Object.values(fields).find((f) => f.conditionField === expander.fieldName);
+        if (dependent) {
+          const dependentId = `root_${dependent.fieldPath.join('_')}`;
+          await page.locator(`#${dependentId}`).waitFor({ state: 'visible', timeout: 3000 }).catch(() => undefined);
+        }
+      }
+    }
+
     // Go through each field in current section one by one.
     for (const [, field] of Object.entries(fields)) {
       const fieldId = `root_${field.fieldPath.join('_')}`;
