@@ -782,14 +782,94 @@ export async function verifySentApplication(
   const tree = buildFormTree(formData as any);
   const t = createTranslator(formData as FormPreviewResponse, 'fi');
 
+  await openSentApplication(page, applicationNumber);
+  await verifyPreviewValues(page, tree, t, filledFields);
+}
+
+/**
+ * Open a submitted application from the "sent" list on oma-asiointi.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param applicationNumber
+ *   The submitted application number.
+ */
+async function openSentApplication(page: Page, applicationNumber: string): Promise<void> {
   await page.goto('/fi/oma-asiointi');
   await page.waitForURL('**/oma-asiointi');
-
-  // Open the application from the "sent" list.
   const row = page.locator('#oma-asiointi__sent .application-list__item', { hasText: applicationNumber });
   await row.locator('.application-list__item__link a').first().click();
+}
 
+/**
+ * Open a submitted application, edit a field, re-submit and verify the changes.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param formData
+ *   The form schema and translations fetched from the server.
+ * @param applicationNumber
+ *   The submitted application number.
+ * @param filledFields
+ *   The values entered during the fill pass, updated with the new value.
+ */
+export async function modifySubmittedApplication(
+  page: Page,
+  formData: Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>,
+  applicationNumber: string,
+  filledFields: FilledFields,
+): Promise<void> {
+  const tree = buildFormTree(formData as any);
+  const t = createTranslator(formData as FormPreviewResponse, 'fi');
+
+  // Open the application and follow the edit link.
+  await openSentApplication(page, applicationNumber);
+  await page.locator('.hdbt-react-form__submission-info__row--edit a').first().click();
+  await waitForFormLoad(page);
+
+  // Find a filled textarea so we can change its value.
+  const target = findEditableTextField(tree, filledFields);
+  if (!target) throw new Error('No editable text field found to modify.');
+
+  // Change the value on its step.
+  await clickOnStepWithTitle(page, t, `${target.step}.title`);
+  let value = faker.lorem.sentences(2);
+  if (target.maxLength && value.length > target.maxLength) {
+    value = value.slice(0, target.maxLength);
+  }
+  await page.fill(`#${target.fieldId}`, value);
+  filledFields.set(target.fieldId, value);
+
+  // Resubmit and confirm the new value is stored.
+  await submitFromConfirmStep(page, formData, `/fi/application/${applicationNumber}/completion`);
+  await openSentApplication(page, applicationNumber);
   await verifyPreviewValues(page, tree, t, filledFields);
+}
+
+/**
+ * Find the first non-conditional textarea that has a filled value.
+ *
+ * @param tree
+ *   The form structure built from the schema.
+ * @param filledFields
+ *   The values entered during the fill pass.
+ */
+function findEditableTextField(
+  tree: FormTree,
+  filledFields: FilledFields,
+): { fieldId: string; step: string; maxLength?: number } | null {
+  for (const [step, sections] of Object.entries(tree)) {
+    for (const fields of Object.values(sections)) {
+      for (const field of Object.values(fields)) {
+        const fieldId = `root_${field.fieldPath.join('_')}`;
+        if (!filledFields.has(fieldId)) continue;
+        // A textarea always accepts free text, unlike selects or formatted inputs.
+        if (field.conditional || field.widget !== 'textarea') continue;
+        return { fieldId, step, maxLength: field.maxLength };
+      }
+    }
+  }
+  return null;
 }
 
 /**
@@ -981,43 +1061,61 @@ export async function verifyFormAndSubmit(
     await page.goto(options.formURL);
     // Expect the React application to load.
     await waitForFormLoad(page);
-    // Set the translations language to Finnish, as form submissions are only tested in Finnish.
-    const language = 'fi';
-    const t = createTranslator(formData as FormPreviewResponse, language);
-    const step = 'confirm_and_submit';
-
-    // Go to last step and check that the form can be submitted.
-    await clickOnStepWithTitle(page, t, `${step}.title`);
-    await expect(page.locator('h2.grants-form__page-title')).toContainText(t(`${step}.title`));
-
-    const preview = page.locator('.hdbt-form__preview');
-    await expect(preview).toBeVisible();
-
-    const submitButton = page.locator('.hdbt-form--actions').getByRole('button', { name: t('submit') });
-    await expect(submitButton).toBeVisible();
-    await expect(submitButton).toHaveAttribute('disabled');
-
-    const agreeTermsCheckbox = page.locator('label[for="final-acceptance"]');
-    await expect(agreeTermsCheckbox).toBeVisible();
-    await agreeTermsCheckbox.click();
-
-    // Submit.
-    logger('Attempting to submit the form...')
-    await expect(submitButton).not.toHaveAttribute('disabled');
-    await submitButton.click();
-
-    // Verify the completion.
-    await logCurrentUrl(page);
-    await page.waitForURL(options.formCompletionURL);
-    await expect(page.getByRole('heading', {name: COMPLETION_TEXT.heading[language]})).toBeVisible();
-    await expect(page.getByText(COMPLETION_TEXT.sent[language]).first()).toBeVisible();
-
-    // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
-    // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
-    applicationReceived = await waitForTextWithInterval(page, COMPLETION_TEXT.received[language]);
-    if (!applicationReceived) {
-      logger('WARNING: Failed to validate that the application was received.');
-    }
+    applicationReceived = await submitFromConfirmStep(page, formData, options.formCompletionURL);
   });
+  return applicationReceived;
+}
+
+/**
+ * Go to the final step, accept the terms, submit, and wait for completion.
+ *
+ * Return whether the received confirmation was shown.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param formData
+ *   The form schema and translations fetched from the server.
+ * @param formCompletionURL
+ *   The URL shown after a successful submission.
+ */
+async function submitFromConfirmStep(
+  page: Page,
+  formData: Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>,
+  formCompletionURL: string,
+): Promise<boolean> {
+  // Form submissions are only tested in Finnish.
+  const language = 'fi';
+  const t = createTranslator(formData as FormPreviewResponse, language);
+  const step = 'confirm_and_submit';
+
+  await clickOnStepWithTitle(page, t, `${step}.title`);
+  await expect(page.locator('h2.grants-form__page-title')).toContainText(t(`${step}.title`));
+
+  const preview = page.locator('.hdbt-form__preview');
+  await expect(preview).toBeVisible();
+
+  const submitButton = page.locator('.hdbt-form--actions').getByRole('button', { name: t('submit') });
+  await expect(submitButton).toBeVisible();
+
+  const agreeTermsCheckbox = page.locator('label[for="final-acceptance"]');
+  await expect(agreeTermsCheckbox).toBeVisible();
+  await agreeTermsCheckbox.click();
+
+  logger('Attempting to submit the form...')
+  await expect(submitButton).not.toHaveAttribute('disabled');
+  await submitButton.click();
+
+  // Verify the completion.
+  await logCurrentUrl(page);
+  await page.waitForURL(formCompletionURL);
+  await expect(page.getByRole('heading', {name: COMPLETION_TEXT.heading[language]})).toBeVisible();
+  await expect(page.getByText(COMPLETION_TEXT.sent[language]).first()).toBeVisible();
+
+  // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
+  // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
+  const applicationReceived = await waitForTextWithInterval(page, COMPLETION_TEXT.received[language]);
+  if (!applicationReceived) {
+    logger('WARNING: Failed to validate that the application was received.');
+  }
   return applicationReceived;
 }

@@ -6,7 +6,8 @@ import {
   fillFormFields, verifyAnswers,
   verifyFormAndSubmit,
   verifyFormFieldTranslations,
-  verifySentApplication
+  verifySentApplication,
+  modifySubmittedApplication
 } from './formFieldVerifier';
 import { craftSchema, type FormPreviewResponse } from './schemaFetcher';
 import { recordReactReceived } from './receivedStatus';
@@ -107,8 +108,9 @@ export async function executeFormFlow(
   });
 
   // Submit the form and wait for the successful completion.
+  let applicationReceived = false;
   await test.step('Submit the form and wait for completion.', async () => {
-    const applicationReceived = await verifyFormAndSubmit(page, formData, {
+    applicationReceived = await verifyFormAndSubmit(page, formData, {
       formURL: `${FORM_URL}/${applicationNumber}`,
       formCompletionURL: `/fi/application/${applicationNumber}/completion`,
     });
@@ -124,6 +126,13 @@ export async function executeFormFlow(
   await test.step('Verify the sent application values', async () => {
     await verifySentApplication(page, formData, applicationNumber, filledFields);
   });
+
+  // Editing is only possible once the application has been received.
+  if (applicationReceived) {
+    await test.step('Modify the submitted application', async () => {
+      await modifySubmittedApplication(page, formData, applicationNumber, filledFields);
+    });
+  }
 }
 
 /**
