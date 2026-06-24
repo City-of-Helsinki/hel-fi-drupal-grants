@@ -282,8 +282,10 @@ async function handleField(
       errorCount = await errorItems.count();
     }
 
-    // Click "Add" to create a fresh list item to fill in.
-    await page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).first().click();
+    // Add a row only when one is not already present.
+    if (await fieldElement.count() === 0) {
+      await page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).first().click();
+    }
     addedArrays.add(field.arrayField);
     if (field.groupDescriptionKey) {
       await expect(

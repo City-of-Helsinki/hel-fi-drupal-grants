@@ -34,19 +34,6 @@ export const formLogic: FormLogic = {
         }
         return true;
       },
-      // Fill grant amounts for required years.
-      applied_grant_amount: async ({ page, fieldId, shouldFill, filledFields }) => {
-        if (shouldFill) {
-          for (const child of ['applied_grant_amount_2027', 'applied_grant_amount_2028']) {
-            const childId = `${fieldId}_${child}`;
-            const childInput = page.locator(`#${childId}`);
-            await expect(childInput).toBeVisible();
-            await childInput.fill('60000');
-            filledFields?.set(childId, '60000');
-          }
-        }
-        return true;
-      },
     },
     target_groups_section: {
       assesment_2_fieldset: {

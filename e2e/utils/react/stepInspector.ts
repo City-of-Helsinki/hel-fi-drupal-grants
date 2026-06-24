@@ -356,9 +356,8 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
         const fieldSchema = resolveSchema(rawFieldSchema);
         const fieldUiSchema = sectionUiSchema[fieldName] ?? {};
 
-        // If the type is a conditional object, step into it
-        // to handle its children.
-        if (fieldSchema?.type === 'object' && fieldSchema.properties) {
+        // Step into a conditional object to handle its child fields.
+        if (fieldSchema?.properties) {
           const nestedRequiredFields = new Set<string>(fieldSchema.required ?? []);
 
           for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
