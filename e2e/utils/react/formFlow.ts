@@ -22,6 +22,15 @@ import {
 } from './utils';
 
 /**
+ * Map a form's applicant type to the role used to access it.
+ */
+const APPLICANT_TYPE_ROLES: Record<string, Role> = {
+  registered_community: 'REGISTERED_COMMUNITY',
+  unregistered_community: 'UNREGISTERED_COMMUNITY',
+  private_person: 'PRIVATE_PERSON',
+};
+
+/**
  * Run the full form flow.
  *
  * Log in, validate field labels/tooltips/required indicators in all
@@ -32,12 +41,13 @@ import {
  *   The Playwright page instance.
  * @param FORM_ID
  *   The form identifier.
- * @param FORM_ROLE
- *   The user role used during the flow.
- * @param fieldInputs
- *   Custom fill values for specific fields, keyed by field id.
  * @param formLogic
  *   Custom logic for a particular form.
+ * @param fieldInputs
+ *   Custom fill values for specific fields, keyed by field id.
+ * @param PRIMARY_FORM_ROLE
+ *   The primary role the form is filled and submitted with. Defaults to the
+ *   registered community role.
  *
  * @return Promise<FilledFields>
  *   The collected field values used during the test.
@@ -45,15 +55,15 @@ import {
 export async function executeFormFlow(
   page: Page,
   FORM_ID: string,
-  FORM_ROLE: Role,
   formLogic?: FormLogic,
   fieldInputs?: FieldInputs,
+  PRIMARY_FORM_ROLE: Role = 'REGISTERED_COMMUNITY',
 ): Promise<FilledFields> {
   const FORM_URL = `/fi/application/new/${FORM_ID}`;
   const FORM_JSON = `/fi/application/preview/${FORM_ID}`;
 
-  // Log in and select the role before opening the form.
-  await selectRole(page, FORM_ROLE);
+  // Log in and select the primary role before opening the form.
+  await selectRole(page, PRIMARY_FORM_ROLE);
 
   let applicationNumber;
   // Track filled field values during the form filling for later verification.
@@ -131,6 +141,15 @@ export async function executeFormFlow(
   if (applicationReceived) {
     await test.step('Modify the submitted application', async () => {
       await modifySubmittedApplication(page, formData, applicationNumber, filledFields);
+    });
+  }
+
+  // Verify every secondary applicant type can access and draft the form.
+  for (const applicantType of formData.settings.applicant_types) {
+    const role = APPLICANT_TYPE_ROLES[applicantType];
+    if (!role || role === PRIMARY_FORM_ROLE) continue;
+    await test.step(`Verify form access as ${applicantType}`, async () => {
+      await verifyFormAccessAsDraft(page, FORM_ID, role);
     });
   }
 }

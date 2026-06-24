@@ -45,7 +45,7 @@ export type FormPreviewResponse = {
 export async function craftSchema(
   formID: string,
   pathToJson: string
-): Promise<Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>> {
+): Promise<Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations' | 'settings'>> {
   const data = await fetchJsonApiRequest<FormPreviewResponse>(pathToJson);
   expect(data).toHaveProperty('settings');
   expect(
@@ -74,6 +74,7 @@ export async function craftSchema(
   return {
     schema: formSchema,
     ui_schema: formUiSchema,
-    translations: data.translations
+    translations: data.translations,
+    settings: data.settings
   };
 }
