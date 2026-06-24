@@ -64,9 +64,11 @@ export async function executeFormFlow(
   // Start listening for the application number before opening the form.
   const applicationNumberPromise = captureApplicationNumber(page);
   await page.goto(FORM_URL);
-  await waitForFormLoad(page);
   // Wait until the application number has been received and store it.
   applicationNumber = await applicationNumberPromise;
+  // Reopen via the application URL so a reload during load keeps the same draft.
+  await page.goto(`${FORM_URL}/${applicationNumber}`);
+  await waitForFormLoad(page);
 
   // Open the form in each language and check that every field label,
   // tooltip and description shows the correct translated text.
@@ -112,7 +114,7 @@ export async function executeFormFlow(
     recordReactReceived(FORM_ID, applicationReceived);
   });
 
-  // Confirm the submitted application appears in the sent list.
+  // Confirm the submitted application appears in the "sent" list.
   await test.step('Verify the application is in the sent list', async () => {
     await assertApplicationInList(page, applicationNumber, 'sent');
   });
@@ -147,8 +149,10 @@ export async function verifyFormAccessAsDraft(
   // Open the form and confirm the React application loads for this profile.
   const applicationNumberPromise = captureApplicationNumber(page);
   await page.goto(FORM_URL);
-  await waitForFormLoad(page);
   const applicationNumber = await applicationNumberPromise;
+  // Reopen via the application URL so a reload during load keeps the same draft.
+  await page.goto(`${FORM_URL}/${applicationNumber}`);
+  await waitForFormLoad(page);
 
   // Save the form as a draft and then remove it.
   await saveDraft(page, t);
