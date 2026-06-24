@@ -133,6 +133,11 @@ export default defineConfig({
       testMatch: '/forms/70_promoting_safer_club_activities/*',
       dependencies: ['profile-registered_community'],
     },
+    {
+      name: 'forms-70-segregaatio',
+      testMatch: '/forms/70_segregaation_ehkaisemisavustus/*',
+      dependencies: ['profile-registered_community', 'profile-unregistered_community'],
+    },
     /* Webforms. */
     /* Form 29 tests. */
     {
