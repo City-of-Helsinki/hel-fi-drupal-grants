@@ -216,7 +216,24 @@ export async function assertApplicationInList(
 ) {
   await page.goto('/fi/oma-asiointi');
   await page.waitForURL('**/oma-asiointi');
-  const row = page.locator(`#oma-asiointi__${list} .application-list__item`, { hasText: applicationNumber });
+
+  const container = page.locator(`#oma-asiointi__${list}`);
+  const row = container.locator('.application-list__item', { hasText: applicationNumber });
+  const activePage = container.locator('.application-list__pagination li.active a.page');
+
+  // Wait for the first page to render before paging through.
+  await container.locator('.application-list__item').first().waitFor({ state: 'visible', timeout: 15000 }).catch(() => undefined);
+
+  // The list paginates client-side, so step through the pages until the row is found.
+  let pageNumber = 1;
+  while ((await row.count()) === 0) {
+    const nextPage = container.locator(`.application-list__pagination a.page[data-i="${pageNumber + 1}"]`);
+    if ((await nextPage.count()) === 0) break;
+    await nextPage.click();
+    await expect(activePage).toHaveAttribute('data-i', String(pageNumber + 1));
+    pageNumber += 1;
+  }
+
   await expect(row).toBeVisible();
 }
 
