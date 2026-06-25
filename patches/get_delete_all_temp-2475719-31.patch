@@ -1,0 +1,55 @@
+diff --git a/core/lib/Drupal/Core/TempStore/PrivateTempStore.php b/core/lib/Drupal/Core/TempStore/PrivateTempStore.php
+index 4c89ff4170..c85740fcef 100644
+--- a/core/lib/Drupal/Core/TempStore/PrivateTempStore.php
++++ b/core/lib/Drupal/Core/TempStore/PrivateTempStore.php
+@@ -202,6 +202,50 @@ public function delete($key) {
+     return TRUE;
+   }
+
++  /**
++   * Returns all the items in the store for current user.
++   *
++   * @return array
++   *   Returns all items for current user.
++   */
++  public function getAllUser() {
++    $keys = $this->storage->getAll();
++    return array_filter($keys, function ($key) {
++      return $this->getOwner() === $key->owner;
++    });
++  }
++
++  /**
++   * Deletes data from the store for a given key and releases the lock on it.
++   */
++  public function deleteAllUser() {
++    $keys = $this->getAllUser();
++    foreach ($keys as $key => $data) {
++      $parts = explode(':', $key);
++      $this->delete($parts[1]);
++    }
++  }
++
++  /**
++   * Returns all the items in the store.
++   *
++   * @return array
++   *   Return all data for all users.
++   */
++  public function getFull() {
++    return $this->storage->getAll();
++  }
++
++  /**
++   * Deletes data from the store for a given key and releases the lock on it.
++   */
++  public function deleteFull() {
++    $keys = $this->getFull();
++    foreach ($keys as $key => $data) {
++      $this->storage->delete($key);
++    }
++  }
++
+   /**
+    * Ensures that the key is unique for a user.
+    *
