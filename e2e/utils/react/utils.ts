@@ -221,7 +221,7 @@ export async function assertApplicationInList(
 }
 
 /**
- * Remove a draft application from oma-asiointi and verify it is gone.
+ * Remove a draft application from oma-asiointi and verify the notification and that it is gone.
  *
  * @param page
  *   The Playwright page instance.
@@ -234,6 +234,9 @@ export async function deleteDraft(page: Page, applicationNumber: string) {
   await page.locator(`.application-delete-link-${applicationNumber}`).click();
   await page.locator('#helfi-dialog__action-button').click();
   await page.waitForURL('**/oma-asiointi');
+  await expect(
+    page.locator('.messages__container .hds-notification .hds-notification__body')
+  ).toContainText('Luonnos poistettu');
   await expect(page.locator(`.application-delete-link-${applicationNumber}`)).toHaveCount(0);
 }
 
