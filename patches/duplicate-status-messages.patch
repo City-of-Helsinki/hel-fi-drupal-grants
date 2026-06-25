@@ -1,0 +1,32 @@
+diff --git a/core/lib/Drupal/Core/Render/Element/StatusMessages.php b/core/lib/Drupal/Core/Render/Element/StatusMessages.php
+index 8f53132873..a8031038af 100644
+--- a/core/lib/Drupal/Core/Render/Element/StatusMessages.php
++++ b/core/lib/Drupal/Core/Render/Element/StatusMessages.php
+@@ -2,6 +2,8 @@
+
+ namespace Drupal\Core\Render\Element;
+
++use Drupal\Component\Utility\Random;
++
+ /**
+  * Provides a messages element.
+  *
+@@ -47,7 +49,17 @@ public function getInfo() {
+    */
+   public static function generatePlaceholder(array $element) {
+     $build = [
+-      '#lazy_builder' => [static::class . '::renderMessages', [$element['#display']]],
++      '#lazy_builder' => [
++        self::class . '::renderMessages',
++        [
++          $element['#display'],
++          // Add a random string to the lazy builder callback to make each
++          // message area unique. This will prevent the same messages from being
++          // rendered more than once when a page contains multiple status
++          // message elements.
++          (new Random())->string(),
++        ],
++      ],
+       '#create_placeholder' => TRUE,
+     ];
+
