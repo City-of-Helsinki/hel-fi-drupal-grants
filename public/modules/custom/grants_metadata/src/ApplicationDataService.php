@@ -145,12 +145,21 @@ final class ApplicationDataService {
       return 'OK';
     }
 
-    if ($this->isSaveIdMismatch($saveIdToValidate, $latestSaveid, $applicationNumber)) {
-      return 'DATA_NOT_SAVED_ATV';
-    }
+    // #UHF-13340 if eventTarget is missing on APP_OK-event, we need to use
+    // timestamps to figure out if application is editable.
+    if ($this->eventTargetsExist($submissionData)) {
+      if ($this->isSaveIdMismatch($saveIdToValidate, $latestSaveid, $applicationNumber)) {
+        return 'DATA_NOT_SAVED_ATV';
+      }
 
-    if ($this->isDataNotSavedToAvus($saveIdToValidate, $submissionData, $applicationNumber, $latestSaveid)) {
-      return 'DATA_NOT_SAVED_AVUS2';
+      if ($this->isDataNotSavedToAvus($saveIdToValidate, $submissionData, $applicationNumber, $latestSaveid)) {
+        return 'DATA_NOT_SAVED_AVUS2';
+      }
+    }
+    else {
+      if (!$this->hasNewAvus2SaveEvent($submissionData)) {
+        return 'DATA_NOT_SAVED_AVUS2';
+      }
     }
 
     if ($this->hasPendingFileUploads($submissionData, $applicationNumber, $latestSaveid, $saveIdToValidate)) {
@@ -158,6 +167,31 @@ final class ApplicationDataService {
     }
 
     return 'OK';
+  }
+
+  /**
+   * The atv document's events have the eventTarget set.
+   *
+   * A missing eventTarget in APP_OK event means that the integration has
+   * failed to save the lastest saveid to the document. Missing saveid causes
+   * problems when checking if application should be editable.
+   *
+   * @param array<mixed> $submissionData
+   *   The submission data.
+   *
+   * @return bool
+   *   Application has event targets set on APP_OK-event.
+   */
+  private function eventTargetsExist(array $submissionData): bool {
+    $applicationEvents = $this->eventsService->filterEvents($submissionData['events'] ?? [], 'INTEGRATION_INFO_APP_OK');
+
+    foreach ($applicationEvents['events'] as $event) {
+      if (!isset($event['eventTarget'])) {
+        return FALSE;
+      }
+    }
+
+    return TRUE;
   }
 
   /**
@@ -283,6 +317,56 @@ final class ApplicationDataService {
       return TRUE;
     }
     return FALSE;
+  }
+
+  /**
+   * Document has new APP_OK -event.
+   *
+   * Allow end users to open applications with missing saveids.
+   *
+   * @param array<mixed> $submissionData
+   *   The submission data.
+   *
+   * @return bool
+   *   The application has an save event which is created after drupal submit.
+   */
+  private function hasNewAvus2SaveEvent(array $submissionData): bool {
+    if ($submissionData['status'] === 'DRAFT') {
+      return TRUE;
+    }
+
+    if (
+      !$submissionData['form_timestamp_submitted'] ||
+      !$submitTimestamp = strtotime($submissionData['form_timestamp_submitted'])
+    ) {
+      return FALSE;
+    }
+
+    $applicationEvents = $this->eventsService->filterEvents(
+      $submissionData['events'] ?? [], 'INTEGRATION_INFO_APP_OK'
+    );
+
+    $appOkAfterSubmit = FALSE;
+    foreach ($applicationEvents['events'] as $event) {
+      try {
+        $eventCreatedDateTime = new \DateTime($event['timeCreated'], new \DateTimeZone('UTC'));
+      }
+      catch (\Exception $e) {
+        continue;
+      }
+
+      $eventCreatedTimestamp = $eventCreatedDateTime->setTimezone(new \DateTimeZone('Europe/Helsinki'))
+        ->getTimestamp();
+
+      if (
+        $eventCreatedTimestamp &&
+        $eventCreatedTimestamp >= $submitTimestamp
+      ) {
+        $appOkAfterSubmit = TRUE;
+      }
+    }
+
+    return $appOkAfterSubmit;
   }
 
   /**
