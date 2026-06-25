@@ -1,6 +1,7 @@
 {
   "title": "Hyvinvoinnin ja terveyden edistämisen pienavustus",
   "description": "HYTEEDPIEN",
+  "form_identifier": "hyteed_pienavustus",
   "application_type": "HYTEEDPIEN",
   "application_type_id": 76,
   "application_industry": "KANSLIA",

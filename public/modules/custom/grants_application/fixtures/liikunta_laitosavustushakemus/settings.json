@@ -1,6 +1,7 @@
 {
   "title": "Liikunta, laitos- ja säätiöavustukset",
   "description": "LIIKUNTALAITOS",
+  "form_identifier": "liikunta_laitosavustushakemus",
   "application_type": "LIIKUNTALAITOS",
   "application_type_id": 57,
   "application_industry": "KUVA",

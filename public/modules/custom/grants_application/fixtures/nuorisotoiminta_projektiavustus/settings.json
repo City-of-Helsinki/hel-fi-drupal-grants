@@ -1,6 +1,7 @@
 {
   "title": "Nuorisotoiminnan projektiavustushakemus",
   "description": "NUORPROJEKTI",
+  "form_identifier": "nuorisotoiminta_projektiavustus",
   "application_type": "NUORPROJEKTI",
   "application_type_id": 77,
   "application_industry": "KUVA",
