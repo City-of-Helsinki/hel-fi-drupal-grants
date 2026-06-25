@@ -331,6 +331,10 @@ final class ApplicationDataService {
    *   The application has an save event which is created after drupal submit.
    */
   private function hasNewAvus2SaveEvent(array $submissionData): bool {
+    if ($submissionData['status'] === 'DRAFT') {
+      return TRUE;
+    }
+
     if (
       !$submissionData['form_timestamp_submitted'] ||
       !$submitTimestamp = strtotime($submissionData['form_timestamp_submitted'])
