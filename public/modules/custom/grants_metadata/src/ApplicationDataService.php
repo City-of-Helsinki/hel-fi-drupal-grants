@@ -155,15 +155,15 @@ final class ApplicationDataService {
       if ($this->isDataNotSavedToAvus($saveIdToValidate, $submissionData, $applicationNumber, $latestSaveid)) {
         return 'DATA_NOT_SAVED_AVUS2';
       }
-
-      if ($this->hasPendingFileUploads($submissionData, $applicationNumber, $latestSaveid, $saveIdToValidate)) {
-        return 'FILE_UPLOAD_PENDING';
-      }
     }
     else {
       if (!$this->hasNewAvus2SaveEvent($submissionData)) {
         return 'DATA_NOT_SAVED_AVUS2';
       }
+    }
+
+    if ($this->hasPendingFileUploads($submissionData, $applicationNumber, $latestSaveid, $saveIdToValidate)) {
+      return 'FILE_UPLOAD_PENDING';
     }
 
     return 'OK';
