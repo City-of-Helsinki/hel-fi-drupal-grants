@@ -36,7 +36,7 @@
   },
   "compensation.compensationInfo.generalInfoArray.1": {
     "datasource": "form_data",
-    "source": "grant_info_step.other_compensations_section.have_received_other_compensations",
+    "source": "grant_info_step.prior_benefits_usage_section.have_received_prior_compensations",
     "mapping_type": "default",
     "data": {
       "ID": "compensationPreviousYear",
@@ -343,14 +343,6 @@
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
-    }
-  },
-  "compensation.additionalInformation": {
-    "datasource": "form_data",
-    "source": "attachments_step.additional_info_section.additional_info",
-    "mapping_type": "simple",
-    "data": {
-      "additionalInformation": ""
     }
   }
 }

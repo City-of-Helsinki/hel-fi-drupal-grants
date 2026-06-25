@@ -103,7 +103,9 @@ export const TextInput = ({
           name,
           onBlur: () => null,
           onChange: (event: ChangeEvent<HTMLInputElement>) => {
-            const sanitized = sanitizeNumericInput(event.target.value, sanitizationType);
+            const nativeEvent: InputEvent = event.nativeEvent as InputEvent;
+            const lastInput = nativeEvent.data ?? '';
+            const sanitized = sanitizeNumericInput(event.target.value, sanitizationType, lastInput);
             if (numberIsTooLarge(sanitized)) return;
             onChange(sanitized === '' ? undefined : sanitized);
           },

@@ -796,33 +796,16 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
     "datasource": "form_data",
-    "source": "budget_step.budget_section.budget_other_cost",
+    "source": "budget_step.budget_section.budget_other_cost.costs",
     "mapping_type": "custom",
     "custom_handler": "income",
     "data": {
-      "ID": "other_cost_field_0",
+      "ID": "budget_other_cost",
       "label": "Muu kulu",
       "value": "0",
       "valueType": "double"
     }
   },
-
-
-
-
-  "": {
-    "datasource": "",
-    "source": "",
-    "mapping_type": "",
-    "data": {
-      "ID": "",
-      "label": "",
-      "value": "",
-      "valueType": ""
-    }
-  },
-
-
 
   "compensation.activitiesInfoArray.6": {
     "datasource": "form_data",

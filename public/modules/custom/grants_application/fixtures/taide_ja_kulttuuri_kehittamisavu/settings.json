@@ -1,0 +1,15 @@
+{
+  "title": "Kulttuurin kehittämisavustukset",
+  "description": "KUVAKEHA",
+  "application_type": "KUVAKEHA",
+  "application_type_id": 49,
+  "application_industry": "KUVA",
+  "application_open": "2026-04-01T10:00:00",
+  "application_close": "2026-07-22T16:02:00",
+  "applicant_types": ["registered_community"],
+  "subvention_type": [44, 45, 46],
+  "target_group": 22,
+  "acting_years": [2026, 2027, 2028],
+  "continuous": false,
+  "disable_copy": false
+}

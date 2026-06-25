@@ -96,6 +96,34 @@ final class ServicePagePresaveTest extends KernelTestBase {
   }
 
   /**
+   * Test that the pre-save hook ignores non-ServicePage nodes.
+   */
+  public function testNonServicePageIsIgnored(): void {
+    $this->container->get('entity_type.manager')
+      ->getStorage('node_type')
+      ->create([
+        'type' => 'page',
+        'name' => 'Basic page',
+      ])->save();
+
+    $node = $this->container->get('entity_type.manager')
+      ->getStorage('node')
+      ->create([
+        'type' => 'page',
+        'uid' => 1,
+        'title' => 'Not a service page',
+      ]);
+    $node->save();
+
+    $node = $this->container->get('entity_type.manager')
+      ->getStorage('node')
+      ->load($node->id());
+
+    $this->assertSame('Not a service page', $node->label());
+    $this->assertFalse($node->hasField('field_react_form'));
+  }
+
+  /**
    * Picks the first key from an allowed values function.
    *
    * This method attempts to call a Drupal "allowed values" callback

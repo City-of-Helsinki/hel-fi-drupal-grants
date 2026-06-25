@@ -12,6 +12,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\AttachmentRemover;
 use Drupal\grants_handler\ApplicationException;
@@ -78,8 +79,6 @@ final class GrantsHandler extends WebformHandlerBase {
 
   /**
    * Application type.
-   *
-   * @var string
    */
   protected string $applicationType = '';
 
@@ -87,29 +86,21 @@ final class GrantsHandler extends WebformHandlerBase {
    * Applicant type.
    *
    * Private / registered / UNregistered.
-   *
-   * @var string
    */
   protected string $applicantType = '';
 
   /**
    * Application type ID.
-   *
-   * @var string
    */
   protected string $applicationTypeID = '';
 
   /**
    * Generated application number.
-   *
-   * @var string
    */
   protected string $applicationNumber = '';
 
   /**
    * Application acting year options.
-   *
-   * @var array
    */
   protected array $applicationActingYears = [];
 
@@ -117,8 +108,6 @@ final class GrantsHandler extends WebformHandlerBase {
    * Status for updated submission.
    *
    * Old one if no update.
-   *
-   * @var string
    */
   protected string $newStatus;
 
@@ -129,134 +118,104 @@ final class GrantsHandler extends WebformHandlerBase {
 
   /**
    * Save form for methods where form is not available.
-   *
-   * @var array
    */
   protected array $formTemp;
 
   /**
    * Save form sate for methods where it's not available.
-   *
-   * @var \Drupal\Core\Form\FormStateInterface
    */
   protected FormStateInterface $formStateTemp;
 
   /**
    * Are we redirecting?
-   *
-   * @var bool
    */
   protected bool $isRedirect = FALSE;
 
   /**
-   * The account proxy interface.
+   * Whether a required attachment file operation failed during submit.
    *
-   * @var \Drupal\Core\Session\AccountProxyInterface
+   * Set in postSaveSubmit() and read in confirmForm() to halt the submission
+   * so an application with a missing file is not uploaded to the integration.
+   */
+  protected bool $attachmentUploadFailed = FALSE;
+
+  /**
+   * The account proxy interface.
    */
   protected AccountProxyInterface $currentUser;
 
   /**
    * The helsinki profiili user data service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
   protected HelsinkiProfiiliUserData $userExternalData;
 
   /**
    * The grants profile service.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
    */
   protected GrantsProfileService $grantsProfileService;
 
   /**
    * The date formatter service.
-   *
-   * @var \Drupal\Core\Datetime\DateFormatter
    */
   protected DateFormatter $dateFormatter;
 
   /**
    * The attachment handler service.
-   *
-   * @var \Drupal\grants_attachments\AttachmentHandler
    */
   protected AttachmentHandler $attachmentHandler;
 
   /**
    * The grants handler navigation helper.
-   *
-   * @var \Drupal\grants_handler\GrantsHandlerNavigationHelper
    */
   protected GrantsHandlerNavigationHelper $grantsFormNavigationHelper;
 
   /**
    * The application validator.
-   *
-   * @var \Drupal\grants_handler\ApplicationValidator
    */
   protected ApplicationValidator $applicationValidator;
 
   /**
    * The application status service.
-   *
-   * @var \Drupal\grants_handler\ApplicationStatusService
    */
   protected ApplicationStatusService $applicationStatusService;
 
   /**
    * The form lock service.
-   *
-   * @var \Drupal\grants_handler\FormLockService
    */
   protected FormLockService $formLockService;
 
   /**
    * The drupal kernel.
-   *
-   * @var \Drupal\Core\DrupalKernel
    */
   protected DrupalKernel $kernel;
 
   /**
    * The request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $requestStack;
 
   /**
    * The application data service.
-   *
-   * @var \Drupal\grants_metadata\ApplicationDataService
    */
   protected ApplicationDataService $applicationDataService;
 
   /**
    * The application initialization service.
-   *
-   * @var \Drupal\grants_handler\ApplicationInitService
    */
   protected ApplicationInitService $applicationInitService;
 
   /**
    * The application uplaod service.
-   *
-   * @var \Drupal\grants_handler\ApplicationUploaderService
    */
   protected ApplicationUploaderService $applicationUploaderService;
 
   /**
    * The application getter service.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
    */
   protected ApplicationGetterService $applicationGetterService;
 
   /**
    * The attachment remover.
-   *
-   * @var \Drupal\grants_attachments\AttachmentRemover
    */
   protected AttachmentRemover $attachmentRemover;
 
@@ -1379,8 +1338,14 @@ submit the application only after you have provided all the necessary informatio
         $this->applicationNumber
       );
     }
-    catch (\Exception $e) {
-      $this->getLogger('grants_handler')->error($e->getMessage());
+    catch (\throwable $e) {
+      // File uploads failed. Halt the submission so the application is not
+      // marked SUBMITTED or uploaded to the integration in an inconsistent
+      // state. confirmForm() checks this flag, aborts the upload and shows
+      // the user-facing error.
+      $this->attachmentUploadFailed = TRUE;
+      Error::logException($this->getLogger('grants_handler'), $e);
+      return;
     }
 
     // Try to update status only if it's allowed.
@@ -1556,8 +1521,6 @@ submit the application only after you have provided all the necessary informatio
       $this->messenger->addError($this->t('Error saving application. please contact support.'));
       $this->getLogger('grants_handler')
         ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
-
-      \Sentry\captureException($e);
     }
   }
 
@@ -1578,6 +1541,14 @@ submit the application only after you have provided all the necessary informatio
     FormStateInterface $form_state,
     WebformSubmissionInterface $webform_submission,
   ): void {
+    // A required file operation failed during postSaveSubmit().
+    if ($this->attachmentUploadFailed) {
+      $this->messenger()->addError(
+        $this->t('An error occurred while sending the application. Please try again in a moment')
+      );
+      return;
+    }
+
     try {
       // Get new status from method that figures that out.
       $this->submittedFormData['status'] = $this->applicationStatusService->getNewStatus(

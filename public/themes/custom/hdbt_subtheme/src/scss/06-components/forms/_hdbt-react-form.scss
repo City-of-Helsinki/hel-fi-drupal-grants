@@ -84,6 +84,20 @@
       margin-block-start: $spacing;
     }
   }
+
+  .form-group.field-object:has(> .grants-form--preview-section__label) {
+    border: 1px solid $color-black;
+    padding: $spacing;
+    
+    > .field {
+      margin-block-end: $spacing-half;
+    }
+
+    > .grants-form--preview-section__label {
+      @include font('h6');
+      margin-block-start: 0;
+    }
+  }
 }
 
 .hdbt-react-form__tooltip-container {

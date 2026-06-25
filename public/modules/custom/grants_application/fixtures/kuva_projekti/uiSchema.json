@@ -353,12 +353,14 @@
         }
       },
       "budget_other_cost": {
-        "ui:options": {
-          "addText": "budget_other_cost.add"
-        },
-        "items": {
+        "costs": {
+          "items": {
+            "ui:options": {
+              "hideNameFromPrint": true
+            }
+          },
           "ui:options": {
-            "hideNameFromPrint": true
+            "addText": "budget_other_cost.add"
           }
         }
       }
@@ -398,6 +400,10 @@
         "ui:field": "textParagraph"
       },
       "extra_info": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      },
+      "further_clarification": {
         "ui:widget": "textarea",
         "misc:max-length": 5000
       },
