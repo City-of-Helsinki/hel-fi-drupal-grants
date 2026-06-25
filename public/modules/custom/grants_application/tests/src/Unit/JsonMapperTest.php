@@ -133,30 +133,195 @@ final class JsonMapperTest extends UnitTestCase {
    * Tests file mapping.
    */
   public function testFileMapping(): void {
-    $defaultMappings = $this->getMapping('mappings.json');
-    $dataSources = $this->getAllDatasources('fileFieldForm.json');
+    $mappings = [
+      "attachmentsInfo.attachmentsArray.0" => [
+        "datasource" => "form_data",
+        "source" => "attachments_step.attachments_section.attachment_without_file.file",
+        "mapping_type" => "file",
+        "data" => [
+          "description" => ["ID" => "description", "value" => "", "valueType" => "string", "label" => "Liitteen kuvaus"],
+          "fileName" => ["ID"  => "fileName", "value" => "", "valueType" => "string", "label" => "Tiedostonimi"],
+          "fileType" => ["ID"  => "fileType", "value" => "10", "valueType" => "int", "label" => "fileType"],
+          "integrationID" => ["ID"  => "integrationID", "value" => "", "valueType" => "string", "label" => "integrationID"],
+          "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+          "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+        ]
+      ],
+      "attachmentsInfo.attachmentsArray.n" => [
+        "datasource" => "form_data",
+        "source" => "attachments_step.attachments_section.other_attachment_fieldset.files",
+        "mapping_type" => "multiple_files",
+        "data" => [
+          "description" => ["ID" => "description", "value" => "", "valueType" => "string", "label" => "Liitteen kuvaus"],
+          "fileName" => ["ID"  => "fileName", "value" => "", "valueType" => "string", "label" => "Tiedostonimi"],
+          "fileType" => ["ID"  => "fileType", "value" => "1", "valueType" => "int", "label" => "fileType"],
+          "integrationID" => ["ID"  => "integrationID", "value" => "", "valueType" => "string", "label" => "integrationID"],
+          "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+          "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+        ]
+      ]
+    ];
+
+    $dataSources = [
+      'form_data' => [
+        'attachments_step' => [
+          'attachments_section' => [
+            'attachment_without_file' => [
+              'file' => [
+                'isDeliveredLater' => TRUE,
+                'isIncludedInOtherFile' => FALSE
+              ],
+            ],
+            'other_attachment_fieldset' => [
+              'files' => [
+                'description' => 'kuvaus liitetiedostosta tulee tänne',
+                'fileName' => 'testfile.pdf',
+                'integrationID' => 'https://example.com/v1/documents/aaaaaaaa-1111-2222-3333-bbbbbbcccccc/attachments/999999/',
+                'isDeliveredLater' => FALSE,
+                'isIncludedInOtherFile' => FALSE,
+                'isNewAttachment' => TRUE,
+                'size' => 13264,
+                'fileId' => 323335
+              ],
+            ],
+          ],
+        ],
+      ],
+    ];
 
     $mapper = new JsonMapper();
-    $mapper->setMappings($defaultMappings);
+    $mapper->setMappings($mappings);
     $mappedFiles = $mapper->mapFiles($dataSources);
 
     $this->assertTrue(count($mappedFiles['attachmentsInfo']['attachmentsArray']) === 2, 'Both files exists.');
+    $this->assertEquals('true', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][2]['value']);
+    $this->assertEquals('fileName', $mappedFiles['attachmentsInfo']['attachmentsArray'][1][1]['ID']);
+    $this->assertEquals('testfile.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][1][1]['value']);
+  }
 
-    $descriptionExists = FALSE;
-    $descriptionValue = FALSE;
-    foreach ($mappedFiles['attachmentsInfo']['attachmentsArray'][0] as $singleFile) {
-      if (isset($singleFile['ID']) && $singleFile['ID'] === 'description') {
-        $descriptionExists = TRUE;
-        $descriptionValue = $singleFile['value'];
-        break;
-      }
-    }
+  /**
+   * Test the logic that handles files on patch request
+   *
+   * Must have the bank file.
+   * Must have all and any "other attachments" whenever they are added.
+   * Must have all "sent later" -marked files
+   * Must have all the new files that overwrites the "sent later" -files
+   */
+  public function testHandleFilesOnPatchRequest(): void {
+    $oldFiles = [
+      // Bank file.
+      [
+        "description" => ["ID" => "description", "value" => "Vahvistus tilinumerolle FIxxxxxxxxxx", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileName" => ["ID"  => "fileName", "value" => "", "valueType" => "string", "label" => "Tiedostonimi"],
+        "fileType" => ["ID"  => "fileType", "value" => "1", "valueType" => "int", "label" => "fileType"],
+        "integrationID" => ["ID"  => "integrationID", "value" => "", "valueType" => "string", "label" => "integrationID"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      // Another required file.
+      [
+        "description" => ["ID" => "description", "value" => "Joku toinen liite", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileName" => ["ID"  => "fileName", "value" => "Testi.pdf", "valueType" => "string", "label" => "Tiedostonimi"],
+        "fileType" => ["ID"  => "fileType", "value" => "2", "valueType" => "int", "label" => "fileType"],
+        "integrationID" => ["ID"  => "integrationID", "value" => "", "valueType" => "string", "label" => "integrationID"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "false", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      // One "other attachments", filetype 0.
+      [
+        "description" => ["ID" => "description", "value" => "Eka random tiedosto", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileName" => ["ID"  => "fileName", "value" => "random1.pdf", "valueType" => "string", "label" => "Tiedostonimi"],
+        "fileType" => ["ID"  => "fileType", "value" => "0", "valueType" => "int", "label" => "fileType"],
+        "integrationID" => ["ID"  => "integrationID", "value" => "url-to-atv-plus-file-id-12345", "valueType" => "string", "label" => "integrationID"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "false", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      // Two required files which are marked as "delivered later".
+      [
+        "description" => ["ID" => "description", "value" => "", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileType" => ["ID"  => "fileType", "value" => "3", "valueType" => "int", "label" => "fileType"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "true", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      [
+        "description" => ["ID" => "description", "value" => "To be overwritten", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileType" => ["ID"  => "fileType", "value" => "4", "valueType" => "int", "label" => "fileType"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "true", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+    ];
 
-    $this->assertTrue($descriptionExists, 'Description exists.');
-    $this->assertEquals('kuvaus liitetiedostosta tulee tänne', $descriptionValue, 'default value given in mappings should have been overwritten by form value');
-    $this->assertNotEquals('Yhteisön säännöt', $descriptionValue, 'default value overwrite works');
-    $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['ID'] === 'fileName', 'Second field: fileName');
-    $this->assertEquals('testfile.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['value']);
+    $newFiles = [
+      // Bank file.
+      [
+        "description" => ["ID" => "description", "value" => "Vahvistus tilinumerolle FIxxxxxxxxxx", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileName" => ["ID"  => "fileName", "value" => "", "valueType" => "string", "label" => "Tiedostonimi"],
+        "fileType" => ["ID"  => "fileType", "value" => "1", "valueType" => "int", "label" => "fileType"],
+        "integrationID" => ["ID"  => "integrationID", "value" => "", "valueType" => "string", "label" => "integrationID"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      // Previously sent Another required file.
+      [
+        "description" => ["ID" => "description", "value" => "Joku toinen liite", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileName" => ["ID"  => "fileName", "value" => "Testi.pdf", "valueType" => "string", "label" => "Tiedostonimi"],
+        "fileType" => ["ID"  => "fileType", "value" => "2", "valueType" => "int", "label" => "fileType"],
+        "integrationID" => ["ID"  => "integrationID", "value" => "", "valueType" => "string", "label" => "integrationID"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "false", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      // Previously sent "other attachment".
+      [
+        "description" => ["ID" => "description", "value" => "Eka random tiedosto", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileName" => ["ID"  => "fileName", "value" => "random1.pdf", "valueType" => "string", "label" => "Tiedostonimi"],
+        "fileType" => ["ID"  => "fileType", "value" => "0", "valueType" => "int", "label" => "fileType"],
+        "integrationID" => ["ID"  => "integrationID", "value" => "url-to-atv-plus-file-id-12345", "valueType" => "string", "label" => "integrationID"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "false", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      // Previously set, One of the "to be seent later" file.
+      [
+        "description" => ["ID" => "description", "value" => "", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileType" => ["ID"  => "fileType", "value" => "3", "valueType" => "int", "label" => "fileType"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "true", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      // Overwritten One of the two "to be sent later" -files is now added.
+      [
+        "description" => ["ID" => "description", "value" => "Overwritten 'sent later'-file", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileName" => ["ID"  => "fileName", "value" => "Testi-4.pdf", "valueType" => "string", "label" => "Tiedostonimi"],
+        "fileType" => ["ID"  => "fileType", "value" => "4", "valueType" => "int", "label" => "fileType"],
+        "integrationID" => ["ID"  => "integrationID", "value" => "", "valueType" => "string", "label" => "integrationID"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "false", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+      // Other attachment added on patch request
+      [
+        "description" => ["ID" => "description", "value" => "Other attachment added on patch request", "valueType" => "string", "label" => "Liitteen kuvaus"],
+        "fileName" => ["ID"  => "fileName", "value" => "random-2.pdf", "valueType" => "string", "label" => "Tiedostonimi"],
+        "fileType" => ["ID"  => "fileType", "value" => "0", "valueType" => "int", "label" => "fileType"],
+        "integrationID" => ["ID"  => "integrationID", "value" => "url-to-atv-plus-file-id-67890", "valueType" => "string", "label" => "integrationID"],
+        "isDeliveredLater" => ["ID"  => "isDeliveredLater", "value" => "false", "valueType" => "bool", "label" => "Liite toimitetaan myöhemmin"],
+        "isIncludedInOtherFile" => ["ID"  => "isIncludedInOtherFile", "value" => "false", "valueType" => "bool", "label" => "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"]
+      ],
+    ];
+
+    $mapper = new JsonMapper();
+    $mappedFiles = $mapper->patchMappedFiles($oldFiles, $newFiles);
+
+    $this->assertCount(6, $mappedFiles);
+    $this->assertEquals(1, $mappedFiles[0]['fileType']['value']);
+    $this->assertEquals(2, $mappedFiles[1]['fileType']['value']);
+    $this->assertEquals(0, $mappedFiles[2]['fileType']['value']);
+    // Third file is delivered later.
+    $this->assertEquals(3, $mappedFiles[3]['fileType']['value']);
+    $this->assertEquals('true', $mappedFiles[3]['isDeliveredLater']['value']);
+    // Fourth file is overwritten on patch request.
+    $this->assertEquals(4, $mappedFiles[4]['fileType']['value']);
+    $this->assertEquals('Overwritten \'sent later\'-file', $mappedFiles[4]['description']['value']);
+    // New file added on patch request.
+    $this->assertEquals(0, $mappedFiles[5]['fileType']['value']);
+    $this->assertEquals("Other attachment added on patch request", $mappedFiles[5]['description']['value']);
   }
 
   /**
