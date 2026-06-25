@@ -5195,6 +5195,13 @@
                 "drupal/search_api": "^1.0"
             },
             "type": "drupal-module",
+            "extra": {
+                "patches": {
+                    "drupal/core": {
+                        "[#3014514] Make igbinary the default serializer, if available": "./public/modules/contrib/helfi_api_base/patches/3014514.patch"
+                    }
+                }
+            },
             "license": [
                 "GPL-2.0-or-later"
             ],
