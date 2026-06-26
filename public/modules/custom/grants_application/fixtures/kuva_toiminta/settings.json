@@ -1,6 +1,7 @@
 {
   "title": "Taide- ja kulttuuriavustukset: toiminta-avustukset",
   "description": "KUVATOIM",
+  "form_identifier": "kuva_toiminta",
   "application_type": "KUVATOIM",
   "application_type_id": 47,
   "application_industry": "KUVA",

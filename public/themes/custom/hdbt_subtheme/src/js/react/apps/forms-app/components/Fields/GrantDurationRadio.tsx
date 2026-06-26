@@ -79,7 +79,7 @@ export const GrantDurationRadio = ({ formData, idSchema, onChange, required, sch
         return (
           <RadioButton
             checked={option.value === (formData as string)}
-            className='hdbt-form--radiobutton'
+            className={`hdbt-form--radiobutton hdbt-form--field--radiobutton--${option.value}`}
             disabled={isReadOnly && !isEmptyPreview}
             id={optionId}
             key={optionId}

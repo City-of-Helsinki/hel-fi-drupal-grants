@@ -16,8 +16,6 @@ export async function fetchJsonApiRequest<T>(
   endpoint: string,
   params?: Record<string, string | number | boolean>,
 ): Promise<T> {
-  console.log('endpoint',endpoint)
-
   // Create a new API context with the provided base URL.
   // @todo: Should we use a valid certificate instead of
   //        ignoring the certificate?

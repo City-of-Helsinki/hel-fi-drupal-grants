@@ -1,6 +1,7 @@
 {
   "title": "Taiteen perusopetuksen avustukset",
   "description": "KUVAPERUS",
+  "form_identifier": "taide_ja_kulttuuriavustukset_tai",
   "application_type": "KUVAPERUS",
   "application_type_id": 50,
   "application_industry": "KUVA",

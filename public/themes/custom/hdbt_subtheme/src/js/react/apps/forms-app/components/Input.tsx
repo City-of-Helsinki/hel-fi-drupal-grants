@@ -425,7 +425,9 @@ export const RadioWidget = ({
               name={optionId}
               onChange={() => onChange(option.value)}
               style={defaultRadioButtonStyle}
-              className='hdbt-form--radiobutton'
+              className={`hdbt-form--radiobutton hdbt-form--field--radiobutton--${
+                option.value === true ? 'yes' : option.value === false ? 'no' : String(option.value)
+              }`}
             />
           );
         })}

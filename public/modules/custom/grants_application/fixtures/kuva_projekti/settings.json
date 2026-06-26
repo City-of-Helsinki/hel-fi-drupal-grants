@@ -1,6 +1,7 @@
 {
   "title": "Taide- ja kulttuuriavustukset: projektiavustukset",
   "description": "KUVAPROJ",
+  "form_identifier": "kuva_projekti",
   "application_type": "KUVAPROJ",
   "application_type_id": 48,
   "application_industry": "KUVA",
