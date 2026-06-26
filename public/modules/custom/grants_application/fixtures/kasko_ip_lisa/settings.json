@@ -1,6 +1,7 @@
 {
   "title": "Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus",
   "description": "KASKOIPLISA",
+  "form_identifier": "kasko_ip_lisa",
   "application_type": "KASKOIPLISA",
   "application_type_id": 53,
   "application_industry": "KASKO",

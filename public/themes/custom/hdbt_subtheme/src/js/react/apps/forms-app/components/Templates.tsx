@@ -323,6 +323,27 @@ const {
   templates: { FieldTemplate: DefaultFieldTemplate },
 } = getDefaultRegistry();
 
+// Convert a camelCase/snake_case token to kebab-case for class names.
+const toKebab = (value: string) =>
+  value
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/_/g, '-')
+    .toLowerCase();
+
+// Map classes to field types.
+const fieldTypeToken = (schema: any, uiSchema: any): string | null => {
+  const uiField = uiSchema?.['ui:field'];
+  const uiWidget = uiSchema?.['ui:widget'];
+  if (uiField) return toKebab(String(uiField));
+  if (uiWidget) return toKebab(String(uiWidget));
+  if (schema?.format === 'decimal-number') return 'decimal-number';
+  if (schema?.type === 'integer') return 'integer';
+  if (schema?.type === 'number') return 'number';
+  if (schema?.type === 'string') return 'text';
+  if (schema?.type === 'boolean') return 'boolean';
+  return null;
+};
+
 export const FieldTemplate = (props: FieldTemplateProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const { schema } = props;
@@ -355,7 +376,15 @@ export const FieldTemplate = (props: FieldTemplateProps) => {
     if (!hasVisibleContent) return null;
   }
 
-  return <DefaultFieldTemplate {...props} />;
+  // Get the class name for the field type.
+  const fieldType = fieldTypeToken(props.schema, props.uiSchema);
+
+  // Add classes to form fields.
+  const classNames = fieldType
+    ? `${props.classNames ?? ''} hdbt-form--field hdbt-form--field--${fieldType}`.trim()
+    : props.classNames;
+
+  return <DefaultFieldTemplate {...props} classNames={classNames} />;
 };
 
 export const ButtonTemplate = ({ icon, children, registry, uiSchema, ...props }: IconButtonProps) => (

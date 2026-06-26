@@ -615,6 +615,7 @@ final class ApplicationController extends ControllerBase {
     try {
       if ($this->atvService->deleteDocument($document)) {
         $submission->delete();
+        $this->messenger()->addStatus($this->t('Draft deleted.', [], $tOpts));
       }
     }
     catch (\Exception $e) {

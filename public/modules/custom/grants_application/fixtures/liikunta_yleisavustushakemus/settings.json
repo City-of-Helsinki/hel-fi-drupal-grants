@@ -1,6 +1,7 @@
 {
   "title": "Liikunta, yleisavustushakemus",
   "description": "LIIKUNTAYLEIS",
+  "form_identifier": "liikunta_yleisavustushakemus",
   "application_type": "LIIKUNTAYLEIS",
   "application_type_id": 56,
   "application_industry": "KUVA",

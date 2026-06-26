@@ -1,6 +1,7 @@
 {
   "title": "Liikunta, tapahtuma-avustushakemus",
   "description": "LIIKUNTATAPAHTUMA",
+  "form_identifier": "liikunta_tapahtuma",
   "application_type": "LIIKUNTATAPAHTUMA",
   "application_type_id": 59,
   "application_industry": "KUVA",

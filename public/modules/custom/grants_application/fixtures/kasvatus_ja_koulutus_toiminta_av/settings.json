@@ -1,6 +1,7 @@
 {
   "title": "Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille",
   "description": "KASKOIPTOIM",
+  "form_identifier": "kasvatus_ja_koulutus_toiminta_av",
   "application_type": "KASKOIPTOIM",
   "application_type_id": 52,
   "application_industry": "KASKO",

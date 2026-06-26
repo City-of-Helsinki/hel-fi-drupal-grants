@@ -1,6 +1,10 @@
 (function ($, Drupal) {
   Drupal.behaviors.omaAsiointiFront = {
     attach: function (context, settings) {
+      if (!$('#oma-asiointi__sent .application-list__item').length) {
+        return;
+      }
+
       if ($("#oma-asiointi__sent")[0]) {
         const sentListOptions = {
           valueNames: ['application-list__item--name', 'application-list__item--status', 'application-list__item--number', 'application-list__item--submitted'],
@@ -59,6 +63,7 @@
 
     if (hasDraftItem) {
       const draftsListOptions = {
+        valueNames: ['application-list__item--name', 'application-list__item--status', 'application-list__item--number', 'application-list__item--submitted'],
         pagination: true,
         page: 10,
       };

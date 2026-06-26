@@ -1,6 +1,7 @@
 {
   "title": "Asukasosallisuus, yleis- ja toiminta-avustushakemus",
   "description": "ASUKASYLEISTOIM",
+  "form_identifier": "asukasosallisuus_yleis_ja_toimin",
   "application_type": "ASUKASYLEISTOIM",
   "application_type_id": 67,
   "application_industry": "KANSLIA",
