@@ -144,16 +144,16 @@ class JsonMapper {
       // Bool values always true/false instead of 0/1.
       $value = $value ? 'true' : 'false';
     }
-    else if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'string' && $value === "") {
+    elseif (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'string' && $value === "") {
       // Empty strings can usually be excluded from the submission.
       return;
     }
-    else if (!$value && $definition['data']['value'] !== "") {
+    elseif (!$value && $definition['data']['value'] !== "") {
       // Allow adding a default value to the mapping-file which is used
       // if end user sent empty value.
       $value = $definition['data']['value'];
     }
-    else if ($value && is_string($value) && in_array($definition['data']['valueType'], ['float', 'double'])) {
+    elseif ($value && is_string($value) && in_array($definition['data']['valueType'], ['float', 'double'])) {
       // Fields mapped as double or float should not have commas, replace with dot.
       $value = str_replace(',', '.', rtrim($value, ','));
     }
@@ -203,44 +203,65 @@ class JsonMapper {
     // Source value contains multiple objects which contains multiple fields.
     // The fields may also contain nested values.
     foreach ($sourceValues as $singleObject) {
-      $values = [];
-      foreach ($singleObject as $fieldName => $value) {
-        if (is_array($value)) {
-          foreach ($value as $subfield => $subValue) {
-            $definitionName = $fieldName . '.' . $subfield;
-            $valueArray = $definition['data'][$definitionName];
-            $valueArray['value'] = (string) $subValue;
-
-            if ($definition['data'][$definitionName]['valueType'] === 'bool') {
-              $valueArray['value'] = is_bool($subValue) ? ($subValue ? "true" : "false") : (string) $subValue;
-            }
-            else if (in_array($definition['data'][$definitionName]['valueType'], ['float', 'double'])) {
-              $valueArray['value'] = str_replace(',','.', (string) $subValue);
-            }
-
-            $values[] = $this->applyMultipleValue($valueArray, (string) $subValue);
-          }
-        }
-        else {
-          if (!in_array($fieldName, array_keys($definition['data']))) {
-            continue;
-          }
-          $valueArray = $definition['data'][$fieldName];
-
-          $valueArray['value'] = (string) $value;
-          if ($definition['data'][$fieldName]['valueType'] === 'bool') {
-            $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
-          }
-          else if (in_array($definition['data'][$fieldName]['valueType'], ['float', 'double'])) {
-            $valueArray['value'] = str_replace(',','.', (string) $value);
-          }
-
-          $stringValue = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
-          $values[] = $this->applyMultipleValue($valueArray, $stringValue);
-        }
-      }
+      $values = $this->handleSingleObject($singleObject, $definition);
       $this->setTargetValue($data, $targetPath, $values, $definition);
     }
+  }
+
+  /**
+   * Handle single object from nested field.
+   *
+   * To prevent sonar error.
+   *
+   * @param array<mixed> $singleObject
+   *   The object from nested field values.
+   * @param array<mixed> $definition
+   *   The field definition
+   *
+   * @return array<mixed>
+   *   A single value from nested field.
+   */
+  private function handleSingleObject(array $singleObject, array $definition): array {
+    $values = [];
+    foreach ($singleObject as $fieldName => $value) {
+      if (is_array($value)) {
+        foreach ($value as $subfield => $subValue) {
+          $definitionName = $fieldName . '.' . $subfield;
+          $valueArray = $definition['data'][$definitionName];
+          $valueArray['value'] = (string) $subValue;
+
+          if ($definition['data'][$definitionName]['valueType'] === 'bool') {
+            $valueArray['value'] = is_bool($subValue) ? ($subValue ? "true" : "false") : (string) $subValue;
+          }
+          elseif (in_array($definition['data'][$definitionName]['valueType'], ['float', 'double'])) {
+            $subValue = str_replace(',','.', (string) $subValue);
+            $valueArray['value'] = $subValue;
+          }
+
+          $values[] = $this->applyMultipleValue($valueArray, (string) $subValue);
+        }
+      }
+      else {
+        if (!in_array($fieldName, array_keys($definition['data']))) {
+          continue;
+        }
+        $valueArray = $definition['data'][$fieldName];
+
+        $valueArray['value'] = (string) $value;
+        if ($definition['data'][$fieldName]['valueType'] === 'bool') {
+          $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
+        }
+        elseif (in_array($definition['data'][$fieldName]['valueType'], ['float', 'double'])) {
+          $value = str_replace(',','.', (string) $value);
+          $valueArray['value'] = $value;
+        }
+
+        $stringValue = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
+        $values[] = $this->applyMultipleValue($valueArray, $stringValue);
+      }
+    }
+
+    return $values;
   }
 
   /**

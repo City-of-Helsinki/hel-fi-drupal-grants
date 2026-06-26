@@ -4,7 +4,7 @@
       "mapArray": [
         {
           "mapName": "Peruskoulun suunnistuskartta",
-          "size": 10,
+          "size": "10,25",
           "creator": {
             "firstName": "Keijo",
             "lastName": "Kartantekijä"
@@ -12,7 +12,7 @@
         },
         {
           "mapName": "Purjehduskerhon karikkokartta",
-          "size": 50
+          "size": "55,55"
         }
       ]
     }
