@@ -69,6 +69,7 @@ export const ComputedSum = ({ formData, idSchema, name, onChange, schema, uiSche
   return (
     <TextInput
       {...({
+        className: 'hdbt-form--field--computed-sum',
         disabled: true,
         id: idSchema.$id,
         label: schema?.title,

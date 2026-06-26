@@ -1,6 +1,7 @@
 {
   "title": "Nuorisotoiminnan leiriavustushakemus",
   "description": "NUORLEIRI",
+  "form_identifier": "nuorleiri",
   "application_type": "NUORLEIRI",
   "application_type_id": 73,
   "application_industry": "KUVA",

@@ -12,18 +12,16 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      74: '74'
-    applicationOpen: '2026-04-01T10:00:00'
-    applicationClose: '2026-04-22T16:02:00'
+      59: '59'
+      72: '72'
+    applicationOpen: '2026-06-15T09:00:00'
+    applicationClose: '2026-08-31T16:02:00'
     applicationContinuous: 0
     applicationTargetGroup: '22'
     disableCopying: 0
     applicationTypeSelect: '49'
     applicationIndustry: KUVA
-    applicationActingYears:
-      2026: '2026'
-      2027: '2027'
-      2028: '2028'
+    applicationActingYears: {  }
     applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '3'
     status: released

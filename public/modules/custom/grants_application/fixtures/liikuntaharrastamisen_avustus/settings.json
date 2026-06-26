@@ -1,6 +1,7 @@
 {
   "title": "Alueellisen liikuntaharrastamisen tukemisen avustus",
   "description": "KUVAERILLIS",
+  "form_identifier": "liikuntaharrastamisen_avustus",
   "application_type": "KUVAERILLIS",
   "application_type_id": 70,
   "application_industry": "KUVA",

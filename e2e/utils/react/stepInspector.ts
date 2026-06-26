@@ -29,6 +29,10 @@ export type StepField = {
   widget?: string;
   required: boolean;
   options?: Array<{ id: number | string; label: string }>;
+  maxLength?: number;
+  singleSubvention?: boolean;
+  startGrant?: boolean;
+  affirmativeExpands?: boolean;
   conditional?: boolean;
   conditionField?: string;
   isArrayItem?: boolean;
@@ -171,15 +175,76 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       widget: fieldUiSchema?.['ui:widget'] ?? fieldUiSchema?.['ui:field'],
       required,
       options: rawOptions?.length ? rawOptions : undefined,
+      maxLength: fieldUiSchema?.['misc:max-length'],
+      singleSubvention: uiOptions.useSingleSubvention === true,
+      startGrant: uiOptions.startGrant != null,
+      affirmativeExpands: uiOptions.affirmativeExpands === true,
       tooltipLabel: uiOptions.tooltipLabel ? translate(uiOptions.tooltipLabel) : undefined,
       tooltipButtonLabel: uiOptions.tooltipButtonLabel ? translate(uiOptions.tooltipButtonLabel) : undefined,
       tooltipText: uiOptions.tooltipText ? translate(uiOptions.tooltipText) : undefined,
     });
   };
 
-  // Walk each section of the step.
+  // Step-level "allOf" rules can add conditional fields to existing sections.
+  // Merge those fields into the section schemas and track the added fields.
+  const conditionalKeys = new Set<string>();
+
+  // Record a conditional field and all its nested children.
+  const recordAddedFields = (schema: any, name: string, sectionName: string): void => {
+    conditionalKeys.add(`${sectionName}::${name}`);
+    const resolved = resolveSchema(schema);
+    if (resolved?.properties) {
+      for (const [childName, childSchema] of Object.entries<any>(resolved.properties)) {
+        recordAddedFields(childSchema, childName, sectionName);
+      }
+    }
+  };
+
+  // Merge conditional properties into the target section schema.
+  const deepMergeProps = (targetProps: any, additionProps: any, sectionName: string): void => {
+    for (const [name, rawAdd] of Object.entries<any>(additionProps)) {
+      const add = resolveSchema(rawAdd);
+      const existing = name in targetProps ? resolveSchema(targetProps[name]) : undefined;
+      if (existing?.properties && add?.properties) {
+        const mergedChildren = { ...existing.properties };
+        targetProps[name] = { ...existing, properties: mergedChildren };
+        deepMergeProps(mergedChildren, add.properties, sectionName);
+      } else if (add?.properties) {
+        // The base field is empty, so use the conditional schema instead.
+        targetProps[name] = rawAdd;
+        recordAddedFields(rawAdd, name, sectionName);
+      } else if (!(name in targetProps)) {
+        targetProps[name] = rawAdd;
+        recordAddedFields(rawAdd, name, sectionName);
+      }
+    }
+  };
+
+  // Section schemas after applying step-level conditional fields.
+  const sectionSchemas: Record<string, any> = {};
+
+  // Build the base section schemas.
   for (const [sectionName, rawSectionSchema] of Object.entries<any>(stepDefinition.properties ?? {})) {
-    const sectionSchema = resolveSchema(rawSectionSchema);
+    const resolved = resolveSchema(rawSectionSchema);
+    sectionSchemas[sectionName] = { ...resolved, properties: { ...(resolved?.properties ?? {}) } };
+  }
+
+  // Merge conditional fields from "allOf" / "then" rules into the sections.
+  for (const conditionalSchema of stepDefinition.allOf ?? []) {
+    for (const [sectionName, rawThenSection] of Object.entries<any>(conditionalSchema?.then?.properties ?? {})) {
+      const target = sectionSchemas[sectionName];
+      if (!target) continue;
+      const thenProps = resolveSchema(rawThenSection)?.properties ?? {};
+      deepMergeProps(target.properties, thenProps, sectionName);
+      // These fields only appear when their condition is met.
+      for (const [name, childSchema] of Object.entries<any>(thenProps)) {
+        recordAddedFields(childSchema, name, sectionName);
+      }
+    }
+  }
+
+  // Walk each section of the step.
+  for (const [sectionName, sectionSchema] of Object.entries<any>(sectionSchemas)) {
     const sectionTitle = translate(sectionSchema.title) ?? sectionName;
     const sectionUiSchema = stepUiSchema[sectionName] ?? {};
     const sectionRequiredFields = new Set<string>(sectionSchema.required ?? []);
@@ -197,7 +262,6 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       // Object fields are containers, step into their children.
       if (fieldSchema?.type === 'object' && fieldSchema.properties) {
         const nestedRequiredFields = new Set<string>(fieldSchema.required ?? []);
-        const nestedUiSchema = fieldUiSchema;
 
         // Walk each child property of the nested object.
         for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
@@ -226,7 +290,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
           pushField(
             childName,
             childRawSchema,
-            nestedUiSchema[childName] ?? {},
+            fieldUiSchema[childName] ?? {},
             nestedRequiredFields.has(childName),
             [step, sectionName, fieldName],
             sectionName,
@@ -294,8 +358,34 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
         const fieldSchema = resolveSchema(rawFieldSchema);
         const fieldUiSchema = sectionUiSchema[fieldName] ?? {};
 
+        // Step into a conditional object to handle its child fields.
+        if (fieldSchema?.properties) {
+          const nestedRequiredFields = new Set<string>(fieldSchema.required ?? []);
+
+          for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
+            const childSchema = resolveSchema(childRawSchema);
+
+            if (childSchema?.type === 'null') {
+              continue;
+            }
+
+            pushField(
+              childName,
+              childRawSchema,
+              fieldUiSchema[childName] ?? {},
+              nestedRequiredFields.has(childName),
+              [step, sectionName, fieldName],
+              sectionName,
+              sectionTitle,
+            );
+
+            const field = fields[fields.length - 1];
+            field.conditional = true;
+            field.conditionField = conditionField;
+          }
+        }
         // Conditional array, collect its row fields too.
-        if (fieldSchema?.type === 'array') {
+        else if (fieldSchema?.type === 'array') {
           const addButtonTextKey: string | undefined = fieldUiSchema?.['ui:options']?.addText;
           const itemSchema = resolveSchema(Array.isArray(fieldSchema.items) ? fieldSchema.items[0] : fieldSchema.items);
           const itemUiSchema = fieldUiSchema.items ?? {};
@@ -338,6 +428,15 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
           field.conditionField = conditionField;
         }
       }
+    }
+  }
+
+  // Fields added by step-level conditional schemas are conditionally rendered,
+  // but are not associated with a specific conditionField toggle.
+  // Mark fields added from allOf/then schema branches as conditional.
+  for (const field of fields) {
+    if (conditionalKeys.has(`${field.section}::${field.fieldName}`)) {
+      field.conditional = true;
     }
   }
 

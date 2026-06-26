@@ -103,7 +103,9 @@ export const TextInput = ({
           name,
           onBlur: () => null,
           onChange: (event: ChangeEvent<HTMLInputElement>) => {
-            const sanitized = sanitizeNumericInput(event.target.value, sanitizationType);
+            const nativeEvent: InputEvent = event.nativeEvent as InputEvent;
+            const lastInput = nativeEvent.data ?? '';
+            const sanitized = sanitizeNumericInput(event.target.value, sanitizationType, lastInput);
             if (numberIsTooLarge(sanitized)) return;
             onChange(sanitized === '' ? undefined : sanitized);
           },
@@ -423,7 +425,9 @@ export const RadioWidget = ({
               name={optionId}
               onChange={() => onChange(option.value)}
               style={defaultRadioButtonStyle}
-              className='hdbt-form--radiobutton'
+              className={`hdbt-form--radiobutton hdbt-form--field--radiobutton--${
+                option.value === true ? 'yes' : option.value === false ? 'no' : String(option.value)
+              }`}
             />
           );
         })}

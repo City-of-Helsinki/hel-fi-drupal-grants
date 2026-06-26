@@ -63,6 +63,7 @@ The file should be located in the `/e2e` directory.
 - **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
 - **WAIT_FOR_TEXT_TIMEOUT**: The time to wait for text in MS (defaults to 60000, 1 minute). Used by the waitForTextWithInterval() function.
 - **WAIT_FOR_TEXT_INTERVAL**: How often to query text in MS (defaults to 5000, 5 seconds). Used by the waitForTextWithInterval() function.
+- **SKIP_SUBMIT**: Set to "true" to skip submitting a React form. The form is filled and saved as a draft, the draft is then removed, and the submit and post submit checks are skipped.
 
 Example `.env` file:
 ```
@@ -102,6 +103,10 @@ WAIT_FOR_TEXT_INTERVAL="5000"
 # A flag indicating if the "debugging mode" should be turned on.
 # Messages will be printed during test runs if set to "TRUE".
 APP_DEBUG="TRUE"
+
+# Skip submitting a React form. The form is filled and saved as a draft,
+# the draft is removed, and the submit and post submit checks are skipped.
+SKIP_SUBMIT="true"
 
 # Test user SSN (sotu) and UUID.
 # Both of these can be fetched from a submitted ATV document using Postman.

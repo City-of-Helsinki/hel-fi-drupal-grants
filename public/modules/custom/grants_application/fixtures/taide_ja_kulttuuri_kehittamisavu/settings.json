@@ -1,6 +1,7 @@
 {
   "title": "Kulttuurin kehittämisavustukset",
   "description": "KUVAKEHA",
+  "form_identifier": "taide_ja_kulttuuri_kehittamisavu",
   "application_type": "KUVAKEHA",
   "application_type_id": 49,
   "application_industry": "KUVA",
