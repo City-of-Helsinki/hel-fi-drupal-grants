@@ -240,10 +240,10 @@ class JsonMapper {
    *   The parent field name.
    * @param array<mixed> $definition
    *   The definition for the parent and child fields.
-   * @param $values
+   * @param array<mixed> $values
    *   The values to write on Avus2-json
    */
-  private function handleNestedMultiFieldItem(array $value, string $fieldName, array $definition, &$values) {
+  private function handleNestedMultiFieldItem(array $value, string $fieldName, array $definition, array &$values): void {
     foreach ($value as $subfield => $subValue) {
       $definitionName = $fieldName . '.' . $subfield;
       $valueArray = $definition['data'][$definitionName];
@@ -259,25 +259,6 @@ class JsonMapper {
 
       $values[] = $this->applyMultipleValue($valueArray, (string) $subValue);
     }
-  }
-
-  /**
-   * Handle single object from nested field.
-   *
-   * To prevent sonar error.
-   *
-   * @param array<mixed> $singleObject
-   *   The object from nested field values.
-   * @param array<mixed> $definition
-   *   The field definition
-   *
-   * @return array<mixed>
-   *   A single value from nested field.
-   */
-  private function handleSingleObject(array $singleObject, array $definition): array {
-
-
-    return $values;
   }
 
   /**
