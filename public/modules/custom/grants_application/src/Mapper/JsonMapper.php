@@ -203,8 +203,61 @@ class JsonMapper {
     // Source value contains multiple objects which contains multiple fields.
     // The fields may also contain nested values.
     foreach ($sourceValues as $singleObject) {
-      $values = $this->handleSingleObject($singleObject, $definition);
+      $values = [];
+      foreach ($singleObject as $fieldName => $value) {
+        if (is_array($value)) {
+          $this->handleNestedMultiFieldItem($value, $fieldName, $definition, $values);
+        }
+        else {
+          if (!in_array($fieldName, array_keys($definition['data']))) {
+            continue;
+          }
+          $valueArray = $definition['data'][$fieldName];
+
+          $valueArray['value'] = (string) $value;
+          if ($definition['data'][$fieldName]['valueType'] === 'bool') {
+            $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
+          }
+          elseif (in_array($definition['data'][$fieldName]['valueType'], ['float', 'double'])) {
+            $value = str_replace(',', '.', (string) $value);
+            $valueArray['value'] = $value;
+          }
+
+          $stringValue = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
+          $values[] = $this->applyMultipleValue($valueArray, $stringValue);
+        }
+      }
       $this->setTargetValue($data, $targetPath, $values, $definition);
+    }
+  }
+
+  /**
+   * Get subfield values of a field.
+   *
+   * @param array<mixed> $value
+   *   The of the subfields.
+   * @param string $fieldName
+   *   The parent field name.
+   * @param array<mixed> $definition
+   *   The definition for the parent and child fields.
+   * @param $values
+   *   The values to write on Avus2-json
+   */
+  private function handleNestedMultiFieldItem(array $value, string $fieldName, array $definition, &$values) {
+    foreach ($value as $subfield => $subValue) {
+      $definitionName = $fieldName . '.' . $subfield;
+      $valueArray = $definition['data'][$definitionName];
+      $valueArray['value'] = (string) $subValue;
+
+      if ($definition['data'][$definitionName]['valueType'] === 'bool') {
+        $valueArray['value'] = is_bool($subValue) ? ($subValue ? "true" : "false") : (string) $subValue;
+      }
+      elseif (in_array($definition['data'][$definitionName]['valueType'], ['float', 'double'])) {
+        $subValue = str_replace(',', '.', (string) $subValue);
+        $valueArray['value'] = $subValue;
+      }
+
+      $values[] = $this->applyMultipleValue($valueArray, (string) $subValue);
     }
   }
 
@@ -222,44 +275,7 @@ class JsonMapper {
    *   A single value from nested field.
    */
   private function handleSingleObject(array $singleObject, array $definition): array {
-    $values = [];
-    foreach ($singleObject as $fieldName => $value) {
-      if (is_array($value)) {
-        foreach ($value as $subfield => $subValue) {
-          $definitionName = $fieldName . '.' . $subfield;
-          $valueArray = $definition['data'][$definitionName];
-          $valueArray['value'] = (string) $subValue;
 
-          if ($definition['data'][$definitionName]['valueType'] === 'bool') {
-            $valueArray['value'] = is_bool($subValue) ? ($subValue ? "true" : "false") : (string) $subValue;
-          }
-          elseif (in_array($definition['data'][$definitionName]['valueType'], ['float', 'double'])) {
-            $subValue = str_replace(',','.', (string) $subValue);
-            $valueArray['value'] = $subValue;
-          }
-
-          $values[] = $this->applyMultipleValue($valueArray, (string) $subValue);
-        }
-      }
-      else {
-        if (!in_array($fieldName, array_keys($definition['data']))) {
-          continue;
-        }
-        $valueArray = $definition['data'][$fieldName];
-
-        $valueArray['value'] = (string) $value;
-        if ($definition['data'][$fieldName]['valueType'] === 'bool') {
-          $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
-        }
-        elseif (in_array($definition['data'][$fieldName]['valueType'], ['float', 'double'])) {
-          $value = str_replace(',','.', (string) $value);
-          $valueArray['value'] = $value;
-        }
-
-        $stringValue = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
-        $values[] = $this->applyMultipleValue($valueArray, $stringValue);
-      }
-    }
 
     return $values;
   }
