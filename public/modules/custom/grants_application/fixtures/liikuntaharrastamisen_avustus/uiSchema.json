@@ -41,6 +41,12 @@
         },
         "items": {
           "other_compensation_issuer": {
+            "ui:enumNames": [
+              "other_compensation_issuer.state",
+              "other_compensation_issuer.eu",
+              "other_compensation_issuer.other",
+              "other_compensation_issuer.insitute"
+            ],
             "ui:options": {
               "tooltipLabel": "other_compensation_issuer.title",
               "tooltipButtonLabel": "other_compensation_issuer.title",
@@ -81,6 +87,12 @@
         },
         "items": {
           "other_applied_compensation_issuer": {
+            "ui:enumNames": [
+              "other_compensation_issuer.state",
+              "other_compensation_issuer.eu",
+              "other_compensation_issuer.other",
+              "other_compensation_issuer.insitute"
+            ],
             "ui:options": {
               "tooltipLabel": "other_compensation_issuer.title",
               "tooltipButtonLabel": "other_compensation_issuer.title",

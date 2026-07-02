@@ -1,43 +1,43 @@
 {
   "definitions": {
-    "_received_compensation_item": {
+    "_other_compensation_item": {
       "title": "other_compensation.title",
       "type": "object",
       "properties": {
-        "received_compensation_issuer": {
-          "title": "received_compensation_issuer.title",
+        "other_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
           "type": "string",
           "enum": [
-            "received_compensation_issuer.state",
-            "received_compensation_issuer.eu",
-            "received_compensation_issuer.other",
-            "received_compensation_issuer.insitute"
+            "1",
+            "3",
+            "4",
+            "5"
           ]
         },
-        "received_compensation_issuer_name": {
-          "title": "received_compensation_issuer_name.title",
+        "other_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
           "type": "string"
         },
-        "received_compensation_issuer_year": {
-          "title": "received_compensation_issuer_year.title",
+        "other_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
           "type": "string"
         },
-        "received_compensation_amount": {
+        "other_compensation_amount": {
           "format": "decimal-number",
-          "title": "received_compensation_amount.title",
+          "title": "other_compensation_amount.title",
           "type": "string"
         },
-        "received_compensation_description": {
-          "title": "received_compensation_description.title",
+        "other_compensation_description": {
+          "title": "other_compensation_description.title",
           "type": "string"
         }
       },
       "required": [
-        "received_compensation_issuer",
-        "received_compensation_issuer_name",
-        "received_compensation_issuer_year",
-        "received_compensation_amount",
-        "received_compensation_description"
+        "other_compensation_issuer",
+        "other_compensation_issuer_name",
+        "other_compensation_issuer_year",
+        "other_compensation_amount",
+        "other_compensation_description"
       ]
     },
     "_premise_item": {
@@ -95,7 +95,7 @@
         "multi_year_section",
         "primary_art_section",
         "project_info_section",
-        "received_compensations_section"
+        "other_compensations_section"
       ],
       "properties": {
         "acting_year_section": {
@@ -232,9 +232,9 @@
             }
           }
         },
-        "received_compensations_section": {
-          "title": "received_compensations_section.title",
-          "description": "received_compensations_section.description",
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
           "type": "object",
           "required": [
             "have_received_other_compensations"
@@ -260,13 +260,13 @@
               },
               "then": {
                 "properties": {
-                  "received_compensations": {
+                  "other_compensations": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/definitions/_received_compensation_item"
+                      "$ref": "#/definitions/_other_compensation_item"
                     },
                     "additionalItems": {
-                      "$ref": "#/definitions/_received_compensation_item"
+                      "$ref": "#/definitions/_other_compensation_item"
                     },
                     "minItems": 1
                   }
