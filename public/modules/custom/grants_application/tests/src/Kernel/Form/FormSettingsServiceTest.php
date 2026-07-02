@@ -240,15 +240,23 @@ final class FormSettingsServiceTest extends KernelTestBase {
     $deleteAfter = $settings->getDraftDeleteAfter();
     $this->assertEquals('2030-02-01', $deleteAfter);
 
+    // Continuous application without close-time.
+    $settingsValues = [
+      'continuous' => TRUE,
+      'application_close' => NULL,
+    ];
+    $settings = new FormSettings($settingsValues, [], [], []);
+    $deleteAfter = $settings->getDraftDeleteAfter();
+    $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
+
+    // Continuous application with close time.
     $settingsValues = [
       'continuous' => TRUE,
       'application_close' => '2030-01-01',
     ];
     $settings = new FormSettings($settingsValues, [], [], []);
-
-    // On continuous application, the draft is deleted after one year.
     $deleteAfter = $settings->getDraftDeleteAfter();
-    $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
+    $this->assertEquals('2030-02-01', $deleteAfter);
 
     // Test bad settings.
     $settings = new FormSettings([], [], [], []);
