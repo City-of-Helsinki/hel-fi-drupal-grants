@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Form;
 
+use Drupal\Core\Database\Connection;
 use Drupal\Core\KeyValueStore\KeyValueDatabaseFactory;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -15,6 +16,7 @@ class ApplicationNumberService {
   public function __construct(
     #[Autowire(service: 'keyvalue.database')]
     private readonly KeyValueDatabaseFactory $keyValue,
+    private readonly Connection $connection
   ) {
   }
 
@@ -37,7 +39,33 @@ class ApplicationNumberService {
 
     $savedSerial = $store->get($last_serial_key, 0);
 
-    if ($savedSerial < 1000) {
+    if ($savedSerial < 1000 && $env === 'production') {
+      $savedSerial += 1000;
+    }
+    else if ($savedSerial < 1000 && $env !== 'production') {
+      // For local development, check database for already saved applications.
+      $like = $application_type_id < 100 ? "$env-0$application_type_id-%" : "$env-$application_type_id-%";
+      $numberArray = $this->connection
+        ->query("select application_number from application_submission where application_number like '$like' ")
+        ->fetchAll();
+
+      if (!$numberArray || !is_array($numberArray)) {
+        $savedSerial += 1000;
+      }
+
+      $numbers = array_map(
+        function ($num) {
+          return (int) explode('-', $num->application_number)[2];
+        },
+        $numberArray
+      );
+      $max = max($numbers);
+
+      if ($max && $max > $savedSerial) {
+        $savedSerial = $max;
+      }
+    }
+    else {
       $savedSerial += 1000;
     }
 

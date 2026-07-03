@@ -192,7 +192,7 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
-    // If we are creating new application, we must check if the application is open.
+    // When creating new application, check if the application is open.
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     if (!$submission && !$settings->isApplicationOpen()) {
       $this->messenger()->addMessage($this->t('The application is not currently open'));

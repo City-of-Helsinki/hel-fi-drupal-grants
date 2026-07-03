@@ -11,6 +11,7 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
@@ -59,6 +60,7 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
     private readonly LoggerChannelFactoryInterface $loggerChannelFactory,
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly ModuleHandlerInterface $moduleHandler,
+    private readonly FormSettingsService $formSettingsService,
   ) {
     $this->logger = $loggerChannelFactory->get('application_getter_service');
   }
@@ -140,6 +142,7 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
     $submitted_missing_delete_after = FALSE;
 
     // Create rows for table.
+    /** @var \Drupal\helfi_atv\AtvDocument $document */
     foreach ($applicationDocuments as $document) {
       $submission_entity = NULL;
       $applicationNumber = $document->getTransactionId();
@@ -167,12 +170,14 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
         try {
           $submission = NULL;
           if ($this->moduleHandler->moduleExists('grants_application')) {
-            $submission = $this->getReactFormApplicationSubmission($applicationNumber);
+            // On non-production environments, recreates the ApplicationSubmission -entity if not found.
+            $submission = $this->getReactFormApplicationSubmission($applicationNumber, $document);
           }
           if ($submission) {
             $submission_entity = $submission;
           }
           else {
+            // On non-production environments, recreates the Webform-submission entity if not found.
             $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
           }
         }
@@ -369,15 +374,73 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
    */
   private function getReactFormApplicationSubmission(
     string $applicationNumber,
+    AtvDocument $mainDocument,
   ): ?ApplicationSubmission {
     $submissions = $this->entityTypeManager->getStorage('application_submission')
       ->loadByProperties(['application_number' => $applicationNumber]);
 
-    if (!$submissions) {
+    if ($submissions) {
+      $submission = reset($submissions);
+      assert($submission instanceof ApplicationSubmission);
+      return $submission;
+    }
+
+    $appEnv = Helpers::getAppEnv();
+
+    // In production, we don't want to do this.
+    if ($appEnv === 'production') {
       return NULL;
     }
-    $submission = reset($submissions);
-    assert($submission instanceof ApplicationSubmission);
+
+    // Recreate the submission entity if sidedocument can be found.
+    // Webform does not have sidedocuments.
+    $sParams = [
+      'transaction_id' => $mainDocument->getId(),
+      'lookfor' => "appenv:$appEnv",
+    ];
+
+    try {
+      $sideDocuments = $this->helfiAtvAtvService->searchDocuments($sParams);
+      if (!$sideDocuments) {
+        return NULL;
+      }
+    }
+    catch (\Exception) {
+      return NULL;
+    }
+
+    // Get all data we need.
+    $sideDocument = reset($sideDocuments);
+    $form_name = $mainDocument->getHumanReadableType()['fi'] ?? '';
+    $form_name = explode('_', $form_name)[0];
+
+    if (!$form_name) {
+      return NULL;
+    }
+    $form_settings = $this->formSettingsService->getFormSettingsByFormName($form_name);
+    if (!$form_settings) {
+      return NULL;
+    }
+
+    $form_id = $form_settings->getFormId();
+    $form_identifier = $form_settings->getFormIdentifier();
+
+    // Create the entity.
+    $submission = ApplicationSubmission::create([
+      'document_id' => $mainDocument->getId(),
+      'business_id' => $mainDocument->getBusinessId(),
+      'sub' => $mainDocument->getUserId(),
+      'langcode' => $mainDocument->getMetadata()['language'],
+      'draft' => $mainDocument->getStatus() === 'DRAFT',
+      'application_type_id' => $form_id,
+      'form_identifier' => $form_identifier,
+      'application_number' => $mainDocument->getMetadata()['applicationnumber'],
+      'side_document_id' => $sideDocument->getId(),
+      'created' => strtotime($mainDocument->getCreatedAt()) ?? '',
+      'changed' => strtotime($mainDocument->getUpdatedAt()) ?? ''
+    ]);
+    $submission->save();
+
     return $submission;
   }
 
