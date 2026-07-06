@@ -444,8 +444,8 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
       'form_identifier' => $form_identifier,
       'application_number' => $mainDocument->getMetadata()['applicationnumber'],
       'side_document_id' => $sideDocument->getId(),
-      'created' => strtotime($mainDocument->getCreatedAt()) ?? '',
-      'changed' => strtotime($mainDocument->getUpdatedAt()) ?? '',
+      'created' => strtotime($mainDocument->getCreatedAt()),
+      'changed' => strtotime($mainDocument->getUpdatedAt()),
     ]);
     $submission->save();
 
