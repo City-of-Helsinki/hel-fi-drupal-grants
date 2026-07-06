@@ -436,7 +436,7 @@ final class DraftTest extends KernelTestBase {
   /**
    * Test the draft post creation if the saved serial number is higher than 0.
    */
-  public function testDraftPost2() {
+  public function testDraftPost2(): void {
     $store = $this->createMock(KeyValueStoreInterface::class);
     $store->expects($this->any())->method('get')->willReturn(1200);
     $keyValue = $this->createMock(KeyValueDatabaseFactory::class);
