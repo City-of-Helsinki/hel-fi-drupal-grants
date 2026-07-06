@@ -430,7 +430,8 @@ final class DraftTest extends KernelTestBase {
     $http_kernel = $this->container->get('http_kernel');
     $response = $http_kernel->handle($request);
 
-    $data = json_decode($response->getContent() ?? '', TRUE);
+    $responseContent = $response->getContent() ?: '';
+    $data = json_decode($responseContent, TRUE);
 
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
     $expected = $number + 1;
