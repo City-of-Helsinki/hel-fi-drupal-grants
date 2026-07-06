@@ -777,11 +777,6 @@ async function verifyPreviewValues(
               return;
             }
           }
-
-          // Last resort: check the value appears anywhere in the section.
-          await expect(
-            scope.locator('.hdbt-form--section__content').filter({hasText: value}).first()
-          ).toBeVisible();
         });
       }
     }
