@@ -118,7 +118,6 @@ export async function executeFormFlow(
   });
 
   // Confirm the saved draft appears in the drafts list.
-  /*
   await test.step('Verify the draft is in the drafts list', async () => {
     await assertApplicationInList(page, applicationNumber, 'drafts');
   });
@@ -165,7 +164,6 @@ export async function executeFormFlow(
       await verifyFormAccessAsDraft(page, FORM_ID, role);
     });
   }
-  */
 }
 
 /**
