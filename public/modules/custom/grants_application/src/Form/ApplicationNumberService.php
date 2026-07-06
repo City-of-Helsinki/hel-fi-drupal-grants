@@ -43,7 +43,7 @@ class ApplicationNumberService {
       // On production, start react applications from 1000.
       // No need to do anything special. Just keep adding 1.
       $newSerial = $savedSerial < 1000 ? 1000 : $savedSerial + 1;
-      $store->set($last_serial_key, $newSerial);
+      $this->store->set($last_serial_key, $newSerial);
       return self::getApplicationNumberInEnvFormat($env, (string) $application_type_id, (string) $newSerial);
     }
 
