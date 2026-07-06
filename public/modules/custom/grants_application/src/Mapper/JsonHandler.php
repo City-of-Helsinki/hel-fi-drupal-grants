@@ -83,7 +83,7 @@ class JsonHandler {
         $mappedItem['value'] = "0";
       }
 
-      if ($definition['data']['valueType'] === 'double') {
+      if (in_array($definition['data']['valueType'], ['double', 'float'])) {
         if (is_int($mappedItem['value'])) {
           $mappedItem['value'] = (string) $mappedItem['value'];
         }
