@@ -7,6 +7,7 @@ namespace Drupal\Tests\grants_application\Kernel\Plugin\rest\resource;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_application\Helper;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
@@ -403,7 +404,7 @@ final class DraftTest extends KernelTestBase {
   /**
    * Test draft post.
    */
-  public function testDraftPost(int $number = 1001): void {
+  public function testDraftPost(int $number = 1000): void {
     $helfiAtvService = $this->createMock(HelfiAtvService::class);
     $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
     $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
@@ -413,8 +414,10 @@ final class DraftTest extends KernelTestBase {
     $helfiAtvService->expects($this->any())->method('saveNewDocument')->willReturn($this->sideDocument);
     $this->container->set(HelfiAtvService::class, $helfiAtvService);
 
+    $env = Helper::getAppEnv();
+
     $factory = $this->container->get('keyvalue.database');
-    $factory->get('application_numbers')->set('58_local', $number);
+    $factory->get('application_numbers')->set("58_$env", $number);
 
     $form_identifier = 'liikunta_suunnistuskartta_avustu';
     $content = json_encode([
