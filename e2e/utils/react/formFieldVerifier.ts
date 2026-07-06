@@ -736,8 +736,7 @@ async function verifyPreviewValues(
         // Build an exact-match pattern for the field title to avoid a short
         // title like "Vuosi" matching a longer label like "Vuosi, jolle haen".
         const exactFieldTitle = new RegExp(`^\\s*${fieldTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`);
-
-
+        
         await test.step(`Preview: ${fieldTitle} = ${value}`, async () => {
 
           // Narrow the search area to this section so we don't accidentally
