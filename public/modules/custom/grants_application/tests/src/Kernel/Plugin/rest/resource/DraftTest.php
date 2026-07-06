@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel\Plugin\rest\resource;
 
+use Drupal\Core\KeyValueStore\KeyValueDatabaseFactory;
+use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -429,6 +431,19 @@ final class DraftTest extends KernelTestBase {
     $response = $http_kernel->handle($request);
 
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+  }
+
+  /**
+   * Test the draft post creation if the saved serial number is higher than 0.
+   */
+  public function testDraftPost2() {
+    $store = $this->createMock(KeyValueStoreInterface::class);
+    $store->expects($this->any())->method('get')->willReturn(1200);
+    $keyValue = $this->createMock(KeyValueDatabaseFactory::class);
+    $keyValue->expects($this->any())->method('get')->willReturn($store);
+    $this->container->set(KeyValueDatabaseFactory::class, $keyValue);
+
+    $this->testDraftPost();
   }
 
   /**
