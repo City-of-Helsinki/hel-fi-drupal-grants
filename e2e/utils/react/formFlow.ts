@@ -89,7 +89,6 @@ export async function executeFormFlow(
 
   // Open the form in each language and check that every field label,
   // tooltip and description shows the correct translated text.
-  /*
   await test.step('Assert the form field translations', async () => {
     await verifyFormFieldTranslations(page, formData, {
       formURL: `${FORM_URL}/${applicationNumber}`,
@@ -97,7 +96,6 @@ export async function executeFormFlow(
       formLogic: formLogic,
     });
   });
-   */
 
   // Go through every field on every step and fill it with a valid value.
   await test.step('Fill the form in Finnish', async () => {
