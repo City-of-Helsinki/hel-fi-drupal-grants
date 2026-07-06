@@ -132,8 +132,10 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     return $settings;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getFormSettingsByFormName(string $name): FormSettings|NULL {
-    $value = NULL;
     foreach ($this->formTypes as $form_type) {
       if (array_find($form_type['labels'], fn($label) => $label === $name)) {
         try {

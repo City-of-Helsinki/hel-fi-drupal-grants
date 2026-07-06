@@ -16,7 +16,7 @@ class ApplicationNumberService {
   public function __construct(
     #[Autowire(service: 'keyvalue.database')]
     private readonly KeyValueDatabaseFactory $keyValue,
-    private readonly Connection $connection
+    private readonly Connection $connection,
   ) {
   }
 
@@ -42,7 +42,7 @@ class ApplicationNumberService {
     if ($savedSerial < 1000 && $env === 'production') {
       $savedSerial += 1000;
     }
-    else if ($savedSerial < 1000 && $env !== 'production') {
+    elseif ($savedSerial < 1000 && $env !== 'production') {
       // For local development, check database for already saved applications.
       $like = $application_type_id < 100 ? "$env-0$application_type_id-%" : "$env-$application_type_id-%";
       $numberArray = $this->connection

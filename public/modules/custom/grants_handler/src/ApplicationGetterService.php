@@ -170,14 +170,14 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
         try {
           $submission = NULL;
           if ($this->moduleHandler->moduleExists('grants_application')) {
-            // On non-production environments, recreates the ApplicationSubmission -entity if not found.
+            // On non-production environments,
+            // Recreates the ApplicationSubmission -entity if not found.
             $submission = $this->getReactFormApplicationSubmission($applicationNumber, $document);
           }
           if ($submission) {
             $submission_entity = $submission;
           }
           else {
-            // On non-production environments, recreates the Webform-submission entity if not found.
             $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
           }
         }
@@ -370,7 +370,15 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Get the React application submission or recreate it if missing.
+   *
+   * @param string $applicationNumber
+   *   The application number.
+   * @param \Drupal\helfi_atv\AtvDocument $mainDocument
+   *   The ATV-document.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
+   *   The application submission.
    */
   private function getReactFormApplicationSubmission(
     string $applicationNumber,
@@ -437,7 +445,7 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
       'application_number' => $mainDocument->getMetadata()['applicationnumber'],
       'side_document_id' => $sideDocument->getId(),
       'created' => strtotime($mainDocument->getCreatedAt()) ?? '',
-      'changed' => strtotime($mainDocument->getUpdatedAt()) ?? ''
+      'changed' => strtotime($mainDocument->getUpdatedAt()) ?? '',
     ]);
     $submission->save();
 
