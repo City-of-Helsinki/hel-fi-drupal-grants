@@ -70,6 +70,14 @@
           "addText": "other_compensation.add"
         },
         "items": {
+          "other_compensation_issuer": {
+            "ui:enumNames": [
+              "other_compensation_issuer.state",
+              "other_compensation_issuer.eu",
+              "other_compensation_issuer.other",
+              "other_compensation_issuer.insitute"
+            ]
+          },
           "other_compensation_issuer_name": {
             "ui:options": {
               "tooltipLabel": "other_compensation_issuer.title",

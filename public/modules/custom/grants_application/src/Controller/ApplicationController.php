@@ -192,6 +192,13 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    // When creating new application, check if the application is open.
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+    if (!$submission && !$settings->isApplicationOpen()) {
+      $this->messenger()->addMessage($this->t('The application is not currently open'));
+      return new RedirectResponse($this->getRedirectBackUrl()->toString());
+    }
+
     // Handle content locking.
     if ($submission && $this->contentLock->isLockable($submission)) {
       $uid = $this->accountProxy->id();
@@ -208,8 +215,6 @@ final class ApplicationController extends ControllerBase {
         $this->contentLock->locking($submission, '*', (int) $uid, FALSE);
       }
     }
-
-    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
 
     // @todo Refactor, return early instead of skipping.
     // When the application doesn't exist yet, we skip all the code
