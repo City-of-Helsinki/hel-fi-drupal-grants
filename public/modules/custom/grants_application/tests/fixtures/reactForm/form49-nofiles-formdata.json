@@ -84,15 +84,15 @@
       "is_festival_or_event": false,
       "project_short_description": "Testausta"
     },
-    "received_compensations_section": {
+    "other_compensations_section": {
       "have_received_other_compensations": true,
-      "received_compensations": [
+      "other_compensations": [
         {
-          "received_compensation_issuer": "Valtio",
-          "received_compensation_issuer_name": "Ministeriö",
-          "received_compensation_issuer_year": "2024",
-          "received_compensation_amount": 5000,
-          "received_compensation_description": "Aiempi avustus"
+          "other_compensation_issuer": "Valtio",
+          "other_compensation_issuer_name": "Ministeriö",
+          "other_compensation_issuer_year": "2024",
+          "other_compensation_amount": 5000,
+          "other_compensation_description": "Aiempi avustus"
         }
       ]
     }

@@ -256,4 +256,28 @@ final class FormSettingsServiceTest extends KernelTestBase {
     $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
   }
 
+  /**
+   * Test getting form settings by form name.
+   */
+  public function testGetSettingsByName(): void {
+    $settings = $this->service->getFormSettingsByFormName('Testi 123 hakemus');
+    $this->assertEquals(123, $settings->getFormId());
+
+    try {
+      $this->service->getFormSettingsByFormName('No application name found');
+    }
+    catch (\Exception $e) {
+      $this->assertTrue($e instanceof \Exception);
+    }
+  }
+
+  /**
+   * Test getting form metadata.
+   */
+  public function testGetMetadata(): void {
+    $this->createApplicationMetadataEntity();
+    $metadata = $this->service->getFormSettingsMetadata(123, 'test-application');
+    $this->assertEquals(123, $metadata->getMetadata()['application_type_id']);
+  }
+
 }

@@ -135,6 +135,23 @@ final class FormSettingsService implements FormSettingsServiceInterface {
   /**
    * {@inheritdoc}
    */
+  public function getFormSettingsByFormName(string $name): FormSettings|NULL {
+    foreach ($this->formTypes as $form_type) {
+      if (array_find($form_type['labels'], fn($label) => $label === $name)) {
+        try {
+          return $this->getFormSettingsByFormIdentifier($form_type['form_identifier']);
+        }
+        catch (\Exception $e) {
+          return NULL;
+        }
+      }
+    }
+    return NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getFormSettingsMetadata(int|string $application_type_id, ?string $identifier = NULL): ?ApplicationMetadata {
     $storage = $this->entityTypeManager->getStorage('application_metadata');
     $parameters = ['application_type_id' => $application_type_id];

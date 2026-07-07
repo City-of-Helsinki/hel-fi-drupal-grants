@@ -8,10 +8,10 @@
           "title": "other_compensation_issuer.title",
           "type": "string",
           "enum": [
-            "other_compensation_issuer.state",
-            "other_compensation_issuer.eu",
-            "other_compensation_issuer.other",
-            "other_compensation_issuer.insitute"
+            "1",
+            "3",
+            "4",
+            "5"
           ]
         },
         "other_compensation_issuer_name": {

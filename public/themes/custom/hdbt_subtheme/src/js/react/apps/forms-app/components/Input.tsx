@@ -240,7 +240,12 @@ export const SelectWidget = ({
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
-    return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
+    const optionLabel = options.enumOptions?.find((item) => {
+      return item.value === String(value);
+    })?.label;
+    const renderedValue = optionLabel ?? value;
+
+    return <PreviewInput value={renderedValue} label={label} uiSchema={uiSchema} />;
   }
 
   return (
