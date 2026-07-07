@@ -437,8 +437,9 @@ final class DraftTest extends KernelTestBase {
     $data = json_decode($responseContent, TRUE);
 
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+
     $expected = $number + 1;
-    $this->assertEquals("local-058-000$expected", $data['application_number']);
+    $this->assertEquals("$env-058-000$expected", $data['application_number']);
   }
 
   /**
