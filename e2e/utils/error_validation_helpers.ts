@@ -37,17 +37,17 @@ const validateFormErrors = async (page: Page, expectedErrors: Object, errorConta
 
   // Assert that no expected errors are missing.
   if (notFoundErrors.length > 0) {
-    logger('Missing expected errors:', notFoundErrors);
-    logger('All errors on the page:', actualErrorMessages);
-    logger('All expected errors:', expectedErrorMessages);
+    logger('Missing expected errors:', false, notFoundErrors);
+    logger('All errors on the page:', false, actualErrorMessages);
+    logger('All expected errors:', false, expectedErrorMessages);
     expect(notFoundErrors).toEqual([]);
   }
 
   // Assert that no unexpected errors are present.
   if (unexpectedErrors.length > 0) {
-    logger('Unexpected errors found:', unexpectedErrors);
-    logger('All errors on the page:', actualErrorMessages);
-    logger('All expected errors:', expectedErrorMessages);
+    logger('Unexpected errors found:', false, unexpectedErrors);
+    logger('All errors on the page:', false, actualErrorMessages);
+    logger('All expected errors:', false, expectedErrorMessages);
     expect(unexpectedErrors).toEqual([]);
   }
 

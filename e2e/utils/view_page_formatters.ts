@@ -35,7 +35,7 @@ const viewPageFormatCurrency = (number: string): string => {
     number = number.trim();
     return number;
   } catch (error) {
-    logger("Error parsing number:", number)
+    logger("Error parsing number:", false, number)
     return number;
   }
 };
@@ -61,7 +61,7 @@ const viewPageFormatNumber = (number: string): string => {
     number = number.trim();
     return number;
   } catch (error) {
-    logger("Error parsing number:", number)
+    logger("Error parsing number:", false, number)
     return number;
   }
 };
@@ -100,7 +100,7 @@ const viewPageFormatDate = (date: string): string => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
     return inputDate.toLocaleDateString('fi-FI', options);
   } catch (error) {
-    logger("Error parsing date:", date)
+    logger("Error parsing date:", false, date)
     return date;
   }
 };
@@ -122,7 +122,7 @@ const viewPageFormatFilePath = (filePath: string): string => {
   try {
     return path.basename(filePath, path.extname(filePath));
   } catch (error) {
-    logger("Error parsing filepath:", filePath)
+    logger("Error parsing filepath:", false, filePath)
     return filePath;
   }
 }
