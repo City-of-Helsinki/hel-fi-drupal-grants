@@ -395,8 +395,8 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
 
     $appEnv = Helpers::getAppEnv();
 
-    // In production, we don't want to do this.
-    if ($appEnv === 'production') {
+    // The application should only be recreated on local, but not on LOCAL.
+    if (in_array($appEnv, ['PROD', 'STAGE', 'TEST', 'DEV', 'LOCAL'])) {
       return NULL;
     }
 
