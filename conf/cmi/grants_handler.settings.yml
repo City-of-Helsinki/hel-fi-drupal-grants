@@ -1,3 +1,4 @@
+langcode: en
 statusStrings:
   en:
     DRAFT: Draft
@@ -47,4 +48,3 @@ statusStrings:
     CANCELLED: Annullerad
     CLOSED: Stängd
     RESOLVED: Behandlad
-langcode: en
