@@ -7,10 +7,10 @@
           "title": "other_compensation_issuer.title",
           "type": "string",
           "enum": [
-            "other_compensation_issuer.state",
-            "other_compensation_issuer.eu",
-            "other_compensation_issuer.other",
-            "other_compensation_issuer.insitute"
+            "1",
+            "3",
+            "4",
+            "5"
           ]
         },
         "other_compensation_issuer_name": {
@@ -37,45 +37,6 @@
         "other_compensation_issuer_year",
         "other_compensation_amount",
         "other_compensation_description"
-      ]
-    },
-    "_other_applied_compensation_item": {
-      "type": "object",
-      "properties": {
-        "other_applied_compensation_issuer": {
-          "title": "other_compensation_issuer.title",
-          "type": "string",
-          "enum": [
-            "other_compensation_issuer.state",
-            "other_compensation_issuer.eu",
-            "other_compensation_issuer.other",
-            "other_compensation_issuer.insitute"
-          ]
-        },
-        "other_applied_compensation_issuer_name": {
-          "title": "other_compensation_issuer_name.title",
-          "type": "string"
-        },
-        "other_applied_compensation_issuer_year": {
-          "title": "other_compensation_issuer_year.title",
-          "type": "string"
-        },
-        "other_applied_compensation_amount": {
-          "format": "decimal-number",
-          "title": "other_applied_compensation_amount.title",
-          "type": "string"
-        },
-        "other_applied_compensation_description": {
-          "title": "other_compensation_description.title",
-          "type": "string"
-        }
-      },
-      "required": [
-        "other_applied_compensation_issuer",
-        "other_applied_compensation_issuer_name",
-        "other_applied_compensation_issuer_year",
-        "other_applied_compensation_amount",
-        "other_applied_compensation_description"
       ]
     },
     "grant_info_step": {

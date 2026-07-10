@@ -29,6 +29,11 @@
       "labels": {
         "und": "KASKO"
       }
+    },
+    "TYPA": {
+      "labels": {
+        "und": "TYPA"
+      }
     }
   },
   "applicant_types": {

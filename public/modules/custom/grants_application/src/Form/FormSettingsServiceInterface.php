@@ -152,4 +152,18 @@ interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
    */
   public function getLabels(?array $section, ?string $langcode = NULL): string|array;
 
+  /**
+   * Get form settings by form name.
+   *
+   * For < production environment, allow recreating the react submissions
+   * after fresh setup.
+   *
+   * @param string $name
+   *   The name of the form.
+   *
+   * @return \Drupal\grants_application\Form\FormSettings|null
+   *   The form identifier.
+   */
+  public function getFormSettingsByFormName(string $name): FormSettings|NULL;
+
 }
