@@ -55,7 +55,7 @@
   }
 
   .description {
-    color: $color-black-60;
+    color: var(--color-black-60);
   }
 }
 
@@ -95,7 +95,7 @@
   }
 
   >dt.webform-section-title {
-    color: $color-black-90;
+    color: var(--color-black-90);
     display: block;
     flex-shrink: 0;
     font-size: var(--fontsize-heading-s);
@@ -172,7 +172,7 @@ fieldset input[type="button"] {
   >h3.webform-section-title,
   >h4.webform-section-title,
   >dt.webform-section-title {
-    color: $color-black-90;
+    color: var(--color-black-90);
     display: block;
     flex-shrink: 0;
     font-size: 24px;
