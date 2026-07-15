@@ -4426,11 +4426,6 @@ parameters:
 			path: public/modules/custom/grants_handler/src/Controller/AtvPrintViewController.php
 
 		-
-			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(mixed, mixed\\)\\: int, Closure\\(mixed, mixed\\)\\: bool given\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/Controller/AtvPrintViewController.php
-
-		-
 			message: "#^Method Drupal\\\\grants_handler\\\\Controller\\\\CompletionController\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/src/Controller/CompletionController.php
