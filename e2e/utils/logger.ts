@@ -12,14 +12,21 @@ import {isDebuggingEnabled} from './debugging_helpers'
  *   The message we want to log.
  * @param {any[]} [parameters]
  *   Any array of parameters.
+ * @param {boolean} timestamp
+ *   Print debug timestamp.
  */
-const logger = (message: string, ...parameters: any[]): void => {
+const logger = (message: string, timestamp = false, ...parameters: any[]): void => {
   if (isDebuggingEnabled()) {
     const logMessage = `[Debugging message]: ${message}`;
     if (parameters.length > 0) {
       console.log(logMessage, ...parameters);
     } else {
       console.log(logMessage);
+    }
+
+    if (timestamp) {
+      const date = new Date();
+      logger(`Timestamp ${date.toLocaleString('fi')}`)
     }
   }
 };

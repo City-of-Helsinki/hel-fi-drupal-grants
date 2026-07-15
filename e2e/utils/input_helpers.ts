@@ -332,7 +332,7 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
           await page.click(radioSelector);
         }
       } catch (error) {
-        logger('Error during click:', error);
+        logger('Error during click:', false, error);
       }
 
       // Wait for the change event to be processed.
@@ -354,7 +354,7 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       try {
         await labelForSelector.check();
       } catch (error) {
-        logger(`Error clicking label with partial 'for' attribute: ${selector.value}`, error);
+        logger(`Error clicking label with partial 'for' attribute: ${selector.value}`, false, error);
       }
       break;
   }
@@ -379,7 +379,7 @@ const fillDynamicMultiValueField = async (page: Page, formField: Partial<FormFie
 
   // Check that we have the needed dynamic multi-value field.
   if (!isDynamicMultiValueField(formField.dynamic_multi)) {
-    logger('A dynamic multi-value field has not been defined in:', itemKey);
+    logger('A dynamic multi-value field has not been defined in:', false, itemKey);
     return;
   }
 
@@ -397,7 +397,7 @@ const fillDynamicMultiValueField = async (page: Page, formField: Partial<FormFie
       await fillMultiValueField(page, dynamicMultiValueField, itemKey);
     });
   } else {
-    logger('No revealed element selector defined for:', itemKey);
+    logger('No revealed element selector defined for:', false, itemKey);
   }
 }
 
@@ -419,7 +419,7 @@ const fillMultiValueField = async (page: Page, formField: Partial<FormFieldWithR
 
   // Check that the dynamic multi-value field has a multi-value field.
   if (!isMultiValueField(formField.multi)) {
-    logger('A multi-value field has not been defined in:', itemKey);
+    logger('A multi-value field has not been defined in:', false, itemKey);
     return;
   }
 
@@ -497,7 +497,7 @@ const uploadFile = async (
   filePath: string | undefined,
 ) => {
   if (!filePath) {
-    logger('No file defined in', uploadSelector);
+    logger('No file defined in', false, uploadSelector);
     return;
   }
 

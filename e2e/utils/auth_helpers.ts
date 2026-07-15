@@ -277,7 +277,7 @@ const sessionIsValid = async (page: Page): Promise<boolean> => {
  *   Playwright page object.
  */
 const checkLoginStateAndLogin = async (page: Page) => {
-  logger('Authenticate...')
+  logger('Authenticate...', true)
 
   // If no auth file exists, login and save state.
   if (!authFileExists()) {
