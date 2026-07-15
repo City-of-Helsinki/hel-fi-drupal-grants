@@ -45,7 +45,7 @@ const fillGrantsFormPage = async (
   profileType: string,
   pageHandlers: PageHandlers
 ) => {
-  logger('FORM', formPath, formClass);
+  logger('FORM', false, formPath, formClass);
 
   // Navigate to form url and make sure we get there. Skip the test otherwise.
   await page.goto(formPath);
@@ -70,11 +70,11 @@ const fillGrantsFormPage = async (
 
   // Log the application ID.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
-  logger(`Filling form with application ID: ${applicationId}.`);
+  logger(`Filling form with application ID: ${applicationId}.`, true);
 
   // Loop form pages.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
-    logger('Form page:', formPageKey);
+    logger('Form page:', false, formPageKey);
 
     // Validate form errors on the preview page.
     if (formPageKey === 'webform_preview') {
@@ -167,7 +167,7 @@ const fillProfileForm = async (
   formPath: string,
   formClass: string,
 ) => {
-  logger('FORM', formPath, formClass);
+  logger('FORM', false, formPath, formClass);
 
   // Navigate to form url.
   await page.goto(formPath);
@@ -179,7 +179,7 @@ const fillProfileForm = async (
 
   // Loop form pages.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
-    logger('Form page:', formPageKey);
+    logger('Form page:', false, formPageKey);
 
     // Loop page items and collect buttons.
     const buttons = [];
@@ -237,7 +237,7 @@ const verifyDraftSave = async (
   submissionUrl: string,
   formKey: string
 ) => {
-  logger(`Verifying draft save...`);
+  logger(`Verifying draft save...`, true);
   await logCurrentUrl(page);
   await page.waitForURL('**/oma-asiointi');
   await expect(await page.getByText('Luonnos').first()).toBeVisible()
@@ -319,7 +319,7 @@ const verifySubmit = async (
     }
   }
   saveObjectToEnv(storeName, newData);
-  logger(`Submit verified for application ID: ${applicationId}.`);
+  logger(`Submit verified for application ID: ${applicationId}.`, true);
 }
 
 /**

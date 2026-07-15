@@ -57,7 +57,7 @@ const validateSubmission = async (
     const applicationIdContainer = await page.locator('.webform-submission__application_id');
     const applicationIdContainerText = await applicationIdContainer.textContent();
     expect(applicationIdContainerText).toContain(applicationId);
-    logger('Draft validation on page:', viewPageURL);
+    logger('Draft validation on page:', false, viewPageURL);
     await validateFormData(page, 'viewPage', formDetails);
   }
 
@@ -546,7 +546,7 @@ const navigateAndValidatePrintPage = async (
   // Validate the application number.
   const applicationIdContainer = await page.locator('.transaction-id');
   await expect(applicationIdContainer).toHaveText(applicationId);
-  logger('Print validation on page:', printPageURL);
+  logger('Print validation on page:', false, printPageURL);
 }
 
 /**
@@ -581,7 +581,7 @@ const navigateAndValidateProfilePage = async (
   let headingContainer = await page.locator('.info-grants');
 
   await expect(headingContainer, `Failed to locate "${expectedHeading}" on "${profilePageURL}".`).toContainText(expectedHeading);
-  logger('Profile data validation on page:', profilePageURL);
+  logger('Profile data validation on page:', false, profilePageURL);
 }
 
 /**

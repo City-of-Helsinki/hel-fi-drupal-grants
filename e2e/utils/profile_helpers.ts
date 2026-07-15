@@ -56,7 +56,7 @@ const isProfileCreated = async (profileType: string, page: Page) => {
 
     })
     .catch((error) => {
-      logger('Error fetching profile:', error);
+      logger('Error fetching profile:', false, error);
       return false;
     });
 };
