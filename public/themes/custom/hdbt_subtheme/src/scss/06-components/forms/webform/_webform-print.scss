@@ -165,11 +165,17 @@
       padding-block-start: $spacing;
     }
 
-    // Application status has an extra border on top of the icon.
-    .application-list__item--status::before {
-      height: $spacing-and-half;
-      mask-size: $spacing-and-half;
-      width: $spacing-and-half;
+    // Reset styles for the application status tag.
+    .application-list__item--status {
+      background: transparent;
+      color: var(--color-black);
+      font-size: 1rem;
+      line-height: 1.5;
+      padding-inline-start: 0;
+
+      &::before {
+        display: none;
+      }
     }
 
     h1 {
