@@ -1,9 +1,13 @@
 document.addEventListener(
   'DOMContentLoaded',
   () => {
-    const body = document.body;
-    body.classList.add('webform-submission-data-preview-page');
-    body.classList.add('webform-print');
+    document.body.classList.add('webform-submission-data-preview-page', 'webform-print');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.print();
+        setTimeout(() => window.history.back(), 500);
+      });
+    });
   },
   false,
 );

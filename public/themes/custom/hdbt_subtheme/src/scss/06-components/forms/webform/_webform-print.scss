@@ -159,17 +159,29 @@
       size: A4;
     }
 
-    h1 {
-      margin: 0;
-      position: relative;
+    // Reduce the margin on status container.
+    .application-list__status__container {
+      padding-block-end: $spacing;
+      padding-block-start: $spacing;
     }
 
+    // Application status has an extra border on top of the icon.
+    .application-list__item--status::before {
+      height: $spacing-and-half;
+      mask-size: $spacing-and-half;
+      width: $spacing-and-half;
+    }
+
+    h1 {
+      margin: $spacing 0 0;
+      position: relative;
+    }
 
     details {
       page-break-before: always;
     }
 
-    .details-section-divider {
+    .details-section-divider:not(:last-child) {
       page-break-after: always;
     }
 
@@ -195,7 +207,7 @@
     nav.breadcrumb,
     .asiointirooli-block,
     .form-actions,
-.hds-notification,
+    .hds-notification,
     .messages__container,
     .tools__container,
     .breadcrumb__container,
@@ -206,7 +218,6 @@
     .webform-multiple-table--operations {
       display: none !important;
     }
-
 
     .gin--horizontal-toolbar .dialog-off-canvas-main-canvas {
       padding: 0 !important;

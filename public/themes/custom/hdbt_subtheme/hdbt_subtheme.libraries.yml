@@ -1,13 +1,11 @@
 global-styling:
-  version: 1.1.9
+  version: HELFI_DEPLOYMENT_IDENTIFIER
   css:
     theme:
       dist/css/styles.min.css: {}
-#     Uncomment following line to load custom svg icon styles.
-#     dist/css/hdbt-subtheme-icons.css: {}
 
 global-scripting:
-  version: 1.4
+  version: HELFI_DEPLOYMENT_IDENTIFIER
   js:
     dist/js/common.min.js: {}
   dependencies:
@@ -16,17 +14,16 @@ global-scripting:
     - core/ajax
 
 matomo:
-  version: 1.0.0
+  version: HELFI_DEPLOYMENT_IDENTIFIER
   header: true
   js:
     dist/js/matomo.min.js: {}
   dependencies:
     - core/drupal
     - core/jquery
-    - eu_cookie_compliance/eu_cookie_compliance
 
 restricted-datepicker:
-  version: 1.0.0
+  version: HELFI_DEPLOYMENT_IDENTIFIER
   js:
     dist/js/restrictedDatepicker.min.js: {}
   dependencies:
@@ -43,6 +40,6 @@ forms-app:
     - core/drupalSettings
 
 print-atv-document:
-  version: 1.0.0
+  version: HELFI_DEPLOYMENT_IDENTIFIER
   js:
     dist/js/printAtvDocument.min.js: {}
