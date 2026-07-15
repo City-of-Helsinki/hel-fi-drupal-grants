@@ -3696,16 +3696,6 @@ parameters:
 			path: public/modules/custom/grants_handler/grants_handler.module
 
 		-
-			message: "#^Function grants_handler_preprocess_grants_handler_webform_print_submission\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
-			message: "#^Function grants_handler_preprocess_grants_handler_webform_print_submission\\(\\) has parameter \\$variables with no type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
 			message: "#^Function grants_handler_preprocess_html\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/grants_handler.module
