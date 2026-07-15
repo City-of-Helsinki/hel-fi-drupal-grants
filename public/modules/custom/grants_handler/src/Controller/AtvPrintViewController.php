@@ -126,7 +126,7 @@ final class AtvPrintViewController extends ControllerBase {
 
     // Sort the sections inside a page based on section weight.
     foreach ($newPages as $pageKey => $page) {
-      usort($newPages[$pageKey]['sections'], fn($a, $b) => $a['weight'] > $b['weight']);
+      usort($newPages[$pageKey]['sections'], fn($a, $b) => $a['weight'] <=> $b['weight']);
     }
 
     // Sort the fields inside the sections based on weight.

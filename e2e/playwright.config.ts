@@ -9,7 +9,7 @@ export default defineConfig({
   globalSetup: require.resolve('./tests/init.setup.ts'),
   testDir: './tests',
   /* Ignore form helper files. */
-  testIgnore: ['**/formInputs.ts', '**/formLogic.ts'],
+  testIgnore: ['**/formInputs.ts', '**/formLogic.ts', '**/archived/*', '**/upcoming/*'],
   timeout: 300 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -102,8 +102,7 @@ export default defineConfig({
     /* Run all form tests. */
     {
       name: 'forms-all',
-      testMatch: '/forms/*',
-      grepInvert: /(archived|upcoming)/,
+      testMatch: '/forms/**/*',
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
     /* Run all smoke tests. */
