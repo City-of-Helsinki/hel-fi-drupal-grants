@@ -1234,7 +1234,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
       expectedInlineErrors: [
-        { selector: '.form-item-email', errorMessage: 'Sähköpostiosoite kenttä ei ole oikeassa muodossa.' },
+        { selector: '.form-item-email', errorMessage: 'ääkkösiä@vaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.' },
       ],
     },
     '4_talous': {
