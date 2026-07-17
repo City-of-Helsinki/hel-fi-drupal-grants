@@ -1254,7 +1254,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä ei ole oikeassa muodossa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiä@vaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
     'edit-muut-avustukset-field-items-0-item-value': 'Virhe sivulla 4. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
     'edit-muut-menot-4-items-0-item-label': 'Virhe sivulla 4. Talous: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
     'edit-muut-palveluiden-ostot-2-items-0-item-value': 'Virhe sivulla 4. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
