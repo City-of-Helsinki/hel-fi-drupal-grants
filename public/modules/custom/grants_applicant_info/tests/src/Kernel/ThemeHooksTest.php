@@ -15,6 +15,13 @@ use PHPUnit\Framework\Attributes\Group;
 class ThemeHooksTest extends KernelTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $modules = [
+    'grants_applicant_info',
+  ];
+
+  /**
    * The renderer.
    */
   private RendererInterface $renderer;
