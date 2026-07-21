@@ -10971,11 +10971,6 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:debugPrint\\(\\) has parameter \\$replacements with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteGdprData\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
