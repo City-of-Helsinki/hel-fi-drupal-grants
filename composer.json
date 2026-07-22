@@ -53,8 +53,6 @@
         "justinrainbow/json-schema": "^6",
         "league/openapi-psr7-validator": "^0.22.0",
         "mglaman/composer-drupal-lenient": "*",
-        "npm-asset/select2": "^4.0",
-        "oomphinc/composer-installers-extender": "^2.0",
         "ramsey/uuid": "^4.9",
         "wikimedia/composer-merge-plugin": "^2.1"
     },
@@ -79,7 +77,6 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-composer-scaffold": true,
             "mglaman/composer-drupal-lenient": true,
-            "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
             "tbachert/spi": false,
