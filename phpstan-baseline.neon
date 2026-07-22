@@ -3696,16 +3696,6 @@ parameters:
 			path: public/modules/custom/grants_handler/grants_handler.module
 
 		-
-			message: "#^Function grants_handler_preprocess_grants_handler_webform_print_submission\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
-			message: "#^Function grants_handler_preprocess_grants_handler_webform_print_submission\\(\\) has parameter \\$variables with no type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
 			message: "#^Function grants_handler_preprocess_html\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/grants_handler.module
@@ -4432,11 +4422,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$object of function date_format expects DateTimeInterface, DateTime\\|false given\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/Controller/AtvPrintViewController.php
-
-		-
-			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(mixed, mixed\\)\\: int, Closure\\(mixed, mixed\\)\\: bool given\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/src/Controller/AtvPrintViewController.php
 
@@ -10982,11 +10967,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:buildUrl\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:debugPrint\\(\\) has parameter \\$replacements with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 

@@ -53,7 +53,7 @@ function saveObjectToEnv(variableName: string, data: Object) {
       // @ts-ignore
       existingObject = existingEncoded[variableName] || {};
     } catch (error) {
-      logger('Error parsing existing data:', error);
+      logger('Error parsing existing data:', false, error);
       return;
     }
   }
@@ -99,7 +99,7 @@ function getObjectFromEnv(profileType: string, formId: string, full: boolean = f
         return existingEncoded[storeName];
       }
     } catch (error) {
-      logger('Error parsing existing data:', error);
+      logger('Error parsing existing data:', false, error);
       return;
     }
   }

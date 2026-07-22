@@ -139,7 +139,7 @@ const waitForTextWithInterval = async (
   timeout?: number,
   interval?: number,
 ): Promise<boolean> => {
-  logger(`Attempting to locate text: "${text}"...`);
+  logger(`Attempting to locate text: "${text}"...`, true);
 
   // Default values for timeouts.
   const DEFAULT_TIMEOUT = 60000;
@@ -205,7 +205,7 @@ async function getFulfilledResponse(page: Page) {
  *  Playwright page object.
  */
 const logCurrentUrl = async (page: Page) => {
-  logger('On URL:', page.url());
+  logger('On URL:', false, page.url());
 }
 
 export {
