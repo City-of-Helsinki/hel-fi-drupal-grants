@@ -33,6 +33,7 @@ dependencies:
     - content_translation
     - easy_breadcrumb
     - entity_usage
+    - external_entities
     - field_ui
     - file
     - filter
@@ -316,6 +317,7 @@ permissions:
   - 'update any tpr_service'
   - 'update any tpr_unit'
   - 'update content translations'
+  - 'update linkedevents_event external entity'
   - 'update media'
   - 'update own tpr_service'
   - 'update own tpr_unit'
@@ -334,6 +336,8 @@ permissions:
   - 'view any webform submission'
   - 'view faq revisions'
   - 'view landing_page revisions'
+  - 'view linkedevents_event external entity'
+  - 'view linkedevents_event external entity collection'
   - 'view media'
   - 'view own unpublished content'
   - 'view own unpublished media'
