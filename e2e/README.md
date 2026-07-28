@@ -39,6 +39,11 @@ It's designed to test applications across all modern web browsers by running tes
   - Filling in a profile form with data that is specific for that role.
   - Verifying the data.
 - Filling a profile form with missing/wrong data and verifying the printed error messages.
+- Editing an existing profile, which consists of:
+  - Logging in and selecting a role.
+  - Changing profile fields, saving the form and verifying the changed data.
+  - Reverting the changes, saving the form and verifying the reverted data.
+- The profile edit tests follow the naming convention `{user_role}_edit.ts`, and their data is located in `/e2e/utils/data/profile_edit_data.ts`.
 
 ### Smoke tests
 - Smoke test have been implemented to lightly test the general site. These tests mainly check that certain components exist on various pages.
@@ -61,6 +66,7 @@ The file should be located in the `/e2e` directory.
 - **ENABLED_FORM_VARIANTS**: Can be used to explicitly run specific form variants. Others are skipped.
 - **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests).
 - **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
+- **RESET_PROFILE**: Set to "TRUE" to restore edited profile data instead of running the profile edit tests. Use this when a failed edit test has left a profile with edited data: `RESET_PROFILE=TRUE npx playwright test --project profile-edits --no-deps`. The `--no-deps` flag is needed, since the profile tests fail while the profile holds edited data.
 - **WAIT_FOR_TEXT_TIMEOUT**: The time to wait for text in MS (defaults to 60000, 1 minute). Used by the waitForTextWithInterval() function.
 - **WAIT_FOR_TEXT_INTERVAL**: How often to query text in MS (defaults to 5000, 5 seconds). Used by the waitForTextWithInterval() function.
 - **SKIP_SUBMIT**: Set to "true" to skip submitting a React form. The form is filled and saved as a draft, the draft is then removed, and the submit and post submit checks are skipped.
