@@ -255,7 +255,7 @@
 
     &:focus,
     &:active {
-      outline-color: $color-white !important;
+      outline-color: $color-white !important; // Needed in order to override default focus styles
     }
   }
 
