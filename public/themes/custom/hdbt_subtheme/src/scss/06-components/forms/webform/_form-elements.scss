@@ -555,6 +555,17 @@ input[type='radio']+label.form-required::after {
   }
 }
 
+.hdbt-form--section__title,
+.webform-section-title {
+  // Needs own focus styles because generic ones don't work.
+  &:focus,
+  &:active {
+    height: fit-content;
+    outline: 3px solid $color-black;
+    outline-offset: 2px;
+  }
+}
+
 .hdbt-form--section {
   margin-block-end: $spacing-triple;
 
