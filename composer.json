@@ -23,7 +23,7 @@
         "drupal/externalauth": "^2.0",
         "drupal/hdbt": "^6.0",
         "drupal/hdbt_admin": "^3.0",
-        "drupal/helfi_azure_fs": "^2",
+        "drupal/helfi_azure_fs": "2.2.3",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_navigation": "^2.3",
         "drupal/helfi_platform_config": "^5.1",
@@ -53,8 +53,6 @@
         "justinrainbow/json-schema": "^6",
         "league/openapi-psr7-validator": "^0.22.0",
         "mglaman/composer-drupal-lenient": "*",
-        "npm-asset/select2": "^4.0",
-        "oomphinc/composer-installers-extender": "^2.0",
         "ramsey/uuid": "^4.9",
         "wikimedia/composer-merge-plugin": "^2.1"
     },
@@ -79,7 +77,6 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-composer-scaffold": true,
             "mglaman/composer-drupal-lenient": true,
-            "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
             "tbachert/spi": false,
@@ -132,9 +129,7 @@
                 "type:drupal-core"
             ],
             "public/libraries/{$name}": [
-                "type:drupal-library",
-                "type:bower-asset",
-                "type:npm-asset"
+                "type:drupal-library"
             ],
             "public/modules/contrib/{$name}": [
                 "type:drupal-module"
@@ -155,7 +150,6 @@
                 "type:drupal-drush"
             ]
         },
-        "installer-types": ["bower-asset", "npm-asset"],
         "patchLevel": {
             "drupal/core": "-p2"
         },
@@ -184,10 +178,6 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
         }
     ],
     "scripts": {

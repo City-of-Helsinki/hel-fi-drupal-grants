@@ -131,7 +131,7 @@ as part of the name also on the internet.", [], $this->tOpts),
       '#title' => $this->t('Community or group bank account', [], $this->tOpts),
     ];
 
-    $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
+    $this->addAddressBits($form, $grantsProfileContent['addresses']);
     $this->addbankAccountBits(
       $form,
       $form_state,
@@ -230,12 +230,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $values = $formState->getValues();
     $input = $formState->getUserInput();
 
-    $addressArrayKeys = [];
+    $addressArrayKeys = [0];
     $officialArrayKeys = [];
     $bankAccountArrayKeys = [];
 
     if (array_key_exists('addressWrapper', $input)) {
-      $addressArrayKeys = array_keys($input["addressWrapper"]);
       $values["addressWrapper"] = $input["addressWrapper"];
     }
 
@@ -303,18 +302,12 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    *
    * @param array $form
    *   Form.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
    * @param array $addresses
    *   Current addresses.
-   * @param string|null $newItem
-   *   New item title.
    */
   public function addAddressBits(
     array &$form,
-    FormStateInterface $formState,
     array $addresses,
-    ?string $newItem,
   ) {
 
     $form['addressWrapper'] = [
@@ -326,123 +319,59 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors.
-    $form = $this->addErrorElement('addressWrapper', $form);
+    $address = $addresses[0] ?? NULL;
 
-    $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
-
-    unset($addressValues['actions']);
-    foreach ($addressValues as $delta => $address) {
-      if (array_key_exists('address', $address)) {
-        $address = $address['address'];
-      }
-      // Make sure we have proper UUID as address id.
-      if (!isset($address['address_id']) || !$this->isValidUuid($address['address_id'])) {
-        $address['address_id'] = $this->uuid->generate();
-      }
-
-      $form['addressWrapper'][$delta]['address'] = [
-        '#type' => 'fieldset',
-        '#attributes' => [
-          'class' => [
-            'hdbt-form--fieldset--border',
-          ],
-        ],
-        '#description_display' => 'before',
-        '#description' => $this->t('The address must be your official address.
-One address is mandatory information in your personal information and on the application.', [], $this->tOpts),
-        '#title' => $this->t('Community or group address', [], $this->tOpts),
-      ];
-      $form['addressWrapper'][$delta]['address']['street'] = [
-        '#type' => 'textfield',
-        '#required' => TRUE,
-        '#title' => $this->t('Street address', [], $this->tOpts),
-        '#default_value' => $address['street'],
-      ];
-      $form['addressWrapper'][$delta]['address']['postCode'] = [
-        '#type' => 'textfield',
-        '#required' => TRUE,
-        '#title' => $this->t('Postal code', [], $this->tOpts),
-        '#default_value' => $address['postCode'],
-        '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
-        '#maxlength' => 8,
-        '#attributes' => [
-          'data-pattern-error' => $this->t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $this->tOpts),
-        ],
-      ];
-      $form['addressWrapper'][$delta]['address']['city'] = [
-        '#type' => 'textfield',
-        '#required' => TRUE,
-        '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
-        '#default_value' => $address['city'],
-      ];
-      $form['addressWrapper'][$delta]['address']['country'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Country', [], ['context' => 'Profile Address']),
-        '#attributes' => ['readonly' => 'readonly'],
-        '#default_value' => $address['country'] ?? 'Suomi',
-        '#value' => $address['country'] ?? 'Suomi',
-      ];
-      // We need the delta / id to create delete links in element.
-      $form['addressWrapper'][$delta]['address']['address_id'] = [
-        '#type' => 'hidden',
-        '#value' => $address['address_id'],
-      ];
+    // Make sure we have proper UUID as address id.
+    if ($address && !$this->isValidUuid($address['address_id'])) {
+      $address['address_id'] = $this->uuid->generate();
     }
 
-    if ($newItem == 'addressWrapper') {
-
-      $form['addressWrapper'][] = [
-        'address' => [
-          '#type' => 'fieldset',
-          '#attributes' => [
-            'class' => [
-              'hdbt-form--fieldset--border',
-            ],
-          ],
-          '#title' => $this->t('Community or group address', [], $this->tOpts),
-          '#help_display' => 'before',
-          '#description' => $this->t('The address must be your official address.
-One address is mandatory information in your personal information and on the application.', [], $this->tOpts),
-          'street' => [
-            '#type' => 'textfield',
-            '#required' => TRUE,
-            '#title' => $this->t('Street address', [], $this->tOpts),
-          ],
-          'postCode' => [
-            '#type' => 'textfield',
-            '#required' => TRUE,
-            '#title' => $this->t('Postal code', [], $this->tOpts),
-            '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
-            '#maxlength' => 8,
-            '#attributes' => [
-              'data-pattern-error' => $this->t('Use the format FI-XXXXX or enter a five-digit postcode.',
-                [], $this->tOpts),
-            ],
-          ],
-          'city' => [
-            '#type' => 'textfield',
-            '#required' => TRUE,
-            '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
-          ],
-          'country' => [
-            '#type' => 'textfield',
-            '#title' => $this->t('Country', [], ['context' => 'Profile Address']),
-            '#attributes' => ['readonly' => 'readonly'],
-            '#default_value' => 'Suomi',
-            '#value' => 'Suomi',
-          ],
-          // We need the delta / id to create delete links in element.
-          'address_id' => [
-            '#type' => 'hidden',
-            '#value' => $this->uuid->generate(),
-          ],
-
+    $form['addressWrapper'][0]['address'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'hdbt-form--fieldset--border',
         ],
-      ];
-      $formState->setValue('newItem', NULL);
-    }
-
+      ],
+      '#description_display' => 'before',
+      '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $this->tOpts),
+      '#title' => $this->t('Community or group address', [], $this->tOpts),
+    ];
+    $form['addressWrapper'][0]['address']['street'] = [
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#title' => $this->t('Street address', [], $this->tOpts),
+      '#default_value' => $address['street'] ?? '',
+    ];
+    $form['addressWrapper'][0]['address']['postCode'] = [
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#title' => $this->t('Postal code', [], $this->tOpts),
+      '#default_value' => $address['postCode'] ?? '',
+      '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+      '#maxlength' => 8,
+      '#attributes' => [
+        'data-pattern-error' => $this->t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $this->tOpts),
+      ],
+    ];
+    $form['addressWrapper'][0]['address']['city'] = [
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
+      '#default_value' => $address['city'] ?? '',
+    ];
+    $form['addressWrapper'][0]['address']['country'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Country', [], ['context' => 'Profile Address']),
+      '#attributes' => ['readonly' => 'readonly'],
+      '#default_value' => $address['country'] ?? 'Suomi',
+      '#value' => $address['country'] ?? 'Suomi',
+    ];
+    // We need the delta / id to create delete links in element.
+    $form['addressWrapper'][0]['address']['address_id'] = [
+      '#type' => 'hidden',
+      '#value' => $address['address_id'] ?? '',
+    ];
   }
 
   /**

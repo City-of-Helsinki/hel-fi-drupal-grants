@@ -17,7 +17,7 @@
     "lint": "npm-run-all --parallel lint:scss lint:js -s",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "validate-ts": "npx --prefix ../../contrib/hdbt tsc --noEmit 2>&1 | grep -v 'hdbt' || true"
+    "validate-ts": "npx --prefix ../../contrib/hdbt tsc --noEmit"
   },
   "@comment dependencies": [
     "The following packages were updated manually.",

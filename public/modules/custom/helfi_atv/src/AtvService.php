@@ -1023,7 +1023,6 @@ class AtvService implements AtvServiceInterface {
    *   Data in cache or null
    */
   protected function getFromCache(string $key): ?array {
-    $this->debugPrint('Loading from cache with key @key.', ['@key' => $key]);
     return $this->requestCache[$key] ?? NULL;
   }
 
@@ -1125,22 +1124,6 @@ class AtvService implements AtvServiceInterface {
       ],
       $useApiKey,
     );
-  }
-
-  /**
-   * Print debug messages.
-   *
-   * @param string $message
-   *   Message.
-   * @param array $replacements
-   *   Replacements.
-   */
-  public function debugPrint(string $message, array $replacements = []): void {
-    // @codeCoverageIgnoreStart
-    if ($this->isDebug()) {
-      $this->logger->debug($message, $replacements);
-    }
-    // @codeCoverageIgnoreEnd
   }
 
   /**

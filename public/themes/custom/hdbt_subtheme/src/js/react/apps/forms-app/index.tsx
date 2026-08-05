@@ -1,7 +1,7 @@
 import { ErrorBoundary, type FallbackRender } from '@sentry/react';
 import { LoadingSpinner, Notification } from 'hds-react';
 import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import initSentry from '@/react/common/helpers/Sentry';
 import { GeneralError } from './components/GeneralError';
 import { ToastStack } from './components/ToastStack';
@@ -51,7 +51,7 @@ const handleErrorFallback: FallbackRender = ({ error }) => {
 };
 
 if (rootElement) {
-  ReactDOM.render(
+  createRoot(rootElement).render(
     <React.StrictMode>
       <ErrorBoundary fallback={handleErrorFallback}>
         <ToastStack />
@@ -64,6 +64,5 @@ if (rootElement) {
         </Suspense>
       </ErrorBoundary>
     </React.StrictMode>,
-    rootElement,
   );
 }
