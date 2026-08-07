@@ -8,16 +8,7 @@ import { getActingYearsAtom, isReadOnlyAtom, shouldRenderPreviewAtom } from '../
 import { formatErrors } from '../../utils';
 import { PreviewInput } from '../Input';
 
-export const ActingYear = ({
-  formData,
-  idSchema,
-  name,
-  onChange,
-  rawErrors,
-  required,
-  schema,
-  uiSchema,
-}: FieldProps) => {
+export const ActingYear = ({ formData, idSchema, onChange, rawErrors, required, schema, uiSchema }: FieldProps) => {
   const { t } = useTranslation();
   const isReadOnly = useAtomValue(isReadOnlyAtom);
   const yearOptions = useAtomValue(getActingYearsAtom);
@@ -46,7 +37,6 @@ export const ActingYear = ({
       disabled={isReadOnly}
       id={idSchema.$id}
       invalid={Boolean(rawErrors?.length)}
-      name={name}
       onChange={handleChange}
       options={options}
       required={required}
