@@ -136,7 +136,7 @@ final class ApplicationController extends ControllerBase {
   ): array|RedirectResponse {
     // Grant terms are stored in block.
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
-    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $langcode = $this->languageManager()->getCurrentLanguage()->getId();
     $terms_block = $blockStorage->load(1);
     if ($terms_block && $terms_block->hasTranslation($langcode)) {
       $terms_block = $terms_block->getTranslation($langcode);
