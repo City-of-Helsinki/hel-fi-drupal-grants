@@ -80,8 +80,33 @@ export default defineConfig({
     },
     {
       name: 'profile-registered_community',
-      testMatch: '/profiles/registered_community.ts ',
+      testMatch: '/profiles/registered_community.ts',
       dependencies: ['auth-setup']
+    },
+    /* Profile edit tests. */
+    {
+      name: 'profile-edits',
+      testMatch: [
+        '/profiles/private_person_edit.ts',
+        '/profiles/unregistered_community_edit.ts',
+        '/profiles/registered_community_edit.ts',
+      ],
+      dependencies: ['smoke', 'profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+    },
+    {
+      name: 'profile-edit-private_person',
+      testMatch: '/profiles/private_person_edit.ts',
+      dependencies: ['profile-private_person']
+    },
+    {
+      name: 'profile-edit-unregistered_community',
+      testMatch: '/profiles/unregistered_community_edit.ts',
+      dependencies: ['profile-unregistered_community']
+    },
+    {
+      name: 'profile-edit-registered_community',
+      testMatch: '/profiles/registered_community_edit.ts',
+      dependencies: ['profile-registered_community']
     },
     /* Form tests by user profile (role). */
     {
@@ -103,7 +128,7 @@ export default defineConfig({
     {
       name: 'forms-all',
       testMatch: '/forms/**/*',
-      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+      dependencies: ['profile-edits']
     },
     /* Run all smoke tests. */
     {

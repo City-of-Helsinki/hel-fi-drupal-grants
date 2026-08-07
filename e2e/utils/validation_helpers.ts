@@ -729,4 +729,5 @@ export {
   validateExistingProfileData,
   validateHiddenFields,
   validatePrintPage,
+  navigateAndValidateProfilePage,
 }

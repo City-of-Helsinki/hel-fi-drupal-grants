@@ -69,4 +69,3 @@ test.describe('Registered Community - Grants Profile', () => {
   });
 
 });
-
