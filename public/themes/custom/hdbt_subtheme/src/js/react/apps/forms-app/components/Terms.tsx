@@ -21,8 +21,12 @@ export const Terms = () => {
         <div dangerouslySetInnerHTML={{ __html: body }} />
       </div>
       <div>
-        <Notification className='hdbt-form--notification' type='alert' label='Huom!'>
-          Hyväksy ehdot ja lähetä hakemus
+        <Notification
+          className='hdbt-form--notification'
+          type='alert'
+          label={Drupal.t('Note!', {}, { context: 'grants_handler' })}
+        >
+          {Drupal.t('Accept the terms and send the application.', {}, { context: 'grants_handler' })}
         </Notification>
         <Checkbox
           checked={finalAcceptance}
