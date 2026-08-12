@@ -17,7 +17,7 @@
     "lint": "npm-run-all --parallel lint:scss lint:js -s",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "validate-ts": "npx --prefix ../../contrib/hdbt tsc --noEmit 2>&1 | grep -v 'hdbt' || true"
+    "validate-ts": "npx --prefix ../../contrib/hdbt tsc --noEmit"
   },
   "@comment dependencies": [
     "The following packages were updated manually.",
@@ -56,7 +56,8 @@
     "not dead"
   ],
   "devDependencies": {
-    "@testing-library/react": "^12.1.5",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
     "@types/json-schema": "^7.0.15",
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^8.0.0",

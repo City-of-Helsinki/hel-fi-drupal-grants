@@ -10,7 +10,7 @@ import type {
 } from '@rjsf/utils';
 import { Accordion, type AccordionTheme, Button, Fieldset, IconCross, IconPlus, Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import {
@@ -23,6 +23,18 @@ import {
 import type { UiSchema } from '../types/UiSchema';
 import { ALLOWED_HTML_TAGS, getTooltip } from '../utils';
 import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
+
+/**
+ * Read the RJSF field props off a rendered field element.
+ *
+ * React types `ReactElement.props` as unknown, so the RJSF props that get
+ * passed down through the templates need to be asserted.
+ *
+ * @param {ReactElement} element - Rendered field element
+ * @return {object} - Field props
+ */
+const getFieldProps = (element?: ReactElement): { formData?: any; schema?: any; uiSchema?: UiSchema } =>
+  (element?.props ?? {}) as { formData?: any; schema?: any; uiSchema?: UiSchema };
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -38,12 +50,12 @@ export const ArrayFieldTemplate = ({
 
   if (shouldRenderPreview) {
     const hideName = uiSchema?.['ui:options']?.hideNameFromPrint;
-    const printableName = uiSchema?.['ui:options']?.printableName;
+    const printableName = uiSchema?.['ui:options']?.printableName?.toString();
 
     // Depending on user actions, items can be empty
     const renderableItems = items
       .filter((item) => {
-        const value = item?.children?.props?.formData;
+        const value = getFieldProps(item?.children).formData;
         return value && Object.keys(value).length;
       })
       // biome-ignore lint/correctness/useJsxKeyInIterable: Item contains key already
@@ -94,7 +106,7 @@ const PreviewStep = ({
   stepNumber?: number;
   stepId?: string;
 }) => {
-  const printableName = uiSchema?.['ui:options']?.printableName;
+  const printableName = uiSchema?.['ui:options']?.printableName?.toString();
   const headingText = printableName || title?.toString();
   const heading = stepNumber !== undefined ? `${stepNumber}. ${headingText}` : headingText;
 
@@ -142,9 +154,9 @@ const PreviewSection = ({
   properties: ObjectFieldTemplatePropertyType[];
   uiSchema: UiSchema;
 }) => {
-  const printableName = uiSchema?.['ui:options']?.printableName;
+  const printableName = uiSchema?.['ui:options']?.printableName?.toString();
   const hideFromPreview = uiSchema?.['ui:options']?.hideFromPreview;
-  const visibleProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+  const visibleProperties = properties.filter((p) => !p.hidden && getFieldProps(p.content).schema?.type !== 'null');
 
   if (hideFromPreview || !visibleProperties.length) {
     return null;
@@ -249,7 +261,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   }
 
   if (_isSection) {
-    const visibleProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+    const visibleProperties = properties.filter((p) => !p.hidden && getFieldProps(p.content).schema?.type !== 'null');
     if (!visibleProperties.length) {
       return null;
     }
@@ -271,7 +283,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
 
   if (shouldRenderPreview) {
     const hideName = uiSchema?.['ui:options']?.hideNameFromPrint;
-    const printableName = uiSchema?.['ui:options']?.printableName;
+    const printableName = uiSchema?.['ui:options']?.printableName?.toString();
 
     return (
       <>
@@ -287,8 +299,9 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
         {properties
           .filter((p) => !p.hidden)
           .map((field) => {
-            if (field.content.props.uiSchema?.['ui:help']) {
-              field.content.props.uiSchema['ui:help'] = '';
+            const { uiSchema: fieldUiSchema } = getFieldProps(field.content);
+            if (fieldUiSchema?.['ui:help']) {
+              fieldUiSchema['ui:help'] = '';
             }
 
             return field.content;
@@ -301,7 +314,9 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     (child) => typeof child === 'object' && child !== null && (child as any)['misc:required'],
   );
 
-  const visibleFieldsetProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+  const visibleFieldsetProperties = properties.filter(
+    (p) => !p.hidden && getFieldProps(p.content).schema?.type !== 'null',
+  );
   if (!visibleFieldsetProperties.length) {
     return null;
   }
