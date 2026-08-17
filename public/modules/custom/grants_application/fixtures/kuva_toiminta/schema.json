@@ -236,7 +236,6 @@
                 "properties": {
                   "is_multi_year_grant": {
                     "title": "is_multi_year_grant.title",
-                    "description": "is_multi_year_grant.description",
                     "enum": [true, false]
                   }
                 },
