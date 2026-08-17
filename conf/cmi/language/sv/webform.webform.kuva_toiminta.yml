@@ -63,7 +63,6 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
     '#title': 'Det är frågan om ett mångårigt stöd'
-    '#description': '<p>Under den fyraårsperioden 2023-2026 kan mångåriga verksamhetsstöd beviljas till helsingforsiska registrerade konst- och kultursamfund inom scenkonst, som åtnjuter statsandelsstöd för sin verksamhet. Beslut om mottagarna har fattats i slutet av 2022.</p>'
     '#options':
       1: Ja
       0: Nej
