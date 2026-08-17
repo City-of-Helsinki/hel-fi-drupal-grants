@@ -60,7 +60,6 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
     '#title': 'I am applying for a multi-year grant'
-    '#description': '<p>For the four year period 2023-2026 multi-year operational grants can be awarded to Helsinki based cultural operators that belong to the central government subsidies system (VOS) in the fields of performing arts or music. The multi-year grant recipients have been decided at the end of 2022.</p>'
     '#options':
       1: 'Yes'
       0: 'No'
