@@ -5,87 +5,168 @@ dependencies:
   config:
     - field.field.user.user.field_industry
   module:
-    - options
+    - field_group
     - user
+third_party_settings:
+  field_group:
+    group_my_content:
+      children:
+        - group_my_pages
+        - group_my_tpr_content
+      label: 'My content'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: tabs
+      format_settings:
+        classes: dashboard__tabs
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        direction: horizontal
+        width_breakpoint: 640
+    group_my_pages:
+      children:
+        - user_content
+      label: 'My Pages'
+      parent_name: group_my_content
+      region: content
+      weight: 3
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: open
+        description: ''
+    group_my_tpr_errand_services:
+      children:
+        - user_tpr_errand_services
+      label: 'My TPR Errand Services'
+      parent_name: group_my_tpr_content_tabs
+      region: content
+      weight: 7
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
+    group_my_tpr_services:
+      children:
+        - user_tpr_services
+      label: 'My TPR Services'
+      parent_name: group_my_tpr_content_tabs
+      region: content
+      weight: 6
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
+    group_my_tpr_units:
+      children:
+        - user_tpr_units
+      label: 'My TPR Units'
+      parent_name: group_my_tpr_content_tabs
+      region: content
+      weight: 5
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
+    group_my_tpr_service_channels:
+      children:
+        - tpr_service_channels
+      label: 'My TPR Service Channels'
+      parent_name: group_my_tpr_content_tabs
+      region: content
+      weight: 8
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
+    group_my_tpr_content:
+      children:
+        - group_my_tpr_content_tabs
+      label: 'My TPR Content'
+      parent_name: group_my_content
+      region: content
+      weight: 4
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
+    group_my_tpr_content_tabs:
+      children:
+        - group_my_tpr_units
+        - group_my_tpr_services
+        - group_my_tpr_errand_services
+        - group_my_tpr_service_channels
+      label: 'My TPR Content Tabs'
+      parent_name: group_my_tpr_content
+      region: content
+      weight: 1
+      format_type: tabs
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        direction: horizontal
+        width_breakpoint: 640
+_core:
+  default_config_hash: YzRSJ2NtFNlvvCkuDJny_xqNKLRDKvLKhUaA7_fXw38
 id: user.user.default
 targetEntityType: user
 bundle: user
 mode: default
 content:
-  field_address:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 12
-    region: content
-  field_industry:
-    type: list_default
-    label: above
+  tpr_service_channels:
     settings: {  }
-    third_party_settings: {  }
-    weight: 13
-    region: content
-  field_kotipaikka:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 9
-    region: content
-  field_lyhenne:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 11
-    region: content
-  field_perustamisvuosi:
-    type: number_integer
-    label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    weight: 8
-    region: content
-  field_rekisterointipaiva:
-    type: datetime_default
-    label: above
-    settings:
-      timezone_override: ''
-      format_type: medium
     third_party_settings: {  }
     weight: 10
     region: content
-  field_virallinen_nimi:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 7
-    region: content
-  field_y_tunnus:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 6
-    region: content
   user_content:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  user_tpr_errand_services:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  user_tpr_services:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  user_tpr_units:
     settings: {  }
     third_party_settings: {  }
     weight: 10
     region: content
 hidden:
-  entity_print_view_epub: true
-  entity_print_view_pdf: true
-  entity_print_view_word_docx: true
+  field_industry: true
   langcode: true
   member_for: true
   search_api_excerpt: true
