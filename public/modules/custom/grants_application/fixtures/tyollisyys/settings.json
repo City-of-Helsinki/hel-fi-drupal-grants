@@ -3,7 +3,7 @@
   "description": "KANSLIATYO",
   "form_identifier": "kaupunginkanslia_tyollisyysavust",
   "application_type": "KANSLIATYO",
-  "application_type_id": 54,
+  "application_type_id": 74,
   "application_industry": "KANSLIA",
   "application_open": "2026-01-01T00:00:00",
   "application_close": "2026-12-31T23:59:59",
@@ -11,8 +11,7 @@
     "registered_community"
   ],
   "subvention_type": [
-    1,
-    17
+    55
   ],
   "target_group": 29,
   "acting_years": [
