@@ -122,8 +122,7 @@
           "type": "object",
           "properties": {
             "purpose": {
-              "title": "purpose_section_purpose.title",
-              "description": "purpose.custom_description",
+              "title": "purpose_section_modified.title",
               "type": "string"
             }
           },
