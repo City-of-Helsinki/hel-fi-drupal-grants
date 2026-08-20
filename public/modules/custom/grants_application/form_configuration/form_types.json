@@ -294,7 +294,7 @@
     "form_identifier": "tyollisyys",
     "code": "TYOLLISYYS",
     "labels": {
-      "fi": "TYOLLISYYS",
+      "fi": "Työllisyysavustushakemus",
       "en": "The employment grant application",
       "sv": "Ansökan om sysselsättningsstöd"
     }
