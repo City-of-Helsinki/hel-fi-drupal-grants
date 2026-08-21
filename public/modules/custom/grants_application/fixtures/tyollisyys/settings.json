@@ -1,7 +1,7 @@
 {
   "title": "Kaupunginkanslia, työllisyysavustushakemus",
   "description": "KANSLIATYO",
-  "form_identifier": "kaupunginkanslia_tyollisyysavust",
+  "form_identifier": "tyollisyys",
   "application_type": "KANSLIATYO",
   "application_type_id": 74,
   "application_industry": "KANSLIA",
