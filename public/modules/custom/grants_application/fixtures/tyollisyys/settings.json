@@ -2,7 +2,7 @@
   "title": "Työllisyysavustushakemus",
   "description": "KANSLIATYO",
   "form_identifier": "tyollisyys",
-  "application_type": "KANSLIATYO",
+  "application_type": "TYOLLISYYS",
   "application_type_id": 74,
   "application_industry": "KANSLIA",
   "application_open": "2026-01-01T00:00:00",
