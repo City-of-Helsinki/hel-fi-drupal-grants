@@ -1,9 +1,9 @@
 {
   "translations": {
     "form_title": {
-      "en": "City Executive Office, employment grant application",
-      "fi": "Kaupunginkanslia, työllisyysavustushakemus",
-      "sv": "Stadskansliet, ansökan om sysselsättningsunderstöd"
+      "en": "Employment grant application",
+      "fi": "Työllisyysavustushakemus",
+      "sv": "Sysselsättningsunderstöd"
     },
     "prior_compensations.tooltip": {
       "en": "Explain how and for what purpose the previous employment grant has been used. In the case of a development grant, a separate report of the development project implemented with the help of the grant must be provided (as an attachment). Additionally, an itemised accounting document of the realised costs (a profit and loss account describing the use of the grant, etc.) is required. More detailed instructions for delivering the accounting document will be delivered after the application period has ended. The itemisation does not need to be attached to the application.",

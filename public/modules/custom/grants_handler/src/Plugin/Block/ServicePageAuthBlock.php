@@ -281,16 +281,20 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
 
     // Create link for new application.
     $node = $this->routeMatch->getParameter('node');
-    $webformId = $node->get('field_webform')->target_id;
+    $webformId = $node->get('field_webform')?->target_id;
 
-    $link = Url::fromRoute('grants_handler.new_application', ['webform_id' => $webformId], ['absolute' => TRUE]);
+    if ($webformId) {
+      $link = Url::fromRoute('grants_handler.new_application', ['webform_id' => $webformId], ['absolute' => TRUE]);
 
-    return [
-      'title' => $this->t('New application', [], $tOpts),
-      'uri' => $link->toString(),
-      'options' => [],
-      '_attributes' => [],
-    ];
+      return [
+        'title' => $this->t('New application', [], $tOpts),
+        'uri' => $link->toString(),
+        'options' => [],
+        '_attributes' => [],
+      ];
+    }
+
+    return FALSE;
   }
 
 }
