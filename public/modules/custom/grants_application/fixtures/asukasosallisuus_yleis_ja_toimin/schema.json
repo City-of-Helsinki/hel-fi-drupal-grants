@@ -175,7 +175,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -216,7 +217,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -278,7 +280,8 @@
                   "have_received_prior_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_prior_compensations"]
               },
               "then": {
                 "properties": {

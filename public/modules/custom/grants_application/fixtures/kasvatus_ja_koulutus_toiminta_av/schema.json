@@ -111,7 +111,8 @@
               "location_held_in_provided_space": {
                 "const": false
               }
-            }
+            },
+            "required": ["location_held_in_provided_space"]
           },
           "then": {
             "properties": {
@@ -244,7 +245,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -306,7 +308,8 @@
                   "have_received_prior_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_prior_compensations"]
               },
               "then": {
                 "properties": {

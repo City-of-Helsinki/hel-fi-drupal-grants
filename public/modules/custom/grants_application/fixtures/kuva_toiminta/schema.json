@@ -1039,7 +1039,8 @@
             },
             "required": ["subventions_total"]
           }
-        }
+        },
+        "required": ["grant_info_step"]
       },
       "then": {
         "properties": {

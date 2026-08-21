@@ -94,7 +94,8 @@
                   "subventions_total": {
                     "minimum": 10000
                   }
-                }
+                },
+                "required": ["subventions_total"]
               },
               "then": {
                 "properties": {
@@ -119,7 +120,8 @@
                   "subventions_total": {
                     "minimum": 50000
                   }
-                }
+                },
+                "required": ["subventions_total"]
               },
               "then": {
                 "properties": {
@@ -157,7 +159,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -197,7 +200,8 @@
                   "have_received_prior_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_prior_compensations"]
               },
               "then": {
                 "properties": {

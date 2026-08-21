@@ -131,7 +131,8 @@
               "realized_premise_is_owned_by_city": {
                 "const": true
               }
-            }
+            },
+            "required": ["realized_premise_is_owned_by_city"]
           },
           "then": {
             "properties": {
@@ -217,7 +218,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -291,7 +293,8 @@
                   "is_owner_of_art_premises": {
                     "const": true
                   }
-                }
+                },
+                "required": ["is_owner_of_art_premises"]
               },
               "then": {
                 "properties": {

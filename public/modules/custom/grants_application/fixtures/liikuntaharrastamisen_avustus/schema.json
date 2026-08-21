@@ -194,7 +194,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -235,7 +236,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -281,7 +283,8 @@
                   "project_application_type": {
                     "const": "2"
                   }
-                }
+                },
+                "required": ["project_application_type"]
               },
               "then": {
                 "properties": {
@@ -307,7 +310,7 @@
                     "const": "1"
                   }
                 },
-                "required": ["grant_duration"]
+                "required": ["project_application_type", "grant_duration"]
               },
               "then": {
                 "properties": {
@@ -336,7 +339,7 @@
                     "const": "2"
                   }
                 },
-                "required": ["grant_duration"]
+                "required": ["project_application_type", "grant_duration"]
               },
               "then": {
                 "properties": {
@@ -396,9 +399,11 @@
               "information_in_more_detail_section": {
                 "properties": {
                   "project_application_type": { "const": "1" }
-                }
+                },
+                "required": ["project_application_type"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {
@@ -470,9 +475,11 @@
               "information_in_more_detail_section": {
                 "properties": {
                   "project_application_type": { "const": "2" }
-                }
+                },
+                "required": ["project_application_type"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {
@@ -575,9 +582,10 @@
                   "project_application_type": { "const": "2" },
                   "grant_duration": { "const": "2" }
                 },
-                "required": ["grant_duration"]
+                "required": ["project_application_type", "grant_duration"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {

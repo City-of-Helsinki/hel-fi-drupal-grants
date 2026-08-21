@@ -313,6 +313,7 @@ export const RJSFFormContainer = ({
         <Form
           className='grants-form'
           customValidate={customValidate}
+          experimental_defaultFormStateBehavior={{ allOf: 'populateDefaults' }}
           fields={{
             ...getDefaultRegistry().fields,
             actingYear: ActingYear,

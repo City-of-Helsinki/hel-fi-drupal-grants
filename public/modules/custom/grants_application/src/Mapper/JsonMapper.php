@@ -227,6 +227,12 @@ class JsonMapper {
           $values[] = $this->applyMultipleValue($valueArray, $stringValue);
         }
       }
+
+      // Guard against empty objects
+      if (!$values) {
+        continue;
+      }
+
       $this->setTargetValue($data, $targetPath, $values, $definition);
     }
   }

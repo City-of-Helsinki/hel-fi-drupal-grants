@@ -351,7 +351,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -394,7 +395,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -466,7 +468,8 @@
                       "3"
                     ]
                   }
-                }
+                },
+                "required": ["project_plan_grant_duration"]
               },
               "then": {
                 "properties": {
@@ -491,7 +494,8 @@
                   "project_plan_grant_duration": {
                     "const": "3"
                   }
-                }
+                },
+                "required": ["project_plan_grant_duration"]
               },
               "then": {
                 "properties": {
@@ -607,7 +611,8 @@
                   "is_application_extension": {
                     "const": true
                   }
-                }
+                },
+                "required": ["is_application_extension"]
               },
               "then": {
                 "properties": {
@@ -747,9 +752,11 @@
                       "3"
                     ]
                   }
-                }
+                },
+                "required": ["project_plan_grant_duration"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {
@@ -779,9 +786,11 @@
                   "project_plan_grant_duration": {
                     "const": "3"
                   }
-                }
+                },
+                "required": ["project_plan_grant_duration"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {
@@ -813,11 +822,14 @@
                       "applied_grant_amount_2026": {
                         "pattern": "^([5-9][0-9]{4}|[0-9]{6,})(,[0-9]+)?$"
                       }
-                    }
+                    },
+                    "required": ["applied_grant_amount_2026"]
                   }
-                }
+                },
+                "required": ["applied_grant_amount"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {

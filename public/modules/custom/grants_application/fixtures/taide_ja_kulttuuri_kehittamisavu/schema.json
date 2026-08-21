@@ -157,7 +157,8 @@
                   "is_multi_year_grant": {
                     "const": true
                   }
-                }
+                },
+                "required": ["is_multi_year_grant"]
               },
               "then": {
                 "properties": {
@@ -256,7 +257,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {

@@ -192,7 +192,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -235,7 +236,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -352,9 +354,11 @@
                   "is_application_extension": {
                     "const": false
                   }
-                }
+                },
+                "required": ["is_application_extension"]
               }
-            }
+            },
+            "required": ["grant_target_section"]
           },
           "then": {
             "properties": {
@@ -458,9 +462,11 @@
                   "is_application_extension": {
                     "const": true
                   }
-                }
+                },
+                "required": ["is_application_extension"]
               }
-            }
+            },
+            "required": ["grant_target_section"]
           },
           "then": {
             "properties": {
