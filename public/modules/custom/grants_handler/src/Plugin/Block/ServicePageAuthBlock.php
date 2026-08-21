@@ -114,7 +114,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
         $this->logger->error("Unable to render the create application button on service page for application ID$reactFormId");
       }
 
-      if ($settings && $settings->isApplicationOpen()) {
+      if ($settings) {
         $useReactForm = TRUE;
       }
     }
@@ -132,6 +132,10 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     // React is always rendered if the settings are set correctly
     // (application period etc).
     if ($useReactForm) {
+      if (!$settings->isApplicationOpen()) {
+        return $build;
+      }
+
       $build['content'] = [
         '#auth' => 'auth',
         '#text' => $description,
