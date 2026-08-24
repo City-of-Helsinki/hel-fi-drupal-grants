@@ -5551,16 +5551,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "5.1.115",
+            "version": "5.1.116",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "0d4f0f66bf500591f6f423c721cb86e3191ba5c4"
+                "reference": "71d0174f2bf46b3d9ac7816f2cec310afb656e6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/0d4f0f66bf500591f6f423c721cb86e3191ba5c4",
-                "reference": "0d4f0f66bf500591f6f423c721cb86e3191ba5c4",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/71d0174f2bf46b3d9ac7816f2cec310afb656e6b",
+                "reference": "71d0174f2bf46b3d9ac7816f2cec310afb656e6b",
                 "shasum": ""
             },
             "require": {
@@ -5656,6 +5656,9 @@
                         "[#UHF-13252] ...account administration pages causes RouteMatch to be Null in some cases (https://www.drupal.org/i/3265213)": "./public/modules/contrib/helfi_platform_config/patches/3265213.patch",
                         "[#UHF-12901] TODO remove on D12 once telephone field is moved to contrib module: Prevent accessibility issue due to difference in tel href encoding between ckeditor and telephone field formatter": "./public/modules/contrib/helfi_platform_config/patches/non-encoded-tel-link-href.patch"
                     },
+                    "drupal/address": {
+                        "address is incompatible with diff 2.x (https://www.drupal.org/i/3589015)": "./public/modules/contrib/helfi_platform_config/patches/3589015.patch"
+                    },
                     "drupal/diff": {
                         "Revision overview form problem (https://www.drupal.org/i/3390329)": "./public/modules/contrib/helfi_platform_config/patches/2882334.patch"
                     },
@@ -5685,10 +5688,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/5.1.115",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/5.1.116",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2026-08-21T07:02:32+00:00"
+            "time": "2026-08-24T06:16:27+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
