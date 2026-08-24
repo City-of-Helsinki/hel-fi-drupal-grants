@@ -15,6 +15,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\helfi_api_base\AuditLog\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Drupal\helfi_platform_config\DTO\ParagraphTypeCollection;
 use Drupal\user\UserInterface;
 use Drupal\views\ViewExecutable;
@@ -245,6 +246,8 @@ function grants_profile_menu_local_tasks_alter(&$data, $route_name) {
 function grants_profile_user_predelete(UserInterface $account) {
   $auditLogger = Drupal::service(AuditLogService::class);
 
+  $status = "SUCCESS";
+
   try {
     $authdata = \Drupal::service('externalauth.authmap')->getAuthData($account->id(), 'openid_connect.tunnistamo');
     if (isset($authdata['authname'])) {
@@ -252,32 +255,22 @@ function grants_profile_user_predelete(UserInterface $account) {
       $account->setEmail(NULL);
       $account->save();
     }
-
-    $message = [
-      "operation" => "GRANTS_USER_DELETE",
-      "status" => "SUCCESS",
-      "target" => [
-        "id" => $account->id(),
-        "type" => "DRUPAL_USER",
-        "name" => $account->getAccountName(),
-      ],
-    ];
   }
   catch (\Exception $e) {
-    $message = [
-      "operation" => "GRANTS_USER_DELETE",
-      "status" => "FAILURE",
-      "target" => [
-        "id" => $account->id(),
-        "type" => "DRUPAL_USER",
-        "name" => $account->getAccountName(),
-      ],
-    ];
+    $status = "FAILURE";
 
     Drupal::logger('grants_oma_asiointi')->error('Error purging users: @error', ['@error' => $e->getMessage()]);
   }
 
-  $auditLogger->dispatchEvent($message);
+  $auditLogger->logOperation(new AuditLogEvent(
+    operation: "GRANTS_USER_DELETE",
+    message: $status,
+    target: [
+      "id" => $account->id(),
+      "type" => "DRUPAL_USER",
+      "name" => $account->getAccountName(),
+    ],
+  ));
 }
 
 /**

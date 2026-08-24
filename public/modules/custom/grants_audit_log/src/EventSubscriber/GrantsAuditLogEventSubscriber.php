@@ -46,9 +46,9 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
         // Add sid field from tunnistamo jwt token. Only users authenticated
         // via Helsinki profiili have a session, so admins keep
         // the user id set by the generic actor subscriber.
-        $event->setActor(array_merge($event->getActor(), [
+        $event->actor = array_merge($event->actor, [
           'user_id' => $data->sid,
-        ]));
+        ]);
       }
     }
     catch (ProfiiliException) {
