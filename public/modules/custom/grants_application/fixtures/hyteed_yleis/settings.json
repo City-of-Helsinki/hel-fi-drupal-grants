@@ -1,6 +1,7 @@
 {
   "title": "Hyvinvoinnin ja terveyden edistämisen yleisavustus",
   "description": "Hyvinvoinnin ja terveyden edistämisen yleisavustus",
+  "form_identifier": "hyteed_yleis",
   "application_type": "HYTEEDYLEIS",
   "application_type_id": 71,
   "application_industry": "KANSLIA",

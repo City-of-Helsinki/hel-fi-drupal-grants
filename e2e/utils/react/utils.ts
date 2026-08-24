@@ -1,5 +1,6 @@
 import { expect, type Page, test } from "@playwright/test";
 import { type FormPreviewResponse } from './schemaFetcher';
+import { logger } from "../logger";
 
 /**
  * Returns a function that looks up translated text by key.
@@ -23,11 +24,22 @@ export function createTranslator(data: FormPreviewResponse, language: string = '
  *
  * @param page
  *   The Playwright page instance.
+ * @param attempts
+ *   How many times to attempt the reload.
  */
-export async function waitForFormLoad(page: Page) {
+export async function waitForFormLoad(page: Page, attempts = 3) {
   await test.step('Wait for React form to load', async () => {
-    await page.waitForSelector('#grants-react-form .grants-form');
-    await expect(page.locator('#grants-react-form .grants-form')).toBeVisible();
+    const form = page.locator('#grants-react-form .grants-form');
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+      try {
+        await form.waitFor({ state: 'visible', timeout: 15_000 });
+        return;
+      } catch {
+        if (attempt === attempts) throw new Error('React form did not load.');
+        logger(`React form did not load, reloading. Attempt ${attempt} of ${attempts}.`);
+        await page.reload();
+      }
+    }
   });
 }
 
@@ -185,6 +197,64 @@ export async function saveDraft(page: Page, t: (key: string) => string) {
   await expect(button).toBeVisible();
   await button.click();
   await page.waitForLoadState('domcontentloaded');
+}
+
+/**
+ * Verify an application appears in an oma-asiointi list.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param applicationNumber
+ *   The application number to find.
+ * @param list
+ *   The list to search, drafts or sent.
+ */
+export async function assertApplicationInList(
+  page: Page,
+  applicationNumber: string,
+  list: 'drafts' | 'sent',
+) {
+  await page.goto('/fi/oma-asiointi');
+  await page.waitForURL('**/oma-asiointi');
+
+  const container = page.locator(`#oma-asiointi__${list}`);
+  const row = container.locator('.application-list__item', { hasText: applicationNumber });
+  const activePage = container.locator('.application-list__pagination li.active a.page');
+
+  // Wait for the first page to render before paging through.
+  await container.locator('.application-list__item').first().waitFor({ state: 'visible', timeout: 15000 }).catch(() => undefined);
+
+  // The list paginates client-side, so step through the pages until the row is found.
+  let pageNumber = 1;
+  while ((await row.count()) === 0) {
+    const nextPage = container.locator(`.application-list__pagination a.page[data-i="${pageNumber + 1}"]`);
+    if ((await nextPage.count()) === 0) break;
+    await nextPage.click();
+    await expect(activePage).toHaveAttribute('data-i', String(pageNumber + 1));
+    pageNumber += 1;
+  }
+
+  await expect(row).toBeVisible();
+}
+
+/**
+ * Remove a draft application from oma-asiointi and verify the notification and that it is gone.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param applicationNumber
+ *   The application number of the draft to remove.
+ */
+export async function deleteDraft(page: Page, applicationNumber: string) {
+  await page.goto('/fi/oma-asiointi');
+  await page.waitForURL('**/oma-asiointi');
+  await page.locator(`.application-delete-link-${applicationNumber}`).click();
+  await page.locator('#helfi-dialog__action-button').click();
+  await page.waitForURL('**/oma-asiointi');
+  await expect(
+    page.locator('.messages__container .hds-notification .hds-notification__body')
+  ).toContainText('Luonnos poistettu');
+  await expect(page.locator(`.application-delete-link-${applicationNumber}`)).toHaveCount(0);
 }
 
 /**

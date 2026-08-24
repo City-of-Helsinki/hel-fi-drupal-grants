@@ -402,12 +402,22 @@ class ApplicationInitService {
   public function setDeleteAfter(array $settings, AtvDocument $atvDocument): void {
     $endDate = strtotime($settings['applicationClose']);
     $isContinuous = $settings['applicationContinuous'];
-
     $deleteAfter = new \DateTimeImmutable("+1 years");
+
+    if ($isContinuous && $endDate) {
+      $date = date('Y-m-d', $endDate);
+      $deleteAfter = (new \DateTimeImmutable($date))->add(new \DateInterval("P1M"));
+    }
+
+    if ($isContinuous && !$endDate) {
+      $deleteAfter = new \DateTimeImmutable("+1 years");
+    }
+
     if (!$isContinuous && $endDate) {
       $date = date('Y-m-d', $endDate);
       $deleteAfter = (new \DateTimeImmutable($date))->add(new \DateInterval("P1M"));
     }
+
     $atvDocument->setDeleteAfter($deleteAfter->format('Y-m-d'));
   }
 

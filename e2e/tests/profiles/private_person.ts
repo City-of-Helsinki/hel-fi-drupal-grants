@@ -69,5 +69,3 @@ test.describe('Private person - Grants Profile', () => {
   });
 
 });
-
-

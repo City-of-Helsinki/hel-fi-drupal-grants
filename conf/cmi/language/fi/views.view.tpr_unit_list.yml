@@ -1,11 +1,14 @@
-label: 'TPR Toimipisteet'
 display:
   default:
-    display_title: Oletus
     display_options:
+      empty:
+        area:
+          content:
+            value: 'Ei tuloksia.'
+            format: plain_text
       exposed_form:
         options:
-          submit_button: Käytä
+          submit_button: Suodata
           reset_button_label: Palauta
           exposed_sorts_label: Lajittele
           sort_asc_label: Nousevasti
@@ -37,18 +40,23 @@ display:
       filters:
         combine:
           expose:
-            label: Etsi
+            label: 'Nimi tai ID'
         langcode:
           expose:
             label: Kieli
+        content_translation_status:
+          group_info:
+            label: Julkaisutila
+            group_items:
+              1:
+                title: Julkaistu
+              2:
+                title: Julkaisematon
       title: 'TPR Toimipisteet'
       header:
         result:
           content: 'Näytetään @start - @end / @total'
-      empty:
-        area:
-          content:
-            value: 'Ei tuloksia.'
-            format: plain_text
+    display_title: Oletus
   page_1:
     display_title: Sivu
+label: 'TPR Toimipisteet'

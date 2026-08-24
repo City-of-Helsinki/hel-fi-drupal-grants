@@ -1,6 +1,7 @@
 {
   "title": "Sosiaali-, terveys- ja pelastustoimen yleisavustus",
   "description": "Sosiaali-, terveys- ja pelastustoimen yleisavustus",
+  "form_identifier": "sotepe_yleis",
   "application_type": "SOTEPEYLEIS",
   "application_type_id": 72,
   "application_industry": "KANSLIA",

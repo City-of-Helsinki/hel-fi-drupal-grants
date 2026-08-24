@@ -35,7 +35,7 @@ export const transformSteps = (
   });
 };
 
-export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
+export const Stepper = ({ formRef }: { formRef: RefObject<Form | null> }) => {
   const divRef = useRef<HTMLDivElement | null>(null);
   const [currentIndex] = useAtomValue(getCurrentStepAtom);
   const errorPageIndices = useAtomValue(getErrorPageIndicesAtom);

@@ -13,7 +13,6 @@ use Drupal\helfi_helsinki_profiili\DTO\ProfiiliToken;
 use Drupal\helfi_helsinki_profiili\Helper\Filters;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Utils;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
@@ -65,7 +64,7 @@ final readonly class ProfiiliApiClient {
         ->getBody()
         ->getContents();
 
-      $parsed = Utils::jsonDecode($body, TRUE);
+      $parsed = json_decode($body, TRUE);
     }
     catch (GuzzleException $e) {
       throw new ProfiiliException('Failed to fetch openid configuration: ' . $e->getMessage(), previous: $e);
@@ -103,7 +102,7 @@ final readonly class ProfiiliApiClient {
     try {
       $response = $this->client->request('GET', $config->jwks_uri);
 
-      $jwks = Utils::jsonDecode($response->getBody()->getContents(), TRUE);
+      $jwks = json_decode($response->getBody()->getContents(), TRUE);
     }
     catch (GuzzleException $e) {
       throw new ProfiiliException('Failed to fetch jwks: ' . $e->getMessage(), previous: $e);
@@ -142,7 +141,7 @@ final readonly class ProfiiliApiClient {
         'form_params' => $this->getProfileTokenParams(),
       ]);
 
-      $parsed = Utils::jsonDecode($response->getBody()->getContents(), TRUE);
+      $parsed = json_decode($response->getBody()->getContents(), TRUE);
     }
     catch (GuzzleException $e) {
       // If we resume failure, assume that the given token is expired.
@@ -190,7 +189,7 @@ final readonly class ProfiiliApiClient {
         ],
       ]);
 
-      $body = Utils::jsonDecode($response->getBody()->getContents(), TRUE);
+      $body = json_decode($response->getBody()->getContents(), TRUE);
     }
     catch (GuzzleException $e) {
       throw new ProfiiliException(sprintf('/userinfo endpoint threw errorcode %d: %s', $e->getCode(), $e->getMessage()));

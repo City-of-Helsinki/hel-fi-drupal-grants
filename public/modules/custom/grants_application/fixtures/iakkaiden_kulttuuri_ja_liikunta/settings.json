@@ -1,6 +1,7 @@
 {
   "title": "KUVA: avustushakemus iäkkäiden ihmisten liikkumisen ja kulttuuritoiminnan edistämiseksi",
   "description": "KUVAERILLIS",
+  "form_identifier": "iakkaiden_kulttuuri_ja_liikunta",
   "application_type": "KUVAERILLIS",
   "application_type_id": 70,
   "application_industry": "KUVA",

@@ -13,69 +13,76 @@
  */
 #}
 <table aria-label="{{ "Print table"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}" class="webform-print-wrapper-table">
-  <thead><tr><th>
-      <div class="webform-print-header-space">&nbsp;</div>
-    </th></tr></thead>
-  <tbody><tr><td>
-      <div class="webform-print-content">
-        <div class="application-list__status__wrapper">
-          <div class="container application-list__status__container">
-            <div class="application-list__status__item">
-              <div class="application-list__status__label">
-                {{ "Application"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
-              </div>
-              <div class="application-list__status__value">
-                {{ statusTag }}
-              </div>
-            </div>
-            <div class="application-list__status__item">
-              <div class="application-list__status__label">
-                {{ "Saved"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
-              </div>
-              <div class="application-list__status__value">
-                <div>{{ date }}</div>
-              </div>
-            </div>
-            <div class="application-list__status__item">
-              <div class="application-list__status__label">
-                {{ "Application number"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
-              </div>
-              <div class="application-list__status__value transaction-id">
-                <div>{{ atv_document.transaction_id }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <h1>{{ title }}</h1>
-          <div{{ attributes.addClass(classes) }}>
-            {% for key, page in pages %}
-              <div class="details-section-divider">
-                <h2>{{ page.label }}</h2>
-                <div class="grants-profile--extrainfo">
-                  {% for key2, section in page.sections %}
-                    <section class="js-form-item form-item js-form-wrapper form-wrapper webform-section">
-                      <div class="webform-section-grid-wrapper">
-                        <h3 class="webform-section-title">{{ section.label }}</h3>
-                        <dl class="webform-section-contents">
-                          {% for key3, field in section.fields %}
-                            {% if field.ID != 'applicantType' %}
-                              <dt class="webform-field-title">{{ field.label }}</dt>
-                              <dd class="webform-field-wrapper">{{ field.value }}</dd>
-                            {% endif %}
-                          {% endfor %}
-                        </dl>
-                      </div>
-                    </section>
-                  {% endfor %}
+  <thead>
+    <tr>
+      <th>
+        <div class="webform-print-header-space">&nbsp;</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="webform-print-content">
+          <div class="application-list__status__wrapper">
+            <div class="container application-list__status__container">
+              <div class="application-list__status__item">
+                <div class="application-list__status__label">
+                  {{ "Application"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
+                </div>
+                <div class="application-list__status__value">
+                  {{ statusTag }}
                 </div>
               </div>
-            {% endfor %}
+              <div class="application-list__status__item">
+                <div class="application-list__status__label">
+                  {{ "Saved"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
+                </div>
+                <div class="application-list__status__value">
+                  <div>{{ date }}</div>
+                </div>
+              </div>
+              <div class="application-list__status__item">
+                <div class="application-list__status__label">
+                  {{ "Application number"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
+                </div>
+                <div class="application-list__status__value transaction-id">
+                  <div>{{ atv_document.transaction_id }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <h1>{{ title }}</h1>
+            <div{{ attributes.addClass(classes) }}>
+              {% for key, page in pages %}
+                <div class="details-section-divider">
+                  <h2>{{ page.label }}</h2>
+                  <div class="grants-profile--extrainfo">
+                    {% for key2, section in page.sections %}
+                      <section class="js-form-item form-item js-form-wrapper form-wrapper webform-section">
+                        <div class="webform-section-grid-wrapper">
+                          <h3 class="webform-section-title">{{ section.label }}</h3>
+                          <dl class="webform-section-contents">
+                            {% for key3, field in section.fields %}
+                              {% if field.ID != 'applicantType' %}
+                                <dt class="webform-field-title">{{ field.label }}</dt>
+                                <dd class="webform-field-wrapper">{{ field.value }}</dd>
+                              {% endif %}
+                            {% endfor %}
+                          </dl>
+                        </div>
+                      </section>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
-
-      </div>
-    </td></tr></tbody>
+      </td>
+    </tr>
+  </tbody>
 </table>
 <header class="webform-print-header">
   {{ helsinki_logo|raw }}

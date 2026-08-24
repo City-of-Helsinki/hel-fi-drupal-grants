@@ -8,18 +8,23 @@ export default defineConfig({
   globalTeardown: require.resolve('./tests/global.teardown.ts'),
   globalSetup: require.resolve('./tests/init.setup.ts'),
   testDir: './tests',
+  /* Ignore form helper files. */
+  testIgnore: ['**/formInputs.ts', '**/formLogic.ts', '**/archived/*', '**/upcoming/*'],
   timeout: 300 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
+  /* Retry once on CI, so f.e. a network error doesn't fail the whole run. */
+  /* This also makes `trace: 'on-first-retry'` below actually produce a trace. */
+  retries: process.env.CI ? 1 : 0,
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI ? [
       ['junit', {outputFile: 'test-results/e2e-junit-results.xml'}],
       ['html']
     ]
-    : 'html',
+    : [['list'], ['html']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Wait for maximum of 120 seconds. Drop the timeout to 60s when */
@@ -75,8 +80,33 @@ export default defineConfig({
     },
     {
       name: 'profile-registered_community',
-      testMatch: '/profiles/registered_community.ts ',
+      testMatch: '/profiles/registered_community.ts',
       dependencies: ['auth-setup']
+    },
+    /* Profile edit tests. */
+    {
+      name: 'profile-edits',
+      testMatch: [
+        '/profiles/private_person_edit.ts',
+        '/profiles/unregistered_community_edit.ts',
+        '/profiles/registered_community_edit.ts',
+      ],
+      dependencies: ['smoke', 'profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+    },
+    {
+      name: 'profile-edit-private_person',
+      testMatch: '/profiles/private_person_edit.ts',
+      dependencies: ['profile-private_person']
+    },
+    {
+      name: 'profile-edit-unregistered_community',
+      testMatch: '/profiles/unregistered_community_edit.ts',
+      dependencies: ['profile-unregistered_community']
+    },
+    {
+      name: 'profile-edit-registered_community',
+      testMatch: '/profiles/registered_community_edit.ts',
+      dependencies: ['profile-registered_community']
     },
     /* Form tests by user profile (role). */
     {
@@ -97,9 +127,8 @@ export default defineConfig({
     /* Run all form tests. */
     {
       name: 'forms-all',
-      testMatch: '/forms/*',
-      grepInvert: /(archived|upcoming)/,
-      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+      testMatch: '/forms/**/*',
+      dependencies: ['profile-edits']
     },
     /* Run all smoke tests. */
     {
@@ -109,9 +138,40 @@ export default defineConfig({
     },
     /* React forms. */
     {
-      name: 'forms-70',
+      name: 'forms-react',
+      testMatch: [
+        '/forms/56_liikunta_yleisavustushakemus/*',
+        '/forms/70_iakkaiden_kulttuuri_ja_liikunta/*',
+        '/forms/70_liikuntaharrastamisen_avustus/*',
+        '/forms/70_promoting_safer_club_activities/*',
+        '/forms/70_segregaation_ehkaisemisavustus/*',
+      ],
+      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community'],
+    },
+    {
+      name: 'forms-56-liikuntayleisavustus',
+      testMatch: '/forms/56_liikunta_yleisavustushakemus/*',
+      dependencies: ['profile-registered_community'],
+    },
+    {
+      name: 'forms-70-iakkaiden',
+      testMatch: '/forms/70_iakkaiden_kulttuuri_ja_liikunta/*',
+      dependencies: ['profile-registered_community'],
+    },
+    {
+      name: 'forms-70-liikuntaharrastus',
+      testMatch: '/forms/70_liikuntaharrastamisen_avustus/*',
+      dependencies: ['profile-registered_community'],
+    },
+    {
+      name: 'forms-70-promoting',
       testMatch: '/forms/70_promoting_safer_club_activities/*',
       dependencies: ['profile-registered_community'],
+    },
+    {
+      name: 'forms-70-segregaatio',
+      testMatch: '/forms/70_segregaation_ehkaisemisavustus/*',
+      dependencies: ['profile-registered_community', 'profile-unregistered_community'],
     },
     /* Webforms. */
     /* Form 29 tests. */

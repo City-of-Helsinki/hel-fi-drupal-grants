@@ -240,7 +240,12 @@ export const SelectWidget = ({
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
-    return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
+    const optionLabel = options.enumOptions?.find((item) => {
+      return item.value === String(value);
+    })?.label;
+    const renderedValue = optionLabel ?? value;
+
+    return <PreviewInput value={renderedValue} label={label} uiSchema={uiSchema} />;
   }
 
   return (
@@ -425,7 +430,9 @@ export const RadioWidget = ({
               name={optionId}
               onChange={() => onChange(option.value)}
               style={defaultRadioButtonStyle}
-              className='hdbt-form--radiobutton'
+              className={`hdbt-form--radiobutton hdbt-form--field--radiobutton--${
+                option.value === true ? 'yes' : option.value === false ? 'no' : String(option.value)
+              }`}
             />
           );
         })}

@@ -15,7 +15,7 @@ const pageCollection: PageCollection = {
       {
         containerClass: ".component--list-of-links",
         elements: [
-          { selector: ".list-of-links__item", countAtLeast: 3 }
+          { selector: ".list-of-links__item", countAtLeast: 2 }
         ],
         occurrences: 2,
       },

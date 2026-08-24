@@ -98,30 +98,38 @@
           "affirmativeExpands": true
         }
       },
-      "received_compensations": {
+      "other_compensations": {
         "ui:options": {
           "addText": "other_compensation.add"
         },
         "items": {
-          "received_compensation_issuer_name": {
+          "other_compensation_issuer": {
+            "ui:enumNames": [
+              "other_compensation_issuer.state",
+              "other_compensation_issuer.eu",
+              "other_compensation_issuer.other",
+              "other_compensation_issuer.insitute"
+            ]
+          },
+          "other_compensation_issuer_name": {
             "ui:options": {
-              "tooltipLabel": "received_compensation_issuer_name.title",
-              "tooltipButtonLabel": "received_compensation_issuer_name.title",
-              "tooltipText": "received_compensation_issuer_name.description"
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
             }
           },
-          "received_compensation_amount": {
+          "other_compensation_amount": {
             "ui:options": {
-              "printableName": "received_compensation_amount.printable_title"
+              "printableName": "other_compensation_amount.printable_title"
             }
           },
-          "received_compensation_description": {
+          "other_compensation_description": {
             "ui:widget": "textarea",
             "misc:max-length": 1000,
             "ui:options": {
-              "tooltipLabel": "received_compensation_description.title",
-              "tooltipButtonLabel": "received_compensation_description.title",
-              "tooltipText": "received_compensation_description.description"
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
             }
           }
         }

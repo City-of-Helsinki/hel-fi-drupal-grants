@@ -23,7 +23,7 @@
         "drupal/externalauth": "^2.0",
         "drupal/hdbt": "^6.0",
         "drupal/hdbt_admin": "^3.0",
-        "drupal/helfi_azure_fs": "^2",
+        "drupal/helfi_azure_fs": "^2.0",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_navigation": "^2.3",
         "drupal/helfi_platform_config": "^5.1",
@@ -53,8 +53,6 @@
         "justinrainbow/json-schema": "^6",
         "league/openapi-psr7-validator": "^0.22.0",
         "mglaman/composer-drupal-lenient": "*",
-        "npm-asset/select2": "^4.0",
-        "oomphinc/composer-installers-extender": "^2.0",
         "ramsey/uuid": "^4.9",
         "wikimedia/composer-merge-plugin": "^2.1"
     },
@@ -79,11 +77,11 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-composer-scaffold": true,
             "mglaman/composer-drupal-lenient": true,
-            "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
             "tbachert/spi": false,
-            "wikimedia/composer-merge-plugin": true
+            "wikimedia/composer-merge-plugin": true,
+            "symfony/runtime": true
         },
         "audit": {
             "abandoned": "report",
@@ -95,11 +93,11 @@
         "patches": {
             "drupal/core": {
                 "Fix missing wrapper from core form": "patches/fix-form-wrapper.patch",
-                "#3023228: Status messages show up twice": "https://www.drupal.org/files/issues/2023-07-19/3023228-39.patch",
+                "#3023228: Status messages show up twice": "patches/3023228-39.patch",
                 "Asset resolver empty settings cache issue": "patches/assetresolver-settings.patch",
                 "Pseudonymize logging of user data.": "patches/drupal_10.5.3-user-module-gdpr-pseudonymize-logging.patch",
                 "Change file name length constraint to 100 characters": "patches/drupal-10.5.x-file-name-length-constraint-100-chars.patch",
-                "Add ability to delete all from tempstore": "https://www.drupal.org/files/issues/2020-10-23/get_delete_all_temp-2475719-31.patch"
+                "#2475719 Add ability to delete all from tempstore": "patches/get_delete_all_temp-2475719-31.patch"
             },
             "drupal/autologout": {
                 "Pseudonymize logging of user data.": "patches/autologout_2.0.0-gdpr-pseudonymize-logging.patch"
@@ -131,9 +129,7 @@
                 "type:drupal-core"
             ],
             "public/libraries/{$name}": [
-                "type:drupal-library",
-                "type:bower-asset",
-                "type:npm-asset"
+                "type:drupal-library"
             ],
             "public/modules/contrib/{$name}": [
                 "type:drupal-module"
@@ -154,7 +150,6 @@
                 "type:drupal-drush"
             ]
         },
-        "installer-types": ["bower-asset", "npm-asset"],
         "patchLevel": {
             "drupal/core": "-p2"
         },
@@ -183,10 +178,6 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
         }
     ],
     "scripts": {

@@ -19,6 +19,7 @@ dependencies:
   module:
     - content_translation
     - entity_usage
+    - external_entities
     - file
     - filter
     - helfi_api_base
@@ -166,6 +167,7 @@ permissions:
   - 'update any tpr_service'
   - 'update any tpr_unit'
   - 'update content translations'
+  - 'update linkedevents_event external entity'
   - 'update media'
   - 'update own tpr_service'
   - 'update own tpr_unit'
@@ -179,6 +181,8 @@ permissions:
   - 'view announcement revisions'
   - 'view any unpublished content'
   - 'view landing_page revisions'
+  - 'view linkedevents_event external entity'
+  - 'view linkedevents_event external entity collection'
   - 'view news_item revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'

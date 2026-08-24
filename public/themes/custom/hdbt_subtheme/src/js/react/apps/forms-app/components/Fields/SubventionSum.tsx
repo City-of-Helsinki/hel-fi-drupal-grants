@@ -35,6 +35,7 @@ export const SubventionSum = ({ idSchema, name, onChange, schema, uiSchema }: Fi
   return (
     <TextInput
       {...({
+        className: 'hdbt-form--field--subvention-sum',
         disabled: true,
         id: idSchema.$id,
         label: schema?.title,

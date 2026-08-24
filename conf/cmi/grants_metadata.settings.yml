@@ -7,6 +7,7 @@ third_party_options:
     PEL: PEL
     KUVA: KUVA
     KASKO: KASKO
+    TYPA: TYPA
   applicant_types:
     registered_community: 'Rekisteröity yhdistys'
     unregistered_community: 'Rekisteröitymätön yhteisö tai ryhmä'

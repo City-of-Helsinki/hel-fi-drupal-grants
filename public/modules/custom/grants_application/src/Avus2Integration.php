@@ -77,13 +77,6 @@ class Avus2Integration {
 
     $headers = [];
 
-    if ($integrationError) {
-      // We set the data source for integration to be used in controlling
-      // application testing in problematic cases.
-      // FIXME: this is immediately overridden to USER.
-      $headers['X-hki-UpdateSource'] = 'RESEND';
-    }
-
     // Get status from updated document.
     $headers['X-Case-Status'] = $document->getStatus();
 

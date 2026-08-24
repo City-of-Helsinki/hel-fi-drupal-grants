@@ -55,7 +55,7 @@
   }
 
   .description {
-    color: $color-black-60;
+    color: var(--color-black-60);
   }
 }
 
@@ -95,7 +95,7 @@
   }
 
   >dt.webform-section-title {
-    color: var(--hdbt-color-black);
+    color: var(--color-black-90);
     display: block;
     flex-shrink: 0;
     font-size: var(--fontsize-heading-s);
@@ -172,7 +172,7 @@ fieldset input[type="button"] {
   >h3.webform-section-title,
   >h4.webform-section-title,
   >dt.webform-section-title {
-    color: var(--hdbt-color-black);
+    color: var(--color-black-90);
     display: block;
     flex-shrink: 0;
     font-size: 24px;
@@ -552,6 +552,17 @@ input[type='radio']+label.form-required::after {
   @include breakpoint($breakpoint-m) {
     margin: 0;
     width: 33%;
+  }
+}
+
+.hdbt-form--section__title,
+.webform-section-title {
+  // Needs own focus styles because generic ones don't work.
+  &:focus,
+  &:active {
+    height: fit-content;
+    outline: 3px solid $color-black;
+    outline-offset: 2px;
   }
 }
 

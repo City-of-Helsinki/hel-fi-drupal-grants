@@ -1601,11 +1601,6 @@ parameters:
 			path: public/modules/custom/grants_application/tests/src/Kernel/Controller/ApplicationControllerTest.php
 
 		-
-			message: "#^Cannot call method id\\(\\) on Drupal\\\\user\\\\Entity\\\\User\\|false\\.$#"
-			count: 2
-			path: public/modules/custom/grants_application/tests/src/Kernel/Entity/ApplicationSubmissionLockTest.php
-
-		-
 			message: "#^Call to an undefined method Drupal\\\\Core\\\\Link\\|Drupal\\\\Core\\\\Url\\:\\:getUrl\\(\\)\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/tests/src/Kernel/Entity/ApplicationSubmissionTest.php
@@ -3456,6 +3451,16 @@ parameters:
 			path: public/modules/custom/grants_handler/grants_handler.install
 
 		-
+			message: """
+				#^Call to deprecated function user_load_by_name\\(\\)\\:
+				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\.
+				  Use \\\\Drupal\\:\\:entityTypeManager\\(\\)\\-\\>getStorage\\('user'\\)\\-\\>loadByProperties\\(\\)
+				  instead\\.$#
+			"""
+			count: 1
+			path: public/modules/custom/grants_handler/grants_handler.module
+
+		-
 			message: "#^Function _grants_handler_add_checkmark_to_text\\(\\) has parameter \\$textValue with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/grants_handler.module
@@ -3687,16 +3692,6 @@ parameters:
 
 		-
 			message: "#^Function grants_handler_preprocess_grants_handler_completion\\(\\) has parameter \\$variables with no type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
-			message: "#^Function grants_handler_preprocess_grants_handler_webform_print_submission\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
-			message: "#^Function grants_handler_preprocess_grants_handler_webform_print_submission\\(\\) has parameter \\$variables with no type specified\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/grants_handler.module
 
@@ -4427,11 +4422,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$object of function date_format expects DateTimeInterface, DateTime\\|false given\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/Controller/AtvPrintViewController.php
-
-		-
-			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(mixed, mixed\\)\\: int, Closure\\(mixed, mixed\\)\\: bool given\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/src/Controller/AtvPrintViewController.php
 
@@ -10236,6 +10226,11 @@ parameters:
 			path: public/modules/custom/grants_profile/src/Plugin/DataType/GrantsProfileRegisteredCommunityData.php
 
 		-
+			message: "#^Cannot access offset 'title' on array\\|Drupal\\\\Component\\\\Plugin\\\\Definition\\\\PluginDefinitionInterface\\.$#"
+			count: 3
+			path: public/modules/custom/grants_profile/src/Plugin/Derivative/DynamicLocalTasks.php
+
+		-
 			message: "#^Method Drupal\\\\grants_profile\\\\Plugin\\\\Derivative\\\\DynamicLocalTasks\\:\\:getDerivativeDefinitions\\(\\) has parameter \\$base_plugin_definition with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_profile/src/Plugin/Derivative/DynamicLocalTasks.php
@@ -10976,11 +10971,6 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:debugPrint\\(\\) has parameter \\$replacements with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteGdprData\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
@@ -11451,6 +11441,16 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/src/ResilientLoggerTasks.php
 
 		-
+			message: "#^Parameter \\#1 \\$mode of method Drupal\\\\Core\\\\Database\\\\StatementInterface\\:\\:fetchAll\\(\\) expects Drupal\\\\Core\\\\Database\\\\Statement\\\\FetchAs\\|null, int given\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSource.php
+
+		-
+			message: "#^Parameter \\#1 \\$mode of method Drupal\\\\Core\\\\Database\\\\StatementInterface\\:\\:fetch\\(\\) expects Drupal\\\\Core\\\\Database\\\\Statement\\\\FetchAs\\|null, int given\\.$#"
+			count: 2
+			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSourceEntry.php
+
+		-
 			message: "#^PHPDoc type array of property Drupal\\\\Tests\\\\helfi_audit_log\\\\Kernel\\\\AuditLogServiceTest\\:\\:\\$modules is not covariant with PHPDoc type array\\<string\\> of overridden property Drupal\\\\KernelTests\\\\KernelTestBase\\:\\:\\$modules\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
@@ -11469,6 +11469,16 @@ parameters:
 			message: "#^Method Drupal\\\\Tests\\\\helfi_av\\\\Unit\\\\AntivirusServiceTest\\:\\:getSut\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_av/tests/src/Unit/AntivirusServiceTest.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$uid\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_helsinki_profiili/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^Cannot access property \\$uid on object\\|false\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_helsinki_profiili/src/Controller/HelfiGdprApiController.php
 
 		-
 			message: "#^Call to an undefined method Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:get\\(\\)\\.$#"

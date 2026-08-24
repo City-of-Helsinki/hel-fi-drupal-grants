@@ -1,6 +1,7 @@
 {
   "title": "Nuorisotoiminnan erillisavustus segregaation ehkäisemiseen",
   "description": "KUVAERILLIS",
+  "form_identifier": "segregaation_ehkaisemisavustus",
   "application_type": "KUVAERILLIS",
   "application_type_id": 70,
   "application_industry": "KUVA",

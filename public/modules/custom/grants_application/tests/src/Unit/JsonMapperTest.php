@@ -433,7 +433,7 @@ final class JsonMapperTest extends UnitTestCase {
           'ID' => 'justAnotherNumericValue',
           'valueType' => 'float',
           'value' => '',
-          'label' => 'Float should not be affected',
+          'label' => 'Float should also be affected',
         ],
       ],
       "compensation.my_numbers.income_with_dot" => [
@@ -460,6 +460,25 @@ final class JsonMapperTest extends UnitTestCase {
           'label' => 'This is overwritten',
         ],
       ],
+      "compensation.my_numbers.multiple_values.0.n" => [
+        'datasource' => 'form_data',
+        'source' => 'number_data.multiple_values',
+        'mapping_type' => 'multiple_values',
+        'data' => [
+          'label' => [
+            'ID' => 'multivalueLabel',
+            'valueType' => 'string',
+            'value' => '',
+            'label' => '',
+          ],
+          'val' => [
+            'ID' => 'theValue',
+            'valueType' => 'float',
+            'value' => '',
+            'label' => '',
+          ],
+        ],
+      ],
     ];
 
     $formData = [
@@ -473,7 +492,17 @@ final class JsonMapperTest extends UnitTestCase {
               ['label' => 'the label 2', 'amount' => 123],
               ['label' => 'the label 3', 'amount' => ""]
             ]
-          ]
+          ],
+          'multiple_values' => [
+            [
+              'label' => 'the label',
+              'val' => '134,45'
+            ],
+            [
+              'label' => 'the label',
+              'val' => '690,89'
+            ],
+          ],
         ],
       ],
     ];
@@ -483,14 +512,13 @@ final class JsonMapperTest extends UnitTestCase {
     $mappedData = $mapper->map($formData);
 
     $this->assertEquals('133.7', $mappedData['compensation']['my_numbers']['double_with_dot']['value']);
-    $this->assertEquals('12,0', $mappedData['compensation']['my_numbers']['float_with_comma']['value']);
+    $this->assertEquals('12.0', $mappedData['compensation']['my_numbers']['float_with_comma']['value']);
     $this->assertEquals('123.45', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['value']);
     $this->assertEquals('the label', $mappedData['compensation']['my_numbers']['income_with_dot'][0]['label']);
     $this->assertEquals('123', $mappedData['compensation']['my_numbers']['income_with_dot'][1]['value']);
     $this->assertEquals('0', $mappedData['compensation']['my_numbers']['income_with_dot'][2]['value']);
-
-    // Float is still comma, only double is changed to dot.
-    $this->assertEquals('123,45', $mappedData['compensation']['my_numbers']['income_with_comma'][0]['value']);
+    $this->assertEquals('123.45', $mappedData['compensation']['my_numbers']['income_with_comma'][0]['value']);
+    $this->assertEquals('134.45', $mappedData['compensation']['my_numbers']['multiple_values'][0][1]['value']);
   }
 
   /**

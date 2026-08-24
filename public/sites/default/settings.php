@@ -286,6 +286,13 @@ if (
   // Register redis services to make sure we don't get a non-existent service
   // error while trying to enable the module.
   $settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
+
+  // Support igbinary. We override redis services, so this *must* be loaded
+  // after redis.services.yml.
+  // @todo Remove this once Redis supports the new ObjectAwareSerializationInterface.
+  if (file_exists('modules/contrib/helfi_api_base/redis.services.yml')) {
+    $settings['container_yamls'][] = 'modules/contrib/helfi_api_base/redis.services.yml';
+  }
 }
 
 $settings['is_azure'] = FALSE;
@@ -357,6 +364,21 @@ if (getenv('OPENAI_KEY')) {
   $config['helfi_search.settings']['openai_model'] = getenv('OPENAI_MODEL');
 }
 
+// Azure OpenAI for Drupal AI module (ai_provider_azure).
+// API key is managed by the Key module entity 'helfi_azure_openai' which reads
+// AZURE_OPENAI_API_KEY from the environment directly.
+// See: https://helsinkisolutionoffice.atlassian.net/browse/UHF-13110.
+if (getenv('AZURE_OPENAI_ENDPOINT') && getenv('AZURE_OPENAI_DEPLOYMENT_NAME')) {
+  $deployment = getenv('AZURE_OPENAI_DEPLOYMENT_NAME');
+  $config['ai.settings']['default_providers']['chat']['model_id'] = $deployment;
+  $config['ai.settings']['default_providers']['embeddings']['model_id'] = $deployment;
+  $config['ai.settings']['models']['azure']['chat'][$deployment] = [
+    'endpoint' => getenv('AZURE_OPENAI_ENDPOINT'),
+    'api_key' => 'helfi_azure_openai',
+    'connect_header' => 'api-key',
+  ];
+}
+
 // Hakuvahti:
 if (getenv('HAKUVAHTI_URL')) {
   $config['helfi_hakuvahti.settings']['base_url'] = getenv('HAKUVAHTI_URL');
@@ -400,6 +422,32 @@ if ($env !== 'production') {
   $config['stage_file_proxy.settings']['hotlink'] = FALSE;
   $config['stage_file_proxy.settings']['use_imagecache_root'] = TRUE;
 }
+
+// Resilient logger (audit log) configuration
+$auditLogConfig = [
+  'sources' => [
+      [
+        'class' => 'Drupal\helfi_api_base\AuditLog\Sources\AuditLogSource'
+      ]
+  ],
+  'store_old_entries_days' => 30,
+  'batch_limit' => 5000,
+  'chunk_size' => 500,
+  'schedule_submit_unsent_entries' => '+15min',
+  'schedule_clear_sent_entries' => 'first day of next month midnight',
+];
+
+if ($auditLogUrl = getenv('AUDIT_LOG_ES_URL')) {
+  $auditLogConfig['targets'][] = [
+    'class' => 'ResilientLogger\Targets\ElasticsearchLogTarget',
+    'es_url' => $auditLogUrl,
+    'es_username' => getenv('AUDIT_LOG_ES_USERNAME') ?: '',
+    'es_password' => getenv('AUDIT_LOG_ES_PASSWORD') ?: '',
+    'es_index' => getenv('AUDIT_LOG_ES_INDEX') ?: '',
+  ];
+}
+
+$settings['resilient_logger'] = $auditLogConfig;
 
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {

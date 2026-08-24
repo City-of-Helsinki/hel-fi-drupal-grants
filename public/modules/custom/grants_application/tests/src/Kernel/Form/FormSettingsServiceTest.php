@@ -240,20 +240,52 @@ final class FormSettingsServiceTest extends KernelTestBase {
     $deleteAfter = $settings->getDraftDeleteAfter();
     $this->assertEquals('2030-02-01', $deleteAfter);
 
+    // Continuous application without close-time.
+    $settingsValues = [
+      'continuous' => TRUE,
+      'application_close' => NULL,
+    ];
+    $settings = new FormSettings($settingsValues, [], [], []);
+    $deleteAfter = $settings->getDraftDeleteAfter();
+    $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
+
+    // Continuous application with close time.
     $settingsValues = [
       'continuous' => TRUE,
       'application_close' => '2030-01-01',
     ];
     $settings = new FormSettings($settingsValues, [], [], []);
-
-    // On continuous application, the draft is deleted after one year.
     $deleteAfter = $settings->getDraftDeleteAfter();
-    $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
+    $this->assertEquals('2030-02-01', $deleteAfter);
 
     // Test bad settings.
     $settings = new FormSettings([], [], [], []);
     $deleteAfter = $settings->getDraftDeleteAfter();
     $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
+  }
+
+  /**
+   * Test getting form settings by form name.
+   */
+  public function testGetSettingsByName(): void {
+    $settings = $this->service->getFormSettingsByFormName('Testi 123 hakemus');
+    $this->assertEquals(123, $settings->getFormId());
+
+    try {
+      $this->service->getFormSettingsByFormName('No application name found');
+    }
+    catch (\Exception $e) {
+      $this->assertTrue($e instanceof \Exception);
+    }
+  }
+
+  /**
+   * Test getting form metadata.
+   */
+  public function testGetMetadata(): void {
+    $this->createApplicationMetadataEntity();
+    $metadata = $this->service->getFormSettingsMetadata(123, 'test-application');
+    $this->assertEquals(123, $metadata->getMetadata()['application_type_id']);
   }
 
 }
