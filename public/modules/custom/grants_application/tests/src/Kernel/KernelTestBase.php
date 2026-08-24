@@ -17,6 +17,7 @@ class KernelTestBase extends CoreKernelTestBase {
   protected static $modules = [
     'content_lock',
     'datetime',
+    'diff',
     'entity',
     'externalauth',
     'field',
@@ -61,6 +62,7 @@ class KernelTestBase extends CoreKernelTestBase {
     $config->save();
 
     $this->installEntitySchema('user');
+    $this->installSchema('user', ['users_data']);
     $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('application_metadata');
     $this->installSchema('system', ['sequences']);

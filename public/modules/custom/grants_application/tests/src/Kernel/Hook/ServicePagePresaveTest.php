@@ -28,6 +28,7 @@ final class ServicePagePresaveTest extends KernelTestBase {
 
     $this->installEntitySchema('node');
     $this->installSchema('node', ['node_access']);
+    $this->installConfig(['system']);
 
     $locale_tables = [
       'locales_source',

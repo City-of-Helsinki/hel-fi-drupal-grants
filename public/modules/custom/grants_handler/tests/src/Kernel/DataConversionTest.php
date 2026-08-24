@@ -31,6 +31,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     'locale',
     'locale_test',
     // Contribs from drupal.org.
+    'diff',
     'webform',
     'externalauth',
     'openid_connect',

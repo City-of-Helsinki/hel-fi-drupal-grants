@@ -87,6 +87,7 @@ final class DraftTest extends KernelTestBase {
     'path_alias',
     'file',
     'field',
+    'diff',
     'helfi_api_base',
     'helfi_atv',
     'helfi_helsinki_profiili',

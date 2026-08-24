@@ -33,6 +33,7 @@ abstract class GrantsHandlerKernelTestBase extends KernelTestBase {
     'path_alias',
     'file',
     'field',
+    'diff',
     'helfi_api_base',
     'helfi_atv',
     'helfi_helsinki_profiili',
@@ -63,6 +64,7 @@ abstract class GrantsHandlerKernelTestBase extends KernelTestBase {
     $this->installEntitySchema('webform');
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
+    $this->installSchema('user', ['users_data']);
     $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('paragraph');
     $this->installEntitySchema('paragraphs_type');
