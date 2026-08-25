@@ -36,6 +36,7 @@ class ResendApplicationsFormTest extends KernelTestBase {
   protected static $modules = [
     'grants_admin_applications',
     'file',
+    'diff',
     'helfi_helsinki_profiili',
     'helfi_api_base',
     'user',

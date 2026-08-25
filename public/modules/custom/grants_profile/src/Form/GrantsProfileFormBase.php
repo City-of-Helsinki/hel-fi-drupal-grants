@@ -20,6 +20,8 @@ use Drupal\Core\Utility\Error;
 use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_api_base\AuditLog\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
@@ -212,39 +214,37 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
     $grantsProfileDocument = $storage['profileDocument'];
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
-    /** @var \Drupal\helfi_audit_log\AuditLogService $auditLogService */
-    $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
+    /** @var \Drupal\helfi_api_base\AuditLog\AuditLogService $auditLogService */
+    $auditLogService = \Drupal::service(AuditLogService::class);
 
     try {
       // Delete attachment by href.
       $deleteResult = $atvService->deleteAttachmentByUrl($file);
 
-      $message = [
-        "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-        "status" => "SUCCESS",
-        "target" => [
+      $auditLogService->logOperation(new AuditLogEvent(
+        operation: "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+        message: "SUCCESS",
+        target: [
           "id" => $grantsProfileDocument->getId(),
           "type" => $grantsProfileDocument->getType(),
           "name" => $grantsProfileDocument->getTransactionId(),
         ],
-      ];
-      $auditLogService->dispatchEvent($message);
+      ));
 
     }
     catch (\Throwable $e) {
 
       $deleteResult = FALSE;
 
-      $message = [
-        "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-        "status" => "FAILURE",
-        "target" => [
+      $auditLogService->logOperation(new AuditLogEvent(
+        operation: "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+        message: "FAILURE",
+        target: [
           "id" => $grantsProfileDocument->getId(),
           "type" => $grantsProfileDocument->getType(),
           "name" => $grantsProfileDocument->getTransactionId(),
         ],
-      ];
-      $auditLogService->dispatchEvent($message);
+      ));
 
       \Drupal::logger('grants_profile')
         ->error('Attachment deletion failed, @error', ['@error' => $e->getMessage()]);
