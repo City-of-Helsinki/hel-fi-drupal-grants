@@ -29,7 +29,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [

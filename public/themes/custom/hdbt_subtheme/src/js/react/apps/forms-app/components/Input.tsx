@@ -123,7 +123,7 @@ export const TextInput = ({
     );
   }
 
-  const maxLength = uiSchema?.['misc:max-length'] as number | undefined;
+  const maxLength = schema.maxLength;
 
   return (
     <HDSTextInput
@@ -177,7 +177,7 @@ export const TextArea = ({
   };
 
   const defaultValue = getDefaultValue();
-  const maxLength = uiSchema?.['misc:max-length'] ?? 5000;
+  const maxLength = schema.maxLength ?? 5000;
 
   useEffect(() => {
     if (!value && defaultValue) {

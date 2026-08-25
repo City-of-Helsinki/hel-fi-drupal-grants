@@ -67,7 +67,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -320,7 +321,8 @@
           "properties": {
             "purpose": {
               "title": "purpose_section_purpose.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1250
             }
           },
           "required": [
@@ -528,11 +530,13 @@
           "properties": {
             "project_name": {
               "title": "project_name.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 300
             },
             "project_purpose_goals": {
               "title": "project_purpose_goals.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2500
             },
             "is_application_extension": {
               "title": "is_application_extension.title",
@@ -560,7 +564,8 @@
                 },
                 "project_actions_timeline_2026": {
                   "title": "project_actions_timeline_2026.title",
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 2500
                 }
               }
             },
@@ -579,27 +584,33 @@
                 },
                 "grant_goals_1": {
                   "title": "grant_goals_1.title",
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 1250
                 },
                 "grant_goals_2": {
                   "title": "grant_goals_2.title",
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 1250
                 },
                 "grant_goals_3": {
                   "title": "grant_goals_3.title",
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 1250
                 },
                 "grant_goals_4": {
                   "title": "grant_goals_4.title",
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 1250
                 },
                 "grant_goals_5": {
                   "title": "grant_goals_5.title",
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 1250
                 },
                 "grant_goals_6": {
                   "title": "grant_goals_6.title",
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 1250
                 }
               }
             }
@@ -618,7 +629,8 @@
                 "properties": {
                   "grant_interim_report_2025": {
                     "title": "grant_interim_report_2025.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   }
                 },
                 "required": [
@@ -641,15 +653,18 @@
           "properties": {
             "target_groups_for_who": {
               "title": "target_groups_for_who.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1250
             },
             "target_groups_participation": {
               "title": "target_groups_participation.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1250
             },
             "target_groups_skills": {
               "title": "target_groups_skills.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1250
             },
             "assesment_1_fieldset": {
               "title": "assesment_1_fieldset.title",
@@ -707,13 +722,15 @@
                 },
                 "project_area_selection_criterion": {
                   "title": "project_area_selection_criterion.title",
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 1250
                 }
               }
             },
             "project_partners": {
               "title": "project_partners.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2500
             }
           }
         },
@@ -727,15 +744,18 @@
           "properties": {
             "key_risks": {
               "title": "key_risks.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1250
             },
             "monitoring_of_project_implementation": {
               "title": "monitoring_of_project_implementation.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1250
             },
             "project_establishment": {
               "title": "project_establishment.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2500
             }
           }
         }
@@ -766,7 +786,8 @@
                     "properties": {
                       "project_actions_timeline_2027": {
                         "title": "project_actions_timeline_2027.title",
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 2500
                       }
                     },
                     "required": [
@@ -800,7 +821,8 @@
                     "properties": {
                       "project_actions_timeline_2028": {
                         "title": "project_actions_timeline_2028.title",
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 2500
                       }
                     },
                     "required": [
@@ -837,7 +859,8 @@
                 "properties": {
                   "project_solved_problem": {
                     "title": "project_solved_problem.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   }
                 },
                 "required": [
@@ -917,7 +940,8 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -972,7 +996,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",

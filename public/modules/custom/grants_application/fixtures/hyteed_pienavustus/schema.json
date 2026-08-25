@@ -28,7 +28,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -67,7 +68,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -242,7 +244,8 @@
           "properties": {
             "community_activity_description": {
               "title": "community_activity.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 500
             },
             "community_practices_business": {
               "title": "community_practices_business.title",

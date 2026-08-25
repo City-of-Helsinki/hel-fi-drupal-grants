@@ -164,11 +164,13 @@
                 "properties": {
                   "multi_year_grant_years": {
                     "title": "multi_year_grant_years.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 100
                   },
                   "multi_year_grant_breakdown": {
                     "title": "multi_year_grant_breakdown.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 100
                   }
                 },
                 "required": [
@@ -216,7 +218,8 @@
           "properties": {
             "project_name": {
               "title": "project_name.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 100
             },
             "is_festival_or_event": {
               "title": "is_festival_or_event.title",
@@ -229,7 +232,8 @@
             },
             "project_short_description": {
               "title": "project_short_description.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 700
             }
           }
         },
@@ -381,7 +385,8 @@
           "properties": {
             "event_dates": {
               "title": "event_dates.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 255
             },
             "project_start_date": {
               "title": "project_start_date.title",
@@ -399,7 +404,8 @@
           "properties": {
             "detailed_project_description": {
               "title": "detailed_project_description.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2500
             }
           }
         }
@@ -414,11 +420,13 @@
           "properties": {
             "artistic_starting_points": {
               "title": "artistic_starting_points.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "diversity_and_equality": {
               "title": "diversity_and_equality.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         },
@@ -428,15 +436,18 @@
           "properties": {
             "accessibility": {
               "title": "accessibility.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "community_spirit": {
               "title": "community_spirit.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "target_audiences": {
               "title": "target_audiences.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         },
@@ -446,15 +457,18 @@
           "properties": {
             "professionalism": {
               "title": "professionalism.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "ecology": {
               "title": "ecology.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "partners": {
               "title": "partners.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         }
@@ -552,7 +566,8 @@
           "properties": {
             "other_valuable_input": {
               "title": "other_valuable_input.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         }
@@ -567,7 +582,8 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -694,7 +710,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",

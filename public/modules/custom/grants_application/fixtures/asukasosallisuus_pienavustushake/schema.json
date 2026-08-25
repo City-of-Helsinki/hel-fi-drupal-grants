@@ -28,7 +28,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -67,7 +68,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -126,7 +128,8 @@
             },
             "purpose": {
               "title": "purpose_section_purpose.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           },
           "required": ["purpose"]

@@ -28,7 +28,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -67,7 +68,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -161,7 +163,8 @@
           "properties": {
             "purpose": {
               "title": "purpose_section_purpose.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             }
           },
           "required": [
@@ -277,11 +280,13 @@
           "properties": {
             "grant_recipient_type": {
               "title": "grant_recipient_type.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 100
             },
             "applicant_summary": {
               "title": "applicant_summary.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2500
             },
             "is_application_extension": {
               "title": "is_application_extension.title",
@@ -303,7 +308,8 @@
           "properties": {
             "project_name": {
               "title": "project_name.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 300
             },
             "project_schedule": {
               "title": "project_schedule.title",
@@ -366,7 +372,8 @@
                 "properties": {
                   "target_group_description": {
                     "title": "target_group_description.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1250
                   },
                   "participant_estimate": {
                     "title": "participant_estimate.title",
@@ -402,11 +409,13 @@
                   },
                   "postal_code_areas": {
                     "title": "postal_code_areas.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 500
                   },
                   "area_need": {
                     "title": "area_need.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   }
                 },
                 "required": [
@@ -420,27 +429,33 @@
                 "properties": {
                   "target_group_reach": {
                     "title": "target_group_reach.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "impact_on_participants": {
                     "title": "impact_on_participants.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1250
                   },
                   "youth_participation_planning": {
                     "title": "youth_participation_planning.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "key_partners": {
                     "title": "key_partners.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "new_partnerships": {
                     "title": "new_partnerships.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "establishment_after_project": {
                     "title": "establishment_after_project.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   }
                 },
                 "required": [
@@ -474,11 +489,13 @@
                 "properties": {
                   "past_project_objective": {
                     "title": "past_project_objective.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "past_target_group_and_means": {
                     "title": "past_target_group_and_means.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "participants_reached": {
                     "title": "participants_reached.title",
@@ -514,7 +531,8 @@
                   },
                   "hours_by_postal_area": {
                     "title": "hours_by_postal_area.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 500
                   }
                 },
                 "required": [
@@ -528,23 +546,28 @@
                 "properties": {
                   "achieved_objectives": {
                     "title": "achieved_objectives.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "current_year_objectives": {
                     "title": "current_year_objectives.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "tested_partnerships": {
                     "title": "tested_partnerships.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "key_partners_report": {
                     "title": "key_partners_report.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "youth_participation_report": {
                     "title": "youth_participation_report.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   }
                 },
                 "required": [
@@ -571,15 +594,18 @@
                   },
                   "grant_usage_report": {
                     "title": "grant_usage_report.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "significant_changes": {
                     "title": "significant_changes.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   },
                   "continuation_plan": {
                     "title": "continuation_plan.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 2500
                   }
                 }
               }
@@ -643,7 +669,8 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -698,7 +725,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",

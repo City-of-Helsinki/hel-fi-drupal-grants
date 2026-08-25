@@ -81,19 +81,23 @@
           "properties": {
             "event_for_applied_grant": {
               "title": "event_for_applied_grant.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 150
             },
             "event_target_group": {
               "title": "event_target_group.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "event_location": {
               "title": "event_location.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "event_details": {
               "title": "event_details.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 3000
             },
             "equality_radios": {
               "title": "equality_radios.title",
@@ -161,7 +165,8 @@
                 "properties": {
                   "equality_how": {
                     "title": "equality_how.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [
@@ -182,7 +187,8 @@
                 "properties": {
                   "inclusion_how": {
                     "title": "inclusion_how.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [
@@ -203,7 +209,8 @@
                 "properties": {
                   "environment_how": {
                     "title": "environment_how.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [
@@ -224,7 +231,8 @@
                 "properties": {
                   "exercise_how": {
                     "title": "exercise_how.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [
@@ -245,7 +253,8 @@
                 "properties": {
                   "activity_how": {
                     "title": "activity_how.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [

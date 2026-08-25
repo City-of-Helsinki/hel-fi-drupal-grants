@@ -28,7 +28,8 @@
         },
         "purpose": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -152,7 +153,8 @@
             },
             "project_short_description": {
               "title": "project_short_description.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 500
             }
           },
           "required": [
@@ -439,7 +441,8 @@
           "properties": {
             "comprehensive_description": {
               "title": "comprehensive_description.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2500
             }
           }
         }
@@ -461,7 +464,8 @@
           "properties": {
             "project_target_audiece": {
               "title": "project_target_audiece.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         },
@@ -471,7 +475,8 @@
           "properties": {
             "operations_partners": {
               "title": "operations_partners.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         }
@@ -494,11 +499,13 @@
                 "properties": {
                   "project_artistic_basis": {
                     "title": "project_artistic_basis.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   },
                   "project_equality": {
                     "title": "project_equality.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 }
               },
@@ -508,15 +515,18 @@
                 "properties": {
                   "project_accessibility": {
                     "title": "project_accessibility.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   },
                   "project_community": {
                     "title": "project_community.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   },
                   "project_target_audiece": {
                     "title": "project_target_audiece.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 }
               },
@@ -524,11 +534,13 @@
                 "properties": {
                   "operations_professionalism": {
                     "title": "operations_professionalism.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   },
                   "operations_ecology": {
                     "title": "operations_ecology.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 }
               }
@@ -675,7 +687,8 @@
           "properties": {
             "other_financing": {
               "title": "other_financing.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         }
@@ -690,7 +703,8 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -735,7 +749,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",

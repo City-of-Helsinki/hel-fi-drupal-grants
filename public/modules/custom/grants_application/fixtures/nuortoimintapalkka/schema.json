@@ -29,7 +29,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -69,7 +70,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -431,7 +433,8 @@
           "properties": {
             "youth_participation": {
               "title": "youth_participation.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         }
@@ -773,7 +776,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",
@@ -869,7 +873,8 @@
                 "properties": {
                   "rental_additional_information": {
                     "title": "rental_additional_information.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 5000
                   }
                 }
               }

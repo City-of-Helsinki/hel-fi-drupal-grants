@@ -92,7 +92,6 @@
           },
           "other_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",

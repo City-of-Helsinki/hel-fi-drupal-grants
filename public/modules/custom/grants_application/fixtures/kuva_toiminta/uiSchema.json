@@ -32,7 +32,6 @@
         }
       },
       "future_years_for_multi_year_grant": {
-        "misc:max-length": 100,
         "ui:options": {
           "tooltipLabel": "future_years_for_multi_year_grant.title",
           "tooltipButtonLabel": "future_years_for_multi_year_grant.title",
@@ -40,7 +39,6 @@
         }
       },
       "grant_amount_breakdown_per_year": {
-        "misc:max-length": 100,
         "ui:options": {
           "tooltipLabel": "grant_amount_breakdown_per_year.title",
           "tooltipButtonLabel": "grant_amount_breakdown_per_year.title",
@@ -69,7 +67,6 @@
         }
       },
       "project_brief_description": {
-        "misc:max-length": 700,
         "ui:widget": "textarea",
         "ui:options": {
           "tooltipLabel": "project_brief_description.title",
@@ -117,7 +114,6 @@
           },
           "other_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -233,15 +229,11 @@
       "festival_dates_info": {
         "ui:field": "textParagraph"
       },
-      "festival_dates": {
-        "misc:max-length": 100
-      },
       "other_activities_info": {
         "ui:field": "textParagraph"
       },
       "other_central_activities": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       }
     },
     "realized_activities_section": {
@@ -337,7 +329,6 @@
       ],
       "artistic_starting_points": {
         "ui:widget": "textarea",
-        "misc:max-length": 1000,
         "ui:options": {
           "tooltipLabel": "artistic_starting_points.title",
           "tooltipButtonLabel": "artistic_starting_points.title",
@@ -345,8 +336,7 @@
         }
       },
       "diversity_and_equality": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     },
     "accessibility_section": {
@@ -356,16 +346,13 @@
         "target_groups"
       ],
       "accessibility": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "community_spirit": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "target_groups": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     },
     "operations_section": {
@@ -375,16 +362,13 @@
         "partners"
       ],
       "professionalism": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "ecological_sustainability": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "partners": {
         "ui:widget": "textarea",
-        "misc:max-length": 1000,
         "ui:options": {
           "tooltipLabel": "partners.title",
           "tooltipButtonLabel": "partners.title",
@@ -399,16 +383,13 @@
         "upcoming_changes"
       ],
       "previous_goals": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "self_assessment_methods": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "upcoming_changes": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },
@@ -471,8 +452,7 @@
         "ui:field": "textParagraph"
       },
       "other_valuable_input": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     },
     "realized_income_expenses_section": {
@@ -538,7 +518,6 @@
     "additional_information_section": {
       "additional_information": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "hideNameFromPrint": true,
           "tooltipLabel": "additional_information.title",
@@ -635,8 +614,7 @@
         }
       },
       "further_clarification": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {

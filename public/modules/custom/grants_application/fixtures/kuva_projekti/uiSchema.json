@@ -44,8 +44,7 @@
           "tooltipButtonLabel": "project_short_description.title",
           "tooltipText": "project_short_description.tooltip"
         },
-        "ui:widget": "textarea",
-        "misc:max-length": 500
+        "ui:widget": "textarea"
       }
     },
     "other_compensations_section": {
@@ -86,7 +85,6 @@
           },
           "purpose": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -227,8 +225,7 @@
           "tooltipButtonLabel": "comprehensive_description.title",
           "tooltipText": "comprehensive_description.tooltip"
         },
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       }
     }
   },
@@ -250,26 +247,21 @@
           "tooltipButtonLabel": "project_artistic_basis.title",
           "tooltipText": "project_artistic_basis.tooltip"
         },
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "project_equality": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     },
     "accessibility_section": {
       "project_community": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "project_accessibility": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "project_target_audiece": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "ui:order": [
         "project_accessibility",
@@ -279,12 +271,10 @@
     },
     "operations_section": {
       "operations_professionalism": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "operations_ecology": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "operations_partners": {
         "ui:options": {
@@ -292,8 +282,7 @@
           "tooltipButtonLabel": "operations_partners.title",
           "tooltipText": "operations_partners.tooltip"
         },
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "ui:order": [
         "operations_professionalism",
@@ -375,8 +364,7 @@
     },
     "other_input_section": {
       "other_financing": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },
@@ -384,7 +372,6 @@
     "additional_information_section": {
       "additional_information": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "hideNameFromPrint": true,
           "tooltipLabel": "additional_information.title",
@@ -408,12 +395,10 @@
         "ui:field": "textParagraph"
       },
       "extra_info": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "further_clarification": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {

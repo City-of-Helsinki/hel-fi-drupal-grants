@@ -56,6 +56,31 @@ const formatMinLengthError = (error: ErrorObject) => {
 };
 
 /**
+ * Localize the "maxLength" error from AJV.
+ *
+ * The inputs cap typing and pasting, but a value can still arrive over the
+ * limit from a restored draft or a profile prefill.
+ *
+ * @param {ErrorObject} error
+ *   The error object.
+ *
+ * @return {string}
+ *   The localized error message.
+ */
+const formatMaxLengthError = (error: ErrorObject) => {
+  const {
+    params: { limit },
+    parentSchema,
+  } = error;
+
+  return Drupal.t(
+    '!field field must be at most @limit characters.',
+    { '!field': parentSchema?.title, '@limit': limit },
+    { context: 'Grants application: Validation' },
+  );
+};
+
+/**
  * Format a required field error message.
  *
  * @param {ErrorObject} error - The error object containing validation details.
@@ -141,6 +166,10 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
     switch (error.keyword) {
       case 'format': {
         outMessage = formatPatternError(error);
+        break;
+      }
+      case 'maxLength': {
+        outMessage = formatMaxLengthError(error);
         break;
       }
       case 'minItems': {
