@@ -83,7 +83,7 @@
         }
       }
     },
-    "received_compensations_section": {
+    "other_compensations_section": {
       "have_received_other_compensations": {
         "ui:widget": "radio",
         "ui:enumNames": [

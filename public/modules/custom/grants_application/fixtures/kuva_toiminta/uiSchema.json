@@ -471,9 +471,6 @@
           "tooltipText": "belonged_to_vos.description"
         }
       },
-      "realized_incomes_info": {
-        "ui:field": "textParagraph"
-      },
       "realized_income": {
         "income_group_name": {
           "ui:widget": "hidden"

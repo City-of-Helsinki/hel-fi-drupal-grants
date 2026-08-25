@@ -150,9 +150,6 @@
   },
   "planned_activity_step": {
     "activity_counts_section": {
-      "activity_counts_text": {
-        "ui:field": "textParagraph"
-      },
       "helsinki_counts_fieldset": {
         "ui:options": {
           "tooltipLabel": "helsinki_counts_fieldset.title",
@@ -306,9 +303,6 @@
         "ui:widget": "radio"
       },
       "budget_income": {
-        "budget_income_text": {
-          "ui:field": "textParagraph"
-        },
         "income_group_name": {
           "ui:widget": "hidden"
         },
@@ -335,9 +329,6 @@
         }
       },
       "budget_cost": {
-        "budget_cost_text": {
-          "ui:field": "textParagraph"
-        },
         "cost_group_name": {
           "ui:widget": "hidden"
         },
@@ -387,15 +378,9 @@
       "multiple_attachments_help": {
         "ui:field": "textParagraph"
       },
-      "formerly_provided_attachments_help": {
-        "ui:field": "textParagraph"
-      },
       "cant_view_after_help": {
         "misc:variant": "infobox",
         "ui:field": "textParagraph"
-      },
-      "extra_info": {
-        "ui:widget": "textarea"
       },
       "further_clarification": {
         "ui:widget": "textarea"
