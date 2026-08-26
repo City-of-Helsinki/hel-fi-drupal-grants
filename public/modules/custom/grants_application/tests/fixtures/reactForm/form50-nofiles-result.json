@@ -643,11 +643,6 @@
                           "ID": "otherCompensations",
                           "value": "1000",
                           "valueType": "double"
-                        },
-                        {
-                          "ID": "totalIncome",
-                          "value": "20000",
-                          "valueType": "double"
                         }
                     ],
                     "otherIncomeRowsArrayStatic": [],

@@ -724,17 +724,6 @@
       "valueType": "double"
     }
   },
-  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.10": {
-    "datasource": "form_data",
-    "source": "budget_step.realized_income_section.total_income",
-    "mapping_type": "default",
-    "data": {
-      "ID": "totalIncome",
-      "label": null,
-      "value": "0",
-      "valueType": "double"
-    }
-  },
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic": {
     "datasource": "form_data",
     "source": "hardcoded",

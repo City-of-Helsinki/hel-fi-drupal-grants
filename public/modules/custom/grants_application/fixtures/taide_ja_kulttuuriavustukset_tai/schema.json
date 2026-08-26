@@ -665,18 +665,12 @@
               "format": "decimal-number",
               "title": "other_compensations_realized.title",
               "type": "string"
-            },
-            "total_income": {
-              "format": "decimal-number",
-              "title": "total_income.title",
-              "type": "string"
             }
           },
           "required": [
             "other_compensation_from_city",
             "state_operative_subvention",
-            "other_compensations_realized",
-            "total_income"
+            "other_compensations_realized"
           ]
         },
         "realized_cost_section": {
