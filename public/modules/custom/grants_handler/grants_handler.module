@@ -2202,8 +2202,9 @@ function _grants_handler_handle_react_application(array &$variables) {
   $variables['applicationSubmitted'] = $time;
   $variables['applicationSubmittedSortable'] = $sortableTime;
 
-  $variables['viewApplicationLink'] = $submission_entity->getViewApplicationLink($settings['settings']['title']);
-  $variables['editApplicationLink'] = $submission_entity->getEditApplicationLink($settings['settings']['title']);
+  // @todo Why would title be missing on oma-asiointi?
+  $variables['viewApplicationLink'] = $submission_entity->getViewApplicationLink($settings['settings']['title'] ?? '');
+  $variables['editApplicationLink'] = $submission_entity->getEditApplicationLink($settings['settings']['title'] ?? '');
 
   $variables['deleteApplicationUrl'] = $submission_entity->getDeleteApplicationUrl()->toString();
   $variables['printApplicationUrl'] = $submission['status'] !== 'DRAFT'
