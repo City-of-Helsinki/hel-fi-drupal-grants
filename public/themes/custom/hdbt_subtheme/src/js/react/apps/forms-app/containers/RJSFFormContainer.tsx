@@ -186,7 +186,14 @@ export const RJSFFormContainer = ({
       return [];
     }
 
-    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null' && error.name !== 'if');
+    const patternFailures = new Set(errors.filter((error) => error.name === 'pattern').map((error) => error.property));
+
+    const prefilteredErrors = errors.filter(
+      (error) =>
+        error.params?.type !== 'null' &&
+        error.name !== 'if' &&
+        !(['format', 'maxLength'].includes(error.name ?? '') && patternFailures.has(error.property)),
+    );
 
     // Expand section-level required errors to field-level errors so fields inside
     // conditionally-required allOf/then sections display red borders when absent.
@@ -365,6 +372,7 @@ export const RJSFFormContainer = ({
               ajvOptionsOverrides: { allErrors: true, coerceTypes: false },
               customFormats: {
                 'decimal-number': /^-?[0-9]+(,[0-9]+)?$/,
+                year: /^[0-9]{4}$/,
               },
             },
             localizeErrors,

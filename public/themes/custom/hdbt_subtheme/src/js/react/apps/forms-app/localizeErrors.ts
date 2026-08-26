@@ -115,6 +115,14 @@ const formatPatternError = (error: ErrorObject) => {
     return formatRequiredError(error);
   }
 
+  if (format === 'year') {
+    return Drupal.t(
+      '!field field must be a year written with four digits.',
+      { '!field': error.parentSchema?.title },
+      { context: 'Grants application: Validation' },
+    );
+  }
+
   if (format === 'email') {
     return Drupal.t(
       'The email address @mail is not valid. Use the format user@example.com.',
@@ -124,6 +132,63 @@ const formatPatternError = (error: ErrorObject) => {
   }
 
   return Drupal.t('Value is of incorrect type.', {}, { context: 'Grants application: Validation' });
+};
+
+/**
+ * Work out the years a pattern accepts.
+ *
+ * @param {string} pattern - The pattern from the field's schema
+ *
+ * @return {Array|undefined} - The lowest and highest accepted year
+ */
+const getYearBounds = (pattern: string): [number, number] | undefined => {
+  try {
+    const expression = new RegExp(pattern);
+    const accepted = [];
+
+    for (let year = 1000; year <= 9999; year++) {
+      if (expression.test(year.toString())) {
+        accepted.push(year);
+      }
+    }
+
+    return accepted.length ? [accepted[0], accepted[accepted.length - 1]] : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+/**
+ * Localize the "pattern" error from AJV.
+ *
+ * @param {ErrorObject} error - The error object containing validation details.
+ *
+ * @return {string} - The localized error message.
+ */
+const formatPatternKeywordError = (error: ErrorObject) => {
+  const { data, parentSchema } = error;
+
+  if (!data || data === '') {
+    return formatRequiredError(error);
+  }
+
+  if (parentSchema?.format === 'year' && typeof parentSchema.pattern === 'string') {
+    const bounds = getYearBounds(parentSchema.pattern);
+
+    if (bounds) {
+      return Drupal.t(
+        '!field field must be a year between @min and @max.',
+        { '!field': parentSchema.title, '@min': bounds[0], '@max': bounds[1] },
+        { context: 'Grants application: Validation' },
+      );
+    }
+  }
+
+  return Drupal.t(
+    '!field field is not in the correct format.',
+    { '!field': parentSchema?.title },
+    { context: 'Grants application: Validation' },
+  );
 };
 
 /**
@@ -170,6 +235,10 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
       }
       case 'maxLength': {
         outMessage = formatMaxLengthError(error);
+        break;
+      }
+      case 'pattern': {
+        outMessage = formatPatternKeywordError(error);
         break;
       }
       case 'minItems': {

@@ -63,7 +63,9 @@ export const TextInput = ({
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
-  const isNumberInput = schema.type === 'number' || schema.type === 'integer' || schema.format === 'decimal-number';
+  const isYear = schema.format === 'year';
+  const isNumberInput =
+    schema.type === 'number' || schema.type === 'integer' || schema.format === 'decimal-number' || isYear;
   const phone = uiSchema?.['misc:phone'] ?? false;
 
   if (shouldRenderPreview) {
@@ -88,7 +90,8 @@ export const TextInput = ({
   };
 
   if (isNumberInput) {
-    const sanitizationType = schema.type === 'integer' ? 'integer' : 'decimal-number';
+    const wholeNumber = schema.type === 'integer' || isYear;
+    const sanitizationType = wholeNumber ? 'integer' : 'decimal-number';
 
     return (
       <HDSTextInput
@@ -97,9 +100,10 @@ export const TextInput = ({
           errorText: formatErrors(rawErrors),
           hideLabel: false,
           id,
-          inputMode: schema.type === 'integer' ? 'numeric' : 'decimal',
+          inputMode: wholeNumber ? 'numeric' : 'decimal',
           invalid: Boolean(rawErrors?.length),
           label,
+          maxLength: schema.maxLength,
           name,
           onBlur: () => null,
           onChange: (event: ChangeEvent<HTMLInputElement>) => {
