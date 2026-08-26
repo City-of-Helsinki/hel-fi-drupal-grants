@@ -99,6 +99,20 @@ const formatRequiredError = (error: ErrorObject) => {
 };
 
 /**
+ * Format the message for an address that is not shaped like an email address.
+ *
+ * @param {unknown} data - The value that failed validation.
+ *
+ * @return {string} - The localized error message.
+ */
+const formatInvalidEmailError = (data: unknown) =>
+  Drupal.t(
+    'The email address @mail is not valid. Use the format user@example.com.',
+    { '@mail': String(data) },
+    { context: 'Grants application: Validation' },
+  );
+
+/**
  * @todo extend this to support other patterns
  *
  * @param {ErrorObject} error - The error object containing validation details.
@@ -124,11 +138,7 @@ const formatPatternError = (error: ErrorObject) => {
   }
 
   if (format === 'email') {
-    return Drupal.t(
-      'The email address @mail is not valid. Use the format user@example.com.',
-      { '@mail': data },
-      { context: 'Grants application: Validation' },
-    );
+    return formatInvalidEmailError(data);
   }
 
   return Drupal.t('Value is of incorrect type.', {}, { context: 'Grants application: Validation' });
@@ -170,6 +180,28 @@ const formatPatternKeywordError = (error: ErrorObject) => {
 
   if (!data || data === '') {
     return formatRequiredError(error);
+  }
+
+  if (parentSchema?.format === 'email') {
+    const localPart = String(data).split('@')[0] ?? '';
+
+    if (localPart.length > 64) {
+      return Drupal.t(
+        '!field field must have at most 64 characters before the @ sign.',
+        { '!field': parentSchema.title },
+        { context: 'Grants application: Validation' },
+      );
+    }
+
+    if (typeof parentSchema.maxLength === 'number' && String(data).length > parentSchema.maxLength) {
+      return Drupal.t(
+        '!field field must be at most @limit characters.',
+        { '!field': parentSchema.title, '@limit': parentSchema.maxLength },
+        { context: 'Grants application: Validation' },
+      );
+    }
+
+    return formatInvalidEmailError(data);
   }
 
   if (parentSchema?.format === 'year' && typeof parentSchema.pattern === 'string') {

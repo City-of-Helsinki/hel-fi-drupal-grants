@@ -128,13 +128,14 @@ export const TextInput = ({
   }
 
   const maxLength = schema.maxLength;
+  const showCounter = Boolean(maxLength) && schema.format !== 'email';
 
   return (
     <HDSTextInput
       {...({
         errorText: formatErrors(rawErrors),
         disabled: readonly,
-        helperText: maxLength ? `${(value as string)?.length || 0}/${maxLength}` : undefined,
+        helperText: showCounter ? `${(value as string)?.length || 0}/${maxLength}` : undefined,
         hideLabel: false,
         id,
         invalid: Boolean(rawErrors?.length),
