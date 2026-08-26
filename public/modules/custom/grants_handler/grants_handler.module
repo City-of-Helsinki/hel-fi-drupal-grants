@@ -2234,8 +2234,14 @@ function _grants_handler_handle_react_application(array &$variables) {
   $variables['applicationNumber'] = $submission['application_number'];
 
   $variables['applicationFormName'] = $settings['translations'][$language]['translation']['form_title'];
-  $variables['openStartDate'] = strtotime($settings['settings']['application_open']);
-  $variables['openEndDate'] = strtotime($settings['settings']['application_close']);
+
+  if ($settings['settings']['application_open']) {
+    $variables['openStartDate'] = strtotime($settings['settings']['application_open']);
+  }
+  if ($settings['settings']['application_close']) {
+    $variables['openEndDate'] = strtotime($settings['settings']['application_close']);
+  }
+
   $variables['isContinuous'] = $settings['settings']['continuous'];
 
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
