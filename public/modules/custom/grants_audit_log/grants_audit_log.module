@@ -11,57 +11,37 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\user\UserInterface;
-
-/**
- * Implements hook_openid_connect_post_authorize().
- */
-function grants_audit_log_openid_connect_post_authorize(UserInterface $account, array $context): void {
-  $message = [
-    "operation" => "TUNNISTAMO_LOGIN",
-    "status" => "SUCCESS",
-    "target" => [
-      "id" => $context["userinfo"]["sub"],
-      "type" => "USER",
-      "name" => $context["userinfo"]["name"],
-    ],
-  ];
-
-  // Do we need to log this separately? Hook `grants_audit_log_user_login`
-  // is fired for helsinki profiili logins too.
-  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
-}
+use Drupal\helfi_api_base\AuditLog\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 
 /**
  * Implements hook_user_login().
  */
 function grants_audit_log_user_login(AccountInterface $account): void {
-  $message = [
-    "operation" => "DRUPAL_LOGIN",
-    "status" => "SUCCESS",
-    "target" => [
+  \Drupal::service(AuditLogService::class)->logOperation(new AuditLogEvent(
+    operation: "DRUPAL_LOGIN",
+    message: "SUCCESS",
+    target: [
       "id" => $account->id(),
       "type" => "USER",
       "name" => "User Login",
     ],
-  ];
-  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  ));
 }
 
 /**
  * Implements hook_user_logout().
  */
 function grants_audit_log_user_logout(AccountInterface $account): void {
-  $message = [
-    "operation" => "DRUPAL_LOGOUT",
-    "status" => "SUCCESS",
-    "target" => [
+  \Drupal::service(AuditLogService::class)->logOperation(new AuditLogEvent(
+    operation: "DRUPAL_LOGOUT",
+    message: "SUCCESS",
+    target: [
       "id" => $account->id(),
       "type" => "USER",
       "name" => "User Logout",
     ],
-  ];
-  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  ));
 }
 
 /**
@@ -71,17 +51,15 @@ function grants_audit_log_entity_view(array &$build, EntityInterface $entity): v
 
   // Only trigger event for webform nodes and submissions.
   if ($entity->bundle() == "webform") {
-
-    $message = [
-      "operation" => "READ",
-      "status" => "SUCCESS",
-      "target" => [
+    \Drupal::service(AuditLogService::class)->logOperation(new AuditLogEvent(
+      operation: "READ",
+      message: "SUCCESS",
+      target: [
         "id" => $entity->id(),
         "type" => "WEBFORM",
         "name" => "Form Viewed",
       ],
-    ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+    ));
   }
 }
 
@@ -92,17 +70,15 @@ function grants_audit_log_entity_insert(EntityInterface $entity): void {
 
   // Trigger event only for users, webform nodes and webform submissions.
   if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {
-
-    $message = [
-      "operation" => "CREATE",
-      "status" => "SUCCESS",
-      "target" => [
+    \Drupal::service(AuditLogService::class)->logOperation(new AuditLogEvent(
+      operation: "CREATE",
+      message: "SUCCESS",
+      target: [
         "id" => $entity->id(),
         "type" => mb_strtoupper($entity->bundle()),
         "name" => "Entity Created",
       ],
-    ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+    ));
   }
 }
 
@@ -113,17 +89,15 @@ function grants_audit_log_entity_delete(EntityInterface $entity): void {
 
   // Trigger event only for users, webform nodes and webform submissions.
   if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {
-
-    $message = [
-      "operation" => "DELETE",
-      "status" => "SUCCESS",
-      "target" => [
+    \Drupal::service(AuditLogService::class)->logOperation(new AuditLogEvent(
+      operation: "DELETE",
+      message: "SUCCESS",
+      target: [
         "id" => $entity->id(),
         "type" => mb_strtoupper($entity->bundle()),
         "name" => "Entity Deleted",
       ],
-    ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+    ));
   }
 }
 
@@ -134,16 +108,14 @@ function grants_audit_log__entity_update(EntityInterface $entity): void {
 
   // Trigger event only for users, webform nodes and webform submissions.
   if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {
-
-    $message = [
-      "operation" => "UPDATE",
-      "status" => "SUCCESS",
-      "target" => [
+    \Drupal::service(AuditLogService::class)->logOperation(new AuditLogEvent(
+      operation: "UPDATE",
+      message: "SUCCESS",
+      target: [
         "id" => $entity->id(),
         "type" => mb_strtoupper($entity->bundle()),
         "name" => "Entity Updated",
       ],
-    ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+    ));
   }
 }

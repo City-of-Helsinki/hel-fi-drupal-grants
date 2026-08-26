@@ -32,6 +32,7 @@ class HooksTest extends KernelTestBase {
     parent::setUp();
 
     $this->installEntitySchema('user');
+    $this->installSchema('user', ['users_data']);
 
     $request = Request::create('/test');
     $request->setSession(new Session(new MockArraySessionStorage()));

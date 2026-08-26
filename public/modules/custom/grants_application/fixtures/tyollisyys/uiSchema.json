@@ -16,7 +16,12 @@
     },
     "purpose_section": {
       "purpose": {
-        "ui:widget": "textarea"
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "purpose_section_modified.title",
+          "tooltipButtonLabel": "purpose_section_modified.title",
+          "tooltipText": "purpose.custom_description"
+        }
       }
     },
     "other_compensations_section": {

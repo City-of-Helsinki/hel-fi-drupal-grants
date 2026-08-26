@@ -107,12 +107,8 @@
               "title": "subventions.title",
               "options": [
                 {
-                  "id": 1,
-                  "label": "subventions.1.title"
-                },
-                {
-                  "id": 17,
-                  "label": "subventions.17.title"
+                  "id": 55,
+                  "label": "subventions.55.title"
                 }
               ]
             },
@@ -128,7 +124,7 @@
           "type": "object",
           "properties": {
             "purpose": {
-              "title": "purpose_section_purpose.title",
+              "title": "purpose_section_modified.title",
               "description": "purpose.custom_description",
               "type": "string",
               "maxLength": 5000
