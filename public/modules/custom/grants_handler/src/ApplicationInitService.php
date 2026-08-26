@@ -408,8 +408,7 @@ class ApplicationInitService {
     $deleteAfter = new \DateTimeImmutable("+1 years");
 
     if ($isContinuous && $endDate) {
-      $date = date('Y-m-d', $endDate);
-      $deleteAfter = (new \DateTimeImmutable($date))->add(new \DateInterval("P1M"));
+      $deleteAfter = new \DateTimeImmutable("+1 years");
     }
 
     if ($isContinuous && !$endDate) {
