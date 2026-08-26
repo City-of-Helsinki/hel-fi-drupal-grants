@@ -24,7 +24,8 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
-use Drupal\helfi_audit_log\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use GuzzleHttp\Exception\GuzzleException;
@@ -87,7 +88,7 @@ class AttachmentHandler {
    *   Profile service.
    * @param \Drupal\grants_metadata\AtvSchema $atvSchema
    *   ATV schema.
-   * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
+   * @param \Drupal\helfi_api_base\AuditLog\AuditLogService $auditLogService
    *   Audit log mandate errors.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
@@ -228,16 +229,15 @@ class AttachmentHandler {
 
         AttachmentHandlerHelper::removeAttachmentFromData($deletedAttachment, $submittedFormData);
 
-        $message = [
-          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-          "status" => "SUCCESS",
-          "target" => [
+        $auditLogService->logOperation(new AuditLogEvent(
+          operation: "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          message: "SUCCESS",
+          target: [
             "id" => '',
             "type" => $deletedAttachment['fileType'],
             "name" => $cleanIntegrationId,
           ],
-        ];
-        $auditLogService->dispatchEvent($message);
+        ));
       }
       catch (AtvDocumentNotFoundException $e) {
         $this->logger->error('Tried to delete an attachment which was not in ATV (id: %id document: $doc): %msg', [
@@ -254,16 +254,15 @@ class AttachmentHandler {
           '%document' => $submittedFormData['application_number'],
         ]);
 
-        $message = [
-          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-          "status" => "FAILED",
-          "target" => [
+        $auditLogService->logOperation(new AuditLogEvent(
+          operation: "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          message: "FAILED",
+          target: [
             "id" => '',
             "type" => $deletedAttachment['fileType'],
             "name" => $cleanIntegrationId,
           ],
-        ];
-        $auditLogService->dispatchEvent($message);
+        ));
       }
     }
   }

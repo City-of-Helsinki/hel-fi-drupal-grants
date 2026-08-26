@@ -17,7 +17,12 @@
     "purpose_section": {
       "purpose": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "misc:max-length": 5000,
+        "ui:options": {
+          "tooltipLabel": "purpose_section_modified.title",
+          "tooltipButtonLabel": "purpose_section_modified.title",
+          "tooltipText": "purpose.custom_description"
+        }
       }
     },
     "other_compensations_section": {

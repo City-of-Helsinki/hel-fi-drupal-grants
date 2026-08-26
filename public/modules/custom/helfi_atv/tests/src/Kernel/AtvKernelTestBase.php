@@ -24,6 +24,7 @@ abstract class AtvKernelTestBase extends KernelTestBase {
     'file',
     'user',
     // Contrib.
+    'diff',
     'externalauth',
     'openid_connect',
     // Helfi modules.
@@ -32,7 +33,6 @@ abstract class AtvKernelTestBase extends KernelTestBase {
     'helfi_atv_test',
     'helfi_helsinki_profiili',
     // Helsinki profiili requires audit log unnecessarily.
-    'helfi_audit_log',
   ];
 
   /**
@@ -60,6 +60,7 @@ abstract class AtvKernelTestBase extends KernelTestBase {
     putenv('ATV_MAX_PAGES=10');
 
     $this->installEntitySchema('user');
+    $this->installSchema('user', ['users_data']);
 
     // User must have hard-coded role to be able to user ATV.
     $this->createRole([], 'helsinkiprofiili');
