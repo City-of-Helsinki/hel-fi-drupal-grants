@@ -81,7 +81,6 @@ module:
   helfi_api_base: 0
   helfi_atv: 0
   helfi_atv_audit_logging: 0
-  helfi_audit_log: 0
   helfi_av: 0
   helfi_azure_fs: 0
   helfi_base_content: 0
@@ -220,7 +219,6 @@ module:
   webform_ui: 0
   webform_views: 0
   webp: 0
-  wpf: 0
   grants_attachments: 1
   helfi_navigation: 1
   menu_admin_per_menu: 1

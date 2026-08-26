@@ -68,7 +68,6 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
     ];
     $this->installSchema('locale', $locale_tables);
     $this->installSchema('webform', 'webform');
-    $this->installSchema('user', ['users_data']);
 
     $this->installConfig(['content_lock', 'block_content', 'grants_handler', 'language', 'helfi_tunnistamo']);
 

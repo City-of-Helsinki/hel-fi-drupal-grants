@@ -20,6 +20,7 @@ class KernelTestBase extends CoreKernelTestBase {
     'externalauth',
     'openid_connect',
     'helfi_helsinki_profiili',
+    'diff',
     'helfi_api_base',
   ];
 
