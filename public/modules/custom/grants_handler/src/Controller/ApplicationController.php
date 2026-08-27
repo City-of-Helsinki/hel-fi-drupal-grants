@@ -300,7 +300,7 @@ final class ApplicationController extends ControllerBase {
         $valueExists = $build['#webform_submission']?->getData()['avustukset_summa'] ?? FALSE;
 
         if ($id == '48' && $sum && !$valueExists) {
-          $sum = (string)(int)str_replace(' ', '', $sum);
+          $sum = (string) (int) str_replace(' ', '', $sum);
           $build['#webform_submission']->setData($build['#webform_submission']->getData() + ['avustukset_summa' => $sum]);
         }
 
