@@ -13,7 +13,6 @@ use Drush\Commands\DrushCommands;
 
 /**
  * Opens the React form application periods.
- *
  */
 final class OpenFormsCommands extends DrushCommands {
 
