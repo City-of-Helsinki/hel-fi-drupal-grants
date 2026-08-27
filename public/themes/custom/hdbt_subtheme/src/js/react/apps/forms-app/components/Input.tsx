@@ -63,9 +63,9 @@ export const TextInput = ({
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
-  const isYear = schema.format === 'year';
+  const isDigitString = ['year', 'postal-code'].includes(schema.format ?? '');
   const isNumberInput =
-    schema.type === 'number' || schema.type === 'integer' || schema.format === 'decimal-number' || isYear;
+    schema.type === 'number' || schema.type === 'integer' || schema.format === 'decimal-number' || isDigitString;
   const phone = uiSchema?.['misc:phone'] ?? false;
 
   if (shouldRenderPreview) {
@@ -90,7 +90,7 @@ export const TextInput = ({
   };
 
   if (isNumberInput) {
-    const wholeNumber = schema.type === 'integer' || isYear;
+    const wholeNumber = schema.type === 'integer' || isDigitString;
     const sanitizationType = wholeNumber ? 'integer' : 'decimal-number';
 
     return (

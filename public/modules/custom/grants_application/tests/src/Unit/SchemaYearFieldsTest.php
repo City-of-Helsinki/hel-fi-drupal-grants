@@ -14,7 +14,14 @@ use Drupal\Tests\UnitTestCase;
 final class SchemaYearFieldsTest extends UnitTestCase {
 
   /**
-   * Tests that year fields follow convention.
+   * A year field must also declare its type, length and accepted range.
+   *
+   * The format makes the input accept digits only, `maxLength` stops a fifth
+   * digit from being typed at all, and `pattern` carries the accepted range.
+   * The range lives in the schema rather than in the format so that a form can
+   * widen or narrow it, and so that it is enforced on submit as well: the
+   * server-side validator ignores formats it does not know, but does apply
+   * `pattern` and `maxLength`.
    */
   public function testYearFieldsAreConstrained(): void {
     $offenders = [];
@@ -26,20 +33,30 @@ final class SchemaYearFieldsTest extends UnitTestCase {
       $this->assertIsString($contents, sprintf('%s is readable', $path));
       $schema = json_decode($contents, TRUE, flags: JSON_THROW_ON_ERROR);
 
-      foreach ($this->collectYearFields($schema) as $name => $field) {
+      foreach ($this->collectFieldsWithFormat($schema, 'year') as $name => $field) {
         $checked++;
-        $missing = array_diff(['format', 'maxLength', 'pattern'], array_keys($field));
 
-        if ($missing) {
-          $offenders[] = sprintf('%s: %s is missing %s', $formName, $name, implode(', ', $missing));
+        if (($field['type'] ?? NULL) !== 'string' || ($field['maxLength'] ?? NULL) !== 4) {
+          $offenders[] = sprintf(
+            '%s: %s declares type %s and maxLength %s',
+            $formName,
+            $name,
+            var_export($field['type'] ?? NULL, TRUE),
+            var_export($field['maxLength'] ?? NULL, TRUE)
+          );
           continue;
         }
-        if ($field['format'] !== 'year' || $field['maxLength'] !== 4) {
-          $offenders[] = sprintf('%s: %s declares format %s and maxLength %s', $formName, $name, $field['format'], $field['maxLength']);
+        if (!isset($field['pattern'])) {
+          $offenders[] = sprintf('%s: %s declares no accepted range', $formName, $name);
           continue;
         }
         if (!$this->acceptsOnlyYears($field['pattern'])) {
-          $offenders[] = sprintf('%s: %s has a pattern that accepts something other than a four-digit year: %s', $formName, $name, $field['pattern']);
+          $offenders[] = sprintf(
+            '%s: %s has a pattern accepting something other than a four-digit year: %s',
+            $formName,
+            $name,
+            $field['pattern']
+          );
         }
       }
     }
@@ -49,30 +66,36 @@ final class SchemaYearFieldsTest extends UnitTestCase {
   }
 
   /**
-   * Collects the year fields of a schema.
+   * Collects the fields declaring a given format.
    *
-   * @param array<string, mixed> $schema
-   *   The decoded schema.
+   * @param mixed $node
+   *   The schema, or a part of it.
+   * @param string $format
+   *   The format to look for.
+   * @param string $path
+   *   The path walked so far.
    *
    * @return array<string, array<string, mixed>>
-   *   The year fields, keyed by definition and field name.
+   *   The matching fields, keyed by path.
    */
-  private function collectYearFields(array $schema): array {
-    $fields = [];
+  private function collectFieldsWithFormat(mixed $node, string $format, string $path = ''): array {
+    if (!is_array($node)) {
+      return [];
+    }
 
-    foreach ($schema['definitions'] ?? [] as $definitionName => $definition) {
-      if (!is_array($definition)) {
-        continue;
-      }
-      foreach ($definition['properties'] ?? [] as $name => $field) {
-        $isYear = str_ends_with((string) $name, '_issuer_year') || $name === 'year';
-        if ($isYear && is_array($field) && ($field['type'] ?? NULL) === 'string') {
-          $fields[$definitionName . '.' . $name] = $field;
-        }
+    $found = [];
+    if (($node['format'] ?? NULL) === $format) {
+      $found[$path] = $node;
+    }
+
+    foreach ($node as $key => $value) {
+      if (is_array($value)) {
+        $childPath = $path === '' ? (string) $key : $path . '.' . $key;
+        $found = array_merge($found, $this->collectFieldsWithFormat($value, $format, $childPath));
       }
     }
 
-    return $fields;
+    return $found;
   }
 
   /**

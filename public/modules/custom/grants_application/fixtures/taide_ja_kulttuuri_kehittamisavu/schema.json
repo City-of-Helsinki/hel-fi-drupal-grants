@@ -53,7 +53,9 @@
         },
         "premise_post_code": {
           "title": "premise_post_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "premise_owned_by_city": {
           "title": "premise_owned_by_city.title",

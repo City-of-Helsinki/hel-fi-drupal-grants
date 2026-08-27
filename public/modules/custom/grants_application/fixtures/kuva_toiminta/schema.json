@@ -64,7 +64,8 @@
         "postCode": {
           "title": "postal_code.title",
           "type": "string",
-          "maxLength": 8
+          "maxLength": 5,
+          "format": "postal-code"
         },
         "isOthersUse": {
           "title": "is_others_use.title",
@@ -99,7 +100,8 @@
         "postCode": {
           "title": "postal_code.title",
           "type": "string",
-          "maxLength": 8
+          "maxLength": 5,
+          "format": "postal-code"
         },
         "isOwnedByCity": {
           "title": "is_owned_by_city.title",

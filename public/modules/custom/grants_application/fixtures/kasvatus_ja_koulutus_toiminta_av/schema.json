@@ -73,7 +73,9 @@
         },
         "location_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "location_pupil_number": {
           "title": "location_pupil_number.title",

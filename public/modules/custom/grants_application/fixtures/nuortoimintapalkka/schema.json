@@ -98,7 +98,9 @@
         },
         "premise_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         }
       }
     },
@@ -127,7 +129,9 @@
         },
         "rented_premise_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "rented_premise_post_office": {
           "title": "rented_premise_post_office.title",

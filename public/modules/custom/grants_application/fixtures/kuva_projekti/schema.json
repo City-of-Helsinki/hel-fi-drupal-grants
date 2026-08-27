@@ -72,7 +72,9 @@
         },
         "post_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "is_owned_by_city": {
           "title": "venue_is_owned_by_city.title",
@@ -383,7 +385,9 @@
                 },
                 "post_code": {
                   "title": "postal_code.title",
-                  "type": "string"
+                  "type": "string",
+                  "format": "postal-code",
+                  "maxLength": 5
                 },
                 "is_owned_by_city": {
                   "title": "venue_is_owned_by_city.title",

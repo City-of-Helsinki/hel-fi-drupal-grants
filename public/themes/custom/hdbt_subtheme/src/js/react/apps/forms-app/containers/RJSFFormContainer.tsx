@@ -373,6 +373,7 @@ export const RJSFFormContainer = ({
               customFormats: {
                 'decimal-number': /^-?[0-9]+(,[0-9]+)?$/,
                 year: /^[0-9]{4}$/,
+                'postal-code': /^[0-9]{5}$/,
               },
             },
             localizeErrors,

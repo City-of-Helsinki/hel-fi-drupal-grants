@@ -61,7 +61,9 @@
         },
         "art_premise_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "art_premise_is_others_use": {
           "title": "art_premise_is_others_use.title",
@@ -103,7 +105,9 @@
         },
         "realized_premise_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "realized_premise_is_owned_by_city": {
           "title": "realized_premise_is_owned_by_city.title",

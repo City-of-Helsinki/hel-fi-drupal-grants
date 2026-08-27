@@ -137,6 +137,14 @@ const formatPatternError = (error: ErrorObject) => {
     );
   }
 
+  if (format === 'postal-code') {
+    return Drupal.t(
+      '!field field must be a postal code written with five digits.',
+      { '!field': error.parentSchema?.title },
+      { context: 'Grants application: Validation' },
+    );
+  }
+
   if (format === 'email') {
     return formatInvalidEmailError(data);
   }
