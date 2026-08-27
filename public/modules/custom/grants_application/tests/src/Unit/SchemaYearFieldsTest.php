@@ -15,13 +15,6 @@ final class SchemaYearFieldsTest extends UnitTestCase {
 
   /**
    * A year field must also declare its type, length and accepted range.
-   *
-   * The format makes the input accept digits only, `maxLength` stops a fifth
-   * digit from being typed at all, and `pattern` carries the accepted range.
-   * The range lives in the schema rather than in the format so that a form can
-   * widen or narrow it, and so that it is enforced on submit as well: the
-   * server-side validator ignores formats it does not know, but does apply
-   * `pattern` and `maxLength`.
    */
   public function testYearFieldsAreConstrained(): void {
     $offenders = [];

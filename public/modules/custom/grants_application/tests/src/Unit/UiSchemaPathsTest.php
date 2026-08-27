@@ -15,10 +15,6 @@ final class UiSchemaPathsTest extends UnitTestCase {
 
   /**
    * Every uiSchema entry must address a field that the schema declares.
-   *
-   * A uiSchema entry is matched to the schema by path, so a field renamed on
-   * one side and not the other leaves the entry inert rather than failing
-   * loudly. The field then renders with default widgets and no tooltips.
    */
   public function testUiSchemaEntriesAddressExistingFields(): void {
     $dead = [];
@@ -101,10 +97,7 @@ final class UiSchemaPathsTest extends UnitTestCase {
   }
 
   /**
-   * Resolves a uiSchema path to the schema nodes it addresses.
-   *
-   * A path can address more than one node, since a section may be declared both
-   * directly and inside a conditional branch.
+   * Resolves a uiSchema path to the schema path it addresses.
    *
    * @param array<string, mixed> $node
    *   The node to walk from.

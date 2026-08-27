@@ -15,13 +15,6 @@ final class SchemaConditionalsTest extends UnitTestCase {
 
   /**
    * Every `if` must require the fields it constrains.
-   *
-   * A keyword such as `const` or `minimum` only constrains a property that is
-   * actually present, so an `if` without `required` is satisfied while the
-   * gating field is still absent from the form data. The React form resolves
-   * `allOf` when computing defaults, which means such a branch would open a
-   * conditional section, and populate the `minItems` rows of any repeater in
-   * it, before the applicant has answered the question gating it.
    */
   public function testConditionalsRequireTheirGatingFields(): void {
     $offenders = [];

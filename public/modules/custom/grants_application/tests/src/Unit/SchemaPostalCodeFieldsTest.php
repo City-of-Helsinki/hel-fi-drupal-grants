@@ -15,11 +15,6 @@ final class SchemaPostalCodeFieldsTest extends UnitTestCase {
 
   /**
    * A postal code field must also declare its type and length.
-   *
-   * The format makes the input accept digits only, but on its own it lets a
-   * sixth digit be typed and rejects it afterwards. `maxLength` is what stops
-   * it being typed at all, and the field has to stay a string so that a leading
-   * zero survives the round trip to Avus2.
    */
   public function testPostalCodeFieldsAreConstrained(): void {
     $offenders = [];
