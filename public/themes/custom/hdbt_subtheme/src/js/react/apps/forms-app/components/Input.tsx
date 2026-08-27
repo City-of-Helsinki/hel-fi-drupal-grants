@@ -18,6 +18,7 @@ import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonSty
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
+import { InfoField } from './ApplicantInfo';
 import {
   getAccountsAtom,
   getAddressesAtom,
@@ -384,7 +385,25 @@ export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: Wi
     );
   }
 
-  return <SelectWidget {...{ ...selectProps }} />;
+  const selected = officials?.find(({ official_id: officialId }) => officialId === value);
+
+  return (
+    <>
+      <SelectWidget {...{ ...selectProps }} />
+      <div aria-live='polite' className='grants-form--official-details'>
+        {selected && (
+          <div className='prh-content-block__content-row'>
+            <InfoField
+              label={Drupal.t('Role', {}, { context: 'grants_profile' })}
+              value={getCommunityOfficialRole(selected.role)}
+            />
+            <InfoField label={Drupal.t('Email', {}, { context: 'Grants application' })} value={selected.email} />
+            <InfoField label={Drupal.t('Phone number', {}, { context: 'Grants application' })} value={selected.phone} />
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export const RadioWidget = ({

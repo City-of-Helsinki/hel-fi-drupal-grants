@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { getApplicantTypeAtom, getFormConfigAtom } from '../store';
 
-const InfoField = ({ label, value }: { label: string; value: string | number | undefined }) => (
+export const InfoField = ({ label, value }: { label: string; value: string | number | undefined }) => (
   <div className='prh-content-block__item'>
     <div className='prh-content-block__item__label'>{label}</div>
     <div className='prh-content-block__item__value'>{value ?? '-'}</div>
