@@ -129,7 +129,6 @@ permissions:
   - 'delete announcement revisions'
   - 'delete any address content'
   - 'delete any announcement content'
-  - 'delete any application_metadata'
   - 'delete any faq content'
   - 'delete any file media'
   - 'delete any form_page content'
