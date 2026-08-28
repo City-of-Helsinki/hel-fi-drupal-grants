@@ -38,7 +38,35 @@
         "expenditure_row_amount"
       ]
     },
-    "grant_info_step": {
+    "_camp_premise_item": {
+      "type": "object",
+      "title": "camp_premise.title",
+      "properties": {
+        "premise_name": {
+          "title": "premise_name.title",
+          "type": "string"
+        },
+        "postal_code": {
+          "title": "postal_code.title",
+          "type": "string"
+        },
+        "day_camp_count": {
+          "title": "day_camp_count.title",
+          "type": "integer"
+        },
+        "night_camp_count": {
+          "title": "night_camp_count.title",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "premise_name",
+        "postal_code",
+        "day_camp_count",
+        "night_camp_count"
+      ]
+    },
+    "campsite_step": {
       "required": [
         "acting_year_section"
       ],
@@ -56,18 +84,21 @@
             "acting_year"
           ]
         },
-        "camp_information": {
-          "title": "camp_information.title",
+        "camp_information_section": {
+          "title": "campsite_step.title",
           "type": "object",
+          "description": "camp_information_section.description",
           "properties": {
-            "camp_information_markup": {
+            "camp_premises": {
+              "default": [],
               "type": "array",
-              "items": [
-                {
-                  "title": "camp_information_markup.value",
-                  "type": "null"
-                }
-              ]
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/_camp_premise_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_camp_premise_item"
+              }
             }
           }
         }
@@ -298,10 +329,10 @@
   "title": "form_title",
   "type": "object",
   "properties": {
-    "grant_info_step": {
-      "title": "grant_info_step.title",
+    "campsite_step": {
+      "title": "campsite_step.title",
       "type": "object",
-      "$ref": "#/definitions/grant_info_step"
+      "$ref": "#/definitions/campsite_step"
     },
     "budget_step": {
       "title": "budget_step.title",

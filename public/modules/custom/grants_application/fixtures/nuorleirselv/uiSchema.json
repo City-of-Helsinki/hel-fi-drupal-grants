@@ -1,13 +1,8 @@
 {
-  "grant_info_step": {
+  "campsite_step": {
     "acting_year_section": {
       "acting_year": {
-        "ui:field": "actingYear",
-        "ui:options": {
-          "tooltipLabel": "acting_year_section_acting_year.title",
-          "tooltipButtonLabel": "acting_year_section_acting_year.title",
-          "tooltipText": "acting_year_section_acting_year.description"
-        }
+        "ui:field": "actingYear"
       }
     },
     "subventions_section": {
@@ -111,7 +106,7 @@
           "misc:file-type": 36,
           "misc:variant": "simple",
           "misc:required": true,
-          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:help": "excel_attachment.ui_help",
           "ui:field": "atvFile"
         }
       },
