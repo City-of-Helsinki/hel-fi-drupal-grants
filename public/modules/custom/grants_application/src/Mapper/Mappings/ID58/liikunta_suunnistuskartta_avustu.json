@@ -46,33 +46,6 @@
     }
   },
 
-  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
-    "datasource": "form_data",
-    "source": "hardcoded",
-    "mapping_type": "hardcoded",
-    "data": {
-      "0": {
-        "ID": "otherCompensationsTotal",
-        "value": "0",
-        "valueType": "double",
-        "label": null
-      }
-    }
-  },
-  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
-    "datasource": "form_data",
-    "source": "hardcoded",
-    "mapping_type": "hardcoded",
-    "data": {
-      "0": {
-        "ID": "otherAppliedCompensationsTotal",
-        "value": "0",
-        "valueType": "double",
-        "label": null
-      }
-    }
-  },
-
   "compensation.compensationsInfo.compensationArray.0": {
     "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.0.0.value",
