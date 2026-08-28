@@ -2202,8 +2202,9 @@ function _grants_handler_handle_react_application(array &$variables) {
   $variables['applicationSubmitted'] = $time;
   $variables['applicationSubmittedSortable'] = $sortableTime;
 
-  $variables['viewApplicationLink'] = $submission_entity->getViewApplicationLink($settings['settings']['title']);
-  $variables['editApplicationLink'] = $submission_entity->getEditApplicationLink($settings['settings']['title']);
+  // @todo Why would title be missing on oma-asiointi?
+  $variables['viewApplicationLink'] = $submission_entity->getViewApplicationLink($settings['settings']['title'] ?? '');
+  $variables['editApplicationLink'] = $submission_entity->getEditApplicationLink($settings['settings']['title'] ?? '');
 
   $variables['deleteApplicationUrl'] = $submission_entity->getDeleteApplicationUrl()->toString();
   $variables['printApplicationUrl'] = $submission['status'] !== 'DRAFT'
@@ -2234,8 +2235,14 @@ function _grants_handler_handle_react_application(array &$variables) {
   $variables['applicationNumber'] = $submission['application_number'];
 
   $variables['applicationFormName'] = $settings['translations'][$language]['translation']['form_title'];
-  $variables['openStartDate'] = strtotime($settings['settings']['application_open']);
-  $variables['openEndDate'] = strtotime($settings['settings']['application_close']);
+
+  if ($settings['settings']['application_open']) {
+    $variables['openStartDate'] = strtotime($settings['settings']['application_open']);
+  }
+  if ($settings['settings']['application_close']) {
+    $variables['openEndDate'] = strtotime($settings['settings']['application_close']);
+  }
+
   $variables['isContinuous'] = $settings['settings']['continuous'];
 
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
