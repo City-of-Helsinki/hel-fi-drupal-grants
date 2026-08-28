@@ -10,7 +10,7 @@
         "ui:field": "subventionTable"
       }
     },
-    "camp_information": {
+    "camp_information_section": {
       "ui:options": {
         "hideFromPreview": true
       },
@@ -135,7 +135,7 @@
           "tooltipText": "confirmed_financial_statements.description"
         },
         "budget_file": {
-          "misc:file-type": 2,
+          "misc:file-type": 43,
           "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
