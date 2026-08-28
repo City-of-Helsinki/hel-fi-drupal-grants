@@ -92,6 +92,7 @@
         },
         "community_rules_file": {
           "misc:file-type": 7,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
@@ -106,6 +107,10 @@
           "misc:file-type": 36,
           "misc:variant": "simple",
           "misc:required": true,
+          "misc:formats": [
+            "xls",
+            "xlsx"
+          ],
           "ui:help": "excel_attachment.ui_help",
           "ui:field": "atvFile"
         }
@@ -118,6 +123,7 @@
         },
         "action_plan_file": {
           "misc:file-type": 1,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
