@@ -24,7 +24,7 @@
     }
   },
 
-  "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
+  "compensation.premisesInfo.premisesArray.0.n": {
     "datasource": "form_data",
     "source": "campsite_step.camp_information_section.camp_premises",
     "mapping_type": "multiple_values",
