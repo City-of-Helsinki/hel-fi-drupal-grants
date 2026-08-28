@@ -751,7 +751,8 @@
               "required": [
                 "other_compensation_from_city",
                 "state_operative_subvention",
-                "other_compensations"
+                "other_compensations",
+                "total_income"
               ],
               "properties": {
                 "income_group_name": {
@@ -771,6 +772,11 @@
                 "other_compensations": {
                   "format": "decimal-number",
                   "title": "other_compensations.title",
+                  "type": "string"
+                },
+                "total_income": {
+                  "format": "decimal-number",
+                  "title": "total_income.title",
                   "type": "string"
                 }
               }

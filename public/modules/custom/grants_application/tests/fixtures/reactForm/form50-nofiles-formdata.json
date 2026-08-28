@@ -164,7 +164,8 @@
       "incomeGroupName": "general",
       "other_compensation_from_city": "12000",
       "state_operative_subvention": "3000",
-      "other_compensations_realized": "1000"
+      "other_compensations_realized": "1000",
+      "total_income": "20000"
     },
     "realized_cost_section": {
       "costGroupName": "general",

@@ -695,6 +695,16 @@
       "fi": "Menot yhteensä (€)",
       "sv": "Utgifterna sammanlagt (€)"
     },
+    "total_income.description": {
+      "en": "Include all your incomes in total here, also including the grants from the previous questions.",
+      "fi": "Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.",
+      "sv": "Anteckna samtliga inkomster, även de understöd som uppgetts i tidigare punkter."
+    },
+    "total_income.title": {
+      "en": "Incomes in total (€)",
+      "fi": "Tulot yhteensä (€)",
+      "sv": "Inkomster sammanlagt (€)"
+    },
     "target_groups.title": {
       "en": "Who are the target audiences or participants for the activities? How will they be reached, and what expertise is available for working with them?",
       "fi": "Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?",

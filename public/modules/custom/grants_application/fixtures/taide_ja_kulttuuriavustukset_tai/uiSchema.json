@@ -319,6 +319,13 @@
           "tooltipButtonLabel": "other_compensations_realized.title",
           "tooltipText": "other_compensations_realized.tooltip"
         }
+      },
+      "total_income": {
+        "ui:options": {
+          "tooltipLabel": "total_income.title",
+          "tooltipButtonLabel": "total_income.title",
+          "tooltipText": "total_income.tooltip"
+        }
       }
     },
     "realized_cost_section": {
