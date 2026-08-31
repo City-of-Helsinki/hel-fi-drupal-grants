@@ -20,7 +20,10 @@
         },
         "other_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_compensation_amount": {
           "format": "decimal-number",
@@ -29,7 +32,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -60,7 +64,10 @@
         },
         "other_applied_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_applied_compensation_amount": {
           "format": "decimal-number",
@@ -69,7 +76,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -90,7 +98,9 @@
         },
         "premise_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         }
       }
     },
@@ -119,7 +129,9 @@
         },
         "rented_premise_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "rented_premise_post_office": {
           "title": "rented_premise_post_office.title",
@@ -431,7 +443,8 @@
           "properties": {
             "youth_participation": {
               "title": "youth_participation.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         }
@@ -773,7 +786,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",
@@ -845,7 +859,8 @@
             },
             "required": ["subventions_section"]
           }
-        }
+        },
+        "required": ["grant_info_step"]
       },
       "then": {
         "properties": {
@@ -868,7 +883,8 @@
                 "properties": {
                   "rental_additional_information": {
                     "title": "rental_additional_information.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 5000
                   }
                 }
               }
@@ -893,7 +909,8 @@
             },
             "required": ["subventions_section"]
           }
-        }
+        },
+        "required": ["grant_info_step"]
       },
       "then": {
         "properties": {

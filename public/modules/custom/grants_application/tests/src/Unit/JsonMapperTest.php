@@ -56,6 +56,46 @@ final class JsonMapperTest extends UnitTestCase {
   }
 
   /**
+   * Test that empty multivalue rows are skipped.
+   */
+  public function testMultipleValueFieldMappingSkipsEmptyRows(): void {
+    $mapping = [
+      "compensation.my_values.rows.0.n" => [
+        'datasource' => 'form_data',
+        'source' => 'section.rows',
+        'mapping_type' => 'multiple_values',
+        'data' => [
+          'label' => [
+            'ID' => 'rowLabel',
+            'valueType' => 'string',
+            'value' => '',
+            'label' => '',
+          ],
+        ],
+      ],
+    ];
+
+    $formData = [
+      'form_data' => [
+        'section' => [
+          'rows' => [
+            [],
+            ['label' => 'the label'],
+          ],
+        ],
+      ],
+    ];
+
+    $mapper = new JsonMapper();
+    $mapper->setMappings($mapping);
+    $mappedData = $mapper->map($formData);
+
+    $rows = $mappedData['compensation']['my_values']['rows'];
+    $this->assertCount(1, $rows, 'The empty row is not mapped');
+    $this->assertEquals('the label', $rows[0][0]['value']);
+  }
+
+  /**
    * Test the complex value mapping.
    *
    * At this point there is only one which is setLabelAndValue-function.
