@@ -445,6 +445,16 @@
       "fi": "Lisäselvitys liitteistä",
       "sv": "Ytterligare information om bilagorna"
     },
+    "gdpr_input_notification.title": {
+      "en": "Do not include special personal data",
+      "fi": "Älä lisää erityisiä henkilötietoja",
+      "sv": "Ange inte särskilda personuppgifter"
+    },
+    "gdpr_input_notification.value": {
+      "en": "Do not include any special personal data on the form, such as information relating to the health, ethnic origin, religious or philosophical beliefs, or sexual orientation or behaviour of a private individual. This information is not required, and it will not affect the processing of your application or the decision-making process.",
+      "fi": "Älä lisää lomakkeelle erityisiä henkilötietoja, joita ovat esimerkiksi yksityishenkilöiden terveyttä koskevat tiedot, etninen alkuperä, uskonnollinen tai filosofinen vakaumus tai seksuaalinen suuntautuminen tai käyttäytyminen. Tietoja ei vaadita, eikä niillä ole vaikutusta hakemuksesi käsittelyyn tai päätöksentekoon.",
+      "sv": "Ange inte några särskilda personuppgifter i blanketten. Sådana är exempelvis uppgifter om privatpersoners hälsa, etniska ursprung, religiösa eller filosofiska övertygelse och sexuella läggning eller beteende. Uppgifterna är inte obligatoriska och de påverkar inte behandlingen av din ansökan eller beslutsfattandet."
+    },
     "girls.title": {
       "en": "Girls",
       "fi": "Tytöt",

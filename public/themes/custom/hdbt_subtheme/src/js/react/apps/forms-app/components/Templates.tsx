@@ -11,6 +11,7 @@ import type {
 import { Accordion, type AccordionTheme, Button, Fieldset, IconCross, IconPlus, Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
 import type { ReactElement, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import {
@@ -177,6 +178,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   const [stepIndex, { id: stepId }] = useAtomValue(getCurrentStepAtom);
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const applicantType = useAtomValue(getApplicantTypeAtom);
+  const { t } = useTranslation();
   const prhBlockTitle =
     applicantType === 'registered_community'
       ? Drupal.t('Community for which the grant is being applied for', {}, { context: 'Grants application' })
@@ -220,26 +222,41 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       <>
         {title && <h2 className='grants-form__page-title'>{stepNumber ? `${stepNumber}. ${title}` : title}</h2>}
         <div className='grants-form__notification-container'>
-          {stepIndex === 0 && !isEmptyPreview && (
-            <Notification
-              className='hdbt-form--notification'
-              label={Drupal.t('Some information fetched from personal information')}
-            >
-              {Drupal.t(
-                'Check the information on the form before sending the application. You can change your own information from personal information section of the site.',
-              )}
-            </Notification>
-          )}
-          {steps && stepIndex < steps.size - 2 && !isEmptyPreview && (
-            <Notification
-              className='hdbt-form--notification'
-              label={Drupal.t('Fill in the fields to all the questions that you can answer.')}
-            >
-              {Drupal.t(
-                'Fields marked with * are mandatory information that you must fill in in order to save and send the information.',
-              )}
-            </Notification>
-          )}
+          {stepIndex === 0 &&
+            !isEmptyPreview &&
+            (() => {
+              const label = Drupal.t('Some information fetched from personal information');
+              return (
+                <Notification className='hdbt-form--notification' label={label} notificationAriaLabel={label}>
+                  {Drupal.t(
+                    'Check the information on the form before sending the application. You can change your own information from personal information section of the site.',
+                  )}
+                </Notification>
+              );
+            })()}
+          {steps &&
+            stepIndex < steps.size - 2 &&
+            !isEmptyPreview &&
+            (() => {
+              const label = Drupal.t('Fill in the fields to all the questions that you can answer.');
+              return (
+                <Notification className='hdbt-form--notification' label={label} notificationAriaLabel={label}>
+                  {Drupal.t(
+                    'Fields marked with * are mandatory information that you must fill in in order to save and send the information.',
+                  )}
+                </Notification>
+              );
+            })()}
+          {stepIndex === 0 &&
+            !isEmptyPreview &&
+            (() => {
+              const label = t('gdpr_input_notification.title');
+              return (
+                <Notification className='hdbt-form--notification' label={label} notificationAriaLabel={label}>
+                  <p>{htmlToReact(t('gdpr_input_notification.value'), ALLOWED_HTML_TAGS)}</p>
+                </Notification>
+              );
+            })()}
         </div>
         {stepId === 'applicant_info' && !isEmptyPreview && (
           <section className='prh-content-block'>
