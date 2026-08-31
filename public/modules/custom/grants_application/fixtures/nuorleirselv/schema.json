@@ -48,7 +48,9 @@
         },
         "postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 5,
+          "format": "postal-code"
         },
         "day_camp_count": {
           "title": "day_camp_count.title",
