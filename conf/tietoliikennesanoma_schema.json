@@ -287,7 +287,8 @@
                       "changesOnSuccess",
                       "resultsOfActivities",
                       "operativeSubventionApplied",
-                      "salarySubventionApplied"
+                      "salarySubventionApplied",
+                      "startSubventionApplied"
                     ]
                   },
                   "label": {
@@ -1313,7 +1314,9 @@
                   "youngPeopleParticipation",
                   "lastYearYoungPeopleParticipation",
                   "lastYearYoungPeopleParticipationDigital",
-                  "participation"
+                  "participation",
+                  "deMinimisGiven",
+                  "deMinimisInfo"
                 ]
               },
               "label": {
@@ -1799,7 +1802,9 @@
                         "totalRent",
                         "rentTimeBegin",
                         "rentTimeEnd",
-                        "free"
+                        "free",
+                        "dayCamps",
+                        "nightCamps"
                       ]
                     },
                     "label": {
