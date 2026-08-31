@@ -16,7 +16,6 @@
     "purpose_section": {
       "purpose": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
@@ -67,7 +66,6 @@
           },
           "other_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -108,7 +106,6 @@
           },
           "other_applied_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -129,7 +126,6 @@
       ],
       "grant_recipient_type": {
         "ui:widget": "textarea",
-        "misc:max-length": 100,
         "ui:options": {
           "tooltipLabel": "grant_recipient_type.title",
           "tooltipButtonLabel": "grant_recipient_type.title",
@@ -137,8 +133,7 @@
         }
       },
       "applicant_summary": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "is_application_extension": {
         "ui:widget": "radio",
@@ -168,8 +163,7 @@
         "area_need"
       ],
       "project_name": {
-        "ui:widget": "textarea",
-        "misc:max-length": 300
+        "ui:widget": "textarea"
       },
       "project_schedule": {
         "ui:options": {
@@ -192,16 +186,13 @@
         }
       },
       "target_group_description": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1250
+        "ui:widget": "textarea"
       },
       "past_project_objective": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "past_target_group_and_means": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "participant_estimate": {
         "ui:options": {
@@ -227,16 +218,13 @@
         }
       },
       "hours_by_postal_area": {
-        "ui:widget": "textarea",
-        "misc:max-length": 500
+        "ui:widget": "textarea"
       },
       "postal_code_areas": {
-        "ui:widget": "textarea",
-        "misc:max-length": 500
+        "ui:widget": "textarea"
       },
       "area_need": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       }
     },
     "project_methods_section": {
@@ -254,32 +242,25 @@
         "youth_participation_report"
       ],
       "target_group_reach": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "impact_on_participants": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1250
+        "ui:widget": "textarea"
       },
       "youth_participation_planning": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "key_partners": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "new_partnerships": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "establishment_after_project": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "achieved_objectives": {
         "ui:widget": "textarea",
-        "misc:max-length": 2500,
         "ui:options": {
           "tooltipLabel": "achieved_objectives.title",
           "tooltipButtonLabel": "achieved_objectives.title",
@@ -287,12 +268,10 @@
         }
       },
       "current_year_objectives": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "tested_partnerships": {
         "ui:widget": "textarea",
-        "misc:max-length": 2500,
         "ui:options": {
           "tooltipLabel": "tested_partnerships.title",
           "tooltipButtonLabel": "tested_partnerships.title",
@@ -300,12 +279,10 @@
         }
       },
       "key_partners_report": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "youth_participation_report": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       }
     },
     "project_economy_section": {
@@ -318,7 +295,6 @@
       },
       "grant_usage_report": {
         "ui:widget": "textarea",
-        "misc:max-length": 2500,
         "ui:options": {
           "tooltipLabel": "grant_usage_report.title",
           "tooltipButtonLabel": "grant_usage_report.title",
@@ -326,12 +302,10 @@
         }
       },
       "significant_changes": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       },
       "continuation_plan": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       }
     }
   },
@@ -378,7 +352,6 @@
     "additional_information_section": {
       "additional_information": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "hideNameFromPrint": true,
           "tooltipLabel": "additional_information.title",
@@ -402,8 +375,7 @@
         "ui:field": "textParagraph"
       },
       "further_clarification": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {

@@ -585,6 +585,30 @@ msgctxt "Grants application: Validation"
 msgid "You must insert at least @limit value for field @field"
 msgstr "Du måste föra in minst @limit värde för fält @field"
 
+msgctxt "Grants application: Validation"
+msgid "!field field is not in the correct format."
+msgstr "Fält !field har fel format."
+
+msgctxt "Grants application: Validation"
+msgid "!field field must be a postal code written with five digits."
+msgstr "Fält !field ska innehålla ett postnummer med fem siffror."
+
+msgctxt "Grants application: Validation"
+msgid "!field field must be a year between @min and @max."
+msgstr "Fält !field ska innehålla ett år mellan @min och @max."
+
+msgctxt "Grants application: Validation"
+msgid "!field field must be a year written with four digits."
+msgstr "Fält !field ska innehålla ett år med fyra siffror."
+
+msgctxt "Grants application: Validation"
+msgid "!field field must be at most @limit characters."
+msgstr "Fält !field får innehålla högst @limit tecken."
+
+msgctxt "Grants application: Validation"
+msgid "!field field must have at most 64 characters before the @ sign."
+msgstr "Fält !field får innehålla högst 64 tecken före @-tecknet."
+
 msgctxt "Grants application: Steps"
 msgid "Next"
 msgstr "Nästa"

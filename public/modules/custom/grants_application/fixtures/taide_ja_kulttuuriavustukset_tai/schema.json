@@ -19,7 +19,10 @@
         },
         "other_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_compensation_amount": {
           "format": "decimal-number",
@@ -28,7 +31,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -57,7 +61,9 @@
         },
         "art_premise_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "art_premise_is_others_use": {
           "title": "art_premise_is_others_use.title",
@@ -99,7 +105,9 @@
         },
         "realized_premise_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "realized_premise_is_owned_by_city": {
           "title": "realized_premise_is_owned_by_city.title",
@@ -131,7 +139,8 @@
               "realized_premise_is_owned_by_city": {
                 "const": true
               }
-            }
+            },
+            "required": ["realized_premise_is_owned_by_city"]
           },
           "then": {
             "properties": {
@@ -190,7 +199,8 @@
             },
             "purpose": {
               "title": "purpose.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 700
             }
           },
           "required": ["acting_year", "subventions", "primary_art", "purpose"]
@@ -217,7 +227,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -291,7 +302,8 @@
                   "is_owner_of_art_premises": {
                     "const": true
                   }
-                }
+                },
+                "required": ["is_owner_of_art_premises"]
               },
               "then": {
                 "properties": {
@@ -399,11 +411,13 @@
             },
             "way_of_selection": {
               "title": "way_of_selection.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "personal_teaching": {
               "title": "personal_teaching.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "free_students": {
               "title": "free_students.title",
@@ -461,7 +475,8 @@
           "properties": {
             "activity_equality": {
               "title": "activity_equality.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         },
@@ -471,7 +486,8 @@
           "properties": {
             "activity_accessibility": {
               "title": "activity_accessibility.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         },
@@ -481,7 +497,8 @@
           "properties": {
             "activity_ecology": {
               "title": "activity_ecology.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         },
@@ -491,15 +508,18 @@
           "properties": {
             "activity_goals": {
               "title": "activity_goals.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "activity_methods": {
               "title": "activity_methods.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "activity_future_changes": {
               "title": "activity_future_changes.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         }
@@ -690,7 +710,8 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -871,7 +892,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",

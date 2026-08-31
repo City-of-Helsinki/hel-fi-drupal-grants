@@ -136,7 +136,17 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
     properties: {
       applicant_email: {
         description: 'applicant_email.description',
-        properties: { email: { format: 'email', title: 'applicant_email_email.title', type: stringType } },
+        properties: {
+          email: {
+            format: 'email',
+            title: 'applicant_email_email.title',
+            type: stringType,
+            // RFC 5321: an address is at most 254 characters and its local part at most 64
+            // See: https://www.rfc-editor.org/info/rfc5321/
+            maxLength: 254,
+            pattern: '^[^@\\s]{1,64}@[^@\\s]{1,253}$',
+          },
+        },
         required: ['email'],
         title: 'applicant_email.title',
         type: objectType,
