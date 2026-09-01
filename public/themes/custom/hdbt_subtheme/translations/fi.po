@@ -709,3 +709,7 @@ msgstr "Osoite"
 msgctxt "Grants application"
 msgid "Phone number"
 msgstr "Puhelinnumero"
+
+msgctxt "Grants application"
+msgid "Allowed types: @formats"
+msgstr "Sallitut tiedostotyypit: @formats"

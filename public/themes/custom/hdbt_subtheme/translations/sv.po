@@ -659,3 +659,7 @@ msgstr "Adress"
 msgctxt "Grants application"
 msgid "Phone number"
 msgstr "Telefonnummer"
+
+msgctxt "Grants application"
+msgid "Allowed types: @formats"
+msgstr "Tillåtna filtyper: @formats"
