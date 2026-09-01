@@ -2431,18 +2431,6 @@ parameters:
 			path: public/modules/custom/grants_application_search/tests/src/Unit/CanonicalSelectFilterBaseTest.php
 
 		-
-			message: '#^Call to deprecated method setAccessible\(\) of class ReflectionMethod\.$#'
-			identifier: method.deprecated
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/CanonicalUnitTestBase.php
-
-		-
-			message: '#^Call to deprecated method setAccessible\(\) of class ReflectionProperty\.$#'
-			identifier: method.deprecated
-			count: 1
-			path: public/modules/custom/grants_application_search/tests/src/Unit/CanonicalUnitTestBase.php
-
-		-
 			message: '#^Cannot call method getMethod\(\) on ReflectionClass\|false\.$#'
 			identifier: method.nonObject
 			count: 1
