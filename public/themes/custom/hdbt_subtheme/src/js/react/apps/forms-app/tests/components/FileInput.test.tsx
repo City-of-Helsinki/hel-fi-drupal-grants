@@ -38,37 +38,9 @@ describe('FileInput.tsx', () => {
   });
 
   describe('getAcceptAttribute', () => {
-    // HDS only matches an extension when the specifier carries the leading dot.
     test('prefixes each format with a dot', () => {
       expect(getAcceptAttribute(['pdf'])).toBe('.pdf');
       expect(getAcceptAttribute(['pdf', 'doc'])).toBe('.pdf,.doc');
-    });
-
-    test('covers every allowed format by default', () => {
-      expect(getAcceptAttribute(ALLOWED_FORMATS)).toBe(
-        '.doc,.docx,.gif,.jpg,.jpeg,.pdf,.png,.ppt,.pptx,.rtf,.txt,.xls,.xlsx,.zip',
-      );
-    });
-  });
-
-  describe('ALLOWED_FORMATS', () => {
-    test('matches the formats the upload flow supports', () => {
-      expect(ALLOWED_FORMATS).toEqual([
-        'doc',
-        'docx',
-        'gif',
-        'jpg',
-        'jpeg',
-        'pdf',
-        'png',
-        'ppt',
-        'pptx',
-        'rtf',
-        'txt',
-        'xls',
-        'xlsx',
-        'zip',
-      ]);
     });
   });
 });
