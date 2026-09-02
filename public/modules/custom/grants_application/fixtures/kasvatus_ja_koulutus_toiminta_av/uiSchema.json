@@ -95,9 +95,6 @@
           "tooltipButtonLabel": "prior_compensations.title",
           "tooltipText": "prior_compensations.tooltip"
         }
-      },
-      "prior_compensations_help": {
-        "ui:field": "textParagraph"
       }
     }
   },

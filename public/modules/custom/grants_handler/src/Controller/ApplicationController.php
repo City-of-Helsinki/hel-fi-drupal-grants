@@ -295,9 +295,9 @@ final class ApplicationController extends ControllerBase {
         $build['submission'] = $page;
 
         // ID48 is missing avustukset_summa for some reason.
-        $id = $build['#webform_submission']?->getData()['application_type_id'] ?? '0';
-        $sum = $build['#webform_submission']?->getData()['subventions'][0]['amount'] ?? '0';
-        $valueExists = $build['#webform_submission']?->getData()['avustukset_summa'] ?? FALSE;
+        $id = $build['#webform_submission']->getData()['application_type_id'] ?? '0';
+        $sum = $build['#webform_submission']->getData()['subventions'][0]['amount'] ?? '0';
+        $valueExists = $build['#webform_submission']->getData()['avustukset_summa'] ?? FALSE;
 
         if ($id == '48' && $sum && !$valueExists) {
           $sum = (string) (int) str_replace(' ', '', $sum);

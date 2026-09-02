@@ -56,6 +56,31 @@ const formatMinLengthError = (error: ErrorObject) => {
 };
 
 /**
+ * Localize the "maxLength" error from AJV.
+ *
+ * The inputs cap typing and pasting, but a value can still arrive over the
+ * limit from a restored draft or a profile prefill.
+ *
+ * @param {ErrorObject} error
+ *   The error object.
+ *
+ * @return {string}
+ *   The localized error message.
+ */
+const formatMaxLengthError = (error: ErrorObject) => {
+  const {
+    params: { limit },
+    parentSchema,
+  } = error;
+
+  return Drupal.t(
+    '!field field must be at most @limit characters.',
+    { '!field': parentSchema?.title, '@limit': limit },
+    { context: 'Grants application: Validation' },
+  );
+};
+
+/**
  * Format a required field error message.
  *
  * @param {ErrorObject} error - The error object containing validation details.
@@ -74,6 +99,20 @@ const formatRequiredError = (error: ErrorObject) => {
 };
 
 /**
+ * Format the message for an address that is not shaped like an email address.
+ *
+ * @param {unknown} data - The value that failed validation.
+ *
+ * @return {string} - The localized error message.
+ */
+const formatInvalidEmailError = (data: unknown) =>
+  Drupal.t(
+    'The email address @mail is not valid. Use the format user@example.com.',
+    { '@mail': String(data) },
+    { context: 'Grants application: Validation' },
+  );
+
+/**
  * @todo extend this to support other patterns
  *
  * @param {ErrorObject} error - The error object containing validation details.
@@ -90,15 +129,106 @@ const formatPatternError = (error: ErrorObject) => {
     return formatRequiredError(error);
   }
 
-  if (format === 'email') {
+  if (format === 'year') {
     return Drupal.t(
-      'The email address @mail is not valid. Use the format user@example.com.',
-      { '@mail': data },
+      '!field field must be a year written with four digits.',
+      { '!field': error.parentSchema?.title },
       { context: 'Grants application: Validation' },
     );
   }
 
+  if (format === 'postal-code') {
+    return Drupal.t(
+      '!field field must be a postal code written with five digits.',
+      { '!field': error.parentSchema?.title },
+      { context: 'Grants application: Validation' },
+    );
+  }
+
+  if (format === 'email') {
+    return formatInvalidEmailError(data);
+  }
+
   return Drupal.t('Value is of incorrect type.', {}, { context: 'Grants application: Validation' });
+};
+
+/**
+ * Work out the years a pattern accepts.
+ *
+ * @param {string} pattern - The pattern from the field's schema
+ *
+ * @return {Array|undefined} - The lowest and highest accepted year
+ */
+const getYearBounds = (pattern: string): [number, number] | undefined => {
+  try {
+    const expression = new RegExp(pattern);
+    const accepted = [];
+
+    for (let year = 1000; year <= 9999; year++) {
+      if (expression.test(year.toString())) {
+        accepted.push(year);
+      }
+    }
+
+    return accepted.length ? [accepted[0], accepted[accepted.length - 1]] : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+/**
+ * Localize the "pattern" error from AJV.
+ *
+ * @param {ErrorObject} error - The error object containing validation details.
+ *
+ * @return {string} - The localized error message.
+ */
+const formatPatternKeywordError = (error: ErrorObject) => {
+  const { data, parentSchema } = error;
+
+  if (!data || data === '') {
+    return formatRequiredError(error);
+  }
+
+  if (parentSchema?.format === 'email') {
+    const localPart = String(data).split('@')[0] ?? '';
+
+    if (localPart.length > 64) {
+      return Drupal.t(
+        '!field field must have at most 64 characters before the @ sign.',
+        { '!field': parentSchema.title },
+        { context: 'Grants application: Validation' },
+      );
+    }
+
+    if (typeof parentSchema.maxLength === 'number' && String(data).length > parentSchema.maxLength) {
+      return Drupal.t(
+        '!field field must be at most @limit characters.',
+        { '!field': parentSchema.title, '@limit': parentSchema.maxLength },
+        { context: 'Grants application: Validation' },
+      );
+    }
+
+    return formatInvalidEmailError(data);
+  }
+
+  if (parentSchema?.format === 'year' && typeof parentSchema.pattern === 'string') {
+    const bounds = getYearBounds(parentSchema.pattern);
+
+    if (bounds) {
+      return Drupal.t(
+        '!field field must be a year between @min and @max.',
+        { '!field': parentSchema.title, '@min': bounds[0], '@max': bounds[1] },
+        { context: 'Grants application: Validation' },
+      );
+    }
+  }
+
+  return Drupal.t(
+    '!field field is not in the correct format.',
+    { '!field': parentSchema?.title },
+    { context: 'Grants application: Validation' },
+  );
 };
 
 /**
@@ -141,6 +271,14 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
     switch (error.keyword) {
       case 'format': {
         outMessage = formatPatternError(error);
+        break;
+      }
+      case 'maxLength': {
+        outMessage = formatMaxLengthError(error);
+        break;
+      }
+      case 'pattern': {
+        outMessage = formatPatternKeywordError(error);
         break;
       }
       case 'minItems': {

@@ -57,7 +57,10 @@
         },
         "other_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_compensation_amount": {
           "format": "decimal-number",
@@ -66,7 +69,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -96,7 +100,10 @@
         },
         "other_applied_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_applied_compensation_amount": {
           "format": "decimal-number",
@@ -105,7 +112,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -201,7 +209,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -242,7 +251,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -285,7 +295,8 @@
             },
             "self_financing_description": {
               "title": "self_financing_description.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "self_financing_amount": {
               "format": "decimal-number",
@@ -344,15 +355,18 @@
             },
             "project_name": {
               "title": "project_name.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 100
             },
             "project_goals": {
               "title": "project_goals.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "project_contents": {
               "title": "project_contents.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -393,7 +407,8 @@
           "properties": {
             "project_location": {
               "title": "project_location.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           }
         }
@@ -408,7 +423,8 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -526,7 +542,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",
