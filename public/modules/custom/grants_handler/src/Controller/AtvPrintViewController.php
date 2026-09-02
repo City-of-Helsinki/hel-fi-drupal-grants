@@ -297,15 +297,13 @@ final class AtvPrintViewController extends ControllerBase {
    *   Field.
    */
   private function handleDates(array &$field): void {
-    if (!$field['value']) {
+    if (!isset($field['value'])) {
       return;
     }
 
     // Some applications have numeric zero instead of "0" (due to a bug),
     // which seems to breaks the print view.
-    if ($field['value'] === 0) {
-      $field['value'] = "0";
-    }
+    $field['value'] = $field['value'] === 0 ? "0" : $field['value'];
 
     if (
       !is_string($field['value']) ||
