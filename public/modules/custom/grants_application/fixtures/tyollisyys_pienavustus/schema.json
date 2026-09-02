@@ -132,7 +132,10 @@
                   "de_minimis_granted": {
                     "const": true
                   }
-                }
+                },
+                "required": [
+                  "de_minimis_granted"
+                ]
               },
               "then": {
                 "properties": {
@@ -226,7 +229,10 @@
                   "change_negotiations": {
                     "const": true
                   }
-                }
+                },
+                "required": [
+                  "change_negotiations"
+                ]
               },
               "then": {
                 "properties": {
