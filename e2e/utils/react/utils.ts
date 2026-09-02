@@ -75,6 +75,33 @@ export const captureApplicationNumber = (page: Page): Promise<string> =>
   );
 
 /**
+ * Fail the test when the form is outside its application period.
+ *
+ * @param settings
+ *   The form settings from the preview endpoint.
+ * @param formID
+ *   The form identifier.
+ */
+export async function assertApplicationOpen(
+  settings: FormPreviewResponse['settings'],
+  formID: string,
+) {
+  await test.step('Assert the application period is open', async () => {
+    const now = new Date();
+    const open = settings.application_open ? new Date(settings.application_open) : null;
+    const close = settings.application_close ? new Date(settings.application_close) : null;
+    const isOpen = settings.continuous === true || Boolean(open && close && open < now && close > now);
+
+    expect(
+      isOpen,
+      `The form "${formID}" is closed. ` +
+      `Application period: ${settings.application_open || 'missing'} – ${settings.application_close || 'missing'}. ` +
+      `Run 'drush gaof' to open the form or create an application metadata entity for the form at /admin/tools/application-metadata.`,
+    ).toBe(true);
+  });
+}
+
+/**
  * Checks that the error summary notification at the top of the form
  * is visible and contains at least one missing-field item.
  *

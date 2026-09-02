@@ -14,6 +14,7 @@ import { recordReactReceived } from './receivedStatus';
 import { Role, selectRole} from "../auth_helpers";
 import {
   assertApplicationInList,
+  assertApplicationOpen,
   captureApplicationNumber,
   createTranslator,
   deleteDraft,
@@ -77,6 +78,9 @@ export async function executeFormFlow(
   // Download the form structure and all translations from the API endpoint.
   // We need this to know what fields exist and what their labels should be.
   const formData = await craftSchema(FORM_ID, FORM_JSON);
+
+  // Stop the run if the form is closed.
+  await assertApplicationOpen(formData.settings, FORM_ID);
 
   // Start listening for the application number before opening the form.
   const applicationNumberPromise = captureApplicationNumber(page);
@@ -190,6 +194,7 @@ export async function verifyFormAccessAsDraft(
   await selectRole(page, FORM_ROLE);
 
   const formData = await craftSchema(FORM_ID, FORM_JSON);
+  await assertApplicationOpen(formData.settings, FORM_ID);
   const t = createTranslator(formData as FormPreviewResponse, 'fi');
 
   // Open the form and confirm the React application loads for this profile.
