@@ -297,9 +297,25 @@ final class AtvPrintViewController extends ControllerBase {
    *   Field.
    */
   private function handleDates(array &$field): void {
-    // if ($field['value'] && preg_match(self::ISO8601, $field['value'])) {
-    if (preg_match(self::ISO8601, $field['value'])) {
-      $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
+    if (!$field['value']) {
+      return;
+    }
+
+    // Some applications have numeric zero instead of "0" (due to a bug),
+    // which seems to breaks the print view.
+    if ($field['value'] === 0) {
+      $field['value'] = "0";
+    }
+
+    if (
+      !is_string($field['value']) ||
+      !preg_match(self::ISO8601, $field['value'])
+    ) {
+      return;
+    }
+
+    if ($dateString = date_format(date_create($field['value']), 'd.m.Y')) {
+      $field['value'] = $dateString;
     }
   }
 
