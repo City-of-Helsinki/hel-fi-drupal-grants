@@ -233,11 +233,9 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
           {steps && stepIndex < steps.size - 2 && !isEmptyPreview && (
             <Notification
               className='hdbt-form--notification'
-              label={Drupal.t('Fill in the fields to all the questions that you can answer.')}
+              label={Drupal.t('Required fields', {}, { context: 'Grants application' })}
             >
-              {Drupal.t(
-                'Fields marked with * are mandatory information that you must fill in in order to save and send the information.',
-              )}
+              {Drupal.t('Required fields are indicated with an asterisk (*).', {}, { context: 'Grants application' })}
             </Notification>
           )}
         </div>

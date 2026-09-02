@@ -683,3 +683,11 @@ msgstr "Adress"
 msgctxt "Grants application"
 msgid "Phone number"
 msgstr "Telefonnummer"
+
+msgctxt "Grants application"
+msgid "Required fields"
+msgstr "Obligatoriska fält"
+
+msgctxt "Grants application"
+msgid "Required fields are indicated with an asterisk (*)."
+msgstr "Obligatoriska fält är markerade med en asterisk (*)."
