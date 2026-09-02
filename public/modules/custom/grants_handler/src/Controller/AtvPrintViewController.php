@@ -297,6 +297,7 @@ final class AtvPrintViewController extends ControllerBase {
    *   Field.
    */
   private function handleDates(array &$field): void {
+    // if ($field['value'] && preg_match(self::ISO8601, $field['value'])) {
     if (preg_match(self::ISO8601, $field['value'])) {
       $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
     }
