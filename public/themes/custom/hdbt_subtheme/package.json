@@ -59,6 +59,8 @@
     "vitest": "^3.0.8"
   },
   "allowScripts": {
-    "@parcel/watcher": false
+    "@parcel/watcher": false,
+    "fsevents": false,
+    "esbuild": false
   }
 }
