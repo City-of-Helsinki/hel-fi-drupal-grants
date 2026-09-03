@@ -1,0 +1,194 @@
+{
+  "compensation.compensationInfo.compensationArray.0.0": {
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "38",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.compensationInfo.compensationArray.0.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "0",
+      "valueType": "float"
+    }
+  },
+
+  "compensation.compensationInfo.generalInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.purpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "purpose",
+      "label": "Avustuksen käyttötarkoitus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.prior_benefits_usage_section.prior_compensations",
+    "mapping_type": "default",
+    "data": {
+      "ID": "explanation",
+      "label": "Edellisen avustuksen käyttöselvitys",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.benefitsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.city_premises_benefits_section.city_premises_benefits",
+    "mapping_type": "default",
+    "data": {
+      "ID": "premises",
+      "label": "Kaupungilta saatu tiloihin liittyvä tuki",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.benefitsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.city_benefits_loans_section.city_benefits_loans",
+    "mapping_type": "default",
+    "data": {
+      "ID": "loans",
+      "label": "Kaupungilta saadut lainat ja takaukset",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.customQuestionsInfo.customQuestionsArray.0": {
+    "#tip": "Sivu 4: Pienavustuksen kohde",
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.grant_target_section.grant_target",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Työkokeilu",
+      "2": "Määräaikainen työsuhde"
+    },
+    "data": {
+      "ID": "pienavustuksen_kohde",
+      "label": "Pienavustuksen kohde",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.1": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.employment_period_section.employment_period.start_date",
+    "mapping_type": "default",
+    "data": {
+      "ID": "tyokokeilun_tai_tyosuhteen_alkupvm",
+      "label": "Työkokeilun tai työsuhteen alkupäivämäärä",
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.2": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.employment_period_section.employment_period.end_date",
+    "mapping_type": "default",
+    "data": {
+      "ID": "tyokokeilun_tai_tyosuhteen_loppupvm",
+      "label": "Työkokeilun tai työsuhteen loppupäivämäärä",
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.3": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.change_negotiations_section.change_negotiations",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "": "Ei"
+    },
+    "data": {
+      "ID": "muutosneuvottelut",
+      "label": "Onko organisaatiossanne käynnissä tai viimeisen 12 kuukauden aikana ollut muutosneuvotteluja?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.4": {
+    "datasource": "form_data",
+    "source": "information_in_more_detail_step.change_negotiations_section.change_negotiations_description",
+    "mapping_type": "default",
+    "data": {
+      "ID": "muutosneuvottelut_kuvaus",
+      "label": "Muutosneuvottelut",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.activitiesInfoArray.0": {
+    "datasource": "form_data",
+    "source": "community_activity_step.community_activity_section.community_activity_description",
+    "mapping_type": "default",
+    "data": {
+      "ID": "businessPurpose",
+      "label": "Toiminnan kuvaus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activitiesInfoArray.1": {
+    "datasource": "form_data",
+    "source": "community_activity_step.community_activity_section.community_practices_business",
+    "mapping_type": "default",
+    "data": {
+      "ID": "communityPracticesBusiness",
+      "label": "Yhteisö harjoittaa liiketoimintaa",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.activitiesInfoArray.2": {
+    "datasource": "form_data",
+    "source": "community_activity_step.de_minimis_section.de_minimis_granted",
+    "mapping_type": "default",
+    "data": {
+      "ID": "deMinimisGiven",
+      "label": "De minimis tuki",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "attachmentsInfo.generalInfoArray": {
+    "#tip": "Lomakkeella ei ole liitteitä eikä Lisäselvitys liitteistä -kenttää, mutta attachmentsInfo on pakollinen tietoliikennesanomassa.",
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "generalInfoArray": []
+    }
+  },
+
+  "compensation.activitiesInfoArray.3": {
+    "datasource": "form_data",
+    "source": "community_activity_step.de_minimis_section.de_minimis_info",
+    "mapping_type": "default",
+    "data": {
+      "ID": "deMinimisInfo",
+      "label": "Lisätiedot myönnetyistä de minimis -tuista",
+      "value": "",
+      "valueType": "string"
+    }
+  }
+}

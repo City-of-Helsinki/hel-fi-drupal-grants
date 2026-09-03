@@ -1,0 +1,136 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
+    "purpose_section": {
+      "purpose": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1500
+      }
+    },
+    "city_benefits_loans_section": {
+      "city_benefits_loans": {
+        "ui:widget": "textarea"
+      }
+    },
+    "city_premises_benefits_section": {
+      "city_premises_benefits": {
+        "ui:widget": "textarea"
+      }
+    },
+    "prior_benefits_usage_section": {
+      "prior_compensations": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "prior_compensations.title",
+          "tooltipButtonLabel": "prior_compensations.title",
+          "tooltipText": "prior_compensations.tooltip"
+        }
+      }
+    }
+  },
+  "community_activity_step": {
+    "community_activity_section": {
+      "community_activity_description": {
+        "misc:profilePrefill": "businessPurpose",
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "community_activity.title",
+          "tooltipButtonLabel": "community_activity.title",
+          "tooltipText": "community_activity.description"
+        }
+      },
+      "community_practices_business": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio"
+      }
+    },
+    "de_minimis_section": {
+      "de_minimis_granted": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true,
+          "tooltipLabel": "de_minimis_granted.title",
+          "tooltipButtonLabel": "de_minimis_granted.title",
+          "tooltipText": "de_minimis_granted.tooltip"
+        }
+      },
+      "de_minimis_info": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    }
+  },
+  "information_in_more_detail_step": {
+    "grant_target_section": {
+      "grant_target": {
+        "ui:enumNames": [
+          "grant_target.work_trial",
+          "grant_target.fixed_term_employment"
+        ],
+        "ui:widget": "radio"
+      }
+    },
+    "employment_period_section": {
+      "employment_period": {
+        "ui:options": {
+          "tooltipLabel": "employment_period.title",
+          "tooltipButtonLabel": "employment_period.title",
+          "tooltipText": "employment_period.tooltip"
+        },
+        "start_date": {
+          "ui:widget": "date"
+        },
+        "end_date": {
+          "ui:widget": "date"
+        }
+      }
+    },
+    "change_negotiations_section": {
+      "change_negotiations": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true,
+          "tooltipLabel": "change_negotiations.title",
+          "tooltipButtonLabel": "change_negotiations.title",
+          "tooltipText": "change_negotiations.tooltip"
+        }
+      },
+      "change_negotiations_description": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      }
+    }
+  },
+  "attachments_step": {
+    "attachments_section": {
+      "attachment_delivery_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "personal_data_processing_help": {
+        "ui:field": "textParagraph"
+      }
+    }
+  }
+}

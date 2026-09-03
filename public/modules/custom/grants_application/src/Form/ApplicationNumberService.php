@@ -51,7 +51,7 @@ class ApplicationNumberService {
     // for already saved applications.
     $like = $application_type_id < 100 ? "$env-0$application_type_id-%" : "$env-$application_type_id-%";
     $existingApplicationNumbers = $this->connection
-      ->query("select application_number from application_submission where application_number like '$like' ")
+      ->query('SELECT application_number FROM {application_submission} WHERE application_number LIKE :pattern', [':pattern' => $like])
       ->fetchAll();
 
     // No react applications found.

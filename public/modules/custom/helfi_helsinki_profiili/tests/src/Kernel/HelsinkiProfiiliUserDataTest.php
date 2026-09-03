@@ -56,6 +56,7 @@ class HelsinkiProfiiliUserDataTest extends KernelTestBase {
     parent::setUp();
 
     $this->installEntitySchema('user');
+    $this->installSchema('user', ['users_data']);
 
     // Push a request with a session so getUserProfileData can access it.
     $request = SymfonyRequest::create('/test');

@@ -86,3 +86,18 @@ fieldset.webform-composite-hidden-title .fieldset-wrapper > .form-item:last-chil
 .form-item.text-field--inside-fieldset {
   max-width: var(--webform-element-width--input-large);
 }
+
+
+// Webform version includes fieldsets for attachments. Ones with checkboxes are assumed required.
+// Validation is done separate from visual style. Fielset does not support required or aria-required
+// so this is not optimal for screen reader but also not a degradation of accessibility.
+.grants-attachments--wrapper:has(.webform-type-checkbox) legend {
+  span::after {
+    content: "\00a0*";
+    position: absolute;
+  }
+
+  .webform-element-help {
+    right: -4px; // make space for absolute asterisk.
+  }
+}

@@ -19,7 +19,10 @@
         },
         "other_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_compensation_amount": {
           "format": "decimal-number",
@@ -58,7 +61,10 @@
         },
         "other_applied_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_applied_compensation_amount": {
           "format": "decimal-number",
@@ -67,7 +73,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -159,7 +166,8 @@
           "properties": {
             "purpose": {
               "title": "purpose_section_purpose.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2500
             }
           },
           "required": ["purpose"]
@@ -186,7 +194,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -227,7 +236,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -257,35 +267,43 @@
           "properties": {
             "reason_for_grant_application": {
               "title": "reason_for_grant_application.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "project_objectives": {
               "title": "project_objectives.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "safety_practices": {
               "title": "safety_practices.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "safer_club_practices": {
               "title": "safer_club_practices.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "project_increase_safety_inclusion": {
               "title": "project_increase_safety_inclusion.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "project_increase_competence": {
               "title": "project_increase_competence.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "antiracism_measures": {
               "title": "antiracism_measures.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "equality_nondiscrimination_responsibility_plan": {
               "title": "equality_nondiscrimination_responsibility_plan.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "active_participants_wrapper": {
               "type": "object",
@@ -316,11 +334,13 @@
             },
             "under_20_affected": {
               "title": "under_20_affected.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             },
             "key_partners": {
               "title": "key_partners.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 3000
             },
             "schedule_wrapper": {
               "type": "object",
@@ -342,27 +362,33 @@
             },
             "schedule_of_measures": {
               "title": "schedule_of_measures.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 3000
             },
             "key_risks": {
               "title": "key_risks.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 3000
             },
             "project_results": {
               "title": "project_results.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "project_implementation": {
               "title": "project_implementation.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "project_indicators": {
               "title": "project_indicators.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 2000
             },
             "project_manager": {
               "title": "project_manager.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1000
             }
           },
           "required": [

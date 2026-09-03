@@ -4,5 +4,5 @@ description: Audit log support for Grants
 package: Helfi
 core_version_requirement: ^10 || ^11
 dependencies:
-  - helfi_audit_log:helfi_audit_log
+  - helfi_api_base:helfi_api_base
   - helfi_helsinki_profiili:helfi_helsinki_profiili

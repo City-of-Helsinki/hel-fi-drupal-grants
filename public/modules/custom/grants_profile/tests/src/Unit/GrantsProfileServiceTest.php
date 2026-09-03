@@ -12,8 +12,8 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\ProfileConnector;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
-use Drupal\helfi_audit_log\AuditLogService;
-use Drupal\helfi_audit_log\AuditLogServiceInterface;
+use Drupal\helfi_api_base\AuditLog\AuditLogService;
+use Drupal\helfi_api_base\AuditLog\AuditLogServiceInterface;
 use Drupal\Tests\UnitTestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -219,7 +219,7 @@ class GrantsProfileServiceTest extends UnitTestCase {
     $atv->deleteAttachment($doc->getId(), '321')->shouldBeCalled();
 
     // Should dispatch audit log event.
-    $auditLog->dispatchEvent(Argument::any())->shouldBeCalled();
+    $auditLog->logOperation(Argument::any())->shouldBeCalled();
 
     // Should remove existing attachments since
     // update does not contain documents.

@@ -16,7 +16,6 @@
       },
       "purpose": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
@@ -62,7 +61,6 @@
           },
           "other_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -110,7 +108,6 @@
           },
           "other_applied_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",

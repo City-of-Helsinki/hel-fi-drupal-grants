@@ -25,7 +25,6 @@
         }
       },
       "multi_year_grant_years": {
-        "misc:max-length": 100,
         "ui:options": {
           "tooltipLabel": "multi_year_grant_years.title",
           "tooltipButtonLabel": "multi_year_grant_years.title",
@@ -33,7 +32,6 @@
         }
       },
       "multi_year_grant_breakdown": {
-        "misc:max-length": 100,
         "ui:options": {
           "tooltipLabel": "multi_year_grant_breakdown.title",
           "tooltipButtonLabel": "multi_year_grant_breakdown.title",
@@ -58,7 +56,6 @@
         "project_short_description"
       ],
       "project_name": {
-        "misc:max-length": 100,
         "ui:options": {
           "tooltipLabel": "project_name.title",
           "tooltipButtonLabel": "project_name.title",
@@ -79,7 +76,6 @@
       },
       "project_short_description": {
         "ui:widget": "textarea",
-        "misc:max-length": 700,
         "ui:options": {
           "tooltipLabel": "project_short_description.title",
           "tooltipButtonLabel": "project_short_description.title",
@@ -87,7 +83,7 @@
         }
       }
     },
-    "received_compensations_section": {
+    "other_compensations_section": {
       "have_received_other_compensations": {
         "ui:widget": "radio",
         "ui:enumNames": [
@@ -125,7 +121,6 @@
           },
           "other_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -177,9 +172,6 @@
       }
     },
     "schedule_section": {
-      "event_dates": {
-        "misc:max-length": 255
-      },
       "project_start_date": {
         "ui:widget": "date"
       },
@@ -190,7 +182,6 @@
     "project_description_section": {
       "detailed_project_description": {
         "ui:widget": "textarea",
-        "misc:max-length": 2500,
         "ui:options": {
           "tooltipLabel": "detailed_project_description.title",
           "tooltipButtonLabel": "detailed_project_description.title",
@@ -203,7 +194,6 @@
     "contents_section": {
       "artistic_starting_points": {
         "ui:widget": "textarea",
-        "misc:max-length": 1000,
         "ui:options": {
           "tooltipLabel": "artistic_starting_points.title",
           "tooltipButtonLabel": "artistic_starting_points.title",
@@ -211,36 +201,29 @@
         }
       },
       "diversity_and_equality": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     },
     "accessibility_section": {
       "accessibility": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "community_spirit": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "target_audiences": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     },
     "operations_section": {
       "professionalism": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "ecology": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "partners": {
         "ui:widget": "textarea",
-        "misc:max-length": 1000,
         "ui:options": {
           "tooltipLabel": "partners.title",
           "tooltipButtonLabel": "partners.title",
@@ -310,8 +293,7 @@
     },
     "other_input_section": {
       "other_valuable_input": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },
@@ -319,7 +301,6 @@
     "additional_information_section": {
       "additional_information": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "hideNameFromPrint": true,
           "tooltipLabel": "additional_information.title",
@@ -366,8 +347,7 @@
         }
       },
       "further_clarification": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {

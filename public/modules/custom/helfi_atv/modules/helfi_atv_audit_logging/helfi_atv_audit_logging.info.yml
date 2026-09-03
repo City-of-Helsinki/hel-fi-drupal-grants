@@ -5,4 +5,4 @@ package: Hel.fi
 core_version_requirement: ^10 || ^11
 dependencies:
   - helfi_atv
-  - helfi_audit_log
+  - helfi_api_base
