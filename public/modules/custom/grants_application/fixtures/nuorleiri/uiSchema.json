@@ -110,7 +110,11 @@
           "misc:file-type": 36,
           "misc:variant": "simple",
           "misc:required": true,
-          "ui:help": "other_attachment_fieldset.ui_help",
+          "misc:formats": [
+            "xls",
+            "xlsx"
+          ],
+          "ui:help": "excel_attachment.ui_help",
           "ui:field": "atvFile"
         }
       },
