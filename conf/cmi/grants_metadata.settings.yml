@@ -330,6 +330,13 @@ third_party_options:
         fi: 'Työllisyyden edistämisen pienavustus'
         en: 'Small Grant for Employment Support'
         sv: 'Små understöd för att främja sysselsättningen'
+    79:
+      id: NUORLEIRSELV
+      code: NUORLEIRSELV
+      labels:
+        fi: "Nuorisotoiminnan leiriavustusselvitys"
+        en: "Camp grant report for youth activities"
+        sv: "Ungdomsverksamhet, utredning över lägerunderstöd"
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
@@ -592,6 +599,12 @@ overridden_configuration:
         disableCopying: 0
   -
     77:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-08-30T11:19:00'
+        disableCopying: 0
+  -
+    78:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-08-30T11:19:00'

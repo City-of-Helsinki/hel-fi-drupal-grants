@@ -2096,7 +2096,7 @@
                 "type": "object",
                 "properties": {
                   "incomeGroupName": {
-                    "type":"string",
+                    "type": "string",
                     "enum": [
                       "general",
                       "budgetForProjectAndDevelopment",
@@ -2358,7 +2358,7 @@
                 "type": "object",
                 "properties": {
                   "incomeGroupName": {
-                    "type":"string"
+                    "type": "string"
                   },
                   "incomeRowsArrayDynamic": {
                     "description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
@@ -2398,7 +2398,7 @@
                     }
                   },
                   "otherIncomeGroupName": {
-                    "type":"string"
+                    "type": "string"
                   },
                   "otherIncomeRowsArrayDynamic": {
                     "description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
