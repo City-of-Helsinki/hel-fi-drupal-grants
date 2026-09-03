@@ -73,7 +73,9 @@
         },
         "location_postal_code": {
           "title": "postal_code.title",
-          "type": "string"
+          "type": "string",
+          "format": "postal-code",
+          "maxLength": 5
         },
         "location_pupil_number": {
           "title": "location_pupil_number.title",
@@ -111,7 +113,8 @@
               "location_held_in_provided_space": {
                 "const": false
               }
-            }
+            },
+            "required": ["location_held_in_provided_space"]
           },
           "then": {
             "properties": {
@@ -156,7 +159,10 @@
         },
         "other_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_compensation_amount": {
           "format": "decimal-number",
@@ -244,7 +250,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -306,7 +313,8 @@
                   "have_received_prior_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_prior_compensations"]
               },
               "then": {
                 "properties": {

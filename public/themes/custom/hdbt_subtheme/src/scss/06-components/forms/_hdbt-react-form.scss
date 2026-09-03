@@ -88,7 +88,7 @@
   .form-group.field-object:has(> .grants-form--preview-section__label) {
     border: 1px solid $color-black;
     padding: $spacing;
-    
+
     > .field {
       margin-block-end: $spacing-half;
     }
@@ -133,7 +133,7 @@
 
 .hdbt-form--fileinput--delete-disabled + ul button {
   display: none;
-} 
+}
 
 .hdbt-react-form__submission-info {
   background: var(--color-black-5);
@@ -229,5 +229,15 @@
   // React & non-React button layout unification styles.
   button:hover {
     text-decoration: none;
+  }
+}
+
+.grants-form--official-details {
+  &:not(:empty) {
+    margin-block-start: $spacing;
+  }
+
+  .prh-content-block__content-row:last-child {
+    margin-block-end: 0;
   }
 }
