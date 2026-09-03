@@ -843,8 +843,8 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
       '#theme' => 'hds_notification',
       '#type' => 'notification',
       '#class' => '',
-      '#label' => t('Required fields', [], ['context' => 'Grants application']),
-      '#body' => t('Required fields are indicated with an asterisk (*).', [], ['context' => 'Grants application']),
+      '#label' => $this->t('Required fields', [], ['context' => 'Grants application']),
+      '#body' => $this->t('Required fields are indicated with an asterisk (*).', [], ['context' => 'Grants application']),
       '#aria_level' => '4',
     ];
 
