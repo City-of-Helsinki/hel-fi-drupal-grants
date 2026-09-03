@@ -84,8 +84,45 @@ const multipleFilesFromATVData = (value?: { files: ATVFile[] } | { files?: [] })
   });
 };
 
+export const ALLOWED_FORMATS = [
+  'doc',
+  'docx',
+  'gif',
+  'jpg',
+  'jpeg',
+  'pdf',
+  'png',
+  'ppt',
+  'pptx',
+  'rtf',
+  'txt',
+  'xls',
+  'xlsx',
+  'zip',
+];
+
+export const getFieldFormats = (uiSchema: UiSchema | undefined): string[] => {
+  const formats = uiSchema?.['misc:formats'];
+
+  if (!Array.isArray(formats)) {
+    return ALLOWED_FORMATS;
+  }
+
+  const accepted = formats.filter((format) => {
+    if (ALLOWED_FORMATS.includes(format)) {
+      return true;
+    }
+
+    console.error('Illegal format value passed to FileInput field ', format);
+    return false;
+  });
+
+  return accepted.length ? accepted : ALLOWED_FORMATS;
+};
+
+export const getAcceptAttribute = (formats: string[]): string => formats.map((format) => `.${format}`).join(',');
+
 export const FileInput = ({
-  accept,
   formData,
   id,
   label,
@@ -110,6 +147,13 @@ export const FileInput = ({
   const isRequired = required || miscRequired;
   const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
   const multipleFiles = uiSchema?.['misc:multiple'] ?? false;
+  const fieldFormats = getFieldFormats(uiSchema);
+  const accept = getAcceptAttribute(fieldFormats);
+  const allowedFormatsHelperText = Drupal.t(
+    'Allowed types: @formats',
+    { '@formats': fieldFormats.join(', ') },
+    { context: 'Grants application' },
+  );
   const defaultValue = multipleFiles ? multipleFilesFromATVData(formData) : filesFromATVData(formData);
   const submitState = useAtomValue(formConfigAtom)?.submitState;
   const isDraft = submitState === SubmitStates.DRAFT;
@@ -266,6 +310,7 @@ export const FileInput = ({
     <HDSFileInput
       accept={accept}
       defaultValue={defaultValue}
+      helperText={allowedFormatsHelperText}
       disabled={readonly || isEmptyPreview}
       dragAndDrop={false}
       errorText={formatErrors(rawErrors)}
@@ -287,6 +332,7 @@ export const FileInput = ({
     <HDSFileInput
       accept={accept}
       defaultValue={defaultValue}
+      helperText={allowedFormatsHelperText}
       disabled={readonly || isEmptyPreview}
       dragAndDrop={false}
       errorText={formatErrors(rawErrors)}

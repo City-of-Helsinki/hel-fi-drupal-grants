@@ -323,6 +323,13 @@ third_party_options:
         fi: 'Nuorisotoiminnan projektiavustushakemus'
         en: 'Project grant application for youth activities'
         sv: 'Ansökan om projektuderstöd för ungdomsverksamhet'
+    78:
+      id: TYOLLISYYSPIEN
+      code: TYOLLISYYSPIEN
+      labels:
+        fi: 'Työllisyyden edistämisen pienavustus'
+        en: 'Small Grant for Employment Support'
+        sv: 'Små understöd för att främja sysselsättningen'
     79:
       id: NUORLEIRSELV
       code: NUORLEIRSELV

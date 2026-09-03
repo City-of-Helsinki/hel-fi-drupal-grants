@@ -1,0 +1,129 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Small Grant for Employment Support",
+      "fi": "Työllisyyden edistämisen pienavustus",
+      "sv": "Små understöd för att främja sysselsättningen"
+    },
+    "subventions.38.title": {
+      "en": "Small Grant for Employment Support",
+      "fi": "Työllisyyden edistämisen pienavustus",
+      "sv": "Små understöd för att främja sysselsättningen"
+    },
+    "purpose_section_purpose.title": {
+      "en": "Intended use of the grant",
+      "fi": "Avustuksen käyttötarkoitus",
+      "sv": "Understödets ändamål"
+    },
+    "purpose_section_purpose.description": {
+      "en": "Will the grant be used for a work try-out or fixed-term employment? What will the employee's main tasks be? How will supervision and support be organised for the employee?",
+      "fi": "Toteutetaanko avustuksella työkokeilu vai määräaikainen työsuhde? Mitkä ovat työllistettävän keskeiset työtehtävät? Miten työllistettävän tuki ja ohjaus on järjestetty?",
+      "sv": "Används understödet för arbetsprövning eller visstidsanställning? Vilka är den anställdas centrala arbetsuppgifter? Hur är stödet och handledningen för den anställda organiserade?"
+    },
+    "de_minimis_section.title": {
+      "en": "De minimis aid",
+      "fi": "De minimis tuki",
+      "sv": "De minimis-stöd"
+    },
+    "de_minimis_granted.title": {
+      "en": "Has the organisation been granted de minimis aid in the last three years?",
+      "fi": "Onko yhdistykselle myönnetty de minimis -tukea viimeisen kolmen vuoden aikana?",
+      "sv": "Har föreningen beviljats de minimis-stöd under de senaste tre åren?"
+    },
+    "de_minimis_granted.tooltip": {
+      "en": "De minimis aid is public aid of amounts small enough to be considered de minimis in nature, that an association may receive up to EUR 300,000 of over a period of three years. Examples of de minimis aid include pay subsidy and other employment subsidies, for example.",
+      "fi": "De minimis -tuki on julkista, vähämerkityksistä tukea, jota yhdistys voi saada enintään 300 000 euroa kolmen vuoden aikana. De minimis tukea ovat esimerkiksi palkkatuki ja muut työllistämistuet.",
+      "sv": "De minimis-stöd är offentligt stöd av mindre betydelse, vilket en förening kan få upp till 300 000 euro under en treårsperiod. Exempel på de minimis-stöd är lönesubvention och andra sysselsättningsstöd."
+    },
+    "de_minimis_info.title": {
+      "en": "Additional information on de minimis aid granted",
+      "fi": "Lisätiedot myönnetyistä de minimis -tuista",
+      "sv": "Tilläggsuppgifter om beviljade de minimis-stöd"
+    },
+    "de_minimis_info.description": {
+      "en": "Please provide details of the granting authority, amount (in euros) and the date on which the de minimis aid was granted.",
+      "fi": "Kirjaa tähän de minimis -tuen myöntäjä, määrä (euroina) ja myöntämispäivä.",
+      "sv": "Ange här de minimis-stödets beviljare, belopp (i euro) och beviljandedatum."
+    },
+    "grant_target_section.title": {
+      "en": "Purpose of the small grant",
+      "fi": "Pienavustuksen kohde",
+      "sv": "Ändamål för små understöd"
+    },
+    "grant_target.title": {
+      "en": "Select what the small grant will be used for: a work try-out or fixed-term employment.",
+      "fi": "Valitse, mihin pienavustus käytetään: työkokeilu vai määräaikainen työsuhde.",
+      "sv": "Välj vad små understöd ska användas till: arbetsprövning eller visstidsanställning."
+    },
+    "grant_target.work_trial": {
+      "en": "Work try-out",
+      "fi": "Työkokeilu",
+      "sv": "Arbetsprövning"
+    },
+    "grant_target.fixed_term_employment": {
+      "en": "Fixed-term employment",
+      "fi": "Määräaikainen työsuhde",
+      "sv": "Visstidsanställning"
+    },
+    "employment_period_section.title": {
+      "en": "Work try-out or employment dates",
+      "fi": "Työkokeilun tai työsuhteen ajankohta",
+      "sv": "Arbetsprövningens eller anställningens tidpunkt"
+    },
+    "employment_period.title": {
+      "en": "Enter the start and end dates.",
+      "fi": "Lisää alkamis- ja päättymispäivä.",
+      "sv": "Ange start- och slutdatum."
+    },
+    "employment_period.tooltip": {
+      "en": "The work try-out or employment must last at least two months.",
+      "fi": "Työkokeilun tai työsuhteen kesto on vähintään 2kk.",
+      "sv": "Arbetsprövningen eller anställningen ska vara minst två månader."
+    },
+    "change_negotiations_section.title": {
+      "en": "Change negotiations",
+      "fi": "Muutosneuvottelut",
+      "sv": "Omställningsförhandlingar"
+    },
+    "change_negotiations.title": {
+      "en": "Are there ongoing change negotiations or have there been change negotiations in your organisation within the past 12 months?",
+      "fi": "Onko organisaatiossanne käynnissä tai viimeisen 12 kuukauden aikana ollut muutosneuvotteluja?",
+      "sv": "Pågår det eller har det förekommit omställningsförhandlingar i er organisation under de senaste 12 månaderna?"
+    },
+    "change_negotiations.tooltip": {
+      "en": "The obligation to conduct change negotiations arises when the employer is considering measures that may lead to the dismissal or lay-off of an employee on financial or production-related grounds, for example.",
+      "fi": "Muutosneuvotteluvelvoite syntyy, kun työnantaja harkitsee toimenpiteitä, jotka voivat johtaa mm. työntekijän irtisanomiseen tai lomauttamiseen taloudellisin tai tuotannollisin perustein.",
+      "sv": "Skyldigheten att föra omställningsförhandlingar uppstår när arbetsgivaren överväger åtgärder som kan leda till bland annat uppsägning eller permittering av en arbetstagare av ekonomiska eller produktionsmässiga skäl."
+    },
+    "change_negotiations_description.title": {
+      "en": "Change negotiations",
+      "fi": "Muutosneuvottelut",
+      "sv": "Omställningsförhandlingar"
+    },
+    "change_negotiations_description.description": {
+      "en": "Please describe the situation regarding the change negotiations.",
+      "fi": "Kuvaa muutosneuvottelujen tilanne.",
+      "sv": "Beskriv situationen för omställningsförhandlingarna."
+    },
+    "attachment_delivery_help.title": {
+      "en": "Submission of attachments",
+      "fi": "Hakemuksen liitteiden toimittaminen",
+      "sv": "Inlämning av bilagor till ansökan"
+    },
+    "attachment_delivery_help.value": {
+      "en": "<p>Instructions: A signed work try-out agreement or an employment contract (in PDF format) must be attached to the application.</p><ol><li>Conclude an agreement with the person to be employed: a work try-out agreement or an employment contract. (For work try-out agreements: ensure that the agreement includes the signatures of a specialist from Employment Services, a representative of your organisation, and the person to be employed.)</li><li>Ensure that the person to be employed is an unemployed Helsinki resident.</li><li>Submit the agreement by secure email (https://securemail.hel.fi/) to tyollisyys.avustukset@hel.fi within the application period.</li></ol>",
+      "fi": "<p>Ohjeet: hakemuksen pakollinen liite on allekirjoitettu työkokeilusopimus tai työsopimus (PDF-muodossa).</p><ol><li>Tee sopimus työllistettävän henkilön kanssa: työkokeilusopimus tai työsopimus. (Työkokeilusopimus: varmista, että sopimuksessa on työllisyyspalvelujen asiantuntijan, järjestönne edustajan ja työllistettävän henkilön allekirjoitukset.)</li><li>Varmista, että työllistettävä on helsinkiläinen työtön.</li><li>Toimita sopimus suojatulla sähköpostilla (https://securemail.hel.fi/) osoitteeseen tyollisyys.avustukset@hel.fi hakuajan puitteissa.</li></ol>",
+      "sv": "<p>Anvisningar: Den obligatoriska bilagan till ansökan är ett undertecknat avtal om arbetsprövning eller ett arbetsavtal (i PDF-format).</p><ol><li>Upprätta ett avtal med den person som ska anställas: ett avtal om arbetsprövning eller ett arbetsavtal. (För avtal om arbetsprövning: säkerställ att avtalet innehåller underskrifter från en expert för sysselsättningstjänsterna, en representant för er organisation och den person som ska anställas.)</li><li>Säkerställ att den som ska anställas är en arbetslös Helsingforsbo.</li><li>Skicka in avtalet via skyddad e-post (https://securemail.hel.fi/) till: tyollisyys.avustukset@hel.fi inom ansökningstiden.</li></ol>"
+    },
+    "personal_data_processing_help.title": {
+      "en": "Information on the processing of the personal data of the person being employed",
+      "fi": "Tietoa työllistettävän henkilötietojen käsittelystä",
+      "sv": "Information om behandlingen av personuppgifter för den som ska anställas"
+    },
+    "personal_data_processing_help.value": {
+      "en": "<p>The processing of attachments sent via Securemail shall be governed by the City of Helsinki Employment Services’ privacy notice for the Helsinki benefit. Further information on the processing of personal data can be found on the City of Helsinki data protection page: www.hel.fi/data-protection</p><p>The applicant undertakes to inform the person being employed of the processing of personal data by the Employment Services.</p>",
+      "fi": "<p>Securemaililla lähetettyjen liitetiedostojen käsittelyssä sovelletaan Helsingin työllisyyspalvelujen Helsinki-lisän tietosuojaselostetta. Lisätietoja henkilötietojen käsittelystä löytyy Helsingin kaupungin tietosuojasivulta: www.hel.fi/tietosuoja</p><p>Hakija sitoutuu informoimaan työllistettävää henkilöä henkilötietojen käsittelystä Työllisyyspalveluissa.</p>",
+      "sv": "<p>Vid hanteringen av bilagor som skickats via Securemail tillämpas integritetspolicyn för Helsingfors sysselsättningstjänsters Helsingforstillägg. Mer information om behandlingen av personuppgifter finns på Helsingfors stads webbsida om dataskydd: www.hel.fi/dataskydd</p><p>Den sökande förbinder sig att informera den person som ska anställas om behandlingen av personuppgifter vid Sysselsättningstjänsterna.</p>"
+    }
+  }
+}
