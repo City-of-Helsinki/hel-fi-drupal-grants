@@ -116,8 +116,8 @@
             "de_minimis_granted": {
               "title": "de_minimis_granted.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             }
@@ -213,8 +213,8 @@
             "change_negotiations": {
               "title": "change_negotiations.title",
               "enum": [
-                false,
-                true
+                true,
+                false
               ],
               "default": false
             }

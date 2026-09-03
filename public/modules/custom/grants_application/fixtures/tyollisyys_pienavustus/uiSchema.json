@@ -60,8 +60,8 @@
     "de_minimis_section": {
       "de_minimis_granted": {
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:widget": "radio",
         "ui:options": {
@@ -105,8 +105,8 @@
     "change_negotiations_section": {
       "change_negotiations": {
         "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
+          "boolean.yes",
+          "boolean.no"
         ],
         "ui:widget": "radio",
         "ui:options": {
