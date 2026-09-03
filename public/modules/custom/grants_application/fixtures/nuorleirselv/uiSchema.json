@@ -4,11 +4,6 @@
       "acting_year": {
         "ui:field": "actingYear"
       }
-    },
-    "camp_information_section": {
-      "camp_information_markup": {
-        "ui:field": "textParagraph"
-      }
     }
   },
   "budget_step": {
