@@ -5,11 +5,6 @@
         "ui:field": "actingYear"
       }
     },
-    "subventions_section": {
-      "subventions": {
-        "ui:field": "subventionTable"
-      }
-    },
     "camp_information_section": {
       "camp_information_markup": {
         "ui:field": "textParagraph"
