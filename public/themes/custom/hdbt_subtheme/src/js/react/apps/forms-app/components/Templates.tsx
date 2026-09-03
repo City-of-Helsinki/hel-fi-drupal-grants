@@ -253,7 +253,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
               const label = t('gdpr_input_notification.title');
               return (
                 <Notification className='hdbt-form--notification' label={label} notificationAriaLabel={label}>
-                  <p>{htmlToReact(t('gdpr_input_notification.value'), ALLOWED_HTML_TAGS)}</p>
+                  <p>{t('gdpr_input_notification.value')}</p>
                 </Notification>
               );
             })()}
