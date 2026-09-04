@@ -173,3 +173,4 @@ settings:
       roles:
         - ad_user
         - content_producer
+  provider_slug: ''

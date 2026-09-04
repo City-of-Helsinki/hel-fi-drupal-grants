@@ -1,0 +1,104 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Camp grant report for youth activities",
+      "fi": "Nuorisotoiminnan leiriavustusselvitys",
+      "sv": "Ungdomsverksamhet, utredning över lägerunderstöd"
+    },
+    "campsite_step.title": {
+      "en": "Camp locations",
+      "fi": "Leiripaikat",
+      "sv": "Lägerplatser"
+    },
+    "camp_information.title": {
+      "en": "Information about the camps",
+      "fi": "Leirien tiedot",
+      "sv": "Uppgifter om lägren"
+    },
+    "camp_information_section.description": {
+      "en": "Enter here the names and postal code areas of all the facilities where you organised camps covered by holiday camp grants in the past season. Also indicate how many day camps and overnight camps were organized at each location.",
+      "fi": "Merkitse tähän kaikkien niiden tilojen nimet ja postinumeroalueet, jossa järjestitte leiriavustuksen piiriin kuuluvia leirejä kuluneella kaudella. Merkitse lisäksi kuinka monta päiväleiriä ja yöleiriä kussakin paikassa on järjestetty.",
+      "sv": "Ange här namnet och postnummerområdet för alla de gårdar på vilka ni har ordnat läger som omfattas av lägerstödet under den gångna säsongen. Ange   \nockså hur många dagläger och övernattningsläger som har ordnats på varje plats."
+    },
+    "camp_premise.title": {
+      "en": "Area",
+      "fi": "Alue",
+      "sv": "Område"
+    },
+    "premise_name.title": {
+      "en": "Premise name",
+      "fi": "Tilan nimi",
+      "sv": "Namn"
+    },
+    "day_camp_count.title": {
+      "en": "Number of day camps",
+      "fi": "Päiväleirien lukumäärä",
+      "sv": "Antal dagläg"
+    },
+    "night_camp_count.title": {
+      "en": "Number of overnight camps",
+      "fi": "Yöleirien lukumäärä",
+      "sv": "Atal övernattningsläger"
+    },
+    "camp_information_markup.value": {
+      "en": "The estimated information of the camps is reported in a separate Excel attachment. Please fill out the attachment carefully for each camp. The attachment can be downloaded <a href=\"/en/information-about-grants/grants-for-youth-activities/holiday-camp-grants-for-youth-activities\">from the service description page of the camp grant</a>. The attachment is mandatory and must be submitted when sending the application.",
+      "fi": "Leirien arvioidut tiedot ilmoitetaan erillisellä Excel-liitteellä. Täytä liite huolellisesti jokaisen leirin kohdalta. Liite on ladattavissa <a href=\"/fi/nuorisotoiminnan-loma-aikojen-leiriavustus\" target=\"_blank\">leiriavustuksen palvelukuvaussivulta</a>. Liite on pakollinen ja se on toimitettava hakemuksen lähettämisen yhteydessä.",
+      "sv": "Använd den separata Excel-bilagan för att ange lägrens preliminära uppgifter. Fyll i bilagan noggrant för varje läger. Bilagan kan laddas ner från <a href=\"/sv/om-understoden/understod-for-ungdomsverksamhet/understod-for-ungdomsverksamhet-lagerunderstod-under\">lägerbidragets tjänstebeskrivningssida</a>. Bilagan är obligatorisk och ska lämnas in när ansökan skickas."
+    },
+    "income_section.tooltip": {
+      "en": "Indicate here the type of income in question. An example of income from camping activities is participation fees.",
+      "fi": "Kerro tässä, millainen tulo on kyseessä. Leiritoiminnan tuloja voivat olla esimerkiksi osallistumismaksut.",
+      "sv": "Ange här vilken intäkt det är fråga om. Intäkter från lägerverksamheten är till exempel deltagaravgifter."
+    },
+    "income_section.description": {
+      "en": "Provide here a breakdown of the estimated expenses for the past camp season. Confirmed figures will be submitted with the next application or by the same deadline.",
+      "fi": "Erittele tässä kuluneen leirikauden arvioidut tulot. Vahvistetut tiedot toimitetaan seuraavan hakemuksen yhteydessä tai samaan aikaa mennessä.",
+      "sv": "Specificera här de uppskattade utgifterna för den gångna lägersäsongen. De bekräftade uppgifterna ska lämnas i samband med nästa ansökan eller senast vid samma tidpunkt."
+    },
+    "expenditure_section.tooltip": {
+      "en": "Indicate here the type of expense in question. Expenses from camp activities may include accommodation and meal expenses and instructors&rsquo; salary expenses.",
+      "fi": "Kerro tässä, millainen meno on kyseessä. Leiritoiminnan menoja voivat olla esimerkiksi majoituskulut, ruokakulut ja ohjaajien palkkakulut.",
+      "sv": "Ange här vilken utgift det är fråga om. Utgifter för lägerverksamheten är till exempel logikostnader, matkostnader och handledarnas lönekostnader."
+    },
+    "expenditure_section.description": {
+      "en": "Provide here a breakdown of the estimated expenses for the past camp season. Confirmed figures will be submitted with the next application or by the same deadline.",
+      "fi": "Erittele tässä kuluneen leirikauden arvioidut menot. Vahvistetut tiedot toimitetaan seuraavan hakemuksen yhteydessä tai samaan aikaan mennessä.",
+      "sv": "Specificera här de uppskattade utgifterna för den gångna lägersäsongen. De bekräftade uppgifterna ska lämnas i samband med nästa ansökan eller senast vid samma tidpunkt."
+    },
+    "attachments_section.description": {
+      "en": "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
+      "sv": "Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor."
+    },
+    "multiple_attachments_help.value": {
+      "en": "If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”",
+      "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.",
+      "sv": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+    },
+    "camp_excel.title": {
+      "en": "Camp excel",
+      "fi": "Leiri-excel",
+      "sv": "Läger-excel"
+    },
+    "camp_excel.tooltip": {
+      "en": "Fill out this mandatory attachment carefully.",
+      "fi": "Täytä tämä pakollinen liite huolellisesti.",
+      "sv": "Fyll i denna obligatoriska bilaga noggrant."
+    },
+    "required_attachments_help.value": {
+      "en": "The required attachment to the camp grant report is the same Excel attachment with preliminary information on camps that you submitted in connection with the application, which you have now supplemented with the actual information. The attachment must be submitted with the report. If the rules of the association have changed, they must also be submitted. The rules must be approved by the Finnish Patent and Registration Office.",
+      "fi": "Leiriavustusselvityksen pakollinen liite on sama ennakkotiedot leireistä excel-liite, joka toimitettiin hakemuksen yhteydessä ja on nyt täydennetty toteutuneilla tiedoilla. Liite on toimitettava selvityksen yhteydessä samaan aikaan. Jos yhdistyksen säännöt ovat muuttuneet, on ne myös toimitettava. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät.",
+      "sv": "Den obligatoriska bilagan till redogörelsen om lägerunderstöd är Excel-bilagan Förhandsinformation om lägren som lämnades in med ansökan och som nu är kompletterad med uppgifterna om utfallet. Bilagan ska lämnas in samtidigt med redogörelsen. Om föreningens stadgar har ändrats ska också de nya   \nstadgarna lämnas in. Stadgarna ska vara godkända av Patent- och registerstyrelsen."
+    },
+    "confirmed_financial_statements.title": {
+      "en": "Confirmed financial statements (for the period to which the expenses of the camps relate)",
+      "fi": "Vahvistettu tilinpäätös (siltä kaudelta, johon leirien kustannukset kohdistuvat)",
+      "sv": "Fastställt bokslut (för det räkenskapsår till vilket lägeskostnaderna hör)"
+    },
+    "confirmed_financial_statements.description": {
+      "en": "Approved financial statements in which the income and expenses of camps are shown as their own cost centre must be delivered with the application for the next season’s grant or by the same deadline.",
+      "fi": "Hyväksytty tilinpäätös, jossa leirien tulot ja menot näkyvät omana kustannuspaikkanaan on toimitettava seuraavan kauden avustuksen haun yhteydessä tai samaan aikaan mennessä.",
+      "sv": "Godkänt bokslut där lägerverksamhetens intänkter och utgifter visas under ett eget kostnadsställe ska lämnas in i samband med ansökan om bidrag för nästa säsong eller senast vid samma tidpunkt."
+    }
+  }
+}

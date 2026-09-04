@@ -32,20 +32,14 @@
         "activity_radios",
         "activity_how"
       ],
-      "event_for_applied_grant": {
-        "misc:max-length": 150
-      },
       "event_target_group": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "event_location": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "event_details": {
-        "ui:widget": "textarea",
-        "misc:max-length": 3000
+        "ui:widget": "textarea"
       },
       "equality_radios": {
         "ui:enumNames": ["boolean.no", "boolean.yes"],
@@ -55,8 +49,7 @@
         "ui:widget": "radio"
       },
       "equality_how": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "inclusion_radios": {
         "ui:enumNames": ["boolean.no", "boolean.yes"],
@@ -66,8 +59,7 @@
         "ui:widget": "radio"
       },
       "inclusion_how": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "environment_radios": {
         "ui:enumNames": ["boolean.no", "boolean.yes"],
@@ -77,8 +69,7 @@
         "ui:widget": "radio"
       },
       "environment_how": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "exercise_radios": {
         "ui:enumNames": ["boolean.no", "boolean.yes"],
@@ -88,8 +79,7 @@
         "ui:widget": "radio"
       },
       "exercise_how": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "activity_radios": {
         "ui:enumNames": ["boolean.no", "boolean.yes"],
@@ -99,8 +89,7 @@
         "ui:widget": "radio"
       },
       "activity_how": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     },
     "participants_section": {

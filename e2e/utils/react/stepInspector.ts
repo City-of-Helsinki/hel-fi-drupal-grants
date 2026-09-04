@@ -175,7 +175,9 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       widget: fieldUiSchema?.['ui:widget'] ?? fieldUiSchema?.['ui:field'],
       required,
       options: rawOptions?.length ? rawOptions : undefined,
-      maxLength: fieldUiSchema?.['misc:max-length'],
+      // The schema carries the character limit; `misc:max-length` was the
+      // uiSchema key it used to live in, kept as a fallback for older forms.
+      maxLength: fieldSchema?.maxLength ?? fieldUiSchema?.['misc:max-length'],
       singleSubvention: uiOptions.useSingleSubvention === true,
       startGrant: uiOptions.startGrant != null,
       affirmativeExpands: uiOptions.affirmativeExpands === true,
