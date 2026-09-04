@@ -1,0 +1,94 @@
+{
+  "applicant_info": {
+    "applicant_email": {
+      "email": "test@example.com"
+    },
+    "contact_person_info": {
+      "contact_person": "Joku Henkilö",
+      "contact_person_phone_number": "040 123 123 12"
+    },
+    "community_address": {
+      "community_address": "Kauppakatu 20"
+    },
+    "bank_account": {
+      "bank_account": "FI4950009420028730"
+    },
+    "community_officials": {
+      "community_officials": [
+        {
+          "official": "a464c2d0-a79a-400e-a9cf-32f583675194"
+        }
+      ]
+    }
+  },
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": "2026"
+    },
+    "subventions_section": {
+      "subventions": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "38",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "3000",
+            "valueType": "float"
+          }
+        ]
+      ]
+    },
+    "purpose_section": {
+      "purpose": "Avustuksella toteutetaan määräaikainen työsuhde."
+    },
+    "city_premises_benefits_section": {
+      "city_premises_benefits": "Kaupungilta saatu tiloihin liittyvä tuki."
+    },
+    "city_benefits_loans_section": {
+      "city_benefits_loans": "Ei lainoja eikä takauksia."
+    },
+    "prior_benefits_usage_section": {
+      "prior_compensations": "Edellinen avustus käytettiin suunnitelman mukaisesti."
+    }
+  },
+  "community_activity_step": {
+    "community_activity_section": {
+      "community_activity_description": "Yhteisön toiminnan kuvaus.",
+      "community_practices_business": false
+    },
+    "de_minimis_section": {
+      "de_minimis_granted": true,
+      "de_minimis_info": "Myöntäjä: KEHA-keskus, 5000 euroa, 1.3.2025."
+    }
+  },
+  "information_in_more_detail_step": {
+    "grant_target_section": {
+      "grant_target": "2"
+    },
+    "employment_period_section": {
+      "employment_period": {
+        "start_date": "2026-03-01",
+        "end_date": "2026-08-31"
+      }
+    },
+    "change_negotiations_section": {
+      "change_negotiations": true,
+      "change_negotiations_description": "Muutosneuvottelut päättyivät kesäkuussa 2025."
+    }
+  },
+  "attachments_step": {
+    "attachments_section": {
+      "attachment_delivery_help": [
+        null
+      ],
+      "personal_data_processing_help": [
+        null
+      ]
+    }
+  }
+}

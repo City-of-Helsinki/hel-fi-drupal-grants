@@ -691,3 +691,7 @@ msgstr "Obligatoriska fält"
 msgctxt "Grants application"
 msgid "Required fields are indicated with an asterisk (*)."
 msgstr "Obligatoriska fält är markerade med en asterisk (*)."
+
+msgctxt "Grants application"
+msgid "Allowed types: @formats"
+msgstr "Tillåtna filtyper: @formats"

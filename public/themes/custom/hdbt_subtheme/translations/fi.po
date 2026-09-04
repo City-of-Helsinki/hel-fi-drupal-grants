@@ -741,3 +741,7 @@ msgstr "Pakolliset kentät"
 msgctxt "Grants application"
 msgid "Required fields are indicated with an asterisk (*)."
 msgstr "Pakolliset kentät on merkitty tähdellä (*)."
+
+msgctxt "Grants application"
+msgid "Allowed types: @formats"
+msgstr "Sallitut tiedostotyypit: @formats"
