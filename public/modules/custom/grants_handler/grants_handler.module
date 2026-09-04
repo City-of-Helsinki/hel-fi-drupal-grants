@@ -838,8 +838,8 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
             [
               '#theme' => 'hds_notification',
               '#type' => 'notification',
-              '#label' => t('Fill in the fields to all the questions that you can answer.', [], $tOpts),
-              '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.', [], $tOpts),
+              '#label' => t('Required fields', [], ['context' => 'Grants application']),
+              '#body' => t('Required fields are indicated with an asterisk (*).', [], ['context' => 'Grants application']),
               '#class' => 'notification-margin-bottom',
               '#aria_level' => '2',
             ],

@@ -238,11 +238,13 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
             stepIndex < steps.size - 2 &&
             !isEmptyPreview &&
             (() => {
-              const label = Drupal.t('Fill in the fields to all the questions that you can answer.');
+              const label = Drupal.t('Required fields', {}, { context: 'Grants application' });
               return (
                 <Notification className='hdbt-form--notification' label={label} notificationAriaLabel={label}>
                   {Drupal.t(
-                    'Fields marked with * are mandatory information that you must fill in in order to save and send the information.',
+                    'Required fields are indicated with an asterisk (*).',
+                    {},
+                    { context: 'Grants application' },
                   )}
                 </Notification>
               );
