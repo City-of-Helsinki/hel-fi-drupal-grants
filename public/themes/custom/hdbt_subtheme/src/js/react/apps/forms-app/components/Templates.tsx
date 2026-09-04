@@ -238,11 +238,9 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
             stepIndex < steps.size - 2 &&
             !isEmptyPreview &&
             (() => {
+              const label = Drupal.t('Required fields', {}, { context: 'Grants application' });
               return (
-                <Notification
-                  className='hdbt-form--notification'
-                  label={Drupal.t('Required fields', {}, { context: 'Grants application' })}
-                >
+                <Notification className='hdbt-form--notification' label={label} notificationAriaLabel={label}>
                   {Drupal.t(
                     'Required fields are indicated with an asterisk (*).',
                     {},
