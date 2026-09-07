@@ -36,8 +36,6 @@ class CanonicalUnitTestBase extends UnitTestCase {
     }
 
     $reflectionMethod = $reflectionObject->getMethod($methodName);
-    $reflectionMethod->setAccessible(TRUE);
-
     return $reflectionMethod->invokeArgs($object, $arguments);
   }
 
@@ -59,7 +57,6 @@ class CanonicalUnitTestBase extends UnitTestCase {
     while (!$reflectionClass->hasProperty($property) && ($reflectionClass = $reflectionClass->getParentClass())) {
     }
     $reflectionProperty = $reflectionClass->getProperty($property);
-    $reflectionProperty->setAccessible(TRUE);
     $reflectionProperty->setValue($object, $value);
   }
 
