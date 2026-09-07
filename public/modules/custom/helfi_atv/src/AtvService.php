@@ -806,15 +806,9 @@ class AtvService implements AtvServiceInterface {
       ];
     }
     else {
-      $bc = $resp->getBody()->getContents();
-      if (is_string($bc)) {
-        $bodyContents = Json::decode($bc);
-      }
-      else {
-        $bodyContents = [
-          'results' => [],
-        ];
-      }
+      $bodyContents = Json::decode($resp->getBody()->getContents()) ?? [
+        'results' => [],
+      ];
     }
 
     $bodyContents['response'] = $resp;

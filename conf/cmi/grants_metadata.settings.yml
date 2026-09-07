@@ -334,9 +334,9 @@ third_party_options:
       id: NUORLEIRSELV
       code: NUORLEIRSELV
       labels:
-        fi: "Nuorisotoiminnan leiriavustusselvitys"
-        en: "Camp grant report for youth activities"
-        sv: "Ungdomsverksamhet, utredning över lägerunderstöd"
+        fi: 'Nuorisotoiminnan leiriavustusselvitys'
+        en: 'Camp grant report for youth activities'
+        sv: 'Ungdomsverksamhet, utredning över lägerunderstöd'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED

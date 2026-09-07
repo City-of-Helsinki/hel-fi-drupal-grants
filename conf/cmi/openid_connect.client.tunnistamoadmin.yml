@@ -10,6 +10,7 @@ plugin: tunnistamo
 settings:
   client_id: ''
   client_secret: ''
+  provider_slug: ''
   iss_allowed_domains: ''
   prompt: {  }
   environment_url: ''
@@ -173,4 +174,3 @@ settings:
       roles:
         - ad_user
         - content_producer
-  provider_slug: ''
