@@ -1,4 +1,16 @@
 {
+  "compensation.applicationInfoArray.7": {
+    "datasource": "form_data",
+    "source": "campsite_step.acting_year_section.acting_year",
+    "mapping_type": "default",
+    "data": {
+      "ID": "actingYear",
+      "label": "Vuosi, jolle haen avustusta",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
   "compensation.compensationInfo.compensationArray.0.0": {
     "datasource": "form_data",
     "source": "",
