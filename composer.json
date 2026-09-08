@@ -97,7 +97,8 @@
                 "Asset resolver empty settings cache issue": "patches/assetresolver-settings.patch",
                 "Pseudonymize logging of user data.": "patches/drupal_10.5.3-user-module-gdpr-pseudonymize-logging.patch",
                 "Change file name length constraint to 100 characters": "patches/drupal-10.5.x-file-name-length-constraint-100-chars.patch",
-                "#2475719 Add ability to delete all from tempstore": "patches/get_delete_all_temp-2475719-31.patch"
+                "#2475719 Add ability to delete all from tempstore": "patches/get_delete_all_temp-2475719-31.patch",
+                "https://www.drupal.org/files/issues/2023-02-19/better-cache-headers-3130912-25.patch": "patches/3130912-25_cache_headers.patch"
             },
             "drupal/autologout": {
                 "Pseudonymize logging of user data.": "patches/autologout_2.0.0-gdpr-pseudonymize-logging.patch"
