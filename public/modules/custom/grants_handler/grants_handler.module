@@ -764,6 +764,10 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $webform = $webform_submission->getWebform();
   $isClosed = $webform->isClosed();
 
+  $webformPages = $webform->getPages($formObject->getOperation(), $webform_submission);
+  $firstPageName = $webformPages ? array_key_first($webformPages) : NULL;
+  $gdprNotificationAdded = FALSE;
+
   $form['#attached']['library'][] = 'grants_handler/webform-additions';
 
   if ($selectedCompany != NULL) {
@@ -844,6 +848,16 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
               '#aria_level' => '2',
             ],
         ];
+        $gdpr_info_element = [
+          'gdpr_input_infobox_' . $page_name => [
+            '#theme' => 'hds_notification',
+            '#type' => 'notification',
+            '#label' => t('Do not include special personal data', [], $tOpts),
+            '#body' => t('Do not include any special personal data on the form, such as information relating to the health, ethnic origin, religious or philosophical beliefs, or sexual orientation or behaviour of a private individual. This information is not required, and it will not affect the processing of your application or the decision-making process.', [], $tOpts),
+            '#class' => 'notification-margin-bottom',
+            '#aria_level' => '2',
+          ],
+        ];
         $page_title_element = [];
         $page_title_element['#title'] = $page_contents['#title'];
         $page_title_element['#type'] = $page_contents['#type'];
@@ -861,6 +875,10 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
         unset($page_contents['#title']);
         unset($page_contents['#type']);
 
+        if (!$isClosed && !$gdprNotificationAdded && ($firstPageName === NULL || $page_name === $firstPageName)) {
+          $form['elements'][$page_name] = array_merge($gdpr_info_element, $form['elements'][$page_name]);
+          $gdprNotificationAdded = TRUE;
+        }
         if (!$isClosed) {
           $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
         }
