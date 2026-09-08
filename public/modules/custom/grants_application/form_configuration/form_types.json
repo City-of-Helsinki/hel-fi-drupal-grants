@@ -340,6 +340,16 @@
     }
   },
   "36": {
+    "id": 78,
+    "form_identifier": "tyollisyys_pienavustus",
+    "code": "TYOLLISYYSPIEN",
+    "labels": {
+      "fi": "Työllisyyden edistämisen pienavustus",
+      "en": "Small Grant for Employment Support",
+      "sv": "Små understöd för att främja sysselsättningen"
+    }
+  },
+  "37": {
     "id": 79,
     "form_identifier": "nuorleirselv",
     "code": "NUORLEIRSELV",

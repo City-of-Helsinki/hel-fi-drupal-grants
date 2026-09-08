@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "node theme-builder.mjs --watch --dev",
     "build": "npm run format:js --loglevel=silent && npm run lint --loglevel=silent && npm run validate-ts &&node theme-builder.mjs",
-    "preinstall": "npx update-browserslist-db@latest --loglevel=silent",
     "postinstall": "npm --prefix ../../contrib/hdbt install --no-audit --progress=false --loglevel=silent",
     "lint:scss": "npx --prefix ../../contrib/hdbt/theme-builder postcss \"$INIT_CWD/src/scss/**/*.scss\" --syntax postcss-scss --use css-declaration-sorter --replace --no-map && npm run lint:stylelint --loglevel=silent",
     "lint:stylelint": "npx --prefix ../../contrib/hdbt/theme-builder stylelint \"$INIT_CWD/src/scss/**/*.scss\" --config ../../contrib/hdbt/theme-builder/.stylelintrc.yaml --fix",
@@ -18,18 +17,6 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "validate-ts": "npx --prefix ../../contrib/hdbt tsc --noEmit"
-  },
-  "@comment dependencies": [
-    "The following packages were updated manually.",
-    "Remove this section once the dependencies have been updated in their respective upstream packages.",
-    {
-      "brace-expansion": ">=5.0.5, dependency of minimatch",
-      "minimatch": ">=10.2.1, dependency of hds-core (eslint)"
-    }
-  ],
-  "overrides": {
-    "brace-expansion": "^5.0.5",
-    "minimatch": "^10.2.1"
   },
   "dependencies": {
     "@biomejs/biome": "^2.2.4",
@@ -50,11 +37,6 @@
     "react-i18next": "^15.5.1",
     "vitest": "^3.0.8"
   },
-  "browserslist": [
-    "last 3 major versions",
-    "> 1%",
-    "not dead"
-  ],
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
@@ -75,5 +57,10 @@
     "stylelint-scss": "^6.0.0",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^3.0.8"
+  },
+  "allowScripts": {
+    "@parcel/watcher": false,
+    "fsevents": false,
+    "esbuild": false
   }
 }
