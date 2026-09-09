@@ -1,5 +1,5 @@
 name: Grants User Fields changes
 type: module
-description: Provides user changes from other sources.
+description: Provides user changes from other sources. (MODULE DISALBED 2026/09)
 package: helfi
 core_version_requirement: ^10 || ^11

@@ -1,5 +1,0 @@
-name: filename_transliteration
-description: 'Hel.fi D11 update helper (REMOVE THIS)'
-type: module
-core_version_requirement: ^10 || ^11
-package: HELfi
