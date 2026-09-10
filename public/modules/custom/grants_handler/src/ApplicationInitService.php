@@ -400,13 +400,15 @@ class ApplicationInitService {
    *   The atv document.
    */
   public function setDeleteAfter(array $settings, AtvDocument $atvDocument): void {
-    $endDate = strtotime($settings['applicationClose']);
+    $endDate = NULL;
+    if ($settings['applicationClose']) {
+      $endDate = strtotime($settings['applicationClose']);
+    }
     $isContinuous = $settings['applicationContinuous'];
     $deleteAfter = new \DateTimeImmutable("+1 years");
 
     if ($isContinuous && $endDate) {
-      $date = date('Y-m-d', $endDate);
-      $deleteAfter = (new \DateTimeImmutable($date))->add(new \DateInterval("P1M"));
+      $deleteAfter = new \DateTimeImmutable("+1 years");
     }
 
     if ($isContinuous && !$endDate) {

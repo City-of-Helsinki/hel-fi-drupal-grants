@@ -30,6 +30,7 @@ final class FormTest extends UnitTestCase {
       ['id' => 'ID49', 'form_identifier' => 'taide_ja_kulttuuri_kehittamisavu', 'form_data' => 'form49-nofiles-formdata', 'result' => 'form49-nofiles-result', 'settings' => 'form49-settings'],
       ['id' => 'ID75', 'form_identifier' => 'nuortoimintapalkka', 'form_data' => 'form75-nofiles-formdata', 'result' => 'form75-nofiles-result', 'settings' => 'form75-settings'],
       ['id' => 'ID70', 'form_identifier' => 'segregaation_ehkaisemisavustus', 'form_data' => 'form70-segregaatio-nofiles-formdata', 'result' => 'form70-segregaatio-nofiles-result', 'settings' => 'form70-segregaatio-settings'],
+      ['id' => 'ID78', 'form_identifier' => 'tyollisyys_pienavustus', 'form_data' => 'form78-nofiles-formdata', 'result' => 'form78-nofiles-result', 'settings' => 'form78-settings'],
     ];
     // phpcs:enable
 

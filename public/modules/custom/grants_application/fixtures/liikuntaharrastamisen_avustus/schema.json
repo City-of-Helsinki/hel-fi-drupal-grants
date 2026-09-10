@@ -19,7 +19,10 @@
         },
         "other_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_compensation_amount": {
           "format": "decimal-number",
@@ -28,7 +31,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -58,7 +62,10 @@
         },
         "other_applied_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_applied_compensation_amount": {
           "format": "decimal-number",
@@ -67,7 +74,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -167,7 +175,8 @@
           "properties": {
             "purpose": {
               "title": "custom_purpose.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1250
             }
           },
           "required": ["purpose"]
@@ -194,7 +203,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -235,7 +245,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -281,7 +292,8 @@
                   "project_application_type": {
                     "const": "2"
                   }
-                }
+                },
+                "required": ["project_application_type"]
               },
               "then": {
                 "properties": {
@@ -307,7 +319,7 @@
                     "const": "1"
                   }
                 },
-                "required": ["grant_duration"]
+                "required": ["project_application_type", "grant_duration"]
               },
               "then": {
                 "properties": {
@@ -336,7 +348,7 @@
                     "const": "2"
                   }
                 },
-                "required": ["grant_duration"]
+                "required": ["project_application_type", "grant_duration"]
               },
               "then": {
                 "properties": {
@@ -396,9 +408,11 @@
               "information_in_more_detail_section": {
                 "properties": {
                   "project_application_type": { "const": "1" }
-                }
+                },
+                "required": ["project_application_type"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {
@@ -407,7 +421,7 @@
                 "type": "object",
                 "default": {},
                 "properties": {
-                  "actual_target_group": { "title": "actual_target_group.title", "type": "string" },
+                  "actual_target_group": { "title": "actual_target_group.title", "type": "string", "maxLength": 2500 },
                   "children_participation_estimate": {
                     "title": "children_participation_estimate.title",
                     "type": "object",
@@ -436,20 +450,20 @@
                     },
                     "required": ["new_participants_estimate"]
                   },
-                  "estimate_basis": { "title": "estimate_basis.title", "type": "string" },
-                  "hours_by_postal_area": { "title": "hours_by_postal_area.title", "type": "string" },
+                  "estimate_basis": { "title": "estimate_basis.title", "type": "string", "maxLength": 1250 },
+                  "hours_by_postal_area": { "title": "hours_by_postal_area.title", "type": "string", "maxLength": 1250 },
                   "session_cost_report": { "format": "decimal-number", "title": "session_cost_report.title", "type": "string" },
-                  "activities_description": { "title": "activities_description.title", "type": "string" },
-                  "financial_changes": { "title": "financial_changes.title", "type": "string" },
-                  "activity_changes": { "title": "activity_changes.title", "type": "string" },
-                  "schedule_changes": { "title": "schedule_changes.title", "type": "string" },
-                  "operating_model_changes": { "title": "operating_model_changes.title", "type": "string" },
-                  "key_partners_report": { "title": "key_partners_report.title", "type": "string" },
-                  "youth_participation_report": { "title": "youth_participation_report.title", "type": "string" },
-                  "challenges_report": { "title": "challenges_report.title", "type": "string" },
-                  "grant_usage_report": { "title": "grant_usage_report.title", "type": "string" },
-                  "continuation_plan": { "title": "continuation_plan.title", "type": "string" },
-                  "grant_amount_change_justification": { "title": "grant_amount_change_justification.title", "type": "string" }
+                  "activities_description": { "title": "activities_description.title", "type": "string", "maxLength": 2500 },
+                  "financial_changes": { "title": "financial_changes.title", "type": "string", "maxLength": 1250 },
+                  "activity_changes": { "title": "activity_changes.title", "type": "string", "maxLength": 1250 },
+                  "schedule_changes": { "title": "schedule_changes.title", "type": "string", "maxLength": 1250 },
+                  "operating_model_changes": { "title": "operating_model_changes.title", "type": "string", "maxLength": 2500 },
+                  "key_partners_report": { "title": "key_partners_report.title", "type": "string", "maxLength": 2500 },
+                  "youth_participation_report": { "title": "youth_participation_report.title", "type": "string", "maxLength": 2500 },
+                  "challenges_report": { "title": "challenges_report.title", "type": "string", "maxLength": 2500 },
+                  "grant_usage_report": { "title": "grant_usage_report.title", "type": "string", "maxLength": 2500 },
+                  "continuation_plan": { "title": "continuation_plan.title", "type": "string", "maxLength": 2500 },
+                  "grant_amount_change_justification": { "title": "grant_amount_change_justification.title", "type": "string", "maxLength": 2500 }
                 },
                 "required": [
                   "actual_target_group", "children_participation_estimate",
@@ -470,9 +484,11 @@
               "information_in_more_detail_section": {
                 "properties": {
                   "project_application_type": { "const": "2" }
-                }
+                },
+                "required": ["project_application_type"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {
@@ -481,19 +497,19 @@
                 "type": "object",
                 "default": {},
                 "properties": {
-                  "project_name": { "title": "project_name.title", "type": "string" },
-                  "project_purpose_goals": { "title": "project_purpose_goals.title", "type": "string" },
+                  "project_name": { "title": "project_name.title", "type": "string", "maxLength": 300 },
+                  "project_purpose_goals": { "title": "project_purpose_goals.title", "type": "string", "maxLength": 3000 },
                   "project_measures_wrapper": {
                     "title": "project_measures_wrapper.title",
                     "type": "object",
                     "default": {},
                     "properties": {
-                      "project_measures_2026": { "title": "project_measures_2026.title", "type": "string" }
+                      "project_measures_2026": { "title": "project_measures_2026.title", "type": "string", "maxLength": 2500 }
                     },
                     "required": ["project_measures_2026"]
                   },
-                  "activity_volume": { "title": "activity_volume.title", "type": "string" },
-                  "positive_encounters": { "title": "positive_encounters.title", "type": "string" }
+                  "activity_volume": { "title": "activity_volume.title", "type": "string", "maxLength": 1250 },
+                  "positive_encounters": { "title": "positive_encounters.title", "type": "string", "maxLength": 2500 }
                 },
                 "required": ["project_name", "project_purpose_goals", "project_measures_wrapper", "activity_volume", "positive_encounters"]
               },
@@ -502,9 +518,9 @@
                 "type": "object",
                 "default": {},
                 "properties": {
-                  "target_group_description": { "title": "target_group_description.title", "type": "string" },
-                  "target_group_special_needs": { "title": "target_group_special_needs.title", "type": "string" },
-                  "target_group_expertise": { "title": "target_group_expertise.title", "type": "string" },
+                  "target_group_description": { "title": "target_group_description.title", "type": "string", "maxLength": 1250 },
+                  "target_group_special_needs": { "title": "target_group_special_needs.title", "type": "string", "maxLength": 1250 },
+                  "target_group_expertise": { "title": "target_group_expertise.title", "type": "string", "maxLength": 1250 },
                   "participant_estimate": {
                     "title": "participant_estimate.title",
                     "type": "object",
@@ -529,10 +545,10 @@
                     },
                     "required": ["new_participant_estimate"]
                   },
-                  "accessibility": { "title": "accessibility.title", "type": "string" },
+                  "accessibility": { "title": "accessibility.title", "type": "string", "maxLength": 2500 },
                   "session_cost_planned": { "title": "session_cost_planned.title", "type": "string" },
-                  "impact_on_participants": { "title": "impact_on_participants.title", "type": "string" },
-                  "postal_code_areas": { "title": "postal_code_areas.title", "type": "string" }
+                  "impact_on_participants": { "title": "impact_on_participants.title", "type": "string", "maxLength": 1250 },
+                  "postal_code_areas": { "title": "postal_code_areas.title", "type": "string", "maxLength": 100 }
                 },
                 "required": [
                   "target_group_description", "target_group_special_needs", "target_group_expertise",
@@ -545,10 +561,10 @@
                 "type": "object",
                 "default": {},
                 "properties": {
-                  "target_group_reach": { "title": "target_group_reach.title", "type": "string" },
-                  "youth_participation_planning": { "title": "youth_participation_planning.title", "type": "string" },
-                  "key_partners": { "title": "key_partners.title", "type": "string" },
-                  "new_partnerships": { "title": "new_partnerships.title", "type": "string" }
+                  "target_group_reach": { "title": "target_group_reach.title", "type": "string", "maxLength": 2500 },
+                  "youth_participation_planning": { "title": "youth_participation_planning.title", "type": "string", "maxLength": 2500 },
+                  "key_partners": { "title": "key_partners.title", "type": "string", "maxLength": 2500 },
+                  "new_partnerships": { "title": "new_partnerships.title", "type": "string", "maxLength": 2500 }
                 },
                 "required": ["target_group_reach", "youth_participation_planning", "key_partners", "new_partnerships"]
               },
@@ -557,9 +573,9 @@
                 "type": "object",
                 "default": {},
                 "properties": {
-                  "main_risks": { "title": "main_risks.title", "type": "string" },
-                  "monitoring_impact_assessment": { "title": "monitoring_impact_assessment.title", "type": "string" },
-                  "establishment_after_project": { "title": "establishment_after_project.title", "type": "string" }
+                  "main_risks": { "title": "main_risks.title", "type": "string", "maxLength": 2500 },
+                  "monitoring_impact_assessment": { "title": "monitoring_impact_assessment.title", "type": "string", "maxLength": 2500 },
+                  "establishment_after_project": { "title": "establishment_after_project.title", "type": "string", "maxLength": 2500 }
                 },
                 "required": ["main_risks", "monitoring_impact_assessment"]
               }
@@ -575,18 +591,19 @@
                   "project_application_type": { "const": "2" },
                   "grant_duration": { "const": "2" }
                 },
-                "required": ["grant_duration"]
+                "required": ["project_application_type", "grant_duration"]
               }
-            }
+            },
+            "required": ["information_in_more_detail_section"]
           },
           "then": {
             "properties": {
               "project_plan_section": {
                 "properties": {
-                  "multi_year_justification": { "title": "multi_year_justification.title", "type": "string" },
+                  "multi_year_justification": { "title": "multi_year_justification.title", "type": "string", "maxLength": 2500 },
                   "project_measures_wrapper": {
                     "properties": {
-                      "project_measures_2027": { "title": "project_measures_2027.title", "type": "string" }
+                      "project_measures_2027": { "title": "project_measures_2027.title", "type": "string", "maxLength": 2500 }
                     },
                     "required": ["project_measures_2027"]
                   }

@@ -447,7 +447,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Email address', [], $this->tOpts),
-          '#pattern' => EmailValidator::PATTERN,
+          '#pattern' => EmailValidator::getPatternWithLengthLimits(),
+          '#maxlength' => EmailValidator::MAX_LENGTH,
           '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
@@ -507,7 +508,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#pattern' => EmailValidator::PATTERN,
+          '#pattern' => EmailValidator::getPatternWithLengthLimits(),
+          '#maxlength' => EmailValidator::MAX_LENGTH,
           '#title' => $this->t('Email address', [], $this->tOpts),
         ],
         'phone' => [

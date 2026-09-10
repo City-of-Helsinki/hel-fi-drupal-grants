@@ -17,7 +17,6 @@
     "purpose_section": {
       "purpose": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "tooltipLabel": "purpose_section_modified.title",
           "tooltipButtonLabel": "purpose_section_modified.title",
@@ -63,7 +62,6 @@
           },
           "other_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -111,7 +109,6 @@
           },
           "other_applied_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -123,14 +120,12 @@
     },
     "city_benefits_loans_section": {
       "city_benefits_loans": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       }
     },
     "city_premises_benefits_section": {
       "city_premises_benefits": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       }
     },
     "prior_benefits_usage_section": {
@@ -146,15 +141,11 @@
       },
       "prior_compensations": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "tooltipLabel": "prior_compensations.title",
           "tooltipButtonLabel": "prior_compensations.title",
           "tooltipText": "prior_compensations.tooltip"
         }
-      },
-      "prior_compensations_help": {
-        "ui:field": "textParagraph"
       }
     }
   },
@@ -162,7 +153,6 @@
     "community_activity_section": {
       "community_activity_description": {
         "misc:profilePrefill": "businessPurpose",
-        "misc:max-length": 500,
         "ui:widget": "textarea",
         "ui:options": {
           "hideNameFromPrint": true,
@@ -229,7 +219,6 @@
     "additional_information_section": {
       "additional_information": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "hideNameFromPrint": true,
           "tooltipLabel": "additional_information.title",
@@ -344,8 +333,7 @@
         }
       },
       "further_clarification": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {

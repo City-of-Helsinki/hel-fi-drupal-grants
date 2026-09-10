@@ -12,7 +12,7 @@ App is based on [react-jsonschema-form](https://rjsf-team.github.io/react-jsonsc
 We have introduced some custom ways to configure the forms.
 
 ### Field types
- 
+
 * **atvFile** renders a fileinput. Has additional functionality for uploading files to ATV.
   * Fields using this need to be `object` type in `schema.json`.
   * Following structure is necessary for the fields (inside properties):
@@ -48,6 +48,7 @@ We have introduced some custom ways to configure the forms.
 ### UiSchema
 
 * **misc:file-type** `number` This is a value necessary for Avus2. It's passed during form submit and does nothing else. See `FileInput.tsx`.
+* **misc:formats** `string[]` Narrows which file types an `atvFile` field accepts, e.g. `["pdf", "doc", "docx"]`. Values must come from `ALLOWED_FORMATS` in `FileInput.tsx`.
 * **misc:max-length** `number` Determines max length for a textarea field. See `Input.tsx`.
 * **misc:variant** `string` Determines a variant of a component to be rendered. See `TextParagraph.tsx`.
 * **misc:exclude-from-submit** `boolean` Strips the field from the data sent to the backend on both submit and draft save. Used for synthetic helper fields (e.g. a `computedSum` that only exists to drive conditional rendering). See `FormWrapper.tsx`.

@@ -1,0 +1,314 @@
+{
+    "compensation": {
+        "applicantInfoArray": [
+            {
+                "ID": "applicantType",
+                "label": "Hakijan tyyppi",
+                "value": "2",
+                "valueType": "string"
+            },
+            {
+                "ID": "companyNumber",
+                "label": "Y-Tunnus",
+                "value": "7769480-5",
+                "valueType": "string"
+            },
+            {
+                "ID": "registrationDate",
+                "label": "Rekisteröimispäivä",
+                "value": "21.5.2023",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "foundingYear",
+                "label": "Perustamisvuosi",
+                "value": "2020",
+                "valueType": "string"
+            },
+            {
+                "ID": "home",
+                "label": "Kotipaikka",
+                "value": "HELSINKI",
+                "valueType": "string"
+            },
+            {
+                "ID": "homePage",
+                "label": "www-sivut",
+                "value": "www.google.com",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityOfficialName",
+                "label": "Yhteisön nimi",
+                "value": "Activenakusteri Oy",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityOfficialNameShort",
+                "label": "Yhteisön lyhenne",
+                "value": "Akt",
+                "valueType": "string"
+            },
+            {
+                "ID": "email",
+                "label": "Sähköpostiosoite",
+                "value": "test@example.com",
+                "valueType": "string"
+            }
+        ],
+        "currentAddressInfoArray": [
+            {
+                "ID": "contactPerson",
+                "label": "Yhteyshenkilö",
+                "value": "Joku Henkilö",
+                "valueType": "string"
+            },
+            {
+                "ID": "phoneNumber",
+                "label": "Puhelinnumero",
+                "value": "040 123 123 12",
+                "valueType": "string"
+            },
+            {
+                "ID": "street",
+                "label": "Lähiosoite",
+                "value": "Mannerheimintie 12",
+                "valueType": "string"
+            },
+            {
+                "ID": "city",
+                "label": "Kaupunki",
+                "value": "Helsinki",
+                "valueType": "string"
+            },
+            {
+                "ID": "postCode",
+                "label": "Postinumero",
+                "value": "00100",
+                "valueType": "string"
+            },
+            {
+                "ID": "country",
+                "label": "Maa",
+                "value": "Suomi",
+                "valueType": "string"
+            }
+        ],
+        "applicationInfoArray": [
+            {
+                "ID": "applicationType",
+                "value": "TYOLLISYYSPIEN",
+                "valueType": "string"
+            },
+            {
+                "ID": "applicationTypeID",
+                "value": "78",
+                "valueType": "string"
+            },
+            {
+                "ID": "formTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "createdFormTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "submittedFormTimeStamp",
+                "value": "2025-10-06T13:13:13",
+                "valueType": "datetime"
+            },
+            {
+                "ID": "applicationNumber",
+                "value": "ABCDE-123-0001009",
+                "valueType": "string"
+            },
+            {
+                "ID": "status",
+                "label": "Hakemuksen tila",
+                "value": "DRAFT",
+                "valueType": "string"
+            },
+            {
+                "ID": "actingYear",
+                "label": "Vuosi, jolle haen avustusta",
+                "value": "2026",
+                "valueType": "string"
+            }
+        ],
+        "applicantOfficialsArray": [
+            [
+                {
+                    "ID": "name",
+                    "label": "Nimi",
+                    "value": "Teppo Testaaja",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "role",
+                    "label": "Rooli",
+                    "value": "2",
+                    "valueType": "int"
+                },
+                {
+                    "ID": "email",
+                    "label": "Sähköposti",
+                    "value": "teppo.testaaja@noreply.com",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "phone",
+                    "label": "Puhelinnumero",
+                    "value": "+358451234657",
+                    "valueType": "string"
+                }
+            ]
+        ],
+        "bankAccountArray": [
+            {
+                "ID": "accountNumber",
+                "label": "Tilinumero",
+                "value": "FI4950009420028730",
+                "valueType": "string"
+            }
+        ],
+        "senderInfoArray": [
+            {
+                "ID": "firstname",
+                "value": "Nordea",
+                "valueType": "string"
+            },
+            {
+                "ID": "lastname",
+                "value": "Demo",
+                "valueType": "string"
+            },
+            {
+                "ID": "personID",
+                "value": "010101A0101",
+                "valueType": "string"
+            },
+            {
+                "ID": "userID",
+                "value": "123345678-abcd-1234-ab12-abcdefgh",
+                "valueType": "string"
+            },
+            {
+                "ID": "email",
+                "value": "user_no_mail@hel.fi",
+                "valueType": "string"
+            }
+        ],
+        "compensationInfo": {
+            "compensationArray": [
+                [
+                    {
+                        "ID": "subventionType",
+                        "label": "Avustuslaji",
+                        "value": "38",
+                        "valueType": "string"
+                    },
+                    {
+                        "ID": "amount",
+                        "label": "Euroa",
+                        "value": "3000",
+                        "valueType": "float"
+                    }
+                ]
+            ],
+            "generalInfoArray": [
+                {
+                    "ID": "purpose",
+                    "label": "Avustuksen käyttötarkoitus",
+                    "value": "Avustuksella toteutetaan määräaikainen työsuhde.",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "explanation",
+                    "label": "Edellisen avustuksen käyttöselvitys",
+                    "value": "Edellinen avustus käytettiin suunnitelman mukaisesti.",
+                    "valueType": "string"
+                }
+            ]
+        },
+        "benefitsInfoArray": [
+            {
+                "ID": "premises",
+                "label": "Kaupungilta saatu tiloihin liittyvä tuki",
+                "value": "Kaupungilta saatu tiloihin liittyvä tuki.",
+                "valueType": "string"
+            },
+            {
+                "ID": "loans",
+                "label": "Kaupungilta saadut lainat ja takaukset",
+                "value": "Ei lainoja eikä takauksia.",
+                "valueType": "string"
+            }
+        ],
+        "customQuestionsInfo": {
+            "customQuestionsArray": [
+                {
+                    "ID": "pienavustuksen_kohde",
+                    "label": "Pienavustuksen kohde",
+                    "value": "Määräaikainen työsuhde",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "tyokokeilun_tai_tyosuhteen_alkupvm",
+                    "label": "Työkokeilun tai työsuhteen alkupäivämäärä",
+                    "value": "2026-03-01",
+                    "valueType": "datetime"
+                },
+                {
+                    "ID": "tyokokeilun_tai_tyosuhteen_loppupvm",
+                    "label": "Työkokeilun tai työsuhteen loppupäivämäärä",
+                    "value": "2026-08-31",
+                    "valueType": "datetime"
+                },
+                {
+                    "ID": "muutosneuvottelut",
+                    "label": "Onko organisaatiossanne käynnissä tai viimeisen 12 kuukauden aikana ollut muutosneuvotteluja?",
+                    "value": "Kyllä",
+                    "valueType": "string"
+                },
+                {
+                    "ID": "muutosneuvottelut_kuvaus",
+                    "label": "Muutosneuvottelut",
+                    "value": "Muutosneuvottelut päättyivät kesäkuussa 2025.",
+                    "valueType": "string"
+                }
+            ]
+        },
+        "activitiesInfoArray": [
+            {
+                "ID": "businessPurpose",
+                "label": "Toiminnan kuvaus",
+                "value": "Yhteisön toiminnan kuvaus.",
+                "valueType": "string"
+            },
+            {
+                "ID": "communityPracticesBusiness",
+                "label": "Yhteisö harjoittaa liiketoimintaa",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "ID": "deMinimisGiven",
+                "label": "De minimis tuki",
+                "value": "true",
+                "valueType": "bool"
+            },
+            {
+                "ID": "deMinimisInfo",
+                "label": "Lisätiedot myönnetyistä de minimis -tuista",
+                "value": "Myöntäjä: KEHA-keskus, 5000 euroa, 1.3.2025.",
+                "valueType": "string"
+            }
+        ]
+    },
+    "attachmentsInfo": {
+        "generalInfoArray": []
+    }
+}

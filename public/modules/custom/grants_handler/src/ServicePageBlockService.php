@@ -158,7 +158,6 @@ class ServicePageBlockService {
    *   The react form id field from service page.
    */
   public function getReactFormId(): ?string {
-    // @phpstan-ignore-next-line
     return $this->currentNode
       ?->get('field_react_form')
       ?->first()
@@ -179,7 +178,6 @@ class ServicePageBlockService {
    *   The form identifier.
    */
   public function getSelectedReactFormIdentifier(): ?string {
-    // @phpstan-ignore-next-line
     return $this->currentNode
       ?->get('field_react_form')
       ?->first()

@@ -18,6 +18,7 @@ import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonSty
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
+import { InfoField } from './ApplicantInfo';
 import {
   getAccountsAtom,
   getAddressesAtom,
@@ -63,7 +64,9 @@ export const TextInput = ({
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
-  const isNumberInput = schema.type === 'number' || schema.type === 'integer' || schema.format === 'decimal-number';
+  const isDigitString = ['year', 'postal-code'].includes(schema.format ?? '');
+  const isNumberInput =
+    schema.type === 'number' || schema.type === 'integer' || schema.format === 'decimal-number' || isDigitString;
   const phone = uiSchema?.['misc:phone'] ?? false;
 
   if (shouldRenderPreview) {
@@ -88,7 +91,8 @@ export const TextInput = ({
   };
 
   if (isNumberInput) {
-    const sanitizationType = schema.type === 'integer' ? 'integer' : 'decimal-number';
+    const wholeNumber = schema.type === 'integer' || isDigitString;
+    const sanitizationType = wholeNumber ? 'integer' : 'decimal-number';
 
     return (
       <HDSTextInput
@@ -97,9 +101,10 @@ export const TextInput = ({
           errorText: formatErrors(rawErrors),
           hideLabel: false,
           id,
-          inputMode: schema.type === 'integer' ? 'numeric' : 'decimal',
+          inputMode: wholeNumber ? 'numeric' : 'decimal',
           invalid: Boolean(rawErrors?.length),
           label,
+          maxLength: schema.maxLength,
           name,
           onBlur: () => null,
           onChange: (event: ChangeEvent<HTMLInputElement>) => {
@@ -123,14 +128,15 @@ export const TextInput = ({
     );
   }
 
-  const maxLength = uiSchema?.['misc:max-length'] as number | undefined;
+  const maxLength = schema.maxLength;
+  const showCounter = Boolean(maxLength) && schema.format !== 'email';
 
   return (
     <HDSTextInput
       {...({
         errorText: formatErrors(rawErrors),
         disabled: readonly,
-        helperText: maxLength ? `${(value as string)?.length || 0}/${maxLength}` : undefined,
+        helperText: showCounter ? `${(value as string)?.length || 0}/${maxLength}` : undefined,
         hideLabel: false,
         id,
         invalid: Boolean(rawErrors?.length),
@@ -177,7 +183,7 @@ export const TextArea = ({
   };
 
   const defaultValue = getDefaultValue();
-  const maxLength = uiSchema?.['misc:max-length'] ?? 5000;
+  const maxLength = schema.maxLength ?? 5000;
 
   useEffect(() => {
     if (!value && defaultValue) {
@@ -379,7 +385,25 @@ export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: Wi
     );
   }
 
-  return <SelectWidget {...{ ...selectProps }} />;
+  const selected = officials?.find(({ official_id: officialId }) => officialId === value);
+
+  return (
+    <>
+      <SelectWidget {...{ ...selectProps }} />
+      <div aria-live='polite' className='grants-form--official-details'>
+        {selected && (
+          <div className='prh-content-block__content-row'>
+            <InfoField
+              label={Drupal.t('Role', {}, { context: 'grants_profile' })}
+              value={getCommunityOfficialRole(selected.role)}
+            />
+            <InfoField label={Drupal.t('Email', {}, { context: 'Grants application' })} value={selected.email} />
+            <InfoField label={Drupal.t('Phone number', {}, { context: 'Grants application' })} value={selected.phone} />
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export const RadioWidget = ({

@@ -72,7 +72,6 @@
           },
           "other_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -120,7 +119,6 @@
           },
           "other_applied_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -141,7 +139,6 @@
       },
       "self_financing_description": {
         "ui:widget": "textarea",
-        "misc:max-length": 1000,
         "ui:options": {
           "tooltipLabel": "self_financing_description.title",
           "tooltipButtonLabel": "self_financing_description.title",
@@ -181,16 +178,13 @@
         "ui:field": "textParagraph"
       },
       "project_name": {
-        "ui:widget": "textarea",
-        "misc:max-length": 100
+        "ui:widget": "textarea"
       },
       "project_goals": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "project_contents": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       }
     },
     "project_schedule_section": {
@@ -226,7 +220,6 @@
     "project_location_section": {
       "project_location": {
         "ui:widget": "textarea",
-        "misc:max-length": 1000,
         "ui:options": {
           "tooltipLabel": "project_location.title",
           "tooltipButtonLabel": "project_location.title",
@@ -239,7 +232,6 @@
     "additional_information_section": {
       "additional_information": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "tooltipLabel": "additional_information.title",
           "tooltipButtonLabel": "additional_information.title",
@@ -288,8 +280,7 @@
         }
       },
       "further_clarification": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {

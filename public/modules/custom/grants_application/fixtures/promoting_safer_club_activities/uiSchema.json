@@ -13,7 +13,6 @@
     "purpose_section": {
       "purpose": {
         "ui:widget": "textarea",
-        "misc:max-length": 2500,
         "ui:options": {
           "tooltipLabel": "purpose_section_purpose.title",
           "tooltipButtonLabel": "purpose_section_purpose.title",
@@ -97,7 +96,6 @@
           },
           "other_applied_compensation_description": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -111,12 +109,10 @@
   "information_in_more_detail_step": {
     "grant_target_section": {
       "reason_for_grant_application": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2000
+        "ui:widget": "textarea"
       },
       "project_objectives": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "project_objectives.title",
           "tooltipButtonLabel": "project_objectives.title",
@@ -124,12 +120,10 @@
         }
       },
       "safety_practices": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2000
+        "ui:widget": "textarea"
       },
       "safer_club_practices": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "safer_club_practices.title",
           "tooltipButtonLabel": "safer_club_practices.title",
@@ -138,7 +132,6 @@
       },
       "project_increase_safety_inclusion": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "project_increase_safety_inclusion.title",
           "tooltipButtonLabel": "project_increase_safety_inclusion.title",
@@ -147,7 +140,6 @@
       },
       "project_increase_competence": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "project_increase_competence.title",
           "tooltipButtonLabel": "project_increase_competence.title",
@@ -156,7 +148,6 @@
       },
       "antiracism_measures": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "antiracism_measures.title",
           "tooltipButtonLabel": "antiracism_measures.title",
@@ -165,7 +156,6 @@
       },
       "equality_nondiscrimination_responsibility_plan": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "equality_nondiscrimination_responsibility_plan.title",
           "tooltipButtonLabel": "equality_nondiscrimination_responsibility_plan.title",
@@ -190,12 +180,10 @@
         }
       },
       "under_20_affected": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "key_partners": {
         "ui:widget": "textarea",
-        "misc:max-length": 3000,
         "ui:options": {
           "tooltipLabel": "key_partners.title",
           "tooltipButtonLabel": "key_partners.title",
@@ -221,7 +209,6 @@
       },
       "schedule_of_measures": {
         "ui:widget": "textarea",
-        "misc:max-length": 3000,
         "ui:options": {
           "tooltipLabel": "schedule_of_measures.title",
           "tooltipButtonLabel": "schedule_of_measures.title",
@@ -230,7 +217,6 @@
       },
       "key_risks": {
         "ui:widget": "textarea",
-        "misc:max-length": 3000,
         "ui:options": {
           "tooltipLabel": "key_risks.title",
           "tooltipButtonLabel": "key_risks.title",
@@ -238,12 +224,10 @@
         }
       },
       "project_results": {
-        "ui:widget": "textarea",
-        "misc:max-length": 2000
+        "ui:widget": "textarea"
       },
       "project_implementation": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "project_implementation.title",
           "tooltipButtonLabel": "project_implementation.title",
@@ -252,7 +236,6 @@
       },
       "project_indicators": {
         "ui:widget": "textarea",
-        "misc:max-length": 2000,
         "ui:options": {
           "tooltipLabel": "project_indicators.title",
           "tooltipButtonLabel": "project_indicators.title",
@@ -260,8 +243,7 @@
         }
       },
       "project_manager": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },

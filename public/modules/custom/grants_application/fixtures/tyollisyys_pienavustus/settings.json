@@ -1,0 +1,22 @@
+{
+  "title": "Työllisyyden edistämisen pienavustus",
+  "description": "TYOLLISYYSPIEN",
+  "form_identifier": "tyollisyys_pienavustus",
+  "application_type": "TYOLLISYYSPIEN",
+  "application_type_id": 78,
+  "application_industry": "TYPA",
+  "application_open": "2026-01-01T00:00:00",
+  "application_close": "2026-12-31T23:59:59",
+  "applicant_types": [
+    "registered_community"
+  ],
+  "subvention_type": [
+    38
+  ],
+  "target_group": 29,
+  "acting_years": [
+    2026
+  ],
+  "continuous": false,
+  "disable_copy": false
+}

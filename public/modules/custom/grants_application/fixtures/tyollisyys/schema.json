@@ -19,7 +19,10 @@
         },
         "other_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_compensation_amount": {
           "format": "decimal-number",
@@ -28,7 +31,8 @@
         },
         "other_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -58,7 +62,10 @@
         },
         "other_applied_compensation_issuer_year": {
           "title": "other_compensation_issuer_year.title",
-          "type": "string"
+          "type": "string",
+          "format": "year",
+          "maxLength": 4,
+          "pattern": "^(19[0-9]{2}|20[0-9]{2}|2100)$"
         },
         "other_applied_compensation_amount": {
           "format": "decimal-number",
@@ -67,7 +74,8 @@
         },
         "other_applied_compensation_description": {
           "title": "other_compensation_description.title",
-          "type": "string"
+          "type": "string",
+          "maxLength": 1000
         }
       },
       "required": [
@@ -123,7 +131,9 @@
           "properties": {
             "purpose": {
               "title": "purpose_section_modified.title",
-              "type": "string"
+              "description": "purpose.custom_description",
+              "type": "string",
+              "maxLength": 5000
             }
           },
           "required": ["purpose"]
@@ -150,7 +160,8 @@
                   "have_received_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -191,7 +202,8 @@
                   "have_applied_other_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_applied_other_compensations"]
               },
               "then": {
                 "properties": {
@@ -217,7 +229,8 @@
           "properties": {
             "city_benefits_loans": {
               "title": "city_benefits_loans.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -228,7 +241,8 @@
           "properties": {
             "city_premises_benefits": {
               "title": "city_premises_benefits.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -253,13 +267,15 @@
                   "have_received_prior_compensations": {
                     "const": true
                   }
-                }
+                },
+                "required": ["have_received_prior_compensations"]
               },
               "then": {
                 "properties": {
                   "prior_compensations": {
                     "title": "prior_compensations.title",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 5000
                   }
                 },
                 "required": ["prior_compensations"]
@@ -278,7 +294,8 @@
           "properties": {
             "community_activity_description": {
               "title": "community_activity.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 500
             },
             "community_practices_business": {
               "title": "community_practices_business.title",
@@ -345,7 +362,8 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             }
           }
         },
@@ -673,7 +691,8 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"
+              "type": "string",
+              "maxLength": 5000
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",

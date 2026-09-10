@@ -44,8 +44,7 @@
           "tooltipButtonLabel": "project_short_description.title",
           "tooltipText": "project_short_description.tooltip"
         },
-        "ui:widget": "textarea",
-        "misc:max-length": 500
+        "ui:widget": "textarea"
       }
     },
     "other_compensations_section": {
@@ -86,7 +85,6 @@
           },
           "purpose": {
             "ui:widget": "textarea",
-            "misc:max-length": 1000,
             "ui:options": {
               "tooltipLabel": "other_compensation_description.title",
               "tooltipButtonLabel": "other_compensation_description.title",
@@ -152,9 +150,6 @@
   },
   "planned_activity_step": {
     "activity_counts_section": {
-      "activity_counts_text": {
-        "ui:field": "textParagraph"
-      },
       "helsinki_counts_fieldset": {
         "ui:options": {
           "tooltipLabel": "helsinki_counts_fieldset.title",
@@ -227,8 +222,7 @@
           "tooltipButtonLabel": "comprehensive_description.title",
           "tooltipText": "comprehensive_description.tooltip"
         },
-        "ui:widget": "textarea",
-        "misc:max-length": 2500
+        "ui:widget": "textarea"
       }
     }
   },
@@ -250,26 +244,21 @@
           "tooltipButtonLabel": "project_artistic_basis.title",
           "tooltipText": "project_artistic_basis.tooltip"
         },
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "project_equality": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     },
     "accessibility_section": {
       "project_community": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "project_accessibility": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "project_target_audiece": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "ui:order": [
         "project_accessibility",
@@ -279,12 +268,10 @@
     },
     "operations_section": {
       "operations_professionalism": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "operations_ecology": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "operations_partners": {
         "ui:options": {
@@ -292,8 +279,7 @@
           "tooltipButtonLabel": "operations_partners.title",
           "tooltipText": "operations_partners.tooltip"
         },
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       },
       "ui:order": [
         "operations_professionalism",
@@ -317,9 +303,6 @@
         "ui:widget": "radio"
       },
       "budget_income": {
-        "budget_income_text": {
-          "ui:field": "textParagraph"
-        },
         "income_group_name": {
           "ui:widget": "hidden"
         },
@@ -346,9 +329,6 @@
         }
       },
       "budget_cost": {
-        "budget_cost_text": {
-          "ui:field": "textParagraph"
-        },
         "cost_group_name": {
           "ui:widget": "hidden"
         },
@@ -375,8 +355,7 @@
     },
     "other_input_section": {
       "other_financing": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },
@@ -384,7 +363,6 @@
     "additional_information_section": {
       "additional_information": {
         "ui:widget": "textarea",
-        "misc:max-length": 5000,
         "ui:options": {
           "hideNameFromPrint": true,
           "tooltipLabel": "additional_information.title",
@@ -400,20 +378,12 @@
       "multiple_attachments_help": {
         "ui:field": "textParagraph"
       },
-      "formerly_provided_attachments_help": {
-        "ui:field": "textParagraph"
-      },
       "cant_view_after_help": {
         "misc:variant": "infobox",
         "ui:field": "textParagraph"
       },
-      "extra_info": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
-      },
       "further_clarification": {
-        "ui:widget": "textarea",
-        "misc:max-length": 5000
+        "ui:widget": "textarea"
       },
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {

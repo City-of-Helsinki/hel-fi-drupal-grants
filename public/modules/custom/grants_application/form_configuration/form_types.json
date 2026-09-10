@@ -338,5 +338,25 @@
       "en": "Grant application for promoting safer club activities",
       "sv": "Ansökan om understöd för främjande av en tryggare föreningsverksamhet"
     }
+  },
+  "36": {
+    "id": 78,
+    "form_identifier": "tyollisyys_pienavustus",
+    "code": "TYOLLISYYSPIEN",
+    "labels": {
+      "fi": "Työllisyyden edistämisen pienavustus",
+      "en": "Small Grant for Employment Support",
+      "sv": "Små understöd för att främja sysselsättningen"
+    }
+  },
+  "37": {
+    "id": 79,
+    "form_identifier": "nuorleirselv",
+    "code": "NUORLEIRSELV",
+    "labels": {
+      "fi": "Nuorisotoiminnan leiriavustusselvitys",
+      "en": "Camp grant report for youth activities",
+      "sv": "Ungdomsverksamhet, utredning över lägerunderstöd"
+    }
   }
 }

@@ -64,7 +64,7 @@ When a form fails, the message usually points to one field. Common causes:
 * **Field not filled or wrong value** — the field needs a specific value or option. Add a  `formInputs.ts` value, or a `formLogic.ts` handler if it needs interaction.
 * **Field not found / not visible** — it is conditional and its reveal was missed, or it is a new widget without a `hdbt-form--field--` class. Check the class in the running browser.
 * **A field is filled with the wrong type** — the type token is missing or wrong on that widget.
-* **Preview or sent value mismatch** — the value was truncated by a `misc:max-length` limit, or a select shows a translated label instead of the entered value.
+* **Preview or sent value mismatch** — the value was truncated by the field's `maxLength` in the schema, or a select shows a translated label instead of the entered value.
 * **Submit never reaches "Vastaanotettu"** — this is a backend or network issue, not a test issue. A single form is tolerated, but the teardown fails the run if every submitted form fails to be received. See: [./receivedStatus.ts](receivedStatus.ts)
 
 ## File reference

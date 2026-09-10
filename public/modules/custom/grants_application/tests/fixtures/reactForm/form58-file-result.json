@@ -268,21 +268,7 @@
       ]
     },
     "otherCompensationsInfo": {
-      "otherCompensationsArray": [],
-      "otherCompensationsInfoArray": [
-        {
-          "ID": "otherCompensationsTotal",
-          "value": "0",
-          "valueType": "double",
-          "label": null
-        },
-        {
-          "ID": "otherAppliedCompensationsTotal",
-          "value": "0",
-          "valueType": "double",
-          "label": null
-        }
-      ]
+      "otherCompensationsArray": []
     },
     "benefitsInfoArray": [
       {

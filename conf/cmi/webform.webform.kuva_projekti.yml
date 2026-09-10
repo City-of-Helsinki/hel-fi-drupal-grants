@@ -24,6 +24,7 @@ third_party_settings:
     applicationIndustry: KUVA
     applicationActingYears:
       2026: '2026'
+      2027: '2027'
     applicationActingYearsType: fixed
     applicationActingYearsNextCount: '1'
     status: released

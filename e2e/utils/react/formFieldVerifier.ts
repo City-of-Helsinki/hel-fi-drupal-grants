@@ -452,6 +452,12 @@ async function handleField(
         value = faker.number.int({ min: 1, max: 99999 }).toString();
         await page.fill(`#${fieldId}`, `${value},${decimal}`);
       }
+      // Postal codes are five digits and may start with a zero, so they are
+      // filled as a string rather than a number.
+      else if (field?.format === 'postal-code') {
+        value = faker.string.numeric({ length: 5, allowLeadingZeros: true });
+        await page.fill(`#${fieldId}`, value);
+      }
       // Year fields get a random year.
       else if (field.fieldName.endsWith('_year')) {
         value = faker.number.int({ min: 1980, max: 2020 }).toString();

@@ -197,7 +197,7 @@ final class FormSettings {
    * Calculate delete after value for this application.
    *
    * Draft - continuous:
-   * - With close-time: +1 month.
+   * - With close-time: +1year.
    * - Without close-time: +1year.
    * Draft - non-continuous
    * - Close-time + 1 month
@@ -211,7 +211,7 @@ final class FormSettings {
     $endDate = $this->settings['application_close'] ?? NULL;
 
     if ($isContinuous && $endDate) {
-      return (new \DateTimeImmutable($endDate))->add(new \DateInterval('P1M'))->format('Y-m-d');
+      return date('Y-m-d', strtotime('+1 year'));
     }
 
     if ($isContinuous && !$endDate) {

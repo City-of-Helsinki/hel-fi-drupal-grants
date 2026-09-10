@@ -295,7 +295,7 @@ class DocumentValueExtractor {
     array $value,
     ?DataDefinitionInterface $definition,
   ): mixed {
-    $parseValue = is_string($value['value']) ? $value['value'] : '';
+    $parseValue = isset($value['value']) && is_string($value['value']) ? $value['value'] : '';
     $meta = isset($value['meta']) ? json_decode($value['meta'], TRUE) : NULL;
 
     $retval = htmlspecialchars_decode($parseValue);
