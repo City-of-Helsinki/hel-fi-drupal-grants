@@ -431,8 +431,8 @@ class GrantsAttachments extends WebformCompositeBase {
    *   Added value.
    */
   public static function recursiveFind(array $haystack, string $needle): \Generator {
-    // Limit the RecursiveArrayIterator to only arrays as the caller expects
-    // the returning value to be an array.
+    // Limit the RecursiveArrayIterator to arrays as without it the iterator
+    // will try to look inside objects, and that is deprecated since PHP 8.5.
     $iterator = new \RecursiveArrayIterator($haystack, \RecursiveArrayIterator::CHILD_ARRAYS_ONLY);
     $recursive = new \RecursiveIteratorIterator(
       $iterator,
