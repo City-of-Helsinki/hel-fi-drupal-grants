@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_industries\Kernel\Hook;
 
+use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
@@ -151,6 +152,7 @@ final class FormHooksTest extends KernelTestBase {
    */
   private function alter(array $form, string $formId): array {
     $formState = new FormState();
+    $formState->setFormObject($this->createMock(FormInterface::class));
     $this->container->get('module_handler')->alter('form', $form, $formState, $formId);
     return $form;
   }
