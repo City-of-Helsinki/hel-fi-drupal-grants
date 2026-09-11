@@ -431,7 +431,9 @@ class GrantsAttachments extends WebformCompositeBase {
    *   Added value.
    */
   public static function recursiveFind(array $haystack, string $needle): \Generator {
-    $iterator = new \RecursiveArrayIterator($haystack);
+    // Limit the RecursiveArrayIterator to only arrays as the caller expects
+    // the returning value to be an array.
+    $iterator = new \RecursiveArrayIterator($haystack, \RecursiveArrayIterator::CHILD_ARRAYS_ONLY);
     $recursive = new \RecursiveIteratorIterator(
       $iterator,
       \RecursiveIteratorIterator::SELF_FIRST
