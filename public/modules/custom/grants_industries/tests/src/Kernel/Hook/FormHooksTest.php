@@ -68,10 +68,24 @@ final class FormHooksTest extends KernelTestBase {
 
     $form = $this->alter($this->webformSettingsForm(), 'webform_settings_form');
 
-    foreach (['general_settings', 'page_settings', 'ajax_settings', 'author_information', 'share_settings', 'advanced_settings'] as $group) {
+    foreach ([
+      'general_settings',
+      'page_settings',
+      'ajax_settings',
+      'author_information',
+      'share_settings',
+      'advanced_settings',
+    ] as $group) {
       $this->assertFalse($form[$group]['#access'], "Setting group $group should be hidden.");
     }
-    foreach (['applicationTypeSelect', 'applicationType', 'applicationTypeID', 'applicationIndustry', 'applicantTypes', 'applicationTypeTerms'] as $setting) {
+    foreach ([
+      'applicationTypeSelect',
+      'applicationType',
+      'applicationTypeID',
+      'applicationIndustry',
+      'applicantTypes',
+      'applicationTypeTerms',
+    ] as $setting) {
       $this->assertTrue($form['third_party_settings']['grants_metadata'][$setting]['#disabled'], "Third party setting $setting should be disabled.");
     }
   }
