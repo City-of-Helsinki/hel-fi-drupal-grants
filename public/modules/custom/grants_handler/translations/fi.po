@@ -764,3 +764,11 @@ msgstr "Hakemuksen poistaminen epäonnistui. Yritä uudelleen tai ota yhteyttä 
 msgctxt "grants_handler"
 msgid "This application is being modified by other person currently, you cannot do any modifications while the application is locked for them."
 msgstr "Toinen henkilö muokkaa tätä lomaketta tällä hetkellä, et voi tehdä mitään muutoksia, kun lomake on lukittu heille."
+
+msgctxt "grants_handler"
+msgid "Do not include special personal data"
+msgstr "Älä lisää erityisiä henkilötietoja"
+
+msgctxt "grants_handler"
+msgid "Do not include any special personal data on the form, such as information relating to the health, ethnic origin, religious or philosophical beliefs, or sexual orientation or behaviour of a private individual. This information is not required, and it will not affect the processing of your application or the decision-making process."
+msgstr "Älä lisää lomakkeelle erityisiä henkilötietoja, joita ovat esimerkiksi yksityishenkilöiden terveyttä koskevat tiedot, etninen alkuperä, uskonnollinen tai filosofinen vakaumus tai seksuaalinen suuntautuminen tai käyttäytyminen. Tietoja ei vaadita, eikä niillä ole vaikutusta hakemuksesi käsittelyyn tai päätöksentekoon."
