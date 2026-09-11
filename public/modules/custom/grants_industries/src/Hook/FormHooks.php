@@ -37,7 +37,6 @@ final class FormHooks {
   #[Hook('form_alter', order: Order::Last)]
   public function formAlter(array &$form, FormStateInterface $form_state, string $form_id): void {
     $userEntity = User::load($this->currentUser->id());
-    $roles = $this->currentUser->getRoles();
 
     // Disallow access to various webform settings for non admin users.
     if ($form_id === 'webform_settings_form' && !$this->webformAccessService->hasAdminRole($userEntity)) {
@@ -57,7 +56,7 @@ final class FormHooks {
       $form['third_party_settings']['grants_metadata']['applicationTypeTerms']['#disabled'] = TRUE;
     }
 
-    if (!in_array('helsinkiprofiili', $roles)) {
+    if (!$this->currentUser->hasRole('helsinkiprofiili')) {
       return;
     }
 
