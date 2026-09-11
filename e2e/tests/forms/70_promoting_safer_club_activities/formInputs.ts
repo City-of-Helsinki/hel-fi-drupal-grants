@@ -1,4 +1,4 @@
-import { fakerFI as faker } from '@faker-js/faker/locale/index';
+import { fakerFI as faker } from '@faker-js/faker';
 import { FieldInputs } from '../../../utils/react/formFieldVerifier';
 
 /**

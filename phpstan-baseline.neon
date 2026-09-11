@@ -7170,30 +7170,6 @@ parameters:
 			path: public/modules/custom/grants_industries/grants_industries.module
 
 		-
-			message: '#^Function grants_industries_form_alter\(\) has parameter \$form with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: public/modules/custom/grants_industries/grants_industries.module
-
-		-
-			message: '#^Function grants_industries_form_alter\(\) has parameter \$form_id with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: public/modules/custom/grants_industries/grants_industries.module
-
-		-
-			message: '#^Function grants_industries_module_implements_alter\(\) has parameter \$hook with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: public/modules/custom/grants_industries/grants_industries.module
-
-		-
-			message: '#^Function grants_industries_module_implements_alter\(\) has parameter \$implementations with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: public/modules/custom/grants_industries/grants_industries.module
-
-		-
 			message: '#^Function grants_industries_node_access_records\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
