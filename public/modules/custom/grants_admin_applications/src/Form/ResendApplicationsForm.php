@@ -605,6 +605,16 @@ class ResendApplicationsForm extends AtvFormBase {
         ],
       ];
 
+      // If avus2-OK is true, then form-OK and handler-OK are true as well.
+      if ($attOk['avus2']) {
+        $rowElement['formOk'] = [
+          '#markup' => $this->t('Yes', [], self::$tOpts),
+        ];
+        $rowElement['handlerOk'] = [
+          '#markup' => $this->t('Yes', [], self::$tOpts),
+        ];
+      }
+
       $form['status']['attachmentList'][] = $rowElement;
     }
   }
