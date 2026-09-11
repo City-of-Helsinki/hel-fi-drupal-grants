@@ -201,8 +201,7 @@ class GrantsConverterService {
    *   Formatted option label.
    */
   public function formatOptionValues(mixed $value, array $arguments): string {
-    // If no arguments defined, return 1.
-    if (empty($arguments)) {
+    if (empty($arguments) || $value === NULL) {
       return '1';
     }
 
