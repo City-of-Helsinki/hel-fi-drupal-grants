@@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class AtvFormBase extends FormBase {
 
-  const LOGGER_CHANNEL = 'grants_admin_applications';
+  const string LOGGER_CHANNEL = 'grants_admin_applications';
 
   /**
    * The config object.

@@ -14,13 +14,11 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
-use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Provides an example block.
@@ -33,32 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
 )]
 class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
-  /**
-   * Construct block object.
-   *
-   * @param array $configuration
-   *   Block config.
-   * @param string $plugin_id
-   *   Plugin.
-   * @param mixed $plugin_definition
-   *   Plugin def.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata
-   *   The helfi_helsinki_profiili service.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   The grants profile service.
-   * @param \Drupal\helfi_atv\AtvService $helfiAtvAtvService
-   *   The ATV service.
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   Current request object.
-   * @param \Drupal\Core\Session\AccountInterface $currentUser
-   *   Current user.
-   * @param \Drupal\grants_handler\MessageService $messageService
-   *   Message service.
-   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
-   *   Application getters.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   Language manager.
-   */
   public function __construct(
     array $configuration,
     $plugin_id,
@@ -66,8 +38,8 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     protected HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata,
     protected GrantsProfileService $grantsProfileService,
     protected AtvService $helfiAtvAtvService,
-    protected Request $request,
     protected AccountInterface $currentUser,
+    #[Autowire(service: 'grants_handler.message_service')]
     protected MessageService $messageService,
     protected ApplicationGetterService $applicationGetterService,
     protected LanguageManagerInterface $languageManager,
@@ -76,47 +48,11 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
   }
 
   /**
-   * Factory function.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   Container.
-   * @param array $configuration
-   *   Block config.
-   * @param string $plugin_id
-   *   Plugin.
-   * @param mixed $plugin_definition
-   *   Plugin def.
-   *
-   * @return static
-   */
-  public static function create(
-    ContainerInterface $container,
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-  ): static {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('helfi_helsinki_profiili.userdata'),
-      $container->get('grants_profile.service'),
-      $container->get('helfi_atv.atv_service'),
-      $container->get('request_stack')->getCurrentRequest(),
-      $container->get('current_user'),
-      $container->get('grants_handler.message_service'),
-      $container->get('grants_handler.application_getter_service'),
-      $container->get('language_manager')
-    );
-  }
-
-  /**
    * {@inheritdoc}
    *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function build(): array {
-
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
 
@@ -139,31 +75,30 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     $messages = [];
     $submissions = [];
 
-    try {
-
-      if ($selectedCompany['type'] == 'private_person') {
-        $searchParams = [
-          'service' => 'AvustushakemusIntegraatio',
-          'user_id' => $userData->sub,
-          'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'],
-        ];
-      }
-      elseif ($selectedCompany['type'] == 'unregistered_community') {
-        $searchParams = [
-          'service' => 'AvustushakemusIntegraatio',
-          'user_id' => $userData->sub,
-          'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'] .
+    if ($selectedCompany['type'] == 'private_person') {
+      $searchParams = [
+        'service' => 'AvustushakemusIntegraatio',
+        'user_id' => $userData->sub,
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'],
+      ];
+    }
+    elseif ($selectedCompany['type'] == 'unregistered_community') {
+      $searchParams = [
+        'service' => 'AvustushakemusIntegraatio',
+        'user_id' => $userData->sub,
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'] .
           ',applicant_id:' . $selectedCompany['identifier'],
-        ];
-      }
-      else {
-        $searchParams = [
-          'service' => 'AvustushakemusIntegraatio',
-          'business_id' => $selectedCompany['identifier'],
-          'lookfor' => $lookForAppEnv,
-        ];
-      }
+      ];
+    }
+    else {
+      $searchParams = [
+        'service' => 'AvustushakemusIntegraatio',
+        'business_id' => $selectedCompany['identifier'],
+        'lookfor' => $lookForAppEnv,
+      ];
+    }
 
+    try {
       $applicationDocuments = $this->helfiAtvAtvService->searchDocuments($searchParams);
 
       /** @var \Drupal\helfi_atv\AtvDocument $document */
@@ -172,21 +107,22 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
           $document->getType(),
           Helpers::getApplicationTypes())
         ) {
-
           try {
+            $atvContent = $document->getContent();
+            $applicationNumber = $document->getMetadata()['applicationnumber'];
 
-            $docArray = $document->toArray();
-            $id = AtvSchema::extractDataForWebForm(
-              $docArray['content'], ['applicationNumber']
-            );
-
-            if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
+            if (!$applicationNumber) {
               continue;
             }
 
-            $submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+            $submission = NULL;
+            $submission = $this->applicationGetterService->getReactFormApplicationSubmission($applicationNumber, $document);
+            if (!$submission) {
+              $submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber, $document);
+            }
+
             $submissionData = $submission->getData();
-            $submissionMessages = $this->messageService->parseMessages($submissionData, TRUE);
+            $submissionMessages = $this->messageService->parseMessages($atvContent, TRUE);
             $messages += $submissionMessages;
 
             if ($submissionData['form_timestamp']) {
@@ -194,13 +130,14 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
               $submissions[$ts] = $submissionData;
             }
           }
-          catch (AtvDocumentNotFoundException $e) {
+          catch (\Throwable) {
+            // Catching only ATV-exception here exits the loop, not good.
+            continue;
           }
         }
       }
-
     }
-    catch (\Throwable $e) {
+    catch (\Throwable) {
     }
 
     $receivedMsgs = [];
@@ -232,6 +169,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       '#lang' => $lang->getId(),
       '#link' => $link,
       '#allMessagesLink' => $allMessagesLink,
+      '#cache' => ['max-age' => $this->getCacheMaxAge()],
     ];
 
     return $build;
