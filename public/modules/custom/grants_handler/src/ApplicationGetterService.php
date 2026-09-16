@@ -197,21 +197,25 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
         // Add value for oma-asiointi listing.
         if ($submission_entity) {
           $submissionData['status'] = $document->getStatus();
-          // $submissionData['messages'] = $document->getMessages();
         }
 
         $webform = $submission->getWebform();
 
         // There's old applications w/o form_uuid, let's add it here
         // Since we've already loaded webform for submission object the old way,
-        // we should have it here anyways. Just make sure it's in the metadata
+        // we should have it here anyway. Just make sure it's in the metadata
         // as well.
         if ($webform && !isset($submissionData["metadata"]["form_uuid"])) {
           $submissionData["metadata"]["form_uuid"] = $webform->uuid();
         }
 
         if ($webform || $submission_entity) {
-          $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
+          if (!$submission_entity) {
+            $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
+          }
+          else {
+            $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($document->getContent());
+          }
         }
 
         $submission = [
