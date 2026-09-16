@@ -211,6 +211,7 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
 
         if ($webform || $submission_entity) {
           if (!$submission_entity) {
+            // If not react.
             $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
           }
           else {

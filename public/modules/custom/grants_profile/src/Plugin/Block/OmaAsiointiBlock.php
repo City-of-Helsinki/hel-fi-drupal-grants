@@ -15,7 +15,6 @@ use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_profile\GrantsProfileService;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -86,8 +85,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData->sub,
-        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'] .
-          ',applicant_id:' . $selectedCompany['identifier'],
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'] . ',applicant_id:' . $selectedCompany['identifier'],
       ];
     }
     else {
@@ -115,6 +113,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
               continue;
             }
 
+            // Get react or webform.
             $submission = NULL;
             $submission = $this->applicationGetterService->getReactFormApplicationSubmission($applicationNumber, $document);
             if (!$submission) {
