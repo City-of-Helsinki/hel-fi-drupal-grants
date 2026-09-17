@@ -6,7 +6,6 @@ namespace Drupal\grants_application\Atv;
 
 use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
-use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvServiceInterface;

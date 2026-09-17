@@ -223,7 +223,8 @@ class MessageService {
    *   Only unread messages.
    * @param bool $showHiddenMessages
    *   Show hidden messages.
-   *
+   * @param bool $isWebform
+   *   The message is related to a webform application form.
    * @return array
    *   Parsed messages.
    */

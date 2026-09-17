@@ -11,7 +11,6 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\grants_handler\Helpers;
 use Drupal\views\EntityViewsData;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Link;
