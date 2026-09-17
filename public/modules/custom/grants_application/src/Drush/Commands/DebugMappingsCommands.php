@@ -7,7 +7,6 @@ namespace Drupal\grants_application\Drush\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes;
 use Drupal\grants_application\Mapper\JsonMapper;
-use Drupal\grants_handler\Helpers;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -15,13 +14,14 @@ use Drush\Commands\DrushCommands;
  */
 final class DebugMappingsCommands extends DrushCommands {
 
+  use EnvironmentRestrictionTrait;
+
   /**
    * Test mappings.
    */
   #[Attributes\Command(name: 'grants-application:debug-mappings')]
   public function debugMappings(): int {
-
-    if (Helpers::isProduction(Helpers::getAppEnv())) {
+    if ($this->isEnvironmentAllowed()) {
       $this->io()->error('This command should not be run in production environment');
       return self::EXIT_FAILURE;
     }
