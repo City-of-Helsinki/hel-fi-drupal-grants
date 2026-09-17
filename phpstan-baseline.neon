@@ -4830,8 +4830,14 @@ parameters:
 			path: public/modules/custom/grants_handler/src/ApplicationGetterService.php
 
 		-
-			message: '#^Negated boolean expression is always false\.$#'
-			identifier: booleanNot.alwaysFalse
+			message: '#^Method Drupal\\grants_handler\\ApplicationGetterService\:\:getWebformFromApplicationNumber\(\) should return Drupal\\webform\\Entity\\Webform\|null but returns array\|Drupal\\webform\\Entity\\Webform\|true\.$#'
+			identifier: return.type
+			count: 1
+			path: public/modules/custom/grants_handler/src/ApplicationGetterService.php
+
+		-
+			message: '#^Method Drupal\\grants_handler\\ApplicationGetterService\:\:getWebformFromApplicationNumber\(\) should return Drupal\\webform\\Entity\\Webform\|null but returns array\|bool\|Drupal\\webform\\Entity\\Webform\.$#'
+			identifier: return.type
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationGetterService.php
 
