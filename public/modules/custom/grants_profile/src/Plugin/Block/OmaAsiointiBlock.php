@@ -115,13 +115,19 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
 
             // Get react or webform.
             $submission = NULL;
+            $isWebform = FALSE;
             $submission = $this->applicationGetterService->getReactFormApplicationSubmission($applicationNumber, $document);
             if (!$submission) {
+              $isWebform = TRUE;
               $submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber, $document);
             }
 
             $submissionData = $submission->getData();
-            $submissionMessages = $this->messageService->parseMessages($atvContent, TRUE);
+            $langcode = $this->languageManager->getCurrentLanguage()->getId();
+            $application_type = $document->getHumanReadableType()[$langcode];
+
+            $submissionData['application_type'] = str_replace(['_FI', '_EN', '_SV'], '', $application_type);
+            $submissionMessages = $this->messageService->parseMessages($atvContent, onlyUnread: TRUE, isWebform: $isWebform);
             $messages += $submissionMessages;
 
             if ($submissionData['form_timestamp']) {

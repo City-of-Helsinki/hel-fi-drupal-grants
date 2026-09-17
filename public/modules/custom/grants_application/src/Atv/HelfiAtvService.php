@@ -6,6 +6,7 @@ namespace Drupal\grants_application\Atv;
 
 use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvServiceInterface;
@@ -232,9 +233,9 @@ class HelfiAtvService {
 
     // @todo Translate the title somehow.
     $humanReadableTypes = [
-      'en' => $application_title . '_EN',
-      'fi' => $application_title . '_FI',
-      'sv' => $application_title . '_SV',
+      'en' => $application_title,
+      'fi' => $application_title,
+      'sv' => $application_title,
     ];
     $atvDocument->setHumanReadableType($humanReadableTypes);
 
@@ -303,9 +304,9 @@ class HelfiAtvService {
 
     // @todo Translate the title somehow.
     $humanReadableTypes = [
-      'en' => $application_title . '_EN',
-      'fi' => $application_title . '_FI',
-      'sv' => $application_title . '_SV',
+      'en' => $application_title,
+      'fi' => $application_title,
+      'sv' => $application_title,
     ];
     $atvDocument->setHumanReadableType($humanReadableTypes);
 

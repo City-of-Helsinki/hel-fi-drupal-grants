@@ -12,12 +12,16 @@
     <h3>{{ "New on your applications"|t({}, {'context': 'grants_oma_asiointi'}) }} <span class="new-messages-length {% if messages %}has-new-messages {% endif %}">{{ messages|length }}</span> </h3>
     {% if messages %}
       {% for message in messages %}
-        <a href="{{ path('grants_handler.view_application', {'submission_id': message['caseId']}) }}" class="oma-asiointi-block--link">
+        {% if message.webform %}
+          <a href="{{ path('grants_handler.view_application', {'submission_id': message['caseId']}) }}" class="oma-asiointi-block--link">
+        {% else %}
+          <a href="{{ path('helfi_grants.view_application', {'application_number': message['caseId']}) }}" class="oma-asiointi-block--link">
+        {% endif %}
           <div class="message">
             <div class="new-message"><span class="hel-icon hel-icon--info-circle hel-icon--size-s" aria-hidden="true"></span> 1 {{ "New message"|t({}, {'context': 'grants_oma_asiointi'}) }}</div>
             {% for submission in allSubmissions %}
               {% if submission['application_number'] is same as (message['caseId']) %}
-                <p class="message-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
+                <p class="message-title">{{ submission['application_type'] }}</p>
               {% endif %}
             {% endfor %}
             <p><strong>{{ "Application number"|t({}, {'context': 'grants_oma_asiointi'}) }}</strong> <br />
@@ -34,9 +38,13 @@
     <h3>{{ "Latest applications"|t({}, {'context': 'grants_oma_asiointi'}) }}</h3>
     {% if submissions %}
       {% for submission in submissions %}
-        <a href="{{ path('grants_handler.view_application', {'submission_id': submission['application_number']}) }}" class="oma-asiointi-block--link">
+        {% if submission.is_react %}
+          <a href="{{ path('helfi_grants.view_application', {'application_number': submission['application_number']}) }}" class="oma-asiointi-block--link">
+        {% else %}
+          <a href="{{ path('grants_handler.view_application', {'submission_id': submission['application_number']}) }}" class="oma-asiointi-block--link">
+        {% endif %}
           <div class="submission">
-            <p class="submission-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
+            <p class="submission-title">{{ submission['application_type'] }}</p>
             <p><strong>{{ "Last saved"|t({}, {'context': 'grants_oma_asiointi'}) }}</strong> <br />
             {{ submission['form_timestamp']|date('d.m.Y H:i') }}</p>
             <p><strong>{{ "Application number"|t({}, {'context': 'grants_oma_asiointi'}) }}</strong><br />
