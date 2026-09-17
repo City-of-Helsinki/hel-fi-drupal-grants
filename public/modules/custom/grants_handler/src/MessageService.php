@@ -225,6 +225,7 @@ class MessageService {
    *   Show hidden messages.
    * @param bool $isWebform
    *   The message is related to a webform application form.
+   *
    * @return array
    *   Parsed messages.
    */
