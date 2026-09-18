@@ -232,9 +232,9 @@ class HelfiAtvService {
 
     // @todo Translate the title somehow.
     $humanReadableTypes = [
-      'en' => $application_title . '_EN',
-      'fi' => $application_title . '_FI',
-      'sv' => $application_title . '_SV',
+      'en' => $application_title,
+      'fi' => $application_title,
+      'sv' => $application_title,
     ];
     $atvDocument->setHumanReadableType($humanReadableTypes);
 
@@ -303,9 +303,9 @@ class HelfiAtvService {
 
     // @todo Translate the title somehow.
     $humanReadableTypes = [
-      'en' => $application_title . '_EN',
-      'fi' => $application_title . '_FI',
-      'sv' => $application_title . '_SV',
+      'en' => $application_title,
+      'fi' => $application_title,
+      'sv' => $application_title,
     ];
     $atvDocument->setHumanReadableType($humanReadableTypes);
 

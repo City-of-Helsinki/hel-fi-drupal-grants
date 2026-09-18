@@ -7,7 +7,6 @@ namespace Drupal\grants_application\Drush\Commands;
 use Consolidation\AnnotatedCommand\Attributes;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
-use Drupal\grants_application\Helper;
 use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
 
@@ -17,13 +16,7 @@ use Drush\Commands\DrushCommands;
 final class OpenFormsCommands extends DrushCommands {
 
   use AutowireTrait;
-
-  /**
-   * The environments the command may run in.
-   *
-   * Anything starting with "LOCAL" is allowed as well.
-   */
-  private const ALLOWED_ENVIRONMENTS = ['DEV', 'TEST', 'STAGE'];
+  use EnvironmentRestrictionTrait;
 
   /**
    * How far in the future the application period is pushed.
@@ -50,10 +43,8 @@ final class OpenFormsCommands extends DrushCommands {
   #[Attributes\Option(name: 'dry-run', description: 'Report what would change without saving anything.')]
   #[Attributes\Usage(name: 'drush grants-application:open-forms --dry-run', description: 'List the forms that are closed.')]
   public function openForms(array $options = ['dry-run' => FALSE]): int {
-    $appEnv = Helper::getAppEnv();
-
-    if (!$this->isEnvironmentAllowed($appEnv)) {
-      $this->io()->error(sprintf('Refusing to run in the "%s" environment.', $appEnv ?: 'unknown'));
+    if (!$this->isEnvironmentAllowed()) {
+      $this->io()->error('Refusing to run in the environment.');
       return self::EXIT_FAILURE;
     }
 
@@ -128,23 +119,6 @@ final class OpenFormsCommands extends DrushCommands {
     $root = defined('DRUPAL_ROOT') ? DRUPAL_ROOT . '/' : '';
 
     return is_file(sprintf('%s%s/fixtures/%s/settings.json', $root, $modulePath, $identifier));
-  }
-
-  /**
-   * Checks whether the command may run in the given environment.
-   *
-   * @param string $appEnv
-   *   The environment name.
-   *
-   * @return bool
-   *   TRUE when the command may run.
-   */
-  private function isEnvironmentAllowed(string $appEnv): bool {
-    // Helper::getAppEnv() passes an unrecognised value through as it is, and
-    // local environments are named freely, so compare in upper case.
-    $appEnv = strtoupper($appEnv);
-
-    return in_array($appEnv, self::ALLOWED_ENVIRONMENTS, TRUE) || str_starts_with($appEnv, 'LOCAL');
   }
 
   /**

@@ -1390,7 +1390,6 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
  * @throws \GuzzleHttp\Exception\GuzzleException
  */
 function grants_handler_preprocess_application_status_tag(&$variables): void {
-
   /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
   $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
 
@@ -1410,7 +1409,8 @@ function grants_handler_preprocess_application_status_tag(&$variables): void {
       $submissionObject = $applicationGetterService->submissionObjectFromApplicationNumber($variables['applicationID']);
       $submissionData = $submissionObject->getData();
     }
-    if (array_key_exists($submissionData["status"], $applicationStatuses)) {
+    $status = $submissionData["status"] ?? 'draft';
+    if (array_key_exists($status, $applicationStatuses)) {
       $config = \Drupal::config('grants_handler.settings');
       $statusStrings = $config->get('statusStrings');
       if (!isset($variables['langcode'])) {
@@ -2022,6 +2022,11 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
 
   $submissionData = $variables['submission'];
   $submissionId = $variables['submission_id'];
+  $status = $variables['document']->getStatus();
+
+  if (!$submissionData["application_number"]) {
+    $submissionData["application_number"] = $variables['document']->getMetadata()['applicationnumber'];
+  }
 
   if (!isset($submissionData["metadata"]["form_uuid"])) {
     \Drupal::logger('grants_handler')
@@ -2035,6 +2040,11 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
 
   // Get webform.
   $webform = $applicationGetterService->getWebformFromApplicationNumber($submissionData["application_number"]);
+  if (!$webform) {
+    // This is somehow possible. Can't do nothing here.
+    return;
+  }
+
   // Set webform title.
   $variables['applicationFormName'] = $webform->label();
 
@@ -2120,7 +2130,7 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
   ];
 
   $variables['classes'] = [
-    strtolower($applicationStatuses[$submissionData["status"]]),
+    strtolower($applicationStatuses[$status]),
     strtolower($submissionData["application_number"]),
   ];
 
@@ -2170,7 +2180,7 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
     $variables['errorType'] = 'ARCHIVED';
   }
   try {
-    if (array_key_exists($submissionData["status"], $applicationStatuses)) {
+    if (array_key_exists($status, $applicationStatuses)) {
       $variables['statusString'] = $submissionData['status'];
     }
     else {
@@ -2203,6 +2213,10 @@ function _grants_handler_handle_react_application(array &$variables) {
 
   /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission_entity */
   $submission_entity = $variables['submission_entity'];
+  if (!$submission_entity instanceof ApplicationSubmission) {
+    return;
+  }
+
   $status = TRUE;
 
   $variables['statusTag'] = [
