@@ -35,7 +35,7 @@ class DocumentValueExtractor {
   ): mixed {
     $newKey = array_shift($pathArray);
 
-    if (array_key_exists($newKey, $content)) {
+    if ($newKey !== NULL && array_key_exists($newKey, $content)) {
       return self::drillDownToElement($content[$newKey], $pathArray, $elementName, $definition);
     }
     elseif (array_key_exists($elementName, $content)) {

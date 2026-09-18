@@ -13,6 +13,9 @@ export type FormPreviewResponse = {
     application_type_id: number;
     acting_years: number[];
     applicant_types: string[];
+    application_open?: string;
+    application_close?: string;
+    continuous?: boolean;
   };
   schema: {
     definitions: Record<string, unknown>;

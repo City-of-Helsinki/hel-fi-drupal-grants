@@ -151,6 +151,10 @@ class GrantsHandlerNavigationHelper {
       }
       $this->cache[$webformId]['errors'] = $data;
     }
+    if ($page === NULL) {
+      return $data;
+    }
+
     return $data[$page] ?? $data;
   }
 

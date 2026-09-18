@@ -12,11 +12,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
+    "@faker-js/faker": "^10.6.0",
     "@playwright/test": "^1.48.0",
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/node": "^20.16.11",
     "dotenv": "^16.4.5",
     "lodash.clonedeep": "^4.5.0"
+  },
+  "allowScripts": {
+    "fsevents": false
   }
 }
