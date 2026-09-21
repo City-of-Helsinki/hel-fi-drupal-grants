@@ -125,7 +125,7 @@
       "ID": "onlineService",
       "label": "Ilmoitetaanko toiminnasta ruoka-apu.fi-verkkopalvelussa? Miten haettavaa valtionavustusta on suunniteltu käytettävän?",
       "value": "",
-      "valueType": "string"
+      "valueType": "bool"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.5": {
@@ -136,7 +136,7 @@
       "ID": "freeOfCharge",
       "label": "Onko tarjottava ruoka-apu maksutonta ja vastikkeetonta?",
       "value": "",
-      "valueType": "string"
+      "valueType": "bool"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.6": {
@@ -147,7 +147,7 @@
       "ID": "requiresReligiousActivities",
       "label": "Edellyttääkö ruoka-avun saaminen osallistumista uskonnolliseen tai poliittiseen toimintaan?",
       "value": "",
-      "valueType": "string"
+      "valueType": "bool"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.7": {
@@ -158,7 +158,7 @@
       "ID": "supervisionPlan",
       "label": "Onko ruoka-aputoiminnasta tehty elintarvikehuoneistoilmoitus ja omavalvontasuunnitelma?",
       "value": "",
-      "valueType": "string"
+      "valueType": "bool"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.8": {
@@ -169,7 +169,7 @@
       "ID": "monitoringPlan",
       "label": "Onko ruoka-aputoiminnasta tehty elintarvikehuoneistoilmoitus ja omavalvontasuunnitelma?",
       "value": "",
-      "valueType": "string"
+      "valueType": "bool"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.9": {
@@ -180,7 +180,7 @@
       "ID": "equality",
       "label": "Sitoudutteko ruoka-aputoiminnassanne yhdenvertaisuuteen ja syrjimättömyyteen?",
       "value": "",
-      "valueType": "string"
+      "valueType": "bool"
     }
   },
 
