@@ -112,11 +112,11 @@ interface ApplicationGetterServiceInterface {
    * @param string $applicationNumber
    *   Application number.
    *
-   * @return \Drupal\webform\Entity\Webform
+   * @return \Drupal\webform\Entity\Webform|null
    *   Webform object.
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    */
-  public function getWebformFromApplicationNumber(string $applicationNumber): Webform;
+  public function getWebformFromApplicationNumber(string $applicationNumber): ?Webform;
 
 }
