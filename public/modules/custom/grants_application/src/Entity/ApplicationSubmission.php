@@ -297,16 +297,18 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function getData(): array {
     // Values are changed in ApplicationGetterService::getCompanyApplications.
+    // And also possibly where ever this function is called.
     return [
       'application_type_id' => $this->get('application_type_id')->value,
       'form_identifier' => $this->get('form_identifier')->value,
       'form_timestamp_created' => date('Y-m-d h:i:s', (int) $this->get('created')->value),
-      'form_timestamp' => $this->get('changed')->value,
+      'form_timestamp' => date('Y-m-d h:i:s', (int) $this->get('changed')->value),
       'form_timestamp_submitted' => $this->get('created')->value,
       'status' => $this->get('draft')->value ? 'DRAFT' : '',
       'application_number' => $this->get('application_number')->value,
       'language' => $this->get('langcode')->value,
       'messages' => [],
+      'is_react' => TRUE,
     ];
   }
 

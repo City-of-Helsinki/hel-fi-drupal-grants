@@ -157,8 +157,11 @@ class DocumentContentMapper {
    */
   private static function processAttachments(array &$typedDataValues): void {
     $other_attachments = [];
-
     $applicationNumber = $typedDataValues["application_number"];
+
+    if (!$applicationNumber) {
+      return;
+    }
 
     // Check if the static variable is already populated
     // for the given application number.
