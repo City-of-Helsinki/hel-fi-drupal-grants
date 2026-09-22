@@ -145,6 +145,7 @@ export default defineConfig({
         '/forms/70_liikuntaharrastamisen_avustus/*',
         '/forms/70_promoting_safer_club_activities/*',
         '/forms/70_segregaation_ehkaisemisavustus/*',
+        '/forms/80_ruokaaputoim/*',
       ],
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community'],
     },
@@ -172,6 +173,11 @@ export default defineConfig({
       name: 'forms-70-segregaatio',
       testMatch: '/forms/70_segregaation_ehkaisemisavustus/*',
       dependencies: ['profile-registered_community', 'profile-unregistered_community'],
+    },
+    {
+      name: 'forms-80-ruokaaputoim',
+      testMatch: '/forms/80_ruokaaputoim/*',
+      dependencies: ['profile-registered_community'],
     },
     /* Webforms. */
     /* Form 29 tests. */
