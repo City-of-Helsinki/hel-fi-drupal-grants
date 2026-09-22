@@ -1,4 +1,3 @@
-import path from 'path';
 import { expect, type Locator, type Page, test } from '@playwright/test';
 import { fakerFI as faker } from '@faker-js/faker';
 import { buildFormTree, type FormTree, type StepField } from './stepInspector';
@@ -16,9 +15,11 @@ import {
   clickOnStepWithTitle,
   createTranslator,
   gatherRequiredFieldWarnings,
+  resetAttachments,
   saveDraft,
   waitForForm,
   waitForFormLoad,
+  uploadAttachments,
 } from './utils';
 import {
   finnishDate, selectFirstDropdownOption,
@@ -348,21 +349,9 @@ async function handleField(
   if (field.widget === 'atvFile') {
     const fileInput = page.locator(`#${field.fieldName}`);
     await expect(fileInput).toBeVisible();
-    // Fill the form with two files.
     if (shouldFill) {
-      const attachments = ['07_muu_liite.pdf', '08_muu_liite.pdf'];
-      for (const attachment of attachments) {
-        // Register before setInputFiles so we don't miss the response event.
-        const uploadDone = page.waitForResponse(
-          r => r.url().includes('/upload') && r.ok(),
-          { timeout: 15000 },
-        );
-        await fileInput.setInputFiles(path.join(__dirname, '../data/attachments', attachment));
-        // Each upload must be completed before the next upload, otherwise only
-        // one file is actually uploaded.
-        await uploadDone;
-        await expect(page.locator('.hdbt-form--fileinput').filter({ hasText: attachment })).toBeVisible();
-      }
+      // Fill the form with required attachments.
+      const attachments = await uploadAttachments(page, fileInput, field);
       filledFields?.set(fieldId, attachments.join(', '));
     }
     // When verifying, check the description still holds the value
@@ -969,6 +958,7 @@ export async function fillFormFields(
   const tree = buildFormTree(formData as any);
   const filledFields:FilledFields = options.filledFields ?? new Map();
   const usedFieldInputs = new Set<string>();
+  resetAttachments();
 
   // Submit the empty form first to trigger all required field errors.
   // This lets us verify that every required field shows an error message.
