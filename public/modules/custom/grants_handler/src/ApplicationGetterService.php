@@ -197,21 +197,26 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
         // Add value for oma-asiointi listing.
         if ($submission_entity) {
           $submissionData['status'] = $document->getStatus();
-          // $submissionData['messages'] = $document->getMessages();
         }
 
         $webform = $submission->getWebform();
 
         // There's old applications w/o form_uuid, let's add it here
         // Since we've already loaded webform for submission object the old way,
-        // we should have it here anyways. Just make sure it's in the metadata
+        // we should have it here anyway. Just make sure it's in the metadata
         // as well.
         if ($webform && !isset($submissionData["metadata"]["form_uuid"])) {
           $submissionData["metadata"]["form_uuid"] = $webform->uuid();
         }
 
         if ($webform || $submission_entity) {
-          $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
+          if (!$submission_entity) {
+            // If not react.
+            $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
+          }
+          else {
+            $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($document->getContent());
+          }
         }
 
         $submission = [
@@ -237,7 +242,7 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
           }
         }
         elseif ($sortByStatus === TRUE) {
-          $applications[$submissionData['status']][$ts] = $submission;
+          $applications[$document->getStatus()][$ts] = $submission;
         }
         else {
           $applications[$ts] = $submission;
@@ -380,7 +385,7 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
    * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
    *   The application submission.
    */
-  private function getReactFormApplicationSubmission(
+  public function getReactFormApplicationSubmission(
     string $applicationNumber,
     AtvDocument $mainDocument,
   ): ?ApplicationSubmission {
@@ -464,7 +469,7 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+  public function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
     // We need the ATV document to get the form uuid.
     $document = $this->getAtvDocument($applicationNumber);
 
@@ -503,7 +508,17 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
       );
     }
     // And return webform loaded the old way.
-    return ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
+    $webform = ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
+    if (!$webform) {
+      $this->logger->error(
+        'Failed to load webform with again (the old way), uuid: @uuid. Error: @error',
+        [
+          '@uuid' => $uuid,
+        ]
+      );
+      return NULL;
+    }
+    return $webform;
   }
 
 }

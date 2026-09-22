@@ -1,6 +1,6 @@
 import path from 'path';
 import { expect, type Locator, type Page, test } from '@playwright/test';
-import { fakerFI as faker } from "@faker-js/faker/locale/index";
+import { fakerFI as faker } from '@faker-js/faker';
 import { buildFormTree, type FormTree, type StepField } from './stepInspector';
 import type { FormPreviewResponse } from './schemaFetcher';
 import {

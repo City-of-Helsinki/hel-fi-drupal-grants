@@ -18,7 +18,6 @@ declare(strict_types=1);
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
 use Drupal\user\Entity\User;
@@ -66,56 +65,6 @@ function grants_industries_entity_type_alter(array &$entity_types): void {
   if (isset($entity_types['taxonomy_term'])) {
     $entity_types['taxonomy_term']->setHandlerClass('translation', 'Drupal\grants_industries\CustomTermTranslationHandler');
   }
-}
-
-/**
- * Implements hook_module_implements_alter().
- */
-function grants_industries_module_implements_alter(&$implementations, $hook): void {
-  if ($hook == 'form_alter') {
-    $group = $implementations['grants_industries'];
-    unset($implementations['grants_industries']);
-    $implementations['grants_industries'] = $group;
-  }
-}
-
-/**
- * Implements hook_form_alter().
- */
-function grants_industries_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
-  $user = Drupal::currentUser();
-  $userEntity = User::load($user->id());
-  $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');
-  $roles = $user->getRoles();
-
-  // Disallow access to various webform settings for non admin users.
-  if ($form_id === 'webform_settings_form' && !$webformAccessService->hasAdminRole($userEntity)) {
-    $form['general_settings']['#access'] = FALSE;
-    $form['page_settings']['#access'] = FALSE;
-    $form['ajax_settings']['#access'] = FALSE;
-    $form['author_information']['#access'] = FALSE;
-    $form['share_settings']['#access'] = FALSE;
-    $form['advanced_settings']['#access'] = FALSE;
-
-    // Restrict access to certain third-party settings for non-admin users.
-    $form['third_party_settings']['grants_metadata']['applicationTypeSelect']['#disabled'] = TRUE;
-    $form['third_party_settings']['grants_metadata']['applicationType']['#disabled'] = TRUE;
-    $form['third_party_settings']['grants_metadata']['applicationTypeID']['#disabled'] = TRUE;
-    $form['third_party_settings']['grants_metadata']['applicationIndustry']['#disabled'] = TRUE;
-    $form['third_party_settings']['grants_metadata']['applicantTypes']['#disabled'] = TRUE;
-    $form['third_party_settings']['grants_metadata']['applicationTypeTerms']['#disabled'] = TRUE;
-  }
-
-  if (!in_array('helsinkiprofiili', $roles)) {
-    return;
-  }
-
-  if ($form_id == 'user_form') {
-    if (!in_array(['admin', 'grants_admin'], $roles)) {
-      $form["field_industry"]["#disabled"] = TRUE;
-    }
-  }
-
 }
 
 /**

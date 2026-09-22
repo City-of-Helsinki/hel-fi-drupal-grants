@@ -123,7 +123,7 @@ final class OpenFormsCommandsTest extends UnitTestCase {
     $result = $this->command([$this->formType('kuva_toiminta')])->openForms();
 
     $this->assertSame(DrushCommands::EXIT_FAILURE, $result);
-    $this->assertStringContainsString('PROD', $this->output->fetch());
+    $this->assertStringContainsString('Refusing to run in the environment', $this->output->fetch());
   }
 
   /**

@@ -755,3 +755,11 @@ msgstr "Det gick inte att ta bort utkastet. Försök igen eller kontakta support
 msgctxt "grants_handler"
 msgid "This form is being modified by other person currently, you cannot do any modifications while the form is locked for them."
 msgstr "Detta formulär ändras för närvarande av en annan person, du kan inte göra några ändringar medan formuläret är låst för dem."
+
+msgctxt "grants_handler"
+msgid "Do not include special personal data"
+msgstr "Ange inte särskilda personuppgifter"
+
+msgctxt "grants_handler"
+msgid "Do not include any special personal data on the form, such as information relating to the health, ethnic origin, religious or philosophical beliefs, or sexual orientation or behaviour of a private individual. This information is not required, and it will not affect the processing of your application or the decision-making process."
+msgstr "Ange inte några särskilda personuppgifter i blanketten. Sådana är exempelvis uppgifter om privatpersoners hälsa, etniska ursprung, religiösa eller filosofiska övertygelse och sexuella läggning eller beteende. Uppgifterna är inte obligatoriska och de påverkar inte behandlingen av din ansökan eller beslutsfattandet."

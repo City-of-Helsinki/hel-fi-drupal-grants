@@ -223,11 +223,13 @@ class MessageService {
    *   Only unread messages.
    * @param bool $showHiddenMessages
    *   Show hidden messages.
+   * @param bool $isWebform
+   *   The message is related to a webform application form.
    *
    * @return array
    *   Parsed messages.
    */
-  public function parseMessages(array $data, bool $onlyUnread = FALSE, bool $showHiddenMessages = FALSE): array {
+  public function parseMessages(array $data, bool $onlyUnread = FALSE, bool $showHiddenMessages = FALSE, $isWebform = TRUE): array {
     if (!isset($data['events'])) {
       return [];
     }
@@ -247,6 +249,7 @@ class MessageService {
         continue;
       }
 
+      $message['webform'] = $isWebform;
       $this->setResentAndAvus2ReceivedFlags($message, $resentMessages, $avus2ReceivedIds, $showHiddenMessages);
 
       $msgUnread = $this->setMessageStatusAndCheckIfUnread($message, $eventIds);
