@@ -139,11 +139,12 @@ final class ApplicationController extends ControllerBase {
   public function accessByApplicationNumber(AccountInterface $account, string $submission_id): AccessResultInterface {
     // Check for react application first.
     try {
+      // Application service checks for permission: If found, allow.
       $this->helfiApplicationService->getSubmissionEntity($submission_id);
       return AccessResult::allowed();
     }
     catch (\Exception $e) {
-      // If not found, we can just skip and let the webform handler continue-
+      // If not found, we can just skip and let the webform handler continue.
     }
 
     try {
