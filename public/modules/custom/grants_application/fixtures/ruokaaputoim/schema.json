@@ -283,7 +283,6 @@
             "is_free_of_charge",
             "requires_religious_acitivities",
             "has_supervision_plan",
-            "has_safety_monitoring_plan",
             "is_committed_to_equality"
           ],
           "properties": {
