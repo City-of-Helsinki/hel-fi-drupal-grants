@@ -410,23 +410,6 @@
               ],
               "default": false
             },
-            "has_safety_monitoring_plan_description": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "has_safety_monitoring_plan.description",
-                  "type": "null"
-                }
-              ]
-            },
-            "has_safety_monitoring_plan": {
-              "title": "has_safety_monitoring_plan.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
-            },
             "is_committed_to_equality_description": {
               "type": "array",
               "items": [

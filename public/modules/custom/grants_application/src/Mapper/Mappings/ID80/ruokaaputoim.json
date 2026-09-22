@@ -123,7 +123,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "onlineService",
-      "label": "Ilmoitetaanko toiminnasta ruoka-apu.fi-verkkopalvelussa? Miten haettavaa valtionavustusta on suunniteltu käytettävän?",
+      "label": "Ilmoitetaanko toiminnasta ruoka-apu.fi-verkkopalvelussa?",
       "value": "",
       "valueType": "bool"
     }
