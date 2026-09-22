@@ -123,7 +123,7 @@
     "mapping_type": "default",
     "data": {
       "ID": "onlineService",
-      "label": "Ilmoitetaanko toiminnasta ruoka-apu.fi-verkkopalvelussa? Miten haettavaa valtionavustusta on suunniteltu käytettävän?",
+      "label": "Ilmoitetaanko toiminnasta ruoka-apu.fi-verkkopalvelussa?",
       "value": "",
       "valueType": "bool"
     }
@@ -162,17 +162,6 @@
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.8": {
-    "datasource": "form_data",
-    "source": "information_in_more_detail_step.information_in_more_detail_section.has_safety_monitoring_plan",
-    "mapping_type": "default",
-    "data": {
-      "ID": "monitoringPlan",
-      "label": "Onko ruoka-aputoiminnasta tehty elintarvikehuoneistoilmoitus ja omavalvontasuunnitelma?",
-      "value": "",
-      "valueType": "bool"
-    }
-  },
-  "compensation.customQuestionsInfo.customQuestionsArray.9": {
     "datasource": "form_data",
     "source": "information_in_more_detail_step.information_in_more_detail_section.is_committed_to_equality",
     "mapping_type": "default",

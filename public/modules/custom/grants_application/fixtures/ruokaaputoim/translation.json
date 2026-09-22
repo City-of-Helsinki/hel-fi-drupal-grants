@@ -105,16 +105,6 @@
       "en": "The Finnish Food Authority requires that the food aid activities have a food safety self-monitoring plan and that a food premises notification has been submitted to the municipal food control authority.",
       "sv": "Livsmedelsverket kräver att det för mathjälpsverksamheten finns en plan för egenkontroll av livsmedelssäkerheten och att en anmälan om livsmedelslokal har gjorts till kommunens livsmedelstillsyn."
     },
-    "has_safety_monitoring_plan.description": {
-      "fi": "Ruokavirasto vaatii, että ruoka-aputoiminnasta tulee olla tehtynä elintarviketurvallisuuden omavalvontasuunnitelma ja elintarvikehuoneistoilmoitus kunnan elintarvikevalvontaan.",
-      "en": "The Finnish Food Authority requires that the food aid activities have a food safety self-monitoring plan and that a food premises notification has been submitted to the municipal food control authority.",
-      "sv": "Livsmedelsverket kräver att det för mathjälpsverksamheten finns en plan för egenkontroll av livsmedelssäkerheten och att en anmälan om livsmedelslokal har gjorts till kommunens livsmedelstillsyn."
-    },
-    "has_safety_monitoring_plan.title": {
-      "fi": "Onko ruoka-aputoiminnasta tehty elintarvikehuoneistoilmoitus ja omavalvontasuunnitelma?",
-      "en": "Has the food premises notification been submitted, and has a food safety self-monitoring plan been prepared?",
-      "sv": "Har en anmälan om livsmedelslokal och en plan för egenkontroll gjorts för mathjälpsverksamheten?"
-    },
     "is_committed_to_equality.description": {
       "fi": "Ruoka-avun hakijoita tulee kohdella tasapuolisesti riippumatta esimerkiksi heidän kansalaisuudestaan tai uskonnostaan",
       "en": "Applicants for food aid must be treated equally regardless of, for example, their nationality or religion.",
@@ -126,9 +116,9 @@
       "sv": "Förbinder ni er till likabehandling och icke-diskriminering i er mathjälpsverksamhet?"
     },
     "custom_required_attachments_help.value": {
-      "en": "Attachments required for theapplication: the statutes of theassociation, the bank’s notice of theaccount holder or a copy of a bankstatement, financial statements, annualreport and financial or operational auditreport for the previous financial year,and the action plan and budget for theupcoming grant period. As the grantperiod covers two years, applicants arerequired to submit an operational planand budget for the first grant yearduring the application phase.",
+      "en": "Attachments required for the application: the statutes of the association, the bank’s notice of the account holder or a copy of a bank statement, financial statements, annual report and financial or operational audit report for the previous financial year, and the action plan and budget for the upcoming grant period. As the grant period covers two years, applicants are required to submit an operational plan and budget for the first grant year during the application phase.",
       "fi": "Hakemuksen liitteeksi tarvitaan yhdistyksen säännöt, pankin ilmoitus tilinomistajasta tai tiliotekopio, edellisen tilikauden vahvistetut tilinpäätös,  toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä tulevaa avustuskautta koskeva toimintasuunnitelma ja talousarvio. Avustuskauden ollessa kaksivuotinen hakuvaiheessa toimitetaan ensimmäisen avustusvuoden toimintasuunnitelma ja talousarvio.",
-      "sv": "Bilagor som krävs för ansökan: föreningens stadgar, ett meddelandefrån banken om kontoinnehavaren elleren kopia av ett kontoutdrag, detfastställda bokslutet, verksamhetsberättelsen och revisions\u0002ellerverksamhetsgranskningsberättelsen förföregående räkenskapsår samtverksamhetsplan och budget för denkommande understödsperioden.Eftersom understödsperioden är tvåårigska en verksamhetsplan och en budgetför det första understödsåret lämnas in iansökningsskedet."
+      "sv": "Erforderliga bilagor Bilagor som krävs för ansökan: föreningens stadgar, ett meddelande från banken om kontoinnehavaren eller en kopia av ett kontoutdrag, det fastställda bokslutet, verksamhetsberättelsen och revisions- eller verksamhetsgranskningsberättelsen för föregående räkenskapsår samt verksamhetsplan och budget för den kommande understödsperioden. Eftersom understödsperioden är tvåårig ska en verksamhetsplan och en budget för det första understödsåret lämnas in i ansökningsskedet."
     },
     "form_title": {
       "en": "Government grant application for food aid activities",

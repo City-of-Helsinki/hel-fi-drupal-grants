@@ -172,16 +172,6 @@
         ],
         "ui:widget": "radio"
       },
-      "has_safety_monitoring_plan_description": {
-        "ui:field": "textParagraph"
-      },
-      "has_safety_monitoring_plan": {
-        "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
-        ],
-        "ui:widget": "radio"
-      },
       "is_committed_to_equality_description": {
         "ui:field": "textParagraph"
       },
