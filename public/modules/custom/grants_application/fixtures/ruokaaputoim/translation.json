@@ -1,9 +1,9 @@
 {
   "translations": {
     "custom_economy_forecast.description": {
-        "en": "For a multi-year project, the budget for the project year 2026 must be provided in this section. Additionally, a budget for the entire project period, showing the distribution of income and expenses across the different project years, must be attached to the application.",
-        "fi": "Monivuotisen hankkeen osalta tässä kohdassa tulee ilmoittaa hankevuoden 2026 talousarvio. Lisäksi hakemuksen liitteenä tulee toimittaa koko hankeajan talousarvio, josta käy ilmi tulojen ja menojen jakautuminen eri hankevuosille.",
-        "sv": "För ett flerårigt projekt ska budgeten för det projektår 2026 anges i detta avsnitt. Dessutom ska en budget för hela projektperioden bifogas ansökan, där intäkter och kostnader fördelas på de olika projektåren."
+      "fi": "Erittele haettavan avustuksen käyttö menolajeittain: palkkakulut, koneet ja laitteet, aineet ja tarvikkeet, matkakulut, palveluiden ostot, kiinteistökulut. Lisää vain ne menolajit, joihin haette avustusta. Merkitse tuloja vain, jos ruoka-aputoiminnasta on jotain tuloja. Haettua avustusta ei merkitä tässä tuloksi.",
+      "en": "Specify how the grant applied for will be used by expense category: salary costs, machinery and equipment, materials and supplies, travel expenses, purchased services, and property costs. Include only the expense categories for which you are applying for a grant. Enter income only if there is any income from the food aid activities. The grant applied for should not be entered here as income.",
+      "sv": "Specificera hur det ansökta understödet ska användas enligt kostnadsslag: lönekostnader, maskiner och utrustning, material och förnödenheter, resekostnader, köp av tjänster och fastighetskostnader. Lägg endast till de kostnadsslag som ni ansöker om understöd för. Ange inkomster endast om det finns inkomster från matutdelningsverksamheten. Det ansökta understödet ska inte anges här som inkomst."
     },
     "custom_purpose.title": {
       "en": "Brief description of the purpose of the grant applied for",
@@ -115,6 +115,7 @@
       "en": "Do you commit to equality and non-discrimination in your food aid activities?",
       "sv": "Förbinder ni er till likabehandling och icke-diskriminering i er mathjälpsverksamhet?"
     },
+
     "custom_required_attachments_help.value": {
       "en": "Attachments required for the application: the statutes of the association, the bank’s notice of the account holder or a copy of a bank statement, financial statements, annual report and financial or operational audit report for the previous financial year, and the action plan and budget for the upcoming grant period. As the grant period covers two years, applicants are required to submit an operational plan and budget for the first grant year during the application phase.",
       "fi": "Hakemuksen liitteeksi tarvitaan yhdistyksen säännöt, pankin ilmoitus tilinomistajasta tai tiliotekopio, edellisen tilikauden vahvistetut tilinpäätös,  toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä tulevaa avustuskautta koskeva toimintasuunnitelma ja talousarvio. Avustuskauden ollessa kaksivuotinen hakuvaiheessa toimitetaan ensimmäisen avustusvuoden toimintasuunnitelma ja talousarvio.",
