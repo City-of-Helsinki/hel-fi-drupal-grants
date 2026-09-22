@@ -2125,12 +2125,6 @@ parameters:
 			path: public/modules/custom/grants_application_search/src/Hook/ViewsHooks.php
 
 		-
-			message: '#^Form alter hook "form_views_exposed_form_alter" implementation must have 2 or 3 parameters\. Expected signature\: method\(&\$form, \\Drupal\\Core\\Form\\FormStateInterface \$form_state\[, \$form_id\]\)$#'
-			identifier: hookFormAlter.invalidParameterCount
-			count: 1
-			path: public/modules/custom/grants_application_search/src/Hook/ViewsHooks.php
-
-		-
 			message: '#^Method Drupal\\grants_application_search\\Hook\\ViewsHooks\:\:buildApplicationPeriodMarkup\(\) should return Drupal\\Component\\Render\\MarkupInterface but returns Drupal\\Component\\Render\\MarkupInterface\|string\.$#'
 			identifier: return.type
 			count: 4
