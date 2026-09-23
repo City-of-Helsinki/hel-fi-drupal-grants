@@ -2171,7 +2171,7 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
       ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }
 
-  $status = $applicationStatusService->getWebformStatus($webform);
+  $webformStatus = $applicationStatusService->getWebformStatus($webform);
 
   $variables['openStartDate'] = $thirdPartySettings['applicationOpen'] ? strtotime($thirdPartySettings['applicationOpen']) : '';
   $variables['openEndDate'] = $thirdPartySettings['applicationClose'] ? strtotime($thirdPartySettings['applicationClose']) : '';
@@ -2179,7 +2179,7 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';
   }
-  elseif ($status === 'archived') {
+  elseif ($webformStatus === 'archived') {
     $variables['errorType'] = 'ARCHIVED';
   }
   try {
