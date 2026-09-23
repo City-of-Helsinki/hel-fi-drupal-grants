@@ -17,6 +17,7 @@ declare(strict_types=1);
  */
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
@@ -26,7 +27,7 @@ use Drupal\user\UserInterface;
 /**
  * Implements hook_entity_operation_alter().
  */
-function grants_industries_entity_operation_alter(array &$operations, EntityInterface $entity): void {
+function grants_industries_entity_operation_alter(array &$operations, EntityInterface $entity, CacheableMetadata $cacheability): void {
   $user = Drupal::currentUser();
   $userEntity = User::load($user->id());
   $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');

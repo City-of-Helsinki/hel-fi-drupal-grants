@@ -4255,17 +4255,6 @@ parameters:
 			path: public/modules/custom/grants_handler/grants_handler.install
 
 		-
-			message: '''
-				#^Call to deprecated function user_load_by_name\(\)\:
-				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\.
-				  Use \\Drupal\:\:entityTypeManager\(\)\-\>getStorage\('user'\)\-\>loadByProperties\(\)
-				  instead\.$#
-			'''
-			identifier: function.deprecated
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
 			message: '#^Function _grants_handler_add_checkmark_to_text\(\) has parameter \$textValue with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -7148,12 +7137,6 @@ parameters:
 		-
 			message: '#^Function grants_industries_entity_operation_alter\(\) has parameter \$operations with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: public/modules/custom/grants_industries/grants_industries.module
-
-		-
-			message: '#^Function grants_industries_entity_operation_alter\(\) implements hook_entity_operation_alter but is missing the CacheableMetadata parameter added in Drupal 11\.3\. Update the signature to\: grants_industries_entity_operation_alter\(array &\$operations, \\Drupal\\Core\\Entity\\EntityInterface \$entity, \\Drupal\\Core\\Cache\\CacheableMetadata \$cacheability\)\.$#'
-			identifier: drupal.proceduralHookEntityOperationAlterMissingCacheabilityParameter
 			count: 1
 			path: public/modules/custom/grants_industries/grants_industries.module
 
