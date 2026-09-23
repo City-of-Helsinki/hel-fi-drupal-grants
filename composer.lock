@@ -4710,34 +4710,34 @@
         },
         {
             "name": "drupal/external_entities",
-            "version": "3.0.0",
+            "version": "3.0.0-rc2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/external_entities.git",
-                "reference": "3.0.0"
+                "reference": "3.0.0-rc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/external_entities-3.0.0.zip",
-                "reference": "3.0.0",
-                "shasum": "2ee071416548f92d1167fbc6f55d689a7fc13350"
+                "url": "https://ftp.drupal.org/files/projects/external_entities-3.0.0-rc2.zip",
+                "reference": "3.0.0-rc2",
+                "shasum": "a6e1f6e0194bdad17b41f258772e829edeb3e220"
             },
             "require": {
                 "drupal/core": "^10 || ^11",
                 "galbar/jsonpath": "^2.0||^3.0"
             },
             "require-dev": {
-                "drupal/dbxschema": "^2.0",
+                "drupal/dbxschema": "*",
                 "drupal/pathauto": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.0",
-                    "datestamp": "1790083228",
+                    "version": "3.0.0-rc2",
+                    "datestamp": "1776284356",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -5577,16 +5577,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "5.1.145",
+            "version": "5.1.146",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "9fe54d3b7fc91ab4d40080edf47202ed7003ff64"
+                "reference": "2401a662d0d0c71cbe0cbe00810226747be26e3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/9fe54d3b7fc91ab4d40080edf47202ed7003ff64",
-                "reference": "9fe54d3b7fc91ab4d40080edf47202ed7003ff64",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/2401a662d0d0c71cbe0cbe00810226747be26e3d",
+                "reference": "2401a662d0d0c71cbe0cbe00810226747be26e3d",
                 "shasum": ""
             },
             "require": {
@@ -5611,7 +5611,7 @@
                 "drupal/elasticsearch_connector": "^8.0@alpha",
                 "drupal/entity_browser": "^2.5",
                 "drupal/entity_usage": "^2.0@beta",
-                "drupal/external_entities": "^3.0",
+                "drupal/external_entities": "3.0.0-rc2",
                 "drupal/field_group": "^4.0",
                 "drupal/focal_point": "^2.0",
                 "drupal/gin_toolbar": "^3.0",
@@ -5724,10 +5724,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/5.1.145",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/5.1.146",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2026-09-22T12:53:50+00:00"
+            "time": "2026-09-23T13:16:28+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
@@ -22068,11 +22068,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.14",
+            "version": "2.2.15",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9c672e7a8e791dfc3d30e55f683e73fc0b63a3ac",
-                "reference": "9c672e7a8e791dfc3d30e55f683e73fc0b63a3ac",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b158556ffd26825cf615a1c1f72fb5157a2301b7",
+                "reference": "b158556ffd26825cf615a1c1f72fb5157a2301b7",
                 "shasum": ""
             },
             "require": {
@@ -22128,7 +22128,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-12T21:39:33+00:00"
+            "time": "2026-09-23T12:23:07+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
