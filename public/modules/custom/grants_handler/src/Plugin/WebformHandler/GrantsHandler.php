@@ -75,7 +75,7 @@ final class GrantsHandler extends WebformHandlerBase {
    * submission to database. This way we can still use webform functionality
    * while not saving any sensitive data to local drupal.
    */
-  private array $submittedFormData = [];
+  protected array $submittedFormData = [];
 
   /**
    * Application type.
@@ -222,7 +222,7 @@ final class GrantsHandler extends WebformHandlerBase {
   /**
    * Event dispatcher.
    */
-  private EventDispatcherInterface $eventDispatcher;
+  protected EventDispatcherInterface $eventDispatcher;
 
   /**
    * {@inheritDoc}

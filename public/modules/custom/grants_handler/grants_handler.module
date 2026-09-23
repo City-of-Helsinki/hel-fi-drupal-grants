@@ -1971,7 +1971,10 @@ function grants_handler_user_login_form_submit(&$form, FormStateInterface $form_
   $username = $form_state->getValue('name');
 
   // Load the user object by username.
-  $user = user_load_by_name($username);
+  $users = \Drupal::entityTypeManager()
+    ->getStorage('user')
+    ->loadByProperties(['name' => $username]);
+  $user = reset($users);
 
   // Roles to check for.
   $roles = [

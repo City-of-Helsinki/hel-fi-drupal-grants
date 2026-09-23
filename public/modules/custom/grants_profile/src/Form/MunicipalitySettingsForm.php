@@ -33,7 +33,7 @@ class MunicipalitySettingsForm extends ConfigFormBase {
     ConfigFactoryInterface $config_factory,
     TypedConfigManagerInterface $typedConfigManager,
     #[Autowire('grants_profile.municipality_service')]
-    private MunicipalityService $municipalityService,
+    protected MunicipalityService $municipalityService,
   ) {
     parent::__construct($config_factory, $typedConfigManager);
   }

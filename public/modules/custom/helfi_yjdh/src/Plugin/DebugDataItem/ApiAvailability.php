@@ -29,7 +29,7 @@ final class ApiAvailability extends DebugDataItemPluginBase implements Container
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private readonly YjdhClient $yjdhClient,
+    protected readonly YjdhClient $yjdhClient,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
