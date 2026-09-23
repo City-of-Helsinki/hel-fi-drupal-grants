@@ -341,9 +341,9 @@ third_party_options:
       id: RUOKAAPUTOIM
       code: RUOKAAPUTOIM
       labels:
-        fi: "Ruoka-aputoiminnan valtionavustushakemus"
-        en: "Government grant application for food aid activities"
-        sv: "Ansökan om statsunderstöd för mathjälpsverksamhet"
+        fi: 'Ruoka-aputoiminnan valtionavustushakemus'
+        en: 'Government grant application for food aid activities'
+        sv: 'Ansökan om statsunderstöd för mathjälpsverksamhet'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
