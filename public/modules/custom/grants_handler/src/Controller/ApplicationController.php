@@ -254,9 +254,12 @@ final class ApplicationController extends ControllerBase {
     $reactSubmission = FALSE;
 
     if ($this->moduleHandler()->moduleExists('grants_application')) {
-      $result = $this->helfiApplicationService->getSubmissionEntity($submission_id);
-      if ($result) {
+      try {
+        $this->helfiApplicationService->getSubmissionEntity($submission_id);
         $reactSubmission = TRUE;
+      }
+      catch (\Exception) {
+        // Continue as a webform application.
       }
     }
 
