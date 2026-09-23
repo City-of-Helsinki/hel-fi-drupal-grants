@@ -25,7 +25,7 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    *
    * @var array|string[] Translation context for class
    */
-  private array $tOpts = ['context' => 'grants_profile'];
+  protected array $tOpts = ['context' => 'grants_profile'];
 
   /**
    * Class constructor.
