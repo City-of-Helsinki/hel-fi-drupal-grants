@@ -4710,34 +4710,34 @@
         },
         {
             "name": "drupal/external_entities",
-            "version": "3.0.0-rc2",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/external_entities.git",
-                "reference": "3.0.0-rc2"
+                "reference": "3.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/external_entities-3.0.0-rc2.zip",
-                "reference": "3.0.0-rc2",
-                "shasum": "a6e1f6e0194bdad17b41f258772e829edeb3e220"
+                "url": "https://ftp.drupal.org/files/projects/external_entities-3.0.0.zip",
+                "reference": "3.0.0",
+                "shasum": "2ee071416548f92d1167fbc6f55d689a7fc13350"
             },
             "require": {
                 "drupal/core": "^10 || ^11",
                 "galbar/jsonpath": "^2.0||^3.0"
             },
             "require-dev": {
-                "drupal/dbxschema": "*",
+                "drupal/dbxschema": "^2.0",
                 "drupal/pathauto": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.0-rc2",
-                    "datestamp": "1776284356",
+                    "version": "3.0.0",
+                    "datestamp": "1790083228",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "RC releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -9761,7 +9761,7 @@
                     "role": "Maintainer"
                 },
                 {
-                    "name": "Bart Vanhoutte",
+                    "name": "bart vanhoutte",
                     "homepage": "https://www.drupal.org/user/1133754"
                 },
                 {
