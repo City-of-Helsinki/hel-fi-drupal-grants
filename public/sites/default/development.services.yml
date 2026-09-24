@@ -1,0 +1,3 @@
+# Don't log audit logs on dev environment, it slows down E2E tests.
+parameters:
+  helfi_api_base.audit_log_entity_types: []
