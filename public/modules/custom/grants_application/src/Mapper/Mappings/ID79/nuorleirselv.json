@@ -181,7 +181,7 @@
   },
   "attachmentsInfo.attachmentsArray.3": {
     "datasource": "form_data",
-    "source": "attachments_step.attachments_section.budget.budget_file",
+    "source": "attachments_step.attachments_section.confirmed_financial_statements.confirmed_financial_statements_file",
     "mapping_type": "file",
     "data": {
       "description": {"ID": "description", "value": "Vahvistettu tilinpäätös (siltä kaudelta, johon leirien kustannukset kohdistuvat)", "valueType": "string", "label": "Liitteen kuvaus"},
