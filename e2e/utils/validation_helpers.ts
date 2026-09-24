@@ -6,6 +6,7 @@ import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
 import {getFulfilledResponse, logCurrentUrl} from "./helpers";
 import { uploadFile } from './input_helpers';
 import { ATTACHMENTS } from './data/attachment_data';
+import {goToSubmissionUrl} from './navigation_helpers';
 
 /**
  *  The pageType type.
@@ -65,6 +66,50 @@ const validateSubmission = async (
     logger(`Validating messaging for sent application with application ID: ${thisStoreData.applicationId}...`);
     await validateMessaging(page, thisStoreData);
   }
+}
+
+/**
+ * The validateDataIntegrity function.
+ *
+ * This function verifies that a submitted application has no data
+ * integrity warning on the view page and that its form is editable.
+ *
+ * @param formKey
+ *   The form variant key.
+ * @param page
+ *   Page object from Playwright.
+ * @param formDetails
+ *   The form data.
+ * @param storedata
+ *   The env form data.
+ */
+const validateDataIntegrity = async (
+  formKey: string,
+  page: Page,
+  formDetails: FormData,
+  storedata: any
+) => {
+  if (storedata?.[formKey]?.status !== 'RECEIVED') {
+    logger(`Skipping data integrity test: No received application stored after the "${formDetails.title}" test.`);
+    test.skip(true, 'Skip data integrity test');
+    return;
+  }
+
+  const {applicationId, submissionUrl} = storedata[formKey];
+  logger(`Validating data integrity for application ID: ${applicationId}...`);
+
+  await page.goto(`/fi/hakemus/${applicationId}/katso`);
+  await page.waitForURL('**/katso');
+  await expect(
+    page.getByText('Hakemuksen tallennusprosessi on kesken, tällä sivulla oleva tieto ei ole ajan tasalla.'),
+    'View page has no data integrity warning.'
+  ).toHaveCount(0);
+
+  await goToSubmissionUrl(page, submissionUrl);
+  await expect(
+    page.locator('#edit-bank-account-account-number-select'),
+    'Submitted form fields are enabled.'
+  ).toBeEnabled();
 }
 
 /**
@@ -724,6 +769,7 @@ const reloadWithRetry = async (page: Page, attempts: number = 2): Promise<void> 
 
 export {
   validateSubmission,
+  validateDataIntegrity,
   validateProfileData,
   validateFormData,
   validateExistingProfileData,
