@@ -1,3 +1,0 @@
-# Disable audit logging on entity operations.
-parameters:
-  helfi_api_base.audit_log_entity_types: []
