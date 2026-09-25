@@ -5,6 +5,7 @@ package: helfi
 core_version_requirement: ^10 || ^11
 dependencies:
   - drupal:webform
+  - grants_handler
 
 # Information added by Drupal.org packaging script on 2021-06-17
 version: '8.x-1.4'
