@@ -995,8 +995,10 @@ export async function fillFormFields(
         // Return to the first step of the form.
         if (fill && options.formURL) {
           await assertMissingInputsGone(page);
+          logger('Saving the draft...');
           await saveDraft(page, t);
           await page.waitForURL('**/oma-asiointi/hakemukset', { timeout: 30_000 });
+          logger('Draft saved. Reopening the form...');
           await page.goto(options.formURL);
           // Expect the React application to load.
           await waitForFormLoad(page);
@@ -1042,6 +1044,7 @@ export async function verifyAnswers(
   // check the previous todo comment at line 769.
   for (const [languageIndex, language] of languages.entries()) {
     const t = createTranslator(formData as FormPreviewResponse, language);
+    logger(`Verifying the preview answers in: ${language}`);
 
     // Switch the language and wait for the form to load.
     if (languageIndex > 0) {
@@ -1080,6 +1083,7 @@ export async function verifyFormAndSubmit(
   await test.step('Submit the form', async () => {
     if (!options.formCompletionURL) throw new Error(`The form completion URL is missing.`);
     if (!options.formURL) throw new Error(`The form URL is missing.`);
+    logger('Opening the form for submit...');
     await page.goto(options.formURL);
     // Expect the React application to load.
     await waitForFormLoad(page);
@@ -1125,7 +1129,15 @@ async function submitFromConfirmStep(
 
   logger('Attempting to submit the form...')
   await expect(submitButton).not.toHaveAttribute('disabled');
-  await submitButton.click();
+  const [submitResponse] = await Promise.all([
+    page.waitForResponse(response =>
+      /\/applications\/[^/]+\/application\//.test(response.url()) && ['POST', 'PATCH'].includes(response.request().method())
+    ),
+    submitButton.click(),
+  ]);
+
+  // Fail fast if the form submit returns a server error.
+  expect(submitResponse.status(), 'Application submit returned a server error.').toBeLessThan(500);
 
   // Verify the completion.
   await logCurrentUrl(page);
