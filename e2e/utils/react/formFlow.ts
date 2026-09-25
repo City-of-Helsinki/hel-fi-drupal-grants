@@ -12,6 +12,7 @@ import {
 import { craftSchema, type FormPreviewResponse } from './schemaFetcher';
 import { recordReactReceived } from './receivedStatus';
 import { Role, selectRole} from "../auth_helpers";
+import { logger } from "../logger";
 import {
   assertApplicationInList,
   assertApplicationOpen,
@@ -84,9 +85,10 @@ export async function executeFormFlow(
 
   // Start listening for the application number before opening the form.
   const applicationNumberPromise = captureApplicationNumber(page);
-  await page.goto(FORM_URL);
+  logger('Waiting for the application number...');
   // Wait until the application number has been received and store it.
-  applicationNumber = await applicationNumberPromise;
+  [, applicationNumber] = await Promise.all([page.goto(FORM_URL), applicationNumberPromise]);
+  logger(`Application number: ${applicationNumber}`);
   // Reopen via the application URL so a reload during load keeps the same draft.
   await page.goto(`${FORM_URL}/${applicationNumber}`);
   await waitForFormLoad(page);

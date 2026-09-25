@@ -208,6 +208,36 @@ const logCurrentUrl = async (page: Page) => {
   logger('On URL:', false, page.url());
 }
 
+// Pages that already log server errors.
+const serverErrorPages = new WeakSet<Page>();
+
+/**
+ * The logServerErrors function.
+ *
+ * This function logs server errors and failed requests of the page
+ * with the request ID used in the Drupal logs.
+ *
+ * @param page
+ *  Playwright page object.
+ */
+const logServerErrors = (page: Page) => {
+  if (serverErrorPages.has(page)) return;
+  serverErrorPages.add(page);
+
+  page.on('response', (response) => {
+    if (response.status() < 500) return;
+    const requestId = response.headers()['x-request-id'] ?? 'unknown';
+    logger(`Server error: ${response.status()} ${response.request().method()} ${response.url()} request_id=${requestId}`);
+  });
+
+  page.on('requestfailed', (request) => {
+    const errorText = request.failure()?.errorText ?? 'unknown';
+    // Skip requests aborted by navigation.
+    if (errorText === 'net::ERR_ABORTED') return;
+    logger(`Request failed: ${request.method()} ${request.url()} ${errorText}`);
+  });
+}
+
 export {
   acceptCookies,
   extractPath,
@@ -215,6 +245,7 @@ export {
   getFulfilledResponse,
   hideDialog,
   logCurrentUrl,
+  logServerErrors,
   slowLocator,
   waitForTextWithInterval,
 };
