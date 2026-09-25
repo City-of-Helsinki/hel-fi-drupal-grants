@@ -149,6 +149,7 @@ export async function waitForFormLoad(page: Page, attempts = 3) {
 export const captureApplicationNumber = (page: Page): Promise<string> =>
   test.step('Capture application number from draft creation request', () =>
     new Promise<string>((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('The draft creation request was not received.')), 60_000);
       page.route(/\/applications\/.*\/draft/, async (route) => {
         if (route.request().method() !== 'POST') {
           return route.continue();
@@ -158,8 +159,10 @@ export const captureApplicationNumber = (page: Page): Promise<string> =>
           const json = await response.json();
           await route.fulfill({ response });
           await page.unroute(/\/applications\/.*\/draft/);
+          clearTimeout(timer);
           resolve(json.application_number as string);
         } catch (err) {
+          clearTimeout(timer);
           reject(err);
         }
       }).catch(reject);
@@ -333,6 +336,7 @@ export async function assertApplicationInList(
   applicationNumber: string,
   list: 'drafts' | 'sent',
 ) {
+  logger(`Locating application ${applicationNumber} in the ${list} list...`);
   await page.goto('/fi/oma-asiointi');
   await page.waitForURL('**/oma-asiointi');
 
@@ -354,6 +358,7 @@ export async function assertApplicationInList(
   }
 
   await expect(row).toBeVisible();
+  logger(`Application ${applicationNumber} found in the ${list} list.`);
 }
 
 /**
