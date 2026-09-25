@@ -29,8 +29,8 @@ class DeleteByTransactionIdForm extends FormBase {
    */
   public function __construct(
     #[Autowire(service: 'helfi_atv.atv_service')]
-    private readonly AtvService $atvService,
-    private readonly HandleDocumentsBatchService $handleDocumentsBatchService,
+    protected readonly AtvService $atvService,
+    protected readonly HandleDocumentsBatchService $handleDocumentsBatchService,
   ) {
   }
 

@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_handler\ApplicationAccessHandler;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationInitService;
@@ -22,7 +23,6 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
-use Drupal\webform\WebformRequestInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -44,7 +44,6 @@ final class ApplicationController extends ControllerBase {
 
   public function __construct(
     private readonly EntityRepositoryInterface $entityRepository,
-    private readonly WebformRequestInterface $requestHandler,
     private readonly RendererInterface $renderer,
     private readonly RequestStack $request,
     private readonly GrantsProfileService $grantsProfileService,
@@ -53,6 +52,7 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationInitService $applicationInitService,
     private readonly ApplicationAccessHandler $applicationAccessHandler,
     private readonly ApplicationGetterService $applicationGetterService,
+    private readonly ApplicationService $helfiApplicationService,
   ) {}
 
   /**
@@ -61,7 +61,6 @@ final class ApplicationController extends ControllerBase {
   public static function create(ContainerInterface $container): ApplicationController {
     return new self(
       $container->get('entity.repository'),
-      $container->get('webform.request'),
       $container->get('renderer'),
       $container->get('request_stack'),
       $container->get('grants_profile.service'),
@@ -69,7 +68,8 @@ final class ApplicationController extends ControllerBase {
       $container->get('grants_handler.application_status_service'),
       $container->get('grants_handler.application_init_service'),
       $container->get('grants_handler.application_access_handler'),
-      $container->get('grants_handler.application_getter_service')
+      $container->get('grants_handler.application_getter_service'),
+      $container->get(ApplicationService::class)
     );
   }
 
@@ -137,6 +137,16 @@ final class ApplicationController extends ControllerBase {
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function accessByApplicationNumber(AccountInterface $account, string $submission_id): AccessResultInterface {
+    // Check for react application first.
+    try {
+      // Application service checks for permission: If found, allow.
+      $this->helfiApplicationService->getSubmissionEntity($submission_id);
+      return AccessResult::allowed();
+    }
+    catch (\Exception $e) {
+      // If not found, we can just skip and let the webform handler continue.
+    }
+
     try {
       $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
     }
@@ -244,11 +254,12 @@ final class ApplicationController extends ControllerBase {
     $reactSubmission = FALSE;
 
     if ($this->moduleHandler()->moduleExists('grants_application')) {
-      $result = $this->entityTypeManager()->getStorage('application_submission')
-        ->loadByProperties(['application_number' => $submission_id]);
-
-      if ($result) {
+      try {
+        $this->helfiApplicationService->getSubmissionEntity($submission_id);
         $reactSubmission = TRUE;
+      }
+      catch (\Exception) {
+        // Continue as a webform application.
       }
     }
 

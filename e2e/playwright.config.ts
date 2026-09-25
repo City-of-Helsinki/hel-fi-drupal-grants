@@ -11,6 +11,8 @@ export default defineConfig({
   /* Ignore form helper files. */
   testIgnore: ['**/formInputs.ts', '**/formLogic.ts', '**/archived/*', '**/upcoming/*'],
   timeout: 300 * 1000,
+  /* Stop the run at 2h 50min before the CI job limit cancels it. */
+  globalTimeout: 170 * 60 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -27,9 +29,10 @@ export default defineConfig({
     : [['list'], ['html']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Wait for maximum of 120 seconds. Drop the timeout to 60s when */
-    /* development server cpu and memory issues have been fixed. */
-    actionTimeout: 120 * 1000,
+    /* For actions, wait for maximum of 60 seconds. */
+    actionTimeout: 60 * 1000,
+    /* For navigation, wait for maximum of 30 seconds. */
+    navigationTimeout: 30 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
     ignoreHTTPSErrors: true,
@@ -145,6 +148,7 @@ export default defineConfig({
         '/forms/70_liikuntaharrastamisen_avustus/*',
         '/forms/70_promoting_safer_club_activities/*',
         '/forms/70_segregaation_ehkaisemisavustus/*',
+        '/forms/80_ruokaaputoim/*',
       ],
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community'],
     },
@@ -172,6 +176,11 @@ export default defineConfig({
       name: 'forms-70-segregaatio',
       testMatch: '/forms/70_segregaation_ehkaisemisavustus/*',
       dependencies: ['profile-registered_community', 'profile-unregistered_community'],
+    },
+    {
+      name: 'forms-80-ruokaaputoim',
+      testMatch: '/forms/80_ruokaaputoim/*',
+      dependencies: ['profile-registered_community'],
     },
     /* Webforms. */
     /* Form 29 tests. */
