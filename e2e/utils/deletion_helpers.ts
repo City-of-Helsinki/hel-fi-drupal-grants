@@ -1,5 +1,6 @@
 import {expect, Page, test} from "@playwright/test";
 import {FormData} from "./data/test_data";
+import {failOnRetryWithoutStoredData} from "./env_helpers";
 import {logger} from "./logger";
 import {logCurrentUrl} from "./helpers";
 
@@ -38,6 +39,7 @@ enum DeletionMethod {
  */
 const deleteDraftApplication = async (formKey: string, page: Page, formDetails: FormData, storedata: any) => {
   if (storedata === undefined || storedata[formKey] === undefined) {
+    failOnRetryWithoutStoredData();
     logger(`Skipping deletion test: No env data stored after the "${formDetails.title}" test.`);
     test.skip(true, 'Skip deletion test');
   }

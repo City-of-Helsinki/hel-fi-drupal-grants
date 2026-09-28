@@ -1,4 +1,5 @@
 import {Page, expect, test, Locator} from "@playwright/test";
+import {failOnRetryWithoutStoredData} from "./env_helpers";
 import {logger} from "./logger";
 import {FormField, FormData, FormFieldWithRemove} from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
@@ -42,6 +43,7 @@ const validateSubmission = async (
   storedata: any
 ) => {
   if (storedata === undefined || storedata[formKey] === undefined) {
+    failOnRetryWithoutStoredData();
     logger(`Skipping validation test: No env data stored after the "${formDetails.title}" test.`);
     test.skip(true, 'Skip validation test');
   }
@@ -90,6 +92,7 @@ const validateDataIntegrity = async (
   storedata: any
 ) => {
   if (storedata?.[formKey]?.status !== 'RECEIVED') {
+    failOnRetryWithoutStoredData();
     logger(`Skipping data integrity test: No received application stored after the "${formDetails.title}" test.`);
     test.skip(true, 'Skip data integrity test');
     return;
@@ -135,6 +138,7 @@ const validatePrintPage = async (
   storedata: any
 ) => {
   if (storedata === undefined || storedata[formKey] === undefined) {
+    failOnRetryWithoutStoredData();
     logger(`Skipping print content test: No env data stored after the "${formDetails.title}" test.`);
     test.skip(true, 'Skip print content test');
   }

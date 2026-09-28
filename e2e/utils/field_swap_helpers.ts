@@ -1,5 +1,6 @@
 import {Page, test} from "@playwright/test";
 import {FieldSwapItemList, FormData, FormPage, Selector} from "./data/test_data";
+import {failOnRetryWithoutStoredData} from "./env_helpers";
 import {logger} from "./logger";
 import {clickButton, fillFormField} from "./input_helpers";
 import {validateFormData} from "./validation_helpers";
@@ -34,6 +35,7 @@ const swapFieldValues = async (
   storedata: any
 ) => {
   if (storedata === undefined || storedata[formKey] === undefined) {
+    failOnRetryWithoutStoredData();
     logger(`Skipping field value swap test: No env data stored after the "${formDetails.title}" test.`);
     test.skip(true, 'Skip field value swap test');
     return;

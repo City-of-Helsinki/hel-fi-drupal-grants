@@ -1,5 +1,6 @@
 import {expect, Page, test} from "@playwright/test";
 import {FormData, TooltipsList} from "./data/test_data";
+import {failOnRetryWithoutStoredData} from "./env_helpers";
 import {logger} from "./logger";
 import {goToSubmissionUrl, navigateToApplicationPage} from "./navigation_helpers";
 
@@ -29,6 +30,7 @@ const validateTooltips = async (
   storedata: any
 ) => {
   if (storedata === undefined || storedata[formKey] === undefined) {
+    failOnRetryWithoutStoredData();
     logger(`Skipping tooltip validation test: No env data stored after the "${formDetails.title}" test.`);
     test.skip(true, 'Skip bank account swap test');
     return;

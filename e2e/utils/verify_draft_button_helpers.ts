@@ -1,5 +1,6 @@
 import {expect, Page, test} from "@playwright/test";
 import {logCurrentUrl} from "./helpers";
+import {failOnRetryWithoutStoredData} from "./env_helpers";
 import {logger} from "./logger";
 import {FormData} from "./data/test_data";
 
@@ -26,6 +27,7 @@ const verifyDraftButton = async (
   storedata: any
 ) => {
   if (storedata === undefined || storedata[formKey] === undefined) {
+    failOnRetryWithoutStoredData();
     logger(`Skipping verify draft button test: No env data stored after the "${formDetails.title}" test.`);
     test.skip(true, 'Skip verify draft button test');
     return;
