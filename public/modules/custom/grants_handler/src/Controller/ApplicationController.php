@@ -17,6 +17,7 @@ use Drupal\grants_handler\ApplicationAccessHandler;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_profile\GrantsProfileService;
@@ -298,22 +299,36 @@ final class ApplicationController extends ControllerBase {
           '#source_entity' => $webform_submission,
         ];
 
+        // Add summation field values so conditional elements are shown.
+        $subventions = is_array($submissionData['subventions'] ?? NULL) ? $submissionData['subventions'] : [];
+        $summationValues = [];
+        foreach ($webform->getElementsDecodedAndFlattened() as $key => $element) {
+          if (($element['#type'] ?? '') !== 'grants_webform_summation_field' || !empty($submissionData[$key])) {
+            continue;
+          }
+
+          $subventionType = $element['#subvention_type'] ?? NULL;
+          if (!$subventionType && $key !== 'avustukset_summa') {
+            continue;
+          }
+
+          $total = 0;
+          foreach ($subventions as $subvention) {
+            if ($subventionType && ($subvention['subventionType'] ?? NULL) != $subventionType) {
+              continue;
+            }
+            $total += GrantsHandler::convertToFloat((string) ($subvention['amount'] ?? '')) ?? 0;
+          }
+          $summationValues[$key] = $total;
+        }
+        $webform_submission->setData($submissionData + $summationValues);
+
         $page = $this->entityTypeManager()
           ->getViewBuilder($webform_submission->getEntityTypeId())
           ->view($webform_submission, $view_mode);
 
         // Submission.
         $build['submission'] = $page;
-
-        // ID48 is missing avustukset_summa for some reason.
-        $id = $build['#webform_submission']->getData()['application_type_id'] ?? '0';
-        $sum = $build['#webform_submission']->getData()['subventions'][0]['amount'] ?? '0';
-        $valueExists = $build['#webform_submission']->getData()['avustukset_summa'] ?? FALSE;
-
-        if ($id == '48' && $sum && !$valueExists) {
-          $sum = (string) (int) str_replace(' ', '', $sum);
-          $build['#webform_submission']->setData($build['#webform_submission']->getData() + ['avustukset_summa' => $sum]);
-        }
 
         // Library.
         $build['#attached']['library'][] = 'webform/webform.admin';
