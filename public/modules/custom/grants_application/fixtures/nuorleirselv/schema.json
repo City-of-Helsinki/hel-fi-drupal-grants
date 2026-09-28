@@ -280,7 +280,7 @@
               "title": "confirmed_financial_statements.title",
               "type": "object",
               "properties": {
-                "budget_file": {
+                "confirmed_financial_statements_file": {
                   "title": "file.title",
                   "type": "object",
                   "properties": {

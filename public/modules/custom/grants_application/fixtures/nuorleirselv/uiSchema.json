@@ -121,7 +121,7 @@
           "tooltipButtonLabel": "confirmed_financial_statements.title",
           "tooltipText": "confirmed_financial_statements.description"
         },
-        "budget_file": {
+        "confirmed_financial_statements_file": {
           "misc:file-type": 43,
           "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
