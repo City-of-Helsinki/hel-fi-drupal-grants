@@ -5,7 +5,7 @@
         $('input:not([type="file"]):not(.js-webform-input-mask), textarea')
           .not('#grants-react-form input, #grants-react-form textarea')
           .on('change', function () {
-            this.value = $.trim($(this).val());
+            this.value = this.value.trim();
           });
 
         const queryString = window.location.search;
