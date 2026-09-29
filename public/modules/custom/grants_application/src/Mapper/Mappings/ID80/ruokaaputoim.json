@@ -338,6 +338,19 @@
   },
   "attachmentsInfo.attachmentsArray.5": {
     "datasource": "form_data",
+    "source": "attachments_step.attachments_section.action_plan.action_plan_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description","value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)","valueType": "string","label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName","value": "","valueType": "string","label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType","value": "1","valueType": "int","label": "fileType"},
+      "integrationID": {"ID": "integrationID","value": "","valueType": "string","label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater","value": "false","valueType": "bool","label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.6": {
+    "datasource": "form_data",
     "source": "attachments_step.attachments_section.budget.budget_file",
     "mapping_type": "file",
     "data": {
@@ -349,7 +362,7 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-  "attachmentsInfo.attachmentsArray.6": {
+  "attachmentsInfo.attachmentsArray.7": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
     "mapping_type": "file",
