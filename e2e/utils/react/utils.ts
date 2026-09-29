@@ -18,10 +18,46 @@ const ATTACHMENTS = readdirSync(ATTACHMENTS_DIR).sort();
 const usedAttachments = new Set<string>();
 
 /**
+ * Source strings of the attachment checkboxes keyed by checkbox id suffix.
+ */
+export const ATTACHMENT_CHECKBOX_LABELS: Record<string, string> = {
+  'delivered-later': 'Attachment will be delivered at later time',
+  'included-in-other-file': 'Attachment already delivered',
+};
+
+/**
+ * Ways to fill an attachment field in the order they are cycled.
+ */
+const ATTACHMENT_MODES = ['upload', ...Object.keys(ATTACHMENT_CHECKBOX_LABELS)];
+
+/**
+ * Attachment fields filled during the current form flow.
+ */
+let attachmentFieldCount = 0;
+
+/**
  * Frees every attachment for the next form flow.
  */
 export function resetAttachments(): void {
   usedAttachments.clear();
+  attachmentFieldCount = 0;
+}
+
+/**
+ * Picks the attachment mode for the next field in the cycle.
+ *
+ * @param field
+ *   The attachment field being filled.
+ *
+ * @return string
+ *   Either 'upload' or an attachment checkbox id suffix.
+ */
+export function nextAttachmentMode(field: StepField): string {
+  // Simple attachment fields have no checkboxes.
+  if (field.simpleFile) return 'upload';
+
+  // Start over from upload after the last mode.
+  return ATTACHMENT_MODES[attachmentFieldCount++ % ATTACHMENT_MODES.length];
 }
 
 /**
