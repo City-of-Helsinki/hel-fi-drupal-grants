@@ -102,19 +102,6 @@
           "ui:field": "atvFile"
         }
       },
-      "action_plan": {
-        "ui:options": {
-          "tooltipLabel": "action_plan.title",
-          "tooltipButtonLabel": "action_plan.title",
-          "tooltipText": "action_plan.description"
-        },
-        "action_plan_file": {
-          "misc:file-type": 1,
-          "misc:required": true,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
-      },
       "confirmed_financial_statements": {
         "ui:options": {
           "tooltipLabel": "confirmed_financial_statements.title",
