@@ -290,6 +290,7 @@ export const assertFieldErrorGone = (page: Page, fieldId: string) =>
  */
 export const gatherRequiredFieldWarnings = (page: Page) =>
   test.step('Click through all stepper buttons and return to first step', async () => {
+    await waitForForm(page);
     const stepper = page.locator('.hdbt-form--stepper');
     const buttons = stepper.getByRole('button');
     const count = await buttons.count();
