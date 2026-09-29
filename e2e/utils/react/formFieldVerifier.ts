@@ -464,6 +464,8 @@ async function handleField(
         const isEndDate = field.fieldName.includes('_end');
         value = finnishDate(isEndDate ? 2 : 1);
         await page.fill(`#${fieldId}`, value);
+        // Blur the field to save the date.
+        await fieldDOM.blur();
       }
       // Amount fields get a random number with decimals.
       else if (field?.format === 'decimal-number') {
