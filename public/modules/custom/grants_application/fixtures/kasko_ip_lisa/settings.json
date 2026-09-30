@@ -9,6 +9,7 @@
   "application_close": "2029-07-30T11:19:00",
   "applicant_types": ["registered_community"],
   "subvention_type": [14],
+  "target_group": 21,
   "acting_years": [2026],
   "continuous": true,
   "disable_copy": false
