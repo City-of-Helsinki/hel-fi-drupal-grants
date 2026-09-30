@@ -1,9 +1,9 @@
 {
   "translations": {
     "custom_economy_forecast.description": {
-      "fi": "Erittele haettavan avustuksen käyttö menolajeittain: palkkakulut, koneet ja laitteet, aineet ja tarvikkeet, matkakulut, palveluiden ostot, kiinteistökulut. Lisää vain ne menolajit, joihin haette avustusta. Merkitse tuloja vain, jos ruoka-aputoiminnasta on jotain tuloja. Haettua avustusta ei merkitä tässä tuloksi.",
-      "en": "Specify how the grant applied for will be used by expense category: salary costs, machinery and equipment, materials and supplies, travel expenses, purchased services, and property costs. Include only the expense categories for which you are applying for a grant. Enter income only if there is any income from the food aid activities. The grant applied for should not be entered here as income.",
-      "sv": "Specificera hur det ansökta understödet ska användas enligt kostnadsslag: lönekostnader, maskiner och utrustning, material och förnödenheter, resekostnader, köp av tjänster och fastighetskostnader. Lägg endast till de kostnadsslag som ni ansöker om understöd för. Ange inkomster endast om det finns inkomster från matutdelningsverksamheten. Det ansökta understödet ska inte anges här som inkomst."
+      "fi": "Erittele haettavan avustuksen käyttö menolajeittain: palkkakulut, koneet ja laitteet, aineet ja tarvikkeet, matkakulut, palveluiden ostot, kiinteistökulut, vuokrakulut, muut kulut. Lisää vain ne menolajit, joihin haette avustusta. Merkitse tuloja vain, jos ruoka-aputoiminnasta on jotain tuloja. Haettua avustusta ei merkitä tässä tuloksi.",
+      "en": "Specify how the grant applied for will be used by expense category: salary costs, machinery and equipment, materials and supplies, travel expenses, purchased services, property costs, rental costs, other costs. Include only the expense categories for which you are applying for a grant. Enter income only if there is any income from the food aid activities. The grant applied for should not be entered here as income.",
+      "sv": "Specificera hur det ansökta understödet ska användas enligt kostnadsslag: lönekostnader, maskiner och utrustning, material och förnödenheter, resekostnader, köp av tjänster, fastighetskostnader, hyreskostnader, övriga kostnader. Lägg endast till de kostnadsslag som ni ansöker om understöd för. Ange inkomster endast om det finns inkomster från matutdelningsverksamheten. Det ansökta understödet ska inte anges här som inkomst."
     },
     "custom_purpose.title": {
       "en": "Brief description of the purpose of the grant applied for",
@@ -56,9 +56,9 @@
       "sv": "Annan verksamhet eller annat stöd som erbjuds i samband med mathjälp"
     },
     "planned_usage.description": {
-      "fi": "Tiivis suunnitelma haettavan valtionavustuksen käytöstä. Mihin kuluihin valtionavustusta käytettäisiin? Muista varmistaa, että käyttökohteet ovat valtionavustusehtojen mukaisia.",
-      "en": "Brief plan for the use of the government grant applied for. What costs would the government grant be used for? Remember to ensure that the intended uses comply with the government grant terms and conditions.",
-      "sv": "Kort plan för användningen av det sökta statsunderstödet. Till vilka kostnader skulle statsunderstödet användas? Kom ihåg att säkerställa att användningsändamålen överensstämmer med villkoren för statsunderstödet."
+      "fi": "Tiivis suunnitelma haettavan valtionavustuksen käytöstä. Mihin kuluihin valtionavustusta käytettäisiin? Muista varmistaa, että käyttökohteet ovat valtionavustusehtojen mukaisia. Jos avustusta haetaan palkkauskustannuksiin tai hankintoihin, erittele tähän suunnitellut hankinnat sekä palkkauskustannusten osalta työntekijän kuukausipalkka ja työtehtävät, joihin avustusta haetaan, sekä niiden osuus työajasta.",
+      "en": "Brief plan for the use of the government grant applied for. What costs would the government grant be used for? Remember to ensure that the intended uses comply with the government grant terms and conditions. If funding is being applied for salary costs or purchases, specify here the planned purchases and, for salary costs, the employee’s monthly salary and the duties for which the funding is being applied, as well as their share of working time.",
+      "sv": "Kort plan för användningen av det sökta statsunderstödet. Till vilka kostnader skulle statsunderstödet användas? Kom ihåg att säkerställa att användningsändamålen överensstämmer med villkoren för statsunderstödet. Om understöd söks för lönekostnader eller anskaffningar, specificera här de planerade anskaffningarna samt, när det gäller lönekostnader, arbetstagarens månadslön och de arbetsuppgifter som understödet söks för samt deras andel av arbetstiden."
     },
     "planned_usage.title": {
       "fi": "Miten haettavaa valtionavustusta on suunniteltu käytettävän?",
