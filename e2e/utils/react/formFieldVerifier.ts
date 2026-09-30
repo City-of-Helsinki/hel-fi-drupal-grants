@@ -7,6 +7,7 @@ import {
   verifyApplicantInfoStepFieldTranslations
 } from './applicantInfoStep';
 import {
+  ATTACHMENT_CHECKBOX_LABELS,
   assertFieldErrorGone,
   assertMissingInputsGone,
   assertMissingInputsVisible,
@@ -15,6 +16,7 @@ import {
   clickOnStepWithTitle,
   createTranslator,
   gatherRequiredFieldWarnings,
+  nextAttachmentMode,
   resetAttachments,
   saveDraft,
   waitForForm,
@@ -350,14 +352,42 @@ async function handleField(
     const fileInput = page.locator(`#${field.fieldName}`);
     await expect(fileInput).toBeVisible();
     if (shouldFill) {
-      // Fill the form with required attachments.
-      const attachments = await uploadAttachments(page, fileInput, field);
-      filledFields?.set(fieldId, attachments.join(', '));
+      // Verify that the field error message is visible.
+      const fileError = page.locator(`#${field.fieldName}-error`);
+      if (field.required) {
+        await test.step(`Assert inline error visible: ${field.fieldName}`, async () => {
+          await expect(fileError).toBeVisible();
+        });
+      }
+
+      // Fill attachment fields in the following repeating order:
+      // 1. Upload, 2. Deliver later, 3. Already delivered.
+      // The sequence follows the field order in the form and resets for each
+      // form run. Simple attachment fields are always uploaded.
+      const mode = nextAttachmentMode(field);
+      if (mode === 'upload') {
+        // Fill the form with required attachments.
+        const attachments = await uploadAttachments(page, fileInput, field);
+        filledFields?.set(fieldId, attachments.join(', '));
+      } else {
+        // Tick the attachment checkbox instead of uploading.
+        await page.click(`label[for="${field.fieldName}-${mode}"]`);
+        await expect(page.locator(`#${field.fieldName}-${mode}`)).toBeChecked();
+        filledFields?.set(fieldId, mode);
+      }
+      // Verify the attachment error is gone.
+      await expect(fileError).not.toBeVisible();
     }
-    // When verifying, check the description still holds the value
-    // we typed during the fill pass.
+    // When verifying, check the field still holds the value
+    // we set during the fill pass.
     else if (filledFields?.has(fieldId)) {
-      await expect(fileInput).toHaveValue(filledFields!.get(fieldId)!);
+      const value = filledFields.get(fieldId)!;
+      // Verify the ticked checkbox or the uploaded file names.
+      if (value in ATTACHMENT_CHECKBOX_LABELS) {
+        await expect(page.locator(`#${field.fieldName}-${value}`)).toBeChecked();
+      } else {
+        await expect(fileInput).toHaveValue(value);
+      }
     }
     return;
   }
@@ -434,6 +464,8 @@ async function handleField(
         const isEndDate = field.fieldName.includes('_end');
         value = finnishDate(isEndDate ? 2 : 1);
         await page.fill(`#${fieldId}`, value);
+        // Blur the field to save the date.
+        await fieldDOM.blur();
       }
       // Amount fields get a random number with decimals.
       else if (field?.format === 'decimal-number') {
@@ -721,12 +753,18 @@ async function verifyPreviewValues(
     for (const [, [section, fields]] of Object.entries(sections).entries()) {
       for (const [, field] of Object.entries(fields)) {
         const fieldId = `root_${field.fieldPath.join('_')}`;
-        const value = filledFields.get(fieldId);
+        const filledValue = filledFields.get(fieldId);
         const fieldTitle = t(field.titleKey);
         const sectionTitle = t(`${section}.title`);
 
         // Skip if there is no value or the value is a radio button value.
-        if (!value || value === 'true' || value === 'false') continue;
+        if (!filledValue || filledValue === 'true' || filledValue === 'false') continue;
+
+        // Translate the attachment checkbox text shown in place of a file name.
+        const checkboxLabel = ATTACHMENT_CHECKBOX_LABELS[filledValue];
+        const value = checkboxLabel
+          ? await page.evaluate((source) => (window as any).Drupal.t(source, {}, { context: 'grants_attachments' }), checkboxLabel)
+          : filledValue;
 
         // Build an exact-match pattern for the field title to avoid a short
         // title like "Vuosi" matching a longer label like "Vuosi, jolle haen".
