@@ -6,7 +6,7 @@ import {fillGrantsFormPage} from "./form_helpers";
 import {getObjectFromEnv} from "./env_helpers";
 import {copyApplication} from "./copying_helpers";
 import {swapFieldValues} from "./field_swap_helpers";
-import {validatePrintPage, validateSubmission} from "./validation_helpers";
+import {validateDataIntegrity, validatePrintPage, validateSubmission} from "./validation_helpers";
 import {deleteDraftApplication} from "./deletion_helpers";
 import {verifyDraftButton} from "./verify_draft_button_helpers";
 import {validateTooltips} from "./tooltip_validation_helpers";
@@ -98,6 +98,19 @@ const generateTests = (
         testFunction: async (page: Page) => {
           const storedata = getObjectFromEnv(profileType, formId);
           await validateSubmission(key, page, obj, storedata);
+        }
+      });
+    }
+
+    // Data integrity tests for submitted variants.
+    const submitsForm = Object.values(obj.formPages)
+      .some(({items}) => Object.values(items).some(item => item.value === 'submit-form'));
+    if (submitsForm) {
+      tests.push({
+        testName: `Data integrity: ${obj.title}`,
+        testFunction: async (page: Page) => {
+          const storedata = getObjectFromEnv(profileType, formId);
+          await validateDataIntegrity(key, page, obj, storedata);
         }
       });
     }

@@ -1,3 +1,4 @@
+import {expect, test} from "@playwright/test";
 import {logger} from "./logger";
 import path from "path";
 import fs from "fs";
@@ -161,8 +162,18 @@ const getAppEnvForATV = () => {
   }
 }
 
+/**
+ * The failOnRetryWithoutStoredData function.
+ *
+ * This function fails a retried test that has no stored data.
+ */
+const failOnRetryWithoutStoredData = () => {
+  expect(test.info().retry, 'Stored data is available on a retry.').toBe(0);
+};
+
 export {
   checkEnvVariables,
+  failOnRetryWithoutStoredData,
   saveObjectToEnv,
   getObjectFromEnv,
   getKeyValue,

@@ -55,12 +55,6 @@ parameters:
 			path: public/modules/custom/grants_admin_applications/src/Form/AtvFormBase.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 2
-			path: public/modules/custom/grants_admin_applications/src/Form/DeleteApplicationsForm.php
-
-		-
 			message: '#^Method Drupal\\grants_admin_applications\\Form\\DeleteApplicationsForm\:\:assembleSearchParams\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -191,18 +185,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: public/modules/custom/grants_admin_applications/src/Form/DeleteApplicationsForm.php
-
-		-
-			message: '#^Property Drupal\\grants_admin_applications\\Form\\DeleteApplicationsForm\:\:\$handleDocumentsBatchService is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: public/modules/custom/grants_admin_applications/src/Form/DeleteApplicationsForm.php
-
-		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 2
-			path: public/modules/custom/grants_admin_applications/src/Form/DeleteByTransactionIdForm.php
 
 		-
 			message: '#^Method Drupal\\grants_admin_applications\\Form\\DeleteByTransactionIdForm\:\:buildForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
@@ -991,12 +973,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Entity/ApplicationSubmission.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/grants_application/src/Entity/ApplicationSubmissionAccessControlHandler.php
-
-		-
 			message: '#^Call to an undefined method Drupal\\Core\\Entity\\ContentEntityInterface\|Drupal\\Core\\Entity\\RevisionLogInterface\:\:get\(\)\.$#'
 			identifier: method.notFound
 			count: 2
@@ -1717,12 +1693,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Mapper/JsonMapperService.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 16
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
 			message: '#^Method Drupal\\grants_application\\Plugin\\rest\\resource\\Application\:\:__construct\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1795,24 +1765,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
 
 		-
-			message: '#^Property Drupal\\grants_application\\Plugin\\rest\\resource\\Application\:\:\$applicationStatusService is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
-			message: '#^Property Drupal\\grants_application\\Plugin\\rest\\resource\\Application\:\:\$languageManager is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
-			message: '#^Property Drupal\\grants_application\\Plugin\\rest\\resource\\Application\:\:\$uuid is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
 			message: '#^Call to an undefined method object\:\:getAttachments\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -1828,12 +1780,6 @@ parameters:
 			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
 			identifier: catch.neverThrown
 			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
-
-		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 12
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
 
 		-
@@ -1875,12 +1821,6 @@ parameters:
 		-
 			message: '#^Parameter \#4 \$serializer_formats of class Drupal\\grants_application\\Plugin\\rest\\resource\\DraftApplication constructor expects array, array\|bool\|float\|int\|string\|UnitEnum\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
-
-		-
-			message: '#^Property Drupal\\grants_application\\Plugin\\rest\\resource\\DraftApplication\:\:\$formValidator is never read, only written\.$#'
-			identifier: property.onlyWritten
 			count: 1
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
 
@@ -2263,12 +2203,6 @@ parameters:
 			path: public/modules/custom/grants_application_search/src/Plugin/search_api/processor/CanonicalFields.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/grants_application_search/src/Plugin/views/filter/CanonicalApplicantType.php
-
-		-
 			message: '#^Method Drupal\\grants_application_search\\Plugin\\views\\filter\\CanonicalApplicantType\:\:__construct\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -2291,12 +2225,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: public/modules/custom/grants_application_search/src/Plugin/views/filter/CanonicalSelectFilterBase.php
-
-		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/grants_application_search/src/Plugin/views/filter/CanonicalSubventionType.php
 
 		-
 			message: '#^Method Drupal\\grants_application_search\\Plugin\\views\\filter\\CanonicalSubventionType\:\:getReverseMap\(\) return type has no value type specified in iterable type array\.$#'
@@ -4255,17 +4183,6 @@ parameters:
 			path: public/modules/custom/grants_handler/grants_handler.install
 
 		-
-			message: '''
-				#^Call to deprecated function user_load_by_name\(\)\:
-				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\.
-				  Use \\Drupal\:\:entityTypeManager\(\)\-\>getStorage\('user'\)\-\>loadByProperties\(\)
-				  instead\.$#
-			'''
-			identifier: function.deprecated
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
 			message: '#^Function _grants_handler_add_checkmark_to_text\(\) has parameter \$textValue with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -5317,12 +5234,6 @@ parameters:
 
 		-
 			message: '#^Property Drupal\\grants_handler\\Controller\\ApplicationController\:\:\$request is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: public/modules/custom/grants_handler/src/Controller/ApplicationController.php
-
-		-
-			message: '#^Property Drupal\\grants_handler\\Controller\\ApplicationController\:\:\$requestHandler is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
 			path: public/modules/custom/grants_handler/src/Controller/ApplicationController.php
@@ -6570,12 +6481,6 @@ parameters:
 			path: public/modules/custom/grants_handler/src/Plugin/WebformHandler/GrantsHandler.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 2
-			path: public/modules/custom/grants_handler/src/Plugin/WebformHandler/GrantsHandler.php
-
-		-
 			message: '#^Method Drupal\\grants_handler\\Plugin\\WebformHandler\\GrantsHandler\:\:alterForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -7152,12 +7057,6 @@ parameters:
 			path: public/modules/custom/grants_industries/grants_industries.module
 
 		-
-			message: '#^Function grants_industries_entity_operation_alter\(\) implements hook_entity_operation_alter but is missing the CacheableMetadata parameter added in Drupal 11\.3\. Update the signature to\: grants_industries_entity_operation_alter\(array &\$operations, \\Drupal\\Core\\Entity\\EntityInterface \$entity, \\Drupal\\Core\\Cache\\CacheableMetadata \$cacheability\)\.$#'
-			identifier: drupal.proceduralHookEntityOperationAlterMissingCacheabilityParameter
-			count: 1
-			path: public/modules/custom/grants_industries/grants_industries.module
-
-		-
 			message: '#^Function grants_industries_entity_type_alter\(\) has parameter \$entity_types with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -7202,12 +7101,6 @@ parameters:
 		-
 			message: '#^Cannot access offset int\<0, max\> on bool\|Drupal\\Core\\StringTranslation\\TranslatableMarkup\|non\-empty\-list\<non\-empty\-array\<string, non\-empty\-array\<string, array\<int\|string, Drupal\\Core\\StringTranslation\\TranslatableMarkup\|string\|null\>\|Drupal\\Core\\StringTranslation\\TranslatableMarkup\|int\|string\>\|string\>\>\|string\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: public/modules/custom/grants_industries/src/Form/SettingsForm.php
-
-		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
 			count: 1
 			path: public/modules/custom/grants_industries/src/Form/SettingsForm.php
 
@@ -11490,12 +11383,6 @@ parameters:
 			path: public/modules/custom/grants_profile/src/Controller/GrantsProfileController.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/AddressDeleteConfirmForm.php
-
-		-
 			message: '#^Method Drupal\\grants_profile\\Form\\AddressDeleteConfirmForm\:\:ajaxSubmitForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -11526,12 +11413,6 @@ parameters:
 			path: public/modules/custom/grants_profile/src/Form/AddressDeleteConfirmForm.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/BankAccountDeleteConfirmForm.php
-
-		-
 			message: '#^Method Drupal\\grants_profile\\Form\\BankAccountDeleteConfirmForm\:\:ajaxSubmitForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -11560,12 +11441,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: public/modules/custom/grants_profile/src/Form/BankAccountDeleteConfirmForm.php
-
-		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/CompanyDeleteConfirmForm.php
 
 		-
 			message: '#^Method Drupal\\grants_profile\\Form\\CompanyDeleteConfirmForm\:\:buildForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
@@ -12210,12 +12085,6 @@ parameters:
 			path: public/modules/custom/grants_profile/src/Form/GrantsProfileFormUnregisteredCommunity.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/MunicipalitySettingsForm.php
-
-		-
 			message: '#^Method Drupal\\grants_profile\\Form\\MunicipalitySettingsForm\:\:buildForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -12244,12 +12113,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: public/modules/custom/grants_profile/src/Form/MunicipalitySettingsForm.php
-
-		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/OfficialDeleteConfirmForm.php
 
 		-
 			message: '#^Method Drupal\\grants_profile\\Form\\OfficialDeleteConfirmForm\:\:ajaxSubmitForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
@@ -12546,12 +12409,6 @@ parameters:
 			path: public/modules/custom/grants_profile/src/Plugin/Derivative/DynamicLocalTasks.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 2
-			path: public/modules/custom/grants_profile/src/Plugin/QueueWorker/DeleteAfterWorker.php
-
-		-
 			message: '#^Method Drupal\\grants_profile\\Plugin\\QueueWorker\\DeleteAfterWorker\:\:__construct\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -12820,18 +12677,6 @@ parameters:
 			identifier: isset.property
 			count: 1
 			path: public/modules/custom/grants_test_base/src/TypedData/Definition/TestDataDefinition.php
-
-		-
-			message: '#^Function grants_webform_actions_alter_preprocess_webform_actions\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: public/modules/custom/grants_webform_actions_alter/grants_webform_actions_alter.module
-
-		-
-			message: '#^Function grants_webform_actions_alter_preprocess_webform_actions\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: public/modules/custom/grants_webform_actions_alter/grants_webform_actions_alter.module
 
 		-
 			message: '#^Argument of an invalid type list\<string\>\|false supplied for foreach, only iterables are supported\.$#'
@@ -13626,12 +13471,6 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/helfi_atv/src/Plugin/DebugDataItem/ApiAvailability.php
-
-		-
 			message: '#^Method Drupal\\helfi_atv\\Plugin\\DebugDataItem\\ApiAvailability\:\:__construct\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -13960,12 +13799,6 @@ parameters:
 			identifier: method.alreadyNarrowedType
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/ProfiiliApiClientTest.php
-
-		-
-			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
-			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
-			count: 1
-			path: public/modules/custom/helfi_yjdh/src/Plugin/DebugDataItem/ApiAvailability.php
 
 		-
 			message: '#^Method Drupal\\helfi_yjdh\\Plugin\\DebugDataItem\\ApiAvailability\:\:__construct\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'

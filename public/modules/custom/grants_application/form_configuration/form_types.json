@@ -358,5 +358,15 @@
       "en": "Camp grant report for youth activities",
       "sv": "Ungdomsverksamhet, utredning över lägerunderstöd"
     }
+  },
+  "38": {
+    "id": 80,
+    "form_identifier": "ruokaaputoim",
+    "code": "RUOKAAPUTOIM",
+    "labels": {
+      "fi": "Ruoka-aputoiminnan valtionavustushakemus",
+      "en": "Government grant application for food aid activities",
+      "sv": "Ansökan om statsunderstöd för mathjälpsverksamhet"
+    }
   }
 }

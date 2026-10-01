@@ -23,7 +23,7 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
    */
   public function __construct(
     EntityTypeInterface $entityTypeInterface,
-    private readonly UserInformationService $userInformationService,
+    protected readonly UserInformationService $userInformationService,
   ) {
     parent::__construct($entityTypeInterface);
   }

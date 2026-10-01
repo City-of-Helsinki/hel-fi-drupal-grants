@@ -39,7 +39,7 @@ class BankAccountDeleteConfirmForm extends FormBase {
    *
    * @var array|string[] Translation context for class
    */
-  private array $tOpts = ['context' => 'grants_profile'];
+  protected array $tOpts = ['context' => 'grants_profile'];
 
   /**
    * Constructs a new ModalBankAccountForm object.

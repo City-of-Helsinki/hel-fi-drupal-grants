@@ -23,7 +23,7 @@ final class CanonicalApplicantType extends CanonicalSelectFilterBase {
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private readonly EntityFieldManagerInterface $entityFieldManager,
+    protected readonly EntityFieldManagerInterface $entityFieldManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }

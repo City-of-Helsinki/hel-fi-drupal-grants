@@ -245,6 +245,7 @@
         },
         "community_rules_file": {
           "misc:file-type": 0,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }

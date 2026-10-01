@@ -1,6 +1,134 @@
-import { expect, type Page, test } from "@playwright/test";
+import path from 'path';
+import { readdirSync } from 'fs';
+import { expect, type Locator, type Page, test } from "@playwright/test";
 import { type FormPreviewResponse } from './schemaFetcher';
+import { type StepField } from './stepInspector';
 import { logger } from "../logger";
+
+const ATTACHMENTS_DIR = path.join(__dirname, '../data/attachments');
+
+/**
+ * Attachments available for upload.
+ */
+const ATTACHMENTS = readdirSync(ATTACHMENTS_DIR).sort();
+
+/**
+ * Attachments already uploaded during the current form flow.
+ */
+const usedAttachments = new Set<string>();
+
+/**
+ * Source strings of the attachment checkboxes keyed by checkbox id suffix.
+ */
+export const ATTACHMENT_CHECKBOX_LABELS: Record<string, string> = {
+  'delivered-later': 'Attachment will be delivered at later time',
+  'included-in-other-file': 'Attachment already delivered',
+};
+
+/**
+ * Ways to fill an attachment field in the order they are cycled.
+ */
+const ATTACHMENT_MODES = ['upload', ...Object.keys(ATTACHMENT_CHECKBOX_LABELS)];
+
+/**
+ * Attachment fields filled during the current form flow.
+ */
+let attachmentFieldCount = 0;
+
+/**
+ * Frees every attachment for the next form flow.
+ */
+export function resetAttachments(): void {
+  usedAttachments.clear();
+  attachmentFieldCount = 0;
+}
+
+/**
+ * Picks the attachment mode for the next field in the cycle.
+ *
+ * @param field
+ *   The attachment field being filled.
+ *
+ * @return string
+ *   Either 'upload' or an attachment checkbox id suffix.
+ */
+export function nextAttachmentMode(field: StepField): string {
+  // Simple attachment fields have no checkboxes.
+  if (field.simpleFile) return 'upload';
+
+  // Start over from upload after the last mode.
+  return ATTACHMENT_MODES[attachmentFieldCount++ % ATTACHMENT_MODES.length];
+}
+
+/**
+ * Reserves an unused attachment the field accepts.
+ *
+ * An application rejects a file name it already holds, so every upload
+ * has to use a file of its own.
+ *
+ * @param field
+ *   The attachment field being filled.
+ *
+ * @return string
+ *   The attachment file name.
+ */
+function reserveAttachment(field: StepField): string {
+  const attachment = ATTACHMENTS.find((file) => {
+    if (usedAttachments.has(file)) return false;
+    return !field.fileFormats || field.fileFormats.includes(file.split('.').pop() ?? '');
+  });
+
+  if (!attachment) {
+    throw new Error(
+      `No unused attachment left for "${field.fieldName}". ` +
+      `Add a file to e2e/utils/data/attachments.`
+    );
+  }
+
+  usedAttachments.add(attachment);
+  return attachment;
+}
+
+/**
+ * Uploads the files an attachment field expects.
+ *
+ * Multi-file fields get two files and the rest get one.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param fileInput
+ *   The file input locator.
+ * @param field
+ *   The attachment field being filled.
+ *
+ * @return Promise<string[]>
+ *   The uploaded file names.
+ */
+export async function uploadAttachments(page: Page, fileInput: Locator, field: StepField): Promise<string[]> {
+  const attachments: string[] = [];
+
+  for (let index = 0; index < (field.multipleFiles ? 2 : 1); index++) {
+    const attachment = reserveAttachment(field);
+    // Register before setInputFiles so we don't miss the response event.
+    const uploadDone = page.waitForResponse(r => r.url().includes('/upload'), { timeout: 15_000 });
+    await fileInput.setInputFiles(path.join(ATTACHMENTS_DIR, attachment));
+    // Each upload must be completed before the next upload, otherwise only
+    // one file is actually uploaded.
+    const response = await uploadDone;
+
+    if (!response.ok()) {
+      throw new Error(
+        `Uploading ${attachment} to "${field.fieldName}" failed with ` +
+        `status ${response.status()}: ${await response.text()}`
+      );
+    }
+
+    await expect(page.locator('.hdbt-form--fileinput').filter({ hasText: attachment })).toBeVisible();
+    attachments.push(attachment);
+  }
+
+  return attachments;
+}
 
 /**
  * Returns a function that looks up translated text by key.
@@ -57,6 +185,7 @@ export async function waitForFormLoad(page: Page, attempts = 3) {
 export const captureApplicationNumber = (page: Page): Promise<string> =>
   test.step('Capture application number from draft creation request', () =>
     new Promise<string>((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('The draft creation request was not received.')), 60_000);
       page.route(/\/applications\/.*\/draft/, async (route) => {
         if (route.request().method() !== 'POST') {
           return route.continue();
@@ -66,8 +195,10 @@ export const captureApplicationNumber = (page: Page): Promise<string> =>
           const json = await response.json();
           await route.fulfill({ response });
           await page.unroute(/\/applications\/.*\/draft/);
+          clearTimeout(timer);
           resolve(json.application_number as string);
         } catch (err) {
+          clearTimeout(timer);
           reject(err);
         }
       }).catch(reject);
@@ -159,6 +290,7 @@ export const assertFieldErrorGone = (page: Page, fieldId: string) =>
  */
 export const gatherRequiredFieldWarnings = (page: Page) =>
   test.step('Click through all stepper buttons and return to first step', async () => {
+    await waitForForm(page);
     const stepper = page.locator('.hdbt-form--stepper');
     const buttons = stepper.getByRole('button');
     const count = await buttons.count();
@@ -241,6 +373,7 @@ export async function assertApplicationInList(
   applicationNumber: string,
   list: 'drafts' | 'sent',
 ) {
+  logger(`Locating application ${applicationNumber} in the ${list} list...`);
   await page.goto('/fi/oma-asiointi');
   await page.waitForURL('**/oma-asiointi');
 
@@ -262,6 +395,7 @@ export async function assertApplicationInList(
   }
 
   await expect(row).toBeVisible();
+  logger(`Application ${applicationNumber} found in the ${list} list.`);
 }
 
 /**
