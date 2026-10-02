@@ -121,7 +121,14 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    */
   public function build(): array {
     // In that case, we always render the react-application block.
-    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    $formSettings = NULL;
+    try {
+      $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    }
+    catch (\Exception $e) {
+      $this->logger->error("Unable to render the create application button on service page: " . $e->getMessage());
+    }
+
     if ($formSettings) {
       $isApplicationOpen = $formSettings->isApplicationOpen();
       // @todo UHF-12685 This is the actual physical print url, paper&ink.
@@ -214,7 +221,14 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $tags = Cache::mergeTags($tags, $node->getCacheTags());
     }
 
-    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    $formSettings = NULL;
+    try {
+      $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    }
+    catch (\Exception $e) {
+      $this->logger->error("Unable to load form settings." . $e->getMessage());
+    }
+
     if ($formSettings) {
       $metadata = $this->formSettingsService->getFormSettingsMetadata($formSettings->getFormId(), $formSettings->getFormIdentifier());
       $tags = Cache::mergeTags($tags, $metadata->getCacheTags());
@@ -241,7 +255,15 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function getCacheMaxAge(): int {
-    if ($this->servicePageBlockService->loadServicePageReactFormSettings()) {
+    $formSettings = NULL;
+    try {
+      $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    }
+    catch (\Exception $e) {
+      $this->logger->error("Unable to load form settings." . $e->getMessage());
+    }
+
+    if ($formSettings) {
       return $this->getReactCacheInvalidationTime();
     }
 
@@ -292,7 +314,13 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    *   Returns the expiration time.
    */
   protected function getReactCacheInvalidationTime(): int {
-    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    $formSettings = NULL;
+    try {
+      $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    }
+    catch (\Exception $e) {
+      $this->logger->error('Unable to load form settings: ' . $e->getMessage());
+    }
 
     // If settings is not set, no cache for the block.
     if (!$formSettings) {
