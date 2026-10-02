@@ -78,12 +78,7 @@ class ServicePageBlockService {
     $reactFormName = $this->getSelectedReactFormIdentifier();
     $reactFormId = $this->getReactFormId();
     if ($reactFormId && $reactFormName) {
-      try {
-        return $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
-      }
-      catch (\Exception $e) {
-        throw $e;
-      }
+      return $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
     }
 
     return NULL;
