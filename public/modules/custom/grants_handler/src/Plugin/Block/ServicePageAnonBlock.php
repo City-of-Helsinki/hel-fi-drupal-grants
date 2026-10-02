@@ -127,7 +127,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
     }
     catch (\Exception $e) {
-      $this->logger->error("Unable to render the create application button on service page: " . $e->getMessage());
+      Error::logException($this->logger, $e);
     }
 
     if ($formSettings) {
