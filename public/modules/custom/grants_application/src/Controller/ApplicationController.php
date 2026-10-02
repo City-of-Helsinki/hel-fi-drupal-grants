@@ -142,24 +142,22 @@ final class ApplicationController extends ControllerBase {
       $terms_block = $terms_block->getTranslation($langcode);
     }
 
-    // Figure out manually if user has permission to edit this entity.
-    $entities = $this->entityTypeManager()
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(FALSE)
-      ->condition('application_number', $application_number)
-      ->execute();
-    $submission = $entities ? ApplicationSubmission::load(reset($entities)) : NULL;
+    try {
+      $submission = $this->applicationService->getSubmissionEntity($application_number);
+    }
+    catch (\Exception $e) {
+      $this->messenger()->addWarning('We cannot find the application you are trying to open.');
+      return new RedirectResponse($this->getRedirectBackUrl()->toString());
+    }
 
     if (
-      $submission &&
       $submission->access('edit', $this->accountProxy->getAccount(), TRUE)->isForbidden()
     ) {
       $this->messenger()->addWarning('We cannot find the application you are trying to open.');
       return new RedirectResponse($this->getRedirectBackUrl()->toString());
     }
 
-    if ($submission && !$submission->isDraft()) {
+    if (!$submission->isDraft()) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
