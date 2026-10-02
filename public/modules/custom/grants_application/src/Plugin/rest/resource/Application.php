@@ -252,9 +252,11 @@ final class Application extends ResourceBase {
 
     $grantsProfile = $grants_profile_data->toArray();
     if ($applicantType === 'private_person') {
-      $grantsProfile['firstName'] = 'asd';
-      $grantsProfile['lastName'] = 'asd';
-      $grantsProfile['socialSecurityNumber'] = 'asd';
+      $verifiedData = $this->userInformationService->getUserProfileData()['myProfile']['verifiedPersonalInformation'];
+
+      $grantsProfile['firstName'] = $verifiedData['firstName'] ?? '-';
+      $grantsProfile['lastName'] = $verifiedData['lastName'] ?? '-';
+      $grantsProfile['socialSecurityNumber'] = $verifiedData['nationalIdentificationNumber'] ?? '-';;
     }
 
     // @todo Only return required user data to frontend.

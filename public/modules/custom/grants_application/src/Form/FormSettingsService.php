@@ -121,6 +121,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     if (!$form_type || !isset($form_type['id'])) {
       throw new \InvalidArgumentException(sprintf('Unknown form type id: %s', $form_identifier));
     }
+
     return $this->getFormSettings($form_type['id'], $form_type['form_identifier']);
   }
 
