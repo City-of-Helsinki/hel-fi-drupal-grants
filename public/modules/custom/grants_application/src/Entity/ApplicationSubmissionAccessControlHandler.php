@@ -85,9 +85,17 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
 
     $userInformation = $this->userInformationService->getUserData();
 
-    // User mandated as private person may not see community applications.
-    return $userInformation->sub === $entity->get('sub')->value &&
-      $entity->get('business_id')->value === '';
+    // When private person creates the application, business_id === sub,
+    // If this application was created by a community, we can just skip.
+    if (
+      $entity->get('business_id') == '' ||
+      $entity->get('business_id') !== $entity->get('sub')
+    ) {
+      return FALSE;
+    }
+
+    // If logged in user sub is same as entity sub, return TRUE.
+    return $userInformation->sub === $entity->get('sub')->value;
   }
 
   /**
