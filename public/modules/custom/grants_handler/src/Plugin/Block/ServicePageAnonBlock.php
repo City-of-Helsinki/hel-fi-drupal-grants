@@ -20,6 +20,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_handler\ApplicationStatusServiceInterface;
 use Drupal\grants_handler\ServicePageBlockService;
@@ -226,7 +227,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
     }
     catch (\Exception $e) {
-      $this->logger->error("Unable to load form settings." . $e->getMessage());
+      Error::logException($this->logger, $e);
     }
 
     if ($formSettings) {
@@ -260,7 +261,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
     }
     catch (\Exception $e) {
-      $this->logger->error("Unable to load form settings." . $e->getMessage());
+      Error::logException($this->logger, $e);
     }
 
     if ($formSettings) {
@@ -319,7 +320,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
     }
     catch (\Exception $e) {
-      $this->logger->error('Unable to load form settings: ' . $e->getMessage());
+      Error::logException($this->logger, $e);
     }
 
     // If settings is not set, no cache for the block.
