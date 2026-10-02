@@ -2,6 +2,7 @@
   "definitions": {
     "_other_compensation_item": {
       "type": "object",
+      "title": "other_compensation.title",
       "properties": {
         "other_compensation_issuer": {
           "title": "other_compensation_issuer.title",
