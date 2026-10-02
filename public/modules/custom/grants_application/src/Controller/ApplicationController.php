@@ -142,22 +142,25 @@ final class ApplicationController extends ControllerBase {
       $terms_block = $terms_block->getTranslation($langcode);
     }
 
-    try {
-      $submission = $this->applicationService->getSubmissionEntity($application_number);
-    }
-    catch (\Exception $e) {
-      $this->messenger()->addWarning('We cannot find the application you are trying to open.');
-      return new RedirectResponse($this->getRedirectBackUrl()->toString());
+    $submission = NULL;
+    if ($application_number) {
+      try {
+        $submission = $this->applicationService->getSubmissionEntity($application_number);
+      }
+      catch (\Exception $e) {
+        $this->messenger()->addWarning('We cannot find the application you are trying to open.');
+      }
     }
 
     if (
+      $submission &&
       $submission->access('edit', $this->accountProxy->getAccount(), TRUE)->isForbidden()
     ) {
       $this->messenger()->addWarning('We cannot find the application you are trying to open.');
       return new RedirectResponse($this->getRedirectBackUrl()->toString());
     }
 
-    if (!$submission->isDraft()) {
+    if ($submission && !$submission->isDraft()) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
