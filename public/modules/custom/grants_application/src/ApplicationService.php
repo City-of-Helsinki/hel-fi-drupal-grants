@@ -8,14 +8,12 @@ use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class for retrieving / saving application data.
@@ -30,7 +28,6 @@ class ApplicationService {
     private readonly LanguageManagerInterface $languageManager,
     private readonly UserInformationService $userInformationService,
     private readonly UuidInterface $uuid,
-    private readonly AccountProxyInterface $accountProxy
   ) {
   }
 
@@ -197,38 +194,40 @@ class ApplicationService {
    *   The application submission entity.
    */
   public function getSubmissionEntity(string $application_number): ApplicationSubmission {
-    $submission = NULL;
-
-    $query = $this->entityTypeManager
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('application_number', $application_number);
-
     if ($this->userInformationService->getApplicantType() === 'private_person') {
-      $query->condition('sub', $this->userInformationService->getUserData()->sub);
+      $ids = $this->entityTypeManager
+        ->getStorage('application_submission')
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('sub', $this->userInformationService->getUserData()->sub)
+        ->condition('application_number', $application_number)
+        ->condition('business_id', '')
+        ->execute();
+
+      if ($ids) {
+        return ApplicationSubmission::load(reset($ids));
+      }
+      throw new \Exception('Application not found');
     }
     else {
       $business_id = $this->userInformationService->getApplicantType() === 'registered_community' ?
         $this->userInformationService->getGrantsProfileContent()->getBusinessId() :
         $this->userInformationService->getGrantsProfileContent()->getBusinessId() ?? '';
 
-      $query->condition('business_id', $business_id);
-    }
+      $ids = $this->entityTypeManager
+        ->getStorage('application_submission')
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('business_id', $business_id)
+        ->condition('application_number', $application_number)
+        ->execute();
 
-    $ids = $query->execute();
-    if ($ids) {
-      $submission = ApplicationSubmission::load(reset($ids));
-    }
+      if ($ids) {
+        return ApplicationSubmission::load(reset($ids));
+      }
 
-    if (
-      $submission &&
-      $submission->access('edit', $this->accountProxy->getAccount(), TRUE)->isForbidden()
-    ) {
       throw new \Exception('Application not found');
     }
-
-    return $submission;
   }
 
 }
