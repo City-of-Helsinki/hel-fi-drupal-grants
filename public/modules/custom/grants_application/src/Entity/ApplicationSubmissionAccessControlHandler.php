@@ -86,8 +86,7 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
     $userInformation = $this->userInformationService->getUserData();
 
     // User mandated as private person may not see community applications.
-    return $userInformation->sub === $entity->get('sub')->value &&
-      $entity->get('business_id')->value === '';
+    return $userInformation->sub === $entity->get('sub')->value;
   }
 
   /**

@@ -201,7 +201,6 @@ class ApplicationService {
         ->accessCheck(TRUE)
         ->condition('sub', $this->userInformationService->getUserData()->sub)
         ->condition('application_number', $application_number)
-        ->condition('business_id', '')
         ->execute();
 
       if ($ids) {

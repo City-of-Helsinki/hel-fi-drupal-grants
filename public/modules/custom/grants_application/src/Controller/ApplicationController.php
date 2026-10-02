@@ -155,6 +155,7 @@ final class ApplicationController extends ControllerBase {
       $submission &&
       $submission->access('edit', $this->accountProxy->getAccount(), TRUE)->isForbidden()
     ) {
+      $this->messenger()->addWarning('We cannot find the application you are trying to open.');
       return new RedirectResponse($this->getRedirectBackUrl()->toString());
     }
 
