@@ -337,6 +337,13 @@ third_party_options:
         fi: 'Nuorisotoiminnan leiriavustusselvitys'
         en: 'Camp grant report for youth activities'
         sv: 'Ungdomsverksamhet, utredning över lägerunderstöd'
+    80:
+      id: RUOKAAPUTOIM
+      code: RUOKAAPUTOIM
+      labels:
+        fi: 'Ruoka-aputoiminnan valtionavustushakemus'
+        en: 'Government grant application for food aid activities'
+        sv: 'Ansökan om statsunderstöd för mathjälpsverksamhet'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
@@ -346,6 +353,11 @@ third_party_options:
     PROCESSING: PROCESSING
     CANCELLED: CANCELLED
     RESOLVED: RESOLVED
+    READY: READY
+    DONE: DONE
+    DELETED: DELETED
+    CANCELED: CANCELED
+    CLOSED: CLOSED
   subvention_types:
     1: 'Operating grant'
     2: 'Hiring grant'

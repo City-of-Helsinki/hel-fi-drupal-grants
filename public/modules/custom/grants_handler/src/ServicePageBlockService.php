@@ -5,14 +5,12 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
-use Psr\Log\LoggerInterface;
 
 /**
  * Provides the ServicePageBlockService service.
@@ -30,9 +28,7 @@ class ServicePageBlockService {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected RouteMatchInterface $routeMatch,
     protected GrantsProfileService $grantsProfileService,
-    protected ModuleHandlerInterface $moduleHandler,
     protected FormSettingsServiceInterface $formSettingsService,
-    protected LoggerInterface $logger,
   ) {
     $this->currentNode = $this->routeMatch->getParameter('node');
   }
@@ -79,22 +75,10 @@ class ServicePageBlockService {
    *   The form settings.
    */
   public function loadServicePageReactFormSettings(): ?FormSettings {
-    if (!$this->moduleHandler->moduleExists('grants_application')) {
-      return NULL;
-    }
-
     $reactFormName = $this->getSelectedReactFormIdentifier();
     $reactFormId = $this->getReactFormId();
     if ($reactFormId && $reactFormName) {
-      try {
-        return $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
-      }
-      catch (\Exception $e) {
-        // If there are no settings, just use the webform.
-        $this->logger->error("Unable to fetch react form $reactFormId");
-      }
-
-      return NULL;
+      return $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
     }
 
     return NULL;
@@ -134,7 +118,6 @@ class ServicePageBlockService {
    */
   public function getReactFormLink(): ?Url {
     if (
-      !$this->moduleHandler->moduleExists('grants_application') ||
       !$this->currentNode ||
       $this->currentNode->bundle() !== 'service'
     ) {

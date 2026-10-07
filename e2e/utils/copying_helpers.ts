@@ -3,7 +3,7 @@ import {FormData} from "./data/test_data";
 import {logger} from "./logger";
 import {getApplicationNumberFromBreadCrumb, logCurrentUrl} from "./helpers";
 import {extractPath} from "./helpers";
-import {getObjectFromEnv, saveObjectToEnv} from "./env_helpers";
+import {failOnRetryWithoutStoredData, getObjectFromEnv, saveObjectToEnv} from "./env_helpers";
 import {validateSubmission} from "./validation_helpers";
 import {deleteDraftApplication} from "./deletion_helpers";
 
@@ -47,6 +47,7 @@ const copyApplication = async (
 
   // Skip this test if the normal "Form" test failed for the form we are copying.
   if (storedata === undefined || storedata[originalFormKey] === undefined) {
+    failOnRetryWithoutStoredData();
     logger(`Skipping copy test: No env data stored after the "${originalFormDetails.title}" test.`);
     test.skip(true, 'Skip copy test');
   }

@@ -27,6 +27,9 @@ export type StepField = {
   format?: string;
   type: string;
   widget?: string;
+  multipleFiles?: boolean;
+  fileFormats?: string[];
+  simpleFile?: boolean;
   required: boolean;
   options?: Array<{ id: number | string; label: string }>;
   maxLength?: number;
@@ -173,7 +176,10 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       format: fieldSchema?.format,
       type: fieldSchema?.type ?? 'string',
       widget: fieldUiSchema?.['ui:widget'] ?? fieldUiSchema?.['ui:field'],
-      required,
+      multipleFiles: fieldUiSchema?.['misc:multiple'] === 'true' || fieldUiSchema?.['misc:multiple'] === true,
+      fileFormats: Array.isArray(fieldUiSchema?.['misc:formats']) ? fieldUiSchema['misc:formats'] : undefined,
+      simpleFile: fieldUiSchema?.['misc:variant'] === 'simple',
+      required: required || fieldUiSchema?.['misc:required'] === true,
       options: rawOptions?.length ? rawOptions : undefined,
       // The schema carries the character limit; `misc:max-length` was the
       // uiSchema key it used to live in, kept as a fallback for older forms.

@@ -975,6 +975,11 @@
       "fi": "Liikunnan erityisavustus 3",
       "sv": "Specialunderstöd för idrott 3"
     },
+    "subventions.58.title": {
+      "en": "Government grant for food aid activities",
+      "fi": "Ruoka-aputoiminnan valtionavustus",
+      "sv": "Statsunderstöd för mathjälpsverksamhet"
+    },
     "subventions.title": {
       "en": "Grants",
       "fi": "Avustukset",

@@ -1,7 +1,7 @@
 import {Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
-import {acceptCookies, hideDialog, logCurrentUrl} from "./helpers";
+import {acceptCookies, hideDialog, logCurrentUrl, logServerErrors} from "./helpers";
 import {chmodSync} from "node:fs";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
@@ -24,6 +24,8 @@ const AUTH_FILE_PATH = '.auth/user.json';
  *   or selecting an existing one.
  */
 const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
+  logServerErrors(page);
+
   const existingCookies = await page.context().cookies();
   const hasSession = existingCookies.some(c => c.name.startsWith('SSESS'));
 

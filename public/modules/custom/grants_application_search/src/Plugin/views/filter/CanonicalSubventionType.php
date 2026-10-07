@@ -20,7 +20,7 @@ final class CanonicalSubventionType extends CanonicalTaxonomySelectFilterBase {
    *
    * @var array|null
    */
-  private static ?array $reverseMap = NULL;
+  protected static ?array $reverseMap = NULL;
 
   /**
    * {@inheritdoc}

@@ -30,8 +30,8 @@ final class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactor
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private readonly LoggerInterface $logger,
-    private readonly AtvService $atvService,
+    protected readonly LoggerInterface $logger,
+    protected readonly AtvService $atvService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }

@@ -121,7 +121,17 @@ const fillGrantsFormPage = async (
     if (!firstButton.selector) continue;
 
     // Click the first button.
-    await clickButton(page, firstButton.selector);
+    if (firstButton.value === 'submit-form') {
+      const [submitResponse] = await Promise.all([
+        page.waitForResponse(response => response.request().isNavigationRequest() && response.request().method() === 'POST'),
+        clickButton(page, firstButton.selector),
+      ]);
+
+      // Fail fast if the form submit returns a server error.
+      expect(submitResponse.status(), 'Application submit returned a server error.').toBeLessThan(500);
+    } else {
+      await clickButton(page, firstButton.selector);
+    }
 
     // Verify application draft save if we had that button.
     if (firstButton.value === 'save-draft') {
