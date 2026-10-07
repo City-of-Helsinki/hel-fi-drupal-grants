@@ -180,6 +180,7 @@ permissions:
   - 'view all tpr_unit revisions'
   - 'view announcement revisions'
   - 'view any unpublished content'
+  - 'view helfi_multisite_content external entity'
   - 'view landing_page revisions'
   - 'view linkedevents_event external entity'
   - 'view linkedevents_event external entity collection'
