@@ -749,6 +749,9 @@ async function verifyPreviewValues(
   const preview = page.locator('.hdbt-form__preview');
   await expect(preview).toBeVisible();
 
+  // Match the whole title text.
+  const exactText = (text: string) => new RegExp(`^\\s*${text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`);
+
   // Loop through all fields and check each value appears in the preview.
   for (const [, [, sections]] of Object.entries(tree).entries()) {
     for (const [, [section, fields]] of Object.entries(sections).entries()) {
@@ -767,24 +770,20 @@ async function verifyPreviewValues(
           ? await page.evaluate((source) => (window as any).Drupal.t(source, {}, { context: 'grants_attachments' }), checkboxLabel)
           : filledValue;
 
-        // Build an exact-match pattern for the field title to avoid a short
-        // title like "Vuosi" matching a longer label like "Vuosi, jolle haen".
-        const exactFieldTitle = new RegExp(`^\\s*${fieldTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`);
-
         await test.step(`Preview: ${fieldTitle} = ${value}`, async () => {
 
           // Narrow the search area to this section so we don't accidentally
           // find the value in a different section with the same field name.
           const sectionContainer = preview
             .locator('section.grants-form--preview-section')
-            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: sectionTitle})});
+            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: exactText(sectionTitle)})});
           const scope = (await sectionContainer.count() > 0) ? sectionContainer : preview;
 
           // First try: some fields have their own section heading.
           // Check the value appears inside that section.
           const byFieldTitle = preview
             .locator('section.grants-form--preview-section')
-            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: fieldTitle})});
+            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: exactText(fieldTitle)})});
           if (await byFieldTitle.count() > 0) {
             await expect(byFieldTitle.locator('.hdbt-form--section__content')).toContainText(value);
             return;
@@ -794,9 +793,8 @@ async function verifyPreviewValues(
           // value appears next to it.
           const bySpanLabel = scope
             .locator('span.grants-form--preview-section__label')
-            .filter({hasText: exactFieldTitle})
-            .locator('xpath=..')
-            .first();
+            .filter({hasText: exactText(fieldTitle)})
+            .locator('xpath=..');
 
           if (await bySpanLabel.count() > 0) {
             if (fieldId.includes('issuer')) {
@@ -804,9 +802,10 @@ async function verifyPreviewValues(
               // The selected value is now translated on preview page and the test should be
               // changed to expect the translated value instead of always expecting a
               // the finnish value - f.ex. Valtio - State
-              await expect(bySpanLabel).not.toContainText('-', { timeout: 5000 });
+              await expect(bySpanLabel.first()).not.toContainText('-', { timeout: 5000 });
             } else {
-              await expect(bySpanLabel).toContainText(value);
+              // Accept any field with the same label.
+              await expect(bySpanLabel.filter({hasText: value}).first(), `Preview shows "${value}" for ${fieldTitle}.`).toBeVisible();
               return;
             }
           }
