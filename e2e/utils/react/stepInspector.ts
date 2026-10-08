@@ -193,6 +193,10 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
     });
   };
 
+  // Detect fields the form does not render.
+  const isHidden = (fieldUiSchema: any): boolean =>
+    fieldUiSchema?.['ui:widget'] === 'hidden' || fieldUiSchema?.['ui:options']?.hidden === true;
+
   // Step-level "allOf" rules can add conditional fields to existing sections.
   // Merge those fields into the section schemas and track the added fields.
   const conditionalKeys = new Set<string>();
@@ -261,7 +265,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
     for (const [fieldName, rawFieldSchema] of Object.entries<any>(sectionSchema.properties ?? {})) {
       const fieldUiSchema = sectionUiSchema[fieldName] ?? {};
 
-      if (fieldUiSchema['ui:widget'] === 'hidden') {
+      if (isHidden(fieldUiSchema)) {
         continue;
       }
 
@@ -275,7 +279,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
         for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
           const childSchema = resolveSchema(childRawSchema);
 
-          if (childSchema?.type === 'null') {
+          if (childSchema?.type === 'null' || isHidden(fieldUiSchema[childName])) {
             continue;
           }
 
@@ -317,7 +321,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
         for (const [childName, childRawSchema] of Object.entries<any>(itemSchema?.properties ?? {})) {
           const childSchema = resolveSchema(childRawSchema);
 
-          if (childSchema?.type === 'null') {
+          if (childSchema?.type === 'null' || isHidden(itemUiSchema[childName])) {
             continue;
           }
 
@@ -366,6 +370,10 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
         const fieldSchema = resolveSchema(rawFieldSchema);
         const fieldUiSchema = sectionUiSchema[fieldName] ?? {};
 
+        if (isHidden(fieldUiSchema)) {
+          continue;
+        }
+
         // Step into a conditional object to handle its child fields.
         if (fieldSchema?.properties) {
           const nestedRequiredFields = new Set<string>(fieldSchema.required ?? []);
@@ -373,7 +381,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
           for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
             const childSchema = resolveSchema(childRawSchema);
 
-            if (childSchema?.type === 'null') {
+            if (childSchema?.type === 'null' || isHidden(fieldUiSchema[childName])) {
               continue;
             }
 
@@ -400,6 +408,10 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
           const itemRequiredFields = new Set<string>(itemSchema?.required ?? []);
 
           for (const [childName, childRawSchema] of Object.entries<any>(itemSchema?.properties ?? {})) {
+            if (isHidden(itemUiSchema[childName])) {
+              continue;
+            }
+
             pushField(
               childName,
               childRawSchema,
