@@ -338,7 +338,8 @@ async function handleField(
       : page.locator(`input[type="radio"][id^="${fieldId}_"]`).first();
     await expect(option).toBeVisible();
     const optionId = (await option.getAttribute('id')) ?? '';
-    await expect(page.locator(`fieldset:has(#${optionId}) legend`)).toContainText(t(fieldTitle));
+    // Verify the legend of the closest fieldset.
+    await expect(option.locator('xpath=ancestor::fieldset[1]/legend')).toContainText(t(fieldTitle));
     if (shouldFill) {
       await page.click(`label[for="${optionId}"]`);
       await assertFieldErrorGone(page, fieldId);
