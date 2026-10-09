@@ -827,12 +827,15 @@ export async function verifyFormFieldTranslations(
  *   The translation function for the current language.
  * @param filledFields
  *   The values that were filled in during the Finnish fill pass.
+ * @param language
+ *   The language of the preview.
  */
 async function verifyPreviewStep(
   page: Page,
   tree: FormTree,
   t: (key: string) => string,
   filledFields: FilledFields,
+  language: string,
 ): Promise<void> {
 
   const step = 'confirm_and_submit';
@@ -842,7 +845,7 @@ async function verifyPreviewStep(
   await clickOnStepWithTitle(page, t, `${step}.title`);
   await expect(page.locator('h2.grants-form__page-title')).toContainText(t(`${step}.title`));
 
-  await verifyPreviewValues(page, tree, t, filledFields);
+  await verifyPreviewValues(page, tree, t, filledFields, language);
 }
 
 /**
@@ -856,12 +859,15 @@ async function verifyPreviewStep(
  *   The translation function for the current language.
  * @param filledFields
  *   The values that were filled in during the Finnish fill pass.
+ * @param language
+ *   The language of the preview. Defaults to 'fi'.
  */
 async function verifyPreviewValues(
   page: Page,
   tree: FormTree,
   t: (key: string) => string,
   filledFields: FilledFields,
+  language = 'fi',
 ): Promise<void> {
   const preview = page.locator('.hdbt-form__preview');
   await expect(preview).toBeVisible();
@@ -871,15 +877,18 @@ async function verifyPreviewValues(
 
   // Loop through all fields and check each value appears in the preview.
   for (const [, [, sections]] of Object.entries(tree).entries()) {
-    for (const [, [section, fields]] of Object.entries(sections).entries()) {
+    for (const [, [, fields]] of Object.entries(sections).entries()) {
       for (const [, field] of Object.entries(fields)) {
         const fieldId = `root_${field.fieldPath.join('_')}`;
         const filledValue = filledFields.get(fieldId);
         const fieldTitle = t(field.titleKey);
-        const sectionTitle = t(`${section}.title`);
 
         // Skip if there is no value or the value is a radio button value.
         if (!filledValue || filledValue === 'true' || filledValue === 'false') continue;
+
+        // Dropdowns like "Tilan omistava toimiala" show a translated value,
+        // so check them in the Finnish preview only.
+        if (field.enumValues && language !== 'fi') continue;
 
         // Translate the attachment checkbox text shown in place of a file name.
         const checkboxLabel = ATTACHMENT_CHECKBOX_LABELS[filledValue];
@@ -893,20 +902,10 @@ async function verifyPreviewValues(
           // find the value in a different section with the same field name.
           const sectionContainer = preview
             .locator('section.grants-form--preview-section')
-            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: exactText(sectionTitle)})});
-          const scope = (await sectionContainer.count() > 0) ? sectionContainer : preview;
+            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: exactText(field.sectionTitleKey ? t(field.sectionTitleKey) : '')})});
+          const scope = (field.sectionTitleKey && await sectionContainer.count() > 0) ? sectionContainer : preview;
 
-          // First try: some fields have their own section heading.
-          // Check the value appears inside that section.
-          const byFieldTitle = preview
-            .locator('section.grants-form--preview-section')
-            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: exactText(fieldTitle)})});
-          if (await byFieldTitle.count() > 0) {
-            await expect(byFieldTitle.locator('.hdbt-form--section__content')).toContainText(value);
-            return;
-          }
-
-          // Second try: find the field by its label span and check the
+          // First try: find the field by its label span and check the
           // value appears next to it.
           const bySpanLabel = scope
             .locator('span.grants-form--preview-section__label')
@@ -925,6 +924,18 @@ async function verifyPreviewValues(
               await expect(bySpanLabel.filter({hasText: value}).first(), `Preview shows "${value}" for ${fieldTitle}.`).toBeVisible();
               return;
             }
+          }
+
+          // Second try: find the value in the field's section.
+          if (scope !== preview && await scope.filter({ hasText: value }).count() > 0) return;
+
+          // Third try: some fields have their own section heading.
+          // Check the value appears inside that section.
+          const byFieldTitle = preview
+            .locator('section.grants-form--preview-section')
+            .filter({has: page.locator('h4.hdbt-form--section__title', {hasText: exactText(fieldTitle)})});
+          if (await byFieldTitle.count() > 0) {
+            await expect(byFieldTitle.locator('.hdbt-form--section__content')).toContainText(value);
           }
         });
       }
@@ -1210,7 +1221,7 @@ export async function verifyAnswers(
     }
 
     // Go to last step and check that the values are correct.
-    await verifyPreviewStep(page, tree, t, filledFields);
+    await verifyPreviewStep(page, tree, t, filledFields, language);
   }
 }
 
