@@ -55,6 +55,7 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
       // This used to be possible case.
       return AccessResult::forbidden('No applicant type selected.');
     }
+
     try {
       if ($applicantType === 'private_person') {
         // Private person may see only own applications.
@@ -83,10 +84,9 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
   private function privateApplicationAllowed(EntityInterface $entity): bool {
     assert($entity instanceof ContentEntityInterface);
 
-    $userInformation = $this->userInformationService->getUserData();
-
-    // When private person creates the application, business_id === sub,
-    // If this application was created by a community, we can just skip.
+    // If this application was created by any community, we can just skip.
+    // If business id and sub matches, the user must be private person.
+    // Sometimes user doesn't seem to have business_id as private person.
     if (
       $entity->get('business_id')->value == '' ||
       $entity->get('business_id')->value !== $entity->get('sub')->value
@@ -94,6 +94,7 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
       return FALSE;
     }
 
+    $userInformation = $this->userInformationService->getUserData();
     // If logged in user sub is same as entity sub, return TRUE.
     return $userInformation->sub === $entity->get('sub')->value;
   }
