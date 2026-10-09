@@ -194,7 +194,8 @@
             "@test-php"
         ],
         "test-php": "vendor/bin/phpunit -c $PWD/phpunit.xml.dist",
-        "lint-php": "vendor/bin/phpcs --standard=Drupal,DrupalPractice --extensions=php,inc,test,info,module,install"
+        "lint-php": "vendor/bin/phpcs --standard=Drupal,DrupalPractice --extensions=php,inc,test,info,module,install",
+        "pre-command-run": "bash tools/composer/require-container.sh"
     },
     "autoload": {
         "psr-4": {
