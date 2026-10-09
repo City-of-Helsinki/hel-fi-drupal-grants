@@ -217,10 +217,11 @@ class ApplicationService {
     }
 
     $ids = $query->execute();
-    if ($ids) {
-      $submission = ApplicationSubmission::load(reset($ids));
+    if (!$ids) {
+      throw new \Exception('Application not found');
     }
 
+    $submission = ApplicationSubmission::load(reset($ids));
     if (
       $submission &&
       $submission->access('edit', $this->accountProxy->getAccount(), TRUE)->isForbidden()
