@@ -26,13 +26,10 @@ export const formLogic: FormLogic = {
   information_in_more_detail_step: {
     information_in_more_detail_section: {
       // Select the three-year duration option.
-      project_plan_grant_duration: async ({ page, fieldId, shouldFill }) => {
-        if (shouldFill) {
-          const option = page.locator(`label[for="${fieldId}_3"]`);
-          await expect(option).toBeVisible();
-          await option.click();
-        }
-        return true;
+      project_plan_grant_duration: '3',
+      applied_grant_amount: {
+        // Total of the filled subvention.
+        applied_grant_amount_2026: '60000',
       },
     },
     target_groups_section: {
