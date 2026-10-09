@@ -275,7 +275,8 @@
           },
           "required": ["community_practices_business"]
         }
-      }
+      },
+      "required": ["community_activity_section"]
     },
     "attachments_step": {
       "type": "object",

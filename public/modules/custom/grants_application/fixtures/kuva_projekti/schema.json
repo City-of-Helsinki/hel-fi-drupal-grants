@@ -414,7 +414,8 @@
                 "$ref": "#/definitions/_venue_item"
               }
             }
-          }
+          },
+          "required": ["first_venue"]
         },
         "schedule_section": {
           "title": "schedule_section.title",
@@ -454,7 +455,8 @@
             }
           }
         }
-      }
+      },
+      "required": ["activity_counts_section", "schedule_section"]
     },
     "activity_foundations_step": {
       "type": "object",
