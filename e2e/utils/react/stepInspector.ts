@@ -53,6 +53,7 @@ export type StepField = {
   fileFormats?: string[];
   simpleFile?: boolean;
   required: boolean;
+  hasDefault?: boolean;
   options?: Array<{ id: number | string; label: string }>;
   enumValues?: unknown[];
   maxLength?: number;
@@ -284,6 +285,7 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       fileFormats: Array.isArray(fieldUiSchema?.['misc:formats']) ? fieldUiSchema['misc:formats'] : undefined,
       simpleFile: fieldUiSchema?.['misc:variant'] === 'simple',
       required: required || fieldUiSchema?.['misc:required'] === true,
+      hasDefault: fieldSchema?.default !== undefined,
       options: rawOptions?.length ? rawOptions : undefined,
       enumValues: Array.isArray(fieldSchema?.enum) ? fieldSchema.enum : undefined,
       // The schema carries the character limit; `misc:max-length` was the

@@ -1139,7 +1139,7 @@ export async function fillFormFields(
     const fill = languageIndex === 0;
     const t = createTranslator(formData as FormPreviewResponse, language);
 
-    for (const [, [step, sections]] of Object.entries(tree).entries()) {
+    for (const [stepIndex, [step, sections]] of Object.entries(tree).entries()) {
       const titleKey = stepTitleKey(formData, step);
       const stepTitle = t(titleKey);
       logger(`Filling step: ${stepTitle}`);
@@ -1174,6 +1174,24 @@ export async function fillFormFields(
         // The fill pass is done, so every custom input should have been used.
         if (fill) assertAllFieldInputsUsed(options.fieldInputs, usedFieldInputs);
         return;
+      }
+
+      // Check that Next stops on an untouched step with required fields.
+      const blockingFields = Object.values(sections).flatMap((fields) => Object.values(fields)).filter((field) =>
+        field.required && !field.hasDefault && !field.conditional && !field.isArrayItem && field.widget !== 'computedSum'
+      );
+      if (fill && blockingFields.length > 0) {
+        await test.step('Next stays on the untouched step', async () => {
+          await clickNext(page);
+          await expect(
+            page.locator('button[aria-current="step"] p'),
+            `Next stays on "${stepTitle}" while its required fields are empty.`,
+          ).toContainText(stepTitle);
+          await expect(
+            page.locator('[class*="notification_hds-notification--error__"] li').filter({ hasText: new RegExp(`\\b${stepIndex + 1}:`) }).first(),
+            `The error summary lists the required fields of "${stepTitle}".`,
+          ).toBeVisible();
+        });
       }
 
       // Fill or verify this step's fields depending on the current pass.
