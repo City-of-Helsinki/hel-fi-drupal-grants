@@ -88,8 +88,8 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
     // When private person creates the application, business_id === sub,
     // If this application was created by a community, we can just skip.
     if (
-      $entity->get('business_id') == '' ||
-      $entity->get('business_id') !== $entity->get('sub')
+      $entity->get('business_id')->value == '' ||
+      $entity->get('business_id')->value !== $entity->get('sub')->value
     ) {
       return FALSE;
     }
