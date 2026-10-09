@@ -549,11 +549,8 @@ export function buildFormTree(data: FormData, locale = 'en', answers?: Map<strin
     planConditions([...stepFields.values()].flat(), answers);
   }
 
+  // Keep steps without fields so the tree matches the stepper.
   for (const [step, fields] of stepFields) {
-    if (fields.length === 0) {
-      continue;
-    }
-
     tree[step] = {};
 
     // Keep the sections in the order the form shows them.

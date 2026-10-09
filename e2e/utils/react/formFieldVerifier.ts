@@ -733,6 +733,21 @@ export async function verifyStep(
 }
 
 /**
+ * Get the translation key of a step title.
+ *
+ * @param formData
+ *   The form schema and translations fetched from the server.
+ * @param step
+ *   The step name.
+ *
+ * @return
+ *   The step title key from the schema.
+ */
+function stepTitleKey(formData: Pick<FormPreviewResponse, 'schema'>, step: string): string {
+  return (formData.schema.properties[step] as { title?: string } | undefined)?.title ?? `${step}.title`;
+}
+
+/**
  * Opens the form in each language and checks that every field label,
  * tooltip and description shows the correct translated text.
  * No fields are filled during this step.
@@ -766,11 +781,12 @@ export async function verifyFormFieldTranslations(
 
       // Go through each step in the form and verify its labels.
       for (const [stepIndex, [step, sections]] of Object.entries(tree).entries()) {
-        const stepTitle = t(`${step}.title`);
+        const titleKey = stepTitleKey(formData, step);
+        const stepTitle = t(titleKey);
         logger(`Step: ${stepTitle}`);
 
         await test.step(`Verifying translations for step: ${stepTitle}...`, async () => {
-          if (!stepTitle) throw new Error(`No translation found for ${step}.title`);
+          if (!stepTitle) throw new Error(`No translation found for ${titleKey}`);
           await expect(page.locator('button[aria-current="step"] p')).toContainText(stepTitle);
         });
 
@@ -990,7 +1006,7 @@ export async function modifySubmittedApplication(
   if (!target) throw new Error('No editable text field found to modify.');
 
   // Change the value on its step.
-  await clickOnStepWithTitle(page, t, `${target.step}.title`);
+  await clickOnStepWithTitle(page, t, stepTitleKey(formData, target.step));
   let value = faker.lorem.sentences(2);
   if (target.maxLength && value.length > target.maxLength) {
     value = value.slice(0, target.maxLength);
@@ -1113,10 +1129,11 @@ export async function fillFormFields(
     const t = createTranslator(formData as FormPreviewResponse, language);
 
     for (const [, [step, sections]] of Object.entries(tree).entries()) {
-      const stepTitle = t(`${step}.title`);
+      const titleKey = stepTitleKey(formData, step);
+      const stepTitle = t(titleKey);
       logger(`Filling step: ${stepTitle}`);
       await test.step(`Checking step: ${stepTitle}...`, async () => {
-        if (!stepTitle) throw new Error(`No translation found for ${step}.title`);
+        if (!stepTitle) throw new Error(`No translation found for ${titleKey}`);
         await expect(page.locator('button[aria-current="step"] p')).toContainText(stepTitle);
       });
 
