@@ -5,6 +5,7 @@ namespace Drupal\grants_application\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,6 +32,13 @@ class CompletionController extends ControllerBase {
   protected RequestStack $requestStack;
 
   /**
+   * The application service.
+   *
+   * @var \Drupal\grants_application\ApplicationService
+   */
+  protected ApplicationService $applicationService;
+
+  /**
    * Create.
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
@@ -43,6 +51,7 @@ class CompletionController extends ControllerBase {
     $instance = parent::create($container);
     $instance->helfiAtvService = $container->get(HelfiAtvService::class);
     $instance->requestStack = $container->get('request_stack');
+    $instance->applicationService = $container->get(ApplicationService::class);
     return $instance;
   }
 
@@ -59,22 +68,15 @@ class CompletionController extends ControllerBase {
     $langcode = $this->languageManager()->getCurrentLanguage()->getId();
 
     try {
-      $entities = $this->entityTypeManager()
-        ->getStorage('application_submission')
-        ->getQuery()
-        ->accessCheck(TRUE)
-        ->condition('application_number', $application_number)
-        ->execute();
+      $entity = $this->applicationService->getSubmissionEntity($application_number);
     }
     catch (\Exception $e) {
       return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
     }
 
-    if (!$entities) {
+    if (!$entity) {
       return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
     }
-
-    $entity = ApplicationSubmission::load(reset($entities));
 
     try {
       $document = $this->helfiAtvService->getDocument($entity->get('application_number')->value);
