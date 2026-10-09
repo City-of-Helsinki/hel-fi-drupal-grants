@@ -1304,7 +1304,10 @@ async function submitFromConfirmStep(
   ]);
 
   // Fail fast if the form submit returns a server error.
-  expect(submitResponse.status(), 'Application submit returned a server error.').toBeLessThan(500);
+  expect(
+    submitResponse.status(),
+    `Application submit returned a server error: ${await submitResponse.text()}`,
+  ).toBeLessThan(500);
 
   // Verify the completion.
   await logCurrentUrl(page);

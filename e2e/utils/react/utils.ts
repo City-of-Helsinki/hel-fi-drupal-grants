@@ -206,7 +206,7 @@ export const captureApplicationNumber = (page: Page): Promise<string> =>
   );
 
 /**
- * Fail the test when the form is outside its application period.
+ * Fail the test when the form is outside its application period or has no acting years.
  *
  * @param settings
  *   The form settings from the preview endpoint.
@@ -229,6 +229,13 @@ export async function assertApplicationOpen(
       `Application period: ${settings.application_open || 'missing'} – ${settings.application_close || 'missing'}. ` +
       `Run 'drush gaof' to open the form or create an application metadata entity for the form at /admin/tools/application-metadata.`,
     ).toBe(true);
+  });
+
+  await test.step('Assert the form has acting years', async () => {
+    expect(
+      settings.acting_years ?? [],
+      `The form "${formID}" has no acting years. Add them to its application metadata at /admin/tools/application-metadata.`,
+    ).not.toHaveLength(0);
   });
 }
 
