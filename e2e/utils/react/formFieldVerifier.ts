@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page, test } from '@playwright/test';
 import { fakerFI as faker } from '@faker-js/faker';
-import { buildFormTree, type FormTree, type StepField } from './stepInspector';
+import { buildFormTree, conditionVerdict, type FormTree, type StepField } from './stepInspector';
 import type { FormPreviewResponse } from './schemaFetcher';
 import {
   fillApplicantInfoStep,
@@ -96,13 +96,19 @@ export type FieldLogicContext = {
 export type FieldLogicHandler = (ctx: FieldLogicContext) => Promise<boolean>;
 
 /**
+ * The answer to give to a question that shows other fields.
+ */
+export type FormAnswer = string | number | boolean;
+
+/**
  * Custom form logic for fields that the generic engine cannot handle.
  *
  * The structure is nested by field path, like FieldInputs. Handler functions
  * are placed at "leaf" nodes. Use this only for true one-off widgets or
- * interactions; recurring patterns belong in the engine.
+ * interactions; recurring patterns belong in the engine. A plain value at a
+ * leaf is the answer the engine gives to a question that shows other fields.
  */
-export type FormLogic = { [key: string]: FieldLogicHandler | FormLogic };
+export type FormLogic = { [key: string]: FieldLogicHandler | FormAnswer | FormLogic };
 
 /**
  * Resolves a custom logic handler for a field path.
@@ -124,6 +130,31 @@ function resolveFormLogic(
     node = node[segment];
   }
   return typeof node === 'function' ? node : undefined;
+}
+
+/**
+ * Collect the answers set in formLogic, keyed by field path.
+ *
+ * @param formLogic
+ *   The nested custom logic for the form.
+ * @param prefix
+ *   The path segments accumulated so far.
+ * @param answers
+ *   The map the answers are collected into.
+ */
+function collectFormAnswers(
+  formLogic: FormLogic | undefined,
+  prefix: string[] = [],
+  answers = new Map<string, unknown>(),
+): Map<string, unknown> {
+  for (const [key, value] of Object.entries(formLogic ?? {})) {
+    if (typeof value === 'object') {
+      collectFormAnswers(value, [...prefix, key], answers);
+    } else if (typeof value !== 'function') {
+      answers.set([...prefix, key].join('.'), value);
+    }
+  }
+  return answers;
 }
 
 /**
@@ -209,6 +240,61 @@ async function waitOptionDisabled(input: Locator, timeout: number): Promise<bool
 }
 
 /**
+ * Find the input of a field, or its first option for radios and subventions.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param field
+ *   The field.
+ * @param fieldId
+ *   The field DOM id.
+ */
+function fieldInput(page: Page, field: StepField, fieldId: string): Locator {
+  if (field.options?.length) return page.locator(`#${fieldId}-${field.options[0].id}`);
+  if (field.widget === 'atvFile') return page.locator(`#${field.fieldName}`);
+  if (field.widget === 'radio' || field.widget === 'grantDuration') return page.locator(`[id^="${fieldId}_"]`).first();
+  return page.locator(`#${fieldId}`);
+}
+
+/**
+ * Check that an answer shows and hides the right conditional fields on the step.
+ *
+ * Only fields that depend on this answer alone are checked.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param stepFields
+ *   All fields on the current step.
+ * @param paths
+ *   The keys of the answers that were set.
+ * @param value
+ *   The answer that was given.
+ * @param t
+ *   The translation function for the current language.
+ */
+async function expectConditionalFields(
+  page: Page,
+  stepFields: StepField[],
+  paths: string[],
+  value: unknown,
+  t: (key: string) => string,
+): Promise<void> {
+  // Rows of a list are added later, so check them only when the answer is in the same row.
+  const answerInRow = paths.some((path) => path.includes('.0.'));
+
+  for (const field of stepFields) {
+    if (!field.conditions) continue;
+    const verdict = conditionVerdict(field.conditions, paths, value);
+    const input = fieldInput(page, field, `root_${field.fieldPath.join('_')}`);
+    if (verdict === 'hidden') {
+      await expect(input, `Form hides "${t(field.titleKey)}" when the answer is ${String(value)}.`).toHaveCount(0);
+    } else if (verdict === 'shown' && (!field.isArrayItem || answerInRow)) {
+      await expect(input, `Form shows "${t(field.titleKey)}" when the answer is ${String(value)}.`).toBeVisible();
+    }
+  }
+}
+
+/**
  * Handle a single field.
  *
  * Checks that field label, tooltip and description is visible.
@@ -219,11 +305,9 @@ async function waitOptionDisabled(input: Locator, timeout: number): Promise<bool
  * @param field
  * @param fieldId
  * @param fieldTitle
- * @param step
- * @param section
  * @param t
  * @param shouldFill
- * @param triggeredConditions
+ * @param stepFields
  * @param addedArrays
  * @param filledFields
  * @param fieldInputs
@@ -235,11 +319,9 @@ async function handleField(
   field: StepField,
   fieldId: string,
   fieldTitle: string,
-  step: string,
-  section: string,
   t: (key: string) => string,
   shouldFill: boolean,
-  triggeredConditions: Set<string>,
+  stepFields: StepField[],
   addedArrays: Set<string>,
   filledFields?: FilledFields,
   fieldInputs?: FieldInputs,
@@ -253,16 +335,6 @@ async function handleField(
     return;
   }
 
-  // Some conditional fields are revealed by a boolean toggle.
-  // Activate the condition once before interacting with the field.
-  if (field.conditional && field.conditionField && !triggeredConditions.has(field.conditionField)) {
-    const toggle = page.locator(`label[for="root_${step}_${section}_${field.conditionField}_true"]`);
-    if (await toggle.count() > 0) {
-      await toggle.click();
-    }
-    triggeredConditions.add(field.conditionField);
-  }
-
   // The current field belongs to a repeatable list, like "Applied grants".
   if (field.isArrayItem && field.arrayField && !addedArrays.has(field.arrayField)) {
     const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
@@ -274,6 +346,12 @@ async function handleField(
       : page.locator('.field-array').filter({
           has: page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }),
         }).first();
+
+    // Lists like "Muut samaan tarkoitukseen myönnetyt avustukset" stay hidden
+    // on the translation pass until their question is answered.
+    if (!shouldFill && field.conditional && await arrayContainer.count() === 0) {
+      return;
+    }
 
     // Remove auto-added empty rows left over from the error-gathering pass.
     const errorItems = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') });
@@ -294,6 +372,17 @@ async function handleField(
       await expect(
         page.locator('.hdbt-form--description').filter({ hasText: t(field.groupDescriptionKey) }).first()
       ).toBeVisible();
+    }
+  }
+
+  // Fields like "Miten tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?" show only after some answer,
+  // so the fill pass fails when one is missing after its answer is given.
+  if (field.conditional) {
+    const input = fieldInput(page, field, fieldId);
+    if (!shouldFill) {
+      if (await input.count() === 0) return;
+    } else {
+      await expect(input, `Form shows "${t(fieldTitle)}" for the chosen answers.`).toBeVisible();
     }
   }
 
@@ -329,20 +418,37 @@ async function handleField(
     return;
   }
 
-  // When handling a radio-button, pick the "truthy" option when there is one,
-  // otherwise pick the first option.
-  if (field.widget === 'radio') {
-    const trueOption = page.locator(`#${fieldId}_true`);
-    const option = (await trueOption.count()) > 0
-      ? trueOption
+  // When handling a radio-button, pick the chosen answer for questions that
+  // open other fields, else the "truthy" option, else the first option.
+  if (field.widget === 'radio' || field.widget === 'grantDuration') {
+    const isControl = field.controlValue !== undefined;
+    const preferredOption = page.locator(`#${fieldId}_${isControl ? String(field.controlValue) : 'true'}`);
+    // Options like the three-year duration show only after an amount is filled,
+    // so require the chosen answer on the fill pass only.
+    const option = (isControl && shouldFill) || (await preferredOption.count()) > 0
+      ? preferredOption
       : page.locator(`input[type="radio"][id^="${fieldId}_"]`).first();
     await expect(option).toBeVisible();
     const optionId = (await option.getAttribute('id')) ?? '';
     // Verify the legend of the closest fieldset.
     await expect(option.locator('xpath=ancestor::fieldset[1]/legend')).toContainText(t(fieldTitle));
     if (shouldFill) {
+      // Questions like "Onko kyseessä jatkohakemus?" show different fields for each answer,
+      // so try the other answers first and check which fields they show and hide.
+      if (isControl) {
+        for (const otherValue of field.enumValues ?? []) {
+          if (otherValue === field.controlValue) continue;
+          const otherLabel = page.locator(`label[for="${fieldId}_${String(otherValue)}"]`);
+          if (await otherLabel.count() === 0) continue;
+          await otherLabel.click();
+          await expectConditionalFields(page, stepFields, field.controlPaths ?? [], otherValue, t);
+        }
+      }
       await page.click(`label[for="${optionId}"]`);
       await assertFieldErrorGone(page, fieldId);
+      if (isControl) {
+        await expectConditionalFields(page, stepFields, field.controlPaths ?? [], field.controlValue, t);
+      }
       if (optionId === `${fieldId}_true`) filledFields?.set(fieldId, 'true');
     }
     return;
@@ -394,20 +500,6 @@ async function handleField(
   }
 
   const fieldDOM = page.locator(`#${fieldId}`);
-
-  // Conditional fields are skipped when their condition is not active.
-  if (field.conditional) {
-    if (!shouldFill) {
-      if ((await fieldDOM.count()) === 0) return;
-    } else {
-      // Filling may reveal the field after a short React debounce.
-      try {
-        await fieldDOM.waitFor({ state: 'visible', timeout: 3000 });
-      } catch {
-        return;
-      }
-    }
-  }
 
   await expect(fieldDOM).toBeVisible();
 
@@ -481,7 +573,7 @@ async function handleField(
         await page.fill(`#${fieldId}`, value);
       }
       // Year fields get a random year.
-      else if (field.fieldName.endsWith('_year')) {
+      else if (field?.format === 'year' || field.fieldName.endsWith('_year')) {
         value = faker.number.int({ min: 1980, max: 2020 }).toString();
         await page.fill(`#${fieldId}`, value);
       }
@@ -561,55 +653,57 @@ export async function verifyStep(
   usedFieldInputs?: Set<string>,
   formLogic?: FormLogic,
 ): Promise<void> {
-  for (const [section, fields] of Object.entries(sections)) {
-    const titleKey = `${section}.title`;
-    const sectionTitle = t(titleKey);
-    // A section can be without a title.
-    const hasTitle = sectionTitle !== titleKey;
-    const sectionHeading = page.locator('h3.hdbt-form--section__title').filter({ hasText: sectionTitle }).first();
+  const stepFields = Object.values(sections).flatMap((fields) => Object.values(fields));
 
-    // Skip a conditional section when it is not on the page.
+  for (const [section, fields] of Object.entries(sections)) {
     const sectionFields = Object.values(fields);
-    const conditionalSection = sectionFields.length > 0 && sectionFields.every((field) => field.conditional);
-    if (hasTitle && conditionalSection) {
+    // A section without a title in the schema shows no heading.
+    const titleKey = sectionFields.find((field) => field.sectionTitleKey)?.sectionTitleKey;
+    const sectionTitle = titleKey ? t(titleKey) : section;
+    const hasTitle = !!titleKey && sectionTitle !== titleKey;
+    const sectionHeading = page.locator('h3.hdbt-form--section__title').filter({ hasText: sectionTitle }).first();
+    const playwrightStepLabel = shouldFill ? 'Filling' : `Verifying (${language}) translations for`;
+
+    // Sections like "Monivuotisten hankkeiden väliraportointi" belong to an answer the test did not choose,
+    // so check their fields stay hidden instead of filling them.
+    if (sectionFields.every((field) => field.active === false)) {
       if (shouldFill) {
-        try {
-          await sectionHeading.waitFor({ state: 'visible', timeout: 3000 });
-        } catch {
-          continue;
-        }
-      } else if ((await sectionHeading.count()) === 0) {
-        continue;
+        await test.step(`Checking hidden section: ${hasTitle ? sectionTitle : section}...`, async () => {
+          for (const field of sectionFields) {
+            await expect(
+              fieldInput(page, field, `root_${field.fieldPath.join('_')}`),
+              `Form hides "${t(field.titleKey)}" for the chosen answers.`,
+            ).toHaveCount(0);
+          }
+        });
       }
+      continue;
     }
 
-    const playwrightStepLabel = shouldFill ? 'Filling' : `Verifying (${language}) translations for`;
+    // Skip a conditional section on the translation pass when its answers are not given.
+    const conditionalSection = sectionFields.length > 0 && sectionFields.every((field) => field.conditional);
+    if (hasTitle && conditionalSection && !shouldFill && (await sectionHeading.count()) === 0) {
+      continue;
+    }
+
     await test.step(`${playwrightStepLabel} section: ${hasTitle ? sectionTitle : section}...`, async () => {
       if (hasTitle) {
         await expect(sectionHeading).toBeVisible();
       }
     });
 
-    // Track which conditional toggles and array groups have been handled
-    // so we don't click "Add" or trigger the same condition twice.
-    const triggeredConditions = new Set<string>();
+    // Track which array groups have been handled so we don't click "Add" twice.
     const addedArrays = new Set<string>();
 
-    // On the translation pass, set the yes option on affirmative radios so
-    // their revealed fields render and their labels can be verified.
+    // On the translation pass, give the answers that open other fields,
+    // so the labels of those fields can be verified.
     if (!shouldFill) {
-      for (const expander of Object.values(fields)) {
-        if (!expander.affirmativeExpands) continue;
-        const expanderId = `root_${expander.fieldPath.join('_')}`;
-        const yesOption = page.locator(`label[for="${expanderId}_true"]`);
-        if ((await yesOption.count()) === 0) continue;
-        await yesOption.click();
-        triggeredConditions.add(expander.fieldName);
-        const dependent = Object.values(fields).find((f) => f.conditionField === expander.fieldName);
-        if (dependent) {
-          const dependentId = `root_${dependent.fieldPath.join('_')}`;
-          await page.locator(`#${dependentId}`).waitFor({ state: 'visible', timeout: 3000 }).catch(() => undefined);
-        }
+      for (const control of sectionFields) {
+        if (control.controlValue === undefined || control.isArrayItem) continue;
+        const answer = page.locator(`label[for="root_${control.fieldPath.join('_')}_${String(control.controlValue)}"]`);
+        if ((await answer.count()) === 0) continue;
+        await answer.click();
+        await expectConditionalFields(page, stepFields, control.controlPaths ?? [], control.controlValue, t);
       }
     }
 
@@ -618,12 +712,20 @@ export async function verifyStep(
       const fieldId = `root_${field.fieldPath.join('_')}`;
       const fieldTitle = field.titleKey;
 
+      // Fields of an answer the test did not choose must stay hidden.
+      if (field.active === false) {
+        if (shouldFill) {
+          await expect(fieldInput(page, field, fieldId), `Form hides "${t(fieldTitle)}" for the chosen answers.`).toHaveCount(0);
+        }
+        continue;
+      }
+
       logger(`${shouldFill ? 'Fill' : `Check ${language}`}: ${section} / ${field.fieldName}`);
       await test.step(`${playwrightStepLabel} field: ${t(fieldTitle)}`, () =>
         handleField(
           page, field, fieldId, fieldTitle,
-          step, section, t, shouldFill,
-          triggeredConditions, addedArrays, filledFields,
+          t, shouldFill,
+          stepFields, addedArrays, filledFields,
           fieldInputs, usedFieldInputs, formLogic,
         )
       );
@@ -649,7 +751,7 @@ export async function verifyFormFieldTranslations(
   options: VerifyFormFieldsOptions = {},
 ): Promise<undefined> {
   const languages = options.languages ?? ['fi', 'sv', 'en'];
-  const tree = buildFormTree(formData as any);
+  const tree = buildFormTree(formData as any, 'en', collectFormAnswers(options.formLogic));
 
   // Loop through each language and open the form in that language.
   for (const [languageIndex, language] of languages.entries()) {
@@ -993,7 +1095,7 @@ export async function fillFormFields(
   options: VerifyFormFieldsOptions = {},
 ): Promise<FilledFields> {
   const languages = options.languages ?? ['fi', 'sv', 'en'];
-  const tree = buildFormTree(formData as any);
+  const tree = buildFormTree(formData as any, 'en', collectFormAnswers(options.formLogic));
   const filledFields:FilledFields = options.filledFields ?? new Map();
   const usedFieldInputs = new Set<string>();
   resetAttachments();
