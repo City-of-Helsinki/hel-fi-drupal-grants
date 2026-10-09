@@ -337,15 +337,12 @@ async function handleField(
 
   // The current field belongs to a repeatable list, like "Applied grants".
   if (field.isArrayItem && field.arrayField && !addedArrays.has(field.arrayField)) {
-    const addText = field.addButtonTextKey ? t(field.addButtonTextKey) : undefined;
+    const listId = `root_${field.fieldPath.slice(0, field.fieldPath.lastIndexOf('0')).join('_')}`;
+    const addButton = page.locator(`#${listId}-add`);
     const fieldElement = page.locator(`#${fieldId}`);
 
-    // Get the current scope by searching the ".field-array" element.
-    const arrayContainer = await fieldElement.count() > 0
-      ? fieldElement.locator('xpath=ancestor::div[contains(@class,"field-array")][1]')
-      : page.locator('.field-array').filter({
-          has: page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }),
-        }).first();
+    // Find the list by its add button, which stays on the page when all rows are removed.
+    const arrayContainer = addButton.locator('xpath=ancestor::div[contains(concat(" ", @class, " "), " field-array ")][1]');
 
     // Lists like "Muut samaan tarkoitukseen myönnetyt avustukset" stay hidden
     // on the translation pass until their question is answered.
@@ -354,23 +351,25 @@ async function handleField(
     }
 
     // Remove auto-added empty rows left over from the error-gathering pass.
-    const errorItems = arrayContainer.locator('.array-item').filter({ has: page.locator('.has-error') });
+    const errorItems = arrayContainer.locator('.array-item')
+      .filter({ has: page.locator('.has-error') })
+      .filter({ has: page.locator('.hdbt-form__array-remove') });
     let errorCount = await errorItems.count();
     while (errorCount > 0) {
       logger('Found empty list item, removing it.');
-      await errorItems.first().getByRole('button', { name: /Remove|Poista|Ta bort/i }).click();
+      await errorItems.first().locator('.hdbt-form__array-remove').first().click();
       await expect(errorItems).toHaveCount(errorCount - 1);
       errorCount = await errorItems.count();
     }
 
     // Add a row only when one is not already present.
     if (await fieldElement.count() === 0) {
-      await page.getByRole('button', { name: addText ?? /Add|Lisää|Lägg till/i }).first().click();
+      await addButton.click();
     }
     addedArrays.add(field.arrayField);
     if (field.groupDescriptionKey) {
       await expect(
-        page.locator('.hdbt-form--description').filter({ hasText: t(field.groupDescriptionKey) }).first()
+        arrayContainer.locator('.hdbt-form--description').filter({ hasText: t(field.groupDescriptionKey) }).first()
       ).toBeVisible();
     }
   }
