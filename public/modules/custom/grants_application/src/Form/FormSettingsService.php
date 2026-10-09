@@ -122,14 +122,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       throw new \InvalidArgumentException(sprintf('Unknown form type id: %s', $form_identifier));
     }
 
-    try {
-      $settings = $this->getFormSettings($form_type['id'], $form_type['form_identifier']);
-    }
-    catch (\Exception $e) {
-      throw $e;
-    }
-
-    return $settings;
+    return $this->getFormSettings($form_type['id'], $form_type['form_identifier']);
   }
 
   /**
