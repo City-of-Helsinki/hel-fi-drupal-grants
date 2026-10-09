@@ -1595,7 +1595,6 @@ display:
             - field_content
             - field_lead_in
             - field_lower_content
-            - field_sidebar_content
             - rendered_item
             - title
       filter_groups:

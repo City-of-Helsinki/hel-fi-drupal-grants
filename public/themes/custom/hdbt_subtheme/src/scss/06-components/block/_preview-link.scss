@@ -1,5 +1,5 @@
 .sidebar-important-links {
-  margin-top: var(--spacing-2-xl);
+  @include component-margin-top;
 
   .sidebar-text .sidebar-text__text-content>p {
     padding: $spacing var(--spacing-m);
