@@ -86,6 +86,9 @@ final class ApplicationServiceTest extends KernelTestBase implements ServiceModi
    */
   protected static $modules = ['helfi_atv'];
 
+  /**
+   * {@inheritDoc}
+   */
   public function alter(ContainerBuilder $container) {
     $grantsProfile = new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']);
 

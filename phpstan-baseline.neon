@@ -1927,6 +1927,18 @@ parameters:
 			path: public/modules/custom/grants_application/src/User/UserInformationService.php
 
 		-
+			message: '#^Call to an undefined method Drupal\\grants_application\\Atv\\HelfiAtvService\:\:expects\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: public/modules/custom/grants_application/tests/src/Kernel/ApplicationServiceTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\grants_application\\Kernel\\ApplicationServiceTest\:\:alter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: public/modules/custom/grants_application/tests/src/Kernel/ApplicationServiceTest.php
+
+		-
 			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 2
