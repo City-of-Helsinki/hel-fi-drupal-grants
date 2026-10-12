@@ -1340,7 +1340,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<h3>Tuloksia ei löytynyt</h3>'
+            value: '<h3>No results were found</h3>'
             format: full_html
           tokenize: false
       sorts:
@@ -1451,7 +1451,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: 'Valitse kohderyhmä'
+            label: 'Choose a target group'
             description: ''
             use_operator: false
             operator: ''
@@ -1489,7 +1489,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: 'Millaiseen toimintaan haet avustusta?'
+            label: 'What kind of activity are you applying grant for?'
             description: ''
             use_operator: false
             operator: ''
@@ -1527,7 +1527,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: 'Avustuksen hakija'
+            label: Applicant
             description: ''
             use_operator: false
             operator: ''
@@ -1565,7 +1565,7 @@ display:
           exposed: true
           expose:
             operator_id: search_api_fulltext_op
-            label: 'Tai etsi hakusanalla'
+            label: 'Or search with a keyword'
             description: ''
             use_operator: false
             operator: search_api_fulltext_op
@@ -1578,7 +1578,7 @@ display:
             remember_roles:
               authenticated: authenticated
             expose_fields: false
-            placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
+            placeholder: 'Search by name or keyword'
             searched_fields_id: search_api_fulltext_searched_fields
           is_grouped: false
           group_info:
@@ -1628,7 +1628,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: '<strong>@total</strong> hakutulosta'
+          content: '<strong>@total</strong> search results'
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -1667,7 +1667,7 @@ display:
       path: etsi-avustusta
       menu:
         type: normal
-        title: 'Etsi avustusta'
+        title: 'Application search'
         description: ''
         weight: -49
         expanded: false
