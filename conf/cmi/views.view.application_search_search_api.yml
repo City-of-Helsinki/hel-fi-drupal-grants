@@ -39,7 +39,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Etsi avustusta'
+      title: 'Application search'
       fields:
         field_target_group:
           id: field_target_group
@@ -1234,9 +1234,9 @@ display:
       exposed_form:
         type: bef
         options:
-          submit_button: Etsi
+          submit_button: Search
           reset_button: true
-          reset_button_label: Tyhjennä
+          reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
