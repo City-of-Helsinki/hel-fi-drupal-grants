@@ -73,10 +73,6 @@ class CompletionController extends ControllerBase {
       return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
     }
 
-    if (!$entity) {
-      return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
-    }
-
     try {
       $document = $this->helfiAtvService->getDocument($entity->get('application_number')->value);
     }
