@@ -208,10 +208,10 @@ class ApplicationService {
       $query->condition('sub', $this->userInformationService->getUserData()->sub);
     }
     else {
-      $business_id = $this->userInformationService->getApplicantType() === 'registered_community' ?
-        $this->userInformationService->getGrantsProfileContent()->getBusinessId() :
-        $this->userInformationService->getGrantsProfileContent()->getBusinessId() ?? '';
+      // Throws exception if fails.
+      $grantsProfile = $this->userInformationService->getGrantsProfileContent();
 
+      $business_id = $grantsProfile->getBusinessId() ?? '';
       $query->condition('business_id', $business_id);
     }
 

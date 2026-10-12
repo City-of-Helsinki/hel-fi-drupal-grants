@@ -69,7 +69,7 @@ class CompletionController extends ControllerBase {
     try {
       $entity = $this->applicationService->getSubmissionEntity($application_number);
     }
-    catch (\Exception $e) {
+    catch (\Exception) {
       return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
     }
 

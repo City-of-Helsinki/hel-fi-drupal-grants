@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -25,7 +27,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *
  * @group grants_application
  */
-final class ApplicationServiceTest extends KernelTestBase {
+final class ApplicationServiceTest extends KernelTestBase implements ServiceModifierInterface {
 
   use AtvDocumentTrait;
 
@@ -83,6 +85,26 @@ final class ApplicationServiceTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = ['helfi_atv'];
+
+  public function alter(ContainerBuilder $container) {
+    $grantsProfile = new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']);
+
+    $userInformationService = $this->createMock(UserInformationService::class);
+    $userInformationService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
+    $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
+    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
+    $userInformationService->method('getSelectedCompany')->willReturn(
+      ['identifier' => 'company-identifier', 'type' => 'registered_community']
+    );
+    $container->set(UserInformationService::class, $userInformationService);
+
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $numberService = $this->createMock(ApplicationNumberService::class);
+    $numberService->expects($this->any())->method('createNewApplicationNumber')->willReturn($this->copiedApplicationNumber);
+    $container->set(ApplicationNumberService::class, $numberService);
+  }
 
   /**
    * {@inheritdoc}
@@ -153,6 +175,17 @@ final class ApplicationServiceTest extends KernelTestBase {
 
     $this->atvDocument = $this->getAtvDocument($this->applicationNumber);
     $this->copiedAtvDocument = $this->getAtvDocument($this->copiedApplicationNumber);
+
+    $helfiAtvService = $this->container->get(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('createAtvDocument')->willReturn($this->copiedAtvDocument);
+    $helfiAtvService->expects($this->exactly(2))->method('saveNewDocument')->willReturnOnConsecutiveCalls(
+      $this->copiedAtvDocument,
+      $this->copiedSideDocument,
+    );
+    $helfiAtvService->expects($this->any())->method('createSideDocument')->willReturn($this->copiedSideDocument);
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
     $eventService = $this->createMock(EventsService::class);
     $eventService->expects($this->any())->method('logEvent')->withAnyParameters()->willReturn([]);
 
@@ -173,31 +206,6 @@ final class ApplicationServiceTest extends KernelTestBase {
    * Test the copying.
    */
   public function testCreateCopy(): void {
-    $grantsProfile = new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']);
-
-    $userInformationService = $this->createMock(UserInformationService::class);
-    $userInformationService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
-    $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
-    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
-    $userInformationService->method('getSelectedCompany')->willReturn(
-      ['identifier' => 'company-identifier', 'type' => 'registered_community']
-    );
-    $this->container->set(UserInformationService::class, $userInformationService);
-
-    $helfiAtvService = $this->createMock(HelfiAtvService::class);
-    $helfiAtvService->expects($this->any())->method('getDocument')->willReturn($this->atvDocument);
-    $helfiAtvService->expects($this->any())->method('createAtvDocument')->willReturn($this->copiedAtvDocument);
-    $helfiAtvService->expects($this->exactly(2))->method('saveNewDocument')->willReturnOnConsecutiveCalls(
-      $this->copiedAtvDocument,
-      $this->copiedSideDocument,
-    );
-    $helfiAtvService->expects($this->any())->method('createSideDocument')->willReturn($this->copiedSideDocument);
-    $this->container->set(HelfiAtvService::class, $helfiAtvService);
-
-    $numberService = $this->createMock(ApplicationNumberService::class);
-    $numberService->expects($this->any())->method('createNewApplicationNumber')->willReturn($this->copiedApplicationNumber);
-    $this->container->set(ApplicationNumberService::class, $numberService);
-
     $applicationService = $this->container->get(ApplicationService::class);
     $response = $applicationService->createCopy('liikunta_suunnistuskartta_avustu', $this->applicationNumber);
 
