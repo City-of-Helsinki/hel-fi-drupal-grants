@@ -297,7 +297,7 @@ export const assertFieldErrorGone = (page: Page, fieldId: string) =>
  */
 export const gatherRequiredFieldWarnings = (page: Page) =>
   test.step('Click through all stepper buttons and return to first step', async () => {
-    await waitForForm(page);
+    await waitForFormLoad(page);
     const stepper = page.locator('.hdbt-form--stepper');
     const buttons = stepper.getByRole('button');
     const count = await buttons.count();
@@ -340,17 +340,6 @@ export async function clickOnStepWithTitle(page: Page, t: (key: string) => strin
 }
 
 /**
- * Waits until the React form is visible on the page.
- *
- * @param page
- *   The Playwright page instance.
- */
-export async function waitForForm(page: Page) {
-  await page.waitForSelector('#grants-react-form .grants-form');
-  await expect(page.locator('#grants-react-form .grants-form')).toBeVisible();
-}
-
-/**
  * Clicks the "Save as draft" button and waits for the page to reload.
  *
  * @param page
@@ -361,6 +350,8 @@ export async function waitForForm(page: Page) {
 export async function saveDraft(page: Page, t: (key: string) => string) {
   const button = page.locator('.hdbt-form--actions').getByRole('button', { name: t('save_as_draft') });
   await expect(button).toBeVisible();
+  // Wait for the form to store the latest answers.
+  await page.waitForTimeout(2_500);
   await button.click();
   await page.waitForLoadState('domcontentloaded');
 }

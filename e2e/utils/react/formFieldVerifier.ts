@@ -19,7 +19,6 @@ import {
   nextAttachmentMode,
   resetAttachments,
   saveDraft,
-  waitForForm,
   waitForFormLoad,
   uploadAttachments,
 } from './utils';
@@ -776,7 +775,7 @@ export async function verifyFormFieldTranslations(
       if (languageIndex > 0) {
         await page.click(`a.language-link[lang="${language}"]`);
         await page.waitForURL(`**/${language}/**`);
-        await waitForForm(page);
+        await waitForFormLoad(page);
       }
 
       // Go through each step in the form and verify its labels.
@@ -1217,7 +1216,7 @@ export async function verifyAnswers(
     if (languageIndex > 0) {
       await page.click(`a.language-link[lang="${language}"]`);
       await page.waitForURL(`**/${language}/**`);
-      await waitForForm(page);
+      await waitForFormLoad(page);
     }
 
     // Go to last step and check that the values are correct.
