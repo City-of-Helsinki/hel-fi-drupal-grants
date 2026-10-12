@@ -1132,6 +1132,34 @@ export async function fillFormFields(
     await page.goto(options.formURL);
     await gatherRequiredFieldWarnings(page);
     await assertMissingInputsVisible(page);
+
+    // Check that clicking Next will prevent the user to proceed if there
+    // are unfilled required fields on the current step.
+    const t = createTranslator(formData as FormPreviewResponse, languages[0]);
+    for (const [stepIndex, [step, sections]] of Object.entries(tree).entries()) {
+      const blockingFields = Object.values(sections).flatMap((fields) => Object.values(fields)).filter((field) =>
+        field.required && !field.hasDefault && !field.conditional && !field.isArrayItem && field.widget !== 'computedSum'
+      );
+      // Skip on the first page or the last page. Skip also if current step
+      // has no required fields.
+      if (step === 'applicant_info' || step === 'confirm_and_submit' || blockingFields.length === 0) continue;
+
+      const stepTitle = t(stepTitleKey(formData, step));
+      await test.step(`Next stays on "${stepTitle}" while its required fields are empty`, async () => {
+        await clickOnStep(page, stepIndex);
+        await expect(page.locator('button[aria-current="step"] p')).toContainText(stepTitle);
+        await clickNext(page);
+        await expect(
+          page.locator('button[aria-current="step"] p'),
+          `Next stays on "${stepTitle}" while its required fields are empty.`,
+        ).toContainText(stepTitle);
+        await expect(
+          page.locator('[class*="notification_hds-notification--error__"] li').filter({ hasText: new RegExp(`\\b${stepIndex + 1}:`) }).first(),
+          `The error summary lists the required fields of "${stepTitle}".`,
+        ).toBeVisible();
+      });
+    }
+    await clickOnStep(page, 0);
   });
 
   for (const [languageIndex, language] of languages.entries()) {
