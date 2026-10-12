@@ -15,7 +15,6 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class for retrieving / saving application data.
@@ -30,7 +29,7 @@ class ApplicationService {
     private readonly LanguageManagerInterface $languageManager,
     private readonly UserInformationService $userInformationService,
     private readonly UuidInterface $uuid,
-    private readonly AccountProxyInterface $accountProxy
+    private readonly AccountProxyInterface $accountProxy,
   ) {
   }
 
