@@ -5,6 +5,11 @@
       "fi": "Avustuksen tiedot",
       "sv": "Uppgifter om understödet"
     },
+    "acting_year_section_acting_year.description": {
+      "en": "Please note that eligibility criteria for different grants might change from year to year.",
+      "fi": "Huomioithan, että avustusten kriteerit saattavat muuttua vuosittain.",
+      "sv": "Observera att grunder för beviljande för olika understödsformer kan ändras årligen."
+    },
     "acting_year_section_acting_year.title": {
       "en": "Year for which I am applying for a grant",
       "fi": "Vuosi, jolle haen avustusta",
@@ -871,7 +876,7 @@
       "sv": "Skicka"
     },
     "subvention.greater_than_zero": {
-      "en": "You must insert at least one subvention amount.",
+      "en": "You must insert at least one grant amount.",
       "fi": "Sinun on syötettävä vähintään yhdelle avustuslajille summa.",
       "sv": "Du måste föra in minst ett subventionsbelopp."
     },

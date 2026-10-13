@@ -10,8 +10,12 @@
         "ui:field": "subventionTable"
       },
       "subventions_sum": {
-        "ui:field": "subventionSum",
-        "ui:widget": "hidden"
+        "ui:field": "computedSum",
+        "ui:options": {
+          "sourceFields": ["grant_info_step.subventions_section.subventions"],
+          "sourceShape": "subvention",
+          "hidden": true
+        }
       }
     },
     "purpose_section": {
