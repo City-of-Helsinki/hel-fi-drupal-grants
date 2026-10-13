@@ -102,7 +102,8 @@
           "format": "postal-code",
           "maxLength": 5
         }
-      }
+      },
+      "required": ["premise_location", "premise_postal_code"]
     },
     "_membership_item": {
       "type": "object",
@@ -359,7 +360,8 @@
                 "members_others_helsinki"
               ]
             }
-          }
+          },
+          "required": ["members_fieldset"]
         },
         "participation_section": {
           "title": "participation_section.title",
@@ -448,7 +450,8 @@
             }
           }
         }
-      }
+      },
+      "required": ["members_section", "participation_section", "premises_section"]
     },
     "salary_info_step": {
       "type": "object",

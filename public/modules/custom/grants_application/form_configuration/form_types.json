@@ -80,13 +80,13 @@
     }
   },
   "8": {
-    "id": 54,
-    "form_identifier": "kaupunginkanslia_tyollisyysavust",
-    "code": "KANSLIATYO",
+    "id": 74,
+    "form_identifier": "tyollisyys",
+    "code": "TYOLLISYYS",
     "labels": {
-      "fi": "Kaupunginkanslia, työllisyysavustushakemus",
-      "en": "City Executive Office, employment grant application",
-      "sv": "Stadskansliet, ansökan om sysselsättningsunderstöd"
+      "fi": "Työllisyysavustushakemus",
+      "en": "The employment grant application",
+      "sv": "Ansökan om sysselsättningsstöd"
     }
   },
   "9": {
