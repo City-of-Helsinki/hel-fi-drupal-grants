@@ -105,6 +105,19 @@ final class DraftTest extends KernelTestBase {
   ];
 
   /**
+   * {@inheritDoc}
+   */
+  public function alter() {
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
+    $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
+    $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
+    $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
+    $this->container->set(UserInformationService::class, $userService);
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -253,13 +266,6 @@ final class DraftTest extends KernelTestBase {
     $eventService = $this->createMock(EventsService::class);
     $eventService->expects($this->any())->method('logEvent')->withAnyParameters()->willReturn([]);
 
-    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
-    $userService = $this->createMock(UserInformationService::class);
-    $userService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
-    $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
-    $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
-    $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
-
     $jsonMapperService = $this->createMock(JsonMapperService::class);
     $jsonMapperService->expects($this->any())->method('getSelectedBankFile')->willReturn([]);
     $jsonMapperService->expects($this->any())->method('documentBankFileIsSet')->willReturn(TRUE);
@@ -278,7 +284,6 @@ final class DraftTest extends KernelTestBase {
 
     $this->container->set('grants_handler.application_getter_service', $applicationGetterService);
     $this->container->set('grants_events.events_service', $eventService);
-    $this->container->set(UserInformationService::class, $userService);
   }
 
   /**
