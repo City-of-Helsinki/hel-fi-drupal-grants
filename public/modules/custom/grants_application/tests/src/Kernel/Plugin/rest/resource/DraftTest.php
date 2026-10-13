@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel\Plugin\rest\resource;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -31,7 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 #[Group('grants_application')]
 #[RunTestsInSeparateProcesses]
-final class DraftTest extends KernelTestBase {
+final class DraftTest extends KernelTestBase implements ServiceModifierInterface {
 
   /**
    * The application number.
@@ -103,6 +105,19 @@ final class DraftTest extends KernelTestBase {
     'user',
     'webform',
   ];
+
+  /**
+   * {@inheritDoc}
+   */
+  public function alter(ContainerBuilder $container) {
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
+    $userService = $this->createMock(UserInformationService::class);
+    $userService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
+    $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
+    $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
+    $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
+    $this->container->set(UserInformationService::class, $userService);
+  }
 
   /**
    * {@inheritdoc}
@@ -192,7 +207,7 @@ final class DraftTest extends KernelTestBase {
         ],
       ],
       'transaction_id' => '1234567890',
-      'business_id' => '1234567-1',
+      'business_id' => '7769480-5',
       'tos_function_id' => '12345',
       'tos_record_id' => '54321',
       'draft' => TRUE,
@@ -253,13 +268,6 @@ final class DraftTest extends KernelTestBase {
     $eventService = $this->createMock(EventsService::class);
     $eventService->expects($this->any())->method('logEvent')->withAnyParameters()->willReturn([]);
 
-    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
-    $userService = $this->createMock(UserInformationService::class);
-    $userService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
-    $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
-    $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
-    $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
-
     $jsonMapperService = $this->createMock(JsonMapperService::class);
     $jsonMapperService->expects($this->any())->method('getSelectedBankFile')->willReturn([]);
     $jsonMapperService->expects($this->any())->method('documentBankFileIsSet')->willReturn(TRUE);
@@ -278,7 +286,6 @@ final class DraftTest extends KernelTestBase {
 
     $this->container->set('grants_handler.application_getter_service', $applicationGetterService);
     $this->container->set('grants_events.events_service', $eventService);
-    $this->container->set(UserInformationService::class, $userService);
   }
 
   /**
@@ -291,7 +298,7 @@ final class DraftTest extends KernelTestBase {
       'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
       'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
       'sub' => '123345678-abcd-1234-ab12-abcdefgh',
-      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
+      'business_id' => '7769480-5',
       'draft' => TRUE,
       'langcode' => 'fi',
       'application_type_id' => 58,
@@ -457,7 +464,7 @@ final class DraftTest extends KernelTestBase {
       'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
       'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
       'sub' => '123345678-abcd-1234-ab12-abcdefgh',
-      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
+      'business_id' => '7769480-5',
       'draft' => TRUE,
       'langcode' => 'fi',
       'application_type_id' => 58,

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Drupal\Tests\grants_application\Kernel\Controller;
 
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Controller\ApplicationController;
@@ -32,7 +34,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *
  * @group grants_application
  */
-final class ApplicationControllerTest extends KernelTestBase {
+final class ApplicationControllerTest extends KernelTestBase implements ServiceModifierInterface {
 
   use AtvDocumentTrait;
 
@@ -68,6 +70,22 @@ final class ApplicationControllerTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = ['helfi_atv'];
+
+  /**
+   * {@inheritDoc}
+   */
+  public function alter(ContainerBuilder $container) {
+    $grantsProfile = new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']);
+
+    $userInformationService = $this->createMock(UserInformationService::class);
+    $userInformationService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
+    $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
+    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
+    $userInformationService->method('getSelectedCompany')->willReturn(
+      ['identifier' => 'company-identifier', 'type' => 'registered_community']
+    );
+    $container->set(UserInformationService::class, $userInformationService);
+  }
 
   /**
    * {@inheritdoc}
@@ -153,11 +171,6 @@ final class ApplicationControllerTest extends KernelTestBase {
     $applicationService->expects($this->any())->method('getSubmissionEntity')->willReturn($this->applicationSubmission);
     $this->container->set(ApplicationService::class, $applicationService);
 
-    $userInformationService = $this->createMock(UserInformationService::class);
-    $userInformationService->expects($this->any())->method('getUserData')
-      ->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
-    $this->container->set(UserInformationService::class, $userInformationService);
-
     $controller = ApplicationController::create($this->container);
     $request = $this->container->get('request_stack')->getCurrentRequest();
 
@@ -203,6 +216,10 @@ final class ApplicationControllerTest extends KernelTestBase {
    * Test application print route throws when user info service fails.
    */
   public function testPrintApplication(): void {
+    $userInformationService = $this->createMock(UserInformationService::class);
+    $userInformationService->method('getUserData')->willThrowException(new \Exception());
+    $this->container->set(UserInformationService::class, $userInformationService);
+
     $this->expectException(NotFoundHttpException::class);
     $controller = ApplicationController::create($this->container);
     $controller->printApplication($this->applicationNumber);
@@ -227,13 +244,6 @@ final class ApplicationControllerTest extends KernelTestBase {
    * Test print route returns render array on happy path.
    */
   public function testPrintApplicationReturnsRenderArray(): void {
-    // Match the sub/business_id of the saved entity so access is granted.
-    $grantsProfile = new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']);
-    $userInformationService = $this->createMock(UserInformationService::class);
-    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
-    $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
-    $this->container->set(UserInformationService::class, $userInformationService);
-
     $formSettings = new FormSettings(
       ['title' => 'Test Grant', 'application_type_id' => 58],
       [],
