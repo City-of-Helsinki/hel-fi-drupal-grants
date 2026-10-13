@@ -15,7 +15,6 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class for retrieving / saving application data.
@@ -30,7 +29,7 @@ class ApplicationService {
     private readonly LanguageManagerInterface $languageManager,
     private readonly UserInformationService $userInformationService,
     private readonly UuidInterface $uuid,
-    private readonly AccountProxyInterface $accountProxy
+    private readonly AccountProxyInterface $accountProxy,
   ) {
   }
 
@@ -209,10 +208,10 @@ class ApplicationService {
       $query->condition('sub', $this->userInformationService->getUserData()->sub);
     }
     else {
-      $business_id = $this->userInformationService->getApplicantType() === 'registered_community' ?
-        $this->userInformationService->getGrantsProfileContent()->getBusinessId() :
-        $this->userInformationService->getGrantsProfileContent()->getBusinessId() ?? '';
+      // Throws exception if fails.
+      $grantsProfile = $this->userInformationService->getGrantsProfileContent();
 
+      $business_id = $grantsProfile->getBusinessId() ?? '';
       $query->condition('business_id', $business_id);
     }
 

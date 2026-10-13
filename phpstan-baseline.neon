@@ -1927,10 +1927,34 @@ parameters:
 			path: public/modules/custom/grants_application/src/User/UserInformationService.php
 
 		-
+			message: '#^Call to an undefined method Drupal\\grants_application\\Atv\\HelfiAtvService\:\:expects\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: public/modules/custom/grants_application/tests/src/Kernel/ApplicationServiceTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\grants_application\\Kernel\\ApplicationServiceTest\:\:alter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: public/modules/custom/grants_application/tests/src/Kernel/ApplicationServiceTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\grants_application\\Kernel\\Controller\\ApplicationControllerTest\:\:alter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: public/modules/custom/grants_application/tests/src/Kernel/Controller/ApplicationControllerTest.php
+
+		-
 			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 2
 			path: public/modules/custom/grants_application/tests/src/Kernel/Controller/ApplicationControllerTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\grants_application\\Kernel\\Entity\\ApplicationSubmissionLockTest\:\:alter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: public/modules/custom/grants_application/tests/src/Kernel/Entity/ApplicationSubmissionLockTest.php
 
 		-
 			message: '#^Call to an undefined method Drupal\\Core\\Link\|Drupal\\Core\\Url\:\:getUrl\(\)\.$#'
@@ -1985,6 +2009,18 @@ parameters:
 			identifier: nonAbstractTestClass.NameNoSuffixTest
 			count: 1
 			path: public/modules/custom/grants_application/tests/src/Kernel/KernelTestBase.php
+
+		-
+			message: '#^Method Drupal\\Tests\\grants_application\\Kernel\\Plugin\\rest\\resource\\ApplicationTest\:\:alter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: public/modules/custom/grants_application/tests/src/Kernel/Plugin/rest/resource/ApplicationTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\grants_application\\Kernel\\Plugin\\rest\\resource\\DraftTest\:\:alter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: public/modules/custom/grants_application/tests/src/Kernel/Plugin/rest/resource/DraftTest.php
 
 		-
 			message: '#^Method Drupal\\Tests\\grants_application\\Unit\\Form\\FormTest\:\:getAllDatasources\(\) return type has no value type specified in iterable type array\.$#'

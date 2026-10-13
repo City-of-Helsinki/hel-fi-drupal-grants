@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Drupal\Tests\grants_application\Kernel\Entity;
 
 use Drupal\block_content\Entity\BlockContent;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\grants_application\Controller\ApplicationController;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\helfi_helsinki_profiili\DTO\AuthenticationLevel;
+use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\Entity\Role;
@@ -19,7 +23,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * @group grants_application
  */
-final class ApplicationSubmissionLockTest extends KernelTestBase {
+final class ApplicationSubmissionLockTest extends KernelTestBase implements ServiceModifierInterface {
 
   use UserCreationTrait;
 
@@ -54,6 +58,22 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
    * @var \Drupal\grants_application\Entity\ApplicationSubmission
    */
   private ApplicationSubmission $applicationSubmission;
+
+  /**
+   * {@inheritDoc}
+   */
+  public function alter(ContainerBuilder $container) {
+    $grantsProfile = new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']);
+
+    $userInformationService = $this->createMock(UserInformationService::class);
+    $userInformationService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
+    $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
+    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
+    $userInformationService->method('getSelectedCompany')->willReturn(
+      ['identifier' => 'company-identifier', 'type' => 'registered_community']
+    );
+    $container->set(UserInformationService::class, $userInformationService);
+  }
 
   /**
    * {@inheritdoc}
@@ -112,12 +132,6 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
       'changed' => '1765430954',
     ]);
     $this->applicationSubmission->save();
-
-    $userInformationService = $this->createMock(UserInformationService::class);
-    $userInformationService->expects($this->any())->method('getApplicantType')->willReturn('registered_community');
-    $userInformationService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']));
-    $this->container->set(UserInformationService::class, $userInformationService);
-
     $this->controller = ApplicationController::create($this->container);
   }
 
