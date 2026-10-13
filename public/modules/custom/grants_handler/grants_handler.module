@@ -2204,7 +2204,7 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
  * @param array $variables
  *   The variables.
  */
-function _grants_handler_handle_react_application(array &$variables) {
+function _grants_handler_handle_react_application(array &$variables): void {
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $formSettingsService = \Drupal::service(FormSettingsServiceInterface::class);
 
@@ -2273,14 +2273,11 @@ function _grants_handler_handle_react_application(array &$variables) {
 
   $variables['applicationFormName'] = $settings['translations'][$language]['translation']['form_title'];
 
-  if ($settings['settings']['application_open']) {
-    $variables['openStartDate'] = strtotime($settings['settings']['application_open']);
-  }
-  if ($settings['settings']['application_close']) {
-    $variables['openEndDate'] = strtotime($settings['settings']['application_close']);
-  }
-
-  $variables['isContinuous'] = $settings['settings']['continuous'];
+  $variables['openStartDate'] = !empty($settings['settings']['application_open'])
+    ? strtotime($settings['settings']['application_open']) : '';
+  $variables['openEndDate'] = !empty($settings['settings']['application_close'])
+    ? strtotime($settings['settings']['application_close']) : '';
+  $variables['isContinuous'] = (bool) ($settings['settings']['continuous'] ?? FALSE);
 
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';
