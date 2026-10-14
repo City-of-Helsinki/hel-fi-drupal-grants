@@ -13,7 +13,6 @@ dependencies:
     - field.storage.node.field_lead_in
     - field.storage.node.field_lower_content
     - field.storage.node.field_react_form
-    - field.storage.node.field_sidebar_content
     - field.storage.node.field_target_group
     - search_api.server.default_server
   module:
@@ -189,15 +188,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_react_form
-  field_sidebar_content:
-    label: 'Sidebar content'
-    datasource_id: 'entity:node'
-    property_path: field_sidebar_content
-    type: text
-    boost: 2.0
-    dependencies:
-      config:
-        - field.storage.node.field_sidebar_content
   field_target_group:
     label: 'Target group'
     datasource_id: 'entity:node'
@@ -311,7 +301,6 @@ processor_settings:
       - field_hakijatyyppi
       - field_lead_in
       - field_lower_content
-      - field_sidebar_content
       - langcode
       - rendered_item
       - title
@@ -338,7 +327,6 @@ processor_settings:
       - field_content
       - field_lead_in
       - field_lower_content
-      - field_sidebar_content
       - rendered_item
       - title
     title: true
@@ -360,7 +348,6 @@ processor_settings:
       - field_hakijatyyppi
       - field_lead_in
       - field_lower_content
-      - field_sidebar_content
       - langcode
       - rendered_item
       - title
@@ -380,7 +367,6 @@ processor_settings:
       - field_content
       - field_lead_in
       - field_lower_content
-      - field_sidebar_content
       - rendered_item
       - title
     spaces: ''

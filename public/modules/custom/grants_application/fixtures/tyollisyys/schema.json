@@ -353,7 +353,8 @@
             }
           }
         }
-      }
+      },
+      "required": ["community_activity_section"]
     },
     "attachments_step": {
       "type": "object",

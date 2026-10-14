@@ -414,7 +414,8 @@
             }
           }
         }
-      }
+      },
+      "required": ["schedule_section"]
     },
     "activity_basis_step": {
       "type": "object",

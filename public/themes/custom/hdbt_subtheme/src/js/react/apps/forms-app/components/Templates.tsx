@@ -39,6 +39,7 @@ const getFieldProps = (element?: ReactElement): { formData?: any; schema?: any; 
 
 export const ArrayFieldTemplate = ({
   canAdd,
+  idSchema,
   items,
   onAddClick,
   registry,
@@ -86,7 +87,14 @@ export const ArrayFieldTemplate = ({
         <ArrayFieldItemTemplate {...item} />
       ))}
       {canAdd && (
-        <Button onClick={onAddClick} theme={secondaryButtonTheme} type='button' iconStart={<IconPlus />}>
+        <Button
+          className='hdbt-form__array-add'
+          id={`${idSchema.$id}-add`}
+          onClick={onAddClick}
+          theme={secondaryButtonTheme}
+          type='button'
+          iconStart={<IconPlus />}
+        >
           {addText ? (addText as ReactNode & string) : Drupal.t('Add')}
         </Button>
       )}
@@ -436,5 +444,9 @@ export const ButtonTemplate = ({ icon, children, registry, uiSchema, ...props }:
 export const RemoveButtonTemplate = (props: IconButtonProps) => {
   const { uiSchema } = props;
   const removeText = uiSchema?.['ui:options']?.removeText;
-  return <ButtonTemplate {...props}>{removeText || Drupal.t('Remove')}</ButtonTemplate>;
+  return (
+    <ButtonTemplate {...props} className={`${props.className ?? ''} hdbt-form__array-remove`.trim()}>
+      {removeText || Drupal.t('Remove')}
+    </ButtonTemplate>
+  );
 };

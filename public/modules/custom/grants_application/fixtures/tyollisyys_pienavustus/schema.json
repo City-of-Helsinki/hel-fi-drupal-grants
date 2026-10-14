@@ -86,7 +86,8 @@
     "community_activity_step": {
       "type": "object",
       "required": [
-        "de_minimis_section"
+        "de_minimis_section",
+        "community_activity_section"
       ],
       "properties": {
         "community_activity_section": {

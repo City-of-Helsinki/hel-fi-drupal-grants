@@ -1,11 +1,32 @@
 /**
  * The full form organised as a nested map.
  *
- * The three levels are: step → section → fieldName.
+ * The three levels are: step → section → field key.
  * Use this to look up a field by where it lives in the form
  * without having to search a flat list.
  */
 export type FormTree = Record<string, Record<string, Record<string, StepField>>>;
+
+/**
+ * One rule an answer must meet, like "yes" or "at least 5000".
+ *
+ * The path points to the answer in the form data, e.g.
+ * [step, section, field].
+ */
+export type ConditionRule = {
+  path: string[];
+  const?: unknown;
+  enum?: unknown[];
+  minimum?: number;
+  exclusiveMinimum?: number;
+  maximum?: number;
+  pattern?: string;
+};
+
+/**
+ * A set of rules that must all be met to show a field.
+ */
+export type Condition = ConditionRule[];
 
 /**
  * All the metadata a test needs about a single form field.
@@ -18,6 +39,7 @@ export type StepField = {
   step: string;
   section: string;
   sectionTitle: string;
+  sectionTitleKey?: string;
   fieldName: string;
   fieldPath: string[];
   titleKey: string;
@@ -31,13 +53,18 @@ export type StepField = {
   fileFormats?: string[];
   simpleFile?: boolean;
   required: boolean;
+  hasDefault?: boolean;
   options?: Array<{ id: number | string; label: string }>;
+  enumValues?: unknown[];
   maxLength?: number;
   singleSubvention?: boolean;
   startGrant?: boolean;
   affirmativeExpands?: boolean;
   conditional?: boolean;
-  conditionField?: string;
+  conditions?: Condition[];
+  active?: boolean;
+  controlPaths?: string[];
+  controlValue?: unknown;
   isArrayItem?: boolean;
   arrayField?: string;
   addButtonTextKey?: string;
@@ -57,10 +84,71 @@ type FormData = {
   schema: {
     definitions: Record<string, any>;
     properties: Record<string, any>;
+    allOf?: any[];
   };
   ui_schema: Record<string, any>;
   translations: Record<string, any>;
 };
+
+/**
+ * The list a field belongs to, when it is part of a list row.
+ */
+type ArrayInfo = {
+  field: string;
+  addButtonTextKey?: string;
+  descriptionKey?: string;
+};
+
+/**
+ * Turn a field path into a lookup key.
+ *
+ * @param path
+ *   The path segments.
+ */
+export const pathKey = (path: string[]): string => path.join('.');
+
+/**
+ * Check whether an answer meets a condition rule.
+ *
+ * @param value
+ *   The answer, or undefined when nothing is answered.
+ * @param rule
+ *   The rule to check.
+ */
+export function ruleMatches(value: unknown, rule: ConditionRule): boolean {
+  if (value === undefined) return false;
+  if ('const' in rule && value !== rule.const) return false;
+  if (rule.enum && !rule.enum.includes(value)) return false;
+  const amount = Number(String(value).replace(',', '.'));
+  if (rule.minimum !== undefined && !(amount >= rule.minimum)) return false;
+  if (rule.exclusiveMinimum !== undefined && !(amount > rule.exclusiveMinimum)) return false;
+  if (rule.maximum !== undefined && !(amount <= rule.maximum)) return false;
+  if (rule.pattern !== undefined && !new RegExp(rule.pattern).test(String(value))) return false;
+  return true;
+}
+
+/**
+ * Tell whether one answer shows or hides a conditional field.
+ *
+ * Returns undefined when the result also depends on other answers.
+ *
+ * @param conditions
+ *   The field's conditions, the field shows when any of them is met.
+ * @param paths
+ *   The keys of the answers that are set.
+ * @param value
+ *   The answer given to them.
+ */
+export function conditionVerdict(conditions: Condition[], paths: string[], value: unknown): 'shown' | 'hidden' | undefined {
+  let unknown = false;
+  for (const condition of conditions) {
+    const rules = condition.filter((rule) => paths.includes(pathKey(rule.path)));
+    if (rules.some((rule) => !ruleMatches(value, rule))) continue;
+    if (rules.length === condition.length) return 'shown';
+    unknown = true;
+  }
+  return unknown ? undefined : 'hidden';
+}
 
 /**
  * Returns a flat list of every field on a given form step.
@@ -147,8 +235,12 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
    *   DOM id.
    * @param sectionName
    *   The section this field belongs to.
-   * @param sectionTitle
-   *   The translated title of the section.
+   * @param sectionTitleKey
+   *   The translation key of the section title, if the section has one.
+   * @param conditions
+   *   The conditions that show the field, if any.
+   * @param array
+   *   The list the field belongs to, if any.
    */
   const pushField = (
     fieldName: string,
@@ -157,8 +249,20 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
     required: boolean,
     pathPrefix: string[],
     sectionName: string,
-    sectionTitle: string,
+    sectionTitleKey: string | undefined,
+    conditions?: Condition[],
+    array?: ArrayInfo,
   ): void => {
+    const fieldPath = [...pathPrefix, fieldName];
+
+    // A field shown by several conditions is listed once and shows when any of them is met.
+    const existing = fields.find((field) => pathKey(field.fieldPath) === pathKey(fieldPath));
+    if (existing) {
+      existing.conditions = existing.conditions && conditions ? [...existing.conditions, ...conditions] : undefined;
+      existing.conditional = existing.conditions !== undefined;
+      return;
+    }
+
     const fieldSchema = resolveSchema(rawFieldSchema);
     const uiOptions = fieldUiSchema?.['ui:options'] ?? {};
     const rawOptions: Array<{ id: number | string; label: string }> | undefined = fieldSchema?.options;
@@ -166,9 +270,10 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
     fields.push({
       step,
       section: sectionName,
-      sectionTitle,
+      sectionTitle: translate(sectionTitleKey) ?? sectionName,
+      sectionTitleKey,
       fieldName,
-      fieldPath: [...pathPrefix, fieldName],
+      fieldPath,
       titleKey: fieldSchema?.title ?? '',
       title: translate(fieldSchema?.title) ?? fieldName,
       descriptionKey: fieldSchema?.description,
@@ -180,275 +285,242 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
       fileFormats: Array.isArray(fieldUiSchema?.['misc:formats']) ? fieldUiSchema['misc:formats'] : undefined,
       simpleFile: fieldUiSchema?.['misc:variant'] === 'simple',
       required: required || fieldUiSchema?.['misc:required'] === true,
+      hasDefault: fieldSchema?.default !== undefined,
       options: rawOptions?.length ? rawOptions : undefined,
+      enumValues: Array.isArray(fieldSchema?.enum) ? fieldSchema.enum : undefined,
       // The schema carries the character limit; `misc:max-length` was the
       // uiSchema key it used to live in, kept as a fallback for older forms.
       maxLength: fieldSchema?.maxLength ?? fieldUiSchema?.['misc:max-length'],
       singleSubvention: uiOptions.useSingleSubvention === true,
       startGrant: uiOptions.startGrant != null,
       affirmativeExpands: uiOptions.affirmativeExpands === true,
+      conditional: conditions !== undefined,
+      conditions,
+      isArrayItem: array !== undefined ? true : undefined,
+      arrayField: array?.field,
+      addButtonTextKey: array?.addButtonTextKey,
+      groupDescriptionKey: array?.descriptionKey,
       tooltipLabel: uiOptions.tooltipLabel ? translate(uiOptions.tooltipLabel) : undefined,
       tooltipButtonLabel: uiOptions.tooltipButtonLabel ? translate(uiOptions.tooltipButtonLabel) : undefined,
       tooltipText: uiOptions.tooltipText ? translate(uiOptions.tooltipText) : undefined,
     });
   };
 
-  // Step-level "allOf" rules can add conditional fields to existing sections.
-  // Merge those fields into the section schemas and track the added fields.
-  const conditionalKeys = new Set<string>();
+  // Detect fields the form does not render.
+  const isHidden = (fieldUiSchema: any): boolean =>
+    fieldUiSchema?.['ui:widget'] === 'hidden' || fieldUiSchema?.['ui:options']?.hidden === true;
 
-  // Record a conditional field and all its nested children.
-  const recordAddedFields = (schema: any, name: string, sectionName: string): void => {
-    conditionalKeys.add(`${sectionName}::${name}`);
-    const resolved = resolveSchema(schema);
-    if (resolved?.properties) {
-      for (const [childName, childSchema] of Object.entries<any>(resolved.properties)) {
-        recordAddedFields(childSchema, childName, sectionName);
+  // Detect a group of fields, which a schema added by a condition may leave without a type.
+  const isObject = (schema: any): boolean =>
+    !!schema?.properties && (schema.type === undefined || schema.type === 'object');
+
+  /**
+   * Collect the rules of a condition with their full answer paths.
+   *
+   * @param ifSchema
+   *   The condition schema.
+   * @param pathPrefix
+   *   The path of the object the condition belongs to.
+   */
+  const collectRules = (ifSchema: any, pathPrefix: string[]): Condition => {
+    const rules: Condition = [];
+    for (const [name, ruleSchema] of Object.entries<any>(ifSchema?.properties ?? {})) {
+      if (ruleSchema?.properties) {
+        rules.push(...collectRules(ruleSchema, [...pathPrefix, name]));
+      } else {
+        rules.push({ ...ruleSchema, path: [...pathPrefix, name] });
       }
     }
+    return rules;
   };
 
-  // Merge conditional properties into the target section schema.
-  const deepMergeProps = (targetProps: any, additionProps: any, sectionName: string): void => {
-    for (const [name, rawAdd] of Object.entries<any>(additionProps)) {
-      const add = resolveSchema(rawAdd);
-      const existing = name in targetProps ? resolveSchema(targetProps[name]) : undefined;
-      if (existing?.properties && add?.properties) {
-        const mergedChildren = { ...existing.properties };
-        targetProps[name] = { ...existing, properties: mergedChildren };
-        deepMergeProps(mergedChildren, add.properties, sectionName);
-      } else if (add?.properties) {
-        // The base field is empty, so use the conditional schema instead.
-        targetProps[name] = rawAdd;
-        recordAddedFields(rawAdd, name, sectionName);
-      } else if (!(name in targetProps)) {
-        targetProps[name] = rawAdd;
-        recordAddedFields(rawAdd, name, sectionName);
-      }
-    }
-  };
+  // Combine a parent's conditions with a nested condition, so a field inside both needs both.
+  const addCondition = (conditions: Condition[] | undefined, condition: Condition): Condition[] =>
+    conditions ? conditions.map((parent) => [...parent, ...condition]) : [condition];
 
-  // Section schemas after applying step-level conditional fields.
-  const sectionSchemas: Record<string, any> = {};
+  /**
+   * Collect the fields of an object and the fields its conditions add.
+   *
+   * @param objectSchema
+   *   The resolved object schema.
+   * @param objectUiSchema
+   *   The UI schema of the object.
+   * @param path
+   *   The path of the object.
+   * @param sectionName
+   *   The section the object belongs to.
+   * @param sectionTitleKey
+   *   The translation key of the section title, if the section has one.
+   * @param isSection
+   *   True when the object is a section of the step.
+   * @param conditions
+   *   The conditions that show the object, if any.
+   * @param array
+   *   The list the object belongs to, if any.
+   */
+  const walkObject = (
+    objectSchema: any,
+    objectUiSchema: any,
+    path: string[],
+    sectionName: string,
+    sectionTitleKey: string | undefined,
+    isSection: boolean,
+    conditions?: Condition[],
+    array?: ArrayInfo,
+  ): void => {
+    const requiredFields = new Set<string>(objectSchema?.required ?? []);
 
-  // Build the base section schemas.
-  for (const [sectionName, rawSectionSchema] of Object.entries<any>(stepDefinition.properties ?? {})) {
-    const resolved = resolveSchema(rawSectionSchema);
-    sectionSchemas[sectionName] = { ...resolved, properties: { ...(resolved?.properties ?? {}) } };
-  }
-
-  // Merge conditional fields from "allOf" / "then" rules into the sections.
-  for (const conditionalSchema of stepDefinition.allOf ?? []) {
-    for (const [sectionName, rawThenSection] of Object.entries<any>(conditionalSchema?.then?.properties ?? {})) {
-      const target = sectionSchemas[sectionName];
-      if (!target) continue;
-      const thenProps = resolveSchema(rawThenSection)?.properties ?? {};
-      deepMergeProps(target.properties, thenProps, sectionName);
-      // These fields only appear when their condition is met.
-      for (const [name, childSchema] of Object.entries<any>(thenProps)) {
-        recordAddedFields(childSchema, name, sectionName);
-      }
-    }
-  }
-
-  // Walk each section of the step.
-  for (const [sectionName, sectionSchema] of Object.entries<any>(sectionSchemas)) {
-    const sectionTitle = translate(sectionSchema.title) ?? sectionName;
-    const sectionUiSchema = stepUiSchema[sectionName] ?? {};
-    const sectionRequiredFields = new Set<string>(sectionSchema.required ?? []);
-
-    // Walk each field in this section.
-    for (const [fieldName, rawFieldSchema] of Object.entries<any>(sectionSchema.properties ?? {})) {
-      const fieldUiSchema = sectionUiSchema[fieldName] ?? {};
-
-      if (fieldUiSchema['ui:widget'] === 'hidden') {
-        continue;
-      }
-
+    for (const [fieldName, rawFieldSchema] of Object.entries<any>(objectSchema?.properties ?? {})) {
       const fieldSchema = resolveSchema(rawFieldSchema);
+      const fieldUiSchema = objectUiSchema?.[fieldName] ?? {};
 
-      // Object fields are containers, step into their children.
-      if (fieldSchema?.type === 'object' && fieldSchema.properties) {
-        const nestedRequiredFields = new Set<string>(fieldSchema.required ?? []);
-
-        // Walk each child property of the nested object.
-        for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
-          const childSchema = resolveSchema(childRawSchema);
-
-          if (childSchema?.type === 'null') {
-            continue;
-          }
-
-          if (childSchema?.type === 'array') {
-            const arrayItemSchemas: any[] = Array.isArray(childSchema.items)
-              ? childSchema.items
-              : childSchema.items
-                ? [childSchema.items]
-                : [];
-
-            if (
-              arrayItemSchemas.length > 0 &&
-              arrayItemSchemas.every((arrayItemSchema: any) => arrayItemSchema?.type === 'null')
-            ) {
-              continue;
-            }
-          }
-
-          // Add this nested field to the results list.
-          pushField(
-            childName,
-            childRawSchema,
-            fieldUiSchema[childName] ?? {},
-            nestedRequiredFields.has(childName),
-            [step, sectionName, fieldName],
-            sectionName,
-            sectionTitle,
-          );
-        }
-      }
-      // Array fields hold repeating rows, collect each row's fields.
-      else if (fieldSchema?.type === 'array') {
-        const addButtonTextKey: string | undefined = fieldUiSchema?.['ui:options']?.addText;
-        const itemSchema = resolveSchema(Array.isArray(fieldSchema.items) ? fieldSchema.items[0] : fieldSchema.items);
-        const itemUiSchema = fieldUiSchema.items ?? {};
-        const itemRequiredFields = new Set<string>(itemSchema?.required ?? []);
-
-        // Walk each field inside one array item row.
-        for (const [childName, childRawSchema] of Object.entries<any>(itemSchema?.properties ?? {})) {
-          const childSchema = resolveSchema(childRawSchema);
-
-          if (childSchema?.type === 'null') {
-            continue;
-          }
-
-          pushField(
-            childName,
-            childRawSchema,
-            itemUiSchema[childName] ?? {},
-            itemRequiredFields.has(childName),
-            [step, sectionName, fieldName, '0'],
-            sectionName,
-            sectionTitle,
-          );
-
-          const field = fields[fields.length - 1];
-          field.isArrayItem = true;
-          field.arrayField = fieldName;
-          field.addButtonTextKey = addButtonTextKey;
-          field.groupDescriptionKey = itemSchema?.description;
-        }
-      }
-      // Plain field, add it directly.
-      else {
-        pushField(
-          fieldName,
-          rawFieldSchema,
-          fieldUiSchema,
-          sectionRequiredFields.has(fieldName),
-          [step, sectionName],
-          sectionName,
-          sectionTitle,
-        );
-      }
-    }
-
-    // Walk fields that only appear when a condition is met.
-    for (const conditionalSchema of sectionSchema.allOf ?? []) {
-      if (!conditionalSchema.if || !conditionalSchema.then) {
+      if (fieldSchema?.type === 'null' || isHidden(fieldUiSchema)) {
         continue;
       }
 
-      const conditionalRequiredFields = new Set<string>(conditionalSchema.then.required ?? []);
-      const conditionField = Object.keys(conditionalSchema.if.properties ?? {})[0];
+      // Skip empty groups that only get their fields from a condition.
+      if (fieldSchema?.type === 'object' && !fieldSchema.properties && !fieldUiSchema['ui:field'] && !fieldUiSchema['ui:widget']) {
+        continue;
+      }
 
-      // Walk each field that the condition reveals.
-      for (const [fieldName, rawFieldSchema] of Object.entries<any>(conditionalSchema.then.properties ?? {})) {
-        const fieldSchema = resolveSchema(rawFieldSchema);
-        const fieldUiSchema = sectionUiSchema[fieldName] ?? {};
+      // Groups like an attachment have their own input, so only plain groups are opened.
+      const isGroup = isObject(fieldSchema) && (isSection || (!fieldUiSchema['ui:field'] && !fieldUiSchema['ui:widget']));
 
-        // Step into a conditional object to handle its child fields.
-        if (fieldSchema?.properties) {
-          const nestedRequiredFields = new Set<string>(fieldSchema.required ?? []);
-
-          for (const [childName, childRawSchema] of Object.entries<any>(fieldSchema.properties)) {
-            const childSchema = resolveSchema(childRawSchema);
-
-            if (childSchema?.type === 'null') {
-              continue;
-            }
-
-            pushField(
-              childName,
-              childRawSchema,
-              fieldUiSchema[childName] ?? {},
-              nestedRequiredFields.has(childName),
-              [step, sectionName, fieldName],
-              sectionName,
-              sectionTitle,
-            );
-
-            const field = fields[fields.length - 1];
-            field.conditional = true;
-            field.conditionField = conditionField;
-          }
+      if (isGroup) {
+        walkObject(fieldSchema, fieldUiSchema, [...path, fieldName], sectionName, sectionTitleKey, false, conditions, array);
+      }
+      // Lists like "Muut kulut" start with only an add button,
+      // so collect the fields of the first row to add and fill it.
+      else if (fieldSchema?.type === 'array') {
+        const itemSchema = resolveSchema(Array.isArray(fieldSchema.items) ? fieldSchema.items[0] : fieldSchema.items);
+        if (!itemSchema?.properties) {
+          continue;
         }
-        // Conditional array, collect its row fields too.
-        else if (fieldSchema?.type === 'array') {
-          const addButtonTextKey: string | undefined = fieldUiSchema?.['ui:options']?.addText;
-          const itemSchema = resolveSchema(Array.isArray(fieldSchema.items) ? fieldSchema.items[0] : fieldSchema.items);
-          const itemUiSchema = fieldUiSchema.items ?? {};
-          const itemRequiredFields = new Set<string>(itemSchema?.required ?? []);
-
-          for (const [childName, childRawSchema] of Object.entries<any>(itemSchema?.properties ?? {})) {
-            pushField(
-              childName,
-              childRawSchema,
-              itemUiSchema[childName] ?? {},
-              itemRequiredFields.has(childName),
-              [step, sectionName, fieldName, '0'],
-              sectionName,
-              sectionTitle,
-            );
-
-            const field = fields[fields.length - 1];
-            field.conditional = true;
-            field.conditionField = conditionField;
-            field.isArrayItem = true;
-            field.arrayField = fieldName;
-            field.addButtonTextKey = addButtonTextKey;
-            field.groupDescriptionKey = itemSchema?.description;
-          }
-        }
-        // Plain conditional field, add it and mark it conditional.
-        else {
-          pushField(
-            fieldName,
-            rawFieldSchema,
-            fieldUiSchema,
-            conditionalRequiredFields.has(fieldName),
-            [step, sectionName],
-            sectionName,
-            sectionTitle,
-          );
-
-          const field = fields[fields.length - 1];
-          field.conditional = true;
-          field.conditionField = conditionField;
-        }
+        walkObject(itemSchema, fieldUiSchema.items ?? {}, [...path, fieldName, '0'], sectionName, sectionTitleKey, false, conditions, {
+          field: [...path, fieldName].slice(2).join('_'),
+          addButtonTextKey: fieldUiSchema['ui:options']?.addText,
+          descriptionKey: itemSchema.description,
+        });
+      }
+      else {
+        pushField(fieldName, rawFieldSchema, fieldUiSchema, requiredFields.has(fieldName), path, sectionName, sectionTitleKey, conditions, array);
       }
     }
-  }
 
-  // Fields added by step-level conditional schemas are conditionally rendered,
-  // but are not associated with a specific conditionField toggle.
-  // Mark fields added from allOf/then schema branches as conditional.
-  for (const field of fields) {
-    if (conditionalKeys.has(`${field.section}::${field.fieldName}`)) {
-      field.conditional = true;
+    // Answers like "Kyllä" reveal more fields in the same group,
+    // so collect those fields together with the answers they need.
+    for (const conditionalSchema of objectSchema?.allOf ?? []) {
+      if (!conditionalSchema?.if || !conditionalSchema?.then) {
+        continue;
+      }
+      const condition = collectRules(conditionalSchema.if, path);
+      walkObject(resolveSchema(conditionalSchema.then), objectUiSchema, path, sectionName, sectionTitleKey, isSection, addCondition(conditions, condition), array);
     }
+  };
+
+  /**
+   * Collect the fields of each section on the step.
+   *
+   * @param stepSchema
+   *   The step schema, or the part of it a condition adds.
+   * @param conditions
+   *   The conditions that show the sections, if any.
+   */
+  const walkStep = (stepSchema: any, conditions?: Condition[]): void => {
+    for (const [sectionName, rawSectionSchema] of Object.entries<any>(stepSchema?.properties ?? {})) {
+      const sectionSchema = resolveSchema(rawSectionSchema);
+      if (!isObject(sectionSchema)) {
+        continue;
+      }
+      // Sections added by a condition can leave the title to the base section.
+      const sectionTitleKey = sectionSchema.title ?? resolveSchema(stepDefinition.properties?.[sectionName])?.title;
+      walkObject(sectionSchema, stepUiSchema[sectionName] ?? {}, [step, sectionName], sectionName, sectionTitleKey, true, conditions);
+    }
+
+    // Answers on this step can show whole sections or add fields to them.
+    for (const conditionalSchema of stepSchema?.allOf ?? []) {
+      if (!conditionalSchema?.if || !conditionalSchema?.then) {
+        continue;
+      }
+      const condition = collectRules(conditionalSchema.if, [step]);
+      walkStep(resolveSchema(conditionalSchema.then), addCondition(conditions, condition));
+    }
+  };
+
+  walkStep(stepDefinition);
+
+  // Answers on an earlier step can fill this step, like the rental step that
+  // only has fields after choosing to apply for a rental grant.
+  for (const conditionalSchema of data.schema.allOf ?? []) {
+    const thenStep = conditionalSchema?.then?.properties?.[step];
+    if (!conditionalSchema?.if || !thenStep) {
+      continue;
+    }
+    walkStep(resolveSchema(thenStep), [collectRules(conditionalSchema.if, [])]);
   }
 
   return fields;
+}
+
+/**
+ * Mark which conditional fields the chosen answers show.
+ *
+ * Questions that open fields with "Kyllä" are answered yes, other
+ * answers come from the form's formLogic.ts.
+ *
+ * @param fields
+ *   Every field on the form.
+ * @param answers
+ *   The answers from formLogic.ts, keyed by field path.
+ */
+function planConditions(fields: StepField[], answers: Map<string, unknown>): void {
+  const conditionalFields = fields.filter((field) => field.conditions);
+  const rulesByPath = new Map<string, ConditionRule[]>();
+
+  for (const field of conditionalFields) {
+    for (const rule of field.conditions!.flat()) {
+      const key = pathKey(rule.path);
+      rulesByPath.set(key, [...(rulesByPath.get(key) ?? []), rule]);
+    }
+  }
+
+  // Answers like amounts or the second option of a choice need to be set in formLogic.ts.
+  const chosen = new Map<string, unknown>();
+  const missing: string[] = [];
+  for (const [key, rules] of rulesByPath) {
+    if (answers.has(key)) {
+      chosen.set(key, answers.get(key));
+    } else if (rules.some((rule) => rule.const === true || rule.enum?.includes(true))) {
+      chosen.set(key, true);
+    } else {
+      missing.push(key);
+    }
+  }
+
+  const unused = [...answers.keys()].filter((key) => !rulesByPath.has(key));
+  if (missing.length > 0 || unused.length > 0) {
+    throw new Error(
+      [
+        missing.length ? `Add answers for these conditions to formLogic.ts: ${missing.join(', ')}.` : '',
+        unused.length ? `These formLogic.ts answers match no condition: ${unused.join(', ')}.` : '',
+      ].filter(Boolean).join(' ')
+    );
+  }
+
+  for (const field of conditionalFields) {
+    field.active = field.conditions!.some((condition) =>
+      condition.every((rule) => ruleMatches(chosen.get(pathKey(rule.path)), rule))
+    );
+  }
+
+  // Give each question the answer to pick.
+  for (const [key, value] of chosen) {
+    const control = fields.find((field) => pathKey(field.fieldPath) === key);
+    if (control && control.widget !== 'computedSum') {
+      control.controlPaths = [key];
+      control.controlValue = value;
+    }
+  }
 }
 
 /**
@@ -462,24 +534,38 @@ export function getStepFields(data: FormData, step: string, locale = 'en'): Step
  *   The form schema, UI schema, and translations.
  * @param locale
  *   The language code for translations. Defaults to 'en'.
+ * @param answers
+ *   The answers from formLogic.ts, keyed by field path. Leave out to skip
+ *   marking which conditional fields show.
  */
-export function buildFormTree(data: FormData, locale = 'en'): FormTree {
+export function buildFormTree(data: FormData, locale = 'en', answers?: Map<string, unknown>): FormTree {
   const tree: FormTree = {};
+  const stepFields = new Map<string, StepField[]>();
 
   // Walk each step in the schema and collect its fields.
   for (const step of Object.keys(data.schema.properties ?? {})) {
-    const fields = getStepFields(data, step, locale);
+    stepFields.set(step, getStepFields(data, step, locale));
+  }
 
-    if (fields.length === 0) {
-      continue;
-    }
+  if (answers) {
+    planConditions([...stepFields.values()].flat(), answers);
+  }
 
+  // Keep steps without fields so the tree matches the stepper.
+  for (const [step, fields] of stepFields) {
     tree[step] = {};
+
+    // Keep the sections in the order the form shows them.
+    for (const section of Object.keys(data.schema.definitions[step]?.properties ?? {})) {
+      if (fields.some((field) => field.section === section)) {
+        tree[step][section] = {};
+      }
+    }
 
     // Place each field into the tree under its section.
     for (const field of fields) {
       tree[step][field.section] ??= {};
-      tree[step][field.section][field.fieldName] = field;
+      tree[step][field.section][field.fieldPath.slice(2).join('_')] = field;
     }
   }
 
