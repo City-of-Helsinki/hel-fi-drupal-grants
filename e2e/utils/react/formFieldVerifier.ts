@@ -1253,6 +1253,41 @@ export async function verifyAnswers(
 }
 
 /**
+ * Check that an empty form cannot be submitted from the preview step.
+ *
+ *  @param page
+ *   The Playwright page instance.
+ * @param formData
+ *   The form schema and translations fetched from the server.
+ */
+export async function verifyEmptyFormSubmitBlocked(
+  page: Page,
+  formData: Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>,
+): Promise<void> {
+  const t = createTranslator(formData as FormPreviewResponse, 'fi');
+  const tree = buildFormTree(formData as any);
+  const step = 'confirm_and_submit';
+
+  await clickOnStepWithTitle(page, t, `${step}.title`);
+  await expect(page.locator('h2.grants-form__page-title')).toContainText(t(`${step}.title`));
+  await assertMissingInputsVisible(page);
+
+  // Accept the terms, so only the unfilled required fields should keep
+  // the submit button disabled.
+  const acceptance = page.locator('#final-acceptance');
+  await page.locator('label[for="final-acceptance"]').click();
+  await expect(acceptance).toBeChecked();
+
+  const submitButton = page.locator('.hdbt-form--actions').getByRole('button', { name: t('submit') });
+  await expect(submitButton, 'Submit is disabled while required fields are empty.').toBeDisabled();
+
+  // Clear the acceptance and return to the first step.
+  await page.locator('label[for="final-acceptance"]').click();
+  await expect(acceptance).not.toBeChecked();
+  await clickOnStep(page, 0);
+}
+
+/**
  * Verify the form and submit it.
  *
  * Opens the form on the final step, accepts the terms, submits it,
