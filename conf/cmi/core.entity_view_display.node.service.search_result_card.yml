@@ -23,7 +23,6 @@ dependencies:
     - field.field.node.service.field_metatags
     - field.field.node.service.field_react_form
     - field.field.node.service.field_service_channel
-    - field.field.node.service.field_sidebar_content
     - field.field.node.service.field_target_group
     - field.field.node.service.field_webform
     - node.type.service
@@ -87,7 +86,6 @@ hidden:
   field_liftup_image: true
   field_lower_content: true
   field_react_form: true
-  field_sidebar_content: true
   field_target_group: true
   field_webform: true
   langcode: true

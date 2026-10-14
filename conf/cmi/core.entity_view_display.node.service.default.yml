@@ -22,7 +22,6 @@ dependencies:
     - field.field.node.service.field_metatags
     - field.field.node.service.field_react_form
     - field.field.node.service.field_service_channel
-    - field.field.node.service.field_sidebar_content
     - field.field.node.service.field_target_group
     - field.field.node.service.field_webform
     - node.type.service
@@ -148,15 +147,6 @@ content:
     third_party_settings: {  }
     weight: 5
     region: content
-  field_sidebar_content:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 9
-    region: sidebar_second
   links:
     settings: {  }
     third_party_settings: {  }
@@ -169,7 +159,6 @@ hidden:
   field_liftup_image: true
   field_react_form: true
   field_service_channel: true
-  field_sidebar_content: true
   field_target_group: true
   field_webform: true
   langcode: true
