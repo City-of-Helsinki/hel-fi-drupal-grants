@@ -7,7 +7,7 @@ One `executeFormFlow()` call drives the whole flow for a form.
 
 For a form, `executeFormFlow()` runs these steps in order:
 
-1. **Empty submit** — jump straight to the preview step on the empty form, accept the terms, and confirm that submit button stays disabled.
+1. **Incomplete submit** — fill the first step, jump straight to the preview step, accept the terms, try to send, and confirm that the form is not sent.
 2. **Translations** — open the form in fi/en/sv and check every label, description, and tooltip.
 3. **Fill** — fill every field with a valid value in Finnish, then save as a draft.
 4. **Preview** — open the summary in fi/en/sv and check that the filled values are shown.
