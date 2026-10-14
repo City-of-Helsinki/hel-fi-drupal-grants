@@ -4,7 +4,7 @@ import {
   type FilledFields,
   type FormLogic,
   fillFormFields, verifyAnswers,
-  verifyEmptyFormSubmitBlocked,
+  verifyIncompleteFormSubmitBlocked,
   verifyFormAndSubmit,
   verifyFormFieldTranslations,
   verifySentApplication,
@@ -94,9 +94,9 @@ export async function executeFormFlow(
   await page.goto(`${FORM_URL}/${applicationNumber}`);
   await waitForFormLoad(page);
 
-  // Jump to the preview on the empty form and check it cannot be sent.
-  await test.step('Verify the empty form cannot be submitted', async () => {
-    await verifyEmptyFormSubmitBlocked(page, formData);
+  // Fill the first step, jump to the preview and check the form cannot be sent.
+  await test.step('Verify the incomplete form cannot be submitted', async () => {
+    await verifyIncompleteFormSubmitBlocked(page, formData);
   });
 
   // Open the form in each language and check that every field label,
