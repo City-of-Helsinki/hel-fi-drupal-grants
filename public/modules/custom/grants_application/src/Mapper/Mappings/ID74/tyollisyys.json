@@ -154,7 +154,7 @@
         "ID": "amount",
         "label": "Haetun avustuksen summa",
         "value": "",
-        "valueType": "string"
+        "valueType": "float"
       },
       "other_applied_compensation_description": {
         "ID": "purpose",
