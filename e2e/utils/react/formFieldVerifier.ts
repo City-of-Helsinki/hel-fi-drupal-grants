@@ -1253,6 +1253,60 @@ export async function verifyAnswers(
 }
 
 /**
+ * Check that a form with only the first step filled cannot be submitted.
+ *
+ * @param page
+ *   The Playwright page instance.
+ * @param formData
+ *   The form schema and translations fetched from the server.
+ */
+export async function verifyIncompleteFormSubmitBlocked(
+  page: Page,
+  formData: Pick<FormPreviewResponse, 'schema' | 'ui_schema' | 'translations'>,
+): Promise<void> {
+  const t = createTranslator(formData as FormPreviewResponse, 'fi');
+  const step = 'confirm_and_submit';
+
+  await fillApplicantInfoStep(page, formData, 'fi', true);
+
+  // Skip the other steps and open the preview.
+  await clickOnStepWithTitle(page, t, `${step}.title`);
+  await expect(page.locator('h2.grants-form__page-title')).toContainText(t(`${step}.title`));
+
+  // Accept the terms, so only the unfilled required fields should keep
+  // the submit button disabled.
+  const acceptance = page.locator('#final-acceptance');
+  await page.locator('label[for="final-acceptance"]').click();
+  await expect(acceptance).toBeChecked();
+
+  // Continue to the send attempt even when the submit button is enabled.
+  const submitButton = page.locator('.hdbt-form--actions').getByRole('button', { name: t('submit') });
+  await expect.soft(submitButton, 'Submit is disabled while required fields are empty.').toBeDisabled();
+
+  // Block the submit endpoint so a failing check never sends the application.
+  const submitEndpoint = /\/applications\/[^/]+\/application\//;
+  await page.route(submitEndpoint, (route) => route.abort());
+
+  // Try to send the form and verify no submit request is made.
+  const submitRequest = page.waitForRequest((request) =>
+    submitEndpoint.test(request.url()) && ['POST', 'PATCH'].includes(request.method()),
+    { timeout: 5_000 },
+  ).then(() => true, () => false);
+  await submitButton.click({ force: true });
+  const submitted = await submitRequest;
+  await page.unroute(submitEndpoint);
+  expect(submitted, 'The incomplete form is not sent.').toBe(false);
+  await expect(page, 'The form stays on the preview step.').not.toHaveURL(/\/completion/);
+
+  await assertMissingInputsVisible(page);
+
+  // Clear the acceptance and return to the first step.
+  await page.locator('label[for="final-acceptance"]').click();
+  await expect(acceptance).not.toBeChecked();
+  await clickOnStep(page, 0);
+}
+
+/**
  * Verify the form and submit it.
  *
  * Opens the form on the final step, accepts the terms, submits it,
