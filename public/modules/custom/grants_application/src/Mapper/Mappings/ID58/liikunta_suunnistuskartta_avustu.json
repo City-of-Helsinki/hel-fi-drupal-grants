@@ -65,7 +65,7 @@
       "ID": "amount",
       "label": "Avustuslajin summa",
       "value": "",
-      "valueType": "string"
+      "valueType": "float"
     }
   },
 
