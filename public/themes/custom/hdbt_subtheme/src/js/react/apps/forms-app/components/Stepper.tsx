@@ -57,8 +57,8 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form | null> }) => {
   }, [divRef, currentIndex]);
 
   const onStepClick = (_event: MouseEvent<HTMLButtonElement>, stepIndex: number) => {
-    formRef.current?.validateForm();
     setStep(stepIndex);
+    formRef.current?.validateForm();
   };
 
   // @todo bad use_preview.
