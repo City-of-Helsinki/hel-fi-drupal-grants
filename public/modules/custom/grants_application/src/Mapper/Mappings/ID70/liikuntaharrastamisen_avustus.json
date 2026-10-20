@@ -20,7 +20,7 @@
       "ID": "amount",
       "label": "Euroa",
       "value": "0",
-      "valueType": "double"
+      "valueType": "float"
     }
   },
   "compensation.compensationInfo.generalInfoArray.0": {
