@@ -55,6 +55,7 @@ dependencies:
     - path
     - pathauto
     - publication_date
+    - quick_node_clone
     - raven
     - redirect
     - responsive_image
@@ -172,6 +173,8 @@ permissions:
   - 'bypass node access'
   - 'cancel account'
   - 'change own username'
+  - 'clone landing_page content'
+  - 'clone page content'
   - 'create announcement content'
   - 'create content translations'
   - 'create file media'
