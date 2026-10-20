@@ -36,6 +36,7 @@ dependencies:
     - path
     - pathauto
     - publication_date
+    - quick_node_clone
     - raven
     - scheduler
     - system
@@ -66,6 +67,8 @@ permissions:
   - 'administer paragraphs library'
   - 'cancel account'
   - 'change own username'
+  - 'clone landing_page content'
+  - 'clone page content'
   - 'create announcement content'
   - 'create file media'
   - 'create hel_map media'
