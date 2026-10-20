@@ -388,7 +388,8 @@
             }
           ]
         }
-      }
+      },
+      "required": ["artistic_spaces_section"]
     },
     "activity_step": {
       "type": "object",

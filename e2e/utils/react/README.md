@@ -7,15 +7,16 @@ One `executeFormFlow()` call drives the whole flow for a form.
 
 For a form, `executeFormFlow()` runs these steps in order:
 
-1. **Translations** — open the form in fi/en/sv and check every label, description, and tooltip.
-2. **Fill** — fill every field with a valid value in Finnish, then save as a draft.
-3. **Preview** — open the summary in fi/en/sv and check that the filled values are shown.
-4. **Draft list** — confirm that the draft appears in `oma-asiointi`.
-5. **Submit** — accept the terms, submit, and wait for the completion page.
-6. **Sent list** — confirm that the application appears in the sent list.
-7. **Sent values** — open the sent application and confirm that the stored values match.
-8. **Modify** — if the application reached the received state, edit a field and confirm that it persists.
-9. **Secondary roles** — for every other `applicant_types` value the form supports, confirm that the role can open and draft the form.
+1. **Incomplete submit** — fill the first step, jump straight to the preview step, accept the terms, try to send, and confirm that the form is not sent.
+2. **Translations** — open the form in fi/en/sv and check every label, description, and tooltip.
+3. **Fill** — fill every field with a valid value in Finnish, then save as a draft.
+4. **Preview** — open the summary in fi/en/sv and check that the filled values are shown.
+5. **Draft list** — confirm that the draft appears in `oma-asiointi`.
+6. **Submit** — accept the terms, submit, and wait for the completion page.
+7. **Sent list** — confirm that the application appears in the sent list.
+8. **Sent values** — open the sent application and confirm that the stored values match.
+9. **Modify** — if the application reached the received state, edit a field and confirm that it persists.
+10. **Secondary roles** — for every other `applicant_types` value the form supports, confirm that the role can open and draft the form.
 
 The primary role is `REGISTERED_COMMUNITY` by default.
 

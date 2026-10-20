@@ -43,6 +43,9 @@ class UserInformationService {
    */
   public function getGrantsProfileAttachments(): array {
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    if (!$selectedCompany) {
+      throw new \Exception('Unable to get selected company data.');
+    }
     $profile = $this->grantsProfileService->getGrantsProfile($selectedCompany, FALSE);
     return $profile->getAttachments();
   }
@@ -58,6 +61,9 @@ class UserInformationService {
    */
   public function getGrantsProfileContent(): GrantsProfile {
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    if (!$selectedCompany) {
+      throw new \Exception('Unable to get selected company data.');
+    }
     $data = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
     return new GrantsProfile($data);
   }

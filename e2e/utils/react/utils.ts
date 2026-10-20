@@ -206,7 +206,7 @@ export const captureApplicationNumber = (page: Page): Promise<string> =>
   );
 
 /**
- * Fail the test when the form is outside its application period.
+ * Fail the test when the form is outside its application period or has no acting years.
  *
  * @param settings
  *   The form settings from the preview endpoint.
@@ -229,6 +229,13 @@ export async function assertApplicationOpen(
       `Application period: ${settings.application_open || 'missing'} – ${settings.application_close || 'missing'}. ` +
       `Run 'drush gaof' to open the form or create an application metadata entity for the form at /admin/tools/application-metadata.`,
     ).toBe(true);
+  });
+
+  await test.step('Assert the form has acting years', async () => {
+    expect(
+      settings.acting_years ?? [],
+      `The form "${formID}" has no acting years. Add them to its application metadata at /admin/tools/application-metadata.`,
+    ).not.toHaveLength(0);
   });
 }
 
@@ -290,7 +297,7 @@ export const assertFieldErrorGone = (page: Page, fieldId: string) =>
  */
 export const gatherRequiredFieldWarnings = (page: Page) =>
   test.step('Click through all stepper buttons and return to first step', async () => {
-    await waitForForm(page);
+    await waitForFormLoad(page);
     const stepper = page.locator('.hdbt-form--stepper');
     const buttons = stepper.getByRole('button');
     const count = await buttons.count();
@@ -333,17 +340,6 @@ export async function clickOnStepWithTitle(page: Page, t: (key: string) => strin
 }
 
 /**
- * Waits until the React form is visible on the page.
- *
- * @param page
- *   The Playwright page instance.
- */
-export async function waitForForm(page: Page) {
-  await page.waitForSelector('#grants-react-form .grants-form');
-  await expect(page.locator('#grants-react-form .grants-form')).toBeVisible();
-}
-
-/**
  * Clicks the "Save as draft" button and waits for the page to reload.
  *
  * @param page
@@ -354,6 +350,8 @@ export async function waitForForm(page: Page) {
 export async function saveDraft(page: Page, t: (key: string) => string) {
   const button = page.locator('.hdbt-form--actions').getByRole('button', { name: t('save_as_draft') });
   await expect(button).toBeVisible();
+  // Wait for the form to store the latest answers.
+  await page.waitForTimeout(2_500);
   await button.click();
   await page.waitForLoadState('domcontentloaded');
 }
@@ -413,8 +411,8 @@ export async function deleteDraft(page: Page, applicationNumber: string) {
   await page.locator('#helfi-dialog__action-button').click();
   await page.waitForURL('**/oma-asiointi');
   await expect(
-    page.locator('.messages__container .hds-notification .hds-notification__body')
-  ).toContainText('Luonnos poistettu');
+    page.locator('.messages__container .hds-notification .hds-notification__body').filter({ hasText: 'Luonnos poistettu' })
+  ).toBeVisible();
   await expect(page.locator(`.application-delete-link-${applicationNumber}`)).toHaveCount(0);
 }
 

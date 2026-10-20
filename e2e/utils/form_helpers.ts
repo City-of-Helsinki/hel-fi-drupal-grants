@@ -336,25 +336,16 @@ const verifySubmit = async (
  * The isApplicationClosed function.
  *
  * This function checks if an application is closed.
- * Applications that are closed redirect the user to the applications
- * service page and display an error message.
+ * Applications that are closed redirect the user to the service page or
+ * the front page and display an error message.
  *
  * @param page
  *   Playwright page object.
  */
 const isApplicationClosed = async (page: Page) => {
-  if (page.url().includes('/fi/tietoa-avustuksista/')) {
-    const errorMessageSelector = '.hds-notification--error .hds-notification__body';
-    const errorMessage = await page.locator(errorMessageSelector);
-
-    if (errorMessage) {
-      const errorMessageText = await errorMessage.innerText();
-      if (errorMessageText.includes('Tämä avustushaku ei ole avoimena')) {
-        return true;
-      }
-    }
-  }
-  return false;
+  const errorMessage = page.locator('.hds-notification--error .hds-notification__body')
+    .filter({ hasText: 'Tämä avustushaku ei ole avoimena' });
+  return await errorMessage.count() > 0;
 };
 
 /**

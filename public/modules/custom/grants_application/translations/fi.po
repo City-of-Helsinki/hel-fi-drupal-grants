@@ -79,6 +79,9 @@ msgstr "Virhe noudettaessa käyttäjätietoja. Yritäthän hetken kuluttua uudel
 msgid "We cannot find the application you are trying to open. Please try creating a new application"
 msgstr "Hakemusta ei löytynyt. Yritäthän tehdä uuden hakemuksen"
 
+msgid "We cannot find the application you are trying to open."
+msgstr "Hakemusta ei löytynyt."
+
 msgid "Unable to fetch your application. Please try again in a moment"
 msgstr "Hakemuksen nouto epäonnistui. Yritäthän hetken kuluttua uudelleen"
 

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import type OptionType from '@/common/types/OptionType';
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { getActingYearsAtom, isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
-import { formatErrors } from '../../utils';
+import { formatErrors, getTooltip } from '../../utils';
 import { PreviewInput } from '../Input';
 
 export const ActingYear = ({ formData, idSchema, onChange, rawErrors, required, schema, uiSchema }: FieldProps) => {
@@ -46,6 +46,7 @@ export const ActingYear = ({ formData, idSchema, onChange, rawErrors, required, 
         placeholder: t('select.placeholder'),
       }}
       theme={defaultSelectTheme}
+      tooltip={getTooltip(uiSchema)}
       value={value}
     />
   );
