@@ -41,7 +41,8 @@
             "purpose": {
               "title": "purpose_section_purpose.title",
               "description": "purpose_section_purpose.description",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1500
             }
           },
           "required": [
@@ -143,7 +144,8 @@
                   "de_minimis_info": {
                     "title": "de_minimis_info.title",
                     "description": "de_minimis_info.description",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [
@@ -240,7 +242,8 @@
                   "change_negotiations_description": {
                     "title": "change_negotiations_description.title",
                     "description": "change_negotiations_description.description",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [

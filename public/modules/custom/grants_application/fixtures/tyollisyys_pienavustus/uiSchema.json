@@ -12,8 +12,7 @@
     },
     "purpose_section": {
       "purpose": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1500
+        "ui:widget": "textarea"
       }
     },
     "city_benefits_loans_section": {
@@ -72,8 +71,7 @@
         }
       },
       "de_minimis_info": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },
@@ -117,8 +115,7 @@
         }
       },
       "change_negotiations_description": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },
