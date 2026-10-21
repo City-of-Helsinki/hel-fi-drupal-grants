@@ -15,14 +15,13 @@ third_party_settings:
     applicationTypeTerms:
       54: '54'
     applicationOpen: '2026-10-01T00:00:00'
-    applicationClose: '2026-11-02T23:59:59'
+    applicationClose: '2026-10-01T23:59:59'
     applicationContinuous: 0
     applicationTargetGroup: '27'
     disableCopying: 0
     applicationTypeSelect: '69'
     applicationIndustry: KUVA
-    applicationActingYears:
-      2026: '2026'
+    applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '0'
     status: released
