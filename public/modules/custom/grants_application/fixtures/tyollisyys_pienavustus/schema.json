@@ -3,7 +3,8 @@
     "grant_info_step": {
       "required": [
         "acting_year_section",
-        "purpose_section"
+        "purpose_section",
+        "prior_benefits_usage_section"
       ],
       "properties": {
         "acting_year_section": {
