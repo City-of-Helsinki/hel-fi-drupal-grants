@@ -23,7 +23,7 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '2'
-    status: released
+    status: archived
     parent: ''
     avus2BreakingChange: false
 weight: 0
