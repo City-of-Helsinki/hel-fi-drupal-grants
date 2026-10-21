@@ -287,7 +287,7 @@
             "ID": "amount",
             "label": "Haetun avustuksen summa",
             "value": "2000",
-            "valueType": "string"
+            "valueType": "float"
           },
           {
             "ID": "purpose",
