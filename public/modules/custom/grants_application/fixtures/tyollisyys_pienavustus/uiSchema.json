@@ -26,6 +26,16 @@
       }
     },
     "prior_benefits_usage_section": {
+      "have_received_prior_compensations": {
+        "ui:enumNames": [
+          "have_received_prior_compensations.no",
+          "have_received_prior_compensations.yes"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true
+        }
+      },
       "prior_compensations": {
         "ui:widget": "textarea",
         "ui:options": {

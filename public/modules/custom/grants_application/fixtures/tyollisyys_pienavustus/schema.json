@@ -75,15 +75,37 @@
         "prior_benefits_usage_section": {
           "title": "prior_benefits_usage_section.title",
           "type": "object",
-          "description": "prior_compensations.description",
           "properties": {
-            "prior_compensations": {
-              "title": "prior_compensations.title",
-              "type": "string"
+            "have_received_prior_compensations": {
+              "title": "other_compensations_section_have_received_prior_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
             }
           },
-          "required": [
-            "prior_compensations"
+          "required": ["have_received_prior_compensations"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_prior_compensations": {
+                    "const": true
+                  }
+                },
+                "required": ["have_received_prior_compensations"]
+              },
+              "then": {
+                "properties": {
+                  "prior_compensations": {
+                    "description": "prior_compensations.description",
+                    "title": "prior_compensations.title",
+                    "type": "string"
+                  }
+                }
+              }
+            }
           ]
         }
       }
