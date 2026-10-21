@@ -102,7 +102,8 @@
       datetimes.forEach((element)=> {
         const btn = document.createElement('input');
         btn.type = 'button';
-        btn.value = 'Tyhjennä';
+        btn.classList.add('button', 'button--small');
+        btn.value = Drupal.t('Clear');
         btn.addEventListener('click', (event) => {
           event.preventDefault();
           event.stopPropagation();
