@@ -985,6 +985,11 @@
       "fi": "Ruoka-aputoiminnan valtionavustus",
       "sv": "Statsunderstöd för mathjälpsverksamhet"
     },
+    "subventions.59.title": {
+      "en": "Small Grant for Employment Support",
+      "fi": "Työllisyyden edistämisen pienavustus",
+      "sv": "Små understöd för att främja sysselsättningen"
+    },
     "subventions.title": {
       "en": "Grants",
       "fi": "Avustukset",
