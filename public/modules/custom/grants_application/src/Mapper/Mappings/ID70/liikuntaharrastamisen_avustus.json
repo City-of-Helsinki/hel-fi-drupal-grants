@@ -20,7 +20,7 @@
       "ID": "amount",
       "label": "Euroa",
       "value": "0",
-      "valueType": "double"
+      "valueType": "float"
     }
   },
   "compensation.compensationInfo.generalInfoArray.0": {
@@ -60,13 +60,13 @@
       },
       "other_compensation_amount": {
         "ID": "amount",
-        "label": "Euroa",
+        "label": "Myönnetyn avustuksen summa",
         "value": "",
-        "valueType": "double"
+        "valueType": "float"
       },
       "other_compensation_description": {
         "ID": "purpose",
-        "label": "Tarkoitus",
+        "label": "Kuvaus käyttötarkoituksesta",
         "value": "",
         "valueType": "string"
       }
@@ -100,7 +100,7 @@
         "ID": "amount",
         "label": "Euroa",
         "value": "",
-        "valueType": "double"
+        "valueType": "float"
       },
       "other_applied_compensation_description": {
         "ID": "purpose",

@@ -29,7 +29,7 @@
       "ID": "amount",
       "label": "Euroa",
       "value": "0",
-      "valueType": "double"
+      "valueType": "float"
     }
   },
   "compensation.compensationInfo.generalInfoArray.0": {
@@ -109,7 +109,7 @@
         "ID": "amount",
         "label": "Haetun avustuksen summa",
         "value": "",
-        "valueType": "string"
+        "valueType": "float"
       },
       "other_applied_compensation_description": {
         "ID": "purpose",
