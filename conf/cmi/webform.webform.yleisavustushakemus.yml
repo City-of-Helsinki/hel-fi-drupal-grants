@@ -15,7 +15,7 @@ third_party_settings:
       49: '49'
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2023-07-30T11:19:00'
-    applicationContinuous: 1
+    applicationContinuous: 0
     applicationTargetGroup: '20'
     disableCopying: 0
     applicationTypeSelect: '29'
@@ -25,6 +25,7 @@ third_party_settings:
     applicationActingYearsNextCount: '2'
     status: released
     parent: ''
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
