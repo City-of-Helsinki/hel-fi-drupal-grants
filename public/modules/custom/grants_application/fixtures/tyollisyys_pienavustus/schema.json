@@ -103,7 +103,8 @@
                     "title": "prior_compensations.title",
                     "type": "string"
                   }
-                }
+                },
+                "required": ["prior_compensations"]
               }
             }
           ]
