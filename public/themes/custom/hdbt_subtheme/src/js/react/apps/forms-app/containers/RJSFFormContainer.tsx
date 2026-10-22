@@ -46,13 +46,14 @@ import {
   getRequiredFileFieldsAtom,
   getStepsAtom,
   getSubventionFieldsAtom,
+  getSumMatchRulesAtom,
   isEmptyPreviewAtom,
   isReadOnlyAtom,
   setErrorsAtom,
   setStepAtom,
 } from '../store';
 import type { RJSFFormData } from '../types/RJSFFormData';
-import { expandConditionalRequiredErrors, isDraft, keyErrorsByStep } from '../utils';
+import { expandConditionalRequiredErrors, getSumMismatch, isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 
 const widgets: RegistryWidgetsType = {
@@ -116,6 +117,7 @@ export const RJSFFormContainer = ({
   }, []);
   const subventionFields = useAtomValue(getSubventionFieldsAtom);
   const requiredFileFields = useAtomValue(getRequiredFileFieldsAtom);
+  const sumMatchRules = useAtomValue(getSumMatchRulesAtom);
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
   const setStep = useSetAtom(setStepAtom);
@@ -266,6 +268,34 @@ export const RJSFFormContainer = ({
             | undefined;
           _field?.addError(t('file.required'));
         }
+      }
+    });
+
+    sumMatchRules.forEach((rule) => {
+      const mismatch = getSumMismatch(formData, rule);
+
+      if (!mismatch) {
+        return;
+      }
+
+      const [left, right] = mismatch.map((sum) => sum.toString().replace('.', ','));
+      const messageKey = rule.message ?? 'sum_match.mismatch';
+      const message = t(messageKey, { left, right }) ?? messageKey;
+      const stepId = rule.path.split('.')[0];
+      const stepIndex = Array.from(steps).find(([, step]) => step.id === stepId)?.[0] ?? 0;
+
+      newErrors.push({
+        property: `.${rule.path}`,
+        message,
+        schemaPath: `.${rule.path}`,
+        stack: `.${rule.path} ${message}`,
+      });
+
+      if (stepIndex <= reachedStep) {
+        const _field = rule.path.split('.').reduce((acc: RJSFFormData, curr) => acc?.[curr], errors) as
+          | { addError: (msg: string) => void }
+          | undefined;
+        _field?.addError(message);
       }
     });
 

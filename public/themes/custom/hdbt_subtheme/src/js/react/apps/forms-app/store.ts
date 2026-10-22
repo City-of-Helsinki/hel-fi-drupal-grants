@@ -6,7 +6,7 @@ import { getUrlParts } from './testutils/Helpers';
 import type { Avus2Message } from './types/Avus2';
 import type { FormConfig, ResponseData } from './types/Data';
 import type { RJSFFormData } from './types/RJSFFormData';
-import { findFieldsOfType, findFieldsWithOption, keyErrorsByStep } from './utils';
+import { findFieldsOfType, findFieldsWithOption, getSumMatchRules, keyErrorsByStep } from './utils';
 
 export type FormStep = { id: string; label: string };
 
@@ -108,6 +108,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     schema,
     submitState: status || SubmitStates.DRAFT,
     subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
+    sumMatchRules: getSumMatchRules(uiSchema),
     summaryData: summaryData
       ? {
           applicationNumber: summaryData?.application_number,
@@ -267,6 +268,11 @@ export const getRequiredFileFieldsAtom = atom((_get) => {
   const { requiredFileFields } = _get(getFormConfigAtom);
 
   return requiredFileFields;
+});
+export const getSumMatchRulesAtom = atom((_get) => {
+  const { sumMatchRules } = _get(getFormConfigAtom);
+
+  return sumMatchRules;
 });
 export const getFormDataAtom = atom((_get) => {
   const formDataAtom = _get(formDataAtomRef);

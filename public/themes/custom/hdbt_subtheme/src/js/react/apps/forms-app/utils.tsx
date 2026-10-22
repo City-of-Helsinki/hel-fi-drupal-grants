@@ -4,7 +4,7 @@ import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { UserType } from './enum/UserType';
 import { communitySettings, privatePersonSettings, unregisteredCommunitySettings } from './formConstants';
 import type { FormStep } from './store';
-import type { ResponseData } from './types/Data';
+import type { ResponseData, SumMatchRule } from './types/Data';
 import type { RJSFFormData } from './types/RJSFFormData';
 
 type SchemaNode = {
@@ -468,6 +468,66 @@ export const getSubventionSum = (formData: RJSFFormData, subventionFields: strin
 
     return totalNumericValue.toString().replace('.', ',');
   }, '0');
+
+/**
+ * Sum numeric values of the given fields.
+ *
+ * Empty and non-numeric values count as zero. Comma decimal separators are accepted.
+ *
+ * @param {object} formData - Form data
+ * @param {string[]} fields - Root-relative dot paths, e.g. 'step.section.field'
+ * @return {number} - Total sum
+ */
+export const sumFieldValues = (formData: RJSFFormData, fields: string[]) =>
+  fields.reduce((acc, field) => {
+    const raw = getNestedSchemaProperty(formData, `.${field}`);
+    const numeric = Number(String(raw ?? '0').replace(',', '.'));
+    return Number.isNaN(numeric) ? acc : acc + numeric;
+  }, 0);
+
+/**
+ * Collect sum match rules declared with `misc:sum-match` in the uiSchema.
+ *
+ * Fields compared default to the field's computedSum `sourceFields`, or the
+ * field itself when it is a regular input.
+ *
+ * @param {object} uiSchema - Form Ui Schema
+ * @return {array} - Sum match rules
+ */
+export const getSumMatchRules = (uiSchema: UiSchema): SumMatchRule[] =>
+  Array.from(findFieldsWithOption(uiSchema, 'misc:sum-match')).map((path) => {
+    const fieldUiSchema = path.split('.').reduce((acc: UiSchema | undefined, key) => acc?.[key], uiSchema);
+    const { compareTo = [], fields, message } = fieldUiSchema?.['misc:sum-match'] ?? {};
+    const sourceFields = fieldUiSchema?.['ui:options']?.sourceFields as string[] | undefined;
+
+    return { compareTo, fields: fields ?? sourceFields ?? [path], message, path };
+  });
+
+/**
+ * Check a sum match rule against form data.
+ *
+ * Rules where none of the fields have a value pass, so empty optional
+ * sections don't produce errors. Sums are compared to two decimals.
+ *
+ * @param {object} formData - Form data
+ * @param {object} rule - Sum match rule
+ * @return {array|null} - [sum, compareSum] when the sums differ, null otherwise
+ */
+export const getSumMismatch = (formData: RJSFFormData, rule: SumMatchRule): [number, number] | null => {
+  const hasValues = [...rule.fields, ...rule.compareTo].some((field) => {
+    const value = getNestedSchemaProperty(formData, `.${field}`);
+    return value != null && String(value).trim() !== '';
+  });
+
+  if (!hasValues) {
+    return null;
+  }
+
+  const sum = sumFieldValues(formData, rule.fields);
+  const compareSum = sumFieldValues(formData, rule.compareTo);
+
+  return Math.round(sum * 100) === Math.round(compareSum * 100) ? null : [sum, compareSum];
+};
 
 /**
  * Check if the form is in draft mode.

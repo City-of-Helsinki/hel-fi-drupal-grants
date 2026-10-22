@@ -4,22 +4,12 @@ import { useAtomValue } from 'jotai';
 import { useEffect, type ComponentPropsWithRef } from 'react';
 
 import { formDataAtomRef, shouldRenderPreviewAtom } from '../../store';
-import { getNestedSchemaProperty, getSubventionSum, sanitizeNumericInput } from '../../utils';
+import { formatErrors, getSubventionSum, sanitizeNumericInput, sumFieldValues } from '../../utils';
 import { PreviewInput } from '../Input';
 
 type SourceShape = 'scalar' | 'subvention';
 
-const sumScalarFields = (formData: unknown, sourceFields: string[]): string => {
-  const total = sourceFields.reduce((acc, field) => {
-    const raw = getNestedSchemaProperty(formData as never, `.${field}`);
-    const numeric = Number(String(raw ?? '0').replace(',', '.'));
-    return Number.isNaN(numeric) ? acc : acc + numeric;
-  }, 0);
-
-  return total.toString().replace('.', ',');
-};
-
-export const ComputedSum = ({ formData, idSchema, name, onChange, schema, uiSchema }: FieldProps) => {
+export const ComputedSum = ({ formData, idSchema, name, onChange, rawErrors, schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const formDataAtom = useAtomValue(formDataAtomRef);
   const data = useAtomValue(formDataAtom);
@@ -41,7 +31,7 @@ export const ComputedSum = ({ formData, idSchema, name, onChange, schema, uiSche
           sourceFields.map((field) => `.${field}`),
           subventionType,
         )
-      : sumScalarFields(data, sourceFields);
+      : sumFieldValues(data, sourceFields).toString().replace('.', ',');
 
   const valueToWrite = numericOutput ? Number(sum.replace(',', '.')) : sum;
 
@@ -71,7 +61,9 @@ export const ComputedSum = ({ formData, idSchema, name, onChange, schema, uiSche
       {...({
         className: 'hdbt-form--field--computed-sum',
         disabled: true,
+        errorText: formatErrors(rawErrors),
         id: idSchema.$id,
+        invalid: Boolean(rawErrors?.length),
         label: schema?.title,
         name,
         value: formattedSum,

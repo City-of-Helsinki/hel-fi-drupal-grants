@@ -51,6 +51,18 @@ We have introduced some custom ways to configure the forms.
 * **misc:formats** `string[]` Narrows which file types an `atvFile` field accepts, e.g. `["pdf", "doc", "docx"]`. Values must come from `ALLOWED_FORMATS` in `FileInput.tsx`.
 * **misc:max-length** `number` Determines max length for a textarea field. See `Input.tsx`.
 * **misc:variant** `string` Determines a variant of a component to be rendered. See `TextParagraph.tsx`.
+* **misc:sum-match** `object` Validates that the sum of `fields` equals the sum of `compareTo`. On mismatch the error is shown on this field and in the error list, and the user can't move past the step or submit. Keys: `compareTo` `string[]` (root-relative dot paths, required), `fields` `string[]` (defaults to the field's computedSum `sourceFields`, or the field itself), `message` `string` (translation key, defaults to `sum_match.mismatch`; `{{left}}` and `{{right}}` interpolate the two sums). Skipped while every field involved is empty. Typically placed on a visible `computedSum` total so the error shows next to it. Example:
+  ```
+  "gender_total": {
+    "ui:field": "computedSum",
+    "ui:options": { "sourceFields": ["step.participants.gender.women", "step.participants.gender.men", "step.participants.gender.other", "step.participants.gender.unknown"] },
+    "misc:exclude-from-submit": true,
+    "misc:sum-match": {
+      "compareTo": ["step.participants.age.minors", "step.participants.age.adults", "step.participants.age.seniors"],
+      "message": "participants.age_gender_mismatch"
+    }
+  }
+  ```
 * **misc:exclude-from-submit** `boolean` Strips the field from the data sent to the backend on both submit and draft save. Used for synthetic helper fields (e.g. a `computedSum` that only exists to drive conditional rendering). See `FormWrapper.tsx`.
 
 ### Variants
