@@ -9,14 +9,20 @@ It's designed to test applications across all modern web browsers by running tes
 
 ## Implemented tests
 
-### Grant application tests
-- Tests have been implemented for all grant applications.
+### React grant application tests
+- React forms are tested with a shared engine. One `form.spec.ts` per form drives the whole flow.
+- These tests are located in `/e2e/tests/forms/{application_type_id}_{form_identifier}/`, e.g. `/e2e/tests/forms/48_kuva_projekti/`.
+- All React forms run in the `forms-react` project. Each form also has its own project, e.g. `forms-48-kuva-projekti`.
+- See the [React form tests README](utils/react/README.md) for the tested flow, adding a form, per-form customization and debugging.
+
+### Legacy grant application tests
+- Tests have been implemented for all legacy webform grant applications.
 - These tests are located in the `/e2e/tests/forms/` directory, and they follow the naming convention `{user_role}_{application_id}.ts`, e.g. `registered_community_48.ts`.
-- The tests use data that is derived from the `/e2e/utilis/data/application/` directory.
+- The tests use data that is derived from the `/e2e/utils/data/application/` directory.
 - The application test data files follow the naming convention `application_data_{application_id}.ts`, e.g. `application_data_48.ts`.
 
 #### The following functionality is tested:
-- Filling in an application from start to finnish.
+- Filling in an application from start to finish.
 - Verifying the content of a submitted application.
 - Verifying the "save as draft" button is present on an active application.
 - Filling an application with missing/wrong data and verifying the printed error messages (both inline form errors and general error messages printed at the top of the page can be tested).
@@ -29,7 +35,7 @@ It's designed to test applications across all modern web browsers by running tes
 ### User role tests
 - Tests have been implemented for all user roles (registered community, unregistered community and private person).
 - These tests are located in the `/e2e/tests/profiles/` directory, and they follow the naming convention `{user_role}.ts`, e.g. `registered_community.ts`.
-- The tests use data that is derived from the `/e2e/utilis/data/` directory.
+- The tests use data that is derived from the `/e2e/utils/data/` directory.
 - The profile test data files follow the naming convention `profile_data_{user_role}.ts`, e.g. `profile_data_registered_community.ts`.
 
 #### The following functionality is tested:
@@ -48,13 +54,12 @@ It's designed to test applications across all modern web browsers by running tes
 ### Smoke tests
 - Smoke test have been implemented to lightly test the general site. These tests mainly check that certain components exist on various pages.
 - These tests are located in the `/e2e/tests/public/` directory. The test files are named after the page the tests are executed on.
-- The tests use data that is derived from the `/e2e/utilis/data/public_page_data.ts`.
+- The tests use data that is derived from the `/e2e/utils/data/public_page_data.ts`.
 
-## Environment setup.
+## Environment setup
 
 ### The .env file
-The following environment variables need to be set in a `.env` files for the tests to work.
-The file should be located in the `/e2e` directory.
+Copy `/e2e/.env.example` to `/e2e/.env` and set the variables below.
 
 #### Mandatory:
 - **APP_ENV**: The local APP env (usually LOCAL{X}, where {X} is exchanged for the first letter in your last name, like LOCALT).
@@ -62,14 +67,16 @@ The file should be located in the `/e2e` directory.
 - **TEST_USER_UUID** A test users UUID (can be found from a ATV document in Postman).
 
 #### Optional:
-- **APP_DEBUG**: Boolean indicating if messages should be printed to the terminal when running tests.
-- **ENABLED_FORM_VARIANTS**: Can be used to explicitly run specific form variants. Others are skipped.
-- **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests).
-- **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
+- **APP_DEBUG**: Set to "TRUE" to print debug messages to the terminal when running tests.
+- **ENABLED_FORM_VARIANTS**: Can be used to explicitly run specific form variants. Others are skipped. Legacy form tests only.
+- **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests). Legacy form tests only.
+- **CREATE_PROFILE**: Set to "TRUE" to create new profiles on each test run. Otherwise a profile is created once every hour.
 - **RESET_PROFILE**: Set to "TRUE" to restore edited profile data instead of running the profile edit tests. Use this when a failed edit test has left a profile with edited data: `RESET_PROFILE=TRUE npx playwright test --project profile-edits --no-deps`. The `--no-deps` flag is needed, since the profile tests fail while the profile holds edited data.
 - **WAIT_FOR_TEXT_TIMEOUT**: The time to wait for text in MS (defaults to 60000, 1 minute). Used by the waitForTextWithInterval() function.
 - **WAIT_FOR_TEXT_INTERVAL**: How often to query text in MS (defaults to 5000, 5 seconds). Used by the waitForTextWithInterval() function.
-- **SKIP_SUBMIT**: Set to "true" to skip submitting a React form. The form is filled and saved as a draft, the draft is then removed, and the submit and post submit checks are skipped.
+- **SKIP_SUBMIT**: Set to "true" or "1" to skip submitting a React form. The form is filled and saved as a draft, the draft is then removed, and the submit and post submit checks are skipped.
+- **TEST_BASEURL**: The site URL (defaults to `https://hel-fi-drupal-grant-applications.docker.so`).
+- **SLOWMO**: Set to any value to pause for one second before each browser action.
 
 Example `.env` file:
 ```
@@ -119,55 +126,63 @@ SKIP_SUBMIT="true"
 # These can and should be changed for your own testing credentials.
 TEST_USER_SSN="090797-999P"
 TEST_USER_UUID="13cb60ae-269a-46da-9a43-da94b980c067"
-
-# Environemnt cleanup: clean-env.sh searches for these
-# IDs from ATV and removes any found documents.
-USER_IDS=("uuid1" "uuid2" "uuid3")
-BUSINESS_IDS=("business1" "business2" "business3")
 ```
 
 ## Running E2E tests
 
 ### TL;DR
 
-RUN ALL FORM TESTS (not that this will run every single E2E test, and it is going to take around 2 hours):
+Start the project with the `testing` compose profile, so the `e2e` container is running:
+```
+COMPOSE_PROFILES=testing make up
+```
+
+Run a single React form:
+```
+make test-pw-p PROJECT=forms-70-iakkaiden
+```
+
+Run all React forms:
+```
+make test-pw-p PROJECT=forms-react
+```
+
+Run everything in the `forms` directory, legacy and React forms, with profile tests as dependencies. This takes hours:
 ```
 make test-pw
 ```
 
-RUN A SPECIFIC SET OF TESTS (more options under the `projects` key in `playwright.config.ts`):
-```
-make test-pw-p PROJECT=forms-48-registered
-```
+All projects are listed under the `projects` key in `playwright.config.ts`.
+Every project runs its `dependencies` first, so running a form also runs the profile tests for the roles it uses.
 
 ### Running E2E tests in Docker (the recommended way)
 
-To run all form and user tests (this runs the `forms-all` defined under the `projects` key in `playwright.config.ts`):
+The `e2e` container only exists when the project is started with `COMPOSE_PROFILES=testing make up`.
+
+To run the `forms-all` project:
 ```
 make test-pw
 ```
 
-To run all tests in headed mode (displays a browser):
+To run the `forms-all` project in headed mode (displays a browser):
 ```
 make test-pw-headed
 ```
 
-To run a specific set of tests. Available sets (projects) can be found in `playwright.config.ts`:
+To run a specific project:
 ```
 make test-pw-p PROJECT={NAME_OF_PROJECT}
 
-Example 1: make test-pw-p PROJECT=forms-48
+Example 1: make test-pw-p PROJECT=forms-48-kuva-projekti
 
 Example 2: make test-pw-p PROJECT=forms-48-registered
-
 ```
 
-To run a specific set of tests in headed mode:
+To run a specific project in headed mode:
 ```
 make test-pw-ph PROJECT={NAME_OF_PROJECT}
 
-Example 1: make test-pw-ph PROJECT=forms-48
-
+Example: make test-pw-ph PROJECT=forms-48-kuva-projekti
 ```
 
 To run all profile tests:
@@ -175,6 +190,7 @@ To run all profile tests:
 make test-pw-profiles
 ```
 
+Headed mode needs an X server on the host, since the container uses the host `DISPLAY`.
 
 ### Running tests on your local machine (in the /e2e directory)
 Running tests on your local machine is discouraged and should only be done if
@@ -182,65 +198,66 @@ running them in a docker container is not an option. This might be needed in a s
 where a certain feature (such as headed mode) doesn't work on your operating systems when
 executing tests via a container.
 
-To run all tests (this runs all tests defined under the `projects` key in `playwright.config.ts`):
+Install the dependencies and browsers first:
 ```
-npx playwright test
-```
-
-To run all tests in headed mode (displays a browser):
-```
-npx playwright test --headed
+npm install
+npx playwright install
 ```
 
-To exit on first error:
-```
-npx playwright test -x
-```
+Always pass a project. `npx playwright test` without `--project` runs every project, and most tests run several times.
 
-To run a specific set of tests. Available sets (projects) can be found in `playwright.config.ts`:
+To run a specific project:
 ```
 npx playwright test --project {NAME_OF_PROJECT}
 
-Example 1: npx playwright test --project forms-48
+Example 1: npx playwright test --project forms-70-iakkaiden
 
 Example 2: npx playwright test --project forms-48-registered
 
-Example 3: npx playwright test --project forms-all
+Example 3: npx playwright test --project forms-react
 ```
 
-To run a specific set of tests in headed mode:
+To run a specific project in headed mode:
 ```
 npx playwright test --project {NAME_OF_PROJECT} --headed
-
-Example 1: npx playwright test --project forms-48 --headed
-
-Example 2: npx playwright test --project forms-48-registered --headed
-
-Example 3: npx playwright test --project forms-all --headed
 ```
 
-To run a specific set of tests in headed mode with a slow-motion feature that pauses for one second before entering data:
+To run a specific project in headed mode with a one second pause before each action:
 ```
 SLOWMO=true npx playwright test --project {NAME_OF_PROJECT} --headed
 ```
 
-Other command line options that can be utilized when running the test on your local machine can be found [here](https://playwright.dev/docs/test-cli).
+To exit on first error:
+```
+npx playwright test --project {NAME_OF_PROJECT} -x
+```
+
+To skip the profile tests a project depends on:
+```
+npx playwright test --project {NAME_OF_PROJECT} --no-deps
+```
+
+To view the report of the last run:
+```
+npx playwright show-report
+```
+
+Other command line options can be found [here](https://playwright.dev/docs/test-cli).
 
 ### Deleting applications from your local env
 After you've been running tests for a while, you might end up in a situation where
 you're left with a lot of applications in your local environment, which makes it slow.
-To fix this issue, you can set the keys `USER_IDS` and `BUSINESS_IDS` in the .env file,
-and run the script `clean-env.sh`.
+The `clean-env.sh` script deletes every ATV document of your `APP_ENV`.
+It reads `APP_ENV` from `/e2e/.env` and the ATV credentials from `public/sites/default/local.settings.php`, and needs `curl` and `jq`.
 
+Delete all documents:
 ```
-Set in the .env file (example values):
-USER_IDS="d2694883-9ef0-4c59-9720-1c2c05ad1rt9"
-BUSINESS_IDS="7009192-5"
+make delete-docs-all
 ```
 
+Delete drafts only:
 ```
-Execute the script
-make shell > e2e/clean-env.sh
+make delete-docs-draft
 ```
 
 ## Known problems
