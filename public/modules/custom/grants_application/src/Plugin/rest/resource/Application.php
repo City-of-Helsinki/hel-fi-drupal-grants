@@ -331,15 +331,8 @@ final class Application extends ResourceBase {
     }
 
     $errors = $this->validate($form_identifier, $form_data);
-    if (is_array($errors)) {
-      // Encode changes (empty)array into object in some cases
-      $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-    }
-
-    $sumErrors = $this->sumMatchValidator->validate($form_data, $settings, $this->languageManager->getCurrentLanguage()->getId());
-    if ($sumErrors) {
-      $this->logger->info("User submitted mismatching sums on application $form_identifier: " . json_encode($sumErrors));
-      return new JsonResponse(['error' => array_values($sumErrors)], 400);
+    if ($errors) {
+      return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
@@ -590,15 +583,8 @@ final class Application extends ResourceBase {
 
 
     $errors = $this->validate($form_identifier, $form_data);
-    if (is_array($errors)) {
-      // Encode changes (empty)array into object in some cases
-      $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-    }
-
-    $sumErrors = $this->sumMatchValidator->validate($form_data, $settings, $this->languageManager->getCurrentLanguage()->getId());
-    if ($sumErrors) {
-      $this->logger->info("User submitted mismatching sums on application $form_identifier: " . json_encode($sumErrors));
-      return new JsonResponse(['error' => array_values($sumErrors)], 400);
+    if ($errors) {
+      return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
@@ -775,27 +761,35 @@ final class Application extends ResourceBase {
   }
 
   /**
+   * Validate the submitted form data.
+   *
+   * JSON schema errors are only logged, as they don't block submitting.
+   * Sum match errors block submitting.
+   *
    * @param string $formIdentifier
    *   The form identifier.
    * @param array $formData
    *   The form data.
    *
-   * @return bool|array
-   *   Is valid or array of errors.
+   * @return string[]
+   *   Error messages that block submitting, empty if valid.
    */
-  private function validate(string $formIdentifier, array $formData): bool|array {
+  private function validate(string $formIdentifier, array $formData): array {
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($formIdentifier);
     $results = $this->jsonSchemaValidator->validate(json_decode(json_encode($formData)), json_decode(json_encode($settings->getSchema())));
 
     if (is_array($results)) {
-      $errors = [];
-      foreach ($results as $error) {
-        $errors[] = $error['message'];
-      }
-      $results = $errors;
+      $schemaErrors = array_map(fn (array $error) => $error['message'], $results);
+      // Encode changes (empty)array into object in some cases
+      $this->logger->alert("User encountered validation error on application $formIdentifier: " . json_encode($schemaErrors));
     }
 
-    return $results;
+    $sumErrors = $this->sumMatchValidator->validate($formData, $settings, $this->languageManager->getCurrentLanguage()->getId());
+    if ($sumErrors) {
+      $this->logger->info("User submitted mismatching sums on application $formIdentifier: " . json_encode($sumErrors));
+    }
+
+    return array_values($sumErrors);
   }
 
 }
