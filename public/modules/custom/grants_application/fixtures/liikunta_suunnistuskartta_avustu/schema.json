@@ -30,8 +30,7 @@
                   "properties": {
                     "map_name": {
                       "title": "map_name.title",
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "size": {
                       "format": "decimal-number",
@@ -65,8 +64,7 @@
                 "properties": {
                   "map_name": {
                     "title": "map_name.title",
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "size": {
                     "format": "decimal-number",

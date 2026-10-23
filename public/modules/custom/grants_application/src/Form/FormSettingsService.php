@@ -73,7 +73,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
   public function getFormSettings(int|string $form_type_id, ?string $identifier = NULL): FormSettings {
     // ID70 requires identifier.
     $form_type = array_find($this->formTypes, fn($type) =>
-      $type['id'] == (int) $form_type_id && $type['form_identifier'] === $identifier
+      $type['id'] == (int) $form_type_id && $type['form_identifier'] == $identifier
     );
 
     if (!$form_type || !isset($form_type['id'])) {
@@ -109,7 +109,6 @@ final class FormSettingsService implements FormSettingsServiceInterface {
 
     // Combine form specific translations with default translations.
     $settings['translation'] = $this->combineTranslations($settings['translation']);
-
     return new FormSettings(...$settings);
   }
 
