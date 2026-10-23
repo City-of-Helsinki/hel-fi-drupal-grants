@@ -130,7 +130,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    */
   public function getFormSettingsByFormName(string $name): FormSettings|NULL {
     foreach ($this->formTypes as $form_type) {
-      if (array_find($form_type['labels'], fn($label) => $label === $name)) {
+      if (array_find($form_type['labels'], fn($label) => $label == $name)) {
         try {
           return $this->getFormSettingsByFormIdentifier($form_type['form_identifier']);
         }
