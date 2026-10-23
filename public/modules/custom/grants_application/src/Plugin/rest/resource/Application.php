@@ -22,6 +22,7 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
+use Drupal\grants_application\SumMatchValidator;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationStatusService;
@@ -78,6 +79,7 @@ final class Application extends ResourceBase {
     protected JsonMapperService $jsonMapperService,
     protected Avus2DataParser $avus2DataParser,
     protected ApplicationService $applicationService,
+    protected SumMatchValidator $sumMatchValidator,
   ) {
     // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
@@ -111,6 +113,7 @@ final class Application extends ResourceBase {
       $container->get(JsonMapperService::class),
       $container->get(Avus2DataParser::class),
       $container->get(ApplicationService::class),
+      $container->get(SumMatchValidator::class),
     );
   }
 
@@ -331,6 +334,12 @@ final class Application extends ResourceBase {
     if (is_array($errors)) {
       // Encode changes (empty)array into object in some cases
       $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
+    }
+
+    $sumErrors = $this->sumMatchValidator->validate($form_data, $settings, $this->languageManager->getCurrentLanguage()->getId());
+    if ($sumErrors) {
+      $this->logger->info("User submitted mismatching sums on application $form_identifier: " . json_encode($sumErrors));
+      return new JsonResponse(['error' => array_values($sumErrors)], 400);
     }
 
     try {
@@ -584,6 +593,12 @@ final class Application extends ResourceBase {
     if (is_array($errors)) {
       // Encode changes (empty)array into object in some cases
       $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
+    }
+
+    $sumErrors = $this->sumMatchValidator->validate($form_data, $settings, $this->languageManager->getCurrentLanguage()->getId());
+    if ($sumErrors) {
+      $this->logger->info("User submitted mismatching sums on application $form_identifier: " . json_encode($sumErrors));
+      return new JsonResponse(['error' => array_values($sumErrors)], 400);
     }
 
     try {
