@@ -355,7 +355,7 @@ final class ApplicationController extends ControllerBase {
     $build = [
       '#theme' => 'grants_application_view',
       '#print_application_link' => $submission->getPrintApplicationUrl(),
-      '#copy_text' => 'Copy application',
+      '#copy_text' => $this->t('Copy application', [], ['context' => 'Grants application: Submitted form']),
       '#submission_id' => $application_number,
       '#application_submit_date' => $submitted,
       '#history' => $history,

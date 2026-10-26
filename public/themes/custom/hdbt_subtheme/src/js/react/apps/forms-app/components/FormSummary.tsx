@@ -1,8 +1,6 @@
-import { Button, ButtonVariant, IconCopy, IconPrinter } from 'hds-react';
+import { Button, ButtonVariant, IconPrinter } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { useState } from 'react';
 import { supplementaryButtonTheme } from '@/react/common/constants/buttonTheme';
-import { Requests } from '../Requests';
 import { getFormConfigAtom, getFormTitleAtom, getSummaryDataAtom } from '../store';
 
 const getHandlerKey = (index: number) => {
@@ -19,29 +17,15 @@ const getHandlerKey = (index: number) => {
 };
 
 export const FormSummary = () => {
-  const [disableActions, setDisableActions] = useState(false);
   const formTitle = useAtomValue(getFormTitleAtom);
   const summaryData = useAtomValue(getSummaryDataAtom);
-  const { applicationNumber, token } = useAtomValue(getFormConfigAtom);
+  const { applicationNumber } = useAtomValue(getFormConfigAtom);
 
   if (!summaryData) {
     return null;
   }
 
   const { applicationSubmitted, attachments, handlers, statusUpdates } = summaryData;
-
-  const copyApplication = async () => {
-    setDisableActions(true);
-    const response = await Requests.DRAFT_APPLICATION_CREATE('58', token, applicationNumber);
-
-    if (response.ok) {
-      const { redirect_url } = await response.json();
-      window.location.href = redirect_url;
-      return;
-    }
-
-    throw new Error('Failed to copy application');
-  };
 
   const latestHandler =
     handlers?.length && Array.isArray(handlers[handlers.length - 1]) ? handlers[handlers.length - 1] : null;
@@ -60,15 +44,6 @@ export const FormSummary = () => {
             }}
           >
             {Drupal.t('Print application', {}, { context: 'Grants application: Submitted form' })}
-          </Button>
-          <Button
-            disabled={disableActions}
-            iconStart={<IconCopy />}
-            theme={supplementaryButtonTheme}
-            onClick={copyApplication}
-            variant={ButtonVariant.Supplementary}
-          >
-            {Drupal.t('Copy application', {}, { context: 'Grants application: Submitted form' })}
           </Button>
         </div>
       </div>

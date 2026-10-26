@@ -10,6 +10,12 @@
         <span aria-hidden="true" class="hel-icon hel-icon--printer"></span>
         <span class="hds-button__label">{{ "Print application"|t }}</span>
       </a>
+      {% if is_copyable %}
+        <a class="hds-button hds-button--supplementary" href="{{ path('helfi_grants.forms_app_copy_application', {form_identifier: form_identifier, original_application_number: submission_id}) }}">
+          <span aria-hidden="true" class="hel-icon hel-icon--copy"></span>
+          <span class="hds-button__label">{{ copy_text }}</span>
+        </a>
+      {% endif %}
     </div>
   </div>
   <div class="hdbt-react-form__submission-info__row hdbt-react-form__submission-info__row--main">
