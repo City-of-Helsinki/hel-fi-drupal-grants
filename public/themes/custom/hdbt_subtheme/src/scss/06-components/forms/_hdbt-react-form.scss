@@ -246,3 +246,25 @@
     }
   }
 }
+
+// Computed sum field is readonly so that error handling can focus it in dom.
+// It's styled as disabled so that design matches what we render.
+.grants-form .hdbt-form--field--computed-sum input[readonly] {
+  -webkit-text-fill-color: var(--input-color-disabled);
+  background-color: var(--input-background-disabled);
+  border: var(--border-width) solid var(--input-border-color-disabled);
+  color: var(--input-color-disabled);
+  cursor: not-allowed;
+  padding: 0 var(--spacing-s);
+
+  &[aria-invalid='true'] {
+    border-color: var(--input-border-color-invalid);
+  }
+}
+
+.grants-form .hdbt-form--field--computed-sum:focus-within input[readonly]:focus {
+  box-shadow: 0 0 0 var(--outline-width) var(--color-focus-outline);
+  height: var(--input-height);
+  margin: 0;
+  outline: none;
+}

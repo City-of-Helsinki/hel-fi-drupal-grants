@@ -59,13 +59,14 @@ export const ComputedSum = ({ formData, idSchema, name, onChange, rawErrors, sch
   return (
     <TextInput
       {...({
+        'aria-invalid': Boolean(rawErrors?.length) || undefined,
         className: 'hdbt-form--field--computed-sum',
-        disabled: true,
         errorText: formatErrors(rawErrors),
         id: idSchema.$id,
         invalid: Boolean(rawErrors?.length),
         label: schema?.title,
         name,
+        readOnly: true,
         value: formattedSum,
       } as ComponentPropsWithRef<typeof TextInput>)}
     />

@@ -53,7 +53,7 @@ import {
   setStepAtom,
 } from '../store';
 import type { RJSFFormData } from '../types/RJSFFormData';
-import { expandConditionalRequiredErrors, getSumMismatch, isDraft, keyErrorsByStep } from '../utils';
+import { expandConditionalRequiredErrors, focusError, getSumMismatch, isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 
 const widgets: RegistryWidgetsType = {
@@ -152,10 +152,10 @@ export const RJSFFormContainer = ({
     const [currentStepIndex] = readCurrentStep();
 
     const currentPageErrors = keyedErrors.filter(([index]) => index === currentStepIndex);
+    const form = formRef.current?.formElement.current as HTMLFormElement | null | undefined;
 
-    if (currentPageErrors.length) {
-      formRef.current?.focusOnError(currentPageErrors[0][1]);
-    }
+    // Focus the first error that has a focusable element.
+    currentPageErrors.some(([, error]) => focusError(form, error));
   };
 
   /**

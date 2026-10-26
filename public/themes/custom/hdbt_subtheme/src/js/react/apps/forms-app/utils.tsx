@@ -529,6 +529,59 @@ export const getSumMismatch = (formData: RJSFFormData, rule: SumMatchRule): [num
   return Math.round(sum * 100) === Math.round(compareSum * 100) ? null : [sum, compareSum];
 };
 
+const FOCUSABLE_SELECTOR = 'input:not([type="hidden"]), select, textarea, button';
+
+const isFocusable = (element: Element): element is HTMLElement =>
+  element instanceof HTMLElement &&
+  element.matches(FOCUSABLE_SELECTOR) &&
+  !(element as HTMLInputElement).disabled &&
+  element.tabIndex >= 0;
+
+const findFocusable = (element: Element | null | undefined): HTMLElement | undefined => {
+  if (!element) {
+    return undefined;
+  }
+
+  return isFocusable(element) ? element : Array.from(element.querySelectorAll(FOCUSABLE_SELECTOR)).find(isFocusable);
+};
+
+/**
+ * Focus the form element of a validation error.
+ *
+ * RJSF's own focusOnError only focuses an exact id match or an input whose id
+ * starts with it, and silently does nothing for wrapper elements (HDS Select,
+ * file inputs) or disabled inputs. This falls back to the first focusable
+ * element inside the match, then inside its closest fieldset or section, and
+ * scrolls the field into view with its error message.
+ *
+ * @param {HTMLFormElement} form - The form element
+ * @param {object} error - RJSF validation error
+ * @return {boolean} - Whether an element was focused
+ */
+export const focusError = (form: HTMLFormElement | null | undefined, error: RJSFValidationError): boolean => {
+  if (!form || !error.property) {
+    return false;
+  }
+
+  const elementId = `root${error.property.replace(/\[(\d+)\]/g, '.$1').replaceAll('.', '_')}`;
+  const element = form.querySelector(`[id="${elementId}"]`) ?? form.querySelector(`[id^="${elementId}"]`);
+  const target = findFocusable(element) ?? findFocusable(element?.closest('fieldset, section'));
+
+  if (!target) {
+    return false;
+  }
+
+  // Scroll the whole field into view, so its error message below the input is
+  // visible too.
+  const field = target.closest('.form-group');
+  const scrollTarget = field && field.getBoundingClientRect().height < window.innerHeight ? field : target;
+
+  target.focus({ preventScroll: true });
+  scrollTarget.scrollIntoView({ block: 'center' });
+
+  return true;
+};
+
 /**
  * Check if the form is in draft mode.
  *
