@@ -4,7 +4,7 @@ import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { UserType } from './enum/UserType';
 import { communitySettings, privatePersonSettings, unregisteredCommunitySettings } from './formConstants';
 import type { FormStep } from './store';
-import type { ResponseData, SumMatchRule } from './types/Data';
+import type { ResponseData, SumMatchRule, SumMatchState } from './types/Data';
 import type { RJSFFormData } from './types/RJSFFormData';
 
 type SchemaNode = {
@@ -497,11 +497,26 @@ export const sumFieldValues = (formData: RJSFFormData, fields: string[]) =>
 export const getSumMatchRules = (uiSchema: UiSchema): SumMatchRule[] =>
   Array.from(findFieldsWithOption(uiSchema, 'misc:sum-match')).map((path) => {
     const fieldUiSchema = path.split('.').reduce((acc: UiSchema | undefined, key) => acc?.[key], uiSchema);
-    const { compareTo = [], fields, message } = fieldUiSchema?.['misc:sum-match'] ?? {};
+    const { compareTo = [], fields, message, successMessage } = fieldUiSchema?.['misc:sum-match'] ?? {};
     const sourceFields = fieldUiSchema?.['ui:options']?.sourceFields as string[] | undefined;
 
-    return { compareTo, fields: fields ?? sourceFields ?? [path], message, path };
+    return { compareTo, fields: fields ?? sourceFields ?? [path], message, path, successMessage };
   });
+
+const hasValue = (formData: RJSFFormData, field: string) => {
+  const value = getNestedSchemaProperty(formData, `.${field}`);
+  return value != null && String(value).trim() !== '';
+};
+
+/**
+ * Check whether both sides of a sum match rule have at least one value.
+ *
+ * @param {object} formData - Form data
+ * @param {object} rule - Sum match rule
+ * @return {boolean} - Whether both groups have been filled in
+ */
+export const hasSumMatchValuesOnBothSides = (formData: RJSFFormData, rule: SumMatchRule) =>
+  rule.fields.some((field) => hasValue(formData, field)) && rule.compareTo.some((field) => hasValue(formData, field));
 
 /**
  * Check a sum match rule against form data.
@@ -514,12 +529,7 @@ export const getSumMatchRules = (uiSchema: UiSchema): SumMatchRule[] =>
  * @return {array|null} - [sum, compareSum] when the sums differ, null otherwise
  */
 export const getSumMismatch = (formData: RJSFFormData, rule: SumMatchRule): [number, number] | null => {
-  const hasValues = [...rule.fields, ...rule.compareTo].some((field) => {
-    const value = getNestedSchemaProperty(formData, `.${field}`);
-    return value != null && String(value).trim() !== '';
-  });
-
-  if (!hasValues) {
+  if (![...rule.fields, ...rule.compareTo].some((field) => hasValue(formData, field))) {
     return null;
   }
 
@@ -528,6 +538,60 @@ export const getSumMismatch = (formData: RJSFFormData, rule: SumMatchRule): [num
 
   return Math.round(sum * 100) === Math.round(compareSum * 100) ? null : [sum, compareSum];
 };
+
+const formatSum = (sum: number) => (Math.round(sum * 100) / 100).toString().replace('.', ',');
+
+/**
+ * Validate a sum match rule and build its message.
+ *
+ * The mismatch message can interpolate {{left}} (sum of `fields`), {{right}}
+ * (sum of `compareTo`) and {{difference}}.
+ *
+ * @param {object} formData - Form data
+ * @param {object} rule - Sum match rule
+ * @param {function} t - Translation function
+ * @return {object|undefined} - The state, or undefined when no field has a value
+ */
+export const getSumMatchState = (
+  formData: RJSFFormData,
+  rule: SumMatchRule,
+  t: (key: string, options?: Record<string, string>) => string | null,
+): SumMatchState | undefined => {
+  if (![...rule.fields, ...rule.compareTo].some((field) => hasValue(formData, field))) {
+    return undefined;
+  }
+
+  const mismatch = getSumMismatch(formData, rule);
+
+  if (!mismatch) {
+    const key = rule.successMessage ?? 'sum_match.match';
+    return { message: t(key) ?? key, status: 'match' };
+  }
+
+  const [left, right] = mismatch.map(formatSum);
+  const difference = formatSum(Math.abs(mismatch[0] - mismatch[1]));
+  const key = rule.message ?? 'sum_match.mismatch';
+
+  return { message: t(key, { difference, left, right }) ?? key, status: 'mismatch' };
+};
+
+/**
+ * Find the sum match rule a field takes part in.
+ *
+ * @param {array} rules - Sum match rules
+ * @param {array} fields - Field paths
+ * @return {object|undefined} - The first rule comparing any of the fields
+ */
+export const findSumMatchRule = (rules: SumMatchRule[], fields: string[]) =>
+  rules.find((rule) => fields.some((field) => rule.fields.includes(field) || rule.compareTo.includes(field)));
+
+/**
+ * Convert a root-relative dot path to an RJSF element id.
+ *
+ * @param {string} path - Dot path, e.g. 'step.section.field'
+ * @return {string} - The element id, e.g. 'root_step_section_field'
+ */
+export const pathToElementId = (path: string) => `root_${path.replaceAll('.', '_')}`;
 
 const FOCUSABLE_SELECTOR = 'input:not([type="hidden"]), select, textarea, button';
 
@@ -565,7 +629,11 @@ export const focusError = (form: HTMLFormElement | null | undefined, error: RJSF
 
   const elementId = `root${error.property.replace(/\[(\d+)\]/g, '.$1').replaceAll('.', '_')}`;
   const element = form.querySelector(`[id="${elementId}"]`) ?? form.querySelector(`[id^="${elementId}"]`);
-  const target = findFocusable(element) ?? findFocusable(element?.closest('fieldset, section'));
+  // Elements that aren't form controls can opt in to receiving the focus,
+  // like the sumMatchStatus notification.
+  const programmaticTarget =
+    element instanceof HTMLElement && element.hasAttribute('data-focus-on-error') ? element : undefined;
+  const target = programmaticTarget ?? findFocusable(element) ?? findFocusable(element?.closest('fieldset, section'));
 
   if (!target) {
     return false;

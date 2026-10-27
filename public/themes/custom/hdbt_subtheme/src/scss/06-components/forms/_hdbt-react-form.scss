@@ -268,3 +268,34 @@
   margin: 0;
   outline: none;
 }
+
+// The computedSum summary variant shows the total as text. After its sum
+// match rule is validated, it's colored by the result.
+.hdbt-form--computed-sum-summary {
+  margin-block-start: $spacing;
+}
+
+.hdbt-form--computed-sum-summary__total {
+  font-size: var(--fontsize-heading-s);
+  font-weight: $font-weight-bold;
+  margin: 0;
+
+  .hdbt-form--computed-sum-summary--match & {
+    color: var(--color-success);
+  }
+
+  .hdbt-form--computed-sum-summary--mismatch & {
+    color: var(--color-error);
+  }
+}
+
+.hdbt-form--computed-sum-summary__description {
+  font-size: var(--fontsize-body-m);
+  margin-block: $spacing-half 0;
+}
+
+// Let the total and the fieldset description span the row in two-column fieldsets.
+.hdbt-react-form__inline-field-group fieldset > .hdbt-form--description,
+.hdbt-react-form__inline-field-group fieldset > .hdbt-form--field--computed-sum {
+  width: 100%;
+}

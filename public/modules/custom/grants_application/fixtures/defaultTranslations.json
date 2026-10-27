@@ -995,6 +995,11 @@
       "fi": "Avustuslajit",
       "sv": "Understödskategorier"
     },
+    "sum_match.match": {
+      "en": "The totals match.",
+      "fi": "Yhteissummat täsmäävät.",
+      "sv": "Totalsummorna stämmer överens."
+    },
     "sum_match.mismatch": {
       "en": "The totals do not match ({{left}} / {{right}}).",
       "fi": "Yhteissummat eivät vastaa toisiaan ({{left}} / {{right}}).",

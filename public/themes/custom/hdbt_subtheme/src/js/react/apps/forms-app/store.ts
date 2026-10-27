@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { SubmitStates } from './enum/SubmitStates';
 import { getUrlParts } from './testutils/Helpers';
 import type { Avus2Message } from './types/Avus2';
-import type { FormConfig, ResponseData } from './types/Data';
+import type { FormConfig, ResponseData, SumMatchState } from './types/Data';
 import type { RJSFFormData } from './types/RJSFFormData';
 import { findFieldsOfType, findFieldsWithOption, getSumMatchRules, keyErrorsByStep } from './utils';
 
@@ -85,6 +85,17 @@ export const formStateAtom = atom<FormState | undefined>(undefined);
 export const formConfigAtom = atom<FormConfig | undefined>(undefined);
 export const formStepsAtom = atom<Map<number, FormStep> | undefined>(undefined);
 export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
+// Form data updated on every change. formDataAtom is only written after a
+// debounce, so derived values like computed sums read this when available.
+export const liveFormDataAtom = atom<RJSFFormData | null>(null);
+// Results of the last validation of each sum match rule, keyed by rule path.
+export const sumMatchStatesAtom = atom<Record<string, SumMatchState>>({});
+export const setSumMatchStateAtom = atom(null, (_get, _set, path: string, state: SumMatchState | undefined) => {
+  _set(sumMatchStatesAtom, (states) => {
+    const { [path]: _previous, ...rest } = states;
+    return state ? { ...rest, [path]: state } : rest;
+  });
+});
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
   const {
     grants_profile: grantsProfile,

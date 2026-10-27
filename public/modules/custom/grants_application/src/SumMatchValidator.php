@@ -43,10 +43,17 @@ final class SumMatchValidator {
         continue;
       }
 
-      [$left, $right] = array_map(fn (float $sum) => str_replace('.', ',', (string) $sum), $mismatch);
+      [$left, $right, $difference] = array_map(
+        fn (float $sum) => str_replace('.', ',', (string) round($sum, 2)),
+        [...$mismatch, abs($mismatch[0] - $mismatch[1])],
+      );
       $key = $rule['message'] ?? self::DEFAULT_MESSAGE;
       $message = $settings->getTranslation($key, $langcode) ?? $key;
-      $errors[$path] = strtr($message, ['{{left}}' => $left, '{{right}}' => $right]);
+      $errors[$path] = strtr($message, [
+        '{{left}}' => $left,
+        '{{right}}' => $right,
+        '{{difference}}' => $difference,
+      ]);
     }
 
     return $errors;

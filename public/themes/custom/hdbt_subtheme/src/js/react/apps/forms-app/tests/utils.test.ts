@@ -4,10 +4,13 @@ import { communitySettings } from '../formConstants';
 import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
 import {
   addApplicantInfoStep,
+  findSumMatchRule,
   getIndicesWithErrors,
   getSubventionSum,
   getSumMatchRules,
+  getSumMatchState,
   getSumMismatch,
+  hasSumMatchValuesOnBothSides,
   keyErrorsByStep,
   sumFieldValues,
 } from '../utils';
@@ -216,5 +219,49 @@ describe('sum match', () => {
       { path: 'step.ages.minors', fields: ['step.ages.minors'], compareTo: ['step.ages.adults'], message: undefined },
       { path: 'step.ages.adults', fields: ['step.ages.seniors'], compareTo: ['step.ages.minors'], message: undefined },
     ]);
+  });
+});
+
+describe('sum match state', () => {
+  const rule = {
+    path: 'step.status',
+    fields: ['step.genders.women', 'step.genders.men'],
+    compareTo: ['step.ages.minors', 'step.ages.adults'],
+  };
+  const t = (key: string, options?: Record<string, string>) => (options ? `${key} ${JSON.stringify(options)}` : key);
+
+  test('hasSumMatchValuesOnBothSides requires a value in each group', () => {
+    expect(hasSumMatchValuesOnBothSides({ step: { ages: { minors: 3 } } }, rule)).toBe(false);
+    expect(hasSumMatchValuesOnBothSides({ step: { ages: { minors: 3 }, genders: { men: '' } } }, rule)).toBe(false);
+    expect(hasSumMatchValuesOnBothSides({ step: { ages: { minors: 3 }, genders: { men: 0 } } }, rule)).toBe(true);
+  });
+
+  test('getSumMatchState is undefined while every field is empty', () => {
+    expect(getSumMatchState({}, rule, t)).toBeUndefined();
+  });
+
+  test('getSumMatchState reports a match with the default or configured success message', () => {
+    const data = { step: { ages: { minors: 3, adults: 5 }, genders: { women: 4, men: 4 } } };
+
+    expect(getSumMatchState(data, rule, t)).toEqual({ message: 'sum_match.match', status: 'match' });
+    expect(getSumMatchState(data, { ...rule, successMessage: 'custom.match' }, t)).toEqual({
+      message: 'custom.match',
+      status: 'match',
+    });
+  });
+
+  test('getSumMatchState interpolates both sums and their difference on mismatch', () => {
+    const data = { step: { ages: { minors: 300, adults: 60 }, genders: { women: '170,5', men: 180 } } };
+
+    expect(getSumMatchState(data, { ...rule, message: 'custom.mismatch' }, t)).toEqual({
+      message: 'custom.mismatch {"difference":"9,5","left":"350,5","right":"360"}',
+      status: 'mismatch',
+    });
+  });
+
+  test('findSumMatchRule finds the rule comparing any of the fields', () => {
+    expect(findSumMatchRule([rule], ['step.ages.adults'])).toBe(rule);
+    expect(findSumMatchRule([rule], ['step.genders.women', 'step.other'])).toBe(rule);
+    expect(findSumMatchRule([rule], ['step.other'])).toBeUndefined();
   });
 });

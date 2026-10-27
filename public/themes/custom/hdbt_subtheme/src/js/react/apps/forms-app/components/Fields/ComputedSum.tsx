@@ -1,10 +1,16 @@
 import type { FieldProps } from '@rjsf/utils';
 import { TextInput } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { useEffect, type ComponentPropsWithRef } from 'react';
+import { type ComponentPropsWithRef, useEffect } from 'react';
 
-import { formDataAtomRef, shouldRenderPreviewAtom } from '../../store';
-import { formatErrors, getSubventionSum, sanitizeNumericInput, sumFieldValues } from '../../utils';
+import {
+  formDataAtomRef,
+  getSumMatchRulesAtom,
+  liveFormDataAtom,
+  shouldRenderPreviewAtom,
+  sumMatchStatesAtom,
+} from '../../store';
+import { findSumMatchRule, formatErrors, getSubventionSum, sanitizeNumericInput, sumFieldValues } from '../../utils';
 import { PreviewInput } from '../Input';
 
 type SourceShape = 'scalar' | 'subvention';
@@ -12,7 +18,11 @@ type SourceShape = 'scalar' | 'subvention';
 export const ComputedSum = ({ formData, idSchema, name, onChange, rawErrors, schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const formDataAtom = useAtomValue(formDataAtomRef);
-  const data = useAtomValue(formDataAtom);
+  const persistedData = useAtomValue(formDataAtom);
+  const liveData = useAtomValue(liveFormDataAtom);
+  const data = liveData ?? persistedData;
+  const sumMatchRules = useAtomValue(getSumMatchRulesAtom);
+  const sumMatchStates = useAtomValue(sumMatchStatesAtom);
 
   const sourceFields = (uiSchema?.['ui:options']?.sourceFields as string[] | undefined) ?? [];
   const sourceShape = (uiSchema?.['ui:options']?.sourceShape as SourceShape | undefined) ?? 'scalar';
@@ -51,6 +61,27 @@ export const ComputedSum = ({ formData, idSchema, name, onChange, rawErrors, sch
   }
 
   const formattedSum = sanitizeNumericInput(sum.toString(), 'decimal-number');
+
+  // The summary variant renders the total as text, with @sum in the title
+  // replaced by the sum. It's colored by the last validation of the sum match
+  // rule comparing its source fields.
+  if (uiSchema?.['misc:variant'] === 'summary') {
+    const total = (schema?.title ?? '').replace('@sum', formattedSum);
+    const rule = findSumMatchRule(sumMatchRules, sourceFields);
+    const status = rule && !shouldRenderPreview ? sumMatchStates[rule.path]?.status : undefined;
+
+    return (
+      <div
+        className={`hdbt-form--computed-sum-summary${status ? ` hdbt-form--computed-sum-summary--${status}` : ''}`}
+        id={idSchema.$id}
+      >
+        <p className='hdbt-form--computed-sum-summary__total'>{total}</p>
+        {schema?.description && !shouldRenderPreview && (
+          <p className='hdbt-form--computed-sum-summary__description'>{schema.description}</p>
+        )}
+      </div>
+    );
+  }
 
   if (shouldRenderPreview) {
     return <PreviewInput label={schema?.title} value={formattedSum} uiSchema={uiSchema} />;

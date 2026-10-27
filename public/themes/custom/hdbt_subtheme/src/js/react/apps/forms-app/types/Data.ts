@@ -20,6 +20,15 @@ export type SumMatchRule = {
   fields: string[];
   message?: string;
   path: string;
+  successMessage?: string;
+};
+
+/**
+ * Result of the last validation of a sum match rule, with its message.
+ */
+export type SumMatchState = {
+  message: string;
+  status: 'match' | 'mismatch';
 };
 
 export type FormConfig = {

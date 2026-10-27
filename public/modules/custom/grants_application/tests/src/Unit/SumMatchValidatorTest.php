@@ -56,6 +56,7 @@ final class SumMatchValidatorTest extends UnitTestCase {
           'fi' => 'Yhteissummat eivät vastaa toisiaan ({{left}} / {{right}}).',
         ],
         'custom.key' => ['fi' => 'Tiedot eivät vastaa toisiaan'],
+        'difference.key' => ['fi' => 'Ero on {{difference}} liikkujaa'],
       ],
     ];
 
@@ -113,6 +114,18 @@ final class SumMatchValidatorTest extends UnitTestCase {
     $this->assertSame(
       ['step.genders.total' => 'Tiedot eivät vastaa toisiaan'],
       (new SumMatchValidator())->validate($formData, $this->getSettings(['message' => 'custom.key']), 'sv'),
+    );
+  }
+
+  /**
+   * The difference between the sums can be interpolated.
+   */
+  public function testDifference(): void {
+    $formData = $this->getFormData(['minors' => 360], ['women' => '349,5']);
+
+    $this->assertSame(
+      ['step.genders.total' => 'Ero on 10,5 liikkujaa'],
+      (new SumMatchValidator())->validate($formData, $this->getSettings(['message' => 'difference.key']), 'fi'),
     );
   }
 
