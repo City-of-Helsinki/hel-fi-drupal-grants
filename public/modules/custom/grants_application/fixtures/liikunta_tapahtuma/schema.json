@@ -140,7 +140,7 @@
             "equality_radios",
             "inclusion_radios",
             "environment_radios",
-            "exercise_radios",
+            "exercise_radios"
           ],
           "allOf": [
             {

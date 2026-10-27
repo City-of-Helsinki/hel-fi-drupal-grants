@@ -28,7 +28,7 @@
         "environment_radios",
         "environment_how",
         "exercise_radios",
-        "exercise_how",
+        "exercise_how"
       ],
       "event_target_group": {
         "ui:widget": "textarea"
