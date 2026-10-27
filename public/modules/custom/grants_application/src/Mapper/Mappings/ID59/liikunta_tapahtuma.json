@@ -338,20 +338,6 @@
   },
 
   "attachmentsInfo.attachmentsArray.0": {
-    "#tip": "tapahtumasuunnitelma, fileType 38",
-    "datasource": "form_data",
-    "source": "attachments_step.attachments_section.event_plan_fieldset.event_plan_fieldset_file",
-    "mapping_type": "file",
-    "data": {
-      "description": {"ID": "description", "value": "Tapahtumasuunnitelma", "valueType": "string", "label": "Liitteen kuvaus"},
-      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
-      "fileType": {"ID": "fileType", "value": "38", "valueType": "int", "label": "fileType"},
-      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
-      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
-    }
-  },
-  "attachmentsInfo.attachmentsArray.1": {
     "#tip": "other attachments, multiple files, fileType 0",
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
