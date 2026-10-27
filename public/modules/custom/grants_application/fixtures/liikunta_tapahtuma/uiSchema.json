@@ -29,8 +29,6 @@
         "environment_how",
         "exercise_radios",
         "exercise_how",
-        "activity_radios",
-        "activity_how"
       ],
       "event_target_group": {
         "ui:widget": "textarea"
@@ -79,16 +77,6 @@
         "ui:widget": "radio"
       },
       "exercise_how": {
-        "ui:widget": "textarea"
-      },
-      "activity_radios": {
-        "ui:enumNames": ["boolean.no", "boolean.yes"],
-        "ui:options": {
-          "affirmativeExpands": true
-        },
-        "ui:widget": "radio"
-      },
-      "activity_how": {
         "ui:widget": "textarea"
       }
     },

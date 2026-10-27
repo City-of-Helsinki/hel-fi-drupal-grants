@@ -292,28 +292,6 @@
       "valueType": "string"
     }
   },
-  "compensation.eventInfoArray.0.14": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.activity_radios",
-    "mapping_type": "default",
-    "data": {
-      "ID": "isEventWorkdayActivating",
-      "label": "Tapahtuma innostaa ihmisiä arkiaktiivisuuteen",
-      "value": "",
-      "valueType": "bool"
-    }
-  },
-  "compensation.eventInfoArray.0.15": {
-    "datasource": "form_data",
-    "source": "grant_info_step.event_info_section.activity_how",
-    "mapping_type": "default",
-    "data": {
-      "ID": "eventWorkdayActivatingText",
-      "label": "Miten tapahtuma innostaa ihmisiä arkiaktiivisuuteen?",
-      "value": "",
-      "valueType": "string"
-    }
-  },
 
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeGroupName": {
     "#tip": "income component hardcoded value 'general'",

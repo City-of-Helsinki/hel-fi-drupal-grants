@@ -1,15 +1,5 @@
 {
   "translations": {
-    "activity_how.title": {
-      "en": "How does the event inspire people to be more actively in their daily lives?",
-      "fi": "Miten tapahtuma innostaa ihmisiä arkiaktiivisuuteen?",
-      "sv": "Hur kommer evenemanget att uppmuntra människor till en fysiskt aktiv vardag?"
-    },
-    "activity_radios.title": {
-      "en": "The event inspires people to be more actively in their daily lives",
-      "fi": "Tapahtuma innostaa ihmisiä arkiaktiivisuuteen",
-      "sv": "Evenemanget uppmuntrar människor till en fysiskt aktiv vardag"
-    },
     "adult_men.title": {
       "en": "Men",
       "fi": "Miehet",

@@ -130,14 +130,6 @@
                 true
               ],
               "default": false
-            },
-            "activity_radios": {
-              "title": "activity_radios.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
             }
           },
           "required": [
@@ -149,7 +141,6 @@
             "inclusion_radios",
             "environment_radios",
             "exercise_radios",
-            "activity_radios"
           ],
           "allOf": [
             {
@@ -237,28 +228,6 @@
                 },
                 "required": [
                   "exercise_how"
-                ]
-              }
-            },
-            {
-              "if": {
-                "properties": {
-                  "activity_radios": {
-                    "const": true
-                  }
-                },
-                "required": ["activity_radios"]
-              },
-              "then": {
-                "properties": {
-                  "activity_how": {
-                    "title": "activity_how.title",
-                    "type": "string",
-                    "maxLength": 1000
-                  }
-                },
-                "required": [
-                  "activity_how"
                 ]
               }
             }
