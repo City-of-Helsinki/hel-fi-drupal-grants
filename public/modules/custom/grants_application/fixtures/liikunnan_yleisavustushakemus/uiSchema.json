@@ -1,0 +1,983 @@
+{
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": {
+        "ui:field": "actingYear"
+      }
+    },
+    "movers_section": {
+      "movers_age": {
+        "ui:classNames": "hdbt-react-form__inline-field-group",
+        "junior_all": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "junior_target_group": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "adult_all": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "adult_target_group": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "senior_all": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "senior_target_group": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "movers_age_total": {
+          "misc:exclude-from-submit": true,
+          "misc:variant": "summary",
+          "ui:field": "computedSum",
+          "ui:options": {
+            "sourceFields": [
+              "grant_info_step.movers_section.movers_age.junior_all",
+              "grant_info_step.movers_section.movers_age.adult_all",
+              "grant_info_step.movers_section.movers_age.senior_all"
+            ]
+          }
+        }
+      },
+      "movers_gender": {
+        "ui:classNames": "hdbt-react-form__inline-field-group",
+        "men": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "women": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "other": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "unknown": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "movers_gender_total": {
+          "misc:exclude-from-submit": true,
+          "misc:variant": "summary",
+          "ui:field": "computedSum",
+          "ui:options": {
+            "sourceFields": [
+              "grant_info_step.movers_section.movers_gender.men",
+              "grant_info_step.movers_section.movers_gender.women",
+              "grant_info_step.movers_section.movers_gender.other",
+              "grant_info_step.movers_section.movers_gender.unknown"
+            ]
+          }
+        }
+      },
+      "movers_sum_status": {
+        "misc:exclude-from-submit": true,
+        "misc:sum-match": {
+          "fields": [
+            "grant_info_step.movers_section.movers_gender.men",
+            "grant_info_step.movers_section.movers_gender.women",
+            "grant_info_step.movers_section.movers_gender.other",
+            "grant_info_step.movers_section.movers_gender.unknown"
+          ],
+          "compareTo": [
+            "grant_info_step.movers_section.movers_age.junior_all",
+            "grant_info_step.movers_section.movers_age.adult_all",
+            "grant_info_step.movers_section.movers_age.senior_all"
+          ],
+          "message": "movers.age_gender_mismatch",
+          "successMessage": "movers.age_gender_match"
+        },
+        "ui:field": "sumMatchStatus"
+      },
+      "all_coaches": {
+        "ui:options": {
+          "tooltipLabel": "all_coaches.title",
+          "tooltipButtonLabel": "all_coaches.title",
+          "tooltipText": "all_coaches.description"
+        }
+      }
+    },
+    "sports_section": {
+      "ui:order": [
+        "club_main_activity",
+        "club_sport",
+        "club_sport_other",
+        "sport_details",
+        "club_activity_description"
+      ],
+      "club_main_activity": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "club_main_activity.1",
+          "club_main_activity.2",
+          "club_main_activity.3",
+          "club_main_activity.4"
+        ],
+        "ui:options": {
+          "tooltipLabel": "club_main_activity.title",
+          "tooltipButtonLabel": "club_main_activity.title",
+          "tooltipText": "club_main_activity.description"
+        }
+      },
+      "club_sport": {
+        "ui:widget": "select",
+        "ui:enumNames": [
+          "sport.dog_agility",
+          "sport.aikido",
+          "sport.american_football",
+          "sport.shooting_sport",
+          "sport.biathlon",
+          "sport.auto_racing",
+          "sport.baseball_softball",
+          "sport.cue_sports",
+          "sport.brazilian_jiu_jitsu",
+          "sport.bridge",
+          "sport.cheerleading",
+          "sport.curling",
+          "sport.darts",
+          "sport.esports",
+          "sport.fitness_and_figure_competition",
+          "sport.disc_golf",
+          "sport.golf",
+          "sport.skiing",
+          "sport.hockey",
+          "sport.air_sports",
+          "sport.football_futsal",
+          "sport.archery",
+          "sport.judo",
+          "sport.ice_hockey",
+          "sport.bandy",
+          "sport.karate",
+          "sport.rinkball",
+          "sport.bowling",
+          "sport.kendo_sports",
+          "sport.climbing",
+          "sport.basketball",
+          "sport.cricket",
+          "sport.finnish_skittles",
+          "sport.handball",
+          "sport.volleyball",
+          "sport.ultimate",
+          "sport.ice_skating",
+          "sport.snowboarding",
+          "sport.paddling_rowing",
+          "sport.fencing_modern_pentathlon",
+          "sport.motorsport",
+          "sport.boxing",
+          "sport.padel",
+          "sport.wrestling",
+          "sport.weightlifting",
+          "sport.parkour",
+          "sport.finnish_baseball",
+          "sport.p_tanque",
+          "sport.kickboxing",
+          "sport.sailing_boating",
+          "sport.cycling",
+          "sport.table_tennis",
+          "sport.miniature_golf",
+          "sport.horse_riding",
+          "sport.harness_racing",
+          "sport.ringette",
+          "sport.rugby_football",
+          "sport.skateboarding",
+          "sport.floorball",
+          "sport.chess",
+          "sport.squash",
+          "sport.underwater_diving",
+          "sport.badminton",
+          "sport.orienteering",
+          "sport.taekwondo",
+          "sport.figure_skating",
+          "sport.dancesport",
+          "sport.tennis",
+          "sport.thai_boxing",
+          "sport.darts_sports",
+          "sport.triathlon",
+          "sport.swimming",
+          "sport.mushing",
+          "sport.mixed_martial_arts",
+          "sport.water_skiing_wakeboarding",
+          "sport.strenght_sports",
+          "sport.powerlifting",
+          "sport.gymnastics",
+          "sport.sport_of_athletics",
+          "sport.other_combat_sport",
+          "sport.other_sport"
+        ]
+      },
+      "sport_details": {
+        "club_sections": {
+          "ui:options": {
+            "addText": "club_sections.add"
+          },
+          "items": {
+            "section_name": {
+              "ui:widget": "select",
+              "ui:enumNames": [
+                "sport.dog_agility",
+                "sport.aikido",
+                "sport.american_football",
+                "sport.shooting_sport",
+                "sport.biathlon",
+                "sport.auto_racing",
+                "sport.baseball_softball",
+                "sport.cue_sports",
+                "sport.brazilian_jiu_jitsu",
+                "sport.bridge",
+                "sport.cheerleading",
+                "sport.curling",
+                "sport.darts",
+                "sport.esports",
+                "sport.fitness_and_figure_competition",
+                "sport.disc_golf",
+                "sport.golf",
+                "sport.skiing",
+                "sport.hockey",
+                "sport.air_sports",
+                "sport.football_futsal",
+                "sport.archery",
+                "sport.judo",
+                "sport.ice_hockey",
+                "sport.bandy",
+                "sport.karate",
+                "sport.rinkball",
+                "sport.bowling",
+                "sport.kendo_sports",
+                "sport.climbing",
+                "sport.basketball",
+                "sport.cricket",
+                "sport.finnish_skittles",
+                "sport.handball",
+                "sport.volleyball",
+                "sport.ultimate",
+                "sport.ice_skating",
+                "sport.snowboarding",
+                "sport.paddling_rowing",
+                "sport.fencing_modern_pentathlon",
+                "sport.motorsport",
+                "sport.boxing",
+                "sport.padel",
+                "sport.wrestling",
+                "sport.weightlifting",
+                "sport.parkour",
+                "sport.finnish_baseball",
+                "sport.p_tanque",
+                "sport.kickboxing",
+                "sport.sailing_boating",
+                "sport.cycling",
+                "sport.table_tennis",
+                "sport.miniature_golf",
+                "sport.horse_riding",
+                "sport.harness_racing",
+                "sport.ringette",
+                "sport.rugby_football",
+                "sport.skateboarding",
+                "sport.floorball",
+                "sport.chess",
+                "sport.squash",
+                "sport.underwater_diving",
+                "sport.badminton",
+                "sport.orienteering",
+                "sport.taekwondo",
+                "sport.figure_skating",
+                "sport.dancesport",
+                "sport.tennis",
+                "sport.thai_boxing",
+                "sport.darts_sports",
+                "sport.triathlon",
+                "sport.swimming",
+                "sport.mushing",
+                "sport.mixed_martial_arts",
+                "sport.water_skiing_wakeboarding",
+                "sport.strenght_sports",
+                "sport.powerlifting",
+                "sport.gymnastics",
+                "sport.sport_of_athletics",
+                "sport.other_combat_sport",
+                "sport.other_sport"
+              ]
+            },
+            "participants": {
+              "ui:classNames": "hdbt-react-form__inline-field-group",
+              "junior": {
+                "ui:classNames": "hdbt-react-form__inline-field"
+              },
+              "junior_target_group": {
+                "ui:classNames": "hdbt-react-form__inline-field"
+              },
+              "adult": {
+                "ui:classNames": "hdbt-react-form__inline-field"
+              },
+              "adult_target_group": {
+                "ui:classNames": "hdbt-react-form__inline-field"
+              },
+              "senior": {
+                "ui:classNames": "hdbt-react-form__inline-field"
+              },
+              "senior_target_group": {
+                "ui:classNames": "hdbt-react-form__inline-field"
+              }
+            },
+            "ui:order": [
+              "section_name",
+              "section_other",
+              "participants"
+            ]
+          }
+        }
+      },
+      "club_activity_description": {
+        "ui:widget": "textarea"
+      }
+    },
+    "duration_section": {
+      "activity_months_help": {
+        "ui:field": "textParagraph"
+      },
+      "activity_months": {
+        "ui:widget": "select"
+      }
+    }
+  },
+  "premises_step": {
+    "premises_section": {
+      "premises_help": {
+        "ui:field": "textParagraph"
+      },
+      "premises_eligibility_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "premises": {
+        "ui:options": {
+          "addText": "premises.add"
+        },
+        "items": {
+          "ui:order": [
+            "premise_address",
+            "premise_target",
+            "rent_type",
+            "club_owns_renter",
+            "rent_market_based",
+            "rent_deduction_help",
+            "hours_last_year",
+            "costs_last_year"
+          ],
+          "premise_address": {
+            "ui:options": {
+              "tooltipLabel": "premise_address.title",
+              "tooltipButtonLabel": "premise_address.title",
+              "tooltipText": "premise_address.description"
+            }
+          },
+          "premise_target": {
+            "ui:options": {
+              "tooltipLabel": "premise.title",
+              "tooltipButtonLabel": "premise.title",
+              "tooltipText": "premise_target.description"
+            }
+          },
+          "rent_type": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "rent_type.1",
+              "rent_type.2",
+              "rent_type.3"
+            ]
+          },
+          "club_owns_renter": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "boolean.yes",
+              "boolean.no"
+            ]
+          },
+          "rent_market_based": {
+            "ui:widget": "radio",
+            "ui:enumNames": [
+              "boolean.yes"
+            ]
+          },
+          "rent_deduction_help": {
+            "ui:field": "textParagraph"
+          },
+          "hours_last_year": {
+            "ui:options": {
+              "tooltipLabel": "hours_last_year.title",
+              "tooltipButtonLabel": "hours_last_year.title",
+              "tooltipText": "hours_last_year.description"
+            }
+          }
+        }
+      },
+      "premises_totals": {
+        "total_hours": {
+          "misc:exclude-from-submit": true,
+          "ui:field": "computedSum",
+          "ui:options": {
+            "sourceFields": [
+              "premises_step.premises_section.premises[].hours_last_year"
+            ]
+          }
+        },
+        "total_costs": {
+          "misc:exclude-from-submit": true,
+          "ui:field": "computedSum",
+          "ui:options": {
+            "sourceFields": [
+              "premises_step.premises_section.premises[].costs_last_year"
+            ]
+          }
+        }
+      },
+      "change_on_usage": {
+        "ui:widget": "textarea"
+      }
+    }
+  },
+  "minimum_criteria_step": {
+    "minimum_criteria_governance_section": {
+      "minimum_criteria_intro": {
+        "ui:field": "textParagraph"
+      },
+      "hh1": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.hh1.option_3"
+        ],
+        "ui:options": {
+          "tooltipLabel": "criteria.hh1.title",
+          "tooltipButtonLabel": "criteria.hh1.title",
+          "tooltipText": "paid_employees.description"
+        }
+      },
+      "hh2": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.hh2.option_3"
+        ],
+        "ui:options": {
+          "tooltipLabel": "criteria.hh2.title",
+          "tooltipButtonLabel": "criteria.hh2.title",
+          "tooltipText": "paid_employees.description"
+        }
+      },
+      "hh3": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh4": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh5": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh6": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh7": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh8": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh9": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh10": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      }
+    },
+    "minimum_criteria_safety_section": {
+      "tt1": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt1.option_3"
+        ]
+      },
+      "tt2": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "tt3": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt3.option_3"
+        ]
+      }
+    },
+    "minimum_criteria_equality_section": {
+      "yt1": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      }
+    },
+    "minimum_criteria_fair_play_section": {
+      "rk1": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "rk2": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      }
+    }
+  },
+  "scored_criteria_step": {
+    "scored_criteria_governance_section": {
+      "scored_criteria_intro": {
+        "ui:field": "textParagraph"
+      },
+      "hh11": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh12": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh13": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.hh13.option_3"
+        ]
+      },
+      "hh14": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh15": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "hh16": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      }
+    },
+    "scored_criteria_safety_section": {
+      "tt4": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "tt5": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt5.option_3"
+        ]
+      },
+      "tt6": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt6.option_3"
+        ]
+      },
+      "tt7": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "tt8": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt8.option_3"
+        ]
+      },
+      "tt9": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "tt10": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt10.option_3"
+        ]
+      },
+      "tt11": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "tt12": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt12.option_3"
+        ]
+      },
+      "tt13": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt13.option_3"
+        ]
+      },
+      "tt14": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.tt14.option_3"
+        ]
+      },
+      "tt15": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      }
+    },
+    "scored_criteria_equality_section": {
+      "yt2": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt3": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt4": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt5": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt6": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt7": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt8": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt9": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt10": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt11": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt12": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt13": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.yt13.option_3"
+        ]
+      },
+      "yt14": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt15": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yt16": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.yt16.option_3"
+        ]
+      }
+    },
+    "scored_criteria_environment_section": {
+      "yi1": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yi2": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.yi2.option_3"
+        ]
+      },
+      "yi3": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.yi3.option_3"
+        ]
+      },
+      "yi4": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.yi4.option_3"
+        ]
+      },
+      "yi5": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      },
+      "yi6": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.yi6.option_3"
+        ]
+      }
+    },
+    "scored_criteria_fair_play_section": {
+      "rk3": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no",
+          "criteria.rk3.option_3"
+        ]
+      },
+      "rk4": {
+        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ]
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "community_rules": {
+        "ui:options": {
+          "tooltipLabel": "community_rules.title",
+          "tooltipButtonLabel": "community_rules.title",
+          "tooltipText": "community_rules.custom_description"
+        },
+        "community_rules_file": {
+          "misc:file-type": 7,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "association_register_extract": {
+        "ui:options": {
+          "tooltipLabel": "association_register_extract.title",
+          "tooltipButtonLabel": "association_register_extract.title",
+          "tooltipText": "association_register_extract.custom_description"
+        },
+        "association_register_extract_file": {
+          "misc:file-type": 26,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "action_plan": {
+        "ui:options": {
+          "tooltipLabel": "action_plan.title",
+          "tooltipButtonLabel": "action_plan.title",
+          "tooltipText": "action_plan.custom_description"
+        },
+        "action_plan_file": {
+          "misc:file-type": 1,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "budget": {
+        "ui:options": {
+          "tooltipLabel": "budget.title",
+          "tooltipButtonLabel": "budget.title",
+          "tooltipText": "budget.custom_description"
+        },
+        "budget_file": {
+          "misc:file-type": 2,
+          "misc:required": true,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "further_clarification": {
+        "ui:widget": "textarea"
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:variant": "simple",
+          "misc:multiple": "true",
+          "ui:help": "other_attachment_fieldset_multiple_files.ui_help",
+          "ui:field": "atvFile"
+        }
+      }
+    }
+  }
+}

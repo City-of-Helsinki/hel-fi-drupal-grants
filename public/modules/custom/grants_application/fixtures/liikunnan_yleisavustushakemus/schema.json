@@ -1,0 +1,1728 @@
+{
+  "definitions": {
+    "_club_section_item": {
+      "type": "object",
+      "title": "club_section.title",
+      "properties": {
+        "section_name": {
+          "title": "club_section.title",
+          "description": "club_section.description",
+          "type": "string",
+          "enum": [
+            "Agility",
+            "Aikido",
+            "Amerikkalainen jalkapallo",
+            "Ammunta",
+            "Ampumahiihto",
+            "Autourheilu",
+            "Baseball & softball",
+            "Biljardi",
+            "Brasilialainen jujutsu",
+            "Bridge",
+            "Cheerleading",
+            "Curling",
+            "Darts",
+            "Elektroninen urheilu",
+            "Fitnessurheilu",
+            "Frisbeegolf",
+            "Golf",
+            "Hiihtolajit",
+            "Hockey",
+            "Ilmailu",
+            "Jalkapallo & futsal",
+            "Jousiammunta",
+            "Judo",
+            "Jääkiekko",
+            "Jääpallo",
+            "Karate",
+            "Kaukalopallo",
+            "Keilaus",
+            "Kendolajit",
+            "Kiipeily",
+            "Koripallo",
+            "Kriketti",
+            "Kyykkä",
+            "Käsipallo",
+            "Lentopallo",
+            "Liitokiekko",
+            "Luistelu",
+            "Lumilautailu",
+            "Melonta / soutu",
+            "Miekkailu & 5-ottelu",
+            "Moottoriurheilu",
+            "Nyrkkeily",
+            "Padel",
+            "Paini",
+            "Painonnosto",
+            "Parkour",
+            "Pesäpallo",
+            "Petanque",
+            "Potkunyrkkeily",
+            "Purjehdus & veneily",
+            "Pyöräily",
+            "Pöytätennis",
+            "Ratagolf",
+            "Ratsastus",
+            "Raviurheilu",
+            "Ringette",
+            "Rugby",
+            "Rullalautailu",
+            "Salibandy",
+            "Shakki",
+            "Squash",
+            "Sukellus",
+            "Sulkapallo",
+            "Suunnistus",
+            "Taekwondo",
+            "Taitoluistelu",
+            "Tanssi",
+            "Tennis",
+            "Thainyrkkeily",
+            "Tikkaurheilu",
+            "Triathlon",
+            "Uinti",
+            "Valjakkourheilu",
+            "Vapaaottelu",
+            "Vesihiihto & wakeboard",
+            "Voimalajit",
+            "Voimannosto",
+            "Voimistelu",
+            "Yleisurheilu",
+            "Muu kamppailulaji",
+            "Muu laji"
+          ]
+        },
+        "participants": {
+          "type": "object",
+          "title": "club_section_participants.title",
+          "properties": {
+            "junior": {
+              "title": "movers.junior.title",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999
+            },
+            "junior_target_group": {
+              "title": "movers.target_group.title",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999
+            },
+            "adult": {
+              "title": "movers.adult.title",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999
+            },
+            "adult_target_group": {
+              "title": "movers.target_group.title",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999
+            },
+            "senior": {
+              "title": "movers.senior.title",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999
+            },
+            "senior_target_group": {
+              "title": "movers.target_group.title",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999
+            }
+          },
+          "required": [
+            "junior",
+            "junior_target_group",
+            "adult",
+            "adult_target_group",
+            "senior",
+            "senior_target_group"
+          ]
+        }
+      },
+      "required": [
+        "section_name",
+        "participants"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "section_name": {
+                "enum": [
+                  "Muu kamppailulaji",
+                  "Muu laji"
+                ]
+              }
+            },
+            "required": [
+              "section_name"
+            ]
+          },
+          "then": {
+            "properties": {
+              "section_other": {
+                "title": "sport_other.title",
+                "type": "string",
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "section_other"
+            ]
+          }
+        }
+      ]
+    },
+    "_premise_item": {
+      "type": "object",
+      "title": "premise.title",
+      "properties": {
+        "premise_address": {
+          "title": "premise_address.title",
+          "type": "string",
+          "maxLength": 200
+        },
+        "premise_target": {
+          "title": "premise.title",
+          "type": "string",
+          "maxLength": 200
+        },
+        "rent_type": {
+          "title": "rent_type.title",
+          "type": "string",
+          "enum": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        "hours_last_year": {
+          "title": "hours_last_year.title",
+          "type": "string",
+          "format": "decimal-number"
+        },
+        "costs_last_year": {
+          "title": "costs_last_year.title",
+          "type": "string",
+          "format": "decimal-number"
+        }
+      },
+      "required": [
+        "premise_address",
+        "premise_target",
+        "rent_type",
+        "hours_last_year",
+        "costs_last_year"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "rent_type": {
+                "enum": [
+                  "1",
+                  "2"
+                ]
+              }
+            },
+            "required": [
+              "rent_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "club_owns_renter": {
+                "title": "club_owns_renter.title",
+                "enum": [
+                  true,
+                  false
+                ]
+              }
+            },
+            "required": [
+              "club_owns_renter"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rent_type": {
+                "enum": [
+                  "1",
+                  "2"
+                ]
+              },
+              "club_owns_renter": {
+                "const": true
+              }
+            },
+            "required": [
+              "rent_type",
+              "club_owns_renter"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rent_market_based": {
+                "title": "rent_market_based.title",
+                "enum": [
+                  true
+                ]
+              }
+            },
+            "required": [
+              "rent_market_based"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rent_type": {
+                "enum": [
+                  "2",
+                  "3"
+                ]
+              }
+            },
+            "required": [
+              "rent_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rent_deduction_help": {
+                "type": "array",
+                "items": [
+                  {
+                    "title": "rent_deduction_help.value",
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "grant_info_step": {
+      "type": "object",
+      "required": [
+        "acting_year_section",
+        "movers_section",
+        "sports_section",
+        "duration_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year_section_acting_year.title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "acting_year"
+          ]
+        },
+        "movers_section": {
+          "title": "movers_section.title",
+          "type": "object",
+          "properties": {
+            "movers_age": {
+              "title": "movers_age.title",
+              "type": "object",
+              "properties": {
+                "junior_all": {
+                  "title": "movers.junior.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "junior_target_group": {
+                  "title": "movers.target_group.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "adult_all": {
+                  "title": "movers.adult.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "adult_target_group": {
+                  "title": "movers.target_group.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "senior_all": {
+                  "title": "movers.senior.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "senior_target_group": {
+                  "title": "movers.target_group.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "movers_age_total": {
+                  "title": "movers_total.title",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "junior_all",
+                "junior_target_group",
+                "adult_all",
+                "adult_target_group",
+                "senior_all",
+                "senior_target_group"
+              ]
+            },
+            "movers_gender": {
+              "title": "movers_gender.title",
+              "type": "object",
+              "properties": {
+                "men": {
+                  "title": "movers.men.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "women": {
+                  "title": "movers.women.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "other": {
+                  "title": "movers.other.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "unknown": {
+                  "title": "movers.unknown.title",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "movers_gender_total": {
+                  "title": "movers_total.title",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "men",
+                "women",
+                "other",
+                "unknown"
+              ]
+            },
+            "movers_sum_status": {
+              "type": "null"
+            },
+            "all_coaches": {
+              "title": "all_coaches.title",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999
+            }
+          },
+          "required": [
+            "movers_age",
+            "movers_gender",
+            "all_coaches"
+          ]
+        },
+        "sports_section": {
+          "title": "sports_section.title",
+          "type": "object",
+          "properties": {
+            "club_main_activity": {
+              "title": "club_main_activity.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3",
+                "4"
+              ]
+            }
+          },
+          "required": [
+            "club_main_activity"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "club_main_activity": {
+                    "enum": [
+                      "1",
+                      "2"
+                    ]
+                  }
+                },
+                "required": [
+                  "club_main_activity"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "club_sport": {
+                    "title": "club_sport.title",
+                    "type": "string",
+                    "enum": [
+                      "Agility",
+                      "Aikido",
+                      "Amerikkalainen jalkapallo",
+                      "Ammunta",
+                      "Ampumahiihto",
+                      "Autourheilu",
+                      "Baseball & softball",
+                      "Biljardi",
+                      "Brasilialainen jujutsu",
+                      "Bridge",
+                      "Cheerleading",
+                      "Curling",
+                      "Darts",
+                      "Elektroninen urheilu",
+                      "Fitnessurheilu",
+                      "Frisbeegolf",
+                      "Golf",
+                      "Hiihtolajit",
+                      "Hockey",
+                      "Ilmailu",
+                      "Jalkapallo & futsal",
+                      "Jousiammunta",
+                      "Judo",
+                      "Jääkiekko",
+                      "Jääpallo",
+                      "Karate",
+                      "Kaukalopallo",
+                      "Keilaus",
+                      "Kendolajit",
+                      "Kiipeily",
+                      "Koripallo",
+                      "Kriketti",
+                      "Kyykkä",
+                      "Käsipallo",
+                      "Lentopallo",
+                      "Liitokiekko",
+                      "Luistelu",
+                      "Lumilautailu",
+                      "Melonta / soutu",
+                      "Miekkailu & 5-ottelu",
+                      "Moottoriurheilu",
+                      "Nyrkkeily",
+                      "Padel",
+                      "Paini",
+                      "Painonnosto",
+                      "Parkour",
+                      "Pesäpallo",
+                      "Petanque",
+                      "Potkunyrkkeily",
+                      "Purjehdus & veneily",
+                      "Pyöräily",
+                      "Pöytätennis",
+                      "Ratagolf",
+                      "Ratsastus",
+                      "Raviurheilu",
+                      "Ringette",
+                      "Rugby",
+                      "Rullalautailu",
+                      "Salibandy",
+                      "Shakki",
+                      "Squash",
+                      "Sukellus",
+                      "Sulkapallo",
+                      "Suunnistus",
+                      "Taekwondo",
+                      "Taitoluistelu",
+                      "Tanssi",
+                      "Tennis",
+                      "Thainyrkkeily",
+                      "Tikkaurheilu",
+                      "Triathlon",
+                      "Uinti",
+                      "Valjakkourheilu",
+                      "Vapaaottelu",
+                      "Vesihiihto & wakeboard",
+                      "Voimalajit",
+                      "Voimannosto",
+                      "Voimistelu",
+                      "Yleisurheilu",
+                      "Muu kamppailulaji",
+                      "Muu laji"
+                    ]
+                  }
+                },
+                "required": [
+                  "club_sport"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "club_main_activity": {
+                    "enum": [
+                      "1",
+                      "2"
+                    ]
+                  },
+                  "club_sport": {
+                    "enum": [
+                      "Muu kamppailulaji",
+                      "Muu laji"
+                    ]
+                  }
+                },
+                "required": [
+                  "club_main_activity",
+                  "club_sport"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "club_sport_other": {
+                    "title": "sport_other.title",
+                    "type": "string",
+                    "maxLength": 100
+                  }
+                },
+                "required": [
+                  "club_sport_other"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "club_main_activity": {
+                    "enum": [
+                      "2",
+                      "3"
+                    ]
+                  }
+                },
+                "required": [
+                  "club_main_activity"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "sport_details": {
+                    "title": "sport_details.title",
+                    "description": "sport_details.description",
+                    "type": "object",
+                    "properties": {
+                      "club_sections": {
+                        "title": "club_sections.title",
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/_club_section_item"
+                        },
+                        "additionalItems": {
+                          "$ref": "#/definitions/_club_section_item"
+                        },
+                        "minItems": 2
+                      }
+                    },
+                    "required": [
+                      "club_sections"
+                    ]
+                  }
+                },
+                "required": [
+                  "sport_details"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "club_main_activity": {
+                    "const": "4"
+                  }
+                },
+                "required": [
+                  "club_main_activity"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "club_activity_description": {
+                    "title": "club_activity_description.title",
+                    "type": "string",
+                    "maxLength": 5000
+                  }
+                },
+                "required": [
+                  "club_activity_description"
+                ]
+              }
+            }
+          ]
+        },
+        "duration_section": {
+          "title": "duration_section.title",
+          "type": "object",
+          "properties": {
+            "activity_months_help": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "activity_months_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "activity_months": {
+              "title": "activity_months.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12"
+              ]
+            }
+          },
+          "required": [
+            "activity_months"
+          ]
+        }
+      }
+    },
+    "premises_step": {
+      "type": "object",
+      "required": [
+        "premises_section"
+      ],
+      "properties": {
+        "premises_section": {
+          "title": "premises_section.title",
+          "description": "premises_section.description",
+          "type": "object",
+          "properties": {
+            "premises_help": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "premises_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "premises_eligibility_help": {
+              "title": "premises_eligibility_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "premises_eligibility_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "premises_eligibility_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "premises": {
+              "title": "premises.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_premise_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_premise_item"
+              }
+            },
+            "premises_totals": {
+              "title": "premises_totals.title",
+              "type": "object",
+              "properties": {
+                "total_hours": {
+                  "title": "total_hours.title",
+                  "type": "string"
+                },
+                "total_costs": {
+                  "title": "total_costs.title",
+                  "type": "string"
+                }
+              }
+            },
+            "change_on_usage": {
+              "title": "change_on_usage.title",
+              "description": "change_on_usage.description",
+              "type": "string",
+              "maxLength": 500
+            }
+          }
+        }
+      }
+    },
+    "minimum_criteria_step": {
+      "type": "object",
+      "required": [
+        "minimum_criteria_governance_section",
+        "minimum_criteria_safety_section",
+        "minimum_criteria_equality_section",
+        "minimum_criteria_fair_play_section"
+      ],
+      "properties": {
+        "minimum_criteria_governance_section": {
+          "title": "criteria_governance.title",
+          "type": "object",
+          "properties": {
+            "minimum_criteria_intro": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "minimum_criteria_intro.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "hh1": {
+              "title": "criteria.hh1.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "hh2": {
+              "title": "criteria.hh2.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "hh3": {
+              "title": "criteria.hh3.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh4": {
+              "title": "criteria.hh4.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh5": {
+              "title": "criteria.hh5.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh6": {
+              "title": "criteria.hh6.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh7": {
+              "title": "criteria.hh7.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh8": {
+              "title": "criteria.hh8.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh9": {
+              "title": "criteria.hh9.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh10": {
+              "title": "criteria.hh10.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            }
+          },
+          "required": [
+            "hh1",
+            "hh2",
+            "hh3",
+            "hh4",
+            "hh5",
+            "hh6",
+            "hh7",
+            "hh8",
+            "hh9",
+            "hh10"
+          ]
+        },
+        "minimum_criteria_safety_section": {
+          "title": "criteria_safety.title",
+          "type": "object",
+          "properties": {
+            "tt1": {
+              "title": "criteria.tt1.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "tt2": {
+              "title": "criteria.tt2.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "tt3": {
+              "title": "criteria.tt3.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          },
+          "required": [
+            "tt1",
+            "tt2",
+            "tt3"
+          ]
+        },
+        "minimum_criteria_equality_section": {
+          "title": "criteria_equality.title",
+          "type": "object",
+          "properties": {
+            "yt1": {
+              "title": "criteria.yt1.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            }
+          },
+          "required": [
+            "yt1"
+          ]
+        },
+        "minimum_criteria_fair_play_section": {
+          "title": "criteria_fair_play.title",
+          "type": "object",
+          "properties": {
+            "rk1": {
+              "title": "criteria.rk1.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "rk2": {
+              "title": "criteria.rk2.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            }
+          },
+          "required": [
+            "rk1",
+            "rk2"
+          ]
+        }
+      }
+    },
+    "scored_criteria_step": {
+      "type": "object",
+      "required": [
+        "scored_criteria_governance_section",
+        "scored_criteria_safety_section",
+        "scored_criteria_equality_section",
+        "scored_criteria_environment_section",
+        "scored_criteria_fair_play_section"
+      ],
+      "properties": {
+        "scored_criteria_governance_section": {
+          "title": "criteria_governance.title",
+          "type": "object",
+          "properties": {
+            "scored_criteria_intro": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "scored_criteria_intro.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "hh11": {
+              "title": "criteria.hh11.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh12": {
+              "title": "criteria.hh12.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh13": {
+              "title": "criteria.hh13.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "hh14": {
+              "title": "criteria.hh14.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh15": {
+              "title": "criteria.hh15.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "hh16": {
+              "title": "criteria.hh16.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            }
+          },
+          "required": [
+            "hh11",
+            "hh12",
+            "hh13",
+            "hh14",
+            "hh15",
+            "hh16"
+          ]
+        },
+        "scored_criteria_safety_section": {
+          "title": "criteria_safety.title",
+          "type": "object",
+          "properties": {
+            "tt4": {
+              "title": "criteria.tt4.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "tt5": {
+              "title": "criteria.tt5.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "tt6": {
+              "title": "criteria.tt6.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "tt7": {
+              "title": "criteria.tt7.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "tt8": {
+              "title": "criteria.tt8.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "tt9": {
+              "title": "criteria.tt9.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "tt10": {
+              "title": "criteria.tt10.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "tt11": {
+              "title": "criteria.tt11.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "tt12": {
+              "title": "criteria.tt12.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "tt13": {
+              "title": "criteria.tt13.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "tt14": {
+              "title": "criteria.tt14.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "tt15": {
+              "title": "criteria.tt15.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            }
+          },
+          "required": [
+            "tt4",
+            "tt5",
+            "tt6",
+            "tt7",
+            "tt8",
+            "tt9",
+            "tt10",
+            "tt11",
+            "tt12",
+            "tt13",
+            "tt14",
+            "tt15"
+          ]
+        },
+        "scored_criteria_equality_section": {
+          "title": "criteria_equality.title",
+          "type": "object",
+          "properties": {
+            "yt2": {
+              "title": "criteria.yt2.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt3": {
+              "title": "criteria.yt3.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt4": {
+              "title": "criteria.yt4.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt5": {
+              "title": "criteria.yt5.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt6": {
+              "title": "criteria.yt6.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt7": {
+              "title": "criteria.yt7.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt8": {
+              "title": "criteria.yt8.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt9": {
+              "title": "criteria.yt9.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt10": {
+              "title": "criteria.yt10.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt11": {
+              "title": "criteria.yt11.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt12": {
+              "title": "criteria.yt12.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt13": {
+              "title": "criteria.yt13.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "yt14": {
+              "title": "criteria.yt14.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt15": {
+              "title": "criteria.yt15.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yt16": {
+              "title": "criteria.yt16.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          },
+          "required": [
+            "yt2",
+            "yt3",
+            "yt4",
+            "yt5",
+            "yt6",
+            "yt7",
+            "yt8",
+            "yt9",
+            "yt10",
+            "yt11",
+            "yt12",
+            "yt13",
+            "yt14",
+            "yt15",
+            "yt16"
+          ]
+        },
+        "scored_criteria_environment_section": {
+          "title": "criteria_environment.title",
+          "type": "object",
+          "properties": {
+            "yi1": {
+              "title": "criteria.yi1.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yi2": {
+              "title": "criteria.yi2.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "yi3": {
+              "title": "criteria.yi3.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "yi4": {
+              "title": "criteria.yi4.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "yi5": {
+              "title": "criteria.yi5.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "yi6": {
+              "title": "criteria.yi6.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          },
+          "required": [
+            "yi1",
+            "yi2",
+            "yi3",
+            "yi4",
+            "yi5",
+            "yi6"
+          ]
+        },
+        "scored_criteria_fair_play_section": {
+          "title": "criteria_fair_play.title",
+          "type": "object",
+          "properties": {
+            "rk3": {
+              "title": "criteria.rk3.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "rk4": {
+              "title": "criteria.rk4.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            }
+          },
+          "required": [
+            "rk3",
+            "rk4"
+          ]
+        }
+      }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "additional_information.title",
+              "type": "string",
+              "maxLength": 5000
+            }
+          }
+        },
+        "attachments_section": {
+          "title": "attachments_section.title",
+          "type": "object",
+          "description": "custom_attachments_section.description",
+          "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "custom_required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "custom_multiple_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "formerly_provided_attachments_help": {
+              "title": "formerly_provided_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "custom_formerly_provided_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "community_rules": {
+              "title": "community_rules.title",
+              "type": "object",
+              "properties": {
+                "community_rules_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "association_register_extract": {
+              "title": "association_register_extract.title",
+              "type": "object",
+              "properties": {
+                "association_register_extract_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "action_plan": {
+              "title": "action_plan.title",
+              "type": "object",
+              "properties": {
+                "action_plan_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "budget": {
+              "title": "budget.title",
+              "type": "object",
+              "properties": {
+                "budget_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "other_attachment_fieldset_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "activity_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    },
+    "premises_step": {
+      "title": "premises_step.title",
+      "type": "object",
+      "$ref": "#/definitions/premises_step"
+    },
+    "minimum_criteria_step": {
+      "title": "minimum_criteria_step.title",
+      "type": "object",
+      "$ref": "#/definitions/minimum_criteria_step"
+    },
+    "scored_criteria_step": {
+      "title": "scored_criteria_step.title",
+      "type": "object",
+      "$ref": "#/definitions/scored_criteria_step"
+    },
+    "attachments_step": {
+      "title": "attachments_step.title",
+      "type": "object",
+      "$ref": "#/definitions/attachments_step"
+    }
+  }
+}
