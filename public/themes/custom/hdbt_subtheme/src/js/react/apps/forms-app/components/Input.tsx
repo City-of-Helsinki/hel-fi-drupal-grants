@@ -475,12 +475,13 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
-  const handleChange = (_dateStr: string, dateObject: Date) => {
-    try {
-      onChange(toLocalISO(dateObject).slice(0, 10));
-    } catch (_error) {
+  const handleChange = (dateStr: string, dateObject: Date) => {
+    // Clear the value when the date is empty or invalid.
+    if (!dateStr || Number.isNaN(dateObject.getTime())) {
+      onChange(undefined);
       return;
     }
+    onChange(toLocalISO(dateObject).slice(0, 10));
   };
 
   let formattedValue: string | undefined;
