@@ -269,13 +269,10 @@
                   "prior_compensations": {
                     "description": "prior_compensations.description",
                     "title": "prior_compensations.title",
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   }
                 },
-                "required": [
-                  "prior_compensations"
-                ]
+                "required": ["prior_compensations"]
               }
             }
           ]

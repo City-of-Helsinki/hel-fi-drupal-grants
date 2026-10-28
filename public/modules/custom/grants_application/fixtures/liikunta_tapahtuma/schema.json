@@ -130,14 +130,6 @@
                 true
               ],
               "default": false
-            },
-            "activity_radios": {
-              "title": "activity_radios.title",
-              "enum": [
-                false,
-                true
-              ],
-              "default": false
             }
           },
           "required": [
@@ -148,8 +140,7 @@
             "equality_radios",
             "inclusion_radios",
             "environment_radios",
-            "exercise_radios",
-            "activity_radios"
+            "exercise_radios"
           ],
           "allOf": [
             {
@@ -237,28 +228,6 @@
                 },
                 "required": [
                   "exercise_how"
-                ]
-              }
-            },
-            {
-              "if": {
-                "properties": {
-                  "activity_radios": {
-                    "const": true
-                  }
-                },
-                "required": ["activity_radios"]
-              },
-              "then": {
-                "properties": {
-                  "activity_how": {
-                    "title": "activity_how.title",
-                    "type": "string",
-                    "maxLength": 1000
-                  }
-                },
-                "required": [
-                  "activity_how"
                 ]
               }
             }
@@ -429,45 +398,6 @@
                   "type": "null"
                 }
               ]
-            },
-            "event_plan_fieldset": {
-              "title": "event_plan_fieldset.title",
-              "type": "object",
-              "properties": {
-                "event_plan_fieldset_file": {
-                  "title": "file.title",
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
             },
             "further_clarification": {
               "title": "further_clarification.title",
