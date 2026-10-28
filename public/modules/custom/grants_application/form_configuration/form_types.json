@@ -368,5 +368,15 @@
       "en": "Government grant application for food aid activities",
       "sv": "Ansökan om statsunderstöd för mathjälpsverksamhet"
     }
+  },
+  "39": {
+    "id": 81,
+    "form_identifier": "liikunnan_yleisavustushakemus",
+    "code": "LIIKUNNANYLEIS",
+    "labels": {
+      "fi": "Liikunnan yleisavustushakemus",
+      "en": "Application for the general grant for sport",
+      "sv": "Ansökan om allmänt understöd för idrott"
+    }
   }
 }
