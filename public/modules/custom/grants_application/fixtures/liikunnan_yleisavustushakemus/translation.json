@@ -1,5 +1,10 @@
 {
   "translations": {
+    "form_title": {
+      "fi": "Liikunnan yleisavustushakemus",
+      "en": "Application for the general grant for sport",
+      "sv": "Ansökan om allmänt understöd för idrott"
+    },
     "sport.dog_agility": {
       "fi": "Agility",
       "en": "Dog agility",

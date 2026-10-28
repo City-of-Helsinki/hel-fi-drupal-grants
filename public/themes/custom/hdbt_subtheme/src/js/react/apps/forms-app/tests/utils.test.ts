@@ -180,6 +180,13 @@ describe('sum match', () => {
     expect(sumFieldValues(formData, [])).toBe(0);
   });
 
+  test('sumFieldValues sums a field over array items', () => {
+    const rows = { step: { rows: [{ hours: '1,5' }, {}, { hours: 3, groups: [{ n: 1 }, { n: 2 }] }] } };
+    expect(sumFieldValues(rows, ['step.rows[].hours'])).toBe(4.5);
+    expect(sumFieldValues(rows, ['step.rows[].groups[].n'])).toBe(3);
+    expect(sumFieldValues(rows, ['step.missing[].hours'])).toBe(0);
+  });
+
   test('getSumMismatch passes when sums are equal', () => {
     expect(getSumMismatch(formData, rule)).toBeNull();
   });

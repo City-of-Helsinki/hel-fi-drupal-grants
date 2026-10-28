@@ -473,13 +473,27 @@ export const getSubventionSum = (formData: RJSFFormData, subventionFields: strin
  * Sum numeric values of the given fields.
  *
  * Empty and non-numeric values count as zero. Comma decimal separators are accepted.
+ * A `[]` in the path sums the rest of the path over every item of that array,
+ * e.g. 'step.section.rows[].amount'.
  *
  * @param {object} formData - Form data
  * @param {string[]} fields - Root-relative dot paths, e.g. 'step.section.field'
  * @return {number} - Total sum
  */
-export const sumFieldValues = (formData: RJSFFormData, fields: string[]) =>
+export const sumFieldValues = (formData: RJSFFormData, fields: string[]): number =>
   fields.reduce((acc, field) => {
+    const [arrayPath, ...rest] = field.split('[].');
+    if (rest.length) {
+      const items = getNestedSchemaProperty(formData, `.${arrayPath}`);
+      return Array.isArray(items)
+        ? acc +
+            sumFieldValues(
+              { items } as RJSFFormData,
+              items.map((_, index) => `items.${index}.${rest.join('[].')}`),
+            )
+        : acc;
+    }
+
     const raw = getNestedSchemaProperty(formData, `.${field}`);
     const numeric = Number(String(raw ?? '0').replace(',', '.'));
     return Number.isNaN(numeric) ? acc : acc + numeric;
