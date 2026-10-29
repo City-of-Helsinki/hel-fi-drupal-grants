@@ -18,7 +18,7 @@ third_party_settings:
     applicationClose: '2026-10-01T23:59:59'
     applicationContinuous: 0
     applicationTargetGroup: '27'
-    disableCopying: 0
+    disableCopying: 1
     applicationTypeSelect: '69'
     applicationIndustry: KUVA
     applicationActingYears: {  }
