@@ -982,7 +982,7 @@ async function openSentApplication(page: Page, applicationNumber: string): Promi
   await page.goto('/fi/oma-asiointi');
   await page.waitForURL('**/oma-asiointi');
   const row = page.locator('#oma-asiointi__sent .application-list__item', { hasText: applicationNumber });
-  await row.locator('.application-list__item__link a').first().click();
+  await row.locator('.card__actions a').first().click();
 }
 
 /**

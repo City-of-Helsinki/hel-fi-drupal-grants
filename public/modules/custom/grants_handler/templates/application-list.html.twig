@@ -42,8 +42,8 @@
               <option value="desc application-list__item--submitted" selected="selected">{{ "Submitted time (newest first)"|t({}, {'context': 'grants_handler'})}}</option>
               <option value="asc application-list__item--status">{{ "Status (a-z)"|t({}, {'context': 'grants_handler'})}}</option>
               <option value="desc application-list__item--status">{{ "Status (z-a)"|t({}, {'context': 'grants_handler'})}}</option>
-              <option value="asc application-list__item--name">{{ "Name (a-z)"|t({}, {'context': 'grants_handler'})}}</option>
-              <option value="desc application-list__item--name">{{ "Name (z-a)"|t({}, {'context': 'grants_handler'})}}</option>
+              <option value="asc card__title">{{ "Name (a-z)"|t({}, {'context': 'grants_handler'})}}</option>
+              <option value="desc card__title">{{ "Name (z-a)"|t({}, {'context': 'grants_handler'})}}</option>
               <option value="asc application-list__item--number">{{ "Application number (a-z)"|t({}, {'context': 'grants_handler'})}}</option>
               <option value="desc application-list__item--number">{{ "Application number (z-a)"|t({}, {'context': 'grants_handler'})}}</option>
             </select>
@@ -65,8 +65,19 @@
       </ul>
     {% endif %}
     {% if items %}
-      <div class="hds-pagination-container" {% if items|length < 11 %} style="display:none;"{% endif %}>
-        <ul aria-label={{"Pagination"|t}} role="navigation" class="pagination application-list__pagination"></ul>
+      {# Markup follows @hdbt/navigation/pager.html.twig. List.js renders the page items client-side. #}
+      <div class="hds-pagination-container" {% if items|length < 6 %} hidden{% endif %}>
+        <nav class="hds-pagination pager" aria-label="{{ 'Pagination'|t({}, {'context': 'Pagination aria-label'}) }}" data-next="{{ 'Next'|t({}, {'context': 'Pagination next page link text'}) }}">
+          <button type="button" disabled title="{{ 'Go to previous page number'|t({}, {'context': 'Pagination previous page link title'}) }}" class="hds-button hds-pagination__button-prev">
+            {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'angle-left'} %}
+            <span aria-hidden="true" class="hds-pagination__button-prev-label">{{ 'Previous'|t({}, {'context': 'Pagination previous page link text'}) }}</span>
+          </button>
+          <ul class="pager__items hds-pagination__pages application-list__pagination"></ul>
+          <button type="button" disabled title="{{ 'Go to next page number'|t({}, {'context': 'Pagination next page link title'}) }}" class="hds-button hds-pagination__button-next">
+            <span aria-hidden="true" class="hds-pagination__button-next-label">{{ 'Next'|t({}, {'context': 'Pagination next page link text'}) }}</span>
+            {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'angle-right'} %}
+          </button>
+        </nav>
       </div>
     {% endif %}
   </div>

@@ -202,45 +202,6 @@
   #oma-asiointi__sent {
     padding-top: $spacing;
   }
-
-  .oma-asiointi-infoboxes-container {
-    .oma-asiointi-infoboxes {
-      gap: var(--spacing-3-xl);
-      margin: var(--spacing-2-xl) 0;
-
-      @include breakpoint($breakpoint-m) {
-        display: flex;
-      }
-    }
-
-    .oma-asiointi-infobox {
-      background-color: var(--color-info-light);
-      flex: 1;
-      margin-bottom: var(--spacing-layout-2-xs);
-      padding: var(--spacing-l);
-
-      @include breakpoint($breakpoint-m) {
-        margin-bottom: 0;
-      }
-
-      &:last-of-type {
-        margin-bottom: 0;
-      }
-
-      &--link {
-        display: flex;
-        margin-top: var(--spacing-layout-2-xs);
-
-        a {
-          font-size: 1.25rem;
-        }
-      }
-
-      h3 {
-        margin-top: 0;
-      }
-    }
-  }
 }
 
 .asiointirooli-block {

@@ -170,22 +170,6 @@ const pageCollection: PageCollection = {
         ],
       },
       {
-        containerClass: ".oma-asiointi-infoboxes-container",
-        elements: [
-          { selector: "h2", countExact: 1 },
-          { selector: ".oma-asiointi-infobox", countExact: 2 },
-        ],
-      },
-      {
-        containerClass: ".oma-asiointi-infobox",
-        elements: [
-          { selector: "h3", countExact: 1 },
-          { selector: "p", countExact: 1 },
-          { selector: "a", countExact: 1 },
-        ],
-        occurrences: 2,
-      },
-      {
         containerClass: "#oma-asiointi__drafts",
         elements: [
           { selector: "h2", countExact: 1, expectedText: ['Keskeneräiset hakemukset'] },

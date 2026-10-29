@@ -102,19 +102,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       throw new AccessDeniedHttpException('User not authorised');
     }
 
-    $grantsProfile = [];
-
     /** @var \Drupal\helfi_atv\AtvDocument | null $grantsProfileDocument */
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
-    if ($grantsProfileDocument) {
-      $grantsProfile = $grantsProfileDocument->getContent();
-    }
-
-    $showProfileNotice = FALSE;
-
-    if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
-      $showProfileNotice = TRUE;
-    }
 
     $updatedAt = $grantsProfileDocument?->getUpdatedAt();
     $updatedAt = $updatedAt ? strtotime($updatedAt) : FALSE;
@@ -179,10 +168,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
     return [
       '#theme' => 'grants_oma_asiointi_front',
-      '#infoboxes' => [
-        '#theme' => 'grants_oma_asiointi_infoboxes',
-        '#profileNotice' => $showProfileNotice,
-      ],
       '#drafts' => [
         '#theme' => 'application_list',
         '#type' => 'drafts',

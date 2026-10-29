@@ -60,7 +60,7 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     test.skip(!receivedApplicationsCount, 'Skip application search sort test');
 
     const firstApplication = await page.locator('#oma-asiointi__sent .application-list__item').first();
-    const applicationId = await firstApplication.getAttribute('data-drupal-selector');
+    const applicationId = (await firstApplication.locator('.application-list__item--application-number').innerText()).trim();
 
     if (!applicationId) return;
 

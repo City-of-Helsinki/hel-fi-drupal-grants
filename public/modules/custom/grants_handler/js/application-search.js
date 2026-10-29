@@ -5,7 +5,7 @@
       var fullList = null;
       if ($("#applications__list")[0]) {
         fullListOptions = {
-          valueNames: ['application-list__item--name', 'application-list__item--status', 'application-list__item--number', 'application-list__item--submitted']
+          valueNames: ['card__title', 'application-list__item--status', 'application-list__item--number', 'application-list__item--submitted']
         };
 
         fullList = new List('applications__list', fullListOptions);
