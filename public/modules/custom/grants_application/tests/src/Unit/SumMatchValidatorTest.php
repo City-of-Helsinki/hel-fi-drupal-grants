@@ -31,7 +31,7 @@ final class SumMatchValidatorTest extends UnitTestCase {
   /**
    * Build form settings with a sum match rule on a computedSum total.
    *
-   * @param array $rule
+   * @param array<string, mixed> $rule
    *   The misc:sum-match rule.
    *
    * @return \Drupal\grants_application\Form\FormSettings
@@ -66,12 +66,12 @@ final class SumMatchValidatorTest extends UnitTestCase {
   /**
    * Build form data.
    *
-   * @param array $ages
+   * @param array<string, int|string> $ages
    *   Age field values.
-   * @param array $genders
+   * @param array<string, int|string> $genders
    *   Gender field values.
    *
-   * @return array
+   * @return array<string, array<string, array<string, int|string>>>
    *   The form data.
    */
   private function getFormData(array $ages, array $genders): array {
