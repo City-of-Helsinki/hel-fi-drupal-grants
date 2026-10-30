@@ -235,4 +235,33 @@ final class FormSettings {
     return $this->settings['acting_years'] ?? [];
   }
 
+  /**
+   * Get form ui schema.
+   *
+   * @return array<string, mixed>
+   *   The form ui schema.
+   */
+  public function getUiSchema(): array {
+    return $this->uiSchema;
+  }
+
+  /**
+   * Get a form translation.
+   *
+   * Falls back to Finnish like the React form does.
+   *
+   * @param string $key
+   *   The translation key.
+   * @param string $langcode
+   *   The language code.
+   *
+   * @return string|null
+   *   The translation, or NULL if the key does not exist.
+   */
+  public function getTranslation(string $key, string $langcode): ?string {
+    $translations = $this->translation['translations'][$key] ?? [];
+
+    return $translations[$langcode] ?? $translations['fi'] ?? NULL;
+  }
+
 }

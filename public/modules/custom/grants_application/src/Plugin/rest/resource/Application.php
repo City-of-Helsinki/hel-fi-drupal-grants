@@ -22,6 +22,7 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
+use Drupal\grants_application\SumMatchValidator;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationStatusService;
@@ -78,6 +79,7 @@ final class Application extends ResourceBase {
     protected JsonMapperService $jsonMapperService,
     protected Avus2DataParser $avus2DataParser,
     protected ApplicationService $applicationService,
+    protected SumMatchValidator $sumMatchValidator,
   ) {
     // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
@@ -111,6 +113,7 @@ final class Application extends ResourceBase {
       $container->get(JsonMapperService::class),
       $container->get(Avus2DataParser::class),
       $container->get(ApplicationService::class),
+      $container->get(SumMatchValidator::class),
     );
   }
 
@@ -327,11 +330,7 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    $errors = $this->validate($form_identifier, $form_data);
-    if (is_array($errors)) {
-      // Encode changes (empty)array into object in some cases
-      $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-    }
+    $this->validate($form_identifier, $form_data);
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
@@ -580,11 +579,7 @@ final class Application extends ResourceBase {
     }
 
 
-    $errors = $this->validate($form_identifier, $form_data);
-    if (is_array($errors)) {
-      // Encode changes (empty)array into object in some cases
-      $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-    }
+    $this->validate($form_identifier, $form_data);
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
@@ -760,27 +755,30 @@ final class Application extends ResourceBase {
   }
 
   /**
+   * Validate the submitted form data.
+   *
+   * Errors are only logged for debugging and don't block submitting, as the
+   * integration rejects faulty submissions.
+   *
    * @param string $formIdentifier
    *   The form identifier.
    * @param array $formData
    *   The form data.
-   *
-   * @return bool|array
-   *   Is valid or array of errors.
    */
-  private function validate(string $formIdentifier, array $formData): bool|array {
+  private function validate(string $formIdentifier, array $formData): void {
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($formIdentifier);
     $results = $this->jsonSchemaValidator->validate(json_decode(json_encode($formData)), json_decode(json_encode($settings->getSchema())));
 
     if (is_array($results)) {
-      $errors = [];
-      foreach ($results as $error) {
-        $errors[] = $error['message'];
-      }
-      $results = $errors;
+      $schemaErrors = array_map(fn (array $error) => $error['message'], $results);
+      // Encode changes (empty)array into object in some cases
+      $this->logger->alert("User encountered validation error on application $formIdentifier: " . json_encode($schemaErrors));
     }
 
-    return $results;
+    $sumErrors = $this->sumMatchValidator->validate($formData, $settings, $this->languageManager->getCurrentLanguage()->getId());
+    if ($sumErrors) {
+      $this->logger->warning("User submitted mismatching sums on application $formIdentifier: " . json_encode(array_values($sumErrors)));
+    }
   }
 
 }

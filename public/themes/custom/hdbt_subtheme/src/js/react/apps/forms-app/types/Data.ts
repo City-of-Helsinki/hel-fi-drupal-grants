@@ -9,6 +9,28 @@ export type FormSettings = {
   [key: string]: unknown;
 };
 
+/**
+ * Rule requiring the sum of `fields` to equal the sum of `compareTo`.
+ *
+ * Declared with the `misc:sum-match` uiSchema key. `path` is the field the
+ * error is attached to. All paths are root-relative dot notation.
+ */
+export type SumMatchRule = {
+  compareTo: string[];
+  fields: string[];
+  message?: string;
+  path: string;
+  successMessage?: string;
+};
+
+/**
+ * Result of the last validation of a sum match rule, with its message.
+ */
+export type SumMatchState = {
+  message: string;
+  status: 'match' | 'mismatch';
+};
+
 export type FormConfig = {
   actingYears?: number[];
   applicantType?: string;
@@ -28,6 +50,7 @@ export type FormConfig = {
     statusUpdates?: string[];
   };
   requiredFileFields: string[];
+  sumMatchRules: SumMatchRule[];
   translations: {
     [key in 'fi' | 'sv' | 'en']: { [key: string]: string };
   };
