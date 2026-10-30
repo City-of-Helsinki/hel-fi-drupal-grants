@@ -89,6 +89,32 @@ describe('ResultCard', () => {
     expect(tags).toEqual(['Draft', 'Application period ended', '2 new messages']);
   });
 
+  test.each([
+    ['RECEIVED', 'info', 'info-circle'],
+    ['READY', 'success', 'check-circle'],
+    ['REJECTED', 'error', 'error'],
+  ])('adds an icon to the %s status tag', (status, color, icon) => {
+    const { container } = renderCard({ status, statusLabel: status });
+    const tag = container.querySelector(`.content-tags__tags__tag--${color}`);
+    expect(tag?.querySelector('svg')?.getAttribute('aria-label')).toBe(icon);
+  });
+
+  test('adds no icon to the draft status tag', () => {
+    const { container } = renderCard({ status: 'DRAFT', statusLabel: 'Draft' });
+    expect(container.querySelector('.card__category li svg')).toBeNull();
+  });
+
+  test('adds an info icon to the archived form tag only', () => {
+    const archived = renderCard({ status: 'DRAFT', statusLabel: 'Draft', errorType: 'ARCHIVED' });
+    expect(archived.container.querySelector('.content-tags__tags__tag--alert svg')?.getAttribute('aria-label')).toBe(
+      'info-circle',
+    );
+    archived.unmount();
+
+    const notOpen = renderCard({ status: 'DRAFT', statusLabel: 'Draft', errorType: 'NOT_OPEN' });
+    expect(notOpen.container.querySelector('.content-tags__tags__tag--alert svg')).toBeNull();
+  });
+
   test('colors the status tag by status', () => {
     const { container } = renderCard({ status: 'READY', statusLabel: 'Ready' });
     expect(container.querySelector('.content-tags__tags__tag--success')).not.toBeNull();

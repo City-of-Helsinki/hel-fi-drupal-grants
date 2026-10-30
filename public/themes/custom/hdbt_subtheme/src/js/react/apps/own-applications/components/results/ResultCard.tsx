@@ -1,4 +1,5 @@
-import { type MouseEvent, useState } from 'react';
+import { IconCheckCircle, IconError, IconInfoCircle } from 'hds-react';
+import { type JSX, type MouseEvent, useState } from 'react';
 import CardItem, { type CardActionType, Metarow } from '@/react/common/Card';
 import type TagType from '@/types/TagType';
 import type { ApplicationItem } from '../../types/ApplicationItem';
@@ -20,8 +21,15 @@ const statusColors: Record<string, string> = {
   CLOSED: 'error',
 };
 
+const statusIcons: Record<string, JSX.Element> = {
+  info: <IconInfoCircle />,
+  success: <IconCheckCircle />,
+  error: <IconError />,
+};
+
 const getTags = ({ errorType, status, statusLabel, unreadMessages }: ApplicationItem): TagType[] => {
-  const tags: TagType[] = [{ tag: statusLabel, color: statusColors[status.toUpperCase()] }];
+  const color = statusColors[status.toUpperCase()];
+  const tags: TagType[] = [{ tag: statusLabel, color, iconStart: color ? statusIcons[color] : undefined }];
 
   if (status === 'DRAFT' && errorType) {
     tags.push({
@@ -30,6 +38,7 @@ const getTags = ({ errorType, status, statusLabel, unreadMessages }: Application
           ? Drupal.t('Application form expired', {}, { context: 'grants_handler' })
           : Drupal.t('Application period ended', {}, { context: 'grants_handler' }),
       color: 'alert',
+      iconStart: <IconInfoCircle />,
     });
   }
 

@@ -121,9 +121,6 @@ class DocumentValueExtractor {
     $retval = [];
 
     foreach ($content[$elementName] as $key => $value) {
-      if(!is_array($value)) {
-        continue;
-      }
       foreach ($value as $key2 => $v) {
         self::getArrayElementItemValue($v, $key, $key2, $itemPropertyDefinitions, $retval);
       }
