@@ -805,5 +805,6 @@
       "type": "object",
       "$ref": "#/definitions/attachments_step"
     }
-  }
+  },
+  "required": ["planned_activities_step"]
 }

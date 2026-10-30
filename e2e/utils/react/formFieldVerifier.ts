@@ -1300,10 +1300,14 @@ export async function verifyIncompleteFormSubmitBlocked(
 
   await assertMissingInputsVisible(page);
 
-  // Clear the acceptance and return to the first step.
+  // Clear the acceptance.
   await page.locator('label[for="final-acceptance"]').click();
   await expect(acceptance).not.toBeChecked();
-  await clickOnStep(page, 0);
+
+  // Reset the form to an empty draft.
+  await page.evaluate(() => sessionStorage.removeItem(location.pathname.split('/').pop()!));
+  await page.reload();
+  await waitForFormLoad(page);
 }
 
 /**

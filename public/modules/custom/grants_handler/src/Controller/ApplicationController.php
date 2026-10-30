@@ -103,7 +103,7 @@ final class ApplicationController extends ControllerBase {
     }
     catch (\Exception $e) {
       $this->getLogger('grants_application_access')
-        ->error(
+        ->info(
           "Unable to resolve single submission access due to exception: @message",
           ['@message' => $e->getMessage()]
         );
@@ -114,7 +114,7 @@ final class ApplicationController extends ControllerBase {
     $viewPermission = $account->hasPermission('view own webform submission');
     if (!$viewPermission || !$singleSubmissionAccess) {
       $this->getLogger('grant_access')
-        ->error("Access denied, user is missing view permission or single submission access.");
+        ->info("Access denied, user is missing view permission or single submission access.");
     }
 
     return AccessResult::allowedIf(

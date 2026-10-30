@@ -12,8 +12,7 @@
     },
     "purpose_section": {
       "purpose": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1500
+        "ui:widget": "textarea"
       }
     },
     "city_benefits_loans_section": {
@@ -27,6 +26,16 @@
       }
     },
     "prior_benefits_usage_section": {
+      "have_received_prior_compensations": {
+        "ui:enumNames": [
+          "have_received_prior_compensations.no",
+          "have_received_prior_compensations.yes"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true
+        }
+      },
       "prior_compensations": {
         "ui:widget": "textarea",
         "ui:options": {
@@ -72,8 +81,7 @@
         }
       },
       "de_minimis_info": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },
@@ -117,8 +125,7 @@
         }
       },
       "change_negotiations_description": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1000
+        "ui:widget": "textarea"
       }
     }
   },

@@ -60,7 +60,7 @@ async function uploadFiles(
 }
 
 const filesFromATVData = (value?: ATVFile): File[] => {
-  if (!value || !value.fileName) {
+  if (!value?.fileName) {
     return [];
   }
 
@@ -125,6 +125,7 @@ export const getAcceptAttribute = (formats: string[]): string => formats.map((fo
 export const FileInput = ({
   formData,
   id,
+  idSchema,
   label,
   name,
   onChange,
@@ -353,14 +354,14 @@ export const FileInput = ({
 
   if (uiSchema?.['misc:variant'] === 'simple') {
     return (
-      <div className='hdbt-form--fileinput' key={refreshKey}>
+      <div className='hdbt-form--fileinput' id={idSchema?.$id} key={refreshKey}>
         {inputElement}
       </div>
     );
   }
 
   return (
-    <div className='hdbt-form--fileinput' key={refreshKey}>
+    <div className='hdbt-form--fileinput' id={idSchema?.$id} key={refreshKey}>
       {inputElement}
       <Checkbox
         checked={isDeliveredLater || false}
