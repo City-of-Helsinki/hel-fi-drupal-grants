@@ -1,14 +1,14 @@
 import { Select } from 'hds-react';
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { getCurrentLanguage } from '@/react/common/helpers/GetCurrentLanguage';
-import SortOptions, { DEFAULT_SORT, type SortValue } from '../enum/SortOptions';
+import SortOptions, { DEFAULT_SORT, type SortValue } from '../../enum/SortOptions';
 
 type ResultsSortProps = {
   setSort: (sort: SortValue) => void;
   sort: SortValue;
 };
 
-export const ResultsSort = ({ setSort, sort }: ResultsSortProps) => (
+const ResultsSort = ({ setSort, sort }: ResultsSortProps) => (
   <Select
     id='applicationListSort'
     clearable={false}
@@ -24,3 +24,5 @@ export const ResultsSort = ({ setSort, sort }: ResultsSortProps) => (
     value={[SortOptions.find((option) => option.value === sort) ?? SortOptions[0]]}
   />
 );
+
+export default ResultsSort;

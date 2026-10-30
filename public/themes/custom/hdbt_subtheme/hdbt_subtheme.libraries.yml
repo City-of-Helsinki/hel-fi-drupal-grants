@@ -45,9 +45,7 @@ own-applications:
     dist/js/own-applications.min.js: {}
   dependencies:
     - core/drupal
-    - core/drupal.message
     - core/drupalSettings
-    - grants_handler/grants-dialog
 
 print-atv-document:
   version: HELFI_DEPLOYMENT_IDENTIFIER

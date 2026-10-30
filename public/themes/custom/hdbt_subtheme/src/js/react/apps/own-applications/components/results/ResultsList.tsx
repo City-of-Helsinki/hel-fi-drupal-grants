@@ -1,21 +1,22 @@
 import { type SyntheticEvent, useEffect, useRef, useState } from 'react';
 import Pagination from '@/react/common/Pagination';
-import type { ApplicationItem } from '../types/ApplicationItem';
-import { ApplicationCard } from './ApplicationCard';
+import AppSettings from '../../enum/AppSettings';
+import type { ApplicationItem } from '../../types/ApplicationItem';
+import ResultCard from './ResultCard';
 
-export const PAGE_SIZE = 5;
+const { size } = AppSettings;
 
-type ApplicationListProps = {
+type ResultsListProps = {
   applications: ApplicationItem[];
   // Changes whenever the search, filter or sort changes so the list returns to the first page.
   resetKey?: string;
 };
 
-export const ApplicationList = ({ applications, resetKey }: ApplicationListProps) => {
+const ResultsList = ({ applications, resetKey }: ResultsListProps) => {
   const [page, setPage] = useState(1);
   const [focusFirstItem, setFocusFirstItem] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  const totalPages = Math.ceil(applications.length / PAGE_SIZE);
+  const totalPages = Math.ceil(applications.length / size);
   const currentPage = Math.min(page, Math.max(totalPages, 1));
 
   useEffect(() => {
@@ -46,13 +47,13 @@ export const ApplicationList = ({ applications, resetKey }: ApplicationListProps
     return null;
   }
 
-  const visibleApplications = applications.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  const visibleApplications = applications.slice((currentPage - 1) * size, currentPage * size);
 
   return (
     <>
       <div ref={listRef}>
         {visibleApplications.map((application) => (
-          <ApplicationCard key={application.applicationNumber} application={application} />
+          <ResultCard key={application.applicationNumber} application={application} />
         ))}
       </div>
       {totalPages > 1 && (
@@ -61,3 +62,5 @@ export const ApplicationList = ({ applications, resetKey }: ApplicationListProps
     </>
   );
 };
+
+export default ResultsList;

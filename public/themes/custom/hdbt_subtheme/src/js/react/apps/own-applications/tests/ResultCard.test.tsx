@@ -1,14 +1,14 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
-import { ApplicationCard } from '../components/ApplicationCard';
+import ResultCard from '../components/results/ResultCard';
 import { createApplication } from './testData';
 
-const renderCard = (overrides = {}) => render(<ApplicationCard application={createApplication(overrides)} />);
+const renderCard = (overrides = {}) => render(<ResultCard application={createApplication(overrides)} />);
 
 const actionLabels = (container: HTMLElement) =>
   Array.from(container.querySelectorAll('.card__actions .hds-button__label')).map((label) => label.textContent);
 
-describe('ApplicationCard', () => {
+describe('ResultCard', () => {
   test('renders a list item card with the application details', () => {
     const { container } = renderCard();
     const card = container.querySelector('.card');
@@ -41,16 +41,41 @@ describe('ApplicationCard', () => {
   });
 
   test('opens the delete confirmation dialog instead of following the link', () => {
-    const createDialog = vi.fn();
-    vi.stubGlobal('Drupal', { ...Drupal, dialogFunctions: { createDialog, removeDialog: vi.fn() } });
-
     const { container } = renderCard({ status: 'DRAFT', statusLabel: 'Draft' });
     const link = container.querySelector('.application-delete-link-LOCALT-060-0000001') as HTMLAnchorElement;
     const notPrevented = fireEvent.click(link);
 
     expect(notPrevented).toBe(false);
-    expect(createDialog).toHaveBeenCalledTimes(1);
-    expect(createDialog.mock.calls[0][0].dialogVariant).toBe('danger');
+    expect(screen.getByRole('dialog', { name: 'Delete application' })).toBeTruthy();
+    expect(screen.getByText('Are you sure you want to delete the application?')).toBeTruthy();
+  });
+
+  test('closes the delete dialog when cancelled', () => {
+    const { container } = renderCard({ status: 'DRAFT', statusLabel: 'Draft' });
+    fireEvent.click(container.querySelector('.application-delete-link-LOCALT-060-0000001') as HTMLAnchorElement);
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  test('deletes the draft and shows an error when deleting fails', async () => {
+    const fetchMock = vi.fn(async (url: string) =>
+      url === '/session/token'
+        ? new Response('token')
+        : new Response(JSON.stringify({ redirectUrl: '' }), { headers: { 'Content-Type': 'application/json' } }),
+    );
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = fetchMock as unknown as typeof fetch;
+
+    const { container } = renderCard({ status: 'DRAFT', statusLabel: 'Draft' });
+    fireEvent.click(container.querySelector('.application-delete-link-LOCALT-060-0000001') as HTMLAnchorElement);
+    fireEvent.click(document.getElementById('own-applications__delete-draft-confirm') as HTMLElement);
+
+    expect(await screen.findByText('Deleting application failed. Please try again or contact support.')).toBeTruthy();
+    expect(fetchMock).toHaveBeenCalledWith('/delete/LOCALT-060-0000001', {
+      method: 'POST',
+      headers: { 'X-CSRF-Token': 'token' },
+    });
+    globalThis.fetch = originalFetch;
   });
 
   test('renders status, error and unread message tags', () => {

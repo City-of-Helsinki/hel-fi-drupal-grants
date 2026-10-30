@@ -181,7 +181,7 @@ const pageCollection: PageCollection = {
           { selector: "h2", countExact: 1, expectedText: ['Lähetetyt hakemukset'] },
           { selector: ".hdbt-search--react__text-field", countExact: 1, expectedText: ['Etsi hakemusta'] },
           { selector: "label[for='checkbox-processed']", countExact: 1, expectedText: ['Näytä vain käsittelyssä olevat hakemukset'] },
-          { selector: ".hdbt-search--react__submit-button", countExact: 1, expectedText: ['Etsi hakemusta'] },
+          { selector: ".hdbt-search--react__submit-button", countExact: 1, expectedText: ['Etsi'] },
         ],
       },
     ]

@@ -1,7 +1,6 @@
+import AppSettings from '../enum/AppSettings';
 import type { SortValue } from '../enum/SortOptions';
 import type { ApplicationItem } from '../types/ApplicationItem';
-
-export const PROCESSING_STATUS = 'PROCESSING';
 
 type SortField = 'applicationNumber' | 'formName' | 'statusLabel' | 'submittedSortable';
 
@@ -45,7 +44,7 @@ export const filterApplications = (
   const { field, direction } = sortFields[sort];
 
   return applications
-    .filter((application) => !onlyProcessing || application.status === PROCESSING_STATUS)
+    .filter((application) => !onlyProcessing || application.status === AppSettings.processingStatus)
     .filter((application) => !searchValue || matchesSearch(application, searchValue))
     .sort((a, b) => {
       const result = (a[field] ?? '').localeCompare(b[field] ?? '');

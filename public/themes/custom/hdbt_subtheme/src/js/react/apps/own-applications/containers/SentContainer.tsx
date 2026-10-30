@@ -6,11 +6,11 @@ import ResultsEmpty from '@/react/common/ResultsEmpty';
 import ResultsHeader from '@/react/common/ResultsHeader';
 import { DEFAULT_SORT, type SortValue } from '../enum/SortOptions';
 import { filterApplications } from '../helpers/filterApplications';
+import ResultsList from '../components/results/ResultsList';
+import ResultsSort from '../components/results/ResultsSort';
 import type { ApplicationItem } from '../types/ApplicationItem';
-import { ApplicationList } from './ApplicationList';
-import { ResultsSort } from './ResultsSort';
 
-export const SentApplications = ({ applications }: { applications: ApplicationItem[] }) => {
+const SentContainer = ({ applications }: { applications: ApplicationItem[] }) => {
   const [searchInput, setSearchInput] = useState('');
   const [stagedOnlyProcessing, setStagedOnlyProcessing] = useState(false);
   const [search, setSearch] = useState('');
@@ -69,7 +69,7 @@ export const SentApplications = ({ applications }: { applications: ApplicationIt
                   actionsClass='hdbt-search--react__results--sort'
                   resultText={`${filteredApplications.length} ${Drupal.t('Applications', {}, { context: 'grants_handler' })}`}
                 />
-                <ApplicationList applications={filteredApplications} resetKey={`${search}|${onlyProcessing}|${sort}`} />
+                <ResultsList applications={filteredApplications} resetKey={`${search}|${onlyProcessing}|${sort}`} />
               </>
             ) : (
               <ResultsEmpty />
@@ -82,3 +82,5 @@ export const SentApplications = ({ applications }: { applications: ApplicationIt
     </section>
   );
 };
+
+export default SentContainer;

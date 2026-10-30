@@ -409,7 +409,7 @@ export async function deleteDraft(page: Page, applicationNumber: string) {
   await page.goto('/fi/oma-asiointi');
   await page.waitForURL('**/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationNumber}`).click();
-  await page.locator('#helfi-dialog__action-button').click();
+  await page.locator('#own-applications__delete-draft-confirm').click();
   await page.waitForURL('**/oma-asiointi');
   await expect(
     page.locator('.messages__container .hds-notification .hds-notification__body').filter({ hasText: 'Luonnos poistettu' })

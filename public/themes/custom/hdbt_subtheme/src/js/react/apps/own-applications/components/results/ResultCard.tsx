@@ -1,7 +1,8 @@
+import { type MouseEvent, useState } from 'react';
 import CardItem, { type CardActionType, Metarow } from '@/react/common/Card';
 import type TagType from '@/types/TagType';
-import { confirmDeleteDraft } from '../helpers/deleteDraft';
-import type { ApplicationItem } from '../types/ApplicationItem';
+import type { ApplicationItem } from '../../types/ApplicationItem';
+import DeleteDraftDialog from '../DeleteDraftDialog';
 
 const statusColors: Record<string, string> = {
   SENT: 'info',
@@ -39,7 +40,10 @@ const getTags = ({ errorType, status, statusLabel, unreadMessages }: Application
   return tags;
 };
 
-const getActions = ({ applicationNumber, formName, links, status }: ApplicationItem): CardActionType[] => {
+const getActions = (
+  { applicationNumber, formName, links, status }: ApplicationItem,
+  onDelete: (e: MouseEvent<HTMLAnchorElement>) => void,
+): CardActionType[] => {
   const actions: CardActionType[] = [];
 
   if (status === 'DRAFT') {
@@ -56,7 +60,6 @@ const getActions = ({ applicationNumber, formName, links, status }: ApplicationI
       });
     }
     if (links.delete) {
-      const deleteUrl = links.delete;
       actions.push({
         label: Drupal.t('Delete'),
         ariaLabel: Drupal.t(
@@ -64,13 +67,10 @@ const getActions = ({ applicationNumber, formName, links, status }: ApplicationI
           { '@number': applicationNumber, '@name': formName },
           { context: 'grants_handler' },
         ),
-        url: deleteUrl,
+        url: links.delete,
         icon: 'trash',
         className: `application-delete-link-${applicationNumber}`,
-        onClick: (e) => {
-          e.preventDefault();
-          confirmDeleteDraft(deleteUrl);
-        },
+        onClick: onDelete,
       });
     }
     return actions;
@@ -103,45 +103,63 @@ const getActions = ({ applicationNumber, formName, links, status }: ApplicationI
   return actions;
 };
 
-export const ApplicationCard = ({ application }: { application: ApplicationItem }) => {
-  const { applicationNumber, formName, status, submitted, submittedSortable } = application;
+const ResultCard = ({ application }: { application: ApplicationItem }) => {
+  const { applicationNumber, formName, links, status, submitted, submittedSortable } = application;
+  const [deleteOpener, setDeleteOpener] = useState<HTMLElement | null>(null);
+
+  const openDeleteDialog = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setDeleteOpener(e.currentTarget);
+  };
 
   return (
-    <CardItem
-      cardModifierClass={`card--border application-list__item application-list__item--${status.toLowerCase()}`}
-      cardTitle={formName}
-      cardTitleLevel={3}
-      cardCategoryTag={getTags(application)}
-      cardActions={getActions(application)}
-      customMetaRows={{
-        top: [
-          <Metarow
-            key='submitted'
-            icon='clock'
-            label={
-              status === 'DRAFT'
-                ? Drupal.t('Draft saved time', {}, { context: 'grants_handler' })
-                : Drupal.t('Submission date', {}, { context: 'grants_handler' })
-            }
-            content={
-              <>
-                {submitted}
-                <span className='application-list__item--submitted'>{submittedSortable}</span>
-              </>
-            }
-          />,
-          <Metarow
-            key='number'
-            icon='document'
-            label={Drupal.t('Application number', {}, { context: 'grants_handler' })}
-            content={
-              <span className='application-list__item--number application-list__item--application-number'>
-                {applicationNumber}
-              </span>
-            }
-          />,
-        ],
-      }}
-    />
+    <>
+      <CardItem
+        cardModifierClass={`card--border application-list__item application-list__item--${status.toLowerCase()}`}
+        cardTitle={formName}
+        cardTitleLevel={3}
+        cardCategoryTag={getTags(application)}
+        cardActions={getActions(application, openDeleteDialog)}
+        customMetaRows={{
+          top: [
+            <Metarow
+              key='submitted'
+              icon='clock'
+              label={
+                status === 'DRAFT'
+                  ? Drupal.t('Draft saved time', {}, { context: 'grants_handler' })
+                  : Drupal.t('Submission date', {}, { context: 'grants_handler' })
+              }
+              content={
+                <>
+                  {submitted}
+                  <span className='application-list__item--submitted'>{submittedSortable}</span>
+                </>
+              }
+            />,
+            <Metarow
+              key='number'
+              icon='document'
+              label={Drupal.t('Application number', {}, { context: 'grants_handler' })}
+              content={
+                <span className='application-list__item--number application-list__item--application-number'>
+                  {applicationNumber}
+                </span>
+              }
+            />,
+          ],
+        }}
+      />
+      {links.delete && (
+        <DeleteDraftDialog
+          close={() => setDeleteOpener(null)}
+          focusAfterCloseElement={deleteOpener ?? undefined}
+          isOpen={deleteOpener !== null}
+          url={links.delete}
+        />
+      )}
+    </>
   );
 };
+
+export default ResultCard;

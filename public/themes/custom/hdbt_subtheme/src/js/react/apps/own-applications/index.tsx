@@ -1,12 +1,12 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import initSentry from '@/react/common/helpers/Sentry';
-import { DraftApplications } from './components/DraftApplications';
-import { SentApplications } from './components/SentApplications';
+import DraftsContainer from './containers/DraftsContainer';
+import SentContainer from './containers/SentContainer';
 
 initSentry();
 
-const rootSelector: string = 'own-application-search';
+const rootSelector: string = 'own-applications-search';
 const rootElement: HTMLElement | null = document.getElementById(rootSelector);
 
 if (rootElement) {
@@ -14,8 +14,8 @@ if (rootElement) {
 
   createRoot(rootElement).render(
     <React.StrictMode>
-      <DraftApplications applications={drafts} />
-      <SentApplications applications={sent} />
+      <DraftsContainer applications={drafts} />
+      <SentContainer applications={sent} />
     </React.StrictMode>,
   );
 }
