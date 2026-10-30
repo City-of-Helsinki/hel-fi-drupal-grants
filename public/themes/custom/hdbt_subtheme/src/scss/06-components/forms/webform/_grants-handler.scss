@@ -47,3 +47,130 @@
 .hds-notification__label {
   align-items: center;
 }
+
+// Application status tag with the status check spinner and error message.
+.application-list__item--status {
+  --status-label-height: 32px;
+  align-items: center;
+  border-radius: 20px;
+  display: inline-flex;
+  font-size: var(--fontsize-body-s);
+  line-height: var(--status-label-height);
+  min-height: var(--status-label-height);
+  padding: var(--spacing-3-xs) $spacing;
+  padding-left: var(--spacing-xs);
+  vertical-align: middle;
+
+  & + .hds-loading-spinner {
+    display: inline-block;
+    left: 10px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: var(--spacing-3-xs);
+  }
+
+  &.hide-spinner + .hds-loading-spinner {
+    display: none;
+  }
+
+  & + div + .application-list__item--error {
+    display: none;
+  }
+
+  &.show-error {
+    background: var(--color-black-20);
+    color: var(--color-black-90);
+  }
+
+  &.show-error + div + .application-list__item--error {
+    display: inline-flex;
+    left: var(--spacing-xs);
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: var(--spacing-3-xs);
+
+    .application-list--error-text {
+      display: inline-block;
+      margin-left: $spacing-half;
+    }
+  }
+}
+
+.application-list__item--status--draft {
+  padding-left: 0;
+}
+
+.application-list__item--status--sent,
+.application-list__item--status--submitted {
+  background: var(--color-black-10);
+
+  &::before {
+    --icon-size: 1.5rem;
+
+    @include pseudo-icon('alert-circle');
+    background-color: var(--color-black);
+    content: '';
+    margin-right: $spacing-half;
+  }
+}
+
+.application-list__item--status--received,
+.application-list__item--status--pending,
+.application-list__item--status--processing,
+.application-list__item--status--preparing {
+  background: var(--color-info);
+  color: var(--color-white);
+
+  &::before {
+    --icon-size: 1.5rem;
+
+    @include pseudo-icon('info-circle');
+    background-color: var(--color-white);
+    content: '';
+    margin-right: $spacing-half;
+  }
+}
+
+.application-list__item--status--done,
+.application-list__item--status--ready,
+.application-list__item--status--resolved {
+  background: var(--color-success);
+  color: var(--color-white);
+
+  &::before {
+    --icon-size: 1.5rem;
+
+    @include pseudo-icon('check-circle');
+    background-color: var(--color-white);
+    content: '';
+    margin-right: $spacing-half;
+  }
+}
+
+.application-list__item--status--rejected,
+.application-list__item--status--deleted,
+.application-list__item--status--canceled,
+.application-list__item--status--cancelled {
+  background: var(--color-alert);
+
+  &::before {
+    --icon-size: 1.5rem;
+
+    @include pseudo-icon('alert-circle');
+    background-color: var(--color-black);
+    content: '';
+    margin-right: $spacing-half;
+  }
+}
+
+.application-list__item--status--error {
+  background: var(--color-black-20);
+  color: var(--color-black);
+  text-transform: uppercase;
+
+  .hel-icon {
+    margin-right: var(--spacing-3-xs);
+  }
+}

@@ -18,47 +18,6 @@
   display: none;
 }
 
-.application-list__item--status {
-  align-items: center;
-  display: flex;
-}
-
-.application-list__item--status + .hds-loading-spinner {
-  display: inline-block;
-  left: 10px;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  top: var(--spacing-3-xs);
-}
-
-.application-list__item--status.hide-spinner + .hds-loading-spinner {
-  display: none;
-}
-
-.application-list__item--status + div + .application-list__item--error {
-  display: none;
-}
-
-.application-list__item--status.show-error {
-  background: var(--color-black-20);
-  color: var(--color-black-90);
-}
-
-.application-list__item--status.show-error + div + .application-list__item--error {
-  display: inline-flex;
-  left: var(--spacing-xs);
-  margin: 0;
-  padding: 0;
-  position: relative;
-  top: var(--spacing-3-xs);
-
-  .application-list--error-text {
-    display: inline-block;
-    margin-left: $spacing-half;
-  }
-}
-
 .application-list__status__wrapper {
   background: var(--color-black-5);
 }
