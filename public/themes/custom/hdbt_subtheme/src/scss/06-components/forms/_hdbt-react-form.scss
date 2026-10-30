@@ -250,12 +250,12 @@
 // Computed sum field is readonly so that error handling can focus it in dom.
 // It's styled as disabled so that design matches what we render.
 .grants-form .hdbt-form--field--computed-sum input[readonly] {
-  -webkit-text-fill-color: var(--input-color-disabled);
   background-color: var(--input-background-disabled);
   border: var(--border-width) solid var(--input-border-color-disabled);
   color: var(--input-color-disabled);
   cursor: not-allowed;
   padding: 0 var(--spacing-s);
+  -webkit-text-fill-color: var(--input-color-disabled);
 
   &[aria-invalid='true'] {
     border-color: var(--input-border-color-invalid);

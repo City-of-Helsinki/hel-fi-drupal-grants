@@ -28,7 +28,6 @@ export const SumMatchStatus = ({ idSchema }: FieldProps) => {
   }
 
   return (
-    // biome-ignore lint/a11y/useSemanticElements: role="status" is announced more consistently than <output>.
     <div className='hdbt-form--sum-match-status' data-focus-on-error id={idSchema.$id} role='status' tabIndex={-1}>
       {state && (
         <Notification className='hdbt-form--notification' type={state.status === 'match' ? 'success' : 'error'}>
