@@ -216,4 +216,50 @@ final class ApplicationServiceTest extends KernelTestBase implements ServiceModi
     $this->assertTrue(str_contains($response['redirect_url'], $this->copiedApplicationNumber));
   }
 
+  /**
+   * Test that legacy issuer values are converted when copying.
+   */
+  public function testCreateCopyConvertsLegacyIssuerValues(): void {
+    $originalSideDocument = AtvDocument::create([
+      'content' => [
+        'grant_info_step' => [
+          'other_compensations_section' => [
+            'other_compensations' => [
+              ['other_compensation_issuer' => 'Valtio'],
+              ['other_compensation_issuer' => 'EU'],
+              ['other_compensation_issuer' => '3'],
+            ],
+          ],
+          'other_applied_compensations_section' => [
+            'other_applied_compensations' => [
+              ['other_applied_compensation_issuer' => 'Fundament'],
+            ],
+          ],
+          'purpose_section' => ['purpose' => 'Muu'],
+        ],
+      ],
+    ]);
+    $this->container->get(HelfiAtvService::class)
+      ->method('getDocumentById')
+      ->willReturn($originalSideDocument);
+
+    $this->container->get(ApplicationService::class)
+      ->createCopy('liikunta_suunnistuskartta_avustu', $this->applicationNumber);
+
+    $content = $this->copiedSideDocument->getContent()['grant_info_step'];
+    $this->assertSame(
+      [
+        ['other_compensation_issuer' => '1'],
+        ['other_compensation_issuer' => '3'],
+        ['other_compensation_issuer' => '3'],
+      ],
+      $content['other_compensations_section']['other_compensations'],
+    );
+    $this->assertSame(
+      [['other_applied_compensation_issuer' => '5']],
+      $content['other_applied_compensations_section']['other_applied_compensations'],
+    );
+    $this->assertSame('Muu', $content['purpose_section']['purpose']);
+  }
+
 }

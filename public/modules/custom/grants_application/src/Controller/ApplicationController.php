@@ -365,7 +365,7 @@ final class ApplicationController extends ControllerBase {
       '#form_identifier' => $form_identifier,
       '#application_handlers' => $handlers,
       '#last_handler' => $lastHandler,
-      '#is_copyable' => $settings->isCopyable(),
+      '#is_copyable' => $settings->canBeCopied(),
       '#status' => $document->getStatus(),
       '#statusLocalized' => $statusLocalized,
       // React has this one named in wrong way.

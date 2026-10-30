@@ -21,6 +21,30 @@ use Drupal\grants_application\User\UserInformationService;
  */
 class ApplicationService {
 
+  /**
+   * Fields that contain a compensation issuer.
+   */
+  private const ISSUER_FIELDS = [
+    'other_compensation_issuer',
+    'other_applied_compensation_issuer',
+  ];
+
+  /**
+   * Legacy issuer labels (fi, en, sv) mapped to the current enum values.
+   */
+  private const LEGACY_ISSUER_VALUES = [
+    'Valtio' => '1',
+    'State' => '1',
+    'Stat' => '1',
+    'EU' => '3',
+    'Muu' => '4',
+    'Other' => '4',
+    'Övrig' => '4',
+    'Säätiö' => '5',
+    'Foundation' => '5',
+    'Fundament' => '5',
+  ];
+
   public function __construct(
     private readonly ApplicationNumberService $applicationNumberService,
     private readonly EntityTypeManagerInterface $entityTypeManager,
@@ -56,8 +80,8 @@ class ApplicationService {
 
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
 
-    if (!$settings->isCopyable()) {
-      throw new \Exception('Copying applications is disabled for this application type.');
+    if (!$settings->canBeCopied()) {
+      throw new \Exception('Copying applications is disabled or the application is not open for this application type.');
     }
 
     $sideDocumentId = $entity->getSideDocumentId();
@@ -135,7 +159,9 @@ class ApplicationService {
       $selected_company,
       $document->getId(),
     );
-    $sideDocument->setContent($this->removeAttachmentsFromCopiedDocument($copiedDocumentContent));
+    $sideDocument->setContent($this->convertLegacyIssuerValues(
+      $this->removeAttachmentsFromCopiedDocument($copiedDocumentContent),
+    ));
     $sideDocument = $this->atvService->saveNewDocument($sideDocument);
 
     $now = time();
@@ -183,6 +209,31 @@ class ApplicationService {
     if (isset($form_data['attachments_step']['attachments_section'])) {
       unset($form_data['attachments_step']['attachments_section']);
     }
+    return $form_data;
+  }
+
+  /**
+   * Convert legacy compensation issuer values to the current enum values.
+   *
+   * Applications saved before the issuer enums were changed to Avus2 codes
+   * contain translated labels, which the current schemas don't allow.
+   *
+   * @param array<string, mixed> $form_data
+   *   The form data array.
+   *
+   * @return array<string, mixed>
+   *   The form data array with the issuer values converted.
+   */
+  private function convertLegacyIssuerValues(array $form_data): array {
+    array_walk_recursive($form_data, function (&$value, $key) {
+      if (
+        in_array($key, self::ISSUER_FIELDS, TRUE) &&
+        is_string($value) &&
+        isset(self::LEGACY_ISSUER_VALUES[$value])
+      ) {
+        $value = self::LEGACY_ISSUER_VALUES[$value];
+      }
+    });
     return $form_data;
   }
 

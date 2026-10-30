@@ -233,6 +233,11 @@ final class DraftApplication extends ResourceBase {
       $grantsProfile['socialSecurityNumber'] = $userProfileData['verifiedPersonalInformation']['nationalIdentificationNumber'] ?? '';
     }
 
+    // Keep the acting year of a submitted application selectable.
+    if (!$submission->isDraft()) {
+      $settings = $settings->withActingYearsOf($sideDocument->getContent());
+    }
+
     $response = [];
 
     // @todo Only return required user data to frontend
