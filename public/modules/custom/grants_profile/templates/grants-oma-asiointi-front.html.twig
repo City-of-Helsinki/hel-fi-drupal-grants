@@ -1,5 +1,4 @@
-
-<div class="oma-asiointi">
+<div>
   {{ notification }}
   {% if unread %}
     <div class="container">
@@ -18,7 +17,6 @@
       </section>
     </div>
   {% endif %}
-  {{ drafts }}
-  {{ others }}
+  {{ attach_library('hdbt_subtheme/own-applications') }}
   <div id="own-application-search"></div>
 </div>

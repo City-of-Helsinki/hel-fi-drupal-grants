@@ -981,7 +981,7 @@ export async function verifySentApplication(
 async function openSentApplication(page: Page, applicationNumber: string): Promise<void> {
   await page.goto('/fi/oma-asiointi');
   await page.waitForURL('**/oma-asiointi');
-  const row = page.locator('#oma-asiointi__sent .application-list__item', { hasText: applicationNumber });
+  const row = page.locator('#own-applications__sent .application-list__item', { hasText: applicationNumber });
   await row.locator('.card__actions a').first().click();
 }
 

@@ -39,6 +39,16 @@ forms-app:
     - core/drupal
     - core/drupalSettings
 
+own-applications:
+  version: HELFI_DEPLOYMENT_IDENTIFIER
+  js:
+    dist/js/own-applications.min.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupal.message
+    - core/drupalSettings
+    - grants_handler/grants-dialog
+
 print-atv-document:
   version: HELFI_DEPLOYMENT_IDENTIFIER
   js:

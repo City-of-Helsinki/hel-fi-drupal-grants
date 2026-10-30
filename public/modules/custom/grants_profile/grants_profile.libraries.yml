@@ -15,10 +15,7 @@ pattern_error:
     - core/drupal
 
 grants_oma_asiointi:
-  version: 2.3.1
-  js:
-    js/list.min.js: { }
-    js/application-draft-list.js: { }
+  version: 2.3.2
   css:
     component:
       css/grants-oma-asiointi.css: {}

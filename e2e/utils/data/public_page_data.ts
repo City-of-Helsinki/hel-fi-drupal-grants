@@ -170,20 +170,18 @@ const pageCollection: PageCollection = {
         ],
       },
       {
-        containerClass: "#oma-asiointi__drafts",
+        containerClass: "#own-applications__drafts",
         elements: [
           { selector: "h2", countExact: 1, expectedText: ['Keskeneräiset hakemukset'] },
-          { selector: ".application-list", countExact: 1 },
         ],
       },
       {
-        containerClass: "#oma-asiointi__sent",
+        containerClass: "#own-applications__sent",
         elements: [
           { selector: "h2", countExact: 1, expectedText: ['Lähetetyt hakemukset'] },
-          { selector: ".application-list", countExact: 1 },
-          { selector: ".application-list-filter", countExact: 1, expectedText: ['Etsi hakemusta'] },
+          { selector: ".hdbt-search--react__text-field", countExact: 1, expectedText: ['Etsi hakemusta'] },
           { selector: "label[for='checkbox-processed']", countExact: 1, expectedText: ['Näytä vain käsittelyssä olevat hakemukset'] },
-          { selector: ".application-list__search-row .hds-button", countExact: 1, expectedText: ['Etsi hakemusta'] },
+          { selector: ".hdbt-search--react__submit-button", countExact: 1, expectedText: ['Etsi hakemusta'] },
         ],
       },
     ]

@@ -11,6 +11,7 @@ const outDir = path.resolve(__dirname, 'dist');
 // React apps.
 const reactApps = {
   'forms-app': './src/js/react/apps/forms-app/index.tsx',
+  'own-applications': './src/js/react/apps/own-applications/index.tsx',
 };
 
 // Vanilla JS files.

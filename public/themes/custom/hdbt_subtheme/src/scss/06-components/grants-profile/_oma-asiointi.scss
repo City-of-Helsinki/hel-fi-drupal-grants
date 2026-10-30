@@ -1,10 +1,15 @@
 /* stylelint-disable max-nesting-depth -- @todo UHF-12501 */
 /* stylelint-disable selector-id-pattern -- @todo UHF-12501 */
-.page--oma-asiointi .main-content {
-  margin-top: 0;
+.page--oma-asiointi {
+  .local-tasks__wrapper {
+    @include components-container-max-width;
+    @include component-side-padding;
+    display: flex;
+    margin-inline: 0;
+  }
 
-  h2 {
-    margin-top: var(--spacing-m);
+  .main-content {
+    margin-top: 0;
   }
 }
 
@@ -39,14 +44,6 @@
   }
 }
 
-#oma-asiointi__sent {
-  background: var(--color-black-5);
-
-  .application-list__item {
-    background: var(--color-white);
-  }
-}
-
 .oma-asiointi-block {
   background-color: var(--color-black-5);
   padding-bottom: var(--spacing-l);
@@ -75,44 +72,6 @@
 
     .link .hel-icon {
       vertical-align: text-top;
-    }
-  }
-
-  &--link {
-    display: block;
-    position: relative;
-    text-decoration: none;
-
-    &::after {
-      --icon-size: 1.5rem;
-
-      @include pseudo-icon('arrow-right');
-      @include hover-link-arrow-transition;
-      bottom: var(--spacing-m);
-      content: '';
-      display: block;
-      flex-shrink: 0;
-      margin-left: -$spacing-quarter;
-      margin-top: $spacing-half;
-      position: absolute;
-      right: var(--spacing-m);
-
-      @include breakpoint($breakpoint-s) {
-        --icon-size: 3rem;
-        margin-left: -$spacing-half;
-        margin-top: $spacing;
-      }
-    }
-
-    &:focus,
-    &:hover {
-      &::after {
-        transform: translateX($spacing-half);
-
-        @media (prefers-reduced-motion) {
-          transform: none;
-        }
-      }
     }
   }
 
@@ -182,27 +141,44 @@
   }
 }
 
-.oma-asiointi {
-  margin-top: var(--spacing-l);
+.oma-asiointi-block--link {
+  display: block;
+  position: relative;
+  text-decoration: none;
 
-  ul {
-    padding: 0;
-  }
+  &::after {
+    --icon-size: 1.5rem;
 
-  &__list {
-    padding-bottom: var(--spacing-l);
-    padding-top: var(--spacing-l);
+    @include pseudo-icon('arrow-right');
+    @include hover-link-arrow-transition;
+    bottom: var(--spacing-m);
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    margin-left: -$spacing-quarter;
+    margin-top: $spacing-half;
+    position: absolute;
+    right: var(--spacing-m);
 
-    h2 {
-      margin-bottom: var(--spacing-m);
-      margin-top: 0;
+    @include breakpoint($breakpoint-s) {
+      --icon-size: 3rem;
+      margin-left: -$spacing-half;
+      margin-top: $spacing;
     }
   }
 
-  #oma-asiointi__sent {
-    padding-top: $spacing;
+  &:focus,
+  &:hover {
+    &::after {
+      transform: translateX($spacing-half);
+
+      @media (prefers-reduced-motion) {
+        transform: none;
+      }
+    }
   }
 }
+
 
 .asiointirooli-block {
   background-color: var(--color-black);

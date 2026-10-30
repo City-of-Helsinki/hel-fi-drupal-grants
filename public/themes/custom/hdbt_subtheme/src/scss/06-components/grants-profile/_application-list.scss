@@ -1,50 +1,21 @@
-/* stylelint-disable max-nesting-depth -- @todo UHF-12501 */
-.application-list {
-  padding-bottom: var(--spacing-xl);
-  padding-left: 0;
+.own-applications {
+  &:first-of-type {
+    margin-block: $spacing-double $spacing-quadruple;
+  }
+
+  &:last-of-type {
+    background-color: $color-black-5;
+    margin-block-end: -112px;
+    padding-block: $spacing-triple 112px;
+  }
 }
 
-.application-list__processed-human-readable {
-  display: none;
-}
-
-.application-list__item .card__content {
-  display: flex;
+.own-applications__title {
+  margin-block: 0 $spacing-and-half;
 }
 
 .application-list__item--submitted {
   display: none;
-}
-
-.application-list__item__link {
-  display:flex;
-  margin-top: var(--spacing-m);
-
-  a {
-    font-size: 1.25rem;
-
-    i {
-      vertical-align: text-bottom;
-    }
-  }
-}
-
-.application-list__item__row {
-  display: flex;
-  flex-flow: row wrap;
-  gap: var(--spacing-m);
-  justify-content: space-between;
-}
-
-.application-list__item__row__left {
-  justify-content: flex-start;
-}
-
-.application-list__item__row__top {
-  padding: $spacing-half $spacing $spacing-half 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
 }
 
 .application-list__item--status {
@@ -88,31 +59,6 @@
   }
 }
 
-.application-list__count {
-  font-size: 1.5rem;
-}
-
-.application-list__count-value {
-  font-weight: bold;
-}
-
-.application-list__information-row {
-  align-items: flex-end;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  width: 100%;
-
-  @include breakpoint(max-width 35rem) {
-    flex-flow: row wrap;
-  }
-
-  .grant-applications--select-wrapper select {
-    max-width: 100%;
-    width: 322px;
-  }
-}
-
 .application-list__status__wrapper {
   background: var(--color-black-5);
 }
@@ -138,35 +84,5 @@
 
   > div {
     margin: auto;
-  }
-}
-
-.application-list__search-row {
-  align-items: flex-end;
-  display: flex;
-  flex-flow: row nowrap;
-  gap: $spacing;
-  justify-content: space-between;
-  width: 100%;
-
-  @include breakpoint(max-width 35rem) {
-    flex-flow: row wrap;
-  }
-
-  .hds-text-input {
-    flex: 1 100%;
-    max-width: 100%;
-  }
-
-  .hds-text-input__input-wrapper {
-    display:block;
-
-    input {
-      width: 100%;
-    }
-  }
-
-  button {
-    white-space: nowrap;
   }
 }

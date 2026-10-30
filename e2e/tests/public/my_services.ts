@@ -47,7 +47,8 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     let applicationDates = await getReceivedApplicationDateValues(page);
     expect(isDescending(applicationDates)).toBeTruthy();
 
-    await page.getByLabel('Järjestä').selectOption('asc application-list__item--submitted');
+    await page.getByRole('combobox', { name: /Järjestä/ }).click();
+    await page.getByRole('option', { name: 'Lähetysaika (vanhin ensin)' }).click();
 
     applicationDates = await getReceivedApplicationDateValues(page);
     expect(isAscending(applicationDates)).toBeTruthy();
@@ -59,12 +60,13 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     const receivedApplicationsCount = await getReceivedApplicationCount(page);
     test.skip(!receivedApplicationsCount, 'Skip application search sort test');
 
-    const firstApplication = await page.locator('#oma-asiointi__sent .application-list__item').first();
+    const firstApplication = await page.locator('#own-applications__sent .application-list__item').first();
     const applicationId = (await firstApplication.locator('.application-list__item--application-number').innerText()).trim();
 
     if (!applicationId) return;
 
     await page.getByLabel('Etsi hakemusta').pressSequentially(applicationId, {delay: 50});
+    await page.getByLabel('Etsi hakemusta').press('Enter');
 
     const visibleApplicationsCount = await getReceivedApplicationCount(page);
     expect(visibleApplicationsCount).toBeGreaterThanOrEqual(1);
