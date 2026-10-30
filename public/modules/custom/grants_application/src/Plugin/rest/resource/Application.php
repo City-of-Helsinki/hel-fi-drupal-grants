@@ -330,10 +330,7 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    $errors = $this->validate($form_identifier, $form_data);
-    if ($errors) {
-      return new JsonResponse(['error' => $errors], 400);
-    }
+    $this->validate($form_identifier, $form_data);
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
@@ -582,10 +579,7 @@ final class Application extends ResourceBase {
     }
 
 
-    $errors = $this->validate($form_identifier, $form_data);
-    if ($errors) {
-      return new JsonResponse(['error' => $errors], 400);
-    }
+    $this->validate($form_identifier, $form_data);
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
@@ -763,18 +757,15 @@ final class Application extends ResourceBase {
   /**
    * Validate the submitted form data.
    *
-   * JSON schema errors are only logged, as they don't block submitting.
-   * Sum match errors block submitting.
+   * Errors are only logged for debugging and don't block submitting, as the
+   * integration rejects faulty submissions.
    *
    * @param string $formIdentifier
    *   The form identifier.
    * @param array $formData
    *   The form data.
-   *
-   * @return string[]
-   *   Error messages that block submitting, empty if valid.
    */
-  private function validate(string $formIdentifier, array $formData): array {
+  private function validate(string $formIdentifier, array $formData): void {
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($formIdentifier);
     $results = $this->jsonSchemaValidator->validate(json_decode(json_encode($formData)), json_decode(json_encode($settings->getSchema())));
 
@@ -786,10 +777,8 @@ final class Application extends ResourceBase {
 
     $sumErrors = $this->sumMatchValidator->validate($formData, $settings, $this->languageManager->getCurrentLanguage()->getId());
     if ($sumErrors) {
-      $this->logger->info("User submitted mismatching sums on application $formIdentifier: " . json_encode($sumErrors));
+      $this->logger->warning("User submitted mismatching sums on application $formIdentifier: " . json_encode(array_values($sumErrors)));
     }
-
-    return array_values($sumErrors);
   }
 
 }

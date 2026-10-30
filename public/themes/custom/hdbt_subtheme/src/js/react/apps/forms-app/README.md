@@ -52,7 +52,7 @@ We have introduced some custom ways to configure the forms.
 * **misc:formats** `string[]` Narrows which file types an `atvFile` field accepts, e.g. `["pdf", "doc", "docx"]`. Values must come from `ALLOWED_FORMATS` in `FileInput.tsx`.
 * **misc:max-length** `number` Determines max length for a textarea field. See `Input.tsx`.
 * **misc:variant** `string` Determines a variant of a component to be rendered. See `TextParagraph.tsx`.
-* **misc:sum-match** `object` Validates that the sum of `fields` equals the sum of `compareTo`, for example that the age groups and the gender distribution of participants add up to the same total. On mismatch the user can't move past the step or submit, but can still save a draft. The backend validates the rule on submit too. Keys:
+* **misc:sum-match** `object` Validates that the sum of `fields` equals the sum of `compareTo`, for example that the age groups and the gender distribution of participants add up to the same total. On mismatch the user can't move past the step or submit, but can still save a draft. The backend checks the rule on submit too, but only logs mismatches. Keys:
   * `compareTo` `string[]` root-relative dot paths, required.
   * `fields` `string[]` defaults to the field's computedSum `sourceFields`, or the field itself.
   * `message` `string` translation key for the error, defaults to `sum_match.mismatch`. `{{left}}` (sum of `fields`), `{{right}}` (sum of `compareTo`) and `{{difference}}` are interpolated.
