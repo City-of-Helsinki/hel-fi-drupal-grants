@@ -763,3 +763,19 @@ msgstr "Ange inte särskilda personuppgifter"
 msgctxt "grants_handler"
 msgid "Do not include any special personal data on the form, such as information relating to the health, ethnic origin, religious or philosophical beliefs, or sexual orientation or behaviour of a private individual. This information is not required, and it will not affect the processing of your application or the decision-making process."
 msgstr "Ange inte några särskilda personuppgifter i blanketten. Sådana är exempelvis uppgifter om privatpersoners hälsa, etniska ursprung, religiösa eller filosofiska övertygelse och sexuella läggning eller beteende. Uppgifterna är inte obligatoriska och de påverkar inte behandlingen av din ansökan eller beslutsfattandet."
+
+msgctxt "grants_handler"
+msgid "Edit application @number, @name"
+msgstr "Uppdatera ansökning @number, @name"
+
+msgctxt "grants_handler"
+msgid "Delete application @number, @name"
+msgstr "Radera ansökning @number, @name"
+
+msgctxt "grants_handler"
+msgid "View application @number, @name"
+msgstr "Visa ansökning @number, @name"
+
+msgctxt "grants_handler"
+msgid "Print application @number, @name"
+msgstr "Skriv ut ansökan @number, @name"

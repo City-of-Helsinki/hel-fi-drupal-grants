@@ -772,3 +772,19 @@ msgstr "Älä lisää erityisiä henkilötietoja"
 msgctxt "grants_handler"
 msgid "Do not include any special personal data on the form, such as information relating to the health, ethnic origin, religious or philosophical beliefs, or sexual orientation or behaviour of a private individual. This information is not required, and it will not affect the processing of your application or the decision-making process."
 msgstr "Älä lisää lomakkeelle erityisiä henkilötietoja, joita ovat esimerkiksi yksityishenkilöiden terveyttä koskevat tiedot, etninen alkuperä, uskonnollinen tai filosofinen vakaumus tai seksuaalinen suuntautuminen tai käyttäytyminen. Tietoja ei vaadita, eikä niillä ole vaikutusta hakemuksesi käsittelyyn tai päätöksentekoon."
+
+msgctxt "grants_handler"
+msgid "Edit application @number, @name"
+msgstr "Muokkaa hakemusta @number, @name"
+
+msgctxt "grants_handler"
+msgid "Delete application @number, @name"
+msgstr "Poista hakemus @number, @name"
+
+msgctxt "grants_handler"
+msgid "View application @number, @name"
+msgstr "Katsele hakemusta @number, @name"
+
+msgctxt "grants_handler"
+msgid "Print application @number, @name"
+msgstr "Tulosta hakemus @number, @name"

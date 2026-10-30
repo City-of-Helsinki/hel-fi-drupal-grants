@@ -160,7 +160,7 @@ const validatePageTitle = async (page: Page) => {
  *   A promise containing an array of dates.
  */
 const getReceivedApplicationDateValues = async (page: Page): Promise<Date[]> => {
-  const receivedApplications = await page.locator("#oma-asiointi__sent .application-list__item--submitted").all();
+  const receivedApplications = await page.locator("#own-applications__sent .application-list__item--submitted").all();
 
   const datePromises = receivedApplications.map(async a => {
     const innerText = await a.innerText();
@@ -183,7 +183,7 @@ const getReceivedApplicationDateValues = async (page: Page): Promise<Date[]> => 
  *   A promise containing an number.
  */
 const getReceivedApplicationCount = async (page: Page): Promise<Number> => {
-  return await page.locator('.application-list [data-status="RECEIVED"]').count();
+  return await page.locator('#own-applications__sent .application-list__item--received').count();
 }
 
 /**

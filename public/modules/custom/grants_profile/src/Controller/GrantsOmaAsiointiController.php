@@ -9,6 +9,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\grants_handler\ApplicationListItemBuilder;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_profile\GrantsProfileException;
@@ -54,6 +55,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *   The atv-service.
    * @param \Drupal\Core\Queue\QueueFactory $queueFactory
    *   The queue factory.
+   * @param \Drupal\grants_handler\ApplicationListItemBuilder $applicationListItemBuilder
+   *   The application list item builder.
    */
   public function __construct(
     protected RequestStack $requestStack,
@@ -65,6 +68,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     protected ApplicationGetterService $applicationGetterService,
     protected AtvService $atvService,
     protected QueueFactory $queueFactory,
+    protected ApplicationListItemBuilder $applicationListItemBuilder,
   ) {
     $this->logger = $this->getLogger('grants_oma_asiointi');
   }
@@ -102,19 +106,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       throw new AccessDeniedHttpException('User not authorised');
     }
 
-    $grantsProfile = [];
-
     /** @var \Drupal\helfi_atv\AtvDocument | null $grantsProfileDocument */
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
-    if ($grantsProfileDocument) {
-      $grantsProfile = $grantsProfileDocument->getContent();
-    }
-
-    $showProfileNotice = FALSE;
-
-    if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
-      $showProfileNotice = TRUE;
-    }
 
     $updatedAt = $grantsProfileDocument?->getUpdatedAt();
     $updatedAt = $updatedAt ? strtotime($updatedAt) : FALSE;
@@ -140,7 +133,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
         $appEnv,
         FALSE,
         TRUE,
-        'application_list_item'
       );
     }
     catch (\Throwable $e) {
@@ -179,30 +171,36 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
     return [
       '#theme' => 'grants_oma_asiointi_front',
-      '#infoboxes' => [
-        '#theme' => 'grants_oma_asiointi_infoboxes',
-        '#profileNotice' => $showProfileNotice,
-      ],
-      '#drafts' => [
-        '#theme' => 'application_list',
-        '#type' => 'drafts',
-        '#header' => $this->t('Applications in progress', [], ['context' => 'grants_oma_asiointi']),
-        '#id' => 'oma-asiointi__drafts',
-        '#items' => $drafts,
-      ],
-      '#others' => [
-        '#theme' => 'application_list',
-        '#type' => 'sent',
-        '#header' => $this->t('Sent applications', [], ['context' => 'grants_oma_asiointi']),
-        '#id' => 'oma-asiointi__sent',
-        '#items' => $other,
-      ],
       '#notification' => [
         '#theme' => 'grants_user_data_notification',
         '#showNotification' => $showNotification,
       ],
       '#unread' => $unreadMsg,
+      '#attached' => [
+        'drupalSettings' => [
+          'own_applications' => [
+            'drafts' => $this->buildListItems($drafts),
+            'sent' => $this->buildListItems($other),
+          ],
+        ],
+      ],
     ];
+  }
+
+  /**
+   * Builds the application list data for the application list React app.
+   *
+   * @param array<int|string, array<string, mixed>> $applications
+   *   Applications from ApplicationGetterService::getCompanyApplications().
+   *
+   * @return array<int, array<string, mixed>>
+   *   The list items.
+   */
+  protected function buildListItems(array $applications): array {
+    return array_values(array_filter(array_map(
+      fn (array $application) => $this->applicationListItemBuilder->build($application),
+      $applications,
+    )));
   }
 
   /**
