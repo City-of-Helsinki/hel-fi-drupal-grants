@@ -101,7 +101,7 @@ export const SubventionTable = ({
     onChange(data);
   }, [startGrant.toggled, startGrant.isApplied, startGrant.subventionId, startGrant.valueWhenTrue]);
 
-  if (!schema.options || !schema.options.length) {
+  if (!schema.options?.length) {
     console.error('Tried to render subvention table without items');
     return null;
   }

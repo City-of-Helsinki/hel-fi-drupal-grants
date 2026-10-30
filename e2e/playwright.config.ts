@@ -321,12 +321,12 @@ export default defineConfig({
       dependencies: ['profile-registered_community'],
     },
     /* Webforms. */
-    /* Form 29 tests. */
-    {
-      name: 'forms-29',
-      testMatch: '/forms/registered_community_29.ts',
-      dependencies: ['profile-registered_community']
-    },
+    /* Archived Form 29 tests. */
+    // {
+    //   name: 'forms-29',
+    //   testMatch: '/forms/registered_community_29.ts',
+    //   dependencies: ['profile-registered_community']
+    // },
     /* Form 48 tests. */
     {
       name: 'forms-48',
@@ -500,22 +500,22 @@ export default defineConfig({
     //   testMatch: '/forms/registered_community_68.ts',
     //   dependencies: ['profile-registered_community'],
     // },
-    /* Form 69 tests. */
-    {
-      name: 'forms-69',
-      testMatch: /forms\/.*_69\.ts$/,
-      dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    },
-    {
-      name: 'forms-69-unregistered',
-      testMatch: '/forms/unregistered_community_69.ts',
-      dependencies: ['profile-unregistered_community']
-    },
-    {
-      name: 'forms-69-registered',
-      testMatch: '/forms/registered_community_69.ts',
-      dependencies: ['profile-registered_community']
-    },
+    /* Archived Form 69 tests. */
+    // {
+    //   name: 'forms-69',
+    //   testMatch: /forms\/.*_69\.ts$/,
+    //   dependencies: ['profile-unregistered_community', 'profile-registered_community']
+    // },
+    // {
+    //   name: 'forms-69-unregistered',
+    //   testMatch: '/forms/unregistered_community_69.ts',
+    //   dependencies: ['profile-unregistered_community']
+    // },
+    // {
+    //   name: 'forms-69-registered',
+    //   testMatch: '/forms/registered_community_69.ts',
+    //   dependencies: ['profile-registered_community']
+    // },
     /* Form 73 tests. */
     {
       name: 'forms-73',

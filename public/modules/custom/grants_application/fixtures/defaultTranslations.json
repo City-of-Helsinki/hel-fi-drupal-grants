@@ -985,6 +985,11 @@
       "fi": "Ruoka-aputoiminnan valtionavustus",
       "sv": "Statsunderstöd för mathjälpsverksamhet"
     },
+    "subventions.59.title": {
+      "en": "Small Grant for Employment Support",
+      "fi": "Työllisyyden edistämisen pienavustus",
+      "sv": "Små understöd för att främja sysselsättningen"
+    },
     "subventions.title": {
       "en": "Grants",
       "fi": "Avustukset",
@@ -994,6 +999,16 @@
       "en": "Types of grant",
       "fi": "Avustuslajit",
       "sv": "Understödskategorier"
+    },
+    "sum_match.match": {
+      "en": "The totals match.",
+      "fi": "Yhteissummat täsmäävät.",
+      "sv": "Totalsummorna stämmer överens."
+    },
+    "sum_match.mismatch": {
+      "en": "The totals do not match ({{left}} / {{right}}).",
+      "fi": "Yhteissummat eivät vastaa toisiaan ({{left}} / {{right}}).",
+      "sv": "Totalsummorna stämmer inte överens ({{left}} / {{right}})."
     },
     "target_group_reach.title": {
       "en": "How are the target groups reached and identified?",

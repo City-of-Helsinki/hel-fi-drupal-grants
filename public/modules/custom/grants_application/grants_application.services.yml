@@ -31,6 +31,8 @@ services:
 
   JsonSchema\Validator: ~
 
+  Drupal\grants_application\SumMatchValidator: ~
+
   Drupal\grants_application\ApplicationService: ~
 
   Drupal\grants_application\Mapper\JsonMapperService: ~
