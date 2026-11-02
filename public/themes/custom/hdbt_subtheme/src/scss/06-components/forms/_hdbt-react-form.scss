@@ -246,3 +246,56 @@
     }
   }
 }
+
+// Computed sum field is readonly so that error handling can focus it in dom.
+// It's styled as disabled so that design matches what we render.
+.grants-form .hdbt-form--field--computed-sum input[readonly] {
+  background-color: var(--input-background-disabled);
+  border: var(--border-width) solid var(--input-border-color-disabled);
+  color: var(--input-color-disabled);
+  cursor: not-allowed;
+  padding: 0 var(--spacing-s);
+  -webkit-text-fill-color: var(--input-color-disabled);
+
+  &[aria-invalid='true'] {
+    border-color: var(--input-border-color-invalid);
+  }
+}
+
+.grants-form .hdbt-form--field--computed-sum:focus-within input[readonly]:focus {
+  box-shadow: 0 0 0 var(--outline-width) var(--color-focus-outline);
+  height: var(--input-height);
+  margin: 0;
+  outline: none;
+}
+
+// The computedSum summary variant shows the total as text. After its sum
+// match rule is validated, it's colored by the result.
+.hdbt-form--computed-sum-summary {
+  margin-block-start: $spacing;
+}
+
+.hdbt-form--computed-sum-summary__total {
+  font-size: var(--fontsize-heading-s);
+  font-weight: $font-weight-bold;
+  margin: 0;
+
+  .hdbt-form--computed-sum-summary--match & {
+    color: var(--color-success);
+  }
+
+  .hdbt-form--computed-sum-summary--mismatch & {
+    color: var(--color-error);
+  }
+}
+
+.hdbt-form--computed-sum-summary__description {
+  font-size: var(--fontsize-body-m);
+  margin-block: $spacing-half 0;
+}
+
+// Let the total and the fieldset description span the row in two-column fieldsets.
+.hdbt-react-form__inline-field-group fieldset > .hdbt-form--description,
+.hdbt-react-form__inline-field-group fieldset > .hdbt-form--field--computed-sum {
+  width: 100%;
+}

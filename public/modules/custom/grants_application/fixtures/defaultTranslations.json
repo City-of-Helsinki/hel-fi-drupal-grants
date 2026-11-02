@@ -1000,6 +1000,16 @@
       "fi": "Avustuslajit",
       "sv": "Understödskategorier"
     },
+    "sum_match.match": {
+      "en": "The totals match.",
+      "fi": "Yhteissummat täsmäävät.",
+      "sv": "Totalsummorna stämmer överens."
+    },
+    "sum_match.mismatch": {
+      "en": "The totals do not match ({{left}} / {{right}}).",
+      "fi": "Yhteissummat eivät vastaa toisiaan ({{left}} / {{right}}).",
+      "sv": "Totalsummorna stämmer inte överens ({{left}} / {{right}})."
+    },
     "target_group_reach.title": {
       "en": "How are the target groups reached and identified?",
       "fi": "Miten kohderyhmät tavoitetaan ja tunnistetaan?",

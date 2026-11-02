@@ -12,11 +12,11 @@ import {
 } from 'hds-react';
 import { useAtomValue } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallback, useEffect } from 'react';
+import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
-import { formatHDSDate, toLocalISO } from '@/react/common/helpers/dateUtils';
+import { formatHDSDate, formatHTMLDate } from '@/react/common/helpers/dateUtils';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { InfoField } from './ApplicantInfo';
 import {
@@ -470,28 +470,45 @@ export const RadioWidget = ({
   );
 };
 
+/**
+ * Parse a YYYY-MM-DD form value into a local date.
+ *
+ * @param {unknown} value - The stored value
+ *
+ * @return {Date|undefined} - The date, or undefined if the value isn't a valid date
+ */
+const parseFormDate = (value: unknown): Date | undefined => {
+  const match = typeof value === 'string' ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(value) : null;
+  if (!match) {
+    return undefined;
+  }
+
+  const [year, month, day] = match.slice(1).map(Number);
+  const date = new Date(year, month - 1, day);
+
+  return date.getMonth() === month - 1 && date.getDate() === day ? date : undefined;
+};
+
 export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema, value }: WidgetProps) => {
   const { currentLanguage } = drupalSettings.path;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
+  const [invalidInput, setInvalidInput] = useState<string>();
+  const date = parseFormDate(value);
 
-  const handleChange = (_dateStr: string, dateObject: Date) => {
-    try {
-      onChange(toLocalISO(dateObject).slice(0, 10));
-    } catch (_error) {
-      return;
+  useEffect(() => {
+    if (value && !date) {
+      onChange(undefined);
     }
+  }, [date, onChange, value]);
+
+  const handleChange = (dateStr: string, dateObject: Date) => {
+    const isValid = Boolean(dateStr) && !Number.isNaN(dateObject.getTime());
+    setInvalidInput(isValid || !dateStr ? undefined : dateStr);
+    onChange(isValid ? formatHTMLDate(dateObject) : undefined);
   };
 
-  let formattedValue: string | undefined;
-  try {
-    if (value) {
-      const [year, month, day] = (value as string).split('-').map(Number);
-      formattedValue = formatHDSDate(new Date(year, month - 1, day));
-    }
-  } catch (_error) {
-    formattedValue = undefined;
-  }
+  const formattedValue = invalidInput ?? (date ? formatHDSDate(date) : undefined);
 
   if (shouldRenderPreview) {
     return <PreviewInput value={formattedValue} label={label} uiSchema={uiSchema} />;

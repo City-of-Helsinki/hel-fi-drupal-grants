@@ -28,9 +28,7 @@
         "environment_radios",
         "environment_how",
         "exercise_radios",
-        "exercise_how",
-        "activity_radios",
-        "activity_how"
+        "exercise_how"
       ],
       "event_target_group": {
         "ui:widget": "textarea"
@@ -79,16 +77,6 @@
         "ui:widget": "radio"
       },
       "exercise_how": {
-        "ui:widget": "textarea"
-      },
-      "activity_radios": {
-        "ui:enumNames": ["boolean.no", "boolean.yes"],
-        "ui:options": {
-          "affirmativeExpands": true
-        },
-        "ui:widget": "radio"
-      },
-      "activity_how": {
         "ui:widget": "textarea"
       }
     },
@@ -173,15 +161,6 @@
       "cant_view_after_help": {
         "misc:variant": "infobox",
         "ui:field": "textParagraph"
-      },
-      "event_plan_fieldset": {
-        "event_plan_fieldset_file": {
-          "misc:file-type": 38,
-          "misc:variant": "simple",
-          "misc:required": true,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
       },
       "further_clarification": {
         "ui:widget": "textarea"
