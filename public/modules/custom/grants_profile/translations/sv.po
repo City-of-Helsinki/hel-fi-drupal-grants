@@ -689,3 +689,11 @@ msgstr "Nytt i dina applikationer"
 msgctxt "grants_oma_asiointi"
 msgid "No community"
 msgstr "Ingen gemenskap"
+
+msgctxt "grants_oma_asiointi"
+msgid "Please remember to fill in your information"
+msgstr "Kom ihåg att fylla i dina uppgifter"
+
+msgctxt "grants_oma_asiointi"
+msgid "We noticed that there is no information about you or your communities yet in the grants service. You must fill in your personal information before proceeding to the application. When you have filled in the information for the first time, it will be used for all applications and when you apply for grant again."
+msgstr "Vi har märkt att det inte finns någon information om dig eller dina samhällen ännu i bidragstjänsten. Du måste fylla i dina personuppgifter innan du går vidare till ansökan. När du har fyllt i uppgifterna för första gången kommer de att användas för alla ansökningar och när du ansöker om bidrag igen."

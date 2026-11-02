@@ -108,6 +108,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
     /** @var \Drupal\helfi_atv\AtvDocument | null $grantsProfileDocument */
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
+    $grantsProfile = $grantsProfileDocument?->getContent() ?? [];
+    $showProfileNotice = empty($grantsProfile['addresses']) || empty($grantsProfile['bankAccounts']);
 
     $updatedAt = $grantsProfileDocument?->getUpdatedAt();
     $updatedAt = $updatedAt ? strtotime($updatedAt) : FALSE;
@@ -176,6 +178,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
         '#showNotification' => $showNotification,
       ],
       '#unread' => $unreadMsg,
+      '#profileNotice' => $showProfileNotice,
       '#attached' => [
         'drupalSettings' => [
           'own_applications' => [

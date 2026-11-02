@@ -1,5 +1,20 @@
 <div>
   {{ notification }}
+  {% if profileNotice %}
+    <div class="container">
+      <div class="hds-notification hds-notification--info">
+        <div class="hds-notification__content">
+          <div class="hds-notification__label" role="heading" aria-level="2">
+            <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+            <span>{{ "Please remember to fill in your information"|t({}, {'context': 'grants_oma_asiointi'}) }}</span>
+          </div>
+          <div class="hds-notification__body">
+            {{ "We noticed that there is no information about you or your communities yet in the grants service. You must fill in your personal information before proceeding to the application. When you have filled in the information for the first time, it will be used for all applications and when you apply for grant again."|t({}, {'context': 'grants_oma_asiointi'}) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
   {% if unread %}
     <div class="container">
       <section aria-label="Notification" class="hds-notification hds-notification--alert">
