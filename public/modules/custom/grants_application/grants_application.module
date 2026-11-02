@@ -44,6 +44,7 @@ function grants_application_theme(): array {
         'editApplicationLink' => NULL,
         'print_application_link' => NULL,
         'copy_text' => NULL,
+        'is_copyable' => NULL,
         'application_submit_date' => NULL,
         'history' => NULL,
         'attachments' => NULL,

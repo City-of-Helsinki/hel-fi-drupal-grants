@@ -355,7 +355,7 @@ final class ApplicationController extends ControllerBase {
     $build = [
       '#theme' => 'grants_application_view',
       '#print_application_link' => $submission->getPrintApplicationUrl(),
-      '#copy_text' => 'Copy application',
+      '#copy_text' => $this->t('Copy application', [], ['context' => 'Grants application: Submitted form']),
       '#submission_id' => $application_number,
       '#application_submit_date' => $submitted,
       '#history' => $history,
@@ -365,7 +365,7 @@ final class ApplicationController extends ControllerBase {
       '#form_identifier' => $form_identifier,
       '#application_handlers' => $handlers,
       '#last_handler' => $lastHandler,
-      '#is_copyable' => $settings->isCopyable(),
+      '#is_copyable' => $settings->canBeCopied(),
       '#status' => $document->getStatus(),
       '#statusLocalized' => $statusLocalized,
       // React has this one named in wrong way.
