@@ -124,7 +124,7 @@ const ResultCard = ({ application }: { application: ApplicationItem }) => {
   return (
     <>
       <CardItem
-        cardModifierClass={`card--border application-list__item application-list__item--${status.toLowerCase()}`}
+        cardModifierClass='card--border'
         cardTitle={formName}
         cardTitleLevel={3}
         cardCategoryTag={getTags(application)}
@@ -140,21 +140,16 @@ const ResultCard = ({ application }: { application: ApplicationItem }) => {
                   : Drupal.t('Submission date', {}, { context: 'grants_handler' })
               }
               content={
-                <>
+                <time className='application-list__submitted' dateTime={submittedSortable ?? undefined}>
                   {submitted}
-                  <span className='application-list__item--submitted'>{submittedSortable}</span>
-                </>
+                </time>
               }
             />,
             <Metarow
               key='number'
               icon='document'
               label={Drupal.t('Application number', {}, { context: 'grants_handler' })}
-              content={
-                <span className='application-list__item--number application-list__item--application-number'>
-                  {applicationNumber}
-                </span>
-              }
+              content={<span className='application-list__application-number'>{applicationNumber}</span>}
             />,
           ],
         }}

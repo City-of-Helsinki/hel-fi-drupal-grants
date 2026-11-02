@@ -5,17 +5,13 @@
 
   &:last-of-type {
     background-color: $color-black-5;
-    margin-block-end: -112px;
-    padding-block: $spacing-triple 112px;
+    margin-block-end: -$negate-footer-margin;
+    padding-block: $spacing-triple $negate-footer-margin;
   }
 }
 
 .own-applications__title {
   margin-block: 0 $spacing-and-half;
-}
-
-.application-list__item--submitted {
-  display: none;
 }
 
 .application-list__status__wrapper {

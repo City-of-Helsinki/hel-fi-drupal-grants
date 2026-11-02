@@ -2,7 +2,7 @@ import {expect, Page, test} from '@playwright/test';
 import {pageCollection} from "../../utils/data/public_page_data";
 import {selectRole} from "../../utils/auth_helpers";
 import {
-  getReceivedApplicationCount,
+  getSentApplicationCount,
   getReceivedApplicationDateValues, isAscending,
   isDescending,
   validateComponent,
@@ -41,7 +41,7 @@ test.describe(`Testing page: ${scenario.url}`, () => {
 
   test('Application filtering: Can be sorted by date', async () => {
     logger('Validating application filtering date sorting...');
-    const receivedApplications = await getReceivedApplicationCount(page);
+    const receivedApplications = await getSentApplicationCount(page);
     test.skip(!receivedApplications, 'Skip application search sort test');
 
     let applicationDates = await getReceivedApplicationDateValues(page);
@@ -57,18 +57,18 @@ test.describe(`Testing page: ${scenario.url}`, () => {
 
   test('Application filtering: Filter by text', async () => {
     logger('Validating application filtering text filtering...');
-    const receivedApplicationsCount = await getReceivedApplicationCount(page);
+    const receivedApplicationsCount = await getSentApplicationCount(page);
     test.skip(!receivedApplicationsCount, 'Skip application search sort test');
 
-    const firstApplication = await page.locator('#own-applications__sent .application-list__item').first();
-    const applicationId = (await firstApplication.locator('.application-list__item--application-number').innerText()).trim();
+    const firstApplication = await page.locator('#own-applications__sent .card').first();
+    const applicationId = (await firstApplication.locator('.application-list__application-number').innerText()).trim();
 
     if (!applicationId) return;
 
     await page.getByLabel('Etsi hakemusta').pressSequentially(applicationId, {delay: 50});
     await page.getByLabel('Etsi hakemusta').press('Enter');
 
-    const visibleApplicationsCount = await getReceivedApplicationCount(page);
+    const visibleApplicationsCount = await getSentApplicationCount(page);
     expect(visibleApplicationsCount).toBeGreaterThanOrEqual(1);
     logger('Application filtering text filtering validated.');
   });

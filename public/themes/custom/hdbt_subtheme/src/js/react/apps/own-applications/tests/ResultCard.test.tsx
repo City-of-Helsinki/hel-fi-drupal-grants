@@ -11,14 +11,11 @@ const actionLabels = (container: HTMLElement) =>
 describe('ResultCard', () => {
   test('renders a list item card with the application details', () => {
     const { container } = renderCard();
-    const card = container.querySelector('.card');
-    expect(card?.className).toContain('application-list__item');
-    expect(card?.className).toContain('application-list__item--received');
     expect(container.querySelector('h3.card__title')?.textContent).toBe('Test application');
-    expect(container.querySelector('.application-list__item--application-number')?.textContent).toBe(
-      'LOCALT-060-0000001',
+    expect(container.querySelector('.application-list__application-number')?.textContent).toBe('LOCALT-060-0000001');
+    expect(container.querySelector('.application-list__submitted')?.getAttribute('datetime')).toBe(
+      '2025-01-01T12:00:00',
     );
-    expect(container.querySelector('.application-list__item--submitted')?.textContent).toBe('2025-01-01T12:00:00');
     expect(container.textContent).toContain('Submission date');
   });
 

@@ -29,7 +29,7 @@ const ResultsList = ({ applications, resetKey }: ResultsListProps) => {
     if (!focusFirstItem) {
       return;
     }
-    const firstItem = listRef.current?.querySelector<HTMLElement>('.application-list__item');
+    const firstItem = listRef.current?.querySelector<HTMLElement>('.card');
     if (firstItem) {
       firstItem.setAttribute('tabindex', '-1');
       firstItem.focus();

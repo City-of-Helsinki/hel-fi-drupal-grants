@@ -376,13 +376,13 @@ export async function assertApplicationInList(
   await page.waitForURL('**/oma-asiointi');
 
   const container = page.locator(`#own-applications__${list}`);
-  const row = container.locator('.application-list__item', { hasText: applicationNumber });
+  const row = container.locator('.card', { hasText: applicationNumber });
   const activePage = container.locator('.hds-pagination__item-link--active');
   // The next button is a link while there are pages left and a disabled button on the last page.
   const nextPage = container.locator('a.hds-pagination__button-next');
 
   // Wait for the first page to render before paging through.
-  await container.locator('.application-list__item').first().waitFor({ state: 'visible', timeout: 15000 }).catch(() => undefined);
+  await container.locator('.card').first().waitFor({ state: 'visible', timeout: 15000 }).catch(() => undefined);
 
   // The list paginates client-side, so step through the pages until the row is found.
   let pageNumber = 1;
