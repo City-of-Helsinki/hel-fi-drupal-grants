@@ -239,9 +239,9 @@ final class ApplicationServiceTest extends KernelTestBase implements ServiceModi
         ],
       ],
     ]);
-    $this->container->get(HelfiAtvService::class)
-      ->method('getDocumentById')
-      ->willReturn($originalSideDocument);
+    /** @var \PHPUnit\Framework\MockObject\MockObject $atvService */
+    $atvService = $this->container->get(HelfiAtvService::class);
+    $atvService->method('getDocumentById')->willReturn($originalSideDocument);
 
     $this->container->get(ApplicationService::class)
       ->createCopy('liikunta_suunnistuskartta_avustu', $this->applicationNumber);
