@@ -43,14 +43,15 @@ import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { localizeErrors } from '../localizeErrors';
 import {
   getCurrentStepAtom,
-  getReachedStepAtom,
   getRequiredFileFieldsAtom,
   getStepsAtom,
   getSubventionFieldsAtom,
   getSumMatchRulesAtom,
+  getValidationCutoffAtom,
   isEmptyPreviewAtom,
   isReadOnlyAtom,
   liveFormDataAtom,
+  raiseValidationCutoffAtom,
   setErrorsAtom,
   setStepAtom,
   setSumMatchStateAtom,
@@ -133,10 +134,11 @@ export const RJSFFormContainer = ({
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
   const setStep = useSetAtom(setStepAtom);
+  const raiseValidationCutoff = useSetAtom(raiseValidationCutoffAtom);
   const readOnly = useAtomValue(isReadOnlyAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(useCallback((get) => get(getCurrentStepAtom), []));
-  const readReachedStep = useAtomCallback(useCallback((get) => get(getReachedStepAtom), []));
+  const readValidationCutoff = useAtomCallback(useCallback((get) => get(getValidationCutoffAtom), []));
   const readFormData = useAtomCallback(useCallback((get) => get(formDataAtom), [formDataAtom]));
   const setErrors = useSetAtom(setErrorsAtom);
   const setLiveFormData = useSetAtom(liveFormDataAtom);
@@ -153,6 +155,7 @@ export const RJSFFormContainer = ({
 
   if (drupalSettings.grants_react_form.use_preview) {
     setStep(steps.size - 2);
+    raiseValidationCutoff(steps.size - 3);
   }
 
   /**
@@ -184,10 +187,10 @@ export const RJSFFormContainer = ({
     return formRef.current?.validate(data);
   };
 
-  const filterErrorsByReachedStep = (errors: [number, RJSFValidationError][]) => {
-    const reachedStep = readReachedStep();
+  const filterErrorsByValidationCutoff = (errors: [number, RJSFValidationError][]) => {
+    const validationCutoff = readValidationCutoff();
 
-    return errors.filter(([index]) => index <= reachedStep).map(([, error]) => error);
+    return errors.filter(([index]) => index <= validationCutoff).map(([, error]) => error);
   };
 
   /**
@@ -215,7 +218,7 @@ export const RJSFFormContainer = ({
     // conditionally-required allOf/then sections display red borders when absent.
     const expandedErrors = expandConditionalRequiredErrors(prefilteredErrors, schema, formRef.current?.state?.formData);
 
-    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(expandedErrors, steps));
+    const errorsToShow = filterErrorsByValidationCutoff(keyErrorsByStep(expandedErrors, steps));
     setErrors(errorsToShow);
 
     return errorsToShow;
@@ -232,6 +235,9 @@ export const RJSFFormContainer = ({
    */
   const customValidate: CustomValidator = (formData, errors, _uiSchema) => {
     const newErrors: RJSFValidationError[] = [];
+    const validationCutoff = readValidationCutoff();
+    const getStepIndex = (path: string) =>
+      Array.from(steps).find(([, step]) => step.id === path.split('.')[0])?.[0] ?? 0;
 
     subventionFields.forEach((field) => {
       const values = field.split('.').reduce((acc: RJSFFormData, curr) => acc?.[curr], formData) as
@@ -248,7 +254,9 @@ export const RJSFFormContainer = ({
         : false;
 
       if (_field && !hasValues) {
-        _field.addError(t('subvention.greater_than_zero'));
+        if (getStepIndex(field) <= validationCutoff) {
+          _field.addError(t('subvention.greater_than_zero'));
+        }
         newErrors.push({
           property: `.${field}`,
           message: t('subvention.greater_than_zero'),
@@ -258,12 +266,7 @@ export const RJSFFormContainer = ({
       }
     });
 
-    const reachedStep = readReachedStep();
     requiredFileFields.forEach((field) => {
-      const stepId = field.split('.')[0];
-      const stepEntry = Array.from(steps).find(([, step]) => step.id === stepId);
-      const stepIndex = stepEntry?.[0] ?? 0;
-
       const fileData = field.split('.').reduce((acc: RJSFFormData, curr) => acc?.[curr], formData);
       const isFulfilled = fileData?.fileName || fileData?.isDeliveredLater || fileData?.isIncludedInOtherFile;
 
@@ -275,8 +278,8 @@ export const RJSFFormContainer = ({
           stack: `.${field} ${t('file.required')}`,
         });
 
-        // Only show inline error on the field itself if the user has reached this step
-        if (stepIndex <= reachedStep) {
+        // Only show inline error on the field itself if its step is validated
+        if (getStepIndex(field) <= validationCutoff) {
           const _field = field.split('.').reduce((acc: RJSFFormData, curr) => acc?.[curr], errors) as
             | { addError: (msg: string) => void }
             | undefined;
@@ -286,11 +289,8 @@ export const RJSFFormContainer = ({
     });
 
     sumMatchRules.forEach((rule) => {
-      const stepId = rule.path.split('.')[0];
-      const stepIndex = Array.from(steps).find(([, step]) => step.id === stepId)?.[0] ?? 0;
-
-      // Steps the user hasn't reached keep their neutral state.
-      if (stepIndex > reachedStep) {
+      // Steps that aren't validated yet keep their neutral state.
+      if (getStepIndex(rule.path) > validationCutoff) {
         return;
       }
 
@@ -323,7 +323,7 @@ export const RJSFFormContainer = ({
       }
     });
 
-    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(newErrors, steps));
+    const errorsToShow = filterErrorsByValidationCutoff(keyErrorsByStep(newErrors, steps));
     setErrors(errorsToShow, true);
 
     return errors;

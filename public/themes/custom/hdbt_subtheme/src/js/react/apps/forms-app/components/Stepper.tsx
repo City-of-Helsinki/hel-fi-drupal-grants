@@ -9,6 +9,7 @@ import {
   getCurrentStepAtom,
   getErrorPageIndicesAtom,
   getSubmitStatusAtom,
+  raiseValidationCutoffAtom,
   setStepAtom,
 } from '../store';
 
@@ -41,6 +42,7 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form | null> }) => {
   const errorPageIndices = useAtomValue(getErrorPageIndicesAtom);
   const steps = useAtomValue(formStepsAtom);
   const setStep = useSetAtom(setStepAtom);
+  const raiseValidationCutoff = useSetAtom(raiseValidationCutoffAtom);
   const submitState = useAtomValue(getSubmitStatusAtom);
   const transformedSteps = transformSteps(steps, submitState, errorPageIndices);
 
@@ -58,6 +60,7 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form | null> }) => {
 
   const onStepClick = (_event: MouseEvent<HTMLButtonElement>, stepIndex: number) => {
     setStep(stepIndex);
+    raiseValidationCutoff(stepIndex - 1);
     formRef.current?.validateForm();
   };
 

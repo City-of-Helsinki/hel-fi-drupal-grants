@@ -12,7 +12,7 @@ export type FormStep = { id: string; label: string };
 
 export type FormState = {
   currentStep: [number, FormStep];
-  reachedStep: number;
+  validationCutoff: number;
 };
 
 const buildFormSteps = ({ properties }: RJSFSchema): Map<number, FormStep> => {
@@ -138,7 +138,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
       return undefined;
     }
 
-    return { currentStep: [0, firstStep], reachedStep: 0 };
+    return { currentStep: [0, firstStep], validationCutoff: -1 };
   });
 
   // Make sure application number is set in url params.
@@ -189,15 +189,26 @@ export const setStepAtom = atom(null, (_get, _set, index: number) => {
 
   _set(formStateAtom, () => ({
     ...currentState,
-    reachedStep: Math.max(currentState?.reachedStep ?? index, index),
     currentStep: [index, step],
   }));
   _set(finalAcceptanceAtom, false);
 });
-export const getReachedStepAtom = atom((_get) => {
-  const { reachedStep } = _get(getFormStateAtom);
+export const getValidationCutoffAtom = atom((_get) => {
+  const { validationCutoff } = _get(getFormStateAtom);
 
-  return reachedStep;
+  return validationCutoff;
+});
+export const raiseValidationCutoffAtom = atom(null, (_get, _set, index: number) => {
+  const currentState = _get(getFormStateAtom);
+
+  if (index <= currentState.validationCutoff) {
+    return;
+  }
+
+  _set(formStateAtom, () => ({
+    ...currentState,
+    validationCutoff: index,
+  }));
 });
 export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError[], additiveOnly = false) => {
   const steps = _get(formStepsAtom);

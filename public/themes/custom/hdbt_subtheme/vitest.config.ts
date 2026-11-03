@@ -10,6 +10,8 @@ const nodeModules = resolve(__dirname, 'node_modules');
 export default defineConfig({
   plugins: [tsconfigPaths({ projects: ['./tsconfig.json', '../../contrib/hdbt/tsconfig.json'] })],
   resolve: {
+    // Prefer ESM builds, as CommonJS requires bypass the aliases below.
+    mainFields: ['module', 'jsnext:main', 'jsnext', 'main'],
     alias: [
       { find: /^react(-dom)?$/, replacement: `${nodeModules}/react$1` },
       { find: /^react(-dom)?\/(.+)$/, replacement: `${nodeModules}/react$1/$2` },
@@ -23,7 +25,7 @@ export default defineConfig({
       deps: {
         // Inlined packages go through the aliases above. Packages loaded from
         // hdbt would otherwise import hdbt's own React.
-        inline: ['@testing-library/react', /contrib\/hdbt\/node_modules\/(hds-react|@react-spring)\//],
+        inline: ['@testing-library/react', /contrib\/hdbt\/node_modules\/(hds-react|@react-spring|react-popper)\//],
       },
     },
     coverage: {
@@ -38,5 +40,5 @@ export default defineConfig({
     exclude: ['node_modules'],
     globals: true,
     setupFiles: ['src/js/react/apps/forms-app/tests/setupTests.ts'],
-  }
+  },
 });
