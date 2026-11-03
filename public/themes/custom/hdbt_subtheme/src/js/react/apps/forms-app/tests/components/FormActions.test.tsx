@@ -33,7 +33,7 @@ describe('FormActions.tsx tests', () => {
     expect(screen.getByText('Next')).toBeTruthy();
   });
 
-  it('Validates up to the current page on next', () => {
+  const renderActions = () => {
     const store = createStore();
     store.set(
       formStateAtom,
@@ -60,9 +60,23 @@ describe('FormActions.tsx tests', () => {
         <FormActions saveDraft={() => Promise.resolve()} validatePartialForm={validatePartialForm} />
       </Provider>,
     );
+
+    return { getCutoffOnValidate: () => cutoffOnValidate, store };
+  };
+
+  it('Validates up to the current page on next', () => {
+    const { getCutoffOnValidate, store } = renderActions();
     fireEvent.click(screen.getAllByText('Next').at(-1) as HTMLElement);
 
-    expect(cutoffOnValidate).toBe(1);
+    expect(getCutoffOnValidate()).toBe(1);
     expect(store.get(formStateAtom)?.currentStep[0]).toBe(2);
+  });
+
+  it('Raises the validation cutoff to the current page on previous', () => {
+    const { store } = renderActions();
+    fireEvent.click(screen.getAllByText('Previous').at(-1) as HTMLElement);
+
+    expect(store.get(getValidationCutoffAtom)).toBe(1);
+    expect(store.get(formStateAtom)?.currentStep[0]).toBe(0);
   });
 });

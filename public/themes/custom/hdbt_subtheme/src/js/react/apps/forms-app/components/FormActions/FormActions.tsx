@@ -32,6 +32,11 @@ export const FormActions = ({
   const setStep = useSetAtom(setStepAtom);
   const raiseValidationCutoff = useSetAtom(raiseValidationCutoffAtom);
 
+  const previousPageAction = () => {
+    raiseValidationCutoff(currentStepIndex);
+    setStep(currentStepIndex - 1);
+  };
+
   const nextPageAction = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -66,7 +71,7 @@ export const FormActions = ({
         <Button
           className='hdbt-form--pager-button'
           disabled={readOnly}
-          onClick={() => setStep(currentStepIndex - 1)}
+          onClick={previousPageAction}
           theme={primaryButtonTheme}
           type='button'
           iconStart={<IconAngleLeft />}
