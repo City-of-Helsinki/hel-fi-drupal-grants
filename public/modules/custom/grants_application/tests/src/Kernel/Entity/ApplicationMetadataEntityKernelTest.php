@@ -153,8 +153,13 @@ final class ApplicationMetadataEntityKernelTest extends KernelTestBase {
     $this->assertSame(101, $metadata['application_type_id']);
     $this->assertSame('test-application', $metadata['form_identifier']);
     $this->assertSame($industry, $metadata['application_industry']);
-    $this->assertSame($open_date, $metadata['application_open']);
-    $this->assertSame($close_date, $metadata['application_close']);
+    // Stored UTC values are returned with an explicit offset so that they
+    // represent the same moment regardless of the parser's timezone.
+    $utc = new \DateTimeZone('UTC');
+    $local = new \DateTimeZone(date_default_timezone_get());
+    $this->assertSame((new \DateTimeImmutable($open_date, $utc))->setTimezone($local)->format(\DateTimeInterface::ATOM), $metadata['application_open']);
+    $this->assertSame((new \DateTimeImmutable($close_date, $utc))->setTimezone($local)->format(\DateTimeInterface::ATOM), $metadata['application_close']);
+    $this->assertSame((new \DateTimeImmutable($close_date, $utc))->getTimestamp(), strtotime($metadata['application_close']));
     $this->assertSame($applicant_types, $metadata['applicant_types']);
     $this->assertSame(array_map('intval', $subvention_types), $metadata['subvention_type']);
     $this->assertSame(array_map('intval', $acting_years), $metadata['acting_years']);
