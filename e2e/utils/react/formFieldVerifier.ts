@@ -533,8 +533,8 @@ async function handleField(
       ).toBeVisible();
     }
 
-    // Fill the field only if it is enabled and we are in the fill pass.
-    if (shouldFill && !await fieldDOM.isDisabled()) {
+    // Fill the field only if it is editable and we are in the fill pass.
+    if (shouldFill && await fieldDOM.isEditable()) {
       const tag = await fieldDOM.evaluate((el: HTMLElement) => el.tagName.toLowerCase());
       const customInput = resolveFieldInput(fieldInputs, field.fieldPath);
       let value: string;
@@ -594,7 +594,7 @@ async function handleField(
       await assertFieldErrorGone(page, fieldId);
       filledFields?.set(fieldId, value);
 
-    // Disabled field, like applied_benefits has a computed value.
+    // Read-only field, like applied_benefits has a computed value.
     // Capture the computed value so verifying steps can assert it.
     // F.e. applied_benefits updates asynchronously.
     } else if (shouldFill) {
@@ -1300,10 +1300,14 @@ export async function verifyIncompleteFormSubmitBlocked(
 
   await assertMissingInputsVisible(page);
 
-  // Clear the acceptance and return to the first step.
+  // Clear the acceptance.
   await page.locator('label[for="final-acceptance"]').click();
   await expect(acceptance).not.toBeChecked();
-  await clickOnStep(page, 0);
+
+  // Reset the form to an empty draft.
+  await page.evaluate(() => sessionStorage.removeItem(location.pathname.split('/').pop()!));
+  await page.reload();
+  await waitForFormLoad(page);
 }
 
 /**

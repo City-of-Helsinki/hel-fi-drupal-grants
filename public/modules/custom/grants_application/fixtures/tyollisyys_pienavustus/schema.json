@@ -3,7 +3,8 @@
     "grant_info_step": {
       "required": [
         "acting_year_section",
-        "purpose_section"
+        "purpose_section",
+        "prior_benefits_usage_section"
       ],
       "properties": {
         "acting_year_section": {
@@ -27,8 +28,8 @@
               "title": "subventions.title",
               "options": [
                 {
-                  "id": 38,
-                  "label": "subventions.38.title"
+                  "id": 59,
+                  "label": "subventions.59.title"
                 }
               ]
             }
@@ -41,7 +42,8 @@
             "purpose": {
               "title": "purpose_section_purpose.title",
               "description": "purpose_section_purpose.description",
-              "type": "string"
+              "type": "string",
+              "maxLength": 1500
             }
           },
           "required": [
@@ -73,13 +75,39 @@
         "prior_benefits_usage_section": {
           "title": "prior_benefits_usage_section.title",
           "type": "object",
-          "description": "prior_compensations.description",
           "properties": {
-            "prior_compensations": {
-              "title": "prior_compensations.title",
-              "type": "string"
+            "have_received_prior_compensations": {
+              "title": "other_compensations_section_have_received_prior_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
             }
-          }
+          },
+          "required": ["have_received_prior_compensations"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_prior_compensations": {
+                    "const": true
+                  }
+                },
+                "required": ["have_received_prior_compensations"]
+              },
+              "then": {
+                "properties": {
+                  "prior_compensations": {
+                    "description": "prior_compensations.description",
+                    "title": "prior_compensations.title",
+                    "type": "string"
+                  }
+                },
+                "required": ["prior_compensations"]
+              }
+            }
+          ]
         }
       }
     },
@@ -143,7 +171,8 @@
                   "de_minimis_info": {
                     "title": "de_minimis_info.title",
                     "description": "de_minimis_info.description",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [
@@ -240,7 +269,8 @@
                   "change_negotiations_description": {
                     "title": "change_negotiations_description.title",
                     "description": "change_negotiations_description.description",
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 1000
                   }
                 },
                 "required": [

@@ -193,7 +193,7 @@ export const expandConditionalRequiredErrors = (
 
     // Get the merged schema for the missing field (resolves $ref and merges allOf/then)
     const missingFieldSchema = resolveFieldSchema(schema, parts);
-    if (!missingFieldSchema || missingFieldSchema.type !== 'object') {
+    if (missingFieldSchema?.type !== 'object') {
       continue;
     }
 

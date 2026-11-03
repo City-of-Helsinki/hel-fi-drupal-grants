@@ -99,6 +99,26 @@ const formatRequiredError = (error: ErrorObject) => {
 };
 
 /**
+ * Localize the "enum" error from AJV.
+ *
+ * A value outside the allowed options (e.g. a year that is no longer
+ * available in a copied application) leaves the select empty, so show the
+ * same message as for a missing value.
+ *
+ * @param {ErrorObject} error - The error object containing validation details.
+ * @return {string} - Translated error message indicating the required field.
+ */
+const formatEnumError = (error: ErrorObject) => {
+  const title = error.parentSchema?.title;
+
+  if (!title) {
+    return Drupal.t('Field is required', {}, { context: 'Grants application: Validation' });
+  }
+
+  return Drupal.t('!field field is required.', { '!field': title }, { context: 'Grants application: Validation' });
+};
+
+/**
  * Format the message for an address that is not shaped like an email address.
  *
  * @param {unknown} data - The value that failed validation.
@@ -269,6 +289,10 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
     let outMessage: string | undefined;
 
     switch (error.keyword) {
+      case 'enum': {
+        outMessage = formatEnumError(error);
+        break;
+      }
       case 'format': {
         outMessage = formatPatternError(error);
         break;

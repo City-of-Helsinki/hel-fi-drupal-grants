@@ -189,7 +189,7 @@ export const setStepAtom = atom(null, (_get, _set, index: number) => {
 
   _set(formStateAtom, () => ({
     ...currentState,
-    reachedStep: currentState?.reachedStep > index ? currentState?.reachedStep : index,
+    reachedStep: Math.max(currentState?.reachedStep ?? index, index),
     currentStep: [index, step],
   }));
   _set(finalAcceptanceAtom, false);

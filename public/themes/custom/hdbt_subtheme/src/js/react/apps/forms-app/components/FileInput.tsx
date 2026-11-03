@@ -60,7 +60,7 @@ async function uploadFiles(
 }
 
 const filesFromATVData = (value?: ATVFile): File[] => {
-  if (!value || !value.fileName) {
+  if (!value?.fileName) {
     return [];
   }
 

@@ -18,7 +18,7 @@ use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2DataParser;
 use Drupal\grants_application\Avus2Exception;
 use Drupal\grants_application\Avus2Integration;
-use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
@@ -265,6 +265,11 @@ final class Application extends ResourceBase {
       $grantsProfile['socialSecurityNumber'] = $verifiedData['nationalIdentificationNumber'] ?? '-';;
     }
 
+    // Keep the acting year of a submitted application selectable.
+    if (!$submission->isDraft()) {
+      $settings = $settings->withActingYearsOf($sideDocument->getContent());
+    }
+
     // @todo Only return required user data to frontend.
     $response = [
       'form_data' => $sideDocument->getContent(),
@@ -330,10 +335,7 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    $errors = $this->validate($form_identifier, $form_data);
-    if ($errors) {
-      return new JsonResponse(['error' => $errors], 400);
-    }
+    $this->validate($settings, $form_data);
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
@@ -581,12 +583,6 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-
-    $errors = $this->validate($form_identifier, $form_data);
-    if ($errors) {
-      return new JsonResponse(['error' => $errors], 400);
-    }
-
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
@@ -614,6 +610,9 @@ final class Application extends ResourceBase {
       $this->logger->error("During PATCH-request, failed to fetch ATV-document, $application_number: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('Unable to fetch the application. Please try again in a moment')], 500);
     }
+
+    // Allow the acting year the application was submitted with.
+    $this->validate($settings->withActingYearsOf($sideDocument->getContent()), $form_data);
 
     try {
       $oldDocument = $document->toArray();
@@ -763,19 +762,16 @@ final class Application extends ResourceBase {
   /**
    * Validate the submitted form data.
    *
-   * JSON schema errors are only logged, as they don't block submitting.
-   * Sum match errors block submitting.
+   * Errors are only logged for debugging and don't block submitting, as the
+   * integration rejects faulty submissions.
    *
-   * @param string $formIdentifier
-   *   The form identifier.
+   * @param \Drupal\grants_application\Form\FormSettings $settings
+   *   The form settings.
    * @param array $formData
    *   The form data.
-   *
-   * @return string[]
-   *   Error messages that block submitting, empty if valid.
    */
-  private function validate(string $formIdentifier, array $formData): array {
-    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($formIdentifier);
+  private function validate(FormSettings $settings, array $formData): void {
+    $formIdentifier = $settings->getFormIdentifier();
     $results = $this->jsonSchemaValidator->validate(json_decode(json_encode($formData)), json_decode(json_encode($settings->getSchema())));
 
     if (is_array($results)) {
@@ -786,10 +782,8 @@ final class Application extends ResourceBase {
 
     $sumErrors = $this->sumMatchValidator->validate($formData, $settings, $this->languageManager->getCurrentLanguage()->getId());
     if ($sumErrors) {
-      $this->logger->info("User submitted mismatching sums on application $formIdentifier: " . json_encode($sumErrors));
+      $this->logger->warning("User submitted mismatching sums on application $formIdentifier: " . json_encode(array_values($sumErrors)));
     }
-
-    return array_values($sumErrors);
   }
 
 }
