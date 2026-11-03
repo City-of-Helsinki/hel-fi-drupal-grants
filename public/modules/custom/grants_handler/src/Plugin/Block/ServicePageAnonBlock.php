@@ -21,7 +21,6 @@ use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\Error;
-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_handler\ApplicationStatusServiceInterface;
 use Drupal\grants_handler\ServicePageBlockService;
@@ -329,17 +328,8 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       return 0;
     }
 
-    // Datetime field values are stored in UTC without a timezone marker.
-    $utc = new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE);
-    try {
-      $open = $formSettings->getApplicationOpen()
-        ? (new \DateTime($formSettings->getApplicationOpen(), $utc))->getTimestamp() : FALSE;
-      $close = $formSettings->getApplicationClose()
-        ? (new \DateTime($formSettings->getApplicationClose(), $utc))->getTimestamp() : FALSE;
-    }
-    catch (\Exception $e) {
-      return 0;
-    }
+    $open = strtotime($formSettings->getApplicationOpen());
+    $close = strtotime($formSettings->getApplicationClose());
     $now = $this->time->getCurrentTime();
 
     // Before application is opened.

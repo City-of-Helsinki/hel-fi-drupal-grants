@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Form;
 
-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
-
 /**
  * Form settings class.
  */
@@ -130,10 +128,8 @@ final class FormSettings {
     }
 
     try {
-      // Datetime field values are stored in UTC without a timezone marker.
-      $utc = new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE);
-      $open = new \DateTime($this->settings['application_open'], $utc);
-      $closed = new \DateTime($this->settings['application_close'], $utc);
+      $open = new \DateTime($this->settings['application_open']);
+      $closed = new \DateTime($this->settings['application_close']);
       $now = new \DateTime();
     }
     catch (\Exception $e) {

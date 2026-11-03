@@ -18,7 +18,6 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
@@ -2274,12 +2273,10 @@ function _grants_handler_handle_react_application(array &$variables): void {
 
   $variables['applicationFormName'] = $settings['translations'][$language]['translation']['form_title'];
 
-  // Datetime field values are stored in UTC without a timezone marker.
-  $utc = new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE);
   $variables['openStartDate'] = !empty($settings['settings']['application_open'])
-    ? (new \DateTime($settings['settings']['application_open'], $utc))->getTimestamp() : '';
+    ? strtotime($settings['settings']['application_open']) : '';
   $variables['openEndDate'] = !empty($settings['settings']['application_close'])
-    ? (new \DateTime($settings['settings']['application_close'], $utc))->getTimestamp() : '';
+    ? strtotime($settings['settings']['application_close']) : '';
   $variables['isContinuous'] = (bool) ($settings['settings']['continuous'] ?? FALSE);
 
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
