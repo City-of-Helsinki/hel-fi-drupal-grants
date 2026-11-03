@@ -12,7 +12,7 @@ import { Notification, NotificationSize } from 'hds-react';
 import { useAtomValue, useSetAtom, type WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import type { FocusEvent, FormEvent, ReactNode } from 'react';
-import { createRef, useCallback, useEffect, useState } from 'react';
+import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorsList } from '../components/ErrorsList';
 import { ActingYear } from '../components/Fields/ActingYear';
@@ -137,6 +137,8 @@ export const RJSFFormContainer = ({
   const raiseValidationCutoff = useSetAtom(raiseValidationCutoffAtom);
   const readOnly = useAtomValue(isReadOnlyAtom);
   const formRef = createRef<Form>();
+  // Validation on load shows errors without moving focus to them.
+  const skipErrorFocusRef = useRef(false);
   const readCurrentStep = useAtomCallback(useCallback((get) => get(getCurrentStepAtom), []));
   const readValidationCutoff = useAtomCallback(useCallback((get) => get(getValidationCutoffAtom), []));
   const readFormData = useAtomCallback(useCallback((get) => get(formDataAtom), [formDataAtom]));
@@ -148,6 +150,18 @@ export const RJSFFormContainer = ({
   const browserCacheData = useDebounceCallback((data: IChangeEvent) => {
     setFormData(data.formData);
   }, 2000);
+
+  // Restore errors on visited pages
+  useEffect(() => {
+    if (readOnly || drupalSettings.grants_react_form.use_preview || readValidationCutoff() < 0) {
+      return;
+    }
+
+    skipErrorFocusRef.current = true;
+    if (formRef.current?.validateForm()) {
+      skipErrorFocusRef.current = false;
+    }
+  }, []);
 
   if (invalidSchemaError) {
     throw invalidSchemaError;
@@ -165,6 +179,11 @@ export const RJSFFormContainer = ({
    * @return {void}
    */
   const onError = (errors: RJSFValidationError[]) => {
+    if (skipErrorFocusRef.current) {
+      skipErrorFocusRef.current = false;
+      return;
+    }
+
     const keyedErrors = keyErrorsByStep(errors, steps);
     const [currentStepIndex] = readCurrentStep();
 

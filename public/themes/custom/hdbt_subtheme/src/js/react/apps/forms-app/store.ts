@@ -46,7 +46,30 @@ const buildFormSteps = ({ properties }: RJSFSchema): Map<number, FormStep> => {
   return steps;
 };
 
-export const createFormDataAtom = (key: string, initialValue: RJSFFormData, timestamp?: number) => {
+const getFormStateKey = (applicationNumber: string) => `${applicationNumber}-form-state`;
+
+/**
+ * Discard the session copy of an application if the server copy is newer.
+ *
+ * @param {string} applicationNumber - The application number
+ * @param {number} serverTimestamp - When the server copy was last changed, in seconds
+ */
+export const discardStaleSession = (applicationNumber: string, serverTimestamp?: number) => {
+  const sessionItem = sessionStorage.getItem(applicationNumber);
+
+  if (!sessionItem || !serverTimestamp) {
+    return;
+  }
+
+  const { timestamp: sessionTimestamp } = JSON.parse(sessionItem);
+
+  if (Number(sessionTimestamp) < Number(serverTimestamp)) {
+    sessionStorage.removeItem(applicationNumber);
+    sessionStorage.removeItem(getFormStateKey(applicationNumber));
+  }
+};
+
+export const createFormDataAtom = (key: string, initialValue: RJSFFormData) => {
   initialValue = initialValue && Array.isArray(initialValue) && !initialValue.length ? {} : initialValue;
 
   const getInitialValue = () => {
@@ -56,16 +79,7 @@ export const createFormDataAtom = (key: string, initialValue: RJSFFormData, time
       return initialValue;
     }
 
-    const parsedItem = JSON.parse(sessionItem);
-    const { timestamp: sessionTimeStamp, data: sessionData } = parsedItem;
-    const sessionTime = new Date(Number(sessionTimeStamp) * 1000);
-    const serverTime = timestamp ? new Date(Number(timestamp) * 1000) : null;
-
-    if (serverTime && sessionTime < serverTime) {
-      return initialValue;
-    }
-
-    return sessionData ?? {};
+    return JSON.parse(sessionItem).data ?? {};
   };
 
   const baseAtom = atom(getInitialValue());
@@ -80,8 +94,49 @@ export const createFormDataAtom = (key: string, initialValue: RJSFFormData, time
 
   return derivedAtom;
 };
+
+/**
+ * Read the form state persisted for an application.
+ *
+ * @param {string} applicationNumber - The application number
+ * @param {Map} steps - The form steps
+ *
+ * @return {FormState|undefined} - The persisted state, if it fits the steps
+ */
+const readPersistedFormState = (applicationNumber: string, steps: Map<number, FormStep>): FormState | undefined => {
+  try {
+    const { currentStep, validationCutoff } =
+      JSON.parse(sessionStorage.getItem(getFormStateKey(applicationNumber)) ?? 'null') ?? {};
+    const step = steps.get(currentStep);
+
+    if (!step || step.id === 'ready' || !Number.isInteger(validationCutoff)) {
+      return undefined;
+    }
+
+    return { currentStep: [currentStep, step], validationCutoff };
+  } catch (_error) {
+    return undefined;
+  }
+};
+
 export const formDataAtomRef = atom<RJSFFormData | null>(null);
-export const formStateAtom = atom<FormState | undefined>(undefined);
+const baseFormStateAtom = atom<FormState | undefined>(undefined);
+
+export const formStateAtom = atom(
+  (get) => get(baseFormStateAtom),
+  (get, set, update: FormState | undefined | ((state: FormState | undefined) => FormState | undefined)) => {
+    const state = typeof update === 'function' ? update(get(baseFormStateAtom)) : update;
+    set(baseFormStateAtom, state);
+
+    const applicationNumber = get(formConfigAtom)?.applicationNumber;
+    if (state && applicationNumber) {
+      sessionStorage.setItem(
+        getFormStateKey(applicationNumber),
+        JSON.stringify({ currentStep: state.currentStep[0], validationCutoff: state.validationCutoff }),
+      );
+    }
+  },
+);
 export const formConfigAtom = atom<FormConfig | undefined>(undefined);
 export const formStepsAtom = atom<Map<number, FormStep> | undefined>(undefined);
 export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
@@ -106,6 +161,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     settings,
     ...rest
   } = formConfig;
+  const { applicationNumber } = formConfig;
   const { acting_years: actingYears, applicant_type: applicantType } = settings || {};
   const steps = buildFormSteps(schema);
   _set(formStepsAtom, () => steps);
@@ -138,11 +194,10 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
       return undefined;
     }
 
-    return { currentStep: [0, firstStep], validationCutoff: -1 };
+    return readPersistedFormState(applicationNumber, steps) ?? { currentStep: [0, firstStep], validationCutoff: -1 };
   });
 
   // Make sure application number is set in url params.
-  const { applicationNumber } = formConfig;
   _set(setApplicationNumberAtom, applicationNumber);
 });
 export const getFormConfigAtom = atom((_get) => {

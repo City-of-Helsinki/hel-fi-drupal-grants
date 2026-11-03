@@ -36,9 +36,10 @@ const schema: RJSFSchema = {
 
 const uiSchema: UiSchema = { grants: { section: { subventions: { 'ui:field': 'subventionTable' } } } };
 
-const renderForm = () => {
+const renderForm = (applicationNumber?: string) => {
   const store = createStore();
   store.set(initializeFormAtom, {
+    applicationNumber,
     grants_profile: testGrantsProfile,
     schema,
     settings: {},
@@ -116,5 +117,29 @@ describe('Errors on pages the user has not reached', () => {
     expect(store.get(formStateAtom)?.currentStep[0]).toBe(1);
     expect(fieldErrors()).toEqual(['root_grants_section_name-error']);
     expect(subventionErrors().length).toBeGreaterThan(0);
+  });
+
+  test('are shown again after reloading the form', async () => {
+    sessionStorage.setItem('TEST-RELOAD-form-state', JSON.stringify({ currentStep: 1, validationCutoff: 1 }));
+
+    await act(async () => {
+      renderForm('TEST-RELOAD');
+    });
+
+    expect(fieldErrors()).toEqual(['root_grants_section_name-error']);
+    expect(subventionErrors().length).toBeGreaterThan(0);
+    // The errors are shown without moving focus to them.
+    expect(document.activeElement?.id).not.toBe('root_grants_section_name');
+  });
+
+  test('stay hidden after reloading the form if the page was not validated', async () => {
+    sessionStorage.setItem('TEST-RELOAD-2-form-state', JSON.stringify({ currentStep: 1, validationCutoff: 0 }));
+
+    await act(async () => {
+      renderForm('TEST-RELOAD-2');
+    });
+
+    expect(fieldErrors()).toEqual([]);
+    expect(subventionErrors()).toHaveLength(0);
   });
 });
