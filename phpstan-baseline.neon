@@ -1717,12 +1717,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
 
 		-
-			message: '#^Method Drupal\\grants_application\\Plugin\\rest\\resource\\Application\:\:validate\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
 			message: '#^Parameter \#1 \$document of method Drupal\\grants_application\\Avus2Integration\:\:sendToAvus2\(\) expects Drupal\\helfi_atv\\AtvDocument, bool\|Drupal\\helfi_atv\\AtvDocument\|null given\.$#'
 			identifier: argument.type
 			count: 1

@@ -11,7 +11,7 @@ import { customizeValidator } from '@rjsf/validator-ajv8';
 import { Notification, NotificationSize } from 'hds-react';
 import { useAtomValue, useSetAtom, type WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import type { FormEvent, ReactNode } from 'react';
+import type { FocusEvent, FormEvent, ReactNode } from 'react';
 import { createRef, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorsList } from '../components/ErrorsList';
@@ -19,6 +19,7 @@ import { ActingYear } from '../components/Fields/ActingYear';
 import { ComputedSum } from '../components/Fields/ComputedSum';
 import { GrantDurationRadio } from '../components/Fields/GrantDurationRadio';
 import { SubventionTable } from '../components/Fields/SubventionTable';
+import { SumMatchStatus } from '../components/Fields/SumMatchStatus';
 import { TextParagraph } from '../components/Fields/TextParagraph';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
@@ -46,13 +47,25 @@ import {
   getRequiredFileFieldsAtom,
   getStepsAtom,
   getSubventionFieldsAtom,
+  getSumMatchRulesAtom,
   isEmptyPreviewAtom,
   isReadOnlyAtom,
+  liveFormDataAtom,
   setErrorsAtom,
   setStepAtom,
+  setSumMatchStateAtom,
 } from '../store';
+import type { SumMatchRule } from '../types/Data';
 import type { RJSFFormData } from '../types/RJSFFormData';
-import { expandConditionalRequiredErrors, isDraft, keyErrorsByStep } from '../utils';
+import {
+  expandConditionalRequiredErrors,
+  focusError,
+  getSumMatchState,
+  hasSumMatchValuesOnBothSides,
+  isDraft,
+  keyErrorsByStep,
+  pathToElementId,
+} from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 
 const widgets: RegistryWidgetsType = {
@@ -116,6 +129,7 @@ export const RJSFFormContainer = ({
   }, []);
   const subventionFields = useAtomValue(getSubventionFieldsAtom);
   const requiredFileFields = useAtomValue(getRequiredFileFieldsAtom);
+  const sumMatchRules = useAtomValue(getSumMatchRulesAtom);
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
   const setStep = useSetAtom(setStepAtom);
@@ -125,6 +139,8 @@ export const RJSFFormContainer = ({
   const readReachedStep = useAtomCallback(useCallback((get) => get(getReachedStepAtom), []));
   const readFormData = useAtomCallback(useCallback((get) => get(formDataAtom), [formDataAtom]));
   const setErrors = useSetAtom(setErrorsAtom);
+  const setLiveFormData = useSetAtom(liveFormDataAtom);
+  const setSumMatchState = useSetAtom(setSumMatchStateAtom);
   const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
   const browserCacheData = useDebounceCallback((data: IChangeEvent) => {
@@ -150,10 +166,10 @@ export const RJSFFormContainer = ({
     const [currentStepIndex] = readCurrentStep();
 
     const currentPageErrors = keyedErrors.filter(([index]) => index === currentStepIndex);
+    const form = formRef.current?.formElement.current as HTMLFormElement | null | undefined;
 
-    if (currentPageErrors.length) {
-      formRef.current?.focusOnError(currentPageErrors[0][1]);
-    }
+    // Focus the first error that has a focusable element.
+    currentPageErrors.some(([, error]) => focusError(form, error));
   };
 
   /**
@@ -269,10 +285,86 @@ export const RJSFFormContainer = ({
       }
     });
 
+    sumMatchRules.forEach((rule) => {
+      const stepId = rule.path.split('.')[0];
+      const stepIndex = Array.from(steps).find(([, step]) => step.id === stepId)?.[0] ?? 0;
+
+      // Steps the user hasn't reached keep their neutral state.
+      if (stepIndex > reachedStep) {
+        return;
+      }
+
+      const state = getSumMatchState(formData, rule, t);
+      setSumMatchState(rule.path, state);
+
+      if (state?.status !== 'mismatch') {
+        return;
+      }
+
+      newErrors.push({
+        property: `.${rule.path}`,
+        message: state.message,
+        schemaPath: `.${rule.path}`,
+        stack: `.${rule.path} ${state.message}`,
+      });
+
+      // The error handler only has nodes for paths present in form data, and
+      // the field showing the rule's status has no data of its own.
+      // biome-ignore lint/suspicious/noExplicitAny: RJSF error handler is untyped
+      const node = rule.path.split('.').reduce((acc: any, key) => {
+        acc[key] ??= {};
+        return acc[key];
+      }, errors);
+
+      if (typeof node.addError === 'function') {
+        node.addError(state.message);
+      } else {
+        node.__errors = [...(node.__errors ?? []), state.message];
+      }
+    });
+
     const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(newErrors, steps));
     setErrors(errorsToShow, true);
 
     return errors;
+  };
+
+  /**
+   * Validate sum match rules when focus leaves one of the compared groups.
+   *
+   * A group is the fieldset around the rule's fields. Validation only happens
+   * once both groups have values, so incomplete input isn't flagged.
+   *
+   * @param {FocusEvent} event - The focusout event
+   */
+  const validateSumMatchOnBlur = (event: FocusEvent<HTMLDivElement>) => {
+    const form = formRef.current?.formElement.current as HTMLFormElement | null | undefined;
+    const data = formRef.current?.state.formData;
+
+    if (!form || !data || !sumMatchRules.length) {
+      return;
+    }
+
+    const getGroup = (fields: string[]) => {
+      const element = fields.length ? form.querySelector(`[id="${pathToElementId(fields[0])}"]`) : null;
+      return element?.closest('fieldset') ?? element;
+    };
+    const next = event.relatedTarget as Node | null;
+
+    sumMatchRules.forEach((rule: SumMatchRule) => {
+      const leftGroup = [getGroup(rule.fields), getGroup(rule.compareTo)].some(
+        (group) => group?.contains(event.target) && !group.contains(next),
+      );
+
+      if (!leftGroup) {
+        return;
+      }
+
+      setSumMatchState(
+        rule.path,
+        hasSumMatchValuesOnBothSides(data, rule) ? getSumMatchState(data, rule, t) : undefined,
+      );
+    });
   };
 
   const getFormTopArea = () => {
@@ -315,7 +407,8 @@ export const RJSFFormContainer = ({
           <Stepper formRef={formRef} />
         </>
       )}
-      <div className='form-wrapper'>
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: Only listens to focus leaving the fields inside. */}
+      <div className='form-wrapper' onBlur={validateSumMatchOnBlur}>
         {getFormTopArea()}
         <Form
           className='grants-form'
@@ -328,13 +421,17 @@ export const RJSFFormContainer = ({
             grantDuration: GrantDurationRadio,
             subventionTable: SubventionTable,
             computedSum: ComputedSum,
+            sumMatchStatus: SumMatchStatus,
             textParagraph: TextParagraph,
           }}
           formData={readFormData() || {}}
           liveValidate={false}
           method='POST'
           noHtml5Validate
-          onChange={browserCacheData}
+          onChange={(data) => {
+            setLiveFormData(data.formData);
+            browserCacheData(data);
+          }}
           onError={onError}
           onSubmit={async (data, event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();

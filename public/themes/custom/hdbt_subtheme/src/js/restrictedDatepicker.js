@@ -23,7 +23,7 @@
         KUVAKEHA: { start_date_field: 'edit-hanke-alkaa', end_date_field: 'edit-hanke-loppuu' },
       };
 
-      if (!settings.restricted_datepicker || !settings.restricted_datepicker.application_type) {
+      if (!settings.restricted_datepicker?.application_type) {
         return;
       }
 

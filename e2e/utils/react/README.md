@@ -24,8 +24,9 @@ The primary role is `REGISTERED_COMMUNITY` by default.
 
 1. Create a folder: `e2e/tests/forms/{application_type_id}_{form_identifier}/`.
    `FORM_ID` is the folder name with the leading `{id}_` stripped.
-2. Copy `form.spec.ts` from an existing form folder. It needs no changes.
-3. Add the form test to `playwright.config.ts`. See, for example: `name: 'forms-react'` and `name: 'forms-29-yleisavustushakemus'`.
+2. Copy `form.spec.ts` from a folder without `formLogic.ts`, for example `29_yleisavustushakemus`. It needs no changes.
+3. In `playwright.config.ts`, add the folder to the `forms-react` `testMatch` list and add a project of its own.
+   See `name: 'forms-29-yleisavustushakemus'`. List a profile project in `dependencies` for every role the form supports.
 
 ## Per-form customization
 
@@ -36,6 +37,7 @@ Two optional files live next to `form.spec.ts` and are ignored as test files:
   the field. Use it for true one-offs, for example, selecting a specific radio option that opens
   more fields. Pass it as the third argument: `executeFormFlow(page, FORM_ID, formLogic)`.
 * **`formInputs.ts`** — replace the auto-generated value for specific fields. Uses the same nesting, with a string or a function as the field value.
+  Pass it as the fourth argument: `executeFormFlow(page, FORM_ID, formLogic, formInputs)`.
 
 Recurring patterns belong in the engine, not in `formLogic`.
 
@@ -51,7 +53,12 @@ languages, and the "sent" application view.
 
 ## Running and debugging
 
-* Run one form: `npx playwright test --project forms-70-iakkaiden`.
+See [Running E2E tests](../../README.md#running-e2e-tests) for the setup and the `.env` file.
+
+* Run one form in Docker: `make test-pw-p PROJECT=forms-70-iakkaiden`.
+* Run one form locally: `npx playwright test --project forms-70-iakkaiden`.
+* Run all React forms: `make test-pw-p PROJECT=forms-react`.
+* Add `--no-deps` to a local run to skip the profile tests when the profiles already exist.
 * `APP_DEBUG=TRUE` prints progress lines per language, step, and field.
 * The local reporter is `list`, so the running test and its timer are shown live.
 * `SKIP_SUBMIT=true` fills and drafts the form but skips submit and the post-submit steps, and

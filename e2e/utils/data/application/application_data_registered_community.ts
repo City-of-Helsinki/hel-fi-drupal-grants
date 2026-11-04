@@ -1,4 +1,3 @@
-import {registeredCommunityApplications_29} from "./application_data_29";
 import {registeredCommunityApplications_48} from "./application_data_48";
 import {registeredCommunityApplications_49} from "./application_data_49";
 import {registeredCommunityApplications_50} from "./application_data_50";
@@ -13,7 +12,6 @@ import {registeredCommunityApplications_61} from "./application_data_61";
 import {registeredCommunityApplications_62} from "./application_data_62";
 import {registeredCommunityApplications_64} from "./application_data_64";
 import {registeredCommunityApplications_67} from "./application_data_67";
-import {registeredCommunityApplications_69} from "./application_data_69";
 import {registeredCommunityApplications_73} from "./application_data_73";
 import {registeredCommunityApplications_74} from "./application_data_74";
 import {registeredCommunityApplications_75} from "./application_data_75";
@@ -21,7 +19,6 @@ import {registeredCommunityApplications_76} from "./application_data_76";
 import {registeredCommunityApplications_77} from "./application_data_77";
 
 const registeredCommunityApplications = {
-  29: registeredCommunityApplications_29,
   48: registeredCommunityApplications_48,
   49: registeredCommunityApplications_49,
   50: registeredCommunityApplications_50,
@@ -36,7 +33,6 @@ const registeredCommunityApplications = {
   62: registeredCommunityApplications_62,
   64: registeredCommunityApplications_64,
   67: registeredCommunityApplications_67,
-  69: registeredCommunityApplications_69,
   73: registeredCommunityApplications_73,
   74: registeredCommunityApplications_74,
   75: registeredCommunityApplications_75,

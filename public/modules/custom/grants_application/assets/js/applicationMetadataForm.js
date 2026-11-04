@@ -84,6 +84,38 @@
           apply(fields, e.currentTarget.value);
         });
       });
+
+
+      const datetime1 = once(
+        'edit-application-open-0-value',
+        'input[id="edit-application-open-0-value-date"]',
+        context
+      );
+      const datetime2 = once(
+        'edit-application-close-0-value-date',
+        'input[id="edit-application-close-0-value-date"]',
+        context
+      )
+      const datetimes = [datetime1[0], datetime2[0]]
+
+      // Add clear button for the datetimes.
+      datetimes.forEach((element)=> {
+        const btn = document.createElement('input');
+        btn.type = 'button';
+        btn.classList.add('button', 'button--small');
+        btn.value = Drupal.t('Clear');
+        btn.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          event.target.parentElement.parentElement.querySelectorAll('input').forEach(el => {
+            if (el.type !== "button") {
+              el.value = undefined;
+            }
+          })
+        })
+        element.parentElement.parentElement.append(btn);
+      });
     },
   };
 })(Drupal, drupalSettings, once);

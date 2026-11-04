@@ -345,7 +345,8 @@ const verifySubmit = async (
 const isApplicationClosed = async (page: Page) => {
   const errorMessage = page.locator('.hds-notification--error .hds-notification__body')
     .filter({ hasText: 'Tämä avustushaku ei ole avoimena' });
-  return await errorMessage.count() > 0;
+  // Wait for the error message to render.
+  return errorMessage.first().waitFor({ state: 'visible', timeout: 10_000 }).then(() => true, () => false);
 };
 
 /**

@@ -179,8 +179,7 @@
                 "properties": {
                   "prior_compensations": {
                     "title": "prior_compensations.title",
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   }
                 },
                 "required": ["prior_compensations"]

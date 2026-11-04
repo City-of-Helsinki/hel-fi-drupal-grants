@@ -42,6 +42,7 @@ dependencies:
     - grants_profile
     - helfi_api_base
     - helfi_tpr
+    - helfi_users
     - language
     - linkit
     - locale
@@ -322,6 +323,7 @@ permissions:
   - 'update media'
   - 'update own tpr_service'
   - 'update own tpr_unit'
+  - 'use favorites'
   - 'use menu link attributes'
   - 'use text format full_html'
   - 'use text format minimal'
