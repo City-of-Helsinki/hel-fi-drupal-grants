@@ -19,16 +19,13 @@ third_party_settings:
     applicationClose: '2026-12-15T23:59:59'
     applicationContinuous: 0
     applicationTargetGroup: '27'
-    disableCopying: 0
+    disableCopying: 1
     applicationTypeSelect: '75'
     applicationIndustry: KUVA
-    applicationActingYears:
-      2026: '2026'
-      2027: '2027'
-      2028: '2028'
+    applicationActingYears: {  }
     applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '1'
-    status: released
+    status: archived
     parent: f5ce73c5-6e6c-4acb-bd52-650d09db29c0
     avus2BreakingChange: false
 weight: 0
