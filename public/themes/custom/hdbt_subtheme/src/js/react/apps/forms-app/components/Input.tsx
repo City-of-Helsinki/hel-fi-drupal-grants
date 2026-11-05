@@ -542,16 +542,29 @@ export const CheckboxWidget = ({ id, label, onChange, rawErrors, required, value
     return <PreviewInput value={value ? t('Yes') : t('No')} label={label} uiSchema={uiSchema} />;
   }
 
-  return (
+  const checkboxLabel = uiSchema?.['ui:options']?.checkboxLabel?.toString();
+  const requiredMark = required ? ' *' : '';
+
+  const checkbox = (
     <Checkbox
       className='hdbt-form--checkbox'
       disabled={isReadOnly}
       errorText={rawErrors?.length ? formatErrors(rawErrors) : undefined}
       id={id}
-      label={`${label ?? ''}${required ? ' *' : ''}`}
+      label={checkboxLabel ?? `${label ?? ''}${requiredMark}`}
       checked={Boolean(value)}
       onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.checked)}
       style={defaultCheckboxStyle}
     />
+  );
+
+  if (!checkboxLabel) {
+    return checkbox;
+  }
+
+  return (
+    <Fieldset heading={`${label ?? ''}${requiredMark}`} className='hdbt-form--fieldset' tooltip={getTooltip(uiSchema)}>
+      {checkbox}
+    </Fieldset>
   );
 };

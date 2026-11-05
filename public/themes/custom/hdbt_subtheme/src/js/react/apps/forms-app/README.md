@@ -111,6 +111,7 @@ We've added some custom keys to ui:options.
 
 * **addText** `string` Renders a custom text for 'add more' button (used in array fields). See `Templates.tsx`.
 * **affirmativeExpands** `boolean` Prints an indication that affirmative answer opens another field. See `Templates.tsx`.
+* **checkboxLabel** `string` Translation key for a boolean checkbox's own label (e.g. `boolean.yes`). When set, the field title renders as a fieldset heading above the checkbox. See `Input.tsx`.
 * **hideNameFromPint** `boolean` Hides field name when viewing a preview or submitted form. See `Templates.tsx`.
 * **printableName** `string` Overrides the field name in preview or submitted form. See `Templates.tsx`.
 * **removeText** `string` Renders a custom text for 'remove item' button (used in array fields). See `Templates.tsx`.
