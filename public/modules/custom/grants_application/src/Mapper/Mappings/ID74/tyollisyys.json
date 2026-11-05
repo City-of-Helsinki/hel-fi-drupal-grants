@@ -114,7 +114,7 @@
   },
   "compensation.compensationInfo.generalInfoArray.6": {
     "datasource": "form_data",
-    "source": "grant_info_step.purpose_section.results_of_success",
+    "source": "grant_info_step.purpose_section.results_of_activities",
     "mapping_type": "default",
     "data": {
       "ID": "resultsOfActivities",
