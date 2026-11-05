@@ -760,7 +760,7 @@ final class ApplicationController extends ControllerBase {
       $this->getLogger('grants_application')
         ->error("User data fetch error when marking message as read: {$e->getMessage()}");
 
-      $render['#message_list']['error'][] = $this->t('Message marking as read failed.');
+      $render['#message_list']['error'][] = $this->t('Message marking as read failed.', [], ['context' => 'grants_handler']);
       $renderedHtml = $this->renderer->render($render);
       $prependCommand = new PrependCommand($dataSelector, (string) $renderedHtml);
       $ajaxResponse->addCommand($prependCommand);
@@ -787,11 +787,11 @@ final class ApplicationController extends ControllerBase {
         $this->eventsService->logEvent(
           $application_number,
           $messageType,
-          (string) $this->t('Message marked as read'),
+          (string) $this->t('Message marked as read', [], ['context' => 'grants_handler']),
           $message_id
         );
 
-        $message = $this->t('Message marked as read');
+        $message = $this->t('Message marked as read', [], ['context' => 'grants_handler']);
         $this->atvService->clearCache($application_number);
       }
       catch (\Exception $e) {
@@ -799,11 +799,11 @@ final class ApplicationController extends ControllerBase {
           '%error' => $e->getMessage(),
         ]);
         $isError = TRUE;
-        $message = $this->t('Message marking as read failed.');
+        $message = $this->t('Message marking as read failed.', [], ['context' => 'grants_handler']);
       }
     }
     else {
-      $message = $this->t('Message already read.');
+      $message = $this->t('Message already read.', [], ['context' => 'grants_handler']);
     }
 
     if (!$isError) {

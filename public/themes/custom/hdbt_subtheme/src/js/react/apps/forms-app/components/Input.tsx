@@ -539,7 +539,7 @@ export const CheckboxWidget = ({ id, label, onChange, rawErrors, required, value
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
-    return <PreviewInput value={value ? t('Yes') : t('No')} label={label} uiSchema={uiSchema} />;
+    return <PreviewInput value={value ? t('boolean.yes') : t('boolean.no')} label={label} uiSchema={uiSchema} />;
   }
 
   const checkboxLabel = uiSchema?.['ui:options']?.checkboxLabel?.toString();

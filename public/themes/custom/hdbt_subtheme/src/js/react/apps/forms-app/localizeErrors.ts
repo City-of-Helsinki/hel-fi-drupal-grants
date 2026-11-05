@@ -23,6 +23,29 @@ const formatMinItemsError = (error: ErrorObject) => {
 };
 
 /**
+ * Localize the "minimum" and "maximum" errors from AJV.
+ *
+ * @param {ErrorObject} error
+ *   The error object.
+ *
+ * @return {string}
+ *   The localized error message.
+ */
+const formatLimitNumberError = (error: ErrorObject) => {
+  const {
+    keyword,
+    params: { limit },
+    parentSchema,
+  } = error;
+  const args = { '!field': parentSchema?.title || '', '@limit': String(limit) };
+  const options = { context: 'Grants application: Validation' };
+
+  return keyword === 'minimum'
+    ? Drupal.t('!field must be at least @limit.', args, options)
+    : Drupal.t('!field must be at most @limit.', args, options);
+};
+
+/**
  * Localize the "minLength" error from AJV.
  *
  * If the minimum length is 1, use the "required" error message.
@@ -307,6 +330,11 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
       }
       case 'minItems': {
         outMessage = formatMinItemsError(error);
+        break;
+      }
+      case 'minimum':
+      case 'maximum': {
+        outMessage = formatLimitNumberError(error);
         break;
       }
       case 'minLength': {

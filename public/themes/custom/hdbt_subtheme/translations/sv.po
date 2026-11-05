@@ -695,3 +695,25 @@ msgstr "Obligatoriska fält är markerade med en asterisk (*)."
 msgctxt "Grants application"
 msgid "Allowed types: @formats"
 msgstr "Tillåtna filtyper: @formats"
+
+msgctxt "Grants application: Validation"
+msgid "!field field must be at least @limit characters."
+msgstr "Fält !field måste innehålla minst @limit tecken."
+
+msgctxt "Grants application: Validation"
+msgid "The value must be a number."
+msgstr "Värdet måste vara ett nummer."
+
+msgctxt "Grants application: Validation"
+msgid "!field must be at least @limit."
+msgstr "Värdet i fältet !field måste vara minst @limit."
+
+msgctxt "Grants application: Validation"
+msgid "!field must be at most @limit."
+msgstr "Värdet i fältet !field får vara högst @limit."
+
+msgid "Form not found."
+msgstr "Formuläret hittades inte."
+
+msgid "The application ran into an unrecoverable error. Please refresh the page to continue."
+msgstr "Ett oväntat fel uppstod i formuläret. Uppdatera sidan för att fortsätta."
