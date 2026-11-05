@@ -82,7 +82,8 @@
             "grant_info_step.movers_section.movers_age.senior_all"
           ],
           "message": "movers.age_gender_mismatch",
-          "successMessage": "movers.age_gender_match"
+          "successMessage": "movers.age_gender_match",
+          "summaryMessage": "movers.age_gender_mismatch_summary"
         },
         "ui:field": "sumMatchStatus"
       },
@@ -121,11 +122,14 @@
         "ui:enumNames": [
           "sport.dog_agility",
           "sport.aikido",
+          "sport.alpine_skiing",
           "sport.american_football",
           "sport.shooting_sport",
           "sport.biathlon",
           "sport.auto_racing",
-          "sport.baseball_softball",
+          "sport.baseball",
+          "sport.softball",
+          "sport.beach_volleyball",
           "sport.cue_sports",
           "sport.brazilian_jiu_jitsu",
           "sport.bridge",
@@ -134,12 +138,16 @@
           "sport.darts",
           "sport.esports",
           "sport.fitness_and_figure_competition",
+          "sport.freestyle_skiing",
           "sport.disc_golf",
+          "sport.futsal",
           "sport.golf",
-          "sport.skiing",
+          "sport.cross_country_skiing",
+          "sport.historical_fencing",
           "sport.hockey",
           "sport.air_sports",
-          "sport.football_futsal",
+          "sport.football_soccer",
+          "sport.yoga",
           "sport.archery",
           "sport.judo",
           "sport.ice_hockey",
@@ -147,23 +155,34 @@
           "sport.karate",
           "sport.rinkball",
           "sport.bowling",
+          "sport.sledding_sports",
           "sport.kendo_sports",
           "sport.climbing",
           "sport.basketball",
+          "sport.krav_maga",
           "sport.cricket",
           "sport.finnish_skittles",
           "sport.handball",
+          "sport.lacrosse",
           "sport.volleyball",
           "sport.ultimate",
-          "sport.ice_skating",
+          "sport.flag_football",
+          "sport.submission_wrestling",
+          "sport.speed_skating",
           "sport.snowboarding",
-          "sport.paddling_rowing",
-          "sport.fencing_modern_pentathlon",
-          "sport.motorsport",
+          "sport.medieval_combat_sport",
+          "sport.canoeing_and_kayaking",
+          "sport.rowing",
+          "sport.fencing",
+          "sport.motorcycling",
+          "sport.molkky",
+          "sport.ski_jumping",
+          "sport.modern_pentathlon",
           "sport.boxing",
           "sport.padel",
           "sport.wrestling",
           "sport.weightlifting",
+          "sport.paintball",
           "sport.parkour",
           "sport.finnish_baseball",
           "sport.p_tanque",
@@ -175,10 +194,14 @@
           "sport.horse_riding",
           "sport.harness_racing",
           "sport.ringette",
+          "sport.roller_derby",
           "sport.rugby_football",
           "sport.skateboarding",
           "sport.floorball",
+          "sport.sambo",
+          "sport.savate",
           "sport.chess",
+          "sport.circus_arts",
           "sport.squash",
           "sport.underwater_diving",
           "sport.badminton",
@@ -190,16 +213,20 @@
           "sport.thai_boxing",
           "sport.darts_sports",
           "sport.triathlon",
+          "sport.diving",
           "sport.swimming",
+          "sport.underwater_rugby",
           "sport.mushing",
           "sport.mixed_martial_arts",
-          "sport.water_skiing_wakeboarding",
-          "sport.strenght_sports",
+          "sport.waterskiing_and_wakeboarding",
+          "sport.water_polo",
+          "sport.other_strength_sports",
           "sport.powerlifting",
           "sport.gymnastics",
+          "sport.nordic_combined",
           "sport.sport_of_athletics",
-          "sport.other_combat_sport",
-          "sport.other_sport"
+          "sport.other_sport",
+          "sport.other_combat_sport"
         ]
       },
       "sport_details": {
@@ -213,11 +240,14 @@
               "ui:enumNames": [
                 "sport.dog_agility",
                 "sport.aikido",
+                "sport.alpine_skiing",
                 "sport.american_football",
                 "sport.shooting_sport",
                 "sport.biathlon",
                 "sport.auto_racing",
-                "sport.baseball_softball",
+                "sport.baseball",
+                "sport.softball",
+                "sport.beach_volleyball",
                 "sport.cue_sports",
                 "sport.brazilian_jiu_jitsu",
                 "sport.bridge",
@@ -226,12 +256,16 @@
                 "sport.darts",
                 "sport.esports",
                 "sport.fitness_and_figure_competition",
+                "sport.freestyle_skiing",
                 "sport.disc_golf",
+                "sport.futsal",
                 "sport.golf",
-                "sport.skiing",
+                "sport.cross_country_skiing",
+                "sport.historical_fencing",
                 "sport.hockey",
                 "sport.air_sports",
-                "sport.football_futsal",
+                "sport.football_soccer",
+                "sport.yoga",
                 "sport.archery",
                 "sport.judo",
                 "sport.ice_hockey",
@@ -239,23 +273,34 @@
                 "sport.karate",
                 "sport.rinkball",
                 "sport.bowling",
+                "sport.sledding_sports",
                 "sport.kendo_sports",
                 "sport.climbing",
                 "sport.basketball",
+                "sport.krav_maga",
                 "sport.cricket",
                 "sport.finnish_skittles",
                 "sport.handball",
+                "sport.lacrosse",
                 "sport.volleyball",
                 "sport.ultimate",
-                "sport.ice_skating",
+                "sport.flag_football",
+                "sport.submission_wrestling",
+                "sport.speed_skating",
                 "sport.snowboarding",
-                "sport.paddling_rowing",
-                "sport.fencing_modern_pentathlon",
-                "sport.motorsport",
+                "sport.medieval_combat_sport",
+                "sport.canoeing_and_kayaking",
+                "sport.rowing",
+                "sport.fencing",
+                "sport.motorcycling",
+                "sport.molkky",
+                "sport.ski_jumping",
+                "sport.modern_pentathlon",
                 "sport.boxing",
                 "sport.padel",
                 "sport.wrestling",
                 "sport.weightlifting",
+                "sport.paintball",
                 "sport.parkour",
                 "sport.finnish_baseball",
                 "sport.p_tanque",
@@ -267,10 +312,14 @@
                 "sport.horse_riding",
                 "sport.harness_racing",
                 "sport.ringette",
+                "sport.roller_derby",
                 "sport.rugby_football",
                 "sport.skateboarding",
                 "sport.floorball",
+                "sport.sambo",
+                "sport.savate",
                 "sport.chess",
+                "sport.circus_arts",
                 "sport.squash",
                 "sport.underwater_diving",
                 "sport.badminton",
@@ -282,16 +331,20 @@
                 "sport.thai_boxing",
                 "sport.darts_sports",
                 "sport.triathlon",
+                "sport.diving",
                 "sport.swimming",
+                "sport.underwater_rugby",
                 "sport.mushing",
                 "sport.mixed_martial_arts",
-                "sport.water_skiing_wakeboarding",
-                "sport.strenght_sports",
+                "sport.waterskiing_and_wakeboarding",
+                "sport.water_polo",
+                "sport.other_strength_sports",
                 "sport.powerlifting",
                 "sport.gymnastics",
+                "sport.nordic_combined",
                 "sport.sport_of_athletics",
-                "sport.other_combat_sport",
-                "sport.other_sport"
+                "sport.other_sport",
+                "sport.other_combat_sport"
               ]
             },
             "participants": {
@@ -338,19 +391,13 @@
   },
   "premises_step": {
     "premises_section": {
-      "premises_help": {
-        "ui:field": "textParagraph"
-      },
-      "premises_eligibility_help": {
-        "misc:variant": "infobox",
-        "ui:field": "textParagraph"
-      },
       "premises": {
         "ui:options": {
           "addText": "premises.add"
         },
         "items": {
           "ui:order": [
+            "premise_help",
             "premise_address",
             "premise_target",
             "rent_type",
@@ -360,7 +407,16 @@
             "hours_last_year",
             "costs_last_year"
           ],
+          "premise_help": {
+            "ui:field": "textParagraph",
+            "ui:options": {
+              "tooltipLabel": "premise.title",
+              "tooltipButtonLabel": "premise.title",
+              "tooltipText": "premise_help.tooltip"
+            }
+          },
           "premise_address": {
+            "misc:variant": "width-l",
             "ui:options": {
               "tooltipLabel": "premise_address.title",
               "tooltipButtonLabel": "premise_address.title",
@@ -368,6 +424,7 @@
             }
           },
           "premise_target": {
+            "misc:variant": "width-l",
             "ui:options": {
               "tooltipLabel": "premise.title",
               "tooltipButtonLabel": "premise.title",
@@ -390,10 +447,9 @@
             ]
           },
           "rent_market_based": {
-            "ui:widget": "radio",
-            "ui:enumNames": [
-              "boolean.yes"
-            ]
+            "ui:options": {
+              "checkboxLabel": "boolean.yes"
+            }
           },
           "rent_deduction_help": {
             "ui:field": "textParagraph"

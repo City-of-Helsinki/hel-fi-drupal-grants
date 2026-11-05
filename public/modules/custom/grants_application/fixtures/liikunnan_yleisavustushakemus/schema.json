@@ -11,11 +11,14 @@
           "enum": [
             "Agility",
             "Aikido",
+            "Alppihiihto",
             "Amerikkalainen jalkapallo",
             "Ammunta",
             "Ampumahiihto",
             "Autourheilu",
-            "Baseball & softball",
+            "Baseball",
+            "Softball",
+            "Beach volley",
             "Biljardi",
             "Brasilialainen jujutsu",
             "Bridge",
@@ -24,12 +27,16 @@
             "Darts",
             "Elektroninen urheilu",
             "Fitnessurheilu",
+            "Freestyle",
             "Frisbeegolf",
+            "Futsal",
             "Golf",
-            "Hiihtolajit",
+            "Hiihto",
+            "Historiallinen miekkailu",
             "Hockey",
             "Ilmailu",
-            "Jalkapallo & futsal",
+            "Jalkapallo",
+            "Jooga",
             "Jousiammunta",
             "Judo",
             "Jääkiekko",
@@ -37,23 +44,34 @@
             "Karate",
             "Kaukalopallo",
             "Keilaus",
+            "Kelkkailu",
             "Kendolajit",
             "Kiipeily",
             "Koripallo",
+            "Krav Maga",
             "Kriketti",
             "Kyykkä",
             "Käsipallo",
+            "Lacrosse",
             "Lentopallo",
             "Liitokiekko",
-            "Luistelu",
+            "Lippupallo",
+            "Lukkopaini",
+            "Pikaluistelu",
             "Lumilautailu",
-            "Melonta / soutu",
-            "Miekkailu & 5-ottelu",
-            "Moottoriurheilu",
+            "Medieval Combat Sport",
+            "Melonta",
+            "Soutu",
+            "Miekkailu",
+            "Moottoripyöräily",
+            "Mölkky",
+            "Mäkihyppy",
+            "Nykyaikainen 5-ottelu",
             "Nyrkkeily",
             "Padel",
             "Paini",
             "Painonnosto",
+            "Paintball",
             "Parkour",
             "Pesäpallo",
             "Petanque",
@@ -65,10 +83,14 @@
             "Ratsastus",
             "Raviurheilu",
             "Ringette",
+            "Roller derby",
             "Rugby",
             "Rullalautailu",
             "Salibandy",
+            "Sambo",
+            "Savate",
             "Shakki",
+            "Sirkus",
             "Squash",
             "Sukellus",
             "Sulkapallo",
@@ -80,16 +102,20 @@
             "Thainyrkkeily",
             "Tikkaurheilu",
             "Triathlon",
+            "Uimahyppy",
             "Uinti",
+            "Uppopallo",
             "Valjakkourheilu",
             "Vapaaottelu",
-            "Vesihiihto & wakeboard",
-            "Voimalajit",
-            "Voimannosto",
+            "Vesihiihto & Wakeboard",
+            "Vesipallo",
+            "Muut voimalajit",
+            "Voimanosto",
             "Voimistelu",
+            "Yhdistetty",
             "Yleisurheilu",
-            "Muu kamppailulaji",
-            "Muu laji"
+            "Muu laji",
+            "Muu kamppailulaji"
           ]
         },
         "participants": {
@@ -181,6 +207,15 @@
       "type": "object",
       "title": "premise.title",
       "properties": {
+        "premise_help": {
+          "type": "array",
+          "items": [
+            {
+              "title": "premise_help.value",
+              "type": "null"
+            }
+          ]
+        },
         "premise_address": {
           "title": "premise_address.title",
           "type": "string",
@@ -270,6 +305,7 @@
             "properties": {
               "rent_market_based": {
                 "title": "rent_market_based.title",
+                "type": "boolean",
                 "enum": [
                   true
                 ]
@@ -321,6 +357,7 @@
       "properties": {
         "acting_year_section": {
           "title": "acting_year_section.title",
+          "description": "activity_step.description",
           "type": "object",
           "properties": {
             "acting_year": {
@@ -338,6 +375,7 @@
           "properties": {
             "movers_age": {
               "title": "movers_age.title",
+              "description": "movers_age.description",
               "type": "object",
               "properties": {
                 "junior_all": {
@@ -487,11 +525,14 @@
                     "enum": [
                       "Agility",
                       "Aikido",
+                      "Alppihiihto",
                       "Amerikkalainen jalkapallo",
                       "Ammunta",
                       "Ampumahiihto",
                       "Autourheilu",
-                      "Baseball & softball",
+                      "Baseball",
+                      "Softball",
+                      "Beach volley",
                       "Biljardi",
                       "Brasilialainen jujutsu",
                       "Bridge",
@@ -500,12 +541,16 @@
                       "Darts",
                       "Elektroninen urheilu",
                       "Fitnessurheilu",
+                      "Freestyle",
                       "Frisbeegolf",
+                      "Futsal",
                       "Golf",
-                      "Hiihtolajit",
+                      "Hiihto",
+                      "Historiallinen miekkailu",
                       "Hockey",
                       "Ilmailu",
-                      "Jalkapallo & futsal",
+                      "Jalkapallo",
+                      "Jooga",
                       "Jousiammunta",
                       "Judo",
                       "Jääkiekko",
@@ -513,23 +558,34 @@
                       "Karate",
                       "Kaukalopallo",
                       "Keilaus",
+                      "Kelkkailu",
                       "Kendolajit",
                       "Kiipeily",
                       "Koripallo",
+                      "Krav Maga",
                       "Kriketti",
                       "Kyykkä",
                       "Käsipallo",
+                      "Lacrosse",
                       "Lentopallo",
                       "Liitokiekko",
-                      "Luistelu",
+                      "Lippupallo",
+                      "Lukkopaini",
+                      "Pikaluistelu",
                       "Lumilautailu",
-                      "Melonta / soutu",
-                      "Miekkailu & 5-ottelu",
-                      "Moottoriurheilu",
+                      "Medieval Combat Sport",
+                      "Melonta",
+                      "Soutu",
+                      "Miekkailu",
+                      "Moottoripyöräily",
+                      "Mölkky",
+                      "Mäkihyppy",
+                      "Nykyaikainen 5-ottelu",
                       "Nyrkkeily",
                       "Padel",
                       "Paini",
                       "Painonnosto",
+                      "Paintball",
                       "Parkour",
                       "Pesäpallo",
                       "Petanque",
@@ -541,10 +597,14 @@
                       "Ratsastus",
                       "Raviurheilu",
                       "Ringette",
+                      "Roller derby",
                       "Rugby",
                       "Rullalautailu",
                       "Salibandy",
+                      "Sambo",
+                      "Savate",
                       "Shakki",
+                      "Sirkus",
                       "Squash",
                       "Sukellus",
                       "Sulkapallo",
@@ -556,16 +616,20 @@
                       "Thainyrkkeily",
                       "Tikkaurheilu",
                       "Triathlon",
+                      "Uimahyppy",
                       "Uinti",
+                      "Uppopallo",
                       "Valjakkourheilu",
                       "Vapaaottelu",
-                      "Vesihiihto & wakeboard",
-                      "Voimalajit",
-                      "Voimannosto",
+                      "Vesihiihto & Wakeboard",
+                      "Vesipallo",
+                      "Muut voimalajit",
+                      "Voimanosto",
                       "Voimistelu",
+                      "Yhdistetty",
                       "Yleisurheilu",
-                      "Muu kamppailulaji",
-                      "Muu laji"
+                      "Muu laji",
+                      "Muu kamppailulaji"
                     ]
                   }
                 },
@@ -726,29 +790,6 @@
           "description": "premises_section.description",
           "type": "object",
           "properties": {
-            "premises_help": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "premises_help.value",
-                  "type": "null"
-                }
-              ]
-            },
-            "premises_eligibility_help": {
-              "title": "premises_eligibility_help.title",
-              "type": "array",
-              "items": [
-                {
-                  "title": "premises_eligibility_help.value",
-                  "type": "null"
-                },
-                {
-                  "title": "premises_eligibility_help.value_2",
-                  "type": "null"
-                }
-              ]
-            },
             "premises": {
               "title": "premises.title",
               "type": "array",

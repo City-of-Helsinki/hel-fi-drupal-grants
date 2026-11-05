@@ -7,7 +7,7 @@
     },
     "sport.dog_agility": {
       "fi": "Agility",
-      "en": "Dog agility",
+      "en": "Agility",
       "sv": "Agility"
     },
     "sport.aikido": {
@@ -15,15 +15,20 @@
       "en": "Aikido",
       "sv": "Aikido"
     },
+    "sport.alpine_skiing": {
+      "fi": "Alppihiihto",
+      "en": "Alpine Skiing",
+      "sv": "Alpin skidåkning"
+    },
     "sport.american_football": {
       "fi": "Amerikkalainen jalkapallo",
-      "en": "American football",
+      "en": "American Football",
       "sv": "Amerikansk fotboll"
     },
     "sport.shooting_sport": {
       "fi": "Ammunta",
-      "en": "Shooting sport",
-      "sv": "Sportskytte"
+      "en": "Shooting Sports",
+      "sv": "Skyttesport"
     },
     "sport.biathlon": {
       "fi": "Ampumahiihto",
@@ -32,23 +37,33 @@
     },
     "sport.auto_racing": {
       "fi": "Autourheilu",
-      "en": "Auto racing",
+      "en": "Motorsport",
       "sv": "Bilsport"
     },
-    "sport.baseball_softball": {
-      "fi": "Baseball & softball",
-      "en": "Baseball & softball",
-      "sv": "Baseball & softboll"
+    "sport.baseball": {
+      "fi": "Baseball",
+      "en": "Baseball",
+      "sv": "Baseboll"
+    },
+    "sport.softball": {
+      "fi": "Softball",
+      "en": "Softball",
+      "sv": "Softboll"
+    },
+    "sport.beach_volleyball": {
+      "fi": "Beach volley",
+      "en": "Beach Volleyball",
+      "sv": "Beachvolleyboll"
     },
     "sport.cue_sports": {
       "fi": "Biljardi",
-      "en": "Cue sports",
+      "en": "Billiards",
       "sv": "Biljard"
     },
     "sport.brazilian_jiu_jitsu": {
       "fi": "Brasilialainen jujutsu",
-      "en": "Brazilian jiu-jitsu",
-      "sv": "Brasialiansk jiu-jitsu"
+      "en": "Brazilian Jiu-Jitsu",
+      "sv": "Brasiliansk jiu-jitsu"
     },
     "sport.bridge": {
       "fi": "Bridge",
@@ -77,38 +92,58 @@
     },
     "sport.fitness_and_figure_competition": {
       "fi": "Fitnessurheilu",
-      "en": "Fitness and figure competition",
-      "sv": "Fitness"
+      "en": "Fitness Sports",
+      "sv": "Fitnesssport"
+    },
+    "sport.freestyle_skiing": {
+      "fi": "Freestyle",
+      "en": "Freestyle Skiing",
+      "sv": "Freestyle"
     },
     "sport.disc_golf": {
       "fi": "Frisbeegolf",
-      "en": "Disc golf",
-      "sv": "Discgolf"
+      "en": "Disc Golf",
+      "sv": "Frisbeegolf"
+    },
+    "sport.futsal": {
+      "fi": "Futsal",
+      "en": "Futsal",
+      "sv": "Futsal"
     },
     "sport.golf": {
       "fi": "Golf",
       "en": "Golf",
       "sv": "Golf"
     },
-    "sport.skiing": {
-      "fi": "Hiihtolajit",
-      "en": "Skiing",
-      "sv": "Skidsport"
+    "sport.cross_country_skiing": {
+      "fi": "Hiihto",
+      "en": "Cross-Country Skiing",
+      "sv": "Längdskidåkning"
+    },
+    "sport.historical_fencing": {
+      "fi": "Historiallinen miekkailu",
+      "en": "Historical Fencing",
+      "sv": "Historisk fäktning"
     },
     "sport.hockey": {
       "fi": "Hockey",
-      "en": "Hockey",
+      "en": "Field Hockey",
       "sv": "Hockey"
     },
     "sport.air_sports": {
       "fi": "Ilmailu",
-      "en": "Air sports",
+      "en": "Aviation Sports",
       "sv": "Flygsport"
     },
-    "sport.football_futsal": {
-      "fi": "Jalkapallo & futsal",
-      "en": "Football & futsal",
-      "sv": "Fotboll & futsal"
+    "sport.football_soccer": {
+      "fi": "Jalkapallo",
+      "en": "Football (Soccer)",
+      "sv": "Fotboll"
+    },
+    "sport.yoga": {
+      "fi": "Jooga",
+      "en": "Yoga",
+      "sv": "Yoga"
     },
     "sport.archery": {
       "fi": "Jousiammunta",
@@ -122,7 +157,7 @@
     },
     "sport.ice_hockey": {
       "fi": "Jääkiekko",
-      "en": "Ice hockey",
+      "en": "Ice Hockey",
       "sv": "Ishockey"
     },
     "sport.bandy": {
@@ -138,17 +173,22 @@
     "sport.rinkball": {
       "fi": "Kaukalopallo",
       "en": "Rinkball",
-      "sv": "Rinkboll"
+      "sv": "Rinkbandy"
     },
     "sport.bowling": {
       "fi": "Keilaus",
       "en": "Bowling",
       "sv": "Bowling"
     },
+    "sport.sledding_sports": {
+      "fi": "Kelkkailu",
+      "en": "Sledding Sports",
+      "sv": "Kälksport"
+    },
     "sport.kendo_sports": {
       "fi": "Kendolajit",
-      "en": "Kendo sports",
-      "sv": "Kendo sport"
+      "en": "Kendo and Related Disciplines",
+      "sv": "Kendogrener"
     },
     "sport.climbing": {
       "fi": "Kiipeily",
@@ -160,6 +200,11 @@
       "en": "Basketball",
       "sv": "Basketboll"
     },
+    "sport.krav_maga": {
+      "fi": "Krav Maga",
+      "en": "Krav Maga",
+      "sv": "Krav Maga"
+    },
     "sport.cricket": {
       "fi": "Kriketti",
       "en": "Cricket",
@@ -167,13 +212,18 @@
     },
     "sport.finnish_skittles": {
       "fi": "Kyykkä",
-      "en": "Finnish skittles",
-      "sv": "Poppi"
+      "en": "Kyykkä",
+      "sv": "Kyykkä"
     },
     "sport.handball": {
       "fi": "Käsipallo",
       "en": "Handball",
       "sv": "Handboll"
+    },
+    "sport.lacrosse": {
+      "fi": "Lacrosse",
+      "en": "Lacrosse",
+      "sv": "Lacrosse"
     },
     "sport.volleyball": {
       "fi": "Lentopallo",
@@ -182,33 +232,68 @@
     },
     "sport.ultimate": {
       "fi": "Liitokiekko",
-      "en": "Ultimate",
-      "sv": "Ultimate"
+      "en": "Ultimate Frisbee",
+      "sv": "Ultimate frisbee"
     },
-    "sport.ice_skating": {
-      "fi": "Luistelu",
-      "en": "Ice skating",
-      "sv": "Skridskosport"
+    "sport.flag_football": {
+      "fi": "Lippupallo",
+      "en": "Flag Football",
+      "sv": "Flaggfotboll"
+    },
+    "sport.submission_wrestling": {
+      "fi": "Lukkopaini",
+      "en": "Submission Wrestling",
+      "sv": "Submission wrestling"
+    },
+    "sport.speed_skating": {
+      "fi": "Pikaluistelu",
+      "en": "Speed Skating",
+      "sv": "Snabbskridskoåkning"
     },
     "sport.snowboarding": {
       "fi": "Lumilautailu",
       "en": "Snowboarding",
       "sv": "Snowboard"
     },
-    "sport.paddling_rowing": {
-      "fi": "Melonta / soutu",
-      "en": "Paddling & rowing",
-      "sv": "Kanotsport & rodd"
+    "sport.medieval_combat_sport": {
+      "fi": "Medieval Combat Sport",
+      "en": "Medieval Combat Sport",
+      "sv": "Medieval Combat Sport"
     },
-    "sport.fencing_modern_pentathlon": {
-      "fi": "Miekkailu & 5-ottelu",
-      "en": "Fencing & modern pentathlon",
-      "sv": "Fäktsport & modern femkamp"
+    "sport.canoeing_and_kayaking": {
+      "fi": "Melonta",
+      "en": "Canoeing and Kayaking",
+      "sv": "Kanot och kajak"
     },
-    "sport.motorsport": {
-      "fi": "Moottoriurheilu",
-      "en": "Motorsport",
-      "sv": "Motorsport"
+    "sport.rowing": {
+      "fi": "Soutu",
+      "en": "Rowing",
+      "sv": "Rodd"
+    },
+    "sport.fencing": {
+      "fi": "Miekkailu",
+      "en": "Fencing",
+      "sv": "Fäktning"
+    },
+    "sport.motorcycling": {
+      "fi": "Moottoripyöräily",
+      "en": "Motorcycling",
+      "sv": "Motorcykelsport"
+    },
+    "sport.molkky": {
+      "fi": "Mölkky",
+      "en": "Mölkky",
+      "sv": "Mölkky"
+    },
+    "sport.ski_jumping": {
+      "fi": "Mäkihyppy",
+      "en": "Ski Jumping",
+      "sv": "Backhoppning"
+    },
+    "sport.modern_pentathlon": {
+      "fi": "Nykyaikainen 5-ottelu",
+      "en": "Modern Pentathlon",
+      "sv": "Modern femkamp"
     },
     "sport.boxing": {
       "fi": "Nyrkkeily",
@@ -230,6 +315,11 @@
       "en": "Weightlifting",
       "sv": "Tyngdlyftning"
     },
+    "sport.paintball": {
+      "fi": "Paintball",
+      "en": "Paintball",
+      "sv": "Paintball"
+    },
     "sport.parkour": {
       "fi": "Parkour",
       "en": "Parkour",
@@ -237,13 +327,13 @@
     },
     "sport.finnish_baseball": {
       "fi": "Pesäpallo",
-      "en": "Finnish baseball",
+      "en": "Finnish Baseball",
       "sv": "Boboll"
     },
     "sport.p_tanque": {
       "fi": "Petanque",
       "en": "Pétanque",
-      "sv": "Boule"
+      "sv": "Boule/Pétanque"
     },
     "sport.kickboxing": {
       "fi": "Potkunyrkkeily",
@@ -252,8 +342,8 @@
     },
     "sport.sailing_boating": {
       "fi": "Purjehdus & veneily",
-      "en": "Sailing & boating",
-      "sv": "Segling & båtliv"
+      "en": "Sailing and Boating",
+      "sv": "Segling och båtsport"
     },
     "sport.cycling": {
       "fi": "Pyöräily",
@@ -262,22 +352,22 @@
     },
     "sport.table_tennis": {
       "fi": "Pöytätennis",
-      "en": "Table tennis",
+      "en": "Table Tennis",
       "sv": "Bordtennis"
     },
     "sport.miniature_golf": {
       "fi": "Ratagolf",
-      "en": "Miniature golf",
+      "en": "Mini Golf",
       "sv": "Bangolf"
     },
     "sport.horse_riding": {
       "fi": "Ratsastus",
-      "en": "Horse riding",
-      "sv": "Ridning"
+      "en": "Equestrian Sports",
+      "sv": "Ridsport"
     },
     "sport.harness_racing": {
       "fi": "Raviurheilu",
-      "en": "Harness racing",
+      "en": "Harness Racing",
       "sv": "Travsport"
     },
     "sport.ringette": {
@@ -285,25 +375,45 @@
       "en": "Ringette",
       "sv": "Ringette"
     },
+    "sport.roller_derby": {
+      "fi": "Roller derby",
+      "en": "Roller Derby",
+      "sv": "Roller derby"
+    },
     "sport.rugby_football": {
       "fi": "Rugby",
-      "en": "Rugby football",
+      "en": "Rugby",
       "sv": "Rugby"
     },
     "sport.skateboarding": {
       "fi": "Rullalautailu",
       "en": "Skateboarding",
-      "sv": "Skateboardåkning"
+      "sv": "Skateboard"
     },
     "sport.floorball": {
       "fi": "Salibandy",
       "en": "Floorball",
       "sv": "Innebandy"
     },
+    "sport.sambo": {
+      "fi": "Sambo",
+      "en": "Sambo",
+      "sv": "Sambo"
+    },
+    "sport.savate": {
+      "fi": "Savate",
+      "en": "Savate",
+      "sv": "Savate"
+    },
     "sport.chess": {
       "fi": "Shakki",
       "en": "Chess",
       "sv": "Schack"
+    },
+    "sport.circus_arts": {
+      "fi": "Sirkus",
+      "en": "Circus Arts",
+      "sv": "Cirkus"
     },
     "sport.squash": {
       "fi": "Squash",
@@ -312,7 +422,7 @@
     },
     "sport.underwater_diving": {
       "fi": "Sukellus",
-      "en": "Underwater diving",
+      "en": "Diving",
       "sv": "Dykning"
     },
     "sport.badminton": {
@@ -332,13 +442,13 @@
     },
     "sport.figure_skating": {
       "fi": "Taitoluistelu",
-      "en": "Figure skating",
+      "en": "Figure Skating",
       "sv": "Konståkning"
     },
     "sport.dancesport": {
       "fi": "Tanssi",
-      "en": "Dancesport",
-      "sv": "Danssport"
+      "en": "Dance",
+      "sv": "Dans"
     },
     "sport.tennis": {
       "fi": "Tennis",
@@ -347,46 +457,61 @@
     },
     "sport.thai_boxing": {
       "fi": "Thainyrkkeily",
-      "en": "Thai boxing",
+      "en": "Muay Thai",
       "sv": "Thaiboxning"
     },
     "sport.darts_sports": {
       "fi": "Tikkaurheilu",
-      "en": "Darts sports",
-      "sv": "Pilidrott"
+      "en": "Darts Sports",
+      "sv": "Dartsport"
     },
     "sport.triathlon": {
       "fi": "Triathlon",
       "en": "Triathlon",
       "sv": "Triathlon"
     },
+    "sport.diving": {
+      "fi": "Uimahyppy",
+      "en": "Diving",
+      "sv": "Simhopp"
+    },
     "sport.swimming": {
       "fi": "Uinti",
       "en": "Swimming",
       "sv": "Simning"
     },
+    "sport.underwater_rugby": {
+      "fi": "Uppopallo",
+      "en": "Underwater Rugby",
+      "sv": "Undervattensrugby"
+    },
     "sport.mushing": {
       "fi": "Valjakkourheilu",
-      "en": "Mushing",
-      "sv": "Mushing"
+      "en": "Sled Dog Sports",
+      "sv": "Draghundssport"
     },
     "sport.mixed_martial_arts": {
       "fi": "Vapaaottelu",
-      "en": "Mixed martial arts",
-      "sv": "Mixed martial arts"
+      "en": "Mixed Martial Arts (MMA)",
+      "sv": "Mixed Martial Arts (MMA)"
     },
-    "sport.water_skiing_wakeboarding": {
-      "fi": "Vesihiihto & wakeboard",
-      "en": "Water skiing & wakeboarding",
-      "sv": "Vattenskidåkning & wakeboard"
+    "sport.waterskiing_and_wakeboarding": {
+      "fi": "Vesihiihto & Wakeboard",
+      "en": "Waterskiing and Wakeboarding",
+      "sv": "Vattenskidor och wakeboard"
     },
-    "sport.strenght_sports": {
-      "fi": "Voimalajit",
-      "en": "Strenght sports",
-      "sv": "Kraftsport"
+    "sport.water_polo": {
+      "fi": "Vesipallo",
+      "en": "Water Polo",
+      "sv": "Vattenpolo"
+    },
+    "sport.other_strength_sports": {
+      "fi": "Muut voimalajit",
+      "en": "Other Strength Sports",
+      "sv": "Övriga styrkesporter"
     },
     "sport.powerlifting": {
-      "fi": "Voimannosto",
+      "fi": "Voimanosto",
       "en": "Powerlifting",
       "sv": "Styrkelyft"
     },
@@ -395,20 +520,25 @@
       "en": "Gymnastics",
       "sv": "Gymnastik"
     },
+    "sport.nordic_combined": {
+      "fi": "Yhdistetty",
+      "en": "Nordic Combined",
+      "sv": "Nordisk kombination"
+    },
     "sport.sport_of_athletics": {
       "fi": "Yleisurheilu",
-      "en": "Sport of athletics",
+      "en": "Athletics",
       "sv": "Friidrott"
-    },
-    "sport.other_combat_sport": {
-      "fi": "Muu kamppailulaji",
-      "en": "Other combat sport",
-      "sv": "Annan kampsport"
     },
     "sport.other_sport": {
       "fi": "Muu laji",
-      "en": "Other sport",
-      "sv": "Annan sport"
+      "en": "Other Sport",
+      "sv": "Annan idrott"
+    },
+    "sport.other_combat_sport": {
+      "fi": "Muu kamppailulaji",
+      "en": "Other Martial Art",
+      "sv": "Annan kampsport"
     },
     "movers.junior.title": {
       "fi": "Lapset ja nuoret (alle 20-vuotiaat)",
@@ -451,19 +581,19 @@
       "sv": "Vilken idrottsgren?"
     },
     "rent_type.1": {
-      "fi": "1) Tuntiperusteisesti vuokrattava liikuntatila",
-      "en": "1) Rent based on rented hours",
-      "sv": "1) Hyrs per timme"
+      "fi": "Tuntiperusteisesti vuokrattava liikuntatila",
+      "en": "Rent based on rented hours",
+      "sv": "Hyrs per timme"
     },
     "rent_type.2": {
-      "fi": "2) Kiinteä kustannus (esim. kk-vuokra)",
-      "en": "2) Fixed cost (e.g. monthly rent)",
-      "sv": "2) Fast kostnad (t.ex. månadshyra)"
+      "fi": "Kiinteä kustannus (esim. kk-vuokra)",
+      "en": "Fixed cost (e.g. monthly rent)",
+      "sv": "Fast kostnad (t.ex. månadshyra)"
     },
     "rent_type.3": {
-      "fi": "3) Seuran itse omistama liikuntatila",
-      "en": "3) Facility owned by the association itself",
-      "sv": "3) Föreningen själv äger lokalen"
+      "fi": "Seuran itse omistama liikuntatila",
+      "en": "Facility owned by the association itself",
+      "sv": "Föreningen själv äger lokalen"
     },
     "premise.title": {
       "fi": "Liikuntatila",
@@ -551,14 +681,19 @@
       "sv": "Okänt"
     },
     "movers_section.title": {
-      "fi": "Liikkujat ja ohjaajat",
-      "en": "Physically active participants and instructors",
-      "sv": "Motionärer och instruktörer"
+      "fi": "Liikkujien ja ohjaajien määrä",
+      "en": "Number of physically active participants and instructors",
+      "sv": "Antalet motionärer och instruktörer"
     },
     "movers_age.title": {
       "fi": "Liikkujat",
       "en": "Physically active participants",
       "sv": "Motionärer"
+    },
+    "movers_age.description": {
+      "fi": "<p>Liikkujiksi lasketaan yhdistyksen järjestämään ryhmämuotoiseen liikuntatoimintaan vähintään 10 kertaa edellisenä kalenterivuonna osallistuneet helsinkiläiset (lukuun ottamatta toimintaa, jota Helsingin kaupunki tukee muulla tavoin). Ryhmissä on oltava vähintään neljä harrastajaa. Neljän harrastajan vaatimus ei koske soveltavan liikunnan kohderyhmään kuuluvia.</p><p>Soveltavan liikunnan kohderyhmään kuuluvat henkilöt, joiden liikkuminen edellyttää apuvälineitä, erityistä tukea tai erityisjärjestelyjä vamman, sairauden tai muusta syystä johtuvan heikentyneen toimintakyvyn takia. He voivat harrastaa omissa ryhmissään tai yhdessä sellaisten liikkujien kanssa, joilla ei ole edellä mainittuja rajoitteita.</p>",
+      "en": "<p>People being physically active must be Helsinki residents who have taken part in group sports activities organised by the association at least 10 times in the previous calendar year (excluding activities funded by the City of Helsinki in other ways). Groups must have at least four members. The requirement of four members is not applied to adapted physical activity target group.</p><p>Adapted physical activity target groups are defined as people whose physical activity requires assistive devices, special support or special arrangements due to disability, illness or reduced functional capacity due to other reasons. They can exercise in their own groups or with other people who do not have the above-mentioned limitations.</p>",
+      "sv": "<p>Som motionärer räknas de Helsingforsbor som deltagit i föreningens idrottsverksamhet i grupp minst tio gånger under föregående kalenderår (med undantag av verksamhet som Helsingfors stad finansierar på annat sätt). Grupper ska ha minst fyra deltagare. Kravet på fyra deltagare gäller inte för målgruppen för anpassad motion.</p><p>Till målgruppen för anpassad motion hör personer vars deltagande i motionsverksamhet förutsätter hjälpmedel, särskilt stöd eller specialarrangemang på grund av funktionsnedsättning, sjukdom eller av någon annan orsak nedsatt funktionsförmåga. De kan motionera i separata grupper eller tillsammans med motionärer som inte har ovan nämnda begränsningar.</p>"
     },
     "movers_gender.title": {
       "fi": "Liikkujien sukupuolijakauma",
@@ -625,6 +760,11 @@
       "en": "The gender distribution totals {{left}}, but the participants total is {{right}}. Check the numbers in both groups. The difference is {{difference}} participants.",
       "sv": "Könsfördelningen är totalt {{left}}, men motionärerna är totalt {{right}}. Kontrollera siffrorna i båda grupperna. Skillnaden är {{difference}} motionärer."
     },
+    "movers.age_gender_mismatch_summary": {
+      "fi": "Liikkujien sukupuolijakauma: summa {{left}} ei vastaa Liikkujat-yhteensä {{right}}.",
+      "en": "Gender distribution of physically active participants: the total {{left}} does not match the participants total {{right}}.",
+      "sv": "Könsfördelning av motionärer: summan {{left}} motsvarar inte motionärer totalt {{right}}."
+    },
     "movers.age_gender_match": {
       "fi": "Yhteensä-summat täsmäävät.",
       "en": "The totals match.",
@@ -650,25 +790,15 @@
       "en": "<p>Please report here information on facility use in sports facilities within the Helsinki Metropolitan Area (Helsinki, Espoo, Vantaa and Kauniainen) that meets the eligibility criteria for the facility use component.</p><p>In this context, a sports facility refers to a specific facility or reservable unit within a sports venue for which rent is actually paid.</p><p>Similar sports facilities or reservable units within the same venue (such as ice rinks, football fields, tennis courts, badminton courts, swimming lanes, etc.) may be reported together in a single entry. In such cases, the name of the sports facility must indicate how many reservable units are included in the reported information (see the example in the information tooltip).</p><p>The number of facility usage hours must be reported in accordance with the invoicing. The rental cost and number of hours must make it possible to calculate, by division, the hourly rate of an individual reservable unit, even if the entry includes multiple reservable units.</p>",
       "sv": "<p>Ange här uppgifter om lokalanvändning i idrottslokaler inom huvudstadsregionen (Helsingfors, Esbo, Vanda och Grankulla) som uppfyller villkoren för lokalanvändningsdelen.</p><p>Med idrottslokal avses här ett objekt eller en bokningsbar helhet inom en idrottsanläggning för vars användning hyra faktiskt betalas.</p><p>Liknande idrottslokaler eller bokningsbara objekt inom samma anläggning (såsom ishockeyrinkar, fotbollsplaner, tennisbanor, badmintonbanor, simbanor osv.) kan anmälas tillsammans i en och samma post. I sådana fall ska namnet på idrottslokalen ange hur många bokningsbara objekt de rapporterade uppgifterna omfattar (se exempel i informationsikonen).</p><p>Antalet timmar för lokalanvändningen ska anges enligt faktureringen. Hyreskostnaden och timantalet ska vara sådana att timpriset för ett enskilt bokningsbart objekt kan beräknas genom division, även om flera bokningsbara objekt ingår i samma post.</p>"
     },
-    "premises_help.value": {
+    "premise_help.value": {
       "fi": "Ilmoita tilankäytön tunnit ja kustannukset ainoastaan avustettavien kohderyhmien osalta. Lisätietoa infopallukassa.",
       "en": "Please report facility usage hours and costs only for eligible target groups. More information is available in the information tooltip.",
       "sv": "Ange användningstimmar och kostnader för lokalen endast för understödsberättigade målgrupper. Mer information finns i informationsikonen."
     },
-    "premises_eligibility_help.title": {
-      "fi": "Tilankäytön tunnit ja kustannukset voidaan ilmoittaa tässä, kun:",
-      "en": "Facility usage hours and costs may be reported here when:",
-      "sv": "Användningstimmar och kostnader för lokalen kan anges här när:"
-    },
-    "premises_eligibility_help.value": {
-      "fi": "Tilankäyttövuorolle osallistuvista henkilöistä vähintään 50 % kuuluu avustettaviin kohderyhmiin ja näihin kohderyhmiin kuuluvia henkilöitä on vuorolla vähintään (4). Vuoron avustettavuuden kriteerien täyttymistä arvioitaessa voidaan katsoa kokonaisuutta koko kalenterivuoden osalta, jokaista yksittäistä harjoituskertaa ei tarvitse tarkastella erikseen.",
-      "en": "At least 50 % of the participants in the facility usage session belong to eligible target groups, and there are at least four (4) participants from these target groups attending the session. When assessing whether the eligibility criteria for a session are met, the activity may be reviewed as a whole over the entire calendar year; each individual training session does not need to be evaluated separately.",
-      "sv": "Minst 50 % av deltagarna i användningstillfället tillhör understödsberättigade målgrupper och det finns minst fyra (4) personer från dessa målgrupper som deltar i tillfället. Vid bedömningen av om kriterierna för understödsberättigande uppfylls kan verksamheten granskas som en helhet för hela kalenderåret; varje enskilt träningstillfälle behöver inte bedömas separat."
-    },
-    "premises_eligibility_help.value_2": {
-      "fi": "Soveltavaksi liikunnaksi katsotaan toiminta, jossa soveltavan liikunnan kohderyhmään kuuluvia harrastajia on vähintään 50 % ryhmästä. Tällöin ei ole neljän (4) kohderyhmään kuuluvan harrastajan minimirajaa.",
-      "en": "Adapted physical activity is defined as activity in which at least 50% of the participants in the group belong to the target group for adapted physical activity. In such cases, the minimum requirement of four (4) participants from the target group does not apply.",
-      "sv": "Med anpassad motion avses verksamhet där minst 50 % av deltagarna i gruppen tillhör målgruppen för anpassad motion. I sådana fall tillämpas inte minimikravet på fyra (4) deltagare från målgruppen."
+    "premise_help.tooltip": {
+      "fi": "<p>Tilankäytön tunnit ja kustannukset voidaan ilmoittaa tässä, kun:</p><ul><li>Tilankäyttövuorolle osallistuvista henkilöistä vähintään 50 % kuuluu avustettaviin kohderyhmiin ja näihin kohderyhmiin kuuluvia henkilöitä on vuorolla vähintään (4). Vuoron avustettavuuden kriteerien täyttymistä arvioitaessa voidaan katsoa kokonaisuutta koko kalenterivuoden osalta, jokaista yksittäistä harjoituskertaa ei tarvitse tarkastella erikseen.</li><li>Soveltavaksi liikunnaksi katsotaan toiminta, jossa soveltavan liikunnan kohderyhmään kuuluvia harrastajia on vähintään 50 % ryhmästä. Tällöin ei ole neljän (4) kohderyhmään kuuluvan harrastajan minimirajaa.</li></ul>",
+      "en": "<p>Facility usage hours and costs may be reported here when:</p><ul><li>At least 50 % of the participants in the facility usage session belong to eligible target groups, and there are at least four (4) participants from these target groups attending the session. When assessing whether the eligibility criteria for a session are met, the activity may be reviewed as a whole over the entire calendar year; each individual training session does not need to be evaluated separately.</li><li>Adapted physical activity is defined as activity in which at least 50% of the participants in the group belong to the target group for adapted physical activity. In such cases, the minimum requirement of four (4) participants from the target group does not apply.</li></ul>",
+      "sv": "<p>Användningstimmar och kostnader för lokalen kan anges här när:</p><ul><li>Minst 50 % av deltagarna i användningstillfället tillhör understödsberättigade målgrupper och det finns minst fyra (4) personer från dessa målgrupper som deltar i tillfället. Vid bedömningen av om kriterierna för understödsberättigande uppfylls kan verksamheten granskas som en helhet för hela kalenderåret; varje enskilt träningstillfälle behöver inte bedömas separat.</li><li>Med anpassad motion avses verksamhet där minst 50 % av deltagarna i gruppen tillhör målgruppen för anpassad motion. I sådana fall tillämpas inte minimikravet på fyra (4) deltagare från målgruppen.</li></ul>"
     },
     "premises.title": {
       "fi": "Liikuntatilat",
@@ -751,9 +881,9 @@
       "sv": "<p>Minimikriterierna för ansvar och tillgänglighet utgör en del av behörighetskraven för det allmänna understödet. Dessa kriterier ska därför uppfyllas både vid ansökningstillfället och under hela understödsåret för att föreningen ska kunna beviljas allmänt understöd.</p><p>Uppfyllandet av kriterierna för ansvar och tillgänglighet i föreningens verksamhet granskas med jämna mellanrum i samband med redovisningen av användningen av det allmänna understödet.</p>"
     },
     "criteria.hh1.title": {
-      "fi": "HH1 Organisaation kaikilla palkatuilla työntekijöillä on kirjalliset työsopimukset.",
-      "en": "HH1 All employees hired by the organization have written employment contracts.",
-      "sv": "HH1 Alla anställda i organisationen har skriftliga arbetsavtal."
+      "fi": "Organisaation kaikilla palkatuilla työntekijöillä on kirjalliset työsopimukset.",
+      "en": "All employees hired by the organization have written employment contracts.",
+      "sv": "Alla anställda i organisationen har skriftliga arbetsavtal."
     },
     "criteria.hh1.option_3": {
       "fi": "Emme maksa kenellekään palkkaa",
@@ -761,9 +891,9 @@
       "sv": "Vi betalar ingen lön"
     },
     "criteria.hh2.title": {
-      "fi": "HH2 Organisaation kaikilla palkatuilla työntekijöillä on nimetty esihenkilö.",
-      "en": "HH2 All paid employees in the organization have a designated supervisor.",
-      "sv": "HH2 Alla anställda i organisationen har en utsedd chef."
+      "fi": "Organisaation kaikilla palkatuilla työntekijöillä on nimetty esihenkilö.",
+      "en": "All paid employees in the organization have a designated supervisor.",
+      "sv": "Alla anställda i organisationen har en utsedd chef."
     },
     "criteria.hh2.option_3": {
       "fi": "Emme maksa kenellekään palkkaa",
@@ -771,49 +901,49 @@
       "sv": "Vi betalar ingen lön"
     },
     "criteria.hh3.title": {
-      "fi": "HH3 Organisaation ajantasaiset tiedot ovat Patentti- ja rekisterihallituksen Yhdistysrekisterin tietopalvelussa tai Virre-tietopalvelussa.",
-      "en": "HH3 Up-to-date information on the organization can be found in the Finnish Patent and Registration Office’s Information Service of the Finnish Register of Associations or in the Virre information service.",
-      "sv": "HH3 Aktuella uppgifter om organisationen finns i Föreningsregistrets informationstjänst vid Patent- och registerstyrelsen eller i informationstjänsten Virre."
+      "fi": "Organisaation ajantasaiset tiedot ovat Patentti- ja rekisterihallituksen Yhdistysrekisterin tietopalvelussa tai Virre-tietopalvelussa.",
+      "en": "Up-to-date information on the organization can be found in the Finnish Patent and Registration Office’s Information Service of the Finnish Register of Associations or in the Virre information service.",
+      "sv": "Aktuella uppgifter om organisationen finns i Föreningsregistrets informationstjänst vid Patent- och registerstyrelsen eller i informationstjänsten Virre."
     },
     "criteria.hh4.title": {
-      "fi": "HH4 Organisaation toiminta, taloudenhoito, kirjanpito sekä tilin- tai toiminnantarkastus toteutetaan lainmukaisesti.",
-      "en": "HH4 The organization's operations, financial management, accounting and auditing of accounts or activities are carried out in accordance with the law.",
-      "sv": "HH4 Organisationens verksamhet, ekonomi, bokföring och revision av räkenskaperna eller verksamheten sköts lagenligt."
+      "fi": "Organisaation toiminta, taloudenhoito, kirjanpito sekä tilin- tai toiminnantarkastus toteutetaan lainmukaisesti.",
+      "en": "The organization's operations, financial management, accounting and auditing of accounts or activities are carried out in accordance with the law.",
+      "sv": "Organisationens verksamhet, ekonomi, bokföring och revision av räkenskaperna eller verksamheten sköts lagenligt."
     },
     "criteria.hh5.title": {
-      "fi": "HH5 Organisaatio kerää toimintaan osallistuvien tiedot tietosuojalainsäädännön mukaisesti.",
-      "en": "HH5 The organization collects data on participants in accordance with data protection legislation.",
-      "sv": "HH5 Organisationen samlar in uppgifter om deltagarna i verksamheten i enlighet med dataskyddslagstiftningen."
+      "fi": "Organisaatio kerää toimintaan osallistuvien tiedot tietosuojalainsäädännön mukaisesti.",
+      "en": "The organization collects data on participants in accordance with data protection legislation.",
+      "sv": "Organisationen samlar in uppgifter om deltagarna i verksamheten i enlighet med dataskyddslagstiftningen."
     },
     "criteria.hh6.title": {
-      "fi": "HH6 Organisaatio informoi toimintaan osallistuvia, että heidän osallistumistietojaan voidaan luovuttaa kaupungille avustusten käytön valvomiseksi.",
-      "en": "HH6 The organization informs participants that their participation data may be shared with the City to monitor the use of the grants.",
-      "sv": "HH6 Organisationen informerar de som deltar i verksamheten om att deras uppgifter om deltagande kan lämnas ut till staden för att övervaka användningen av understöden."
+      "fi": "Organisaatio informoi toimintaan osallistuvia, että heidän osallistumistietojaan voidaan luovuttaa kaupungille avustusten käytön valvomiseksi.",
+      "en": "The organization informs participants that their participation data may be shared with the City to monitor the use of the grants.",
+      "sv": "Organisationen informerar de som deltar i verksamheten om att deras uppgifter om deltagande kan lämnas ut till staden för att övervaka användningen av understöden."
     },
     "criteria.hh7.title": {
-      "fi": "HH7 Organisaatio ilmoittaa viipymättä Helsingin kaupungin liikuntapalveluille, jos sen toiminnassa ilmenee vakavia mihin tahansa vastuullisuuden ja saavutettavuuden vähimmäiskriteereihin liittyviä laiminlyöntejä tai rikkomuksia.",
-      "en": "HH7 The organization will immediately notify the City of Helsinki Sports Services if serious omissions or violations of any of the minimum criteria for responsibility and accessibility occur in its operations.",
-      "sv": "HH7 Organisationen ska utan dröjsmål underrätta Helsingfors stads idrottstjänster om det i dess verksamhet förekommer allvarliga försummelser eller överträdelser som hänför sig till någon av minimikriterierna för ansvar och tillgänglighet."
+      "fi": "Organisaatio ilmoittaa viipymättä Helsingin kaupungin liikuntapalveluille, jos sen toiminnassa ilmenee vakavia mihin tahansa vastuullisuuden ja saavutettavuuden vähimmäiskriteereihin liittyviä laiminlyöntejä tai rikkomuksia.",
+      "en": "The organization will immediately notify the City of Helsinki Sports Services if serious omissions or violations of any of the minimum criteria for responsibility and accessibility occur in its operations.",
+      "sv": "Organisationen ska utan dröjsmål underrätta Helsingfors stads idrottstjänster om det i dess verksamhet förekommer allvarliga försummelser eller överträdelser som hänför sig till någon av minimikriterierna för ansvar och tillgänglighet."
     },
     "criteria.hh8.title": {
-      "fi": "HH8 Yhdistyksellä on ajantasaiset säännöt.",
-      "en": "HH8 The association has up-to-date statutes.",
-      "sv": "HH8 Föreningen har uppdaterade stadgar."
+      "fi": "Yhdistyksellä on ajantasaiset säännöt.",
+      "en": "The association has up-to-date statutes.",
+      "sv": "Föreningen har uppdaterade stadgar."
     },
     "criteria.hh9.title": {
-      "fi": "HH9 Yhdistys ylläpitää jäsenistään luetteloa, johon merkitään yhdistyslain mukaisesti kunkin jäsenen nimi ja kotipaikka.",
-      "en": "HH9 The association maintains a list of its members, in which the name and domicile of each member is entered in accordance with the Associations Act.",
-      "sv": "HH9 Föreningen upprätthåller en medlemsförteckning med varje medlems namn och hemort enligt föreningslagen."
+      "fi": "Yhdistys ylläpitää jäsenistään luetteloa, johon merkitään yhdistyslain mukaisesti kunkin jäsenen nimi ja kotipaikka.",
+      "en": "The association maintains a list of its members, in which the name and domicile of each member is entered in accordance with the Associations Act.",
+      "sv": "Föreningen upprätthåller en medlemsförteckning med varje medlems namn och hemort enligt föreningslagen."
     },
     "criteria.hh10.title": {
-      "fi": "HH10 Yhdistys järjestää yhdistyksen kokoukset sääntöjensä määrääminä ajankohtina.",
-      "en": "HH10 The association holds its meetings at the times specified in its statutes.",
-      "sv": "HH10 Föreningen håller sina möten vid de tidpunkter som anges i stadgarna."
+      "fi": "Yhdistys järjestää yhdistyksen kokoukset sääntöjensä määrääminä ajankohtina.",
+      "en": "The association holds its meetings at the times specified in its statutes.",
+      "sv": "Föreningen håller sina möten vid de tidpunkter som anges i stadgarna."
     },
     "criteria.tt1.title": {
-      "fi": "TT1 Organisaatio tarkastaa rikosrekisteriotteet kaikilta alle 18-vuotiaiden kanssa toimivilta palkatuilta henkilöiltä sekä kaikilta toiminnassa aloittavilta alle 18-vuotiaiden kanssa toimivilta vapaaehtoisilta.",
-      "en": "TT1 The organization checks the criminal records extracts of all employees working with under-18s and all volunteers starting to work with under-18s.",
-      "sv": "TT1 Organisationen kontrollerar straffregisterutdragen för alla anställda som arbetar med personer under 18 år samt för alla frivilliga som inleder verksamhet med personer under 18 år."
+      "fi": "Organisaatio tarkastaa rikosrekisteriotteet kaikilta alle 18-vuotiaiden kanssa toimivilta palkatuilta henkilöiltä sekä kaikilta toiminnassa aloittavilta alle 18-vuotiaiden kanssa toimivilta vapaaehtoisilta.",
+      "en": "The organization checks the criminal records extracts of all employees working with under-18s and all volunteers starting to work with under-18s.",
+      "sv": "Organisationen kontrollerar straffregisterutdragen för alla anställda som arbetar med personer under 18 år samt för alla frivilliga som inleder verksamhet med personer under 18 år."
     },
     "criteria.tt1.option_3": {
       "fi": "Emme järjestä toimintaa alle 18-vuotiaille",
@@ -821,14 +951,14 @@
       "sv": "Vi organiserar inte aktiviteter för personer under 18 år"
     },
     "criteria.tt2.title": {
-      "fi": "TT2 Organisaation toiminnassa ei sallita rasismia, seksuaalista häirintää, sukupuoleen perustuvaa häirintää tai epäasiallista käyttäytymistä. Näiden linjausten vastaista toimintaa ennaltaehkäistään aktiivisesti, linjausten vastaiseen toimintaan suhtaudutaan aina vakavasti ja ilmenneisiin tapauksiin puututaan viipymättä.",
-      "en": "TT2 The organization does not tolerate racism, sexual harassment, gender-based harassment or inappropriate behavior. Activities in breach of these policies are actively prevented, are always taken seriously and incidents are dealt with without delay.",
-      "sv": "TT2 I organisationens verksamhet tillåts inte rasism, sexuella trakasserier, könsbaserade trakasserier eller osakligt beteende. Verksamhet som strider mot dessa riktlinjer förebyggs aktivt, man förhåller sig alltid på allvar till verksamhet som strider mot riktlinjerna och man ingriper utan dröjsmål i fall som framkommit."
+      "fi": "Organisaation toiminnassa ei sallita rasismia, seksuaalista häirintää, sukupuoleen perustuvaa häirintää tai epäasiallista käyttäytymistä. Näiden linjausten vastaista toimintaa ennaltaehkäistään aktiivisesti, linjausten vastaiseen toimintaan suhtaudutaan aina vakavasti ja ilmenneisiin tapauksiin puututaan viipymättä.",
+      "en": "The organization does not tolerate racism, sexual harassment, gender-based harassment or inappropriate behavior. Activities in breach of these policies are actively prevented, are always taken seriously and incidents are dealt with without delay.",
+      "sv": "I organisationens verksamhet tillåts inte rasism, sexuella trakasserier, könsbaserade trakasserier eller osakligt beteende. Verksamhet som strider mot dessa riktlinjer förebyggs aktivt, man förhåller sig alltid på allvar till verksamhet som strider mot riktlinjerna och man ingriper utan dröjsmål i fall som framkommit."
     },
     "criteria.tt3.title": {
-      "fi": "TT3 Organisaation alle 18-vuotiaille järjestettävässä toiminnassa ei sallita nikotiinituotteiden, alkoholin tai muiden päihteiden käyttöä. Käyttöä ennaltaehkäistään aktiivisesti ja ilmenneisiin tapauksiin puututaan viipymättä.",
-      "en": "TT3 The use of nicotine products, alcohol or other intoxicants is not permitted in the organization's activities for children under 18. The use of these is actively prevented and incidents are dealt with without delay.",
-      "sv": "TT3 I organisationens verksamhet som ordnas för personer under 18 år är det inte tillåtet att använda nikotinprodukter, alkohol eller andra rusmedel. Användningen förebyggs aktivt och man ingriper utan dröjsmål i fall som framkommit."
+      "fi": "Organisaation alle 18-vuotiaille järjestettävässä toiminnassa ei sallita nikotiinituotteiden, alkoholin tai muiden päihteiden käyttöä. Käyttöä ennaltaehkäistään aktiivisesti ja ilmenneisiin tapauksiin puututaan viipymättä.",
+      "en": "The use of nicotine products, alcohol or other intoxicants is not permitted in the organization's activities for children under 18. The use of these is actively prevented and incidents are dealt with without delay.",
+      "sv": "I organisationens verksamhet som ordnas för personer under 18 år är det inte tillåtet att använda nikotinprodukter, alkohol eller andra rusmedel. Användningen förebyggs aktivt och man ingriper utan dröjsmål i fall som framkommit."
     },
     "criteria.tt3.option_3": {
       "fi": "Emme järjestä toimintaa alle 18-vuotiaille",
@@ -836,19 +966,19 @@
       "sv": "Vi organiserar inte aktiviteter för personer under 18 år"
     },
     "criteria.yt1.title": {
-      "fi": "YT1 Toimintarajoitteisen henkilön avustajan osallistuminen organisaation järjestämään toimintaan on maksutonta.",
-      "en": "YT1 The participation of an assistant of a person with a disability in activities organized by the organization is free of charge.",
-      "sv": "YT1 Assistenter till personer med funktionsnedsättning deltar avgiftsfritt i verksamhet som organisationen ordnar."
+      "fi": "Toimintarajoitteisen henkilön avustajan osallistuminen organisaation järjestämään toimintaan on maksutonta.",
+      "en": "The participation of an assistant of a person with a disability in activities organized by the organization is free of charge.",
+      "sv": "Assistenter till personer med funktionsnedsättning deltar avgiftsfritt i verksamhet som organisationen ordnar."
     },
     "criteria.rk1.title": {
-      "fi": "RK1 Organisaation toiminnassa ei sallita dopingin eikä kuntodopingin käyttöä. Mahdollisiin rikkomuksiin puututaan viipymättä.",
-      "en": "RK1 The use of doping or fitness doping is not permitted in the organization's activities. Any breaches will be dealt with without delay.",
-      "sv": "RK1 Det är inte tillåtet att använda dopning eller motionsdopning i föreningens verksamhet. Föreningen ingriper utan dröjsmål i eventuella överträdelser."
+      "fi": "Organisaation toiminnassa ei sallita dopingin eikä kuntodopingin käyttöä. Mahdollisiin rikkomuksiin puututaan viipymättä.",
+      "en": "The use of doping or fitness doping is not permitted in the organization's activities. Any breaches will be dealt with without delay.",
+      "sv": "Det är inte tillåtet att använda dopning eller motionsdopning i föreningens verksamhet. Föreningen ingriper utan dröjsmål i eventuella överträdelser."
     },
     "criteria.rk2.title": {
-      "fi": "RK2 Organisaation toiminnassa ei sallita kilpailumanipulaatiota. Mahdollisiin rikkomuksiin puututaan viipymättä.",
-      "en": "RK2 No manipulation of competition is allowed in the organization's activities. Any breaches will be dealt with without delay.",
-      "sv": "RK2 Tävlingsmanipulation tillåts inte i föreningens verksamhet. Föreningen ingriper utan dröjsmål i eventuella överträdelser."
+      "fi": "Organisaation toiminnassa ei sallita kilpailumanipulaatiota. Mahdollisiin rikkomuksiin puututaan viipymättä.",
+      "en": "No manipulation of competition is allowed in the organization's activities. Any breaches will be dealt with without delay.",
+      "sv": "Tävlingsmanipulation tillåts inte i föreningens verksamhet. Föreningen ingriper utan dröjsmål i eventuella överträdelser."
     },
     "scored_criteria_intro.value": {
       "fi": "<p>Vastuullisuuden ja saavutettavuuden pisteytettävät kriteerit kerryttävät vastuullisuus- ja saavutettavuuslisää, joka kasvattaa yleisavustuksen toimintaosan määrää.</p><p>Valitse alla olevista toimenpiteistä ne, jotka yhdistyksessänne on suoritettu / käytössä hakemuksen lähettämishetkellä ja jotka toteutuvat koko avustusvuoden ajan. Mikäli jokin toimenpide toteutetaan kuluvan vuoden aikana, sen voi ilmoittaa seuraavan vuoden avustushaussa. Jokainen valittu toimenpide / käytäntö tulee olla myöhemmin todennettavissa, esim. merkinnällä yhdistyksen kokouspöytäkirjassa, säännöissä tai muissa dokumenteissa. Toimenpiteet ja erilaiset dokumentit tulee olla todenmukaisia sekä huolella tehtyjä, ja ne voivat olla osana jotain laajempaa dokumenttia (esim. vastuullisuussuunnitelma, yhdenvertaisuusohjelma).</p><p>Avustuksen saajille kohdistetaan avustuksen käyttöön sekä avustushakemuksen yhteydessä ilmoitettujen tietojen oikeellisuuteen liittyviä tarkastuksia, jolloin valitut toimenpiteet ja käytännöt tulee todentaa. Osana avustusvalmistelua, valvontaa ja avustuksen käytön selvittämistä avustuksen hakijan on pyynnöstä toimitettava Helsingin kaupungille kaikki pyydetyt dokumentit ja selvitykset.</p>",
@@ -856,19 +986,19 @@
       "sv": "<p>De poängsatta kriterierna för ansvar och tillgänglighet ger ett tillägg för ansvar och tillgänglighet, vilket ökar verksamhetsdelen av det allmänna understödet.</p><p>Välj bland åtgärderna nedan de som har genomförts eller är i bruk i er förening vid tidpunkten för inlämnandet av ansökan och som kommer att tillämpas under hela understödsåret. Om en åtgärd genomförs under innevarande år kan den anmälas i följande års ansökan om understöd. Varje vald åtgärd eller praxis ska senare kunna verifieras, till exempel genom anteckningar i föreningens mötesprotokoll, stadgar eller andra dokument. Åtgärderna och de tillhörande dokumenten ska vara korrekta och noggrant utarbetade, och de kan utgöra en del av ett mer omfattande dokument (till exempel en plan för ansvarstagande eller ett program för likabehandling).</p><p>Mottagare av understöd kan bli föremål för kontroller som gäller användningen av understödet och riktigheten i de uppgifter som lämnats i ansökan om understöd. I sådana fall ska de valda åtgärderna och praxisarna kunna verifieras. Som en del av beredningen av understödet, tillsynen och redovisningen av understödets användning ska den sökande på begäran lämna alla begärda dokument och utredningar till Helsingfors stad.</p>"
     },
     "criteria.hh11.title": {
-      "fi": "HH11 Yhdistyksen säännöissä on kirjaus, että yhdistyksen toiminnassa ei sallita rasismia, seksuaalista häirintää, sukupuoleen perustuvaa häirintää tai epäasiallista käyttäytymistä.",
-      "en": "HH11 The association's statutes state that racism, sexual harassment, gender-based harassment or inappropriate behaviour are not permitted in the association's activities.",
-      "sv": "HH11 Föreningens stadgar innehåller en anteckning om att rasism, sexuella trakasserier, könsbaserade trakasserier eller osakligt beteende inte är tillåtna i föreningens verksamhet."
+      "fi": "Yhdistyksen säännöissä on kirjaus, että yhdistyksen toiminnassa ei sallita rasismia, seksuaalista häirintää, sukupuoleen perustuvaa häirintää tai epäasiallista käyttäytymistä.",
+      "en": "The association's statutes state that racism, sexual harassment, gender-based harassment or inappropriate behaviour are not permitted in the association's activities.",
+      "sv": "Föreningens stadgar innehåller en anteckning om att rasism, sexuella trakasserier, könsbaserade trakasserier eller osakligt beteende inte är tillåtna i föreningens verksamhet."
     },
     "criteria.hh12.title": {
-      "fi": "HH12 Yhdistyksen säännöissä määritellään rasismiin, seksuaaliseen tai sukupuoleen perustuvaan häirintään ja epäasialliseen käyttäytymiseen liittyvien sääntöjen rikkomiseen liittyviä kurinpitotoimenpiteitä.",
-      "en": "HH12 The association's statutes set out disciplinary measures for breaches of the rules on racism, sexual or gender-based harassment and inappropriate behaviour.",
-      "sv": "HH12 Föreningens stadgar definierar disciplinära åtgärder vid brott mot regler om rasism, sexuella eller könsbaserade trakasserier och osakligt beteende."
+      "fi": "Yhdistyksen säännöissä määritellään rasismiin, seksuaaliseen tai sukupuoleen perustuvaan häirintään ja epäasialliseen käyttäytymiseen liittyvien sääntöjen rikkomiseen liittyviä kurinpitotoimenpiteitä.",
+      "en": "The association's statutes set out disciplinary measures for breaches of the rules on racism, sexual or gender-based harassment and inappropriate behaviour.",
+      "sv": "Föreningens stadgar definierar disciplinära åtgärder vid brott mot regler om rasism, sexuella eller könsbaserade trakasserier och osakligt beteende."
     },
     "criteria.hh13.title": {
-      "fi": "HH13 Yhdistys on järjestänyt vähintään kerran vuodessa kehityskeskustelun jokaisen päävalmentajan ja kokoaikaisen henkilöstön jäsenen kanssa.",
-      "en": "HH13 The association has held a development conversation with each head coach and full-time staff member at least once a year.",
-      "sv": "HH13 Föreningen har ordnat ett utvecklingssamtal med alla huvudtränare och heltidsanställda minst en gång om året."
+      "fi": "Yhdistys on järjestänyt vähintään kerran vuodessa kehityskeskustelun jokaisen päävalmentajan ja kokoaikaisen henkilöstön jäsenen kanssa.",
+      "en": "The association has held a development conversation with each head coach and full-time staff member at least once a year.",
+      "sv": "Föreningen har ordnat ett utvecklingssamtal med alla huvudtränare och heltidsanställda minst en gång om året."
     },
     "criteria.hh13.option_3": {
       "fi": "Meillä ei ole päävalmentajia eikä kokoaikaisia työntekijöitä",
@@ -876,29 +1006,29 @@
       "sv": "Vi har inga huvudtränare eller heltidsanställda"
     },
     "criteria.hh14.title": {
-      "fi": "HH14 Yhdistyksen hallituksen jäsenet ovat suorittaneet Olympiakomitean Seuran hallinnon verkkokurssin tai muun vastaavan yhdistyksen hyvän hallinnon kurssin.",
-      "en": "HH14 The members of the association’s Board of Directors have completed an online course on good association governance offered by the Finnish Olympic Committee (Seuran hallinnon verkkokurssi) or an equivalent course.",
-      "sv": "HH14 Medlemmarna i föreningens styrelse har genomgått Olympiska Kommitténs webbkurs i föreningsförvaltning eller någon annan motsvarande kurs i god föreningsförvaltning."
+      "fi": "Yhdistyksen hallituksen jäsenet ovat suorittaneet Olympiakomitean Seuran hallinnon verkkokurssin tai muun vastaavan yhdistyksen hyvän hallinnon kurssin.",
+      "en": "The members of the association’s Board of Directors have completed an online course on good association governance offered by the Finnish Olympic Committee (Seuran hallinnon verkkokurssi) or an equivalent course.",
+      "sv": "Medlemmarna i föreningens styrelse har genomgått Olympiska Kommitténs webbkurs i föreningsförvaltning eller någon annan motsvarande kurs i god föreningsförvaltning."
     },
     "criteria.hh15.title": {
-      "fi": "HH15 Yhdistyksen hallituksen jäsenten ja myös mahdollisten palkattujen työntekijöiden tehtävät on kuvattu kirjallisesti.",
-      "en": "HH15 The duties of the members of the association’s Board of Directors and also of any paid employees are described in writing.",
-      "sv": "HH15 Uppgifterna för föreningens styrelsemedlemmar och även för eventuella anställda beskrivs skriftligt."
+      "fi": "Yhdistyksen hallituksen jäsenten ja myös mahdollisten palkattujen työntekijöiden tehtävät on kuvattu kirjallisesti.",
+      "en": "The duties of the members of the association’s Board of Directors and also of any paid employees are described in writing.",
+      "sv": "Uppgifterna för föreningens styrelsemedlemmar och även för eventuella anställda beskrivs skriftligt."
     },
     "criteria.hh16.title": {
-      "fi": "HH16 Yhdistyksen hallituksen jäsenet ja mahdolliset palkatut työntekijät on perehdytetty tehtäviinsä.",
-      "en": "HH16 The members of the Board of Directors and any hired employees are familiarised with their duties.",
-      "sv": "HH16 Föreningens styrelsemedlemmar och eventuella anställda har blivit introducerade sina uppgifter."
+      "fi": "Yhdistyksen hallituksen jäsenet ja mahdolliset palkatut työntekijät on perehdytetty tehtäviinsä.",
+      "en": "The members of the Board of Directors and any hired employees are familiarised with their duties.",
+      "sv": "Föreningens styrelsemedlemmar och eventuella anställda har blivit introducerade sina uppgifter."
     },
     "criteria.tt4.title": {
-      "fi": "TT4 Yhdistyksessä on toteutettu nimetön palautekysely harrastajille viimeisen kahden vuoden sisällä. Kyselyssä on selvitetty turvalliseen toimintaympäristöön liittyviä kokemuksia sekä mahdollisia havaintoja kiusaamisesta tai muusta epäasiallisesta toiminnasta yhdistyksen toiminnassa.",
-      "en": "TT4 The association has carried out an anonymous feedback survey on participants within the last two years. This survey reviewed the experiences related to a safe operating environment and potential observations of bullying or other inappropriate behaviour within the association's activities.",
-      "sv": "TT4 Föreningen har genomfört en anonym enkät för hobbyutövare under de senaste två åren. Enkäten utredde erfarenheter i anslutning till en trygg verksamhetsmiljö samt eventuella observationer av mobbning eller annan osaklig verksamhet i föreningens verksamhet."
+      "fi": "Yhdistyksessä on toteutettu nimetön palautekysely harrastajille viimeisen kahden vuoden sisällä. Kyselyssä on selvitetty turvalliseen toimintaympäristöön liittyviä kokemuksia sekä mahdollisia havaintoja kiusaamisesta tai muusta epäasiallisesta toiminnasta yhdistyksen toiminnassa.",
+      "en": "The association has carried out an anonymous feedback survey on participants within the last two years. This survey reviewed the experiences related to a safe operating environment and potential observations of bullying or other inappropriate behaviour within the association's activities.",
+      "sv": "Föreningen har genomfört en anonym enkät för hobbyutövare under de senaste två åren. Enkäten utredde erfarenheter i anslutning till en trygg verksamhetsmiljö samt eventuella observationer av mobbning eller annan osaklig verksamhet i föreningens verksamhet."
     },
     "criteria.tt5.title": {
-      "fi": "TT5 Yhdistyksen palkattu henkilöstö, valmentajat ja ohjaajat ovat käyneet Väestöliiton Et ole yksin -verkkokurssin.",
-      "en": "TT5 The association's paid staff, coaches and instructors have taken the Family Federation of Finland's ‘You are not alone’ online course.",
-      "sv": "TT5 Föreningens avlönade personal, tränare och instruktörer har gått Befolkningsförbundets webbkurs Du är inte ensam."
+      "fi": "Yhdistyksen palkattu henkilöstö, valmentajat ja ohjaajat ovat käyneet Väestöliiton Et ole yksin -verkkokurssin.",
+      "en": "The association's paid staff, coaches and instructors have taken the Family Federation of Finland's ‘You are not alone’ online course.",
+      "sv": "Föreningens avlönade personal, tränare och instruktörer har gått Befolkningsförbundets webbkurs Du är inte ensam."
     },
     "criteria.tt5.option_3": {
       "fi": "Emme maksa kenellekään palkkaa eikä meillä ole valmentajia eikä ohjaajia",
@@ -906,9 +1036,9 @@
       "sv": "Vi betalar ingen lön och vi har inga tränare eller instruktörer"
     },
     "criteria.tt6.title": {
-      "fi": "TT6 Yhdistyksellä on lasten ja nuorten harrastustoimintaa koskeva lasten liikunnan linjaus, joka tukee lapsilähtöistä ja turvallista harrastamista, jossa lapsen oikeudet ja hyvinvointi ovat etusijalla.",
-      "en": "TT6 The association has a children's sports policy on recreational activities for children and young people, which promotes child-centred and safe recreational activities where the rights and wellbeing of the child are paramount.",
-      "sv": "TT6 Föreningen har riktlinjer för barns och ungas hobbyverksamhet, som stöder en barnorienterad och trygg hobby där barnets rättigheter och välbefinnande prioriteras."
+      "fi": "Yhdistyksellä on lasten ja nuorten harrastustoimintaa koskeva lasten liikunnan linjaus, joka tukee lapsilähtöistä ja turvallista harrastamista, jossa lapsen oikeudet ja hyvinvointi ovat etusijalla.",
+      "en": "The association has a children's sports policy on recreational activities for children and young people, which promotes child-centred and safe recreational activities where the rights and wellbeing of the child are paramount.",
+      "sv": "Föreningen har riktlinjer för barns och ungas hobbyverksamhet, som stöder en barnorienterad och trygg hobby där barnets rättigheter och välbefinnande prioriteras."
     },
     "criteria.tt6.option_3": {
       "fi": "Meillä ei ole toimintaa lapsille ja nuorille",
@@ -916,14 +1046,14 @@
       "sv": "Vi har inga aktiviteter för barn och ungdomar"
     },
     "criteria.tt7.title": {
-      "fi": "TT7 Yhdistyksellä on turvallisemman tilan periaatteet.",
-      "en": "TT7 The association has the principles for a safer space.",
-      "sv": "TT7 Föreningen har principerna för ett tryggare rum."
+      "fi": "Yhdistyksellä on turvallisemman tilan periaatteet.",
+      "en": "The association has the principles for a safer space.",
+      "sv": "Föreningen har principerna för ett tryggare rum."
     },
     "criteria.tt8.title": {
-      "fi": "TT8 Yhdistyksen turvallisemman tilan periaatteet ovat näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla ja/tai harjoitustiloissa.",
-      "en": "TT8 The association's principles for a safer space are posted on the association's website, social media channels and/or in the training facilities.",
-      "sv": "TT8 Principerna för ett tryggare rum i föreningen finns på föreningens webbplats, på sociala medier eller i träningslokalerna."
+      "fi": "Yhdistyksen turvallisemman tilan periaatteet ovat näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla ja/tai harjoitustiloissa.",
+      "en": "The association's principles for a safer space are posted on the association's website, social media channels and/or in the training facilities.",
+      "sv": "Principerna för ett tryggare rum i föreningen finns på föreningens webbplats, på sociala medier eller i träningslokalerna."
     },
     "criteria.tt8.option_3": {
       "fi": "Emme ole laatineet turvallisemman tilan periaatteita",
@@ -931,14 +1061,14 @@
       "sv": "Vi har inte utarbetat principer för ett tryggare rum."
     },
     "criteria.tt9.title": {
-      "fi": "TT9 Yhdistyksessä on nimetty häirintäyhdyshenkilö, jolle voi ilmoittaa epäasiallisesta käyttäytymisestä.",
-      "en": "TT9 The association has a designated harassment contact person to whom one can report inappropriate behavior.",
-      "sv": "TT9 Föreningen har utsett en trakasserikontaktperson som kan underrättas om osakligt beteende."
+      "fi": "Yhdistyksessä on nimetty häirintäyhdyshenkilö, jolle voi ilmoittaa epäasiallisesta käyttäytymisestä.",
+      "en": "The association has a designated harassment contact person to whom one can report inappropriate behavior.",
+      "sv": "Föreningen har utsett en trakasserikontaktperson som kan underrättas om osakligt beteende."
     },
     "criteria.tt10.title": {
-      "fi": "TT10 Yhdistyksen häirintäyhdyshenkilön yhteydenottokanavat ovat näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla ja/tai harjoitustiloissa.",
-      "en": "TT10 The contact channels for the association's harassment contact person are visible on the association's website, social media channels and/or in the training facilities.",
-      "sv": "TT10 Kontaktkanalerna till föreningens trakasserikontaktperson finns på föreningens webbplats, på sociala medier eller i träningslokalerna."
+      "fi": "Yhdistyksen häirintäyhdyshenkilön yhteydenottokanavat ovat näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla ja/tai harjoitustiloissa.",
+      "en": "The contact channels for the association's harassment contact person are visible on the association's website, social media channels and/or in the training facilities.",
+      "sv": "Kontaktkanalerna till föreningens trakasserikontaktperson finns på föreningens webbplats, på sociala medier eller i träningslokalerna."
     },
     "criteria.tt10.option_3": {
       "fi": "Emme ole nimenneet häirintäyhdyshenkilöä",
@@ -946,14 +1076,14 @@
       "sv": "Vi har inte utsett någon trakasserikontaktperson."
     },
     "criteria.tt11.title": {
-      "fi": "TT11 Yhdistyksellä on toimintapa ja kirjalliset ohjeet epäasiallisen käytöksen ennaltaehkäisyyn ja siihen puuttumiseen.",
-      "en": "TT11 The association has a policy and written guidelines for preventing and addressing inappropriate behaviour.",
-      "sv": "TT11 Föreningen har ett verksamhetssätt och skriftliga anvisningar för att förebygga och ingripa i osakligt beteende."
+      "fi": "Yhdistyksellä on toimintapa ja kirjalliset ohjeet epäasiallisen käytöksen ennaltaehkäisyyn ja siihen puuttumiseen.",
+      "en": "The association has a policy and written guidelines for preventing and addressing inappropriate behaviour.",
+      "sv": "Föreningen har ett verksamhetssätt och skriftliga anvisningar för att förebygga och ingripa i osakligt beteende."
     },
     "criteria.tt12.title": {
-      "fi": "TT12 Yhdistyksen epäasiallisen käytöksen ennaltaehkäisyn ohjeet ovat nähtävillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla tai harjoitustiloissa.",
-      "en": "TT12 The association's guidelines for the prevention of inappropriate behavior are available on the association's website, social media channels or in the training facilities.",
-      "sv": "TT12 Anvisningarna för förebyggande av osakligt beteende finns på föreningens webbplats, på sociala medier eller i träningslokalerna."
+      "fi": "Yhdistyksen epäasiallisen käytöksen ennaltaehkäisyn ohjeet ovat nähtävillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla tai harjoitustiloissa.",
+      "en": "The association's guidelines for the prevention of inappropriate behavior are available on the association's website, social media channels or in the training facilities.",
+      "sv": "Anvisningarna för förebyggande av osakligt beteende finns på föreningens webbplats, på sociala medier eller i träningslokalerna."
     },
     "criteria.tt12.option_3": {
       "fi": "Emme ole tehneet epäasiallisen käytöksen ennaltaehkäisyn ja siihen puuttumisen ohjetta",
@@ -961,9 +1091,9 @@
       "sv": "Vi har inte utarbetat anvisningar för att förebygga osakligt beteende och för att ingripa i sådant beteende."
     },
     "criteria.tt13.title": {
-      "fi": "TT13 Yhdistyksellä on kirjalliset pelisäännöt alle 20-vuotiaiden harrastajien huoltajille.",
-      "en": "TT13 The association has written rules for the guardians of participants under the age of 20.",
-      "sv": "TT13 Föreningen har skriftliga spelregler för vårdnadshavare till hobbyutövare under 20 år."
+      "fi": "Yhdistyksellä on kirjalliset pelisäännöt alle 20-vuotiaiden harrastajien huoltajille.",
+      "en": "The association has written rules for the guardians of participants under the age of 20.",
+      "sv": "Föreningen har skriftliga spelregler för vårdnadshavare till hobbyutövare under 20 år."
     },
     "criteria.tt13.option_3": {
       "fi": "Meillä ei ole toimintaa alle 20-vuotiaille",
@@ -971,9 +1101,9 @@
       "sv": "Vi har inga aktiviteter för personer under 20 år"
     },
     "criteria.tt14.title": {
-      "fi": "TT14 Yhdistyksen alle 20-vuotiaiden harrastajien ryhmillä on ryhmän yhteisesti määrittelemät kirjalliset pelisäännöt.",
-      "en": "TT14 The association's groups for 4 participants under the age of 20 have written sets of rules, which were drafted by the groups.",
-      "sv": "TT14 Föreningens grupper med hobbyutövare under 20 år har skriftliga spelregler som gruppen fastställer gemensamt."
+      "fi": "Yhdistyksen alle 20-vuotiaiden harrastajien ryhmillä on ryhmän yhteisesti määrittelemät kirjalliset pelisäännöt.",
+      "en": "The association's groups for 4 participants under the age of 20 have written sets of rules, which were drafted by the groups.",
+      "sv": "Föreningens grupper med hobbyutövare under 20 år har skriftliga spelregler som gruppen fastställer gemensamt."
     },
     "criteria.tt14.option_3": {
       "fi": "Meillä ei ole ryhmiä alle 20-vuotiaille",
@@ -981,69 +1111,69 @@
       "sv": "Vi har inga grupper för personer under 20 år"
     },
     "criteria.tt15.title": {
-      "fi": "TT15 Yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla on linkki Et ole yksin -palveluun.",
-      "en": "TT15 The association's website or social media channels have a link to the ‘You are not alone’ service.",
-      "sv": "TT15 På föreningens webbplats eller sociala mediekanaler finns en länk till tjänsten Du är inte ensam."
+      "fi": "Yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla on linkki Et ole yksin -palveluun.",
+      "en": "The association's website or social media channels have a link to the ‘You are not alone’ service.",
+      "sv": "På föreningens webbplats eller sociala mediekanaler finns en länk till tjänsten Du är inte ensam."
     },
     "criteria.yt2.title": {
-      "fi": "YT2 Yhdistys tarjoaa alennettuja harrastusmaksuja tai avustuksia niille, joille kustannukset ovat este harrastamiselle.",
-      "en": "YT2 The association offers reduced participation fees or subsidies for people to whom the cost of activities is a barrier to participation.",
-      "sv": "YT2 Föreningen erbjuder lägre hobbyavgifter eller ekonomiskt stöd till dem för vilka kostnaderna utgör ett hinder för att delta i hobbyverksamheten."
+      "fi": "Yhdistys tarjoaa alennettuja harrastusmaksuja tai avustuksia niille, joille kustannukset ovat este harrastamiselle.",
+      "en": "The association offers reduced participation fees or subsidies for people to whom the cost of activities is a barrier to participation.",
+      "sv": "Föreningen erbjuder lägre hobbyavgifter eller ekonomiskt stöd till dem för vilka kostnaderna utgör ett hinder för att delta i hobbyverksamheten."
     },
     "criteria.yt3.title": {
-      "fi": "YT3 Yhdistys järjestää mahdollisen kilpailullisen toiminnan lisäksi ei-kilpailullista harrastustoimintaa, jolla tarkoitetaan helposti saavutettavaa, kohtuullisen hintaista toimintaa, joka ei vaadi aikaisempaa kokemusta, pitkäaikaista sitoutumista, korkeaa osaamistasoa tai omia erityisvarusteita.",
-      "en": "YT3 In addition to any possible competitive activities, the association organizes non-competitive recreational activities, which are easily accessible and reasonably priced and do not require previous experience, long-term commitment, a high level of skill or any special equipment from the participants.",
-      "sv": "YT3 Utöver en eventuell tävlingsinriktad verksamhet ordnar föreningen också icke-tävlingsinriktad hobbyverksamhet som avser verksamhet till ett skäligt pris, som är lättillgänglig och som inte kräver tidigare erfarenhet, långvarigt engagemang, hög nivå av kunnighet eller egen specialutrustning."
+      "fi": "Yhdistys järjestää mahdollisen kilpailullisen toiminnan lisäksi ei-kilpailullista harrastustoimintaa, jolla tarkoitetaan helposti saavutettavaa, kohtuullisen hintaista toimintaa, joka ei vaadi aikaisempaa kokemusta, pitkäaikaista sitoutumista, korkeaa osaamistasoa tai omia erityisvarusteita.",
+      "en": "In addition to any possible competitive activities, the association organizes non-competitive recreational activities, which are easily accessible and reasonably priced and do not require previous experience, long-term commitment, a high level of skill or any special equipment from the participants.",
+      "sv": "Utöver en eventuell tävlingsinriktad verksamhet ordnar föreningen också icke-tävlingsinriktad hobbyverksamhet som avser verksamhet till ett skäligt pris, som är lättillgänglig och som inte kräver tidigare erfarenhet, långvarigt engagemang, hög nivå av kunnighet eller egen specialutrustning."
     },
     "criteria.yt4.title": {
-      "fi": "YT4 Yhdistyksellä on säännöllisesti harjoitteleva soveltavan liikunnan ryhmä.",
-      "en": "YT4 The association has a regular training group for adapted physical activity.",
-      "sv": "YT4 Föreningen har en regelbunden träningsgrupp för anpassad motion."
+      "fi": "Yhdistyksellä on säännöllisesti harjoitteleva soveltavan liikunnan ryhmä.",
+      "en": "The association has a regular training group for adapted physical activity.",
+      "sv": "Föreningen har en regelbunden träningsgrupp för anpassad motion."
     },
     "criteria.yt5.title": {
-      "fi": "YT5 Yhdistys viestii harjoituspaikkojensa esteettömyyteen ja saavutettavuuteen liittyvistä asioista verkkosivuillaan tai sosiaalisen median kanavillaan. Esim. portaat, pintamateriaalit, pysäköintimahdollisuudet, sukupuolitetut ja sukupuolineutraalit wc- ja peseytymistilat.",
-      "en": "YT5 The association communicates on the matters of accessibility related to its training facilities on its website or social media channels. For example, stairs, surface materials, parking options, gender-segregated and gender-neutral toilets and shower facilities.",
-      "sv": "YT5 Föreningen kommunicerar om tillgängligheten av sina träningsplatser på sin webbplats eller sociala mediekanaler. Till exempel trappor, ytmaterial, parkeringsmöjligheter, könsindelade och könsneutrala toaletter och duschrum."
+      "fi": "Yhdistys viestii harjoituspaikkojensa esteettömyyteen ja saavutettavuuteen liittyvistä asioista verkkosivuillaan tai sosiaalisen median kanavillaan. Esim. portaat, pintamateriaalit, pysäköintimahdollisuudet, sukupuolitetut ja sukupuolineutraalit wc- ja peseytymistilat.",
+      "en": "The association communicates on the matters of accessibility related to its training facilities on its website or social media channels. For example, stairs, surface materials, parking options, gender-segregated and gender-neutral toilets and shower facilities.",
+      "sv": "Föreningen kommunicerar om tillgängligheten av sina träningsplatser på sin webbplats eller sociala mediekanaler. Till exempel trappor, ytmaterial, parkeringsmöjligheter, könsindelade och könsneutrala toaletter och duschrum."
     },
     "criteria.yt6.title": {
-      "fi": "YT6 Yhdistyksen hallituksen jäsenet ja mahdolliset palkatut työntekijät ovat käyneet Ihmisoikeusliiton Ihmisoikeudet urheilussa -verkkokoulutuksen.",
-      "en": "YT6 The association's paid staff and board members have completed the Ihmisoikeudet urheilussa online training course on human rights in sports by the Finnish League for Human Rights.",
-      "sv": "YT6 Föreningens styrelsemedlemmar och eventuella anställda har genomgått Förbundet för mänskliga rättigheters webbutbildning Mänskliga rättigheter i idrott."
+      "fi": "Yhdistyksen hallituksen jäsenet ja mahdolliset palkatut työntekijät ovat käyneet Ihmisoikeusliiton Ihmisoikeudet urheilussa -verkkokoulutuksen.",
+      "en": "The association's paid staff and board members have completed the Ihmisoikeudet urheilussa online training course on human rights in sports by the Finnish League for Human Rights.",
+      "sv": "Föreningens styrelsemedlemmar och eventuella anställda har genomgått Förbundet för mänskliga rättigheters webbutbildning Mänskliga rättigheter i idrott."
     },
     "criteria.yt7.title": {
-      "fi": "YT7 Yhdistyksellä on kirjallinen suunnitelma sukupuolivähemmistöön kuuluvien henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä sukupuolivähemmistöön kuuluvilla voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
-      "en": "YT7 The association has a written plan for reaching out to people from gender minorities. The plan includes information on the barriers to participation that people from gender minorities may face and how to develop the activities to facilitate their participation in the association's activities.",
-      "sv": "YT7 Föreningen har en skriftlig plan för att nå personer som tillhör en könsminoritet. Planen innehåller information om hurdana hinder för deltagande som kan finnas för personer som tillhör en könsminoritet och hur verksamheten utvecklas så att de kan delta i föreningens verksamhet bättre."
+      "fi": "Yhdistyksellä on kirjallinen suunnitelma sukupuolivähemmistöön kuuluvien henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä sukupuolivähemmistöön kuuluvilla voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
+      "en": "The association has a written plan for reaching out to people from gender minorities. The plan includes information on the barriers to participation that people from gender minorities may face and how to develop the activities to facilitate their participation in the association's activities.",
+      "sv": "Föreningen har en skriftlig plan för att nå personer som tillhör en könsminoritet. Planen innehåller information om hurdana hinder för deltagande som kan finnas för personer som tillhör en könsminoritet och hur verksamheten utvecklas så att de kan delta i föreningens verksamhet bättre."
     },
     "criteria.yt8.title": {
-      "fi": "YT8 Yhdistyksellä on kirjallinen suunnitelma ulkomaalaistaustaisten henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä ulkomaalaistaustaisilla henkilöillä voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
-      "en": "YT8 The association has a written plan for reaching out to people from foreign backgrounds. The plan includes information on the barriers to participation that people from foreign backgrounds may face and how to develop the activities to better allow them to participate in the association's activities.",
-      "sv": "YT8 Föreningen har en skriftlig plan för att nå personer med utländsk bakgrund. Planen innehåller information om hurdana hinder för deltagande som kan finnas för personer med utländsk bakgrund och hur verksamheten utvecklas så att de kan delta i föreningens verksamhet bättre."
+      "fi": "Yhdistyksellä on kirjallinen suunnitelma ulkomaalaistaustaisten henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä ulkomaalaistaustaisilla henkilöillä voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
+      "en": "The association has a written plan for reaching out to people from foreign backgrounds. The plan includes information on the barriers to participation that people from foreign backgrounds may face and how to develop the activities to better allow them to participate in the association's activities.",
+      "sv": "Föreningen har en skriftlig plan för att nå personer med utländsk bakgrund. Planen innehåller information om hurdana hinder för deltagande som kan finnas för personer med utländsk bakgrund och hur verksamheten utvecklas så att de kan delta i föreningens verksamhet bättre."
     },
     "criteria.yt9.title": {
-      "fi": "YT9 Yhdistyksellä on kirjallinen suunnitelma toimintarajoitteisten henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä toimintarajoitteisilla henkilöillä voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
-      "en": "YT9 The association has a written plan for reaching people with functional difficulties. The plan includes information on what barriers to participation people with functional difficulties may have and how to develop activities to better allow them to participate in the association's activities.",
-      "sv": "YT9 Föreningen har en skriftlig plan för att nå personer med funktionsnedsättning. Planen innehåller information om hurdana hinder för deltagande som kan finnas för personer med funktionsnedsättning och hur verksamheten utvecklas så att de kan delta i föreningens verksamhet bättre."
+      "fi": "Yhdistyksellä on kirjallinen suunnitelma toimintarajoitteisten henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä toimintarajoitteisilla henkilöillä voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
+      "en": "The association has a written plan for reaching people with functional difficulties. The plan includes information on what barriers to participation people with functional difficulties may have and how to develop activities to better allow them to participate in the association's activities.",
+      "sv": "Föreningen har en skriftlig plan för att nå personer med funktionsnedsättning. Planen innehåller information om hurdana hinder för deltagande som kan finnas för personer med funktionsnedsättning och hur verksamheten utvecklas så att de kan delta i föreningens verksamhet bättre."
     },
     "criteria.yt10.title": {
-      "fi": "YT10 Yhdistyksen hallituksen jäsenistä enintään 2/3 on yhden sukupuolen edustajia.",
-      "en": "YT10 No more than two thirds of the members of the association’s board of directors represent one gender.",
-      "sv": "YT10 Högst 2/3 av medlemmarna i föreningens styrelse är av samma kön."
+      "fi": "Yhdistyksen hallituksen jäsenistä enintään 2/3 on yhden sukupuolen edustajia.",
+      "en": "No more than two thirds of the members of the association’s board of directors represent one gender.",
+      "sv": "Högst 2/3 av medlemmarna i föreningens styrelse är av samma kön."
     },
     "criteria.yt11.title": {
-      "fi": "YT11 Yhdistyksen liikuntatoimintaan voi osallistua, ilmoittautua ja maksaa laskut myös muilla kielillä kuin suomeksi tai ruotsiksi.",
-      "en": "YT11 One can also participate in the association's sports activities, register and pay invoices in languages other than Finnish or Swedish.",
-      "sv": "YT11 Man kan delta i föreningens idrottsverksamhet, anmäla sig och betala fakturor även på andra språk än finska eller svenska."
+      "fi": "Yhdistyksen liikuntatoimintaan voi osallistua, ilmoittautua ja maksaa laskut myös muilla kielillä kuin suomeksi tai ruotsiksi.",
+      "en": "One can also participate in the association's sports activities, register and pay invoices in languages other than Finnish or Swedish.",
+      "sv": "Man kan delta i föreningens idrottsverksamhet, anmäla sig och betala fakturor även på andra språk än finska eller svenska."
     },
     "criteria.yt12.title": {
-      "fi": "YT12 Tieto monikielisistä osallistumismahdollisuuksista on avoimesti esillä yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla.",
-      "en": "YT12 Information about multilingual participation opportunities is openly displayed on the association's website or social media channels.",
-      "sv": "YT12 Information om möjligheterna att delta på flera språk finns öppet synligt på föreningens webbplats eller sociala medier."
+      "fi": "Tieto monikielisistä osallistumismahdollisuuksista on avoimesti esillä yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla.",
+      "en": "Information about multilingual participation opportunities is openly displayed on the association's website or social media channels.",
+      "sv": "Information om möjligheterna att delta på flera språk finns öppet synligt på föreningens webbplats eller sociala medier."
     },
     "criteria.yt13.title": {
-      "fi": "YT13 Jos yhdistys tarjoaa esimerkiksi alennettuja harrastusmaksuja, avustuksia tai vapaaoppilaspaikkoja jäsenistönsä yhdenvertaisuuden edistämiseksi, tieto näistä tukimuodoista on avoimesti näkyvillä yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla.",
-      "en": "YT13 If an association offers e.g. reduced fees, subsidies or free places to promote equality among its members, information about these forms of support is openly displayed on the association's website or social media channels.",
-      "sv": "YT13 Om föreningen erbjuder till exempel lägre hobbyavgifter, ekonomiskt stöd eller avgiftsfria platser för att främja likabehandlingen av sina medlemmar, finns informationen om dessa stödformer öppet tillgänglig på föreningens webbplats eller sociala medier."
+      "fi": "Jos yhdistys tarjoaa esimerkiksi alennettuja harrastusmaksuja, avustuksia tai vapaaoppilaspaikkoja jäsenistönsä yhdenvertaisuuden edistämiseksi, tieto näistä tukimuodoista on avoimesti näkyvillä yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla.",
+      "en": "If an association offers e.g. reduced fees, subsidies or free places to promote equality among its members, information about these forms of support is openly displayed on the association's website or social media channels.",
+      "sv": "Om föreningen erbjuder till exempel lägre hobbyavgifter, ekonomiskt stöd eller avgiftsfria platser för att främja likabehandlingen av sina medlemmar, finns informationen om dessa stödformer öppet tillgänglig på föreningens webbplats eller sociala medier."
     },
     "criteria.yt13.option_3": {
       "fi": "Emme tarjoa alennettuja harrastusmaksuja tai vastaavia",
@@ -1051,19 +1181,19 @@
       "sv": "Vi erbjuder inte lägre hobbyavgifter eller liknande"
     },
     "criteria.yt14.title": {
-      "fi": "YT14 Yhdistys viestii monimuotoisuuden tavoitteestaan (toimintaan tavoitellaan sukupuoleltaan, iältään, etniseltä taustaltaan, vammaltaan tai seksuaaliselta suuntautumiseltaan erilaisia henkilöitä) avoimesti verkkosivuillaan tai sosiaalisen median kanavallaan.",
-      "en": "YT14 The association communicates its diversity objective (to reach people of different gender, age, ethnicity, disability or sexual orientation and encourage them to participate in the activities) openly on its website or social media channels.",
-      "sv": "YT14 Föreningen informerar öppet om sina mål för mångfalden (man eftersträvar personer av olika kön, ålder, etnisk bakgrund, funktionsnedsättningar eller sexuella läggningar) på sin webbplats eller sina sociala mediekanaler."
+      "fi": "Yhdistys viestii monimuotoisuuden tavoitteestaan (toimintaan tavoitellaan sukupuoleltaan, iältään, etniseltä taustaltaan, vammaltaan tai seksuaaliselta suuntautumiseltaan erilaisia henkilöitä) avoimesti verkkosivuillaan tai sosiaalisen median kanavallaan.",
+      "en": "The association communicates its diversity objective (to reach people of different gender, age, ethnicity, disability or sexual orientation and encourage them to participate in the activities) openly on its website or social media channels.",
+      "sv": "Föreningen informerar öppet om sina mål för mångfalden (man eftersträvar personer av olika kön, ålder, etnisk bakgrund, funktionsnedsättningar eller sexuella läggningar) på sin webbplats eller sina sociala mediekanaler."
     },
     "criteria.yt15.title": {
-      "fi": "YT15 Saattajan tai kaverin ottaminen tarvittaessa mukaan harrastukseen maksutta on sallittua vähintään kaksi kertaa vuoden aikana.",
-      "en": "YT15 Bringing a friend or a companion to the activity when necessary is possible free of charge at least twice a year.",
-      "sv": "YT15 Det är tillåtet att vid behov ta med en ledsagare eller kompis till hobbyn avgiftsfritt minst två gånger under året."
+      "fi": "Saattajan tai kaverin ottaminen tarvittaessa mukaan harrastukseen maksutta on sallittua vähintään kaksi kertaa vuoden aikana.",
+      "en": "Bringing a friend or a companion to the activity when necessary is possible free of charge at least twice a year.",
+      "sv": "Det är tillåtet att vid behov ta med en ledsagare eller kompis till hobbyn avgiftsfritt minst två gånger under året."
     },
     "criteria.yt16.title": {
-      "fi": "YT16 Yhdistys hyödyntää Suomen Olympiakomitean Sporttihakua järjestämänsä soveltavan liikunnan markkinointiin.",
-      "en": "YT16 The association uses the Finnish Olympic Committee's Sporttihaku search service to market the adapted physical activity it organises.",
-      "sv": "YT16 Föreningen utnyttjar Finlands Olympiska Kommittés Sporttihaku (söktjänst för idrott) för marknadsföring av anpassad motion."
+      "fi": "Yhdistys hyödyntää Suomen Olympiakomitean Sporttihakua järjestämänsä soveltavan liikunnan markkinointiin.",
+      "en": "The association uses the Finnish Olympic Committee's Sporttihaku search service to market the adapted physical activity it organises.",
+      "sv": "Föreningen utnyttjar Finlands Olympiska Kommittés Sporttihaku (söktjänst för idrott) för marknadsföring av anpassad motion."
     },
     "criteria.yt16.option_3": {
       "fi": "Emme järjestä soveltavaa liikuntaa",
@@ -1071,14 +1201,14 @@
       "sv": "Vi organiserar inte anpassad motion"
     },
     "criteria.yi1.title": {
-      "fi": "YI1 Yhdistyksellä on kirjallisesti määritellyt toimenpiteet kävelyn ja pyöräilyn edistämiseksi harjoitusmatkoilla.",
-      "en": "YI1 The association has written measures to promote walking and cycling when travelling to and from practice.",
-      "sv": "YI1 Föreningen har skriftligt fastställt åtgärder för att främja gång och cykling under träningsresor."
+      "fi": "Yhdistyksellä on kirjallisesti määritellyt toimenpiteet kävelyn ja pyöräilyn edistämiseksi harjoitusmatkoilla.",
+      "en": "The association has written measures to promote walking and cycling when travelling to and from practice.",
+      "sv": "Föreningen har skriftligt fastställt åtgärder för att främja gång och cykling under träningsresor."
     },
     "criteria.yi2.title": {
-      "fi": "YI2 Yhdistyksellä on kirjallisesti määritellyt toimenpiteet, miten joukkoliikenteen ja yhteiskuljetusten hyödyntämistä lisätään harjoitus-, leiri- ja kilpailumatkoilla.",
-      "en": "YI2 The association has written measures to increase the use of public transport and shared transport to and from training, camps and competitions.",
-      "sv": "YI2 Föreningen har skriftligt fastställt åtgärder för att öka utnyttjandet av kollektivtrafik och samtransporter under tränings-, läger- och tävlingsresor."
+      "fi": "Yhdistyksellä on kirjallisesti määritellyt toimenpiteet, miten joukkoliikenteen ja yhteiskuljetusten hyödyntämistä lisätään harjoitus-, leiri- ja kilpailumatkoilla.",
+      "en": "The association has written measures to increase the use of public transport and shared transport to and from training, camps and competitions.",
+      "sv": "Föreningen har skriftligt fastställt åtgärder för att öka utnyttjandet av kollektivtrafik och samtransporter under tränings-, läger- och tävlingsresor."
     },
     "criteria.yi2.option_3": {
       "fi": "Meillä ei ole harjoitus-, leiri- eikä kilpailumatkoja",
@@ -1086,9 +1216,9 @@
       "sv": "Vi har inga tränings-, läger- och tävlingsresor"
     },
     "criteria.yi3.title": {
-      "fi": "YI3 Yhdistyksen järjestämässä toiminnassa ei ole viimeksi kuluneen vuoden aikana lennetty tapahtuma-, leiri- tai kilpailumatkoille Suomen sisällä.",
-      "en": "YI3 The association has not flown to events, camps or competitions within Finland during the past year.",
-      "sv": "YI3 Inom den verksamhet som föreningen ordnar har man inte under det senaste året flugit till evenemang, läger eller tävlingar i Finland."
+      "fi": "Yhdistyksen järjestämässä toiminnassa ei ole viimeksi kuluneen vuoden aikana lennetty tapahtuma-, leiri- tai kilpailumatkoille Suomen sisällä.",
+      "en": "The association has not flown to events, camps or competitions within Finland during the past year.",
+      "sv": "Inom den verksamhet som föreningen ordnar har man inte under det senaste året flugit till evenemang, läger eller tävlingar i Finland."
     },
     "criteria.yi3.option_3": {
       "fi": "Meillä ei ollut tapahtuma-, leiri- eikä kilpailumatkoja Suomen sisällä viime vuonna",
@@ -1096,9 +1226,9 @@
       "sv": "Vi hade inga evenemangs-, läger- och tävlingsresor under det senaste året"
     },
     "criteria.yi4.title": {
-      "fi": "YI4 Yhdistyksellä on kirjallinen suunnitelma tai ohjeet jätteiden lajittelemisesta tapahtumissa.",
-      "en": "YI4 The association has a written plan or instructions for sorting waste at events.",
-      "sv": "YI4 Föreningen har en skriftlig plan eller anvisningar för sortering av avfall vid evenemang."
+      "fi": "Yhdistyksellä on kirjallinen suunnitelma tai ohjeet jätteiden lajittelemisesta tapahtumissa.",
+      "en": "The association has a written plan or instructions for sorting waste at events.",
+      "sv": "Föreningen har en skriftlig plan eller anvisningar för sortering av avfall vid evenemang."
     },
     "criteria.yi4.option_3": {
       "fi": "Emme järjestä tapahtumia",
@@ -1106,14 +1236,14 @@
       "sv": "Vi organiserar inga evenemang"
     },
     "criteria.yi5.title": {
-      "fi": "YI5 Yhdistys järjestää tai tukee varusteiden kierrätystä.",
-      "en": "YI5 The association organises or supports the recycling of equipment.",
-      "sv": "YI5 Föreningen organiserar eller stöder återvinning av utrustning."
+      "fi": "Yhdistys järjestää tai tukee varusteiden kierrätystä.",
+      "en": "The association organises or supports the recycling of equipment.",
+      "sv": "Föreningen organiserar eller stöder återvinning av utrustning."
     },
     "criteria.yi6.title": {
-      "fi": "YI6 Varusteiden kierrätykseen liittyvät ohjeet ja toimintatavat ovat avoimesti näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla tai harjoitustiloissa.",
-      "en": "YI6 The instructions and procedures for recycling equipment are openly displayed on the association's website, social media channels or in the training facilities.",
-      "sv": "YI6 Anvisningarna och verksamhetssätten för återvinning av utrustning finns öppet synliga på föreningens webbplats, sociala medier eller i träningslokalerna."
+      "fi": "Varusteiden kierrätykseen liittyvät ohjeet ja toimintatavat ovat avoimesti näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla tai harjoitustiloissa.",
+      "en": "The instructions and procedures for recycling equipment are openly displayed on the association's website, social media channels or in the training facilities.",
+      "sv": "Anvisningarna och verksamhetssätten för återvinning av utrustning finns öppet synliga på föreningens webbplats, sociala medier eller i träningslokalerna."
     },
     "criteria.yi6.option_3": {
       "fi": "Emme järjestä tai tue varusteiden kierrätystä",
@@ -1121,9 +1251,9 @@
       "sv": "Vi organiserar eller stöder inte återvinning av utrustning"
     },
     "criteria.rk3.title": {
-      "fi": "RK3 Yhdistys antaa vuosittain kirjallisen suosituksen yhdistyksen valmentajille, ohjaajille ja yli 12-vuotiaille kilpaurheilijoille sekä heidän vanhemmilleen SUEK:n Reilusti Paras- ja Puhtaasti Paras -koulutusten käymisestä.",
-      "en": "RK3 Every year, the association issues a written recommendation to its coaches, instructors and athletes over 12 years of age and their parents to attend the Fair Win and Clean Win training modules by the Finnish Center for Integrity in Sports FINCIS.",
-      "sv": "RK3 Föreningen ger en skriftlig rekommendation varje år till föreningens tränare, instruktörer och tävlingsidrottare över 12 år samt deras föräldrar om att gå SUEK:s utbildningar Rent spel är bäst och Rättvist spel är bäst."
+      "fi": "Yhdistys antaa vuosittain kirjallisen suosituksen yhdistyksen valmentajille, ohjaajille ja yli 12-vuotiaille kilpaurheilijoille sekä heidän vanhemmilleen SUEK:n Reilusti Paras- ja Puhtaasti Paras -koulutusten käymisestä.",
+      "en": "Every year, the association issues a written recommendation to its coaches, instructors and athletes over 12 years of age and their parents to attend the Fair Win and Clean Win training modules by the Finnish Center for Integrity in Sports FINCIS.",
+      "sv": "Föreningen ger en skriftlig rekommendation varje år till föreningens tränare, instruktörer och tävlingsidrottare över 12 år samt deras föräldrar om att gå SUEK:s utbildningar Rent spel är bäst och Rättvist spel är bäst."
     },
     "criteria.rk3.option_3": {
       "fi": "Meillä ei ole valmentajia, ohjaajia eikä yli 12-vuotiaita kilpaurheilijoita",
@@ -1131,9 +1261,9 @@
       "sv": "Vi har inga tränare, instruktörer eller tävlingsidrottare över 12 år"
     },
     "criteria.rk4.title": {
-      "fi": "RK4 Yhdistyksen verkkosivuilla tai sosiaalisen median kanavalla on linkki ILMO-palveluun.",
-      "en": "RK4 There is a link to the ILMO service on the association's website or social media channel.",
-      "sv": "RK4 Det finns en länk till tjänsten ILMO på föreningens webbplats eller sociala mediekanaler."
+      "fi": "Yhdistyksen verkkosivuilla tai sosiaalisen median kanavalla on linkki ILMO-palveluun.",
+      "en": "There is a link to the ILMO service on the association's website or social media channel.",
+      "sv": "Det finns en länk till tjänsten ILMO på föreningens webbplats eller sociala mediekanaler."
     },
     "association_register_extract.title": {
       "fi": "Yhdistysrekisteriote",
@@ -1182,8 +1312,13 @@
     },
     "activity_step.title": {
       "fi": "Toiminnan tiedot",
-      "en": "Activity information",
-      "sv": "Information om verksamheten"
+      "en": "Details of the activities",
+      "sv": "Verksamhetets detaljer"
+    },
+    "activity_step.description": {
+      "fi": "Ilmoita tällä sivulla yhdistyksenne liikuntatoiminnan tiedot edelliseltä vuodelta (1.1.–31.12.).",
+      "en": "On this page, please report the association's sports activities in the previous year (January 1–December 31).",
+      "sv": "Rapportera om föreningens idrottsaktiviteter förra året (1 januari–31 december) på den här sidan."
     },
     "premises_step.title": {
       "fi": "Tilankäyttö yksityisissä liikuntatiloissa",
