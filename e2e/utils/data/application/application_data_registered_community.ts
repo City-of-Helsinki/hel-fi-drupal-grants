@@ -6,15 +6,10 @@ import {registeredCommunityApplications_52} from "./application_data_52";
 import {registeredCommunityApplications_53} from "./application_data_53";
 import {registeredCommunityApplications_56} from "./application_data_56";
 import {registeredCommunityApplications_57} from "./application_data_57";
-import {registeredCommunityApplications_58} from "./application_data_58";
-import {registeredCommunityApplications_60} from "./application_data_60";
 import {registeredCommunityApplications_61} from "./application_data_61";
-import {registeredCommunityApplications_62} from "./application_data_62";
 import {registeredCommunityApplications_64} from "./application_data_64";
 import {registeredCommunityApplications_67} from "./application_data_67";
-import {registeredCommunityApplications_73} from "./application_data_73";
 import {registeredCommunityApplications_74} from "./application_data_74";
-import {registeredCommunityApplications_75} from "./application_data_75";
 import {registeredCommunityApplications_76} from "./application_data_76";
 import {registeredCommunityApplications_77} from "./application_data_77";
 
@@ -27,15 +22,10 @@ const registeredCommunityApplications = {
   53: registeredCommunityApplications_53,
   56: registeredCommunityApplications_56,
   57: registeredCommunityApplications_57,
-  58: registeredCommunityApplications_58,
-  60: registeredCommunityApplications_60,
   61: registeredCommunityApplications_61,
-  62: registeredCommunityApplications_62,
   64: registeredCommunityApplications_64,
   67: registeredCommunityApplications_67,
-  73: registeredCommunityApplications_73,
   74: registeredCommunityApplications_74,
-  75: registeredCommunityApplications_75,
   76: registeredCommunityApplications_76,
   77: registeredCommunityApplications_77,
 }
