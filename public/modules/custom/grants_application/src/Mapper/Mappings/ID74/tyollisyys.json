@@ -71,16 +71,6 @@
   },
   "compensation.compensationInfo.generalInfoArray.2": {
     "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions_sum",
-    "mapping_type": "default",
-    "data": {
-      "ID": "totalAmount",
-      "value": "",
-      "valueType": "float"
-    }
-  },
-  "compensation.compensationInfo.generalInfoArray.3": {
-    "datasource": "form_data",
     "source": "grant_info_step.prior_benefits_usage_section.prior_compensations",
     "mapping_type": "default",
     "data": {
@@ -90,7 +80,7 @@
       "label": "Selvitys avustuksen käytöstä"
     }
   },
-  "compensation.compensationInfo.generalInfoArray.4": {
+  "compensation.compensationInfo.generalInfoArray.3": {
     "datasource": "form_data",
     "source": "grant_info_step.purpose_section.who_benefits",
     "mapping_type": "default",
@@ -101,7 +91,7 @@
       "label": "Ketkä toiminnastanne erityisesti hyötyvät"
     }
   },
-  "compensation.compensationInfo.generalInfoArray.5": {
+  "compensation.compensationInfo.generalInfoArray.4": {
     "datasource": "form_data",
     "source": "grant_info_step.purpose_section.changes_on_success",
     "mapping_type": "default",
@@ -112,7 +102,7 @@
       "label": "Minkälaisia muutoksia tapahtuu, jos onnistutte?"
     }
   },
-  "compensation.compensationInfo.generalInfoArray.6": {
+  "compensation.compensationInfo.generalInfoArray.5": {
     "datasource": "form_data",
     "source": "grant_info_step.purpose_section.results_of_activities",
     "mapping_type": "default",
