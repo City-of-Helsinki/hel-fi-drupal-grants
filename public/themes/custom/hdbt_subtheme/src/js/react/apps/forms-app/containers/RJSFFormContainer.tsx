@@ -320,11 +320,13 @@ export const RJSFFormContainer = ({
         return;
       }
 
+      // The error list at the top of the form uses the shorter summary if any.
+      const summary = state.summary ?? state.message;
       newErrors.push({
         property: `.${rule.path}`,
-        message: state.message,
+        message: summary,
         schemaPath: `.${rule.path}`,
-        stack: `.${rule.path} ${state.message}`,
+        stack: `.${rule.path} ${summary}`,
       });
 
       // The error handler only has nodes for paths present in form data, and

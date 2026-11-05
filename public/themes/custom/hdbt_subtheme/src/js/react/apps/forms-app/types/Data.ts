@@ -21,6 +21,7 @@ export type SumMatchRule = {
   message?: string;
   path: string;
   successMessage?: string;
+  summaryMessage?: string;
 };
 
 /**
@@ -29,6 +30,7 @@ export type SumMatchRule = {
 export type SumMatchState = {
   message: string;
   status: 'match' | 'mismatch';
+  summary?: string;
 };
 
 export type FormConfig = {

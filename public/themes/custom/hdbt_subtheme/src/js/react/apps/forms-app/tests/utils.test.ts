@@ -266,6 +266,18 @@ describe('sum match state', () => {
     });
   });
 
+  test('getSumMatchState adds the interpolated summary on mismatch when configured', () => {
+    const data = { step: { ages: { minors: 300, adults: 60 }, genders: { women: 170, men: 180 } } };
+
+    expect(
+      getSumMatchState(data, { ...rule, message: 'custom.mismatch', summaryMessage: 'custom.summary' }, t),
+    ).toEqual({
+      message: 'custom.mismatch {"difference":"10","left":"350","right":"360"}',
+      status: 'mismatch',
+      summary: 'custom.summary {"difference":"10","left":"350","right":"360"}',
+    });
+  });
+
   test('findSumMatchRule finds the rule comparing any of the fields', () => {
     expect(findSumMatchRule([rule], ['step.ages.adults'])).toBe(rule);
     expect(findSumMatchRule([rule], ['step.genders.women', 'step.other'])).toBe(rule);
