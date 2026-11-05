@@ -17,7 +17,7 @@ third_party_settings:
     applicationClose: '2023-07-30T11:19:00'
     applicationContinuous: 0
     applicationTargetGroup: '20'
-    disableCopying: 0
+    disableCopying: 1
     applicationTypeSelect: '29'
     applicationIndustry: KANSLIA
     applicationActingYears: {  }
