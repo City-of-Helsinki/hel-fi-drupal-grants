@@ -5,7 +5,7 @@ const getPostHeaders = (token: string) => ({ 'Content-Type': 'application/json',
  */
 export const Requests = {
   DRAFT_APPLICATION_CREATE: (form_identifier: string, token: string): Promise<Response> =>
-    fetch(`/applications/${form_identifier}/draft`, {
+    fetch(`/${drupalSettings.path.currentLanguage}/applications/${form_identifier}/draft`, {
       method: 'POST',
       headers: getPostHeaders(token),
     }),

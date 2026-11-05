@@ -3,7 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { createStore, Provider } from 'jotai';
 import { describe, expect, test, vi } from 'vitest';
 import { RJSFFormContainer } from '../../containers/RJSFFormContainer';
-import { createFormDataAtom, formDataAtomRef, formStateAtom, initializeFormAtom } from '../../store';
+import { createFormDataAtom, errorsAtom, formDataAtomRef, formStateAtom, initializeFormAtom } from '../../store';
 import { testGrantsProfile } from '../../testutils/Data';
 
 const integer = (title: string): RJSFSchema => ({ title, type: 'integer' });
@@ -61,7 +61,13 @@ const uiSchema: UiSchema = {
       genders: { total: summary(genders) },
       status: {
         'misc:exclude-from-submit': true,
-        'misc:sum-match': { compareTo: ages, fields: genders, message: 'mismatch', successMessage: 'match' },
+        'misc:sum-match': {
+          compareTo: ages,
+          fields: genders,
+          message: 'mismatch',
+          successMessage: 'match',
+          summaryMessage: 'mismatch_summary',
+        },
         'ui:field': 'sumMatchStatus',
       },
     },
@@ -149,5 +155,8 @@ describe('Sum match validation', () => {
     expect(document.activeElement).toBe(status());
     expect(status().getAttribute('role')).toBe('status');
     expect(status().textContent).toBe('mismatch');
+    // The error list at the top of the form shows the summary instead.
+    expect(store.get(errorsAtom).map(([, error]) => error.message)).toContain('mismatch_summary');
+    expect(store.get(errorsAtom).map(([, error]) => error.message)).not.toContain('mismatch');
   });
 });

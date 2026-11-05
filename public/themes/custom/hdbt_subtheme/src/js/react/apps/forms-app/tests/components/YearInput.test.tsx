@@ -21,7 +21,7 @@ const renderInput = (schema: object, onChange = vi.fn()) => {
         [initializeFormAtom, testResponseData],
         // The test schema has no steps of its own, which lands the form on the
         // preview step, where inputs render as plain text.
-        [formStateAtom, { currentStep: [0, { id: 'step-1', label: 'Step 1' }], reachedStep: 0 }],
+        [formStateAtom, { currentStep: [0, { id: 'step-1', label: 'Step 1' }], validationCutoff: 0 }],
       ]}
     >
       <TextInput

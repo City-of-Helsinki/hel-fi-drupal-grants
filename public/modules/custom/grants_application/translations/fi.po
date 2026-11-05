@@ -138,3 +138,36 @@ msgstr "Duplikaatti tiedostonnimi: Nimeä tiedoston uudelleen"
 
 msgid "Clear"
 msgstr "Tyhjennä"
+
+msgid "Failed to copy the application. Please try again later."
+msgstr "Hakemuksen kopiointi epäonnistui. Yritä myöhemmin uudelleen."
+
+msgid "Failed to delete attachment"
+msgstr "Liitteen poistaminen epäonnistui"
+
+msgid "The application is not currently open"
+msgstr "Hakemus ei ole avoinna tällä hetkellä"
+
+msgid "Unable to find the application"
+msgstr "Hakemusta ei löytynyt"
+
+msgid "Unable to fetch the application. Please try again in a moment."
+msgstr "Hakemuksen nouto epäonnistui. Yritä hetken kuluttua uudelleen."
+
+msgid "Unable to fetch the application. Please try again in a moment"
+msgstr "Hakemuksen nouto epäonnistui. Yritä hetken kuluttua uudelleen"
+
+msgid "An error occurred while sending the application. Please try again later"
+msgstr "Hakemuksen lähetys epäonnistui. Yritä myöhemmin uudelleen"
+
+msgid "We cannot fetch the application. Please try again in a moment"
+msgstr "Hakemuksen nouto epäonnistui. Yritä hetken kuluttua uudelleen"
+
+msgid "We cannot find the application you are trying to open. Please try creating another one"
+msgstr "Hakemusta ei löytynyt. Yritäthän tehdä uuden hakemuksen"
+
+msgid "This application is not available for your user role."
+msgstr "Tämä hakemus ei ole saatavilla käyttäjäroolillesi."
+
+msgid "You are not allowed to remove the attachments any more."
+msgstr "Liitteitä ei voi enää poistaa."

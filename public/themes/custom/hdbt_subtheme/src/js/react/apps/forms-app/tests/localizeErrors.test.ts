@@ -26,6 +26,20 @@ describe('localizeErrors', () => {
     expect(errors.map((error) => error.message)).toEqual(['Field is required']);
   });
 
+  it('localizes the minimum and maximum errors', () => {
+    const numberSchema: RJSFSchema = {
+      type: 'object',
+      properties: { count: { title: 'Count', type: 'integer', minimum: 0, maximum: 9999 } },
+    };
+
+    expect(validator.validateFormData({ count: 10000 }, numberSchema).errors.map((e) => e.message)).toEqual([
+      'Count must be at most 9999.',
+    ]);
+    expect(validator.validateFormData({ count: -1 }, numberSchema).errors.map((e) => e.message)).toEqual([
+      'Count must be at least 0.',
+    ]);
+  });
+
   it('accepts an allowed value', () => {
     const { errors } = validator.validateFormData({ acting_year: '2027', untitled: '3' }, schema);
 

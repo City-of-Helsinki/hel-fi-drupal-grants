@@ -18,7 +18,7 @@ const renderInput = (schema: object, value = '', onChange = vi.fn()) => {
     <TestProvider
       initialValues={[
         [initializeFormAtom, testResponseData],
-        [formStateAtom, { currentStep: [0, { id: 'step-1', label: 'Step 1' }], reachedStep: 0 }],
+        [formStateAtom, { currentStep: [0, { id: 'step-1', label: 'Step 1' }], validationCutoff: 0 }],
       ]}
     >
       <TextInput

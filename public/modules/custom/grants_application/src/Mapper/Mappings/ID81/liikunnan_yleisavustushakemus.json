@@ -1,0 +1,1451 @@
+{
+  "compensation.membersInfo.membersInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_age.junior_all",
+    "mapping_type": "default",
+    "data": {
+      "ID": "juniorAll",
+      "label": "Lapset ja nuoret (alle 20-vuotiaat)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_age.junior_target_group",
+    "mapping_type": "default",
+    "data": {
+      "ID": "juniorTargetGroup",
+      "label": "joista soveltavan liikunnan kohderyhmää",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.2": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_age.adult_all",
+    "mapping_type": "default",
+    "data": {
+      "ID": "adultAll",
+      "label": "Työikäiset (20–63-vuotiaat)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.3": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_age.adult_target_group",
+    "mapping_type": "default",
+    "data": {
+      "ID": "adultTargetGroup",
+      "label": "joista soveltavan liikunnan kohderyhmää",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.4": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_age.senior_all",
+    "mapping_type": "default",
+    "data": {
+      "ID": "seniorAll",
+      "label": "Ikääntyneet (64 vuotta täyttäneet)",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.5": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_age.senior_target_group",
+    "mapping_type": "default",
+    "data": {
+      "ID": "seniorTargetGroup",
+      "label": "joista soveltavan liikunnan kohderyhmää",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.6": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_gender.men",
+    "mapping_type": "default",
+    "data": {
+      "ID": "men",
+      "label": "Pojat/miehet",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.7": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_gender.women",
+    "mapping_type": "default",
+    "data": {
+      "ID": "women",
+      "label": "Tytöt/naiset",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.8": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_gender.other",
+    "mapping_type": "default",
+    "data": {
+      "ID": "other",
+      "label": "Muut",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.9": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.movers_gender.unknown",
+    "mapping_type": "default",
+    "data": {
+      "ID": "unkown",
+      "label": "Ei tiedossa",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.membersInfoArray.10": {
+    "datasource": "form_data",
+    "source": "grant_info_step.movers_section.all_coaches",
+    "mapping_type": "default",
+    "data": {
+      "ID": "allCoaches",
+      "label": "Koulutettujen ohjaajien/valmentajien määrä",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.membersInfo.clubsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.sports_section.club_main_activity",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Liikuntaa yhdessä lajissa",
+      "2": "Liikuntaa useissa lajeissa, joista yksi on selvästi muita suurempi",
+      "3": "Liikuntaa useissa lajeissa, joista yksikään ei ole muita selvästi suurempi",
+      "4": "Liikuntaa ei-lajikeskeisesti"
+    },
+    "data": {
+      "ID": "clubMainActivity",
+      "label": "Järjestääkö yhdistyksenne pääasiassa:",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.membersInfo.clubsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.sports_section.club_activity_description",
+    "mapping_type": "default",
+    "data": {
+      "ID": "clubActivityDescription",
+      "label": "Kuvaile järjestämäänne toimintaa",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.membersInfo.clubsInfoArray.2": {
+    "datasource": "form_data",
+    "source": "grant_info_step.duration_section.activity_months",
+    "mapping_type": "default",
+    "data": {
+      "ID": "activityMonthsLastYear",
+      "label": "Kuinka monen kuukauden aikana edellisenä kalenterivuonna yhdistys järjesti ryhmämuotoista liikuntatoimintaa?",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.membersInfo.clubSectionsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.sports_section.sport_details.club_sections",
+    "mapping_type": "multiple_values",
+    "data": {
+      "section_name": {
+        "ID": "sectionName",
+        "label": "Yhdistyksen liikuntalaji/Nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "section_other": {
+        "ID": "sectionOther",
+        "label": "Mikä? (Jos valittu laji jonka nimesä muu)",
+        "value": "",
+        "valueType": "string"
+      },
+      "participants.junior": {
+        "ID": "junior",
+        "label": "Lapset ja nuoret (alle 20-vuotiaat)",
+        "value": "",
+        "valueType": "int"
+      },
+      "participants.junior_target_group": {
+        "ID": "juniorTargetGroup",
+        "label": "joista soveltavan liikunnan kohderyhmää",
+        "value": "",
+        "valueType": "int"
+      },
+      "participants.adult": {
+        "ID": "adult",
+        "label": "Työikäiset (20–63-vuotiaat)",
+        "value": "",
+        "valueType": "int"
+      },
+      "participants.adult_target_group": {
+        "ID": "adultTargetGroup",
+        "label": "joista soveltavan liikunnan kohderyhmää",
+        "value": "",
+        "valueType": "int"
+      },
+      "participants.senior": {
+        "ID": "senior",
+        "label": "Ikääntyneet (64 vuotta täyttäneet)",
+        "value": "",
+        "valueType": "int"
+      },
+      "participants.senior_target_group": {
+        "ID": "seniorTargetGroup",
+        "label": "joista soveltavan liikunnan kohderyhmää",
+        "value": "",
+        "valueType": "int"
+      }
+    }
+  },
+  "compensation.premisesInfo.premisesArray.0.n": {
+    "datasource": "form_data",
+    "source": "premises_step.premises_section.premises",
+    "mapping_type": "multiple_values",
+    "data": {
+      "premise_address": {
+        "ID": "premiseAddress",
+        "label": "Liikuntapaikka",
+        "value": "",
+        "valueType": "string"
+      },
+      "premise_target": {
+        "ID": "premiseTarget",
+        "label": "Liikuntatila",
+        "value": "",
+        "valueType": "string"
+      },
+      "rent_type": {
+        "ID": "rentType",
+        "label": "Tilanvuokraustyyppi",
+        "value": "",
+        "valueType": "string",
+        "value_map": {
+          "1": "Tuntiperusteisesti vuokrattava liikuntatila",
+          "2": "Kiinteä kustannus (esim. kk-vuokra)",
+          "3": "Seuran itse omistama liikuntatila"
+        }
+      },
+      "club_owns_renter": {
+        "ID": "clubOwnsRenter",
+        "label": "Yhdistyksellämme on omistussuhde liikuntatilan vuokranantajaan",
+        "value": "",
+        "valueType": "bool"
+      },
+      "rent_market_based": {
+        "ID": "rentMarketBased",
+        "label": "Vakuutamme, että vuokranantajan laskuttamat vuokrat ovat korkeintaan markkinaehtoisesti määräytyneitä",
+        "value": "",
+        "valueType": "bool"
+      },
+      "hours_last_year": {
+        "ID": "hoursLastYear",
+        "label": "Tilankäyttötunnit edellisvuonna (1.1.-31.12.)",
+        "value": "",
+        "valueType": "double"
+      },
+      "costs_last_year": {
+        "ID": "costsLastYear",
+        "label": "Tilankäytön kustannukset edellisvuonna (1.1.-31.12.)",
+        "value": "",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.premisesInfo.premiseSummaryArray.0": {
+    "datasource": "form_data",
+    "source": "premises_step.premises_section.change_on_usage",
+    "mapping_type": "default",
+    "data": {
+      "ID": "changeOnUsageInfo",
+      "label": "Oleellinen muutos tilankäytössä avustusvuodelle. Ilmoita tuntien ja kustannusten nousu (+) tai lasku (-) sekä syy muutokselle.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.sports_section.club_sport",
+    "mapping_type": "default",
+    "data": {
+      "ID": "clubMainSport",
+      "label": "Yhdistyksen liikuntalaji",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.sports_section.club_sport_other",
+    "mapping_type": "default",
+    "data": {
+      "ID": "clubMainSportOther",
+      "label": "Mikä?",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.2": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh1",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme maksa kenellekään palkkaa"
+    },
+    "data": {
+      "ID": "HH1",
+      "label": "HH1 Organisaation kaikilla palkatuilla työntekijöillä on kirjalliset työsopimukset.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.3": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh2",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme maksa kenellekään palkkaa"
+    },
+    "data": {
+      "ID": "HH2",
+      "label": "HH2 Organisaation kaikilla palkatuilla työntekijöillä on nimetty esihenkilö.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.4": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh3",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH3",
+      "label": "HH3 Organisaation ajantasaiset tiedot ovat Patentti- ja rekisterihallituksen Yhdistysrekisterin tietopalvelussa tai Virre-tietopalvelussa.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.5": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh4",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH4",
+      "label": "HH4 Organisaation toiminta, taloudenhoito, kirjanpito sekä tilin- tai toiminnantarkastus toteutetaan lainmukaisesti.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.6": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh5",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH5",
+      "label": "HH5 Organisaatio kerää toimintaan osallistuvien tiedot tietosuojalainsäädännön mukaisesti.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.7": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh6",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH6",
+      "label": "HH6 Organisaatio informoi toimintaan osallistuvia, että heidän osallistumistietojaan voidaan luovuttaa kaupungille avustusten käytön valvomiseksi.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.8": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh7",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH7",
+      "label": "HH7 Organisaatio ilmoittaa viipymättä Helsingin kaupungin liikuntapalveluille, jos sen toiminnassa ilmenee vakavia mihin tahansa vastuullisuuden ja saavutettavuuden vähimmäiskriteereihin liittyviä laiminlyöntejä tai rikkomuksia.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.9": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh8",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH8",
+      "label": "HH8 Yhdistyksellä on ajantasaiset säännöt.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.10": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh9",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH9",
+      "label": "HH9 Yhdistys ylläpitää jäsenistään luetteloa, johon merkitään yhdistyslain mukaisesti kunkin jäsenen nimi ja kotipaikka.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.11": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_governance_section.hh10",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH10",
+      "label": "HH10 Yhdistys järjestää yhdistyksen kokoukset sääntöjensä määrääminä ajankohtina.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.12": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_safety_section.tt1",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme järjestä toimintaa alle 18-vuotiaille"
+    },
+    "data": {
+      "ID": "TT1",
+      "label": "TT1 Organisaatio tarkastaa rikosrekisteriotteet kaikilta alle 18-vuotiaiden kanssa toimivilta palkatuilta henkilöiltä sekä kaikilta toiminnassa aloittavilta alle 18-vuotiaiden kanssa toimivilta vapaaehtoisilta.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.13": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_safety_section.tt2",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "TT2",
+      "label": "TT2 Organisaation toiminnassa ei sallita rasismia, seksuaalista häirintää, sukupuoleen perustuvaa häirintää tai epäasiallista käyttäytymistä. Näiden linjausten vastaista toimintaa ennaltaehkäistään aktiivisesti, linjausten vastaiseen toimintaan suhtaudutaan aina vakavasti ja ilmenneisiin tapauksiin puututaan viipymättä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.14": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_safety_section.tt3",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme järjestä toimintaa alle 18-vuotiaille"
+    },
+    "data": {
+      "ID": "TT3",
+      "label": "TT3 Organisaation alle 18-vuotiaille järjestettävässä toiminnassa ei sallita nikotiinituotteiden, alkoholin tai muiden päihteiden käyttöä. Käyttöä ennaltaehkäistään aktiivisesti ja ilmenneisiin tapauksiin puututaan viipymättä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.15": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_equality_section.yt1",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT1",
+      "label": "YT1 Toimintarajoitteisen henkilön avustajan osallistuminen organisaation järjestämään toimintaan on maksutonta.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.16": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_fair_play_section.rk1",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "RK1",
+      "label": "RK1 Organisaation toiminnassa ei sallita dopingin eikä kuntodopingin käyttöä. Mahdollisiin rikkomuksiin puututaan viipymättä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.17": {
+    "datasource": "form_data",
+    "source": "minimum_criteria_step.minimum_criteria_fair_play_section.rk2",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "RK2",
+      "label": "RK2 Organisaation toiminnassa ei sallita kilpailumanipulaatiota. Mahdollisiin rikkomuksiin puututaan viipymättä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.18": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_governance_section.hh11",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH11",
+      "label": "HH11 Yhdistyksen säännöissä on kirjaus, että yhdistyksen toiminnassa ei sallita rasismia, seksuaalista häirintää, sukupuoleen perustuvaa häirintää tai epäasiallista käyttäytymistä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.19": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_governance_section.hh12",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH12",
+      "label": "HH12 Yhdistyksen säännöissä määritellään rasismiin, seksuaaliseen tai sukupuoleen perustuvaan häirintään ja epäasialliseen käyttäytymiseen liittyvien sääntöjen rikkomiseen liittyviä kurinpitotoimenpiteitä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.20": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_governance_section.hh13",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Meillä ei ole päävalmentajia eikä kokoaikaisia työntekijöitä"
+    },
+    "data": {
+      "ID": "HH13",
+      "label": "HH13 Yhdistys on järjestänyt vähintään kerran vuodessa kehityskeskustelun jokaisen päävalmentajan ja kokoaikaisen henkilöstön jäsenen kanssa.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.21": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_governance_section.hh14",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH14",
+      "label": "HH14 Yhdistyksen hallituksen jäsenet ovat suorittaneet Olympiakomitean Seuran hallinnon verkkokurssin tai muun vastaavan yhdistyksen hyvän hallinnon kurssin.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.22": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_governance_section.hh15",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH15",
+      "label": "HH15 Yhdistyksen hallituksen jäsenten ja myös mahdollisten palkattujen työntekijöiden tehtävät on kuvattu kirjallisesti.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.23": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_governance_section.hh16",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "HH16",
+      "label": "HH16 Yhdistyksen hallituksen jäsenet ja mahdolliset palkatut työntekijät on perehdytetty tehtäviinsä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.24": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt4",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "TT4",
+      "label": "TT4 Yhdistyksessä on toteutettu nimetön palautekysely harrastajille viimeisen kahden vuoden sisällä. Kyselyssä on selvitetty turvalliseen toimintaympäristöön liittyviä kokemuksia sekä mahdollisia havaintoja kiusaamisesta tai muusta epäasiallisesta toiminnasta yhdistyksen toiminnassa.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.25": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt5",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme maksa kenellekään palkkaa eikä meillä ole valmentajia eikä ohjaajia"
+    },
+    "data": {
+      "ID": "TT5",
+      "label": "TT5 Yhdistyksen palkattu henkilöstö, valmentajat ja ohjaajat ovat käyneet Väestöliiton Et ole yksin -verkkokurssin.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.26": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt6",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Meillä ei ole toimintaa lapsille ja nuorille"
+    },
+    "data": {
+      "ID": "TT6",
+      "label": "TT6 Yhdistyksellä on lasten ja nuorten harrastustoimintaa koskeva lasten liikunnan linjaus, joka tukee lapsilähtöistä ja turvallista harrastamista, jossa lapsen oikeudet ja hyvinvointi ovat etusijalla.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.27": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt7",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "TT7",
+      "label": "TT7 Yhdistyksellä on turvallisemman tilan periaatteet.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.28": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt8",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme ole laatineet turvallisemman tilan periaatteita"
+    },
+    "data": {
+      "ID": "TT8",
+      "label": "TT8 Yhdistyksen turvallisemman tilan periaatteet ovat näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla ja/tai harjoitustiloissa.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.29": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt9",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "TT9",
+      "label": "TT9 Yhdistyksessä on nimetty häirintäyhdyshenkilö, jolle voi ilmoittaa epäasiallisesta käyttäytymisestä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.30": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt10",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme ole nimenneet häirintäyhdyshenkilöä"
+    },
+    "data": {
+      "ID": "TT10",
+      "label": "TT10 Yhdistyksen häirintäyhdyshenkilön yhteydenottokanavat ovat näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla ja/tai harjoitustiloissa.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.31": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt11",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "TT11",
+      "label": "TT11 Yhdistyksellä on toimintapa ja kirjalliset ohjeet epäasiallisen käytöksen ennaltaehkäisyyn ja siihen puuttumiseen.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.32": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt12",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme ole tehneet epäasiallisen käytöksen ennaltaehkäisyn ja siihen puuttumisen ohjetta"
+    },
+    "data": {
+      "ID": "TT12",
+      "label": "TT12 Yhdistyksen epäasiallisen käytöksen ennaltaehkäisyn ohjeet ovat nähtävillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla tai harjoitustiloissa.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.33": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt13",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Meillä ei ole toimintaa alle 20-vuotiaille"
+    },
+    "data": {
+      "ID": "TT13",
+      "label": "TT13 Yhdistyksellä on kirjalliset pelisäännöt alle 20-vuotiaiden harrastajien huoltajille.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.34": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt14",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Meillä ei ole ryhmiä alle 20-vuotiaille"
+    },
+    "data": {
+      "ID": "TT14",
+      "label": "TT14 Yhdistyksen alle 20-vuotiaiden harrastajien ryhmillä on ryhmän yhteisesti määrittelemät kirjalliset pelisäännöt.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.35": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_safety_section.tt15",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "TT15",
+      "label": "TT15 Yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla on linkki Et ole yksin -palveluun.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.36": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt2",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT2",
+      "label": "YT2 Yhdistys tarjoaa alennettuja harrastusmaksuja tai avustuksia niille, joille kustannukset ovat este harrastamiselle.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.37": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt3",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT3",
+      "label": "YT3 Yhdistys järjestää mahdollisen kilpailullisen toiminnan lisäksi ei-kilpailullista harrastustoimintaa, jolla tarkoitetaan helposti saavutettavaa, kohtuullisen hintaista toimintaa, joka ei vaadi aikaisempaa kokemusta, pitkäaikaista sitoutumista, korkeaa osaamistasoa tai omia erityisvarusteita.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.38": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt4",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT4",
+      "label": "YT4 Yhdistyksellä on säännöllisesti harjoitteleva soveltavan liikunnan ryhmä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.39": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt5",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT5",
+      "label": "YT5 Yhdistys viestii harjoituspaikkojensa esteettömyyteen ja saavutettavuuteen liittyvistä asioista verkkosivuillaan tai sosiaalisen median kanavillaan. Esim. portaat, pintamateriaalit, pysäköintimahdollisuudet, sukupuolitetut ja sukupuolineutraalit wc- ja peseytymistilat.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.40": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt6",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT6",
+      "label": "YT6 Yhdistyksen hallituksen jäsenet ja mahdolliset palkatut työntekijät ovat käyneet Ihmisoikeusliiton Ihmisoikeudet urheilussa -verkkokoulutuksen.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.41": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt7",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT7",
+      "label": "YT7 Yhdistyksellä on kirjallinen suunnitelma sukupuolivähemmistöön kuuluvien henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä sukupuolivähemmistöön kuuluvilla voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.42": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt8",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT8",
+      "label": "YT8 Yhdistyksellä on kirjallinen suunnitelma ulkomaalaistaustaisten henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä ulkomaalaistaustaisilla henkilöillä voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.43": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt9",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT9",
+      "label": "YT9 Yhdistyksellä on kirjallinen suunnitelma toimintarajoitteisten henkilöiden tavoittamiseksi. Suunnitelma sisältää tietoa siitä, millaisia osallistumisen esteitä toimintarajoitteisilla henkilöillä voi olla ja miten toimintaa kehitetään niin, että he voivat paremmin osallistua yhdistyksen toimintaan.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.44": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt10",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT10",
+      "label": "YT10 Yhdistyksen hallituksen jäsenistä enintään 2/3 on yhden sukupuolen edustajia.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.45": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt11",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT11",
+      "label": "YT11 Yhdistyksen liikuntatoimintaan voi osallistua, ilmoittautua ja maksaa laskut myös muilla kielillä kuin suomeksi tai ruotsiksi.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.46": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt12",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT12",
+      "label": "YT12 Tieto monikielisistä osallistumismahdollisuuksista on avoimesti esillä yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.47": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt13",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme tarjoa alennettuja harrastusmaksuja tai vastaavia"
+    },
+    "data": {
+      "ID": "YT13",
+      "label": "YT13 Jos yhdistys tarjoaa esimerkiksi alennettuja harrastusmaksuja, avustuksia tai vapaaoppilaspaikkoja jäsenistönsä yhdenvertaisuuden edistämiseksi, tieto näistä tukimuodoista on avoimesti näkyvillä yhdistyksen verkkosivuilla tai sosiaalisen median kanavilla.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.48": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt14",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT14",
+      "label": "YT14 Yhdistys viestii monimuotoisuuden tavoitteestaan (toimintaan tavoitellaan sukupuoleltaan, iältään, etniseltä taustaltaan, vammaltaan tai seksuaaliselta suuntautumiseltaan erilaisia henkilöitä) avoimesti verkkosivuillaan tai sosiaalisen median kanavallaan.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.49": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt15",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YT15",
+      "label": "YT15 Saattajan tai kaverin ottaminen tarvittaessa mukaan harrastukseen maksutta on sallittua vähintään kaksi kertaa vuoden aikana.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.50": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_equality_section.yt16",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme järjestä soveltavaa liikuntaa"
+    },
+    "data": {
+      "ID": "YT16",
+      "label": "YT16 Yhdistys hyödyntää Suomen Olympiakomitean Sporttihakua järjestämänsä soveltavan liikunnan markkinointiin.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.51": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_environment_section.yi1",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YI1",
+      "label": "YI1 Yhdistyksellä on kirjallisesti määritellyt toimenpiteet kävelyn ja pyöräilyn edistämiseksi harjoitusmatkoilla.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.52": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_environment_section.yi2",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Meillä ei ole harjoitus-, leiri- eikä kilpailumatkoja"
+    },
+    "data": {
+      "ID": "YI2",
+      "label": "YI2 Yhdistyksellä on kirjallisesti määritellyt toimenpiteet, miten joukkoliikenteen ja yhteiskuljetusten hyödyntämistä lisätään harjoitus-, leiri- ja kilpailumatkoilla.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.53": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_environment_section.yi3",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Meillä ei ollut tapahtuma-, leiri- eikä kilpailumatkoja Suomen sisällä viime vuonna"
+    },
+    "data": {
+      "ID": "YI3",
+      "label": "YI3 Yhdistyksen järjestämässä toiminnassa ei ole viimeksi kuluneen vuoden aikana lennetty tapahtuma-, leiri- tai kilpailumatkoille Suomen sisällä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.54": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_environment_section.yi4",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme järjestä tapahtumia"
+    },
+    "data": {
+      "ID": "YI4",
+      "label": "YI4 Yhdistyksellä on kirjallinen suunnitelma tai ohjeet jätteiden lajittelemisesta tapahtumissa.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.55": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_environment_section.yi5",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "YI5",
+      "label": "YI5 Yhdistys järjestää tai tukee varusteiden kierrätystä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.56": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_environment_section.yi6",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Emme järjestä tai tue varusteiden kierrätystä"
+    },
+    "data": {
+      "ID": "YI6",
+      "label": "YI6 Varusteiden kierrätykseen liittyvät ohjeet ja toimintatavat ovat avoimesti näkyvillä yhdistyksen verkkosivuilla, sosiaalisen median kanavilla tai harjoitustiloissa.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.57": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_fair_play_section.rk3",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei",
+      "3": "Meillä ei ole valmentajia, ohjaajia eikä yli 12-vuotiaita kilpaurheilijoita"
+    },
+    "data": {
+      "ID": "RK3",
+      "label": "RK3 Yhdistys antaa vuosittain kirjallisen suosituksen yhdistyksen valmentajille, ohjaajille ja yli 12-vuotiaille kilpaurheilijoille sekä heidän vanhemmilleen SUEK:n Reilusti Paras- ja Puhtaasti Paras -koulutusten käymisestä.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.customQuestionsInfo.customQuestionsArray.58": {
+    "datasource": "form_data",
+    "source": "scored_criteria_step.scored_criteria_fair_play_section.rk4",
+    "mapping_type": "custom",
+    "custom_handler": "enumToLabel",
+    "value_map": {
+      "1": "Kyllä",
+      "2": "Ei"
+    },
+    "data": {
+      "ID": "RK4",
+      "label": "RK4 Yhdistyksen verkkosivuilla tai sosiaalisen median kanavalla on linkki ILMO-palveluun.",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "attachmentsInfo.attachmentsArray.0": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.community_rules.community_rules_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {
+        "ID": "description",
+        "value": "Yhteisön säännöt",
+        "valueType": "string",
+        "label": "Liitteen kuvaus"
+      },
+      "fileName": {
+        "ID": "fileName",
+        "value": "",
+        "valueType": "string",
+        "label": "Tiedostonimi"
+      },
+      "fileType": {
+        "ID": "fileType",
+        "value": "7",
+        "valueType": "int",
+        "label": "fileType"
+      },
+      "integrationID": {
+        "ID": "integrationID",
+        "value": "",
+        "valueType": "string",
+        "label": "integrationID"
+      },
+      "isDeliveredLater": {
+        "ID": "isDeliveredLater",
+        "value": "false",
+        "valueType": "bool",
+        "label": "Liite toimitetaan myöhemmin"
+      },
+      "isIncludedInOtherFile": {
+        "ID": "isIncludedInOtherFile",
+        "value": "false",
+        "valueType": "bool",
+        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+      }
+    }
+  },
+  "attachmentsInfo.attachmentsArray.1": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.association_register_extract.association_register_extract_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {
+        "ID": "description",
+        "value": "Yhdistysrekisteriote",
+        "valueType": "string",
+        "label": "Liitteen kuvaus"
+      },
+      "fileName": {
+        "ID": "fileName",
+        "value": "",
+        "valueType": "string",
+        "label": "Tiedostonimi"
+      },
+      "fileType": {
+        "ID": "fileType",
+        "value": "26",
+        "valueType": "int",
+        "label": "fileType"
+      },
+      "integrationID": {
+        "ID": "integrationID",
+        "value": "",
+        "valueType": "string",
+        "label": "integrationID"
+      },
+      "isDeliveredLater": {
+        "ID": "isDeliveredLater",
+        "value": "false",
+        "valueType": "bool",
+        "label": "Liite toimitetaan myöhemmin"
+      },
+      "isIncludedInOtherFile": {
+        "ID": "isIncludedInOtherFile",
+        "value": "false",
+        "valueType": "bool",
+        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+      }
+    }
+  },
+  "attachmentsInfo.attachmentsArray.2": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.action_plan.action_plan_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {
+        "ID": "description",
+        "value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
+        "valueType": "string",
+        "label": "Liitteen kuvaus"
+      },
+      "fileName": {
+        "ID": "fileName",
+        "value": "",
+        "valueType": "string",
+        "label": "Tiedostonimi"
+      },
+      "fileType": {
+        "ID": "fileType",
+        "value": "1",
+        "valueType": "int",
+        "label": "fileType"
+      },
+      "integrationID": {
+        "ID": "integrationID",
+        "value": "",
+        "valueType": "string",
+        "label": "integrationID"
+      },
+      "isDeliveredLater": {
+        "ID": "isDeliveredLater",
+        "value": "false",
+        "valueType": "bool",
+        "label": "Liite toimitetaan myöhemmin"
+      },
+      "isIncludedInOtherFile": {
+        "ID": "isIncludedInOtherFile",
+        "value": "false",
+        "valueType": "bool",
+        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+      }
+    }
+  },
+  "attachmentsInfo.attachmentsArray.3": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.budget.budget_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {
+        "ID": "description",
+        "value": "Talousarvio (sille vuodelle jolle haet avustusta)",
+        "valueType": "string",
+        "label": "Liitteen kuvaus"
+      },
+      "fileName": {
+        "ID": "fileName",
+        "value": "",
+        "valueType": "string",
+        "label": "Tiedostonimi"
+      },
+      "fileType": {
+        "ID": "fileType",
+        "value": "2",
+        "valueType": "int",
+        "label": "fileType"
+      },
+      "integrationID": {
+        "ID": "integrationID",
+        "value": "",
+        "valueType": "string",
+        "label": "integrationID"
+      },
+      "isDeliveredLater": {
+        "ID": "isDeliveredLater",
+        "value": "false",
+        "valueType": "bool",
+        "label": "Liite toimitetaan myöhemmin"
+      },
+      "isIncludedInOtherFile": {
+        "ID": "isIncludedInOtherFile",
+        "value": "false",
+        "valueType": "bool",
+        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+      }
+    }
+  },
+  "attachmentsInfo.attachmentsArray.n": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
+    "mapping_type": "multiple_files",
+    "data": {
+      "description": {
+        "ID": "description",
+        "value": "",
+        "valueType": "string",
+        "label": "Liitteen kuvaus"
+      },
+      "fileName": {
+        "ID": "fileName",
+        "value": "",
+        "valueType": "string",
+        "label": "Tiedostonimi"
+      },
+      "fileType": {
+        "ID": "fileType",
+        "value": "0",
+        "valueType": "int",
+        "label": "fileType"
+      },
+      "integrationID": {
+        "ID": "integrationID",
+        "value": "",
+        "valueType": "string",
+        "label": "integrationID"
+      },
+      "isDeliveredLater": {
+        "ID": "isDeliveredLater",
+        "value": "",
+        "valueType": "bool",
+        "label": "Liite toimitetaan myöhemmin"
+      },
+      "isIncludedInOtherFile": {
+        "ID": "isIncludedInOtherFile",
+        "value": "",
+        "valueType": "bool",
+        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
+      }
+    }
+  }
+}

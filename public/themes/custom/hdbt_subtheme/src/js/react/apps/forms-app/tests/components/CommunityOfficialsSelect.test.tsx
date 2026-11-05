@@ -22,7 +22,7 @@ const renderSelect = (value?: string) => {
     <TestProvider
       initialValues={[
         [initializeFormAtom, responseData],
-        [formStateAtom, { currentStep: [0, { id: 'step-1', label: 'Step 1' }], reachedStep: 0 }],
+        [formStateAtom, { currentStep: [0, { id: 'step-1', label: 'Step 1' }], validationCutoff: 0 }],
       ]}
     >
       <CommunityOfficialsSelect

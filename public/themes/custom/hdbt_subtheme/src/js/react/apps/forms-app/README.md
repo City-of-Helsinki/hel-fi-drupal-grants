@@ -57,6 +57,7 @@ We have introduced some custom ways to configure the forms.
   * `fields` `string[]` defaults to the field's computedSum `sourceFields`, or the field itself.
   * `message` `string` translation key for the error, defaults to `sum_match.mismatch`. `{{left}}` (sum of `fields`), `{{right}}` (sum of `compareTo`) and `{{difference}}` are interpolated.
   * `successMessage` `string` translation key for the success notification, defaults to `sum_match.match`.
+  * `summaryMessage` `string` translation key for the error in the error list at the top of the form, defaults to `message`. Use it for a shorter variant of the inline error. Interpolates the same values as `message`.
 
   The rule is validated when moving to the next step, and when focus leaves the fieldset around `fields` or `compareTo` while both have a value. Incomplete input isn't flagged while the user is typing. Skipped while every field involved is empty. Declare the rule on a `sumMatchStatus` field placed after the compared fieldsets, and show the totals with `computedSum` summaries; they're colored by the result. Individual inputs aren't marked invalid, as it's unknown which number is wrong. Example:
   ```
@@ -110,6 +111,7 @@ We've added some custom keys to ui:options.
 
 * **addText** `string` Renders a custom text for 'add more' button (used in array fields). See `Templates.tsx`.
 * **affirmativeExpands** `boolean` Prints an indication that affirmative answer opens another field. See `Templates.tsx`.
+* **checkboxLabel** `string` Translation key for a boolean checkbox's own label (e.g. `boolean.yes`). When set, the field title renders as a fieldset heading above the checkbox. See `Input.tsx`.
 * **hideNameFromPint** `boolean` Hides field name when viewing a preview or submitted form. See `Templates.tsx`.
 * **printableName** `string` Overrides the field name in preview or submitted form. See `Templates.tsx`.
 * **removeText** `string` Renders a custom text for 'remove item' button (used in array fields). See `Templates.tsx`.

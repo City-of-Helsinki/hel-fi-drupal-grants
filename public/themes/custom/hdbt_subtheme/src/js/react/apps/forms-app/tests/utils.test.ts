@@ -180,6 +180,13 @@ describe('sum match', () => {
     expect(sumFieldValues(formData, [])).toBe(0);
   });
 
+  test('sumFieldValues sums a field over array items', () => {
+    const rows = { step: { rows: [{ hours: '1,5' }, {}, { hours: 3, groups: [{ n: 1 }, { n: 2 }] }] } };
+    expect(sumFieldValues(rows, ['step.rows[].hours'])).toBe(4.5);
+    expect(sumFieldValues(rows, ['step.rows[].groups[].n'])).toBe(3);
+    expect(sumFieldValues(rows, ['step.missing[].hours'])).toBe(0);
+  });
+
   test('getSumMismatch passes when sums are equal', () => {
     expect(getSumMismatch(formData, rule)).toBeNull();
   });
@@ -256,6 +263,18 @@ describe('sum match state', () => {
     expect(getSumMatchState(data, { ...rule, message: 'custom.mismatch' }, t)).toEqual({
       message: 'custom.mismatch {"difference":"9,5","left":"350,5","right":"360"}',
       status: 'mismatch',
+    });
+  });
+
+  test('getSumMatchState adds the interpolated summary on mismatch when configured', () => {
+    const data = { step: { ages: { minors: 300, adults: 60 }, genders: { women: 170, men: 180 } } };
+
+    expect(
+      getSumMatchState(data, { ...rule, message: 'custom.mismatch', summaryMessage: 'custom.summary' }, t),
+    ).toEqual({
+      message: 'custom.mismatch {"difference":"10","left":"350","right":"360"}',
+      status: 'mismatch',
+      summary: 'custom.summary {"difference":"10","left":"350","right":"360"}',
     });
   });
 

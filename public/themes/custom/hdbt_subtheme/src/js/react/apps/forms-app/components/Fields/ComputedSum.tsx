@@ -70,11 +70,12 @@ export const ComputedSum = ({ formData, idSchema, name, onChange, rawErrors, sch
     const rule = findSumMatchRule(sumMatchRules, sourceFields);
     const status = rule && !shouldRenderPreview ? sumMatchStates[rule.path]?.status : undefined;
 
+    const baseClass = 'hdbt-form--computed-sum-summary';
+    const modifiers = [status, shouldRenderPreview && 'preview'].filter(Boolean);
+    const className = [baseClass, ...modifiers.map((modifier) => `${baseClass}--${modifier}`)].join(' ');
+
     return (
-      <div
-        className={`hdbt-form--computed-sum-summary${status ? ` hdbt-form--computed-sum-summary--${status}` : ''}`}
-        id={idSchema.$id}
-      >
+      <div className={className} id={idSchema.$id}>
         <p className='hdbt-form--computed-sum-summary__total'>{total}</p>
         {schema?.description && !shouldRenderPreview && (
           <p className='hdbt-form--computed-sum-summary__description'>{schema.description}</p>

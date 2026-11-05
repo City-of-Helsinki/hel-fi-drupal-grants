@@ -699,6 +699,17 @@ input[type='radio']+label.form-required::after {
   margin-block: 0 $spacing-and-half;
 }
 
+// Element selector needed to beat the runtime-injected HDS Button margin: 0.
+button.hdbt-form__array-add {
+  margin-block-end: $spacing-and-half;
+}
+
+.hdbt-form--paragraph__body--with-tooltip {
+  align-items: flex-start;
+  display: flex;
+  gap: $spacing-half;
+}
+
 .hdbt-form--actions {
   display: flex;
   flex-direction: row;
