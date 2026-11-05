@@ -168,12 +168,10 @@
               }
             },
             {
-              "if": [
-                {
+              "if": {
                   "properties": {"subventions_total": {"minimum": 50000}},
                   "required": ["subventions_total"]
-                }
-              ],
+              },
               "then": {
                   "properties": {
                     "results_of_activities": {
