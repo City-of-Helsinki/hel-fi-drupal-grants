@@ -17,9 +17,9 @@
     <span aria-hidden="true" class="application-list--error-text">{{ 'There has been an error in updating application status, please reload the page.'|t({}, {'context': 'grants_handler'})}}</span>
   </div>
 
-  <div class="webform-submission__application_id">
-    <h2 class="webform-submission__application_id--header">{{ "Application number"|t }}</h2>
-    <div class="webform-submission__application_id--body">{{ submission_id }}</div>
+  <div class="grants-form-submission__application_id">
+    <h2 class="grants-form-submission__application_id--header">{{ "Application number"|t }}</h2>
+    <div class="grants-form-submission__application_id--body">{{ submission_id }}</div>
   </div>
 
   {% include 'grants-application-view-messages.html.twig' %}

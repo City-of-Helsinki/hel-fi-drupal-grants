@@ -118,11 +118,11 @@ export const RJSFFormContainer = ({
     if (!drupalSettings.grants_react_form.use_print) {
       return;
     }
-    document.body.classList.add('webform-submission-data-preview-page', 'webform-print');
+    document.body.classList.add('grants-form-submission-data-preview-page', 'grants-form-print');
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         window.print();
-        document.body.classList.remove('webform-submission-data-preview-page', 'webform-print');
+        document.body.classList.remove('grants-form-submission-data-preview-page', 'grants-form-print');
         setTimeout(() => window.history.back(), 500);
       });
     });
@@ -375,14 +375,14 @@ export const RJSFFormContainer = ({
         <Notification
           className='hdbt-form--notification empty-preview-notification'
           key='preview-notification'
-          label={Drupal.t('Preview mode', {}, { context: 'grants_webform_print' })}
+          label={Drupal.t('Preview mode', {}, { context: 'grants_form_print' })}
           size={NotificationSize.Small}
           type='alert'
         >
           {Drupal.t(
             'This printout is only for previewing the application and cannot be used when applying for a grant',
             {},
-            { context: 'grants_webform_print' },
+            { context: 'grants_form_print' },
           )}
         </Notification>,
       );

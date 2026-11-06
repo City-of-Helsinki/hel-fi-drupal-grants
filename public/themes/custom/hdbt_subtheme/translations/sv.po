@@ -695,3 +695,11 @@ msgstr "Obligatoriska fält är markerade med en asterisk (*)."
 msgctxt "Grants application"
 msgid "Allowed types: @formats"
 msgstr "Tillåtna filtyper: @formats"
+
+msgctxt "grants_form_print"
+msgid "Preview mode"
+msgstr "Förhandsgranskningsläge"
+
+msgctxt "grants_form_print"
+msgid "This printout is only for previewing the application and cannot be used when applying for a grant"
+msgstr "Denna utskrift är endast till för att förhandsgranska ansökan och kan inte användas vid ansökan om bidrag"
