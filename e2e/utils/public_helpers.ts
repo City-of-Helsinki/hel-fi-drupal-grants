@@ -160,20 +160,19 @@ const validatePageTitle = async (page: Page) => {
  *   A promise containing an array of dates.
  */
 const getReceivedApplicationDateValues = async (page: Page): Promise<Date[]> => {
-  const receivedApplications = await page.locator("#oma-asiointi__sent .application-list__item--submitted").all();
+  const receivedApplications = await page.locator("#own-applications__sent .application-list__submitted").all();
 
   const datePromises = receivedApplications.map(async a => {
-    const innerText = await a.innerText();
-    const trimmedText = innerText.trim();
-    return new Date(trimmedText)
+    const dateTime = await a.getAttribute('datetime');
+    return new Date(dateTime ?? '')
   })
   return await Promise.all(datePromises)
 }
 
 /**
- * The getReceivedApplicationCount function.
+ * The getSentApplicationCount function.
  *
- * This function returns the count of received applications
+ * This function returns the count of sent applications
  * on the Oma-asiointi page.
  *
  * @param page
@@ -182,8 +181,8 @@ const getReceivedApplicationDateValues = async (page: Page): Promise<Date[]> => 
  * @return
  *   A promise containing an number.
  */
-const getReceivedApplicationCount = async (page: Page): Promise<Number> => {
-  return await page.locator('.application-list [data-status="RECEIVED"]').count();
+const getSentApplicationCount = async (page: Page): Promise<Number> => {
+  return await page.locator('#own-applications__sent .card').count();
 }
 
 /**
@@ -222,7 +221,7 @@ export {
   validateComponent,
   validatePageTitle,
   getReceivedApplicationDateValues,
-  getReceivedApplicationCount,
+  getSentApplicationCount,
   isDescending,
   isAscending,
 }

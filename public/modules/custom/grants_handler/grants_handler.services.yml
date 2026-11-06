@@ -166,3 +166,18 @@ services:
       '@grants_profile.service',
       '@grants_handler.application_getter_service'
     ]
+
+  logger.channel.grants_handler:
+    parent: logger.channel_base
+    arguments: ['grants_handler']
+
+  Drupal\grants_handler\ApplicationListItemBuilder:
+    arguments: [
+      '@grants_handler.application_status_service',
+      '@grants_handler.application_getter_service',
+      '@Drupal\grants_application\Form\FormSettingsServiceInterface',
+      '@language_manager',
+      '@config.factory',
+      '@string_translation',
+      '@logger.channel.grants_handler',
+    ]
