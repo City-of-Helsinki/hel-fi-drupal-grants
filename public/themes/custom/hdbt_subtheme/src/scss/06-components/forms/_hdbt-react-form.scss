@@ -26,10 +26,6 @@
   margin-block-start: $spacing-double;
 }
 
-.hdbt-react-form__preview-accordion-item .grants-form--preview-section__label {
-  margin-block-end: $spacing-half;
-}
-
 .hdbt-react-form__preview-accordion-item .hdbt-form--section__content {
   padding-block-start: $spacing-quarter;
 
@@ -53,8 +49,7 @@
   margin-block-start: $spacing-and-half;
 }
 
-.hdbt-react-form__completion-page .page-title,
-.grants-application-print-page .page-title {
+.hdbt-react-form__completion-page .page-title {
   display: none;
 }
 
@@ -68,7 +63,6 @@
 }
 
 
-
 .empty-preview-notification {
   margin-block-start: $spacing-double;
 }
@@ -78,25 +72,6 @@
 
   .form-group {
     width: 100%;
-
-    // Labels inside another form-group need margin on top to avoid being too close to the previous field value.
-    .form-group .form-group .grants-form--preview-section__label {
-      margin-block-start: $spacing;
-    }
-  }
-
-  .form-group.field-object:has(> .grants-form--preview-section__label) {
-    border: 1px solid $color-black;
-    padding: $spacing;
-
-    > .field {
-      margin-block-end: $spacing-half;
-    }
-
-    > .grants-form--preview-section__label {
-      @include font('h6');
-      margin-block-start: 0;
-    }
   }
 }
 
@@ -230,43 +205,6 @@
   button:hover {
     text-decoration: none;
   }
-}
-
-.grants-form--official-details {
-  &:not(:empty) {
-    margin-block-start: $spacing;
-  }
-
-  .prh-content-block__content-row {
-    gap: $spacing;
-    grid-template-columns: repeat(1, 1fr);
-
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-
-// Computed sum field is readonly so that error handling can focus it in dom.
-// It's styled as disabled so that design matches what we render.
-.grants-form .hdbt-form--field--computed-sum input[readonly] {
-  background-color: var(--input-background-disabled);
-  border: var(--border-width) solid var(--input-border-color-disabled);
-  color: var(--input-color-disabled);
-  cursor: not-allowed;
-  padding: 0 var(--spacing-s);
-  -webkit-text-fill-color: var(--input-color-disabled);
-
-  &[aria-invalid='true'] {
-    border-color: var(--input-border-color-invalid);
-  }
-}
-
-.grants-form .hdbt-form--field--computed-sum:focus-within input[readonly]:focus {
-  box-shadow: 0 0 0 var(--outline-width) var(--color-focus-outline);
-  height: var(--input-height);
-  margin: 0;
-  outline: none;
 }
 
 // The computedSum summary variant shows the total as text. After its sum

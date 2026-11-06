@@ -543,7 +543,6 @@ function hdbt_subtheme_preprocess_html(array &$variables): void {
 
   if ($route_name === 'helfi_grants.print_view') {
     $variables['attributes']['class'][] = 'grants-application-print-page';
-    $variables['attributes']['class'][] = 'webform-print-page-html';
   }
 
   if (

@@ -1,0 +1,69 @@
+.grants-form--official-details {
+  &:not(:empty) {
+    margin-block-start: $spacing;
+  }
+
+  .prh-content-block__content-row {
+    gap: $spacing;
+    grid-template-columns: repeat(1, 1fr);
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+  }
+}
+
+// Computed sum field is readonly so that error handling can focus it in dom.
+// It's styled as disabled so that design matches what we render.
+.grants-form .hdbt-form--field--computed-sum input[readonly] {
+  background-color: var(--input-background-disabled);
+  border: var(--border-width) solid var(--input-border-color-disabled);
+  color: var(--input-color-disabled);
+  cursor: not-allowed;
+  padding: 0 var(--spacing-s);
+  -webkit-text-fill-color: var(--input-color-disabled);
+
+  &[aria-invalid='true'] {
+    border-color: var(--input-border-color-invalid);
+  }
+}
+
+.grants-form .hdbt-form--field--computed-sum:focus-within input[readonly]:focus {
+  box-shadow: 0 0 0 var(--outline-width) var(--color-focus-outline);
+  height: var(--input-height);
+  margin: 0;
+  outline: none;
+}
+
+
+// Grants specific accordion content styles.
+
+.hdbt-react-form__preview-accordion-item .grants-form--preview-section__label {
+  margin-block-end: $spacing-half;
+}
+
+
+.grants-application-print-page .page-title {
+  display: none;
+}
+
+.hdbt-form__preview {
+  // Old code - check if really 3x .form-group (or only 2x).
+  .form-group .form-group .form-group .grants-form--preview-section__label {
+    margin-block-start: $spacing;
+  }
+
+  .form-group.field-object:has(> .grants-form--preview-section__label) {
+    border: 1px solid $color-black;
+    padding: $spacing;
+
+    > .field {
+      margin-block-end: $spacing-half;
+    }
+
+    > .grants-form--preview-section__label {
+      @include font('h6');
+      margin-block-start: 0;
+    }
+  }
+  }
