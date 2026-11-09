@@ -3,7 +3,7 @@
     attach: function attach() {
       $(document).ready(() => {
         $('input:not([type="file"]):not(.js-webform-input-mask), textarea')
-          .not('#grants-react-form input, #grants-react-form textarea')
+          .not('#grants-form input, #grants-form textarea')
           .on('change', function () {
             this.value = this.value.trim();
           });

@@ -23,7 +23,7 @@ const formatSchemaErrors = (errors: string) => (
   </div>
 );
 
-const rootSelector: string = 'grants-react-form';
+const rootSelector: string = 'grants-form';
 const rootElement: HTMLElement | null = document.getElementById(rootSelector);
 const { application_number: applicationTypeId, form_identifier: formIdentifier } = drupalSettings.grants_react_form;
 
