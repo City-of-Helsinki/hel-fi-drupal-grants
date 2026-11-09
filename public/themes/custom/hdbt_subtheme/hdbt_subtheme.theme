@@ -542,7 +542,7 @@ function hdbt_subtheme_preprocess_html(array &$variables): void {
   $route_name = $current_route->getRouteName();
 
   if ($route_name === 'helfi_grants.print_view') {
-    $variables['attributes']['class'][] = 'grants-application-print-page';
+    $variables['attributes']['class'][] = 'grants-form__print-page';
   }
 
   if (
@@ -568,7 +568,7 @@ function hdbt_subtheme_preprocess_html(array &$variables): void {
   }
 
   if ($route_name == 'helfi_grants.completion') {
-    $variables['attributes']['class'][] = 'hdbt-react-form__completion-page';
+    $variables['attributes']['class'][] = 'hdbt-form__completion-page';
   }
 }
 

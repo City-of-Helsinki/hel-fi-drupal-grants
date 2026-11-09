@@ -118,11 +118,9 @@ export const RJSFFormContainer = ({
     if (!drupalSettings.grants_react_form.use_print) {
       return;
     }
-    document.body.classList.add('grants-form-submission-data-preview-page', 'grants-form-print');
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         window.print();
-        document.body.classList.remove('grants-form-submission-data-preview-page', 'grants-form-print');
         setTimeout(() => window.history.back(), 500);
       });
     });

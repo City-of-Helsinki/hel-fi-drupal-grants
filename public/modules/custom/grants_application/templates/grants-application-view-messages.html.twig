@@ -1,12 +1,12 @@
-<div class="grants-form-submission-messages__wrapper">
+<div class="grants-form__submission-messages__wrapper">
   <h2>{{ 'Messages'|t({}, {'context': 'grants_handler'})}}</h2>
   {% if not hideMessageText and not isDraft %}
     <p>{{ 'You can send a message to the handler of the application or provide a missing attachment'|t({}, {'context': 'grants_handler'})}}</p>
   {% endif %}
-  <div class="grants-form-submission-messages">
+  <div class="grants-form__submission-messages">
     <h4>{{ 'Sent messages'|t({}, {'context': 'grants_handler'})}}</h4>
     <hr/>
-    <div class="grants-form-submission-data grants-form-submission-data--grants-form-">
+    <div class="grants-form__submission-data grants-form__submission-data--grants-form-">
       {% if isDraft %}
         <p>{{ 'You cannot send messages to an incomplete application.'|t({}, {'context': 'grants_handler'}) }}</p>
       {% endif %}
@@ -14,22 +14,22 @@
         <p>{{ 'Messages cannot be sent to a resolved application.'|t({}, {'context': 'grants_handler'}) }}</p>
       {% endif %}
       {% if messages %}
-      <ul class="grants-form-submission-messages__messages-list">
+      <ul class="grants-form__submission-messages__messages-list">
         {% for message in messages %}
-          <li data-message-id="{{ message.messageId }}" class="grants-form-submission-messages__message">
+          <li data-message-id="{{ message.messageId }}" class="grants-form__submission-messages__message">
           {% if (message.messageStatus == 'UNREAD' and message.sentBy == 'Avustusten kasittelyjarjestelma') %}
-            <div class="grants-form-submission-messages__new-message">
+            <div class="grants-form__submission-messages__new-message">
               <span class="hel-icon icon hel-icon--alert-circle" aria-hidden="true"></span>
               <span>{{ "New message"|t({}, {'context': 'grants_handler'})}}</span>
             </div>
           {% endif %}
-          <h5 class="grants-form-submission-messages__message-sender hdbt-react-form__message__sender"><strong>{{ message.sentBy }}</strong> - {{ message.sendDateTime|date('d.m.Y H:i:s') }}</h5>
-          <div class="grants-form-submission-messages__message-body">{{ message.body }}</div>
+          <h5 class="grants-form__submission-messages__message-sender hdbt-form__message__sender"><strong>{{ message.sentBy }}</strong> - {{ message.sendDateTime|date('d.m.Y H:i:s') }}</h5>
+          <div class="grants-form__submission-messages__message-body">{{ message.body }}</div>
           {{ message.markReadLink }}
           {% if message.attachments %}
-            <ul class="grants-form-submission-messages__message__attachments hdbt-react-form__message__attachments">
+            <ul class="grants-form__submission-messages__message__attachments hdbt-form__message__attachments">
               {% for attachment in message.attachments %}
-                <li class="grants-form-submission-messages__message__attachment">
+                <li class="grants-form__submission-messages__message__attachment">
                   <span class="hel-icon hel-icon--paperclip" aria-hidden="true"></span>
                   <strong>{{ attachment.fileName }}</strong> - {{ attachment.description }}
                 </li>

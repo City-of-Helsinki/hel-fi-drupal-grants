@@ -1,9 +1,9 @@
-<table class="grants-application-print-wrapper-table" aria-label="{{ 'Print table'|t }}">
+<table class="grants-form__print-wrapper-table" aria-label="{{ 'Print table'|t }}">
   <thead><tr><th>
-    <div class="grants-application-print-header-space"></div>
+    <div class="grants-form__print-header-space"></div>
   </th></tr></thead>
   <tbody><tr><td>
-    <div class="grants-application-print">
+    <div class="grants-form__print-content">
 <div class="application-list__status__wrapper">
         <div class="container application-list__status__container">
           <div class="application-list__status__item">
@@ -28,22 +28,22 @@
     </div>
   </td></tr></tbody>
   <tfoot><tr><td>
-    <div class="grants-application-print-footer-space"></div>
+    <div class="grants-form__print-footer-space"></div>
   </td></tr></tfoot>
 </table>
-<header class="grants-application-print-header">
+<header class="grants-form__print-header">
   {{ helsinki_logo }}
-  <div class="grants-application-print-header-left-text"></div>
-  <div class="grants-application-print-header-right-text">
+  <div class="grants-form__print-header-left-text"></div>
+  <div class="grants-form__print-header-right-text">
     {{ title }}<br>
     {{ submission_id }}
   </div>
 </header>
-<footer class="grants-application-print-footer">
+<footer class="grants-form__print-footer">
   {{ helsinki_logo }}
-  <div class="grants-application-print-footer-left-text">
+  <div class="grants-form__print-footer-left-text">
     © Helsingin kaupunki {{ 'now'|date('Y') }} |
     <a href="https://www.hel.fi">www.hel.fi</a>
   </div>
-  <div class="grants-application-print-footer-right-text"></div>
+  <div class="grants-form__print-footer-right-text"></div>
 </footer>

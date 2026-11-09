@@ -121,7 +121,7 @@ const PreviewStep = ({
 
   if (drupalSettings.grants_react_form.use_print) {
     return (
-      <div className='hdbt-react-form__preview-accordion-item hdbt-react-form__preview-accordion-item--print'>
+      <div className='hdbt-form__preview-accordion-item hdbt-form__preview-accordion-item--print'>
         <h3>{heading}</h3>
         {stepId === 'applicant_info' && <PreviewApplicantInfo />}
         {properties.map((field) => field.content)}
@@ -131,10 +131,7 @@ const PreviewStep = ({
 
   return (
     <Accordion
-      className={
-        'hdbt-react-form__preview-accordion-item' +
-        (stepNumber === 1 ? ' hdbt-react-form__preview-accordion-item--first' : '')
-      }
+      className={`hdbt-form__preview-accordion-item${stepNumber === 1 ? ' hdbt-form__preview-accordion-item--first' : ''}`}
       heading={heading?.toString()}
       headingLevel={3}
       initiallyOpen

@@ -36,7 +36,7 @@ const handleErrorFallback: FallbackRender = ({ error }) => {
   }
 
   if (error instanceof RedirectError) {
-    return <LoadingSpinner className='hdbt-react-form__loading-spinner' />;
+    return <LoadingSpinner className='hdbt-form__loading-spinner' />;
   }
 
   if (error instanceof BackendError) {

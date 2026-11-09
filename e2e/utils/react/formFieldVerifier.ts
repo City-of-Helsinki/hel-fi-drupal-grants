@@ -1008,7 +1008,7 @@ export async function modifySubmittedApplication(
 
   // Open the application and follow the edit link.
   await openSentApplication(page, applicationNumber);
-  await page.locator('.hdbt-react-form__submission-info__row--edit a').first().click();
+  await page.locator('.hdbt-form__submission-info__row--edit a').first().click();
   await waitForFormLoad(page);
 
   // Find a filled textarea so we can change its value.

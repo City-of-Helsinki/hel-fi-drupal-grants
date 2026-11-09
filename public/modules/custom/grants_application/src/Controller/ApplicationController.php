@@ -808,7 +808,7 @@ final class ApplicationController extends ControllerBase {
 
     if (!$isError) {
       $replaceMessageContainerCommand = new ReplaceCommand(
-        $dataSelector . ' .grants-form-submission-messages__new-message',
+        $dataSelector . ' .grants-form__submission-messages__new-message',
         ''
       );
       // Mark as read button.

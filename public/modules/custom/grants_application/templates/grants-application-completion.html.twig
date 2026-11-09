@@ -7,8 +7,8 @@
  */
 #}
 {% set classes = [
-  'grants-form-submission-data',
-  view_mode ? 'grants-form-submission-data--view-mode-' ~ view_mode|clean_class,
+  'grants-form__submission-data',
+  view_mode ? 'grants-form__submission-data--view-mode-' ~ view_mode|clean_class,
 ] %}
 
 <div{{ attributes.addClass(classes) }}>
