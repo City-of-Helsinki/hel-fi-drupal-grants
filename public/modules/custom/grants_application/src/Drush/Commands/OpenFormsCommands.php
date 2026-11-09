@@ -88,7 +88,7 @@ final class OpenFormsCommands extends DrushCommands {
         continue;
       }
 
-      $open = new \DateTimeImmutable('yesterday');
+      $open = new \DateTimeImmutable('yesterday', new \DateTimeZone('UTC'));
       $close = $open->add(new \DateInterval(sprintf('P%dY', self::YEARS_OPEN)));
 
       if (!$dryRun) {

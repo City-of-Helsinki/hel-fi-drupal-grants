@@ -14,6 +14,7 @@ use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\user\EntityOwnerInterface;
 use Drupal\user\EntityOwnerTrait;
 
@@ -241,8 +242,8 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
       'application_type_id' => (int) $this->application_type_id->value,
       'form_identifier' => $this->form_identifier->value,
       'application_industry' => $this->application_industry->value,
-      'application_open' => $this->application_open->value,
-      'application_close' => $this->application_close->value,
+      'application_open' => $this->getDateTimeFieldValue('application_open'),
+      'application_close' => $this->getDateTimeFieldValue('application_close'),
       'applicant_types' => $this->getMultivalueFieldValues('applicant_types'),
       'subvention_type' => array_map('intval', $this->getMultivalueFieldValues('application_subvention_type')),
       'target_group' => $targetGroupId,
@@ -250,6 +251,31 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
       'continuous' => (bool) $this->application_continuous->value,
       'disable_copy' => (bool) $this->disable_copying->value,
     ];
+  }
+
+  /**
+   * Get a datetime field value as an ISO 8601 string with a UTC offset.
+   *
+   * @param string $field
+   *   The datetime field name.
+   *
+   * @return string|null
+   *   The date, e.g. "2026-11-02T16:00:00+02:00", or NULL if empty/invalid.
+   */
+  protected function getDateTimeFieldValue(string $field): ?string {
+    $value = $this->get($field)->value;
+    if (!$value) {
+      return NULL;
+    }
+
+    try {
+      return (new \DateTimeImmutable($value, new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE)))
+        ->setTimezone(new \DateTimeZone(date_default_timezone_get()))
+        ->format(\DateTimeInterface::ATOM);
+    }
+    catch (\Exception) {
+      return NULL;
+    }
   }
 
   /**

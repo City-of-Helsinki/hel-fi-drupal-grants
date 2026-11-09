@@ -252,7 +252,7 @@ const verifyDraftSave = async (
   await page.waitForURL('**/oma-asiointi');
   await expect(await page.getByText('Luonnos').first()).toBeVisible()
   await expect(await page.getByRole('link', {name: 'Muokkaa hakemusta'}).first()).toBeEnabled();
-  const applicationId = await page.locator('.application-list__item--application-number').first().innerText();
+  const applicationId = await page.locator('.application-list__application-number').first().innerText();
 
   if (!applicationId) {
     logger('WARNING: Failed retrieving application ID.');
