@@ -492,8 +492,12 @@ final class DraftApplication extends ResourceBase {
       $this->atvService->updateExistingDocument($sideDocument);
 
       $document->setDeleteAfter($settings->getDraftDeleteAfter());
+      // Set language for the application, same as webform applications do.
+      $langcode = $this->languageManager->getCurrentLanguage()->getId();
+      $document->addMetadata('language', $langcode);
       $this->atvService->updateExistingDocument($document);
 
+      $submission->set('langcode', $langcode);
       $submission->setChangedTime(time());
       $submission->save();
     }
