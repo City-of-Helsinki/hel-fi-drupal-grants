@@ -7,6 +7,7 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
@@ -50,8 +51,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     UuidInterface $uuid,
     #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    #[Autowire(service: 'logger.channel.grants_profile')]
+    protected LoggerChannelInterface $logger,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid);
+    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid, $logger);
   }
 
   /**

@@ -66,7 +66,6 @@ abstract class GrantsProfileFormBase extends FormBase {
     protected GrantsProfileService $grantsProfileService,
     protected SessionInterface $session,
     protected UuidInterface $uuid,
-    #[Autowire(service: 'logger.channel.grants_profile')]
     protected LoggerChannelInterface $logger,
   ) {}
 

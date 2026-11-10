@@ -4,6 +4,7 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_metadata\Validator\EmailValidator;
@@ -12,6 +13,7 @@ use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
 use Drupal\grants_profile\ProfileFetchTimeoutException;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -31,8 +33,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     UuidInterface $uuid,
     protected PRHUpdaterService $prhUpdaterService,
     protected FormLockService $lockService,
+    #[Autowire(service: 'logger.channel.grants_profile')]
+    protected LoggerChannelInterface $logger,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid);
+    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid, $logger);
   }
 
   /**
