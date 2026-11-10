@@ -34,7 +34,6 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     protected LoggerChannelInterface $logger,
     #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-
   ) {
     parent::__construct($typedDataManager, $grantsProfileService, $session, $uuid, $logger);
   }
