@@ -58,6 +58,8 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Session data.
    * @param \Drupal\Component\Uuid\UuidInterface $uuid
    *   Uuid generator.
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
+   *   The logger.
    */
   public function __construct(
     protected TypedDataManagerInterface $typedDataManager,
