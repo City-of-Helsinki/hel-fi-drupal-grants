@@ -565,6 +565,12 @@ const clickButton = async (
       element.click(),
     ]);
   }
+
+  // Wait for the clicked step to become the current step.
+  if (buttonSelector.type === 'form-topnavi-link') {
+    const currentStep = page.locator(`li[data-webform-page="${buttonSelector.value}"] [aria-current="step"]`);
+    await expect(currentStep, `Step ${buttonSelector.value} did not open.`).toBeVisible({timeout: 30_000});
+  }
 };
 
 /**
