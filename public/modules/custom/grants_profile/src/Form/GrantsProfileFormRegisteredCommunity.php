@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form.
- *
- * @phpstan-consistent-constructor
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
@@ -28,10 +26,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     GrantsProfileService $grantsProfileService,
     SessionInterface $session,
     UuidInterface $uuid,
-    protected PRHUpdaterService $prhUpdaterService,
-    protected FormLockService $lockService,
     #[Autowire(service: 'logger.channel.grants_profile')]
     protected LoggerChannelInterface $logger,
+    protected PRHUpdaterService $prhUpdaterService,
+    protected FormLockService $lockService,
   ) {
     parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid, $logger);
   }

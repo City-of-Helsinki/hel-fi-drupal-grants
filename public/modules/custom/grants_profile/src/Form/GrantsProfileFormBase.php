@@ -31,8 +31,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form base.
- *
- * @phpstan-consistent-constructor
  */
 abstract class GrantsProfileFormBase extends FormBase {
 

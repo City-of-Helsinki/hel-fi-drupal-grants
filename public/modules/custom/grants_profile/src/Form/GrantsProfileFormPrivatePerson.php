@@ -20,8 +20,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form.
- *
- * @phpstan-consistent-constructor
  */
 class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
@@ -32,10 +30,11 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     GrantsProfileService $grantsProfileService,
     SessionInterface $session,
     UuidInterface $uuid,
-    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
-    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     #[Autowire(service: 'logger.channel.grants_profile')]
     protected LoggerChannelInterface $logger,
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+
   ) {
     parent::__construct($typedDataManager, $grantsProfileService, $session, $uuid, $logger);
   }
