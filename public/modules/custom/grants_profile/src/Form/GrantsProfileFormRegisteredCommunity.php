@@ -23,9 +23,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
-  /**
-   * PRH data update service class.
-   */
   public function __construct(
     TypedDataManagerInterface $typed_data_manager,
     GrantsProfileService $grantsProfileService,

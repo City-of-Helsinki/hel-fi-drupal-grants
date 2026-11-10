@@ -47,20 +47,6 @@ abstract class GrantsProfileFormBase extends FormBase {
    */
   protected array $tOpts = ['context' => 'grants_profile'];
 
-  /**
-   * Constructs a new GrantsProfileForm object.
-   *
-   * @param \Drupal\Core\TypedData\TypedDataManagerInterface $typedDataManager
-   *   Typed data manager.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Profile.
-   * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-   *   Session data.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid
-   *   Uuid generator.
-   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
-   *   The logger.
-   */
   public function __construct(
     protected TypedDataManagerInterface $typedDataManager,
     protected GrantsProfileService $grantsProfileService,

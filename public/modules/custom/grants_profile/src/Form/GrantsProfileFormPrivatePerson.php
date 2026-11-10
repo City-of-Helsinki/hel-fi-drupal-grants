@@ -27,20 +27,6 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
   use StringTranslationTrait;
 
-  /**
-   * Constructs a new GrantsProfileForm object.
-   *
-   * @param \Drupal\Core\TypedData\TypedDataManager $typedDataManager
-   *   Typed data manager.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Profile service.
-   * @param \Symfony\Component\HttpFoundation\Session\Session $session
-   *   Session data.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid
-   *   Uuid generator.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-   *   Data for Helsinki Profile.
-   */
   public function __construct(
     TypedDataManagerInterface $typedDataManager,
     GrantsProfileService $grantsProfileService,
