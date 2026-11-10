@@ -12,6 +12,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
@@ -25,8 +26,7 @@ use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -35,11 +35,10 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  *
  * @phpstan-consistent-constructor
  */
-abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInterface {
+abstract class GrantsProfileFormBase extends FormBase {
 
   use StringTranslationTrait;
   use AutowireTrait;
-  use LoggerAwareTrait;
 
   /**
    * Variable for translation context.
@@ -65,6 +64,8 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
     protected GrantsProfileService $grantsProfileService,
     protected SessionInterface $session,
     protected UuidInterface $uuid,
+    #[Autowire(service: 'logger.channel.grants_profile')]
+    protected LoggerChannelInterface $logger,
   ) {}
 
   /**
