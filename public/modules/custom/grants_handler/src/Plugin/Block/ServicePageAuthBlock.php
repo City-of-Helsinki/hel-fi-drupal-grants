@@ -136,6 +136,9 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
         '#auth' => 'auth',
         '#text' => $description,
         '#reactFormLink' => $this->servicePageBlockService->getReactFormLink(),
+        '#previewLink' => Url::fromRoute('helfi_grants.forms_app_empty_preview', [
+          'form_identifier' => $settings->getFormIdentifier(),
+        ]),
         '#theme' => 'grants_service_page_block',
       ];
     }
@@ -180,7 +183,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
         '#link' => $applicationLink,
         '#text' => $description,
         '#theme' => 'grants_service_page_block',
-        '#webformLink' => $webformLink,
+        '#previewLink' => $webformLink,
       ];
     }
 

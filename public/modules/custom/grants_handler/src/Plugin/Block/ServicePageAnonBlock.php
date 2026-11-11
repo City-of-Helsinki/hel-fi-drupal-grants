@@ -132,7 +132,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
 
     if ($formSettings) {
       $isApplicationOpen = $formSettings->isApplicationOpen();
-      $formLink = Url::fromRoute('helfi_grants.forms_app_empty_preview', [
+      $previewLink = Url::fromRoute('helfi_grants.forms_app_empty_preview', [
         'form_identifier' => $formSettings->getFormIdentifier(),
       ]);
       $selectedRole = $this->grantsProfileService->getSelectedRoleData();
@@ -141,7 +141,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     else {
       $webform = $this->getWebform();
       $isApplicationOpen = $this->applicationStatusService->isApplicationOpen($webform);
-      $formLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webform->id()]);
+      $previewLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webform->id()]);
       $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
     }
 
@@ -198,7 +198,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
         '#link' => $link,
         '#title' => $title,
         '#text' => $text,
-        '#webformLink' => $formLink,
+        '#previewLink' => $previewLink,
         '#auth' => 'anon',
       ];
     }
