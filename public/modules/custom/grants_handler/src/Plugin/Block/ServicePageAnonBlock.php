@@ -132,8 +132,9 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
 
     if ($formSettings) {
       $isApplicationOpen = $formSettings->isApplicationOpen();
-      // @todo UHF-12685 This is the actual physical print url, paper&ink.
-      $formLink = '';
+      $formLink = Url::fromRoute('helfi_grants.forms_app_empty_preview', [
+        'form_identifier' => $formSettings->getFormIdentifier(),
+      ]);
       $selectedRole = $this->grantsProfileService->getSelectedRoleData();
       $isCorrectApplicantType = $selectedRole ? $formSettings->isAllowedApplicantType($selectedRole['type']) : FALSE;
     }
