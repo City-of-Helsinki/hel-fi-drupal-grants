@@ -31,10 +31,10 @@ export const FormSummary = () => {
     handlers?.length && Array.isArray(handlers[handlers.length - 1]) ? handlers[handlers.length - 1] : null;
 
   return (
-    <div className='hdbt-react-form__submission-info'>
-      <div className='hdbt-react-form__submission-info__row hdbt-react-form__submission-info__row--top'>
+    <div className='hdbt-form__submission-info'>
+      <div className='hdbt-form__submission-info__row hdbt-form__submission-info__row--top'>
         <h4>{formTitle}</h4>
-        <div className='hdbt-react-form__submission-info__row__supportlinks'>
+        <div className='hdbt-form__submission-info__row__supportlinks'>
           <Button
             iconStart={<IconPrinter />}
             theme={supplementaryButtonTheme}
@@ -47,7 +47,7 @@ export const FormSummary = () => {
           </Button>
         </div>
       </div>
-      <div className='hdbt-react-form__submission-info__row hdbt-react-form__submission-info__row--main'>
+      <div className='hdbt-form__submission-info__row hdbt-form__submission-info__row--main'>
         <div>
           <h5>{Drupal.t('Application number', {}, { context: 'Grants application: Submitted form' })}</h5>
           {applicationNumber}

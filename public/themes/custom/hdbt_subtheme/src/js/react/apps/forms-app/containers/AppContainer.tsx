@@ -116,7 +116,7 @@ export const AppContainer = ({
   );
 
   if (isLoading || isValidating) {
-    return <LoadingSpinner className='hdbt-react-form__loading-spinner' />;
+    return <LoadingSpinner className='hdbt-form__loading-spinner' />;
   }
 
   if (error) {

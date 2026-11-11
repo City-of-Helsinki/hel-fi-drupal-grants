@@ -1,0 +1,44 @@
+.grants-form__submission-messages {
+  background: var(--color-black-5);
+  margin-top: var(--spacing-3-xl);
+  padding: var(--spacing-l);
+
+  h4,
+  h5 {
+    margin-top: 0;
+  }
+
+  hr {
+    margin: var(--spacing-l) 0;
+  }
+}
+
+.grants-form__submission-messages__new-message {
+  align-items: center;
+  background: var(--color-alert);
+  display: inline-flex;
+  font-weight: bold;
+  gap: $spacing-half;
+  margin-bottom: var(--spacing-m);
+  padding: $spacing-half var(--spacing-xs);
+  text-transform: uppercase;
+}
+
+.grants-form__submission-messages__messages-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.grants-form__submission-messages__message {
+  margin: 0;
+  padding: 0;
+
+  .hds-button {
+    margin-top: $spacing;
+  }
+}
+
+.grants-form__submission-messages__message__attachments {
+  list-style: none;
+}
