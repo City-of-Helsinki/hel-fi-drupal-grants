@@ -8,6 +8,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Query\Sql\Query;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -32,6 +33,8 @@ final class ApplicationMetadataHooks {
    * Implements hook_views_query_alter().
    *
    * Hide unnecessary applications from application_metadata view.
+   *
+   * @phpstan-param \Drupal\views\Plugin\views\query\Sql $sql
    */
   #[Hook('views_query_alter')]
   public function viewsQueryAlter(ViewExecutable $view, QueryPluginBase $query): void {
