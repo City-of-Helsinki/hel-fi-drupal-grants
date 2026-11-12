@@ -31,7 +31,7 @@ final class ApplicationMetadataHooksTest extends KernelTestBase {
   /**
    * The application metadata entities.
    *
-   * @var array<ApplicationMetadata> $metadata
+   * @var array<ApplicationMetadata>
    */
   private array $metadata;
 
