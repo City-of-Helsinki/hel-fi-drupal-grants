@@ -26,6 +26,7 @@ permissions:
   - 'access application_metadata overview'
   - 'access toolbar'
   - 'access webform overview'
+  - 'create application_metadata'
   - 'create url aliases'
   - 'delete own files'
   - 'edit any webform'
