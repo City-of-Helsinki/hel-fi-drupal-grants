@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel\Hook;
 
-use Drupal\Core\Config\FileStorage;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\grants_application\Entity\ApplicationMetadata;
@@ -12,7 +11,6 @@ use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\UserInterface;
-use Drupal\views\Entity\View;
 use Drupal\views\Views;
 
 /**
