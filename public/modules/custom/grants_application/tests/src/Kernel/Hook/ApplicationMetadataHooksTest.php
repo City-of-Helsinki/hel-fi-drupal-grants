@@ -89,7 +89,7 @@ final class ApplicationMetadataHooksTest extends KernelTestBase {
 
     $this->assertCount(1, $view->result);
 
-    $operations = ['view', 'update', 'delete', 'create'];
+    $operations = ['view', 'update', 'delete'];
 
     foreach ($this->metadata as $entity) {
       if ($entity->getMetadata()['application_industry'] === 'KUVA') {
@@ -109,6 +109,12 @@ final class ApplicationMetadataHooksTest extends KernelTestBase {
         }
       }
     }
+
+    $this->assertTrue(
+      $this->container->get('entity_type.manager')
+        ->getAccessControlHandler('application_metadata')
+        ->createAccess(NULL, $industryUser),
+    );
   }
 
   /**
