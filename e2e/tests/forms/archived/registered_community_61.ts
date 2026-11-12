@@ -1,10 +1,10 @@
 import {Page, test} from '@playwright/test';
-import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
-import {fillHakijanTiedotRegisteredCommunity,} from "../../utils/form_helpers";
-import {fillFormField, uploadFile} from "../../utils/input_helpers";
-import {generateTests} from "../../utils/test_generator_helpers";
-import {Role, selectRole} from "../../utils/auth_helpers";
-import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
+import {FormData, PageHandlers, FormPage} from "../../../utils/data/test_data";
+import {fillHakijanTiedotRegisteredCommunity} from "../../../utils/form_helpers";
+import {fillFormField, fillInputField, uploadFile} from "../../../utils/input_helpers";
+import {generateTests} from "../../../utils/test_generator_helpers";
+import {Role, selectRole} from "../../../utils/auth_helpers";
+import {registeredCommunityApplications as applicationData} from '../../../utils/data/application_data';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -16,9 +16,9 @@ const formPages: PageHandlers = {
       await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
-    if (items['edit-subventions-items-1-amount']) {
-      await page.locator('#edit-subventions-items-1-amount')
-        .fill(items['edit-subventions-items-1-amount'].value ?? '');
+    if (items['edit-subventions-items-0-amount']) {
+      await page.locator('#edit-subventions-items-0-amount')
+        .fill(items['edit-subventions-items-0-amount'].value ?? '');
     }
 
     if (items['edit-compensation-purpose']) {
@@ -28,10 +28,6 @@ const formPages: PageHandlers = {
 
     if (items['edit-myonnetty-avustus']) {
       await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
-    }
-
-    if (items['edit-haettu-avustus-tieto']) {
-      await fillFormField(page, items['edit-haettu-avustus-tieto'], 'edit-haettu-avustus-tieto')
     }
 
     if (items['edit-benefits-loans']) {
@@ -44,6 +40,16 @@ const formPages: PageHandlers = {
         .fill(items['edit-benefits-premises'].value ?? '');
     }
 
+    if (items['edit-compensation-boolean-1']) {
+      await page.locator('#edit-compensation-boolean')
+        .getByText(items['edit-compensation-boolean-1'].value ?? '').click();
+    }
+
+    if (items['edit-compensation-explanation']) {
+      await page.locator('#edit-compensation-explanation')
+        .fill(items['edit-compensation-explanation'].value ?? '');
+    }
+
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
@@ -52,17 +58,93 @@ const formPages: PageHandlers = {
         .fill(items['edit-business-purpose'].value ?? '');
     }
 
-    if (items['edit-community-practices-business-1']) {
+    if (items['edit-community-practices-business-0']) {
       await page.locator('#edit-community-practices-business')
-        .getByText(items['edit-community-practices-business-1'].value ?? '').click();
+        .getByText(items['edit-community-practices-business-0'].value ?? '').click();
     }
 
+    await fillInputField(
+      items['edit-fee-person'].value ?? '',
+      items['edit-fee-person'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-fee-person',
+      },
+      page,
+      'edit-fee-person'
+    );
+
+    await fillInputField(
+      items['edit-fee-community'].value ?? '',
+      items['edit-fee-community'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-fee-community',
+      },
+      page,
+      'edit-fee-community'
+    );
+
+    await fillInputField(
+      items['edit-members-applicant-person-global'].value ?? '',
+      items['edit-members-applicant-person-global'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-person-global',
+      },
+      page,
+      'edit-members-applicant-person-global'
+    );
+
+    await fillInputField(
+      items['edit-members-applicant-person-local'].value ?? '',
+      items['edit-members-applicant-person-local'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-person-local',
+      },
+      page,
+      'edit-members-applicant-person-local'
+    );
+
+    await fillInputField(
+      items['edit-members-applicant-community-global'].value ?? '',
+      items['edit-members-applicant-community-global'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-community-global',
+      },
+      page,
+      'edit-members-applicant-community-global'
+    );
+
+    await fillInputField(
+      items['edit-members-applicant-community-local'].value ?? '',
+      items['edit-members-applicant-community-local'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-community-local',
+      },
+      page,
+      'edit-members-applicant-community-local'
+    );
+
   },
+
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-yhteison-saannot-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].value
+      )
     }
 
     if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
@@ -137,11 +219,11 @@ const formPages: PageHandlers = {
   },
 };
 
-test.describe('LIIKUNTALAITOS(57)', () => {
+test.describe('YMPARISTOYLEIS(61)', () => {
   let page: Page;
 
   const profileType = 'registered_community';
-  const formId = '57';
+  const formId = '61';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();
