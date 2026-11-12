@@ -153,6 +153,7 @@ export default defineConfig({
         '/forms/53_kasko_ip_lisa/*',
         '/forms/56_liikunta_yleisavustushakemus/*',
         '/forms/57_liikunta_laitosavustushakemus/*',
+        '/forms/58_liikunta_suunnistuskartta_avustu/*',
         '/forms/59_liikunta_tapahtuma/*',
         '/forms/61_ymparistopalvelut_yleisavustus/*',
         '/forms/64_asukasosallisuus_pienavustushake/*',
@@ -163,7 +164,9 @@ export default defineConfig({
         '/forms/70_segregaation_ehkaisemisavustus/*',
         '/forms/71_hyteed_yleis/*',
         '/forms/72_sotepe_yleis/*',
+        '/forms/73_nuorleiri/*',
         '/forms/74_tyollisyys/*',
+        '/forms/75_nuortoimintapalkka/*',
         '/forms/76_hyteed_pienavustus/*',
         '/forms/77_nuorisotoiminta_projektiavustus/*',
         '/forms/78_tyollisyys_pienavustus/*',
@@ -223,6 +226,11 @@ export default defineConfig({
       dependencies: ['profile-registered_community'],
     },
     {
+      name: 'forms-58-liikunta-suunnistuskartta-avustu',
+      testMatch: '/forms/58_liikunta_suunnistuskartta_avustu/*',
+      dependencies: ['profile-registered_community'],
+    },
+    {
       name: 'forms-59-liikunta-tapahtuma',
       testMatch: '/forms/59_liikunta_tapahtuma/*',
       dependencies: ['profile-registered_community'],
@@ -273,9 +281,19 @@ export default defineConfig({
       dependencies: ['profile-registered_community'],
     },
     {
+      name: 'forms-73-nuorleiri',
+      testMatch: '/forms/73_nuorleiri/*',
+      dependencies: ['profile-registered_community', 'profile-unregistered_community'],
+    },
+    {
       name: 'forms-74-tyollisyys',
       testMatch: '/forms/74_tyollisyys/*',
       dependencies: ['profile-registered_community'],
+    },
+    {
+      name: 'forms-75-nuortoimintapalkka',
+      testMatch: '/forms/75_nuortoimintapalkka/*',
+      dependencies: ['profile-registered_community', 'profile-unregistered_community'],
     },
     {
       name: 'forms-76-hyteed-pienavustus',
