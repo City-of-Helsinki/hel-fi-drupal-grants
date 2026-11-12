@@ -26,6 +26,7 @@ final class ApplicationMetadataHooksTest extends KernelTestBase {
     'access application_metadata overview',
     'view application_metadata',
     'update any application_metadata',
+    'create application_metadata',
   ];
 
   /**
