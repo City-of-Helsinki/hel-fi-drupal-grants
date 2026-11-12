@@ -92,20 +92,14 @@ final class ApplicationMetadataHooksTest extends KernelTestBase {
 
     foreach ($this->metadata as $entity) {
       if ($entity->getMetadata()['application_industry'] === 'KUVA') {
-        array_all(
-          $operations,
-          function ($op) use ($entity, $industryUser) {
-            $this->assertTrue($entity->access($op, $industryUser));
-          }
-        );
+        foreach ($operations as $operation) {
+          $this->assertTrue($entity->access($operation, $industryUser));
+        }
       }
       else {
-        array_all(
-          $operations,
-          function ($op) use ($entity, $industryUser) {
-            $this->assertFalse($entity->access($op, $industryUser));
-          }
-        );
+        foreach ($operations as $operation) {
+          $this->assertFalse($entity->access($operation, $industryUser));
+        }
       }
     }
   }
