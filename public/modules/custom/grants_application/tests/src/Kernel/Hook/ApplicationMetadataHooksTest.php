@@ -29,6 +29,13 @@ final class ApplicationMetadataHooksTest extends KernelTestBase {
   ];
 
   /**
+   * The application metadata entities.
+   *
+   * @var array<ApplicationMetadata> $metadata
+   */
+  private array $metadata;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -59,7 +66,7 @@ final class ApplicationMetadataHooksTest extends KernelTestBase {
       ]);
       $entity->save();
 
-      // $this->metadata[$industry] = $entity;
+      $this->metadata[] = $entity;
     }
   }
 
@@ -80,6 +87,17 @@ final class ApplicationMetadataHooksTest extends KernelTestBase {
     $view->execute();
 
     $this->assertCount(1, $view->result);
+
+    $operations = ['view', 'update', 'delete', 'create'];
+
+    foreach ($this->metadata as $entity) {
+      if ($entity->getMetadata()['application_industry'] === 'KUVA') {
+        array_all($operations, fn ($op) => $this->assertTrue($entity->access($op, $industryUser)));
+      }
+      else {
+        array_all($operations, fn ($op) => $this->assertFalse($entity->access($op, $industryUser)));
+      }
+    }
   }
 
   /**
