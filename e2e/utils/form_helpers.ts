@@ -252,7 +252,7 @@ const verifyDraftSave = async (
   await page.waitForURL('**/oma-asiointi');
   await expect(await page.getByText('Luonnos').first()).toBeVisible()
   await expect(await page.getByRole('link', {name: 'Muokkaa hakemusta'}).first()).toBeEnabled();
-  const applicationId = await page.locator('.application-list__item--application-number').first().innerText();
+  const applicationId = await page.locator('.application-list__application-number').first().innerText();
 
   if (!applicationId) {
     logger('WARNING: Failed retrieving application ID.');
@@ -337,16 +337,17 @@ const verifySubmit = async (
  *
  * This function checks if an application is closed.
  * Applications that are closed redirect the user to the service page or
- * the front page and display an error message.
+ * the front page and display an error message. The service page also
+ * shows a closed notice in its application block.
  *
  * @param page
  *   Playwright page object.
  */
 const isApplicationClosed = async (page: Page) => {
-  const errorMessage = page.locator('.hds-notification--error .hds-notification__body')
+  const closedNotice = page.locator('.hds-notification--error .hds-notification__body, .grants-service-page-block')
     .filter({ hasText: 'Tämä avustushaku ei ole avoimena' });
-  // Wait for the error message to render.
-  return errorMessage.first().waitFor({ state: 'visible', timeout: 10_000 }).then(() => true, () => false);
+  // Wait for the closed notice to render.
+  return closedNotice.first().waitFor({ state: 'visible', timeout: 10_000 }).then(() => true, () => false);
 };
 
 /**
