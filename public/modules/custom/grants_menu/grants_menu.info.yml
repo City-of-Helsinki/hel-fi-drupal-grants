@@ -1,5 +1,0 @@
-name: Grants Menu (DEPRECATED)
-type: module
-description: Provides functionality related to menus.
-package: Helfi
-core_version_requirement: ^10 || ^11
