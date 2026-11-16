@@ -6,6 +6,7 @@ use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
@@ -86,6 +87,18 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             ['context' => 'grants_oma_asiointi']
           )
         );
+    }
+    catch (\Exception $e) {
+      Error::logException($this->logger, $e);
+      $this->messenger()
+        ->addError(
+          $this->t(
+            'Something went wrong. Please try again in a moment.',
+            [],
+            ['context' => 'grants_oma_asiointi']
+          )
+        );
+      return [];
     }
 
     if ($grantsProfile == NULL) {
