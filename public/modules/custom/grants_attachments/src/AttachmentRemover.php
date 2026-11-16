@@ -5,7 +5,7 @@ namespace Drupal\grants_attachments;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\File\FileSystem;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -63,7 +63,7 @@ class AttachmentRemover {
   /**
    * The file system.
    *
-   * @var \Drupal\Core\File\FileSystem
+   * @var \Drupal\Core\File\FileSystemInterface
    */
   private $fileSystem;
 
@@ -82,7 +82,7 @@ class AttachmentRemover {
    *   Current user.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
-   * @param \Drupal\Core\File\FileSystem $fileSystem
+   * @param \Drupal\Core\File\FileSystemInterface $fileSystem
    *   File system.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
@@ -95,7 +95,7 @@ class AttachmentRemover {
     Connection $connection,
     AccountProxyInterface $currentUser,
     EntityTypeManagerInterface $entityTypeManager,
-    FileSystem $fileSystem,
+    FileSystemInterface $fileSystem,
   ) {
     $this->fileUsage = $file_usage;
     $this->messenger = $messenger;
