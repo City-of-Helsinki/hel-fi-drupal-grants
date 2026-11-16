@@ -99,3 +99,27 @@
 .grants-form---terms {
   margin-block-end: $spacing-triple;
 }
+
+.grants-form__submission__application_id {
+  border-bottom: 1px var(--color-black-20) solid;
+  padding-bottom: var(--spacing-xl);
+}
+
+.grants-form__submission__application_id--header {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.grants-form__submission__title-wrapper {
+  padding-top: var(--spacing-2-xl);
+
+  h1 {
+    max-width: 100%;
+  }
+  
+  ul {
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
+  }
+}
