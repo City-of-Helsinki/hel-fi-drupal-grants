@@ -507,10 +507,7 @@
               "if": {
                 "properties": {
                   "club_main_activity": {
-                    "enum": [
-                      "1",
-                      "2"
-                    ]
+                    "const": "1"
                   }
                 },
                 "required": [
@@ -642,10 +639,7 @@
               "if": {
                 "properties": {
                   "club_main_activity": {
-                    "enum": [
-                      "1",
-                      "2"
-                    ]
+                    "const": "1"
                   },
                   "club_sport": {
                     "enum": [
