@@ -746,10 +746,10 @@ msgctxt "Grants application"
 msgid "Allowed types: @formats"
 msgstr "Sallitut tiedostotyypit: @formats"
 
-msgctxt "grants_form_print"
+msgctxt "Print grants form"
 msgid "Preview mode"
 msgstr "Esikatselutila"
 
-msgctxt "grants_form_print"
+msgctxt "Print grants form"
 msgid "This printout is only for previewing the application and cannot be used when applying for a grant"
 msgstr "Tämä tuloste on vain hakemuksen esikatselua varten, eikä sitä voi käyttää avustuksen hakemisessa"

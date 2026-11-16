@@ -373,14 +373,14 @@ export const RJSFFormContainer = ({
         <Notification
           className='hdbt-form--notification empty-preview-notification'
           key='preview-notification'
-          label={Drupal.t('Preview mode', {}, { context: 'grants_form_print' })}
+          label={Drupal.t('Preview mode', {}, { context: 'Print grants form' })}
           size={NotificationSize.Small}
           type='alert'
         >
           {Drupal.t(
             'This printout is only for previewing the application and cannot be used when applying for a grant',
             {},
-            { context: 'grants_form_print' },
+            { context: 'Print grants form' },
           )}
         </Notification>,
       );
