@@ -1,5 +1,7 @@
 <?php
-// phpcs:ignoreFile
+
+declare(strict_types=1);
+
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
@@ -12,6 +14,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\grants_application\ApplicationEditPolicy;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -23,11 +26,11 @@ use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\Event\ApplicationSubmitEvent;
 use Drupal\rest\Attribute\RestResource;
-use Drupal\rest\Plugin\ResourceBase;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Sentry\Breadcrumb;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,7 +50,7 @@ use function Sentry\addBreadcrumb;
     "edit" => "/applications/{form_identifier}/{application_number}",
   ]
 )]
-final class DraftApplication extends ResourceBase {
+final class DraftApplication extends HelfiResourceBase {
 
   use StringTranslationTrait;
 
@@ -55,7 +58,9 @@ final class DraftApplication extends ResourceBase {
     array $configuration,
     $plugin_id,
     $plugin_definition,
+    #[Autowire(param: 'serializer.formats')]
     array $serializer_formats,
+    #[Autowire(service: 'logger.channel.grants_application')]
     LoggerInterface $logger,
     protected FormSettingsServiceInterface $formSettingsService,
     protected UserInformationService $userInformationService,
@@ -70,8 +75,8 @@ final class DraftApplication extends ResourceBase {
     protected ContentLockInterface $contentLock,
     protected AccountProxyInterface $accountProxy,
     protected ApplicationService $applicationService,
+    protected ApplicationEditPolicy $applicationEditPolicy,
   ) {
-    // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
 
@@ -79,27 +84,7 @@ final class DraftApplication extends ResourceBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    // @todo Use autowiretrait.
-    return new self(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->getParameter('serializer.formats'),
-      $container->get('logger.channel.grants_application'),
-      $container->get(FormSettingsServiceInterface::class),
-      $container->get(UserInformationService::class),
-      $container->get(HelfiAtvService::class),
-      $container->get(UuidInterface::class),
-      $container->get(ApplicationNumberService::class),
-      $container->get(LanguageManagerInterface::class),
-      $container->get('entity_type.manager'),
-      $container->get(CsrfTokenGenerator::class),
-      $container->get(EventDispatcherInterface::class),
-      $container->get(FormValidator::class),
-      $container->get('content_lock'),
-      $container->get('current_user'),
-      $container->get(ApplicationService::class),
-    );
+    return static::createInstanceAutowired($container, $configuration, $plugin_id, $plugin_definition);
   }
 
   /**
@@ -294,6 +279,10 @@ final class DraftApplication extends ResourceBase {
       return $redirect;
     }
 
+    if (!$this->applicationEditPolicy->canCreateDraft($settings)) {
+      return new JsonResponse(['error' => $this->t('The application is not currently open')], 403);
+    }
+
     $application_uuid = $this->uuid->generate();
     $env = Helper::getAppEnv();
 
@@ -337,9 +326,9 @@ final class DraftApplication extends ResourceBase {
     $document->setContent([
       'form_data' => [],
       'compensation' => [
-        'applicantInfoArray' => []
+        'applicantInfoArray' => [],
       ],
-      'formUpdate' => false,
+      'formUpdate' => FALSE,
       'statusUpdates' => [],
       'events' => [],
       'messages' => [],
@@ -379,7 +368,7 @@ final class DraftApplication extends ResourceBase {
     $now = time();
     $submission = ApplicationSubmission::create([
       'document_id' => $document->getId(),
-      'business_id' => $grants_profile_data->getBusinessId(),
+      'business_id' => $business_id,
       'sub' => $user_data->sub,
       'langcode' => $langcode,
       'draft' => TRUE,
@@ -409,10 +398,10 @@ final class DraftApplication extends ResourceBase {
    *   The form identifier.
    * @param string $application_number
    *   The application number.
-   * @param Request $request
+   * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request object.
    *
-   * @return JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The HTTP response object.
    */
   public function patch(
@@ -451,7 +440,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $this->userInformationService->getGrantsProfileContent();
     }
     catch (\Exception $e) {
       return new JsonResponse([], 500);
@@ -465,10 +454,6 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    // @todo Check that the application is actually a draft?
-    // Actually, the document state should not be > "received"
-    // since an application which is taken into processing
-    // should not change.
     try {
       $document = $this->atvService->getDocument($application_number);
       $sideDocument = $this->atvService->getDocumentById($submission->get('side_document_id')->value);
@@ -476,6 +461,15 @@ final class DraftApplication extends ResourceBase {
     catch (\Throwable $e) {
       // Error while fetching the document.
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
+    }
+
+    // Only a draft in an open application round can be saved as a draft.
+    if (!$this->applicationEditPolicy->canSaveDraft($settings, (string) $document->getStatus())) {
+      $this->logger->warning('Denied draft save of @number with status @status.', [
+        '@number' => $application_number,
+        '@status' => $document->getStatus(),
+      ]);
+      return new JsonResponse(['error' => $this->t('The application can no longer be saved as a draft')], 409);
     }
 
     $sideDocument->setContent($form_data);
@@ -534,63 +528,6 @@ final class DraftApplication extends ResourceBase {
       Url::fromRoute('<front>', [], ['absolute' => TRUE]),
       $message,
     );
-  }
-
-  /**
-   * Build a redirect to the grants profile edit page if the profile is
-   * incomplete (no profile, or missing addresses / bank accounts).
-   *
-   * Mirrors the old webform behavior in GrantsHandler::prepareForm. Applies
-   * uniformly to all applicant types; warnings stack into the messenger.
-   *
-   * @param array<string, mixed> $profileContent
-   *   The grants profile content array (from GrantsProfile::toArray()).
-   *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse|null
-   *   Redirect response when the profile is incomplete, NULL otherwise.
-   */
-  private function profileIncompleteRedirect(array $profileContent): ?JsonResponse {
-    $tOpts = ['context' => 'grants_handler'];
-
-    if (empty($profileContent)) {
-      $this->messenger()->addWarning($this->t('You must have grants profile created.', [], $tOpts));
-      return $this->redirectJsonResponse(
-        Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE]),
-        $this->t('Your profile is incomplete.', [], $tOpts),
-      );
-    }
-
-    $needsRedirect = FALSE;
-    if (empty($profileContent['addresses'])) {
-      $this->messenger()->addWarning($this->t('You must have address saved to your profile.', [], $tOpts));
-      $needsRedirect = TRUE;
-    }
-    if (empty($profileContent['bankAccounts'])) {
-      $this->messenger()->addWarning($this->t('You must have bank account saved to your profile.', [], $tOpts));
-      $needsRedirect = TRUE;
-    }
-
-    if (!$needsRedirect) {
-      return NULL;
-    }
-
-    return $this->redirectJsonResponse(
-      Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE]),
-      $this->t('Your profile is incomplete.', [], $tOpts),
-    );
-  }
-
-  /**
-   * Build a JSON response carrying an error message and a redirect URL.
-   *
-   * The frontend's handleErrors detects redirect_url and navigates instead of
-   * rendering the error notification.
-   */
-  private function redirectJsonResponse(Url $target, string|TranslatableMarkup $errorMessage): JsonResponse {
-    return new JsonResponse([
-      'error' => $errorMessage,
-      'redirect_url' => $target->toString(),
-    ], 403);
   }
 
   /**

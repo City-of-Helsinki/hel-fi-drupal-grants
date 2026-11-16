@@ -1,5 +1,7 @@
 <?php
-// phpcs:ignoreFile
+
+declare(strict_types=1);
+
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
@@ -13,6 +15,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\Error;
+use Drupal\grants_application\ApplicationEditPolicy;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2DataParser;
@@ -29,12 +32,11 @@ use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\Event\ApplicationSubmitEvent;
 use Drupal\rest\Attribute\RestResource;
-use Drupal\rest\Plugin\ResourceBase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 use Sentry\Breadcrumb;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
@@ -53,14 +55,16 @@ use function Sentry\addBreadcrumb;
     "edit" => "/applications/{form_identifier}/application/{application_number}",
   ]
 )]
-final class Application extends ResourceBase {
+final class Application extends HelfiResourceBase {
   use StringTranslationTrait;
 
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    $serializer_formats,
+    #[Autowire(param: 'serializer.formats')]
+    array $serializer_formats,
+    #[Autowire(service: 'logger.channel.grants_application')]
     LoggerInterface $logger,
     protected FormSettingsServiceInterface $formSettingsService,
     protected UserInformationService $userInformationService,
@@ -71,7 +75,9 @@ final class Application extends ResourceBase {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected EventDispatcherInterface $dispatcher,
     protected Avus2Integration $integration,
+    #[Autowire(service: 'grants_events.events_service')]
     protected EventsService $eventsService,
+    #[Autowire(service: 'grants_handler.application_status_service')]
     protected ApplicationStatusService $applicationStatusService,
     protected JsonSchemaValidator $jsonSchemaValidator,
     protected ContentLockInterface $contentLock,
@@ -80,41 +86,9 @@ final class Application extends ResourceBase {
     protected Avus2DataParser $avus2DataParser,
     protected ApplicationService $applicationService,
     protected SumMatchValidator $sumMatchValidator,
+    protected ApplicationEditPolicy $applicationEditPolicy,
   ) {
-    // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    // @todo Use autowiretrait.
-    return new self(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->getParameter('serializer.formats'),
-      $container->get('logger.channel.grants_application'),
-      $container->get(FormSettingsServiceInterface::class),
-      $container->get(UserInformationService::class),
-      $container->get(HelfiAtvService::class),
-      $container->get(UuidInterface::class),
-      $container->get(CsrfTokenGenerator::class),
-      $container->get(LanguageManagerInterface::class),
-      $container->get('entity_type.manager'),
-      $container->get(EventDispatcherInterface::class),
-      $container->get(Avus2Integration::class),
-      $container->get('grants_events.events_service'),
-      $container->get('grants_handler.application_status_service'),
-      $container->get(JsonSchemaValidator::class),
-      $container->get('content_lock'),
-      $container->get('current_user'),
-      $container->get(JsonMapperService::class),
-      $container->get(Avus2DataParser::class),
-      $container->get(ApplicationService::class),
-      $container->get(SumMatchValidator::class),
-    );
   }
 
   /**
@@ -199,13 +173,12 @@ final class Application extends ResourceBase {
       $document = $this->atvService->getDocument($application_number);
       if ($sideDocumentId = $submission->get('side_document_id')->value) {
         $sideDocument = $this->atvService->getDocumentById($sideDocumentId);
-      } else {
+      }
+      else {
         // Side document bc.
         try {
           $document_content = $document->getContent();
-          $form_data = isset($document_content['form_data']) ?
-            $document_content['form_data'] : (isset($document_content['compensation']['form_data']) ?
-            $document_content['compensation']['form_data'] : []);
+          $form_data = $document_content['form_data'] ?? ($document_content['compensation']['form_data'] ?? []);
 
           $sideDocument = $this->atvService->createSideDocument(
             'application_type',
@@ -262,7 +235,8 @@ final class Application extends ResourceBase {
 
       $grantsProfile['firstName'] = $verifiedData['firstName'] ?? '-';
       $grantsProfile['lastName'] = $verifiedData['lastName'] ?? '-';
-      $grantsProfile['socialSecurityNumber'] = $verifiedData['nationalIdentificationNumber'] ?? '-';;
+      $grantsProfile['socialSecurityNumber'] = $verifiedData['nationalIdentificationNumber'] ?? '-';
+
     }
 
     // Keep the acting year of a submitted application selectable.
@@ -321,7 +295,6 @@ final class Application extends ResourceBase {
       ],
     ));
 
-    // phpcs:enable
     try {
       $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
@@ -338,9 +311,9 @@ final class Application extends ResourceBase {
     $this->validate($settings, $form_data);
 
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
+      $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
       $this->logger->error("User failed to fetch the user information during POST-request: {$e->getMessage()}");
@@ -363,6 +336,16 @@ final class Application extends ResourceBase {
     catch (\Throwable $e) {
       $this->logger->error("During POST-request, failed to fetch ATV-document, $application_number: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('We cannot fetch the application. Please try again in a moment')], 500);
+    }
+
+    // Only a draft in an open application round, or a submission that has
+    // not reached the case management yet, can be submitted.
+    if (!$this->applicationEditPolicy->canSubmit($settings, (string) $document->getStatus())) {
+      $this->logger->warning('Denied submit of @number with status @status.', [
+        '@number' => $application_number,
+        '@status' => $document->getStatus(),
+      ]);
+      return new JsonResponse(['error' => $this->t('The application can no longer be submitted')], 409);
     }
 
     // Here we do the actual work.
@@ -413,7 +396,7 @@ final class Application extends ResourceBase {
         $document = $this->atvService->getDocument($application_number);
         $bankFileIsSet = $this->jsonMapperService->documentBankFileIsSet($document);
       }
-      catch(\throwable $e) {
+      catch (\throwable $e) {
         // Just to be safe.
         Error::logException($this->logger, $e);
         return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
@@ -428,7 +411,7 @@ final class Application extends ResourceBase {
 
     try {
       $mappedData = $this->jsonMapperService->handleMapping(
-        $settings->getFormId(),
+        (string) $settings->getFormId(),
         $submission->get('form_identifier')->value,
         $application_number,
         $form_data,
@@ -460,8 +443,12 @@ final class Application extends ResourceBase {
       $this->eventsService->addNewEventForApplication($document, $event);
     }
 
-    if ($document->getContent()['events']) {
-      $mappedData['events'] = $document->getContent()['events'];
+    // Keep the items added by the integration.
+    $documentContent = $document->getContent();
+    foreach (['events', 'messages', 'statusUpdates'] as $item) {
+      if (!empty($documentContent[$item])) {
+        $mappedData[$item] = $documentContent[$item];
+      }
     }
 
     $sideDocument->setContent($form_data);
@@ -482,7 +469,6 @@ final class Application extends ResourceBase {
     }
     $document->setContent($mappedData);
     // @codingStandardsIgnoreEnd
-
     // Set the submitted -status right before sending to Avus2.
     // The status is set as request header by integration-service.
     $document->setStatus('SUBMITTED');
@@ -560,7 +546,7 @@ final class Application extends ResourceBase {
     $content = json_decode($request->getContent(), TRUE);
     [
       'form_data' => $form_data,
-      'attachments' => $attachments,
+      // 'attachments' => $attachments,
     ] = $content;
 
     addBreadcrumb(new Breadcrumb(
@@ -588,9 +574,9 @@ final class Application extends ResourceBase {
     }
 
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
+      $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
       $this->logger->error("User failed to fetch the user information during POST-request: {$e->getMessage()}");
@@ -615,13 +601,23 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Unable to fetch the application. Please try again in a moment')], 500);
     }
 
+    // A submitted application can be changed until it is taken into
+    // processing.
+    if (!$this->applicationEditPolicy->canUpdateSubmitted((string) $document->getStatus())) {
+      $this->logger->warning('Denied update of @number with status @status.', [
+        '@number' => $application_number,
+        '@status' => $document->getStatus(),
+      ]);
+      return new JsonResponse(['error' => $this->t('The application can no longer be changed')], 409);
+    }
+
     // Allow the acting year the application was submitted with.
     $this->validate($settings->withActingYearsOf($sideDocument->getContent()), $form_data);
 
     try {
       $oldDocument = $document->toArray();
       $mappedData = $this->jsonMapperService->handleMappingForPatchRequest(
-        $settings->getFormId(),
+        (string) $settings->getFormId(),
         $submission->get('form_identifier')->value,
         $application_number,
         $form_data,
@@ -701,8 +697,16 @@ final class Application extends ResourceBase {
 
     return $this->getSuccessResponse($application_number);
   }
-  // phpcs:enabled
 
+  /**
+   * Create a json response.
+   *
+   * @param string $applicationNumber
+   *   The application number.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The response.
+   */
   private function getSuccessResponse(string $applicationNumber): JsonResponse {
     return new JsonResponse([
       'redirect_url' => Url::fromRoute(
@@ -711,48 +715,6 @@ final class Application extends ResourceBase {
         ['absolute' => TRUE],
       )->toString(),
     ], 200);
-  }
-
-  /**
-   * Build a redirect to the grants profile edit page if the profile is
-   * incomplete. Mirrors the old webform behavior in
-   * GrantsHandler::prepareForm. Applies uniformly to all applicant types.
-   *
-   * @param array<string, mixed> $profileContent
-   *   The grants profile content array (from GrantsProfile::toArray()).
-   *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse|null
-   *   Redirect response when the profile is incomplete, NULL otherwise.
-   */
-  private function profileIncompleteRedirect(array $profileContent): ?JsonResponse {
-    $tOpts = ['context' => 'grants_handler'];
-
-    if (empty($profileContent)) {
-      $this->messenger()->addWarning($this->t('You must have grants profile created.', [], $tOpts));
-      return new JsonResponse([
-        'error' => $this->t('Your profile is incomplete.', [], $tOpts),
-        'redirect_url' => Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE])->toString(),
-      ], 403);
-    }
-
-    $needsRedirect = FALSE;
-    if (empty($profileContent['addresses'])) {
-      $this->messenger()->addWarning($this->t('You must have address saved to your profile.', [], $tOpts));
-      $needsRedirect = TRUE;
-    }
-    if (empty($profileContent['bankAccounts'])) {
-      $this->messenger()->addWarning($this->t('You must have bank account saved to your profile.', [], $tOpts));
-      $needsRedirect = TRUE;
-    }
-
-    if (!$needsRedirect) {
-      return NULL;
-    }
-
-    return new JsonResponse([
-      'error' => $this->t('Your profile is incomplete.', [], $tOpts),
-      'redirect_url' => Url::fromRoute('grants_profile.edit', [], ['absolute' => TRUE])->toString(),
-    ], 403);
   }
 
   /**
@@ -784,7 +746,7 @@ final class Application extends ResourceBase {
 
     if (is_array($results)) {
       $schemaErrors = array_map(fn (array $error) => $error['message'], $results);
-      // Encode changes (empty)array into object in some cases
+      // Encode changes (empty)array into object in some cases.
       $this->logger->alert("User encountered validation error on application $formIdentifier: " . json_encode($schemaErrors));
     }
 

@@ -77,10 +77,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       return [];
     }
 
-    if ($grantsProfile == NULL) {
-      return [];
-    }
-
     $isNewGrantsProfile = $grantsProfile->getTransactionId();
 
     // Get content from document.

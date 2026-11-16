@@ -530,4 +530,21 @@ final class DraftTest extends KernelTestBase implements ServiceModifierInterface
     $this->assertSame($formData, $responseData['content']);
   }
 
+  /**
+   * A PATCH is denied once the application has been submitted.
+   */
+  public function testDraftPatchDeniedForSubmittedApplication(): void {
+    $this->createDraftSubmission();
+    $this->atvDocument->setStatus('RECEIVED');
+
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->never())->method('updateExistingDocument');
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $response = $this->dispatchPatch();
+    $this->assertEquals(409, $response->getStatusCode());
+  }
+
 }

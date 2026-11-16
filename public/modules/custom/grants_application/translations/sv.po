@@ -163,3 +163,14 @@ msgstr "Det gick inte att spara utkastet. Försök igen om en stund"
 msgid "You are not allowed to remove the attachments any more."
 msgstr "Du kan inte längre ta bort bilagor."
 
+msgid "The application is not currently open"
+msgstr "Ansökan är inte öppen för tillfället"
+
+msgid "The application can no longer be saved as a draft"
+msgstr "Ansökan kan inte längre sparas som utkast"
+
+msgid "The application can no longer be submitted"
+msgstr "Ansökan kan inte längre skickas"
+
+msgid "The application can no longer be changed"
+msgstr "Ansökan kan inte längre ändras"

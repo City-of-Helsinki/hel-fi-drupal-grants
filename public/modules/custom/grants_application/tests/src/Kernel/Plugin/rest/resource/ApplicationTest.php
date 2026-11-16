@@ -22,6 +22,7 @@ use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -538,6 +539,73 @@ final class ApplicationTest extends KernelTestBase implements ServiceModifierInt
     $response = $http_kernel->handle($request);
 
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+  }
+
+  /**
+   * Submitting or updating is denied when the status does not allow it.
+   */
+  #[DataProvider('deniedStatusProvider')]
+  public function testApplicationChangeDeniedByStatus(string $method, string $status): void {
+    $this->applicationSubmission = ApplicationSubmission::create([
+      'id' => 1,
+      'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
+      'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
+      'sub' => '123345678-abcd-1234-ab12-abcdefgh',
+      'business_id' => '7769480-5',
+      'draft' => $status === 'DRAFT',
+      'langcode' => 'fi',
+      'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
+      'side_document_id' => $this->sideDocumentId,
+      'application_number' => $this->applicationNumber,
+      'created' => '1765430954',
+      'changed' => '1765430954',
+    ]);
+    $this->applicationSubmission->save();
+
+    $this->atvDocument->setStatus($status);
+
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->never())->method('updateExistingDocument');
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $integration = $this->createMock(Avus2Integration::class);
+    $integration->expects($this->never())->method('sendToAvus2');
+    $this->container->set(Avus2Integration::class, $integration);
+
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $content = json_encode([
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
+      'attachments' => [],
+    ]) ?: NULL;
+
+    $uri = "/applications/$form_identifier/application/$this->applicationNumber";
+    $request = Request::create($uri, $method, [], [], [], [], $content);
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    $response = $this->container->get('http_kernel')->handle($request);
+    $this->assertEquals(409, $response->getStatusCode());
+  }
+
+  /**
+   * Data provider for testApplicationChangeDeniedByStatus().
+   *
+   * @return array<array{string, string}>
+   *   The request method and the document status.
+   */
+  public static function deniedStatusProvider(): array {
+    return [
+      ['POST', 'RECEIVED'],
+      ['POST', 'PROCESSING'],
+      ['POST', 'RESOLVED'],
+      ['PATCH', 'DRAFT'],
+      ['PATCH', 'SUBMITTED'],
+      ['PATCH', 'PROCESSING'],
+      ['PATCH', 'RESOLVED'],
+    ];
   }
 
 }

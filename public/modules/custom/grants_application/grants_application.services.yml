@@ -35,6 +35,9 @@ services:
 
   Drupal\grants_application\ApplicationService: ~
 
+  Drupal\grants_application\ApplicationEditPolicy:
+    arguments: ['@grants_handler.application_status_service']
+
   Drupal\grants_application\Mapper\JsonMapperService: ~
 
   Drupal\grants_application\Drush\Commands\DebugMappingsCommands:

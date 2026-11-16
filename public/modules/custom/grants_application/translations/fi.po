@@ -171,3 +171,15 @@ msgstr "Tämä hakemus ei ole saatavilla käyttäjäroolillesi."
 
 msgid "You are not allowed to remove the attachments any more."
 msgstr "Liitteitä ei voi enää poistaa."
+
+msgid "The application is not currently open"
+msgstr "Hakemus ei ole avoinna tällä hetkellä"
+
+msgid "The application can no longer be saved as a draft"
+msgstr "Hakemusta ei voi enää tallentaa luonnoksena"
+
+msgid "The application can no longer be submitted"
+msgstr "Hakemusta ei voi enää lähettää"
+
+msgid "The application can no longer be changed"
+msgstr "Hakemusta ei voi enää muokata"
