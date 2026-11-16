@@ -703,3 +703,11 @@ msgstr "Förhandsgranskningsläge"
 msgctxt "Print grants form"
 msgid "This printout is only for previewing the application and cannot be used when applying for a grant"
 msgstr "Denna utskrift är endast till för att förhandsgranska ansökan och kan inte användas vid ansökan om bidrag"
+
+msgctxt "Print grants form"
+msgid "Here we print submission data when coming NOT from form."
+msgstr "Här skriver vi ut inlämningsdata när de INTE kommer från formuläret.."
+
+msgctxt "Print grants form"
+msgid "Print Application"
+msgstr "Skriv ut ansökan"

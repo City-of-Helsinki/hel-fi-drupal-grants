@@ -11,11 +11,3 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-msgctxt "Print grants form"
-msgid "Here we print submission data when coming NOT from form."
-msgstr "Tähän tulostamme hakemusdatan kun se EI tule lomakkeelta."
-
-msgctxt "Print grants form"
-msgid "Print Application"
-msgstr "Tulosta hakemus"
