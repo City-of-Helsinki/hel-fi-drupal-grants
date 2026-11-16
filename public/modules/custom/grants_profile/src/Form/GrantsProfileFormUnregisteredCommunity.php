@@ -19,6 +19,7 @@ use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\ProfileFetchTimeoutException;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -194,6 +195,29 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     $form_state->setRebuild();
     return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getBankAccountOwner(): ?array {
+    try {
+      $profileData = $this->helsinkiProfiiliUserData->getUserProfileData();
+    }
+    catch (ProfiiliException $e) {
+      Error::logException($this->logger, $e);
+      return NULL;
+    }
+
+    $personalInfo = $profileData['myProfile']['verifiedPersonalInformation'] ?? NULL;
+    if (empty($personalInfo)) {
+      return NULL;
+    }
+
+    return [
+      'ownerName' => $personalInfo['firstName'] . ' ' . $personalInfo['lastName'],
+      'ownerSsn' => $personalInfo['nationalIdentificationNumber'],
+    ];
   }
 
   /**

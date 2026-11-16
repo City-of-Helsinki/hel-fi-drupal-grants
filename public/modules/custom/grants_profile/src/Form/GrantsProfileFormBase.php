@@ -1018,23 +1018,71 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
             $values[$key][$delta]['bank_account_id'] = $this->uuid->generate();
           }
 
-          // TypedData validation requires confirmationFile field, which should
-          // contains the file name. This makes it hard to upload file during
-          // the submit step. Instead of juggling the files in validation step,
-          // just pass the filename to this imaginary field, so TypedData
-          // validator is happy.
-          $values[$key][$delta]['confirmationFileName'] = $storage['confirmationFiles'][$delta]['filename'] ??
-            $values[$key][$delta]['confirmationFileName'] ??
-            NULL;
-
-          $values[$key][$delta]['confirmationFile'] = $values[$key][$delta]['confirmationFileName'] ??
-            $storage['confirmationFiles'][$delta]['filename'] ??
-            $values[$key][$delta]['confirmationFile'] ??
-            NULL;
+          if (is_array($values[$key][$delta])) {
+            $this->applyTrustedBankAccountValues($values[$key][$delta], $delta, $storage);
+          }
         }
       }
     }
     return $values;
+  }
+
+  /**
+   * Replace client-controlled bank account fields with trusted values.
+   *
+   * The confirmation file and owner fields are read-only in the UI, but the
+   * submitted values come from raw user input. An existing account keeps
+   * the confirmation file and owner stored in the profile. A new account, or
+   * an account whose number was changed, must have a confirmation file
+   * uploaded in this form session, and gets its owner from the server.
+   *
+   * TypedData validation requires the confirmationFile field, which should
+   * contain the file name, so the file name is set to it here.
+   *
+   * @param array<string, mixed> $account
+   *   Bank account values from the form.
+   * @param int|string $delta
+   *   Delta of the bank account in the form.
+   * @param array<string, mixed> $storage
+   *   Form storage.
+   */
+  private function applyTrustedBankAccountValues(array &$account, int|string $delta, array $storage): void {
+    $storedAccount = NULL;
+    $profileDocument = $storage['profileDocument'] ?? NULL;
+    $storedAccounts = $profileDocument instanceof AtvDocument ? ($profileDocument->getContent()['bankAccounts'] ?? []) : [];
+    foreach ($storedAccounts as $candidate) {
+      if (self::accountsAreEqual($account['bankAccount'] ?? NULL, $candidate['bankAccount'] ?? NULL)) {
+        $storedAccount = $candidate;
+        break;
+      }
+    }
+
+    // Only trust a file that was actually uploaded in this form session.
+    $fileName = $storage['confirmationFiles'][$delta]['filename'] ?? NULL;
+    if (!$fileName && $storedAccount) {
+      $fileName = $storedAccount['confirmationFile'] ?? NULL;
+    }
+    $account['confirmationFileName'] = $fileName;
+    $account['confirmationFile'] = $fileName;
+
+    $owner = !empty($storedAccount['ownerSsn']) ? $storedAccount : $this->getBankAccountOwner();
+    unset($account['ownerName'], $account['ownerSsn']);
+    foreach (['ownerName', 'ownerSsn'] as $field) {
+      if (!empty($owner[$field])) {
+        $account[$field] = $owner[$field];
+      }
+    }
+  }
+
+  /**
+   * Get the owner of new bank accounts.
+   *
+   * @return array{ownerName: string, ownerSsn: string}|null
+   *   Array with ownerName and ownerSsn keys, or NULL if this profile type
+   *   does not store bank account owners.
+   */
+  protected function getBankAccountOwner(): ?array {
+    return NULL;
   }
 
   /**
