@@ -7,6 +7,7 @@ type StartGrantConfig = {
   controlledBy: string;
   subventionId: string;
   valueWhenTrue: string;
+  fixed: boolean;
 };
 
 type StartGrantState = {
@@ -14,6 +15,7 @@ type StartGrantState = {
   valueWhenTrue: string | undefined;
   isApplied: boolean;
   toggled: boolean;
+  fixed: boolean | undefined;
 };
 
 /**
@@ -33,11 +35,14 @@ export const useStartGrant = (uiSchema: UiSchema | undefined): StartGrantState =
   const config = uiSchema?.['ui:options']?.startGrant as StartGrantConfig | undefined;
 
   // Read the apply_for_start_grant radio button value from the full form data.
-  const isStartGrantApplied = config
-    ? config.controlledBy
-        .split('.')
-        .reduce((acc: unknown, key) => (acc as Record<string, unknown>)?.[key], fullFormData) === true
-    : false;
+  let isStartGrantApplied = false;
+  if (config?.controlledBy) {
+    isStartGrantApplied = config
+      ? config.controlledBy
+          .split('.')
+          .reduce((acc: unknown, key) => (acc as Record<string, unknown>)?.[key], fullFormData) === true
+      : false;
+  }
 
   // Initialize the ref to the current radio button value so the effect does not
   // fire on mount.
@@ -54,5 +59,6 @@ export const useStartGrant = (uiSchema: UiSchema | undefined): StartGrantState =
     valueWhenTrue: config?.valueWhenTrue,
     isApplied: isStartGrantApplied,
     toggled,
+    fixed: config?.fixed,
   };
 };

@@ -7,7 +7,14 @@
     },
     "subventions_section": {
       "subventions": {
-        "ui:field": "subventionTable"
+        "ui:field": "subventionTable",
+        "ui:options": {
+          "startGrant": {
+            "fixed": true,
+            "subventionId": "59",
+            "valueWhenTrue": "3000"
+          }
+        }
       }
     },
     "purpose_section": {

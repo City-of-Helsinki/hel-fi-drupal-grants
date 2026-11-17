@@ -320,13 +320,6 @@ export default defineConfig({
       testMatch: '/forms/80_ruokaaputoim/*',
       dependencies: ['profile-registered_community'],
     },
-    /* Webforms. */
-    /* Archived Form 29 tests. */
-    // {
-    //   name: 'forms-29',
-    //   testMatch: '/forms/registered_community_29.ts',
-    //   dependencies: ['profile-registered_community']
-    // },
     /* Form 48 tests. */
     {
       name: 'forms-48',
@@ -348,30 +341,6 @@ export default defineConfig({
       testMatch: '/forms/registered_community_48.ts',
       dependencies: ['profile-registered_community']
     },
-    /* Form 49 tests. */
-    {
-      name: 'forms-49',
-      testMatch: '/forms/registered_community_49.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 50 tests. */
-    {
-      name: 'forms-50',
-      testMatch: '/forms/registered_community_50.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 51 tests. */
-    {
-      name: 'forms-51',
-      testMatch: '/forms/registered_community_51.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 52 tests. */
-    {
-      name: 'forms-52',
-      testMatch: '/forms/registered_community_52.ts',
-      dependencies: ['profile-registered_community']
-    },
     /* Form 53 tests. */
     {
       name: 'forms-53',
@@ -382,46 +351,6 @@ export default defineConfig({
     {
       name: 'forms-56',
       testMatch: '/forms/registered_community_56.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 57 tests. */
-    {
-      name: 'forms-57',
-      testMatch: '/forms/registered_community_57.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 58 tests. */
-    {
-      name: 'forms-58',
-      testMatch: '/forms/registered_community_58.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 60 tests. */
-    {
-      name: 'forms-60',
-      testMatch: '/forms/registered_community_60.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 61 tests. */
-    {
-      name: 'forms-61',
-      testMatch: '/forms/registered_community_61.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 62 tests. */
-    {
-      name: 'forms-62',
-      testMatch: /forms\/.*_62\.ts$/,
-      dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    },
-    {
-      name: 'forms-62-unregistered',
-      testMatch: '/forms/unregistered_community_62.ts',
-      dependencies: ['profile-unregistered_community']
-    },
-    {
-      name: 'forms-62-registered',
-      testMatch: '/forms/registered_community_62.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 64 tests. */
@@ -443,105 +372,6 @@ export default defineConfig({
     {
       name: 'forms-64-registered',
       testMatch: '/forms/registered_community_64.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Archived Form 54 tests. */
-    // {
-    //   name: 'forms-54',
-    //   testMatch: '/forms/registered_community_54.ts',
-    //   dependencies: ['profile-registered_community']
-    // },
-    /* Form 65 tests. */
-    // Disable test for ID65:nuorlomaleir. It is archived form
-    // and the form ID73 is the current version of this application.
-    // {
-    //   name: 'forms-65',
-    //   testMatch: /forms\/.*_65\.ts$/,
-    //   dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    // },
-    // {
-    //   name: 'forms-65-unregistered',
-    //   testMatch: '/forms/unregistered_community_65.ts',
-    //   dependencies: ['profile-unregistered_community']
-    // },
-    // {
-    //   name: 'forms-65-registered',
-    //   testMatch: '/forms/registered_community_65.ts',
-    //   dependencies: ['profile-registered_community']
-    // },
-    /* Form 66 tests. */
-    // {
-    //   name: 'forms-66',
-    //   testMatch: /forms\/.*_66\.ts$/,
-    //   dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    // },
-    // {
-    //   name: 'forms-66-unregistered',
-    //   testMatch: '/forms/unregistered_community_66.ts',
-    //   dependencies: ['profile-unregistered_community']
-    // },
-    // {
-    //   name: 'forms-66-registered',
-    //   testMatch: '/forms/registered_community_66.ts',
-    //   dependencies: ['profile-registered_community']
-    // },
-    /* Form 67 tests. */
-    {
-      name: 'forms-67',
-      testMatch: '/forms/registered_community_67.ts',
-      dependencies: ['profile-registered_community'],
-    },
-    /* Form 68 tests. */
-    // Disable test for 68:hyte_yleisavustus. It is used as a parent form for
-    // form 71:HYTEEDYLEIS form which doesn't have a test yet.
-    // The test is excluded in "name: 'forms-all'" test.
-    // {
-    //   name: 'forms-68',
-    //   testMatch: '/forms/registered_community_68.ts',
-    //   dependencies: ['profile-registered_community'],
-    // },
-    /* Archived Form 69 tests. */
-    // {
-    //   name: 'forms-69',
-    //   testMatch: /forms\/.*_69\.ts$/,
-    //   dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    // },
-    // {
-    //   name: 'forms-69-unregistered',
-    //   testMatch: '/forms/unregistered_community_69.ts',
-    //   dependencies: ['profile-unregistered_community']
-    // },
-    // {
-    //   name: 'forms-69-registered',
-    //   testMatch: '/forms/registered_community_69.ts',
-    //   dependencies: ['profile-registered_community']
-    // },
-    /* Form 73 tests. */
-    {
-      name: 'forms-73',
-      testMatch: /forms\/.*_73\.ts$/,
-      dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    },
-    {
-      name: 'forms-73-unregistered',
-      testMatch: '/forms/unregistered_community_73.ts',
-      dependencies: ['profile-unregistered_community']
-    },
-    {
-      name: 'forms-73-registered',
-      testMatch: '/forms/registered_community_73.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 74 tests. */
-    {
-      name: 'forms-74',
-      testMatch: '/forms/registered_community_74.ts',
-      dependencies: ['profile-registered_community']
-    },
-    /* Form 75 tests. */
-    {
-      name: 'forms-75',
-      testMatch: '/forms/registered_community_75.ts',
       dependencies: ['profile-registered_community']
     },
     {

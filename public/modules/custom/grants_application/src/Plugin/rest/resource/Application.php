@@ -487,6 +487,9 @@ final class Application extends ResourceBase {
     // The status is set as request header by integration-service.
     $document->setStatus('SUBMITTED');
     $document->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
+    // Set language for the application, same as webform applications do.
+    $langcode = $this->languageManager->getCurrentLanguage()->getId();
+    $document->addMetadata('language', $langcode);
     $latestDocument = $this->atvService->updateExistingDocument($document);
 
     // Add the submit event to the events.
@@ -509,6 +512,7 @@ final class Application extends ResourceBase {
     try {
       $submission->setChangedTime(time());
       $submission->set('draft', FALSE);
+      $submission->set('langcode', $langcode);
       $submission->save();
     }
     catch (\Exception $e) {
@@ -657,6 +661,9 @@ final class Application extends ResourceBase {
       $sideDocument->setContent($form_data);
       $sideDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
       $this->atvService->updateExistingDocument($sideDocument);
+      // Set language for the application, same as webform applications do.
+      $langcode = $this->languageManager->getCurrentLanguage()->getId();
+      $document->addMetadata('language', $langcode);
       $latestDocument = $this->atvService->updateExistingDocument($document);
     }
     catch (\Exception $e) {
@@ -673,6 +680,7 @@ final class Application extends ResourceBase {
     }
 
     $submission->setChangedTime(time());
+    $submission->set('langcode', $langcode);
     $submission->save();
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
