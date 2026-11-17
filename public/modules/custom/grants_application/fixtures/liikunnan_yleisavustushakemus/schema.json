@@ -458,6 +458,7 @@
                 },
                 "movers_gender_total": {
                   "title": "movers_total.title",
+                  "description": "movers_gender_total.description",
                   "type": "string"
                 }
               },

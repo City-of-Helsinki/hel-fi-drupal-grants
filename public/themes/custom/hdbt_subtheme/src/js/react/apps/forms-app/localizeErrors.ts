@@ -37,12 +37,19 @@ const formatLimitNumberError = (error: ErrorObject) => {
     params: { limit },
     parentSchema,
   } = error;
-  const args = { '!field': parentSchema?.title || '', '@limit': String(limit) };
-  const options = { context: 'Grants application: Validation' };
+  const field = parentSchema?.title || '';
 
   return keyword === 'minimum'
-    ? Drupal.t('!field must be at least @limit.', args, options)
-    : Drupal.t('!field must be at most @limit.', args, options);
+    ? Drupal.t(
+        '!field must be at least @limit.',
+        { '!field': field, '@limit': String(limit) },
+        { context: 'Grants application: Validation' },
+      )
+    : Drupal.t(
+        '!field must be at most @limit.',
+        { '!field': field, '@limit': String(limit) },
+        { context: 'Grants application: Validation' },
+      );
 };
 
 /**

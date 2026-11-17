@@ -657,8 +657,13 @@
     },
     "movers_total.title": {
       "fi": "Yhteensä @sum liikkujaa",
-      "en": "In total @sum participants",
+      "en": "In total @sum active participants",
       "sv": "Totalt @sum motionärer"
+    },
+    "movers_gender_total.description": {
+      "fi": "Sukupuolijakauman yhteissumman tulee vastata Liikkujat-kohdan yhteissummaa.",
+      "en": "The total sum of the Gender distribution section must match the total sum in the Physically active participants section.",
+      "sv": "Totalen för könsfördelningen ska matcha totalen för Motionärer."
     },
     "movers.men.title": {
       "fi": "Pojat/miehet",
@@ -756,19 +761,19 @@
       "sv": "Under hur många månader organiserade er förening idrottsaktiviteter i gruppform under det föregående kalenderåret?"
     },
     "movers.age_gender_mismatch": {
-      "fi": "Sukupuolijakauman summa on {{left}}, mutta Liikkujat-yhteensä on {{right}}. Tarkista molempien ryhmien luvut. Ero on {{difference}} liikkujaa.",
-      "en": "The gender distribution totals {{left}}, but the participants total is {{right}}. Check the numbers in both groups. The difference is {{difference}} participants.",
-      "sv": "Könsfördelningen är totalt {{left}}, men motionärerna är totalt {{right}}. Kontrollera siffrorna i båda grupperna. Skillnaden är {{difference}} motionärer."
+      "fi": "Sukupuolijakauman summa on {{left}}, mutta liikkujat-yhteensä on {{right}}. Tarkista molempien ryhmien luvut. Ero on {{difference}} liikkujaa.",
+      "en": "The sum of the gender distribution is {{left}}, but the total number of participants is {{right}}. Please check the figures in both groups. The difference is {{difference}} participants.",
+      "sv": "Summan av könsfördelningen är {{left}}, men det totala antalet motionärer är {{right}}. Kontrollera siffrorna i båda grupperna. Skillnaden är {{difference}} motionärer."
     },
     "movers.age_gender_mismatch_summary": {
       "fi": "Liikkujien sukupuolijakauma: summa {{left}} ei vastaa Liikkujat-yhteensä {{right}}.",
-      "en": "Gender distribution of physically active participants: the total {{left}} does not match the participants total {{right}}.",
-      "sv": "Könsfördelning av motionärer: summan {{left}} motsvarar inte motionärer totalt {{right}}."
+      "en": "Participant gender distribution: the total of {{left}} does not match the total number of active participants ({{right}}).",
+      "sv": "Motionärernas könsfördelning: summan {{left}} motsvarar inte det totala antalet motionärer ({{right}})."
     },
     "movers.age_gender_match": {
-      "fi": "Yhteensä-summat täsmäävät.",
-      "en": "The totals match.",
-      "sv": "Summorna stämmer överens."
+      "fi": "Yhteensä-summat täsmäävät",
+      "en": "The total sums match",
+      "sv": "Totalsummorna stämmer överens"
     },
     "all_coaches.description": {
       "fi": "Koulutetuiksi valmentajiksi lasketaan henkilöt, jotka ohjaavat tai valmentavat alle 20-vuotiaita, vähintään 64-vuotiaita tai soveltavan liikunnan kohderyhmään kuuluvia yhdistyksen liikuntatoiminnassa (vähintään 50 prosenttia valmennettavan ryhmän osallistujista tulee kuulua näihin avustettaviin kohderyhmiin) ja ovat suorittaneet jonkin yleisavustuksen kriteereissä määritellyistä koulutuksista.",

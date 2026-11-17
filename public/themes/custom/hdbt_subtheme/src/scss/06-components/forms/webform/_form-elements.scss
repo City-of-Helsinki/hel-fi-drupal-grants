@@ -540,7 +540,8 @@ input[type='radio']+label.form-required::after {
   &.field-string,
   &.field-integer,
   &.field-number,
-  &.field-object {
+  &.field-object,
+  &.field-boolean:has(.hdbt-form--checkbox) {
     margin-block-end: $spacing-and-half;
   }
 }

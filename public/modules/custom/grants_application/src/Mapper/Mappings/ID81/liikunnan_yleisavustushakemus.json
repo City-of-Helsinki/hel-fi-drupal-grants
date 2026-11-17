@@ -117,7 +117,7 @@
       "ID": "allCoaches",
       "label": "Koulutettujen ohjaajien/valmentajien määrä",
       "value": "",
-      "valueType": "string"
+      "valueType": "int"
     }
   },
   "compensation.membersInfo.clubsInfoArray.0": {
