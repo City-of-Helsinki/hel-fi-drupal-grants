@@ -230,10 +230,7 @@ class MessageForm extends FormBase {
 
       // Render the build array and add to the append command.
       $messageOutput = $this->renderer->render($messageBuild);
-      $appendMessage = new AppendCommand(
-        '.webform-submission-messages__messages-list, 
-        .grants-form__submission-messages__messages-list',
-        $messageOutput);
+      $appendMessage = new AppendCommand('.webform-submission-messages__messages-list', $messageOutput);
       $ajaxResponse->addCommand($appendMessage);
     }
 
