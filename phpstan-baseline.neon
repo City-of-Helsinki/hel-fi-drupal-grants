@@ -11791,12 +11791,6 @@ parameters:
 			path: public/modules/custom/grants_profile/src/Form/GrantsProfileFormPrivatePerson.php
 
 		-
-			message: '#^Parameter \#5 \$helsinkiProfiiliUserData of method Drupal\\grants_profile\\Form\\GrantsProfileFormPrivatePerson\:\:__construct\(\) is not optional\.$#'
-			identifier: parameter.notOptional
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/GrantsProfileFormPrivatePerson.php
-
-		-
 			message: '#^Cannot access offset ''add_official'' on ''\</div\>''\|''\<div id\="officials…''\|''container''\|''h4''\|array\<int\|string, non\-empty\-array\<string, non\-empty\-array\<string, mixed\>\|Drupal\\Core\\StringTranslation\\TranslatableMarkup\|string\>\|string\>\|Drupal\\Core\\StringTranslation\\TranslatableMarkup\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
@@ -11935,18 +11929,6 @@ parameters:
 			path: public/modules/custom/grants_profile/src/Form/GrantsProfileFormRegisteredCommunity.php
 
 		-
-			message: '#^Parameter \#5 \$prhUpdaterService of method Drupal\\grants_profile\\Form\\GrantsProfileFormRegisteredCommunity\:\:__construct\(\) is not optional\.$#'
-			identifier: parameter.notOptional
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/GrantsProfileFormRegisteredCommunity.php
-
-		-
-			message: '#^Parameter \#6 \$lockService of method Drupal\\grants_profile\\Form\\GrantsProfileFormRegisteredCommunity\:\:__construct\(\) is not optional\.$#'
-			identifier: parameter.notOptional
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/GrantsProfileFormRegisteredCommunity.php
-
-		-
 			message: '#^Dead catch \- Drupal\\grants_profile\\ProfileFetchTimeoutException is never thrown in the try block\.$#'
 			identifier: catch.neverThrown
 			count: 1
@@ -12051,12 +12033,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$uri of static method Drupal\\Core\\Url\:\:fromUri\(\) expects string, string\|false given\.$#'
 			identifier: argument.type
-			count: 1
-			path: public/modules/custom/grants_profile/src/Form/GrantsProfileFormUnregisteredCommunity.php
-
-		-
-			message: '#^Parameter \#5 \$helsinkiProfiiliUserData of method Drupal\\grants_profile\\Form\\GrantsProfileFormUnregisteredCommunity\:\:__construct\(\) is not optional\.$#'
-			identifier: parameter.notOptional
 			count: 1
 			path: public/modules/custom/grants_profile/src/Form/GrantsProfileFormUnregisteredCommunity.php
 

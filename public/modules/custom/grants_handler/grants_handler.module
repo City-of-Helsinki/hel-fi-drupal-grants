@@ -219,7 +219,7 @@ function grants_handler_theme(): array {
         'text' => NULL,
         'reactFormLink' => NULL,
         'title' => NULL,
-        'webformLink' => NULL,
+        'previewLink' => NULL,
       ],
     ],
     'application_timeout_message' => [

@@ -226,7 +226,6 @@ module:
   content_translation: 10
   externalauth: 10
   views: 10
-  grants_user_fields: 11
   grants_webform_print: 11
   grants_webform_summation_field: 11
   paragraphs: 11

@@ -135,7 +135,7 @@ export const TextInput = ({
     <HDSTextInput
       {...({
         errorText: formatErrors(rawErrors),
-        disabled: readonly,
+        disabled: readonly || isReadOnly,
         helperText: showCounter ? `${(value as string)?.length || 0}/${maxLength}` : undefined,
         hideLabel: false,
         id,

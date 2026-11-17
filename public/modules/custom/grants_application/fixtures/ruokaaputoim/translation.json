@@ -23,7 +23,7 @@
     "other_applied_compensations_section.description": {
       "en": "Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet. Indicate only the grants applied for the same purpose of use, not all grants your organization has applied for.",
       "fi": "Ilmoita tähän ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eikä päätöstä ole vielä tehty. Ilmoita vain samaan käyttötarkoitukseen haetut avustukset, ei kaikkia organisaationne hakemia avustuksia.",
-      "sv": "Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, mutta beslut har ännu inte fattats. Ange endast de understöd som sökts för samma användningsändamål, inte alla understöd som er organisation har ansökt om."
+      "sv": "Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats. Ange endast de understöd som sökts för samma användningsändamål, inte alla understöd som er organisation har ansökt om."
     },
     "food_grants_short_description.title": {
       "fi": "Millaiseen ruoka-aputoimintaan haette avustusta?",
@@ -118,7 +118,7 @@
     "custom_required_attachments_help.value": {
       "en": "Attachments required for the application: the statutes of the association, the bank’s notice of the account holder or a copy of a bank statement, financial statements, annual report and financial or operational audit report for the previous financial year, and the action plan and budget for the upcoming grant period. As the grant period covers two years, applicants are required to submit an operational plan and budget for the first grant year during the application phase.",
       "fi": "Hakemuksen liitteeksi tarvitaan yhdistyksen säännöt, pankin ilmoitus tilinomistajasta tai tiliotekopio, edellisen tilikauden vahvistetut tilinpäätös,  toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä tulevaa avustuskautta koskeva toimintasuunnitelma ja talousarvio. Avustuskauden ollessa kaksivuotinen hakuvaiheessa toimitetaan ensimmäisen avustusvuoden toimintasuunnitelma ja talousarvio.",
-      "sv": "Erforderliga bilagor Bilagor som krävs för ansökan: föreningens stadgar, ett meddelande från banken om kontoinnehavaren eller en kopia av ett kontoutdrag, det fastställda bokslutet, verksamhetsberättelsen och revisions- eller verksamhetsgranskningsberättelsen för föregående räkenskapsår samt verksamhetsplan och budget för den kommande understödsperioden. Eftersom understödsperioden är tvåårig ska en verksamhetsplan och en budget för det första understödsåret lämnas in i ansökningsskedet."
+      "sv": "Bilagor som krävs för ansökan: föreningens stadgar, ett meddelande från banken om kontoinnehavaren eller en kopia av ett kontoutdrag, det fastställda bokslutet, verksamhetsberättelsen och revisions- eller verksamhetsgranskningsberättelsen för föregående räkenskapsår samt verksamhetsplan och budget för den kommande understödsperioden. Eftersom understödsperioden är tvåårig ska en verksamhetsplan och en budget för det första understödsåret lämnas in i ansökningsskedet."
     },
     "form_title": {
       "en": "Government grant application for food aid activities",

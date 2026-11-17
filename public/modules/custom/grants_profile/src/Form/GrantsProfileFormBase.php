@@ -12,6 +12,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
@@ -25,21 +26,16 @@ use Drupal\helfi_api_base\AuditLog\Event\AuditLogEvent;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form base.
- *
- * @phpstan-consistent-constructor
  */
-abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInterface {
+abstract class GrantsProfileFormBase extends FormBase {
 
   use StringTranslationTrait;
   use AutowireTrait;
-  use LoggerAwareTrait;
 
   /**
    * Variable for translation context.
@@ -48,23 +44,12 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
    */
   protected array $tOpts = ['context' => 'grants_profile'];
 
-  /**
-   * Constructs a new GrantsProfileForm object.
-   *
-   * @param \Drupal\Core\TypedData\TypedDataManagerInterface $typedDataManager
-   *   Typed data manager.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Profile.
-   * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-   *   Session data.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid
-   *   Uuid generator.
-   */
   public function __construct(
     protected TypedDataManagerInterface $typedDataManager,
     protected GrantsProfileService $grantsProfileService,
     protected SessionInterface $session,
     protected UuidInterface $uuid,
+    protected LoggerChannelInterface $logger,
   ) {}
 
   /**

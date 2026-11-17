@@ -288,8 +288,8 @@ class ApplicationListItemBuilderTest extends UnitTestCase {
       'applicationNumber' => 'LOCAL-058-0000002',
       'formName' => 'Testilomake',
       'status' => 'DRAFT',
-      // The status label uses the language of the submission.
-      'statusLabel' => 'Utkast',
+      // The status label uses the current language, not the submission's.
+      'statusLabel' => 'Luonnos',
       'submitted' => '01.03.2025 10:15',
       'submittedSortable' => '2025-03-01T10:15:00',
       'errorType' => 'NOT_OPEN',

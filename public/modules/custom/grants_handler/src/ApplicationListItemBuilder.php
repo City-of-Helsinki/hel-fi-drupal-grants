@@ -85,18 +85,16 @@ final class ApplicationListItemBuilder {
   }
 
   /**
-   * Gets the human-readable status string.
+   * Gets the human-readable status string in the current language.
    *
    * @param string $status
    *   The status, for example 'DRAFT'.
-   * @param string|null $langcode
-   *   The language code, defaults to the current language.
    *
    * @return string
    *   The human-readable status.
    */
-  public function getStatusLabel(string $status, ?string $langcode = NULL): string {
-    $langcode ??= $this->languageManager->getCurrentLanguage()->getId();
+  public function getStatusLabel(string $status): string {
+    $langcode = $this->languageManager->getCurrentLanguage()->getId();
     $statusStrings = $this->configFactory->get('grants_handler.settings')->get('statusStrings');
     return $statusStrings[$langcode][$status] ?? $status;
   }
@@ -207,7 +205,7 @@ final class ApplicationListItemBuilder {
       'applicationNumber' => $submissionData['application_number'],
       'formName' => $settings['translations'][$language]['translation']['form_title'] ?? $title,
       'status' => $status,
-      'statusLabel' => $this->getStatusLabel($status, $submissionEntity->get('langcode')->value),
+      'statusLabel' => $this->getStatusLabel($status),
       'submitted' => $submissionEntity->getSubmittedDateTime('d.m.Y H:i'),
       'submittedSortable' => $submissionEntity->getSubmittedDateTime('Y-m-d\TH:i:s'),
       'errorType' => $this->getErrorType($isContinuous, $openStart, $openEnd),
