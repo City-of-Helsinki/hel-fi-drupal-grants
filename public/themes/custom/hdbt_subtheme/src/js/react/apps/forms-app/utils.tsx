@@ -473,13 +473,27 @@ export const getSubventionSum = (formData: RJSFFormData, subventionFields: strin
  * Sum numeric values of the given fields.
  *
  * Empty and non-numeric values count as zero. Comma decimal separators are accepted.
+ * A `[]` in the path sums the rest of the path over every item of that array,
+ * e.g. 'step.section.rows[].amount'.
  *
  * @param {object} formData - Form data
  * @param {string[]} fields - Root-relative dot paths, e.g. 'step.section.field'
  * @return {number} - Total sum
  */
-export const sumFieldValues = (formData: RJSFFormData, fields: string[]) =>
+export const sumFieldValues = (formData: RJSFFormData, fields: string[]): number =>
   fields.reduce((acc, field) => {
+    const [arrayPath, ...rest] = field.split('[].');
+    if (rest.length) {
+      const items = getNestedSchemaProperty(formData, `.${arrayPath}`);
+      return Array.isArray(items)
+        ? acc +
+            sumFieldValues(
+              { items } as RJSFFormData,
+              items.map((_, index) => `items.${index}.${rest.join('[].')}`),
+            )
+        : acc;
+    }
+
     const raw = getNestedSchemaProperty(formData, `.${field}`);
     const numeric = Number(String(raw ?? '0').replace(',', '.'));
     return Number.isNaN(numeric) ? acc : acc + numeric;
@@ -497,10 +511,10 @@ export const sumFieldValues = (formData: RJSFFormData, fields: string[]) =>
 export const getSumMatchRules = (uiSchema: UiSchema): SumMatchRule[] =>
   Array.from(findFieldsWithOption(uiSchema, 'misc:sum-match')).map((path) => {
     const fieldUiSchema = path.split('.').reduce((acc: UiSchema | undefined, key) => acc?.[key], uiSchema);
-    const { compareTo = [], fields, message, successMessage } = fieldUiSchema?.['misc:sum-match'] ?? {};
+    const { compareTo = [], fields, message, successMessage, summaryMessage } = fieldUiSchema?.['misc:sum-match'] ?? {};
     const sourceFields = fieldUiSchema?.['ui:options']?.sourceFields as string[] | undefined;
 
-    return { compareTo, fields: fields ?? sourceFields ?? [path], message, path, successMessage };
+    return { compareTo, fields: fields ?? sourceFields ?? [path], message, path, successMessage, summaryMessage };
   });
 
 const hasValue = (formData: RJSFFormData, field: string) => {
@@ -545,7 +559,8 @@ const formatSum = (sum: number) => (Math.round(sum * 100) / 100).toString().repl
  * Validate a sum match rule and build its message.
  *
  * The mismatch message can interpolate {{left}} (sum of `fields`), {{right}}
- * (sum of `compareTo`) and {{difference}}.
+ * (sum of `compareTo`) and {{difference}}. So can the optional summary, the
+ * shorter variant shown in the error list at the top of the form.
  *
  * @param {object} formData - Form data
  * @param {object} rule - Sum match rule
@@ -571,8 +586,13 @@ export const getSumMatchState = (
   const [left, right] = mismatch.map(formatSum);
   const difference = formatSum(Math.abs(mismatch[0] - mismatch[1]));
   const key = rule.message ?? 'sum_match.mismatch';
+  const state: SumMatchState = { message: t(key, { difference, left, right }) ?? key, status: 'mismatch' };
 
-  return { message: t(key, { difference, left, right }) ?? key, status: 'mismatch' };
+  if (rule.summaryMessage) {
+    state.summary = t(rule.summaryMessage, { difference, left, right }) ?? rule.summaryMessage;
+  }
+
+  return state;
 };
 
 /**

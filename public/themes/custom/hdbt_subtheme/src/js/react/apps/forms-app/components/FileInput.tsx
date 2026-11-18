@@ -45,7 +45,7 @@ async function uploadFiles(
   formData.append('fieldName', field);
   files.forEach((file) => formData.append('file', file));
 
-  const response = await fetch(`/en/application/${applicationNumber}/upload`, {
+  const response = await fetch(`/${drupalSettings.path.currentLanguage}/application/${applicationNumber}/upload`, {
     method: 'POST',
     body: formData,
     headers: { 'X-CSRF-Token': token },
@@ -195,10 +195,13 @@ export const FileInput = ({
     const fileUrl = new URL(existingData.integrationID);
     const pathSemgments = fileUrl.pathname.split('/').filter(Boolean);
     const attachmentId = pathSemgments.pop();
-    const response = await fetch(`/application/${applicationNumber}/delete/${attachmentId}`, {
-      method: 'POST',
-      headers: { 'X-CSRF-Token': token },
-    });
+    const response = await fetch(
+      `/${drupalSettings.path.currentLanguage}/application/${applicationNumber}/delete/${attachmentId}`,
+      {
+        method: 'POST',
+        headers: { 'X-CSRF-Token': token },
+      },
+    );
 
     if (!response.ok) {
       handleResponseError(response);

@@ -632,8 +632,8 @@ msgid "Value is of incorrect type."
 msgstr "Arvo on väärässä muodossa."
 
 msgctxt "Grants application: Validation"
-msgid "You must insert at least @limit value for field @field"
-msgstr "Sinun on syötettävä vähintään @limit arvo kentälle @field"
+msgid "You must insert at least @limit value for field !field"
+msgstr "Kenttään !field on lisättävä vähintään @limit kpl."
 
 msgctxt "Grants application: Validation"
 msgid "!field field is not in the correct format."
@@ -745,3 +745,25 @@ msgstr "Pakolliset kentät on merkitty tähdellä (*)."
 msgctxt "Grants application"
 msgid "Allowed types: @formats"
 msgstr "Sallitut tiedostotyypit: @formats"
+
+msgctxt "Grants application: Validation"
+msgid "!field field must be at least @limit characters."
+msgstr "!field kenttään on syötettävä vähintään @limit merkkiä."
+
+msgctxt "Grants application: Validation"
+msgid "The value must be a number."
+msgstr "Arvon on oltava numero."
+
+msgctxt "Grants application: Validation"
+msgid "!field must be at least @limit."
+msgstr "Kentän !field arvon on oltava vähintään @limit."
+
+msgctxt "Grants application: Validation"
+msgid "!field must be at most @limit."
+msgstr "Kentän !field arvon on oltava enintään @limit."
+
+msgid "Form not found."
+msgstr "Lomaketta ei löytynyt."
+
+msgid "The application ran into an unrecoverable error. Please refresh the page to continue."
+msgstr "Lomakkeessa tapahtui odottamaton virhe. Päivitä sivu jatkaaksesi."

@@ -96,6 +96,60 @@ final class JsonMapperTest extends UnitTestCase {
   }
 
   /**
+   * Test that unmapped nested subfields in multivalue rows are skipped.
+   *
+   * E.g. textParagraph help fields inside array items end up in the form
+   * data as arrays but have no mapping definition.
+   */
+  public function testMultipleValueFieldMappingSkipsUnmappedNestedFields(): void {
+    $mapping = [
+      "compensation.my_values.rows.0.n" => [
+        'datasource' => 'form_data',
+        'source' => 'section.rows',
+        'mapping_type' => 'multiple_values',
+        'data' => [
+          'label' => [
+            'ID' => 'rowLabel',
+            'valueType' => 'string',
+            'value' => '',
+            'label' => '',
+          ],
+          'nested.count' => [
+            'ID' => 'rowCount',
+            'valueType' => 'int',
+            'value' => '',
+            'label' => '',
+          ],
+        ],
+      ],
+    ];
+
+    $formData = [
+      'form_data' => [
+        'section' => [
+          'rows' => [
+            [
+              'help' => [NULL],
+              'label' => 'the label',
+              'nested' => ['count' => 3, 'unmapped' => 'x'],
+            ],
+          ],
+        ],
+      ],
+    ];
+
+    $mapper = new JsonMapper();
+    $mapper->setMappings($mapping);
+    $mappedData = $mapper->map($formData);
+
+    $row = $mappedData['compensation']['my_values']['rows'][0];
+    $this->assertCount(2, $row, 'Only mapped subfields are written');
+    $this->assertEquals('rowLabel', $row[0]['ID']);
+    $this->assertEquals('rowCount', $row[1]['ID']);
+    $this->assertEquals('3', $row[1]['value']);
+  }
+
+  /**
    * Test the complex value mapping.
    *
    * At this point there is only one which is setLabelAndValue-function.

@@ -30,7 +30,7 @@ const renderDate = (initialValue?: string) => {
     <TestProvider
       initialValues={[
         [formConfigAtom, { submitState: 'DRAFT', grantsProfile: {} }],
-        [formStateAtom, { currentStep: [0, { id: 'step', label: 'Step' }], reachedStep: 0 }],
+        [formStateAtom, { currentStep: [0, { id: 'step', label: 'Step' }], validationCutoff: 0 }],
       ]}
     >
       <Wrapper initialValue={initialValue} onChange={onChange} />

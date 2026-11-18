@@ -22,7 +22,7 @@ import {
   shouldRenderPreviewAtom,
 } from '../store';
 import type { UiSchema } from '../types/UiSchema';
-import { ALLOWED_HTML_TAGS, getTooltip } from '../utils';
+import { ALLOWED_HTML_TAGS, formatErrors, getTooltip } from '../utils';
 import { ApplicantInfo, PreviewApplicantInfo } from './ApplicantInfo';
 
 /**
@@ -42,6 +42,7 @@ export const ArrayFieldTemplate = ({
   idSchema,
   items,
   onAddClick,
+  rawErrors,
   registry,
   schema,
   uiSchema,
@@ -86,6 +87,14 @@ export const ArrayFieldTemplate = ({
         // biome-ignore lint/correctness/useJsxKeyInIterable: Item contains key already
         <ArrayFieldItemTemplate {...item} />
       ))}
+      {/* Array-level errors (e.g. too few items) sit next to the add button, and take the focus on error. */}
+      {!!rawErrors?.length && (
+        <div className='hdbt-form--array-errors' data-focus-on-error id={idSchema.$id} tabIndex={-1}>
+          <Notification type='error' className='hdbt-form--notification'>
+            {formatErrors(rawErrors)}
+          </Notification>
+        </div>
+      )}
       {canAdd && (
         <Button
           className='hdbt-form__array-add'
