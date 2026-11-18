@@ -4,7 +4,9 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
@@ -12,27 +14,25 @@ use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
 use Drupal\grants_profile\ProfileFetchTimeoutException;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form.
- *
- * @phpstan-consistent-constructor
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
-  /**
-   * PRH data update service class.
-   */
   public function __construct(
     TypedDataManagerInterface $typed_data_manager,
     GrantsProfileService $grantsProfileService,
     SessionInterface $session,
     UuidInterface $uuid,
+    #[Autowire(service: 'logger.channel.grants_profile')]
+    protected LoggerChannelInterface $logger,
     protected PRHUpdaterService $prhUpdaterService,
     protected FormLockService $lockService,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid);
+    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid, $logger);
   }
 
   /**
@@ -87,6 +87,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             ['context' => 'grants_oma_asiointi']
           )
         );
+    }
+    catch (\Exception $e) {
+      Error::logException($this->logger, $e);
+      return [];
     }
 
     if ($grantsProfile == NULL) {

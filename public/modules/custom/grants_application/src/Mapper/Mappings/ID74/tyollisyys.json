@@ -71,16 +71,6 @@
   },
   "compensation.compensationInfo.generalInfoArray.2": {
     "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions_sum",
-    "mapping_type": "default",
-    "data": {
-      "ID": "totalAmount",
-      "value": "",
-      "valueType": "float"
-    }
-  },
-  "compensation.compensationInfo.generalInfoArray.3": {
-    "datasource": "form_data",
     "source": "grant_info_step.prior_benefits_usage_section.prior_compensations",
     "mapping_type": "default",
     "data": {
@@ -88,6 +78,39 @@
       "value": "",
       "valueType": "string",
       "label": "Selvitys avustuksen käytöstä"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.3": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.who_benefits",
+    "mapping_type": "default",
+    "data": {
+      "ID": "whoBenefits",
+      "value": "",
+      "valueType": "string",
+      "label": "Ketkä toiminnastanne erityisesti hyötyvät"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.4": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.changes_on_success",
+    "mapping_type": "default",
+    "data": {
+      "ID": "changesOnSuccess",
+      "value": "",
+      "valueType": "string",
+      "label": "Minkälaisia muutoksia tapahtuu, jos onnistutte?"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.5": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.results_of_activities",
+    "mapping_type": "default",
+    "data": {
+      "ID": "resultsOfActivities",
+      "value": "",
+      "valueType": "string",
+      "label": "Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?"
     }
   },
   "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {

@@ -170,7 +170,6 @@ Removal can not be done if there are sent applications. This cannot be undone.',
         $appEnv,
         FALSE,
         TRUE,
-        'application_list_item'
       );
       unset($applications['missing_delete_after']);
 

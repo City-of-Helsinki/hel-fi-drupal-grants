@@ -68,7 +68,12 @@ export const SubventionTable = ({
       : [];
     const sorted = optionOrder.map((optionId) => {
       const existing = data.find((item) => Array.isArray(item) && item[0]?.value === optionId);
-      return existing ?? createSubventionDataItem(optionId, '0');
+      // Use the uiSchema fixed value if given.
+      const amount =
+        startGrant.fixed && String(startGrant.subventionId) === optionId && startGrant.valueWhenTrue
+          ? startGrant.valueWhenTrue
+          : '0';
+      return existing ?? createSubventionDataItem(optionId, amount);
     });
 
     if (JSON.stringify(data) !== JSON.stringify(sorted)) {

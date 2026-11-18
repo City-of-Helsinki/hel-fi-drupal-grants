@@ -12,12 +12,7 @@
     },
     "purpose_section": {
       "purpose": {
-        "ui:widget": "textarea",
-        "ui:options": {
-          "tooltipLabel": "purpose_section_purpose.title",
-          "tooltipButtonLabel": "purpose_section_purpose.title",
-          "tooltipText": "purpose.description"
-        }
+        "ui:widget": "textarea"
       }
     },
     "other_compensations_section": {
@@ -136,12 +131,7 @@
         }
       },
       "prior_compensations": {
-        "ui:widget": "textarea",
-        "ui:options": {
-          "tooltipLabel": "prior_compensations.title",
-          "tooltipButtonLabel": "prior_compensations.title",
-          "tooltipText": "prior_compensations.tooltip"
-        }
+        "ui:widget": "textarea"
       }
     }
   },

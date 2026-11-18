@@ -108,7 +108,7 @@ const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await logCurrentUrl(page);
   await page.waitForURL('**/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
-  await page.locator('#helfi-dialog__action-button').click();
+  await page.locator('#own-applications__delete-draft-confirm').click();
   await page.waitForLoadState('load');
   await logCurrentUrl(page);
   await validateDeletionNotification(page, 'Application ID on Oma asiointi page.', applicationId);

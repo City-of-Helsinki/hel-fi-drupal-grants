@@ -20,11 +20,13 @@ export default defineConfig({
       },
     },
     coverage: {
-      include: ['src/js/react/apps/forms-app/**/*.{js,jsx,ts,tsx}'],
+      include: ['src/js/react/apps/forms-app/**/*.{js,jsx,ts,tsx}', 'src/js/react/apps/own-applications/**/*.{js,jsx,ts,tsx}'],
       exclude: [
         'src/js/react/apps/forms-app/types',
         'src/js/react/apps/forms-app/testutils',
         'src/js/react/apps/forms-app/index.tsx',
+        'src/js/react/apps/own-applications/index.tsx',
+        'src/js/react/apps/own-applications/types',
       ],
     },
     environment: 'jsdom',
