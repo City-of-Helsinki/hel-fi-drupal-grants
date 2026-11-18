@@ -1,5 +1,10 @@
 {
   "translations": {
+    "additional_information.description": {
+      "fi": "Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.",
+      "en": "If necessary, you can write additional information or other justifications regarding the application here.",
+      "sv": "Vid behov kan du skriva ytterligare information eller andra motiveringar gällande ansökan här."
+    },
     "form_title": {
       "fi": "Liikunnan yleisavustushakemus",
       "en": "Application for the general grant for sport",
@@ -659,6 +664,11 @@
       "fi": "Yhteensä @sum liikkujaa",
       "en": "In total @sum active participants",
       "sv": "Totalt @sum motionärer"
+    },
+    "movers_age_total.description": {
+      "fi": "Yhteissumma lasketaan kolmesta ikäryhmästä. Soveltavan liikunnan kohderyhmään kuuluvat sisältyvät ikäryhmien lukuihin, eikä heitä lisätä summaan uudelleen.",
+      "en": "The total sum is calculated from three age groups. Individuals belonging to the adapted physical activity target group are already included in the figures for these age groups and are not added to the sum again.",
+      "sv": "Totalsumman beräknas utifrån tre åldersgrupper. De som ingår i målgruppen för anpassad motion ingår i åldersgruppssiffrorna och läggs inte tillbaka till totalen."
     },
     "movers_gender_total.description": {
       "fi": "Sukupuolijakauman yhteissumman tulee vastata Liikkujat-kohdan yhteissummaa.",

@@ -416,6 +416,7 @@
                 },
                 "movers_age_total": {
                   "title": "movers_total.title",
+                  "description": "movers_age_total.description",
                   "type": "string"
                 }
               },
