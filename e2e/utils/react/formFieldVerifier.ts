@@ -1304,8 +1304,12 @@ export async function verifyIncompleteFormSubmitBlocked(
   await page.locator('label[for="final-acceptance"]').click();
   await expect(acceptance).not.toBeChecked();
 
-  // Reset the form to an empty draft.
-  await page.evaluate(() => sessionStorage.removeItem(location.pathname.split('/').pop()!));
+  // Reset the form to an empty draft on the first step.
+  await page.evaluate(() => {
+    const applicationNumber = location.pathname.split('/').pop()!;
+    sessionStorage.removeItem(applicationNumber);
+    sessionStorage.removeItem(`${applicationNumber}-form-state`);
+  });
   await page.reload();
   await waitForFormLoad(page);
 }
