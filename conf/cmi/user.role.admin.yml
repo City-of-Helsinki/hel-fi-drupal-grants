@@ -166,6 +166,7 @@ permissions:
   - 'administer webform element access'
   - 'administer webform overview'
   - 'administer webform submission'
+  - 'allow views bulk operations'
   - 'assign all roles'
   - 'assign content_producer role'
   - 'assign editor role'
