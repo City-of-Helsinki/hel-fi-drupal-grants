@@ -102,3 +102,64 @@ msgstr "Filnamnet är för långt. Byt namn på filen och försök igen."
 
 msgid "Duplicate file name: Please rename the file"
 msgstr "Duplicerat filnamn: Vänligen byt namn på filen"
+
+msgid "Failed to copy the application. Please try again later."
+msgstr "Det gick inte att kopiera ansökan. Försök igen senare."
+
+msgid "Failed to delete attachment"
+msgstr "Det gick inte att radera bilagan"
+
+msgid "Failed to upload the file. Please try again in a moment"
+msgstr "Det gick inte att ladda upp filen. Försök igen om en stund"
+
+msgid "File upload failed during antivirus-scan. Please try again in a moment"
+msgstr "Filuppladdningen misslyckades vid virusskanningen. Försök igen om en stund"
+
+msgid "Something went wrong"
+msgstr "Något gick fel"
+
+msgid "The application is not currently open"
+msgstr "Ansökan är inte öppen för tillfället"
+
+msgid "Unable to find the application"
+msgstr "Ansökan hittades inte"
+
+msgid "Unable to fetch the application. Please try again in a moment."
+msgstr "Det gick inte att hämta ansökan. Försök igen om en stund."
+
+msgid "Unable to fetch the application. Please try again in a moment"
+msgstr "Det gick inte att hämta ansökan. Försök igen om en stund"
+
+msgid "An error occurred while sending the application. Please try again in a moment"
+msgstr "Ett fel uppstod när ansökan skickades. Försök igen om en stund"
+
+msgid "An error occurred while sending the application. Please try again later"
+msgstr "Ett fel uppstod när ansökan skickades. Försök igen senare"
+
+msgid "Unable to fetch your application. Please try again in a moment"
+msgstr "Det gick inte att hämta din ansökan. Försök igen om en stund"
+
+msgid "Unable to fetch your user information. Please try again in a moment"
+msgstr "Det gick inte att hämta dina användaruppgifter. Försök igen om en stund"
+
+msgid "We cannot fetch the application. Please try again in a moment"
+msgstr "Vi kan inte hämta ansökan. Försök igen om en stund"
+
+msgid "We cannot find the application you are trying to open. Please try creating another one"
+msgstr "Vi hittar inte ansökan du försöker öppna. Försök skapa en ny ansökan"
+
+msgid "Your user profile does not contain the given bank account number. Please update your user profile and try again"
+msgstr "Din användarprofil innehåller inte det angivna bankkontonumret. Uppdatera din profil och försök igen"
+
+msgid "Grant application (<span id=\"saved-application-number\">@number</span>) saved as DRAFT"
+msgstr "Ansökan (<span id=\"saved-application-number\">@number</span>) har sparats som utkast"
+
+msgid "This application is not available for your user role."
+msgstr "Den här ansökan är inte tillgänglig för din användarroll."
+
+msgid "Unable to save the draft. Please try again in a moment"
+msgstr "Det gick inte att spara utkastet. Försök igen om en stund"
+
+msgid "You are not allowed to remove the attachments any more."
+msgstr "Du kan inte längre ta bort bilagor."
+

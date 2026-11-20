@@ -252,6 +252,12 @@ class JsonMapper {
   private function handleNestedMultiFieldItem(array $value, string $fieldName, array $definition, array &$values): void {
     foreach ($value as $subfield => $subValue) {
       $definitionName = $fieldName . '.' . $subfield;
+
+      // Skip unmapped subfields, e.g. help paragraphs inside array items.
+      if (!isset($definition['data'][$definitionName])) {
+        continue;
+      }
+
       $valueArray = $definition['data'][$definitionName];
       $valueArray['value'] = (string) $subValue;
 

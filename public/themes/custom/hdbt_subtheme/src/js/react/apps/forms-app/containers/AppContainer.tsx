@@ -79,13 +79,15 @@ async function fetchFormData(form_identifier: string, token: string) {
   }
 
   // Uses DraftApplication or Application REST resource based on useDraft flag
+  // Prefix the language so backend error messages come back in the page language.
+  const langPrefix = `/${drupalSettings.path.currentLanguage}`;
   let fetchUrl = '';
   if (useEmptyPreview) {
-    fetchUrl = `/application/preview/${form_identifier}`;
+    fetchUrl = `${langPrefix}/application/preview/${form_identifier}`;
   } else if (useDraft) {
-    fetchUrl = `/applications/${form_identifier}/${applicationNumber}`;
+    fetchUrl = `${langPrefix}/applications/${form_identifier}/${applicationNumber}`;
   } else {
-    fetchUrl = `/applications/${form_identifier}/application/${applicationNumber}`;
+    fetchUrl = `${langPrefix}/applications/${form_identifier}/application/${applicationNumber}`;
   }
   const formConfigResponse = await fetch(fetchUrl, {
     headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },

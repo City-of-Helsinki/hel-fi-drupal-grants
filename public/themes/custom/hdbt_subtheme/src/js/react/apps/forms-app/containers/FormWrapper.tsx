@@ -9,6 +9,7 @@ import { useTranslateData } from '../hooks/useTranslateData';
 import {
   avus2DataAtom,
   createFormDataAtom,
+  discardStaleSession,
   formDataAtomRef,
   getApplicationNumberAtom,
   getSubmitStatusAtom,
@@ -178,6 +179,7 @@ export const FormWrapper = ({
   const setAvus2Data = useSetAtom(avus2DataAtom);
   const setIsSubmitting = useSetAtom(isBeingSubmittedAtom);
 
+  discardStaleSession(translatedData.applicationNumber, data?.last_changed);
   initializeForm(translatedData);
 
   const excludedFields = Array.from(findFieldsWithOption(translatedData.ui_schema, 'misc:exclude-from-submit'));
@@ -233,11 +235,7 @@ export const FormWrapper = ({
     window.location.href = redirect_url;
   };
 
-  const formDataAtom = createFormDataAtom(
-    translatedData.applicationNumber,
-    translatedData.formData,
-    data?.last_changed,
-  );
+  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, translatedData.formData);
   store.set(formDataAtomRef, formDataAtom);
 
   if (translatedData.status !== SubmitStates.DRAFT) {
