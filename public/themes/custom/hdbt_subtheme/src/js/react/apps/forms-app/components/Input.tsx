@@ -14,6 +14,7 @@ import { useAtomValue } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { defaultDatePickerStyle } from '@/react/common/constants/datePickerStyle';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { formatHDSDate, formatHTMLDate } from '@/react/common/helpers/dateUtils';
@@ -525,6 +526,7 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
         language: currentLanguage,
         onChange: handleChange,
         required,
+        style: defaultDatePickerStyle,
         tooltip: getTooltip(uiSchema),
         value: formattedValue,
       } as ComponentPropsWithRef<typeof DateInput>)}
