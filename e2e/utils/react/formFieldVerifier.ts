@@ -1008,7 +1008,7 @@ export async function modifySubmittedApplication(
 
   // Open the application and follow the edit link.
   await openSentApplication(page, applicationNumber);
-  await page.locator('.hdbt-react-form__submission-info__row--edit a').first().click();
+  await page.locator('.hdbt-form__submission-info__row--edit a').first().click();
   await waitForFormLoad(page);
 
   // Find a filled textarea so we can change its value.
@@ -1304,8 +1304,12 @@ export async function verifyIncompleteFormSubmitBlocked(
   await page.locator('label[for="final-acceptance"]').click();
   await expect(acceptance).not.toBeChecked();
 
-  // Reset the form to an empty draft.
-  await page.evaluate(() => sessionStorage.removeItem(location.pathname.split('/').pop()!));
+  // Reset the form to an empty draft on the first step.
+  await page.evaluate(() => {
+    const applicationNumber = location.pathname.split('/').pop()!;
+    sessionStorage.removeItem(applicationNumber);
+    sessionStorage.removeItem(`${applicationNumber}-form-state`);
+  });
   await page.reload();
   await waitForFormLoad(page);
 }

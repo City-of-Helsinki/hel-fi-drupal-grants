@@ -11,6 +11,7 @@ import {
   getCurrentStepAtom,
   getStepsAtom,
   isReadOnlyAtom,
+  raiseValidationCutoffAtom,
   setStepAtom,
 } from '../../store';
 import { isDraft, keyErrorsByStep } from '../../utils';
@@ -29,10 +30,17 @@ export const FormActions = ({
   const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
   const errors = useAtomValue(errorsAtom);
   const setStep = useSetAtom(setStepAtom);
+  const raiseValidationCutoff = useSetAtom(raiseValidationCutoffAtom);
+
+  const previousPageAction = () => {
+    raiseValidationCutoff(currentStepIndex);
+    setStep(currentStepIndex - 1);
+  };
 
   const nextPageAction = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
+    raiseValidationCutoff(currentStepIndex);
     const validateResult = validatePartialForm();
 
     if (!validateResult) {
@@ -63,7 +71,7 @@ export const FormActions = ({
         <Button
           className='hdbt-form--pager-button'
           disabled={readOnly}
-          onClick={() => setStep(currentStepIndex - 1)}
+          onClick={previousPageAction}
           theme={primaryButtonTheme}
           type='button'
           iconStart={<IconAngleLeft />}

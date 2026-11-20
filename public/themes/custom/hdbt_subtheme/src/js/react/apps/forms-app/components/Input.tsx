@@ -14,6 +14,7 @@ import { useAtomValue } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { formatHDSDate, formatHTMLDate } from '@/react/common/helpers/dateUtils';
@@ -532,22 +533,38 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
   );
 };
 
-export const CheckboxWidget = ({ id, label, onChange, value, uiSchema }: WidgetProps) => {
+export const CheckboxWidget = ({ id, label, onChange, rawErrors, required, value, uiSchema }: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
-    return <PreviewInput value={value ? t('Yes') : t('No')} label={label} uiSchema={uiSchema} />;
+    return <PreviewInput value={value ? t('boolean.yes') : t('boolean.no')} label={label} uiSchema={uiSchema} />;
+  }
+
+  const checkboxLabel = uiSchema?.['ui:options']?.checkboxLabel?.toString();
+  const requiredMark = required ? ' *' : '';
+
+  const checkbox = (
+    <Checkbox
+      className='hdbt-form--checkbox'
+      disabled={isReadOnly}
+      errorText={rawErrors?.length ? formatErrors(rawErrors) : undefined}
+      id={id}
+      label={checkboxLabel ?? `${label ?? ''}${requiredMark}`}
+      checked={Boolean(value)}
+      onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.checked)}
+      style={defaultCheckboxStyle}
+    />
+  );
+
+  if (!checkboxLabel) {
+    return checkbox;
   }
 
   return (
-    <Checkbox
-      disabled={isReadOnly}
-      id={id}
-      label={label ?? ''}
-      checked={Boolean(value)}
-      onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.checked)}
-    />
+    <Fieldset heading={`${label ?? ''}${requiredMark}`} className='hdbt-form--fieldset' tooltip={getTooltip(uiSchema)}>
+      {checkbox}
+    </Fieldset>
   );
 };

@@ -5,7 +5,7 @@ import { useAtomValue } from 'jotai';
 import type { JSONSchema7Definition } from 'json-schema';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { shouldRenderPreviewAtom } from '../../store';
-import { ALLOWED_HTML_TAGS } from '../../utils';
+import { ALLOWED_HTML_TAGS, getTooltip } from '../../utils';
 
 export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
@@ -29,6 +29,16 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
     return p;
   };
 
+  const tooltip = getTooltip(uiSchema);
+  const paragraphs =
+    Array.isArray(items) &&
+    items?.length &&
+    items.map((p, index) => (
+      <p className='hdbt-form--paragraph__content' key={index}>
+        {htmlToReact(getTitle(p) ?? '', ALLOWED_HTML_TAGS)}
+      </p>
+    ));
+
   return variant === 'infobox' ? (
     <Notification label={title} className='hdbt-form--notification'>
       {Array.isArray(items) &&
@@ -38,13 +48,14 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
   ) : (
     <div className='hdbt-form--paragraph'>
       {title && <h4 className='hdbt-form--paragraph__title'>{title}</h4>}
-      {Array.isArray(items) &&
-        items?.length &&
-        items.map((p, index) => (
-          <p className='hdbt-form--paragraph__content' key={index}>
-            {htmlToReact(getTitle(p) ?? '', ALLOWED_HTML_TAGS)}
-          </p>
-        ))}
+      {tooltip ? (
+        <div className='hdbt-form--paragraph__body--with-tooltip'>
+          <div>{paragraphs}</div>
+          {tooltip}
+        </div>
+      ) : (
+        paragraphs
+      )}
     </div>
   );
 };

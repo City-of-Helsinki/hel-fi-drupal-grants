@@ -21,7 +21,7 @@ const renderInput = (schema: object) => {
     <TestProvider
       initialValues={[
         [initializeFormAtom, testResponseData],
-        [formStateAtom, { currentStep: [0, { id: 'step-1', label: 'Step 1' }], reachedStep: 0 }],
+        [formStateAtom, { currentStep: [0, { id: 'step-1', label: 'Step 1' }], validationCutoff: 0 }],
       ]}
     >
       <TextInput
