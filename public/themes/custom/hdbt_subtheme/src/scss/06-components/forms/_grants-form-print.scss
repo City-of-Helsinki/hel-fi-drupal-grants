@@ -1,0 +1,237 @@
+/* stylelint-disable max-nesting-depth -- @todo UHF-12501 */
+// Print styles used by the grants React forms print view (/application/{application_number}/print).
+// with grants-application-print.html.twig and the forms app.
+
+.grants-form__print-page .page-title {
+  display: none;
+}
+
+.grants-form__print-header,
+.grants-form__print-footer {
+  display: none;
+}
+
+.grants-form__print-page .main-content {
+  display: block;
+}
+
+.grants-form__print-page {
+  .grants-form__print-wrapper-table {
+    border: 0 transparent solid;
+    display: table;
+    max-width: 100%;
+    overflow-x: initial;
+    width: 100%;
+
+    thead,
+    tbody,
+    tfoot,
+    tr,
+    tbody tr:hover,
+    td,
+    td:first-child,
+    th {
+      background: transparent;
+      border: 0;
+      color: var(--color-black);
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        border-bottom: 1px var(--color-black-50) solid;
+        list-style: none;
+        margin-top: 0;
+        padding: 1rem 0;
+
+        &:last-of-type {
+          border-bottom: 0 transparent solid;
+        }
+      }
+    }
+
+    thead {
+      display: table-header-group;
+
+      th {
+        padding: 0;
+      }
+    }
+
+    tfoot {
+      display: table-footer-group;
+    }
+  }
+
+  .grants-form__submission-data > section {
+    border-top: 1px var(--color-black-20) solid;
+    padding-top: var(--spacing-layout-l);
+
+    &.hds-notification {
+      padding-top: $spacing;
+    }
+  }
+
+  @media print {
+    @page {
+      margin: 0;
+      size: A4;
+    }
+
+    // Reduce the margin on status container.
+    .application-list__status__container {
+      padding-block-end: $spacing;
+      padding-block-start: $spacing;
+    }
+
+    h1 {
+      margin: $spacing 0 0;
+      position: relative;
+    }
+
+    label {
+      font-size: 8pt;
+      margin-bottom: 0;
+    }
+
+    section {
+      border-top: 0 var(--color-black-20) solid !important;
+      margin-bottom: 0;
+      padding-bottom: 0;
+      padding-top: 0 !important;
+    }
+
+    div.main-content {
+      margin: 0;
+    }
+
+    button,
+    footer.footer,
+    header.header,
+    nav.breadcrumb,
+    .asiointirooli-block,
+    .hds-notification,
+    .messages__container,
+    .tools__container,
+    .breadcrumb__container {
+      display: none !important;
+    }
+
+    .gin--horizontal-toolbar .dialog-off-canvas-main-canvas {
+      padding: 0 !important;
+    }
+
+    .grants-form__print-header {
+      align-items: center;
+      background: var(--color-white);
+      border-bottom: 1px var(--color-black-40) solid;
+      display: flex;
+      flex-flow: row nowrap;
+      font-size: 9pt;
+      height: 21mm;
+      left: 0;
+      max-width: 100%;
+      min-width: 100%;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+
+      svg {
+        color: var(--color-black);
+        display: block;
+        height: 25mm;
+        margin-right: 3mm;
+        width: 55mm;
+      }
+
+      .grants-form__print-header-left-text {
+        color: var(--color-black-40);
+        text-align: left;
+        width: 100%;
+      }
+
+      .grants-form__print-header-right-text {
+        color: var(--color-black-40);
+        text-align: right;
+        width: 100%;
+      }
+    }
+
+    .grants-form__print-footer {
+      align-items: center;
+      background: var(--color-white);
+      border-top: 1px var(--color-black-40) solid;
+      bottom: 0;
+      display: flex;
+      flex-flow: row nowrap;
+      font-size: 9pt;
+      height: 17mm;
+      left: 0;
+      max-width: 100%;
+      min-width: 100%;
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+
+      svg {
+        color: var(--color-black);
+        display: block;
+        height: 15mm;
+        margin-right: 3mm;
+        width: 33mm;
+      }
+
+      .grants-form__print-footer-left-text {
+        color: var(--color-black-40);
+        text-align: left;
+        width: 100%;
+      }
+
+      .grants-form__print-footer-right-text {
+        color: var(--color-black-40);
+        text-align: right;
+        width: 100%;
+      }
+    }
+
+    .grants-form__print-header-space {
+      background: var(--color-white);
+      font-size: 9pt;
+      height: 21mm;
+    }
+
+    .grants-form__print-footer-space {
+      background: var(--color-white);
+      font-size: 9pt;
+      height: 17mm;
+    }
+
+    .grants-form__print-wrapper-table {
+      border: 0;
+      margin: 0;
+      overflow-x: initial;
+    }
+  }
+}
+
+.grants-form__submission-data dl {
+  dt {
+    font-weight: bold;
+  }
+  
+  dd {
+    margin: 0;
+    padding: 0;
+  }
+  
+  dl {
+    padding-left: $spacing-half;
+  }
+  
+  > br {
+    display: none;
+  }
+}

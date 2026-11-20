@@ -1,0 +1,484 @@
+// Form element styles used by the HDBT React forms.
+
+.form-group:not(:last-child) {
+  &.field-string,
+  &.field-integer,
+  &.field-number,
+  &.field-object {
+    margin-block-end: $spacing-and-half;
+  }
+}
+
+.hdbt-form--section__title,
+.hdbt-form--section__spacer {
+  margin-block: 0 $spacing;
+
+  @include breakpoint($breakpoint-m) {
+    margin: 0;
+    width: 33%;
+  }
+}
+
+.hdbt-form--section__title {
+  // Needs own focus styles because generic ones don't work.
+  &:focus,
+  &:active {
+    height: fit-content;
+    outline: 3px solid $color-black;
+    outline-offset: 2px;
+  }
+}
+
+.hdbt-form--section {
+  margin-block-end: $spacing-triple;
+
+  @include breakpoint($breakpoint-m) {
+    display: flex;
+    gap: $spacing-triple;
+  }
+}
+
+.hdbt-form--section__content {
+  @include breakpoint($breakpoint-m) {
+    width: 67%;
+  }
+}
+
+// Fields with tooltips need spacing between label and tooltip container.
+.hdbt-form--section__content .field:has(.hdbt-form__tooltip-container) label {
+  margin-inline-end: $spacing-and-half;
+}
+
+.hdbt-form--description,
+.help-block {
+  color: $color-black-60;
+  margin-block-end: $spacing-and-half;
+}
+
+.hdbt-form--fieldset {
+  margin-inline: 0;
+}
+
+// Target array items that are not in preview section
+// Add same styles to fieldset that are not in array-item
+.array-item:not(.grants-form--preview-section .array-item),
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border,
+.hdbt-form--fieldset--border {
+  border: 2px solid $color-black-50;
+  margin-block-end: $spacing-and-half;
+  margin-inline: 0;
+  padding: $spacing-double;
+}
+
+.field .hdbt-form--fieldset {
+  padding: 0;
+
+  legend {
+    font-weight: 500;
+    margin-block: 0 $spacing;
+  }
+}
+
+
+// Align legend when fieldset is not in array item
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border,
+.hdbt-form--fieldset--border {
+  legend {
+    float: left;
+  }
+
+  legend + * {
+    clear: both;
+  }
+}
+
+.hdbt-form--fieldset--border>legend {
+  @include font('h4');
+  margin-block-end: $spacing-and-half;
+  width: 100%;
+
+  & + .hdbt-form--description {
+    margin-block-start: calc(-1 * #{$spacing});
+  }
+}
+
+.hdbt-form--fieldset--border:not(:has(+ div .button)),
+.hdbt-form--fieldset--border .fieldset-wrapper .form-item:last-of-type {
+  margin-block-end: 0;
+}
+
+.hdbt-form--fieldset--border .fieldset-wrapper .hds-button,
+.hdbt-form--fieldset--border + .hdbt-form--fieldset--border {
+  margin-top: $spacing-and-half;
+}
+
+
+// TODO: Remove when HDS supports file input styling
+.hdbt-form--fileinput {
+  & > div:first-child > div:first-child > div:first-child {
+    border-color: $color-black;
+    color: $color-black;
+  }
+
+  ul:has(li) {
+    margin-block-end: $spacing;
+  }
+
+  // These are copied from _button.scss in hdbt
+  // remove when HDS supports file input styling
+  button {
+    --background-color: var(--theme-bg2, transparent);
+    --background-color-hover: var(--theme-bg1, var(--color-bus-light));
+    --background-color-focus: var(--theme-bg2, transparent);
+    --background-color-hover-focus: var(--theme-bg1, var(--color-bus-light));
+    --background-color-disabled: transparent;
+
+    // Borders
+    --border-color: var(--theme-bg1, var(--color-bus));
+    --border-color-hover: var(--theme-bg2, var(--color-bus-dark));
+    --border-color-focus: var(--theme-bg1, var(--color-bus));
+    --border-color-hover-focus: var(--theme-bg2, var(--color-bus-dark));
+    --border-color-disabled: var(--color-black-50);
+
+    // Colors
+    --color: var(--theme-fg2, var(--color-bus));
+    --color-hover: var(--theme-fg1, var(--color-bus-dark));
+    --color-focus: var(--theme-fg2, var(--color-bus));
+    --color-hover-focus: var(--theme-fg1, var(--color-bus-dark));
+    --color-disabled: var(--color-black-40);
+
+    // Focus ring
+    --focus-outline-color: var(--theme-focus, var(--color-coat-of-arms));
+    --submit-input-focus-gutter-color: var(--theme-focus-gutter-color, var(--color-white));
+  }
+}
+
+.hdbt-form--paragraph__title {
+  margin-block: 0 $spacing-half;
+}
+
+.hdbt-form--paragraph__content,
+.hdbt-form--notification {
+  margin-block: 0 $spacing-and-half;
+}
+
+.hdbt-form--actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $spacing-half;
+  justify-content: right;
+
+  button {
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      width: auto;
+    }
+
+    &.hdbt-form--pager-button {
+      width: calc(50% - $spacing-quarter);
+
+      @include breakpoint($breakpoint-m) {
+        width: auto;
+      }
+    }
+  }
+}
+
+// Error messages in select widget get too much spacing.
+.hdbt-form--select [class*="Select-module_invalid__"] {
+  margin-block-end: 0;
+}
+
+// Errors on fieldset such as the subvention amount get too much spacing.
+.form-group.has-error > .array-item {
+  border-color: var(--color-error);
+  margin-block-end: $spacing-half;
+}
+
+
+
+.hdbt-form__loading-spinner {
+  margin-block-start: $spacing-sextuple;
+  margin-inline: auto;
+}
+
+.hdbt-form__preview-accordion-item {
+  padding-inline: $spacing;
+
+  @include breakpoint($breakpoint-m) {
+    padding-inline: $spacing-and-half;
+  }
+}
+
+// Accordion button/header styles
+.hdbt-form__preview-accordion-item [role='heading'] {
+  @include font('h3');
+}
+
+// Accordion content styles
+.hdbt-form__preview-accordion-item [role='region'] {
+  padding-block: $spacing-and-half $spacing;
+}
+
+.hdbt-form__preview-accordion-item--first {
+  border-top: 1px solid var(--color-black-20);
+  margin-block-start: $spacing-double;
+}
+
+.hdbt-form__preview-accordion-item .hdbt-form--section__content {
+  padding-block-start: $spacing-quarter;
+
+  .array-item:not(:only-child) {
+    margin-block-end: $spacing-and-half;
+  }
+}
+
+.hdbt-form__subvention-table {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hdbt-form__subvention-table__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.hdbt-form__form-status {
+  margin-block-start: $spacing-and-half;
+}
+
+.hdbt-form__completion-page .page-title {
+  display: none;
+}
+
+.hdbt-form__message__sender:not(:first-child) {
+  margin-block-start: $spacing-and-half;
+}
+
+.hdbt-form__message__attachments {
+  margin: $spacing-half 0 0;
+  padding: 0;
+}
+
+
+.empty-preview-notification {
+  margin-block-start: $spacing-double;
+}
+
+.hdbt-form__preview {
+  margin-block-end: $spacing-quadruple;
+
+  .form-group {
+    width: 100%;
+  }
+}
+
+.hdbt-form__tooltip-container {
+  p,
+  ul,
+  ol {
+    margin-block-end: 0;
+  }
+
+  p:first-child,
+  ul:first-child,
+  ol:first-child {
+    margin-block-start: 0;
+  }
+}
+
+.hdbt-form__inline-field-group fieldset {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include breakpoint($breakpoint-m) {
+    column-gap: $spacing;
+  }
+
+  .hdbt-form__inline-field {
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      width: calc(50% - $spacing / 2);
+    }
+  }
+}
+
+.hdbt-form--fileinput--delete-disabled + ul button {
+  display: none;
+}
+
+.hdbt-form__submission-info {
+  background: var(--color-black-5);
+  margin-block-start: $spacing-sextuple;
+  padding: $spacing-and-half;
+
+  .hdbt-form__submission-info {
+    margin-block-start: $spacing-and-half;
+    padding: 0;
+  }
+
+  h4 {
+    margin-block-start: 0;
+  }
+
+  h5 {
+    font-size: var(--fontsize-body-m);
+    margin-block-start: $spacing;
+  }
+
+  .application-attachment-list li {
+    overflow-wrap: anywhere;
+  }
+}
+
+.hdbt-form__submission-info__row {
+  display: flex;
+}
+
+.hdbt-form__submission-info__row--edit {
+  margin-block-start: $spacing-and-half;
+}
+
+.hdbt-form__submission-info__row--top {
+  align-items: center;
+  border-block-end: 1px solid var(--color-black-20);
+  justify-content: space-between;
+  padding-block-end: $spacing;
+
+  @include breakpoint(max-width $breakpoint-m) {
+    display: block;
+  }
+}
+
+.hdbt-form__submission-info__row--main {
+  flex-flow: row nowrap;
+  gap: $spacing;
+  justify-content: space-between;
+
+  @include breakpoint(max-width $breakpoint-l) {
+    flex-flow: row wrap;
+  }
+
+  & > div {
+    flex: 1;
+
+    @include breakpoint(max-width $breakpoint-l) {
+      flex: auto;
+      width: 100%;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    margin-block: 0;
+    padding-inline-start: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.hdbt-form__submission-info__row__supportlinks {
+  display: flex;
+  flex-flow: row nowrap;
+  min-width: fit-content;
+
+  .hds-loading-spinner {
+    inset-inline-start: 0;
+  }
+
+  .hds-button {
+    min-width: fit-content;
+
+    // React & non-React button layout unification styles.
+    .hds-button__label {
+      padding: 14px;
+    }
+  }
+
+  // React & non-React button layout unification styles.
+  button:hover {
+    text-decoration: none;
+  }
+}
+
+// The computedSum summary variant shows the total as text. After its sum
+// match rule is validated, it's colored by the result.
+.hdbt-form--computed-sum-summary {
+  margin-block-start: $spacing;
+}
+
+.hdbt-form--computed-sum-summary__total {
+  font-size: var(--fontsize-heading-s);
+  font-weight: $font-weight-bold;
+  margin: 0;
+
+  .hdbt-form--computed-sum-summary--match & {
+    color: var(--color-success);
+  }
+
+  .hdbt-form--computed-sum-summary--mismatch & {
+    color: var(--color-error);
+  }
+}
+
+.hdbt-form--computed-sum-summary__description {
+  font-size: var(--fontsize-body-m);
+  margin-block: $spacing-half 0;
+}
+
+// Let the total and the fieldset description span the row in two-column fieldsets.
+.hdbt-form__inline-field-group fieldset > .hdbt-form--description,
+.hdbt-form__inline-field-group fieldset > .hdbt-form--field--computed-sum {
+  width: 100%;
+}
+
+.hdbt-form--stepper {
+  margin-block: $spacing-quadruple;
+
+  // Fixes stepper circle size
+  button {
+    box-sizing: content-box;
+  }
+
+  // Styles for non-current step button texts
+  button[aria-current='false'] {
+    p {
+      text-decoration-thickness: remify(1px);
+      text-underline-offset: 10%;
+    }
+
+    &:hover p,
+    &:focus p {
+      text-decoration-thickness: remify(2px);
+    }
+  }
+
+  div:has(svg[aria-label='error']) {
+    border-color: $color-error;
+  }
+
+  svg[aria-label='error'] {
+    color: $color-error;
+  }
+}
+
+.hdbt-form--fileinput .hdbt-form--checkbox:not(:first-of-type) {
+  // Margin-top to override HDS default margin
+  margin-top: $spacing;
+}
+
+.hdbt-form--fieldset .hdbt-form--radiobutton:not(:first-of-type) {
+  // Margin-top to override HDS default margin
+  margin-top: $spacing;
+}
+
+.hdbt-form--radiobutton + .hdbt-form--notification {
+  margin-block: $spacing 0;
+}

@@ -692,7 +692,7 @@ export const getTooltip = (uiSchema: UiSchema | undefined) => {
 
   return (
     <Tooltip
-      className='hdbt-react-form__tooltip-container'
+      className='hdbt-form__tooltip-container'
       buttonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
       tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
     >
