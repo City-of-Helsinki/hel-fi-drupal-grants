@@ -96,10 +96,30 @@ Mapping type decides how to process the given value before adding it to the sour
 ```
 default          : The normal mapping for most of the form fields
 multiple_values  : The "add new item" -field, where user may add new item n-times.
+multiselect      : A multiselect field, each selected option is sent as a separate "Kyllä" field. See below.
 hardcoded        : Read the first key from the data-section and add it to target data as it is
 simple           : Simple key-value added to the target data
 custom           : Allows creating and using custom mapper function to process the data
 empty            : Add an empty object to the data.
+```
+
+#### Multiselect
+
+A multiselect field sends an array of the selected enum values, e.g. `["football", "diving"]`. Avus2 expects each option as a separate custom question, so the `data` section holds one field definition per option, keyed by the enum value. Selected options are sent as `"Kyllä"`, in the order of the mapping file, and unselected options are left out. Options with `valueType: "bool"` are sent as `"true"` instead.
+
+The target path must end in an index or `n`, as each option is appended to the target array. The options are appended in the order of the mapping keys, so they end up among the other custom questions as their own fields.
+
+```
+"compensation.customQuestionsInfo.customQuestionsArray.5": {
+  "datasource": "form_data",
+  "source": "activity_step.sports_section.sports",
+  "mapping_type": "multiselect",
+  "data": {
+    "football": { "ID": "football", "label": "Jalkapallo", "value": "", "valueType": "string" },
+    "swimming": { "ID": "swimming", "label": "Uinti", "value": "", "valueType": "string" },
+    "diving": { "ID": "diving", "label": "Sukellus", "value": "", "valueType": "string" }
+  }
+}
 ```
 
 #### Custom_handler when custom mapping-type is selected

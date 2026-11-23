@@ -16,7 +16,8 @@ import { type ChangeEvent, type ComponentPropsWithRef, type FocusEvent, useCallb
 import { useTranslation } from 'react-i18next';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
+import { defaultMultiSelectTheme, defaultSelectTheme } from '@/react/common/constants/selectTheme';
+import { getCurrentLanguage } from '@/react/common/helpers/GetCurrentLanguage';
 import { formatHDSDate, formatHTMLDate } from '@/react/common/helpers/dateUtils';
 import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { InfoField } from './ApplicantInfo';
@@ -247,17 +248,24 @@ export const SelectWidget = ({
   const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
-    const optionLabel = options.enumOptions?.find((item) => {
-      return item.value === String(value);
-    })?.label;
-    const renderedValue = optionLabel ?? value;
+    const getOptionLabel = (item: unknown) =>
+      options.enumOptions?.find((option) => String(option.value) === String(item))?.label ?? String(item);
 
-    return <PreviewInput value={renderedValue} label={label} uiSchema={uiSchema} />;
+    const getRenderedValue = () => {
+      if (Array.isArray(value)) {
+        return value.length ? value.map(getOptionLabel) : undefined;
+      }
+
+      return value === undefined || value === null ? undefined : getOptionLabel(value);
+    };
+
+    return <PreviewInput value={getRenderedValue()} label={label} uiSchema={uiSchema} />;
   }
 
   return (
     <Select
       className='hdbt-form--select'
+      clearable={multiple}
       disabled={readonly || isReadOnly}
       id={id}
       invalid={Boolean(rawErrors?.length)}
@@ -282,9 +290,10 @@ export const SelectWidget = ({
         assistive,
         error: rawErrors ? formatErrors(rawErrors) : undefined,
         label: label ?? '',
+        language: getCurrentLanguage(drupalSettings.path.currentLanguage),
         placeholder: t('select.placeholder'),
       }}
-      theme={defaultSelectTheme}
+      theme={multiple ? defaultMultiSelectTheme : defaultSelectTheme}
       tooltip={getTooltip(uiSchema)}
       value={value}
     />
