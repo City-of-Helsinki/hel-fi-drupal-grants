@@ -242,10 +242,8 @@ class JsonMapper {
    * Map a multiselect field into separate yes fields.
    *
    * Frontend sends values as an array. Each selected option is sent as its
-   * own field, unselected options are left out.
-   *
-   * Options with valueType 'bool' get "true", others get the "Kyllä" string
-   * that Avus2 uses for custom questions.
+   * own field with the "Kyllä" string that Avus2 uses for custom questions.
+   * Unselected options are left out.
    *
    * @param array<mixed> $data
    *   The target data.
@@ -265,7 +263,7 @@ class JsonMapper {
         continue;
       }
 
-      $field['value'] = ($field['valueType'] ?? NULL) === 'bool' ? 'true' : 'Kyllä';
+      $field['value'] = 'Kyllä';
       $this->setTargetValue($data, $targetPath, $field, $definition);
     }
   }

@@ -621,18 +621,15 @@ final class JsonMapperTest extends UnitTestCase {
    * The options are mapped among the custom questions, after a regular
    * custom question.
    *
-   * @param string $valueType
-   *   The valueType of the options.
-   *
    * @return array<mixed>
    *   The mapping.
    */
-  private function getMultiselectMapping(string $valueType = 'string'): array {
+  private function getMultiselectMapping(): array {
     $option = fn(string $id, string $label) => [
       'ID' => $id,
       'label' => $label,
       'value' => '',
-      'valueType' => $valueType,
+      'valueType' => 'string',
     ];
 
     return [
@@ -692,21 +689,6 @@ final class JsonMapperTest extends UnitTestCase {
       ['ID' => 'football', 'label' => 'Jalkapallo', 'value' => 'Kyllä', 'valueType' => 'string'],
       ['ID' => 'diving', 'label' => 'Sukellus', 'value' => 'Kyllä', 'valueType' => 'string'],
     ], $mappedData['compensation']['customQuestionsInfo']['customQuestionsArray']);
-  }
-
-  /**
-   * Test that bool options are mapped as true.
-   */
-  public function testMultiselectMappingBool(): void {
-    $mapper = new JsonMapper();
-    $mapper->setMappings($this->getMultiselectMapping('bool'));
-    $mappedData = $mapper->map($this->getMultiselectFormData(['swimming']));
-
-    $values = array_column($mappedData['compensation']['customQuestionsInfo']['customQuestionsArray'], 'value', 'ID');
-    $this->assertSame([
-      'description' => 'Kuvaus toiminnasta',
-      'swimming' => 'true',
-    ], $values);
   }
 
   /**

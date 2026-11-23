@@ -105,7 +105,7 @@ empty            : Add an empty object to the data.
 
 #### Multiselect
 
-A multiselect field sends an array of the selected enum values, e.g. `["football", "diving"]`. Avus2 expects each option as a separate custom question, so the `data` section holds one field definition per option, keyed by the enum value. Selected options are sent as `"Kyllä"`, in the order of the mapping file, and unselected options are left out. Options with `valueType: "bool"` are sent as `"true"` instead.
+A multiselect field sends an array of the selected enum values, e.g. `["football", "diving"]`. Avus2 expects each option as a separate custom question, so the `data` section holds one field definition per option, keyed by the enum value. Selected options are sent as `"Kyllä"`, in the order of the mapping file, and unselected options are left out.
 
 The target path must end in an index or `n`, as each option is appended to the target array. The options are appended in the order of the mapping keys, so they end up among the other custom questions as their own fields.
 
