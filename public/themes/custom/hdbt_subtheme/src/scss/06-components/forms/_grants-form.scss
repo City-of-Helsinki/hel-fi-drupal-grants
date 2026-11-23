@@ -1,5 +1,14 @@
 // Form element styles used by the Grants React forms specifically.
 
+// Gin toolbars core/drupal.dialog loads Claro's variables on every page
+// where it is added. Claro has --color-focus set to green that isn't in
+// our palette but some HDS buttons inherit it in the forms. For example
+// the date picker's buttons do this. To fix the issue we reset it here
+// so HDS uses its own colors.
+.grants-form {
+  --color-focus: initial;
+}
+
 .grants-form--official-details {
   &:not(:empty) {
     margin-block-start: $spacing;
