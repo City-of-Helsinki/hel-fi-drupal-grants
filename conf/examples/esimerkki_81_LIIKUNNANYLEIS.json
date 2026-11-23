@@ -1,0 +1,464 @@
+{
+	"compensation": {
+		"applicationInfoArray": [{
+				"ID": "applicationType",
+				"label": "Hakemustyyppi",
+				"value": "LIIKUNNANYLEIS",
+				"valueType": "string"
+			},
+			{
+				"ID": "applicationTypeID",
+				"label": "Hakemustyypin numero",
+				"value": "81",
+				"valueType": "int"
+			},
+			{
+				"ID": "formTimeStamp",
+				"label": "Hakemuksen/sanoman lähetyshetki",
+				"value": "2026-10-15T13:50:25.000",
+				"valueType": "datetime"
+			},
+			{
+				"ID": "applicationNumber",
+				"label": "Hakemusnumero",
+				"value": "LIIKUNNANYLEIS-1",
+				"valueType": "string"
+			},
+			{
+				"ID": "status",
+				"label": "Tila",
+				"value": "Vastaanotettu",
+				"valueType": "string"
+			},
+			{
+				"ID": "actingYear",
+				"label": "Hakemusvuosi",
+				"value": "2026",
+				"valueType": "int"
+			}
+		],
+		"currentAddressInfoArray": [{
+				"ID": "contactPerson",
+				"label": "Yhteyshenkilö",
+				"value": "Teemu Testaushenkilö",
+				"valueType": "string"
+			},
+			{
+				"ID": "phoneNumber",
+				"label": "Puhelinnumero",
+				"value": "+358404040404",
+				"valueType": "string"
+			},
+			{
+				"ID": "street",
+				"label": "Katuosoite",
+				"value": "Annankatu 18 Ö 905",
+				"valueType": "string"
+			},
+			{
+				"ID": "city",
+				"label": "Postitoimipaikka",
+				"value": "Helsinki",
+				"valueType": "string"
+			},
+			{
+				"ID": "postCode",
+				"label": "Postinumero",
+				"value": "00120",
+				"valueType": "string"
+			},
+			{
+				"ID": "country",
+				"label": "Maa",
+				"value": "Suomi",
+				"valueType": "string"
+			}
+		],
+		"applicantInfoArray": [{
+				"ID": "applicantType",
+				"label": "Hakijan tyyppi",
+				"value": "2",
+				"valueType": "string"
+			},
+			{
+				"ID": "companyNumber",
+				"label": "Rekisterinumero",
+				"value": "2365457-6",
+				"valueType": "string"
+			},
+			{
+				"ID": "communityOfficialName",
+				"label": "Yhteisön nimi",
+				"value": "Uusi hakija 111",
+				"valueType": "string"
+			},
+			{
+				"ID": "communityOfficialNameShort",
+				"label": "Yhteisön lyhenne",
+				"value": "uh111",
+				"valueType": "string"
+			},
+			{
+				"ID": "registrationDate",
+				"label": "Rekisteröimispäivä",
+				"value": "2025-01-01T00:00:00.000",
+				"valueType": "datetime"
+			},
+			{
+				"ID": "foundingYear",
+				"label": "Perustamisvuosi",
+				"value": "2025",
+				"valueType": "int"
+			},
+			{
+				"ID": "home",
+				"label": "Kotipaikka",
+				"value": "Tampere",
+				"valueType": "string"
+			},
+			{
+				"ID": "homePage",
+				"label": "www-sivut",
+				"value": "www.notexistsnotnotnot.fi",
+				"valueType": "string"
+			},
+			{
+				"ID": "email",
+				"label": "Sähköpostiosoite",
+				"value": "tsto@notnotnotexiststsss.not",
+				"valueType": "string"
+			},
+			{
+				"ID": "communityType",
+				"label": "Yhteisön tyyppi",
+				"value": "Liikuntaseura",
+				"valueType": "string"
+			}
+		],
+		"applicantOfficialsArray": [
+			[{
+					"ID": "email",
+					"label": "Sähköposti",
+					"value": "teemu@ttry.fi",
+					"valueType": "string"
+				},
+				{
+					"ID": "role",
+					"label": "Rooli",
+					"value": "1",
+					"valueType": "string"
+				},
+				{
+					"ID": "name",
+					"label": "Nimi",
+					"value": "Teemu Testaushenkilö",
+					"valueType": "string"
+				},
+				{
+					"ID": "phone",
+					"label": "Puhelinnumero",
+					"value": "09-616527788",
+					"valueType": "string"
+				}
+			]
+		],
+		"bankAccountArray": [{
+			"ID": "accountNumber",
+			"label": "Tilinumero",
+			"value": "FI9640231442000454",
+			"valueType": "string"
+		}],
+		"membersInfo": {
+			"membersInfoArray": [{
+					"ID": "juniorAll",
+					"label": "Lapset ja nuoret (alle 20-vuotiaat)",
+					"value": "20",
+					"valueType": "int"
+				},
+				{
+					"ID": "juniorTargetGroup",
+					"label": "joista soveltavan liikunnan kohderyhmää",
+					"value": "5",
+					"valueType": "int"
+				},
+				{
+					"ID": "adultAll",
+					"label": "Aikuiset (20-63-vuotiaat)",
+					"value": "30",
+					"valueType": "int"
+				},
+				{
+					"ID": "adultTargetGroup",
+					"label": "joista soveltavan liikunnan kohderyhmää",
+					"value": "10",
+					"valueType": "int"
+				},
+				{
+					"ID": "seniorAll",
+					"label": "Ikääntyneet (64 vuotta täyttäneet)",
+					"value": "40",
+					"valueType": "int"
+				},
+				{
+					"ID": "seniorTargetGroup",
+					"label": "joista soveltavan liikunnan kohderyhmää",
+					"value": "15",
+					"valueType": "int"
+				},
+				{
+					"ID": "men",
+					"label": "Pojat/miehet",
+					"value": "45",
+					"valueType": "int"
+				},
+				{
+					"ID": "women",
+					"label": "Tytöt/naiset",
+					"value": "40",
+					"valueType": "int"
+				},
+				{
+					"ID": "other",
+					"label": "Muut",
+					"value": "3",
+					"valueType": "int"
+				},
+				{
+					"ID": "unkown",
+					"label": "Ei tiedossa",
+					"value": "2",
+					"valueType": "int"
+				},
+				{
+					"ID": "allCoaches",
+					"label": "Määrä",
+					"value": "5",
+					"valueType": "string"
+				}
+			],
+			"clubsInfoArray": [
+				{
+					"ID": "clubMainActivity",
+					"label": "Järjestääkö yhdistyksenne pääasiassa:",
+					"value": "liikuntaa useissa lajeissa, joista yksi on selvästi muita suurempi",
+					"valueType": "string"				
+				},
+				{
+					"ID": "clubActivityDescription",
+					"label": "Kuvaile järjestämäänne toimintaa:",
+					"value": "Toimimme näin ja tälläin eritavoilla.",
+					"valueType": "string"				
+				},
+				{
+					"ID": "activityMonthsLastYear",
+					"label": "Kuinka monen kuukauden aikana edellisenä kalenterivuonna yhdistys järjesti ryhmämuotoista liikuntatoimintaa?",
+					"value": "5",
+					"valueType": "int"				
+				}
+			],
+			"clubSectionsArray": [
+				[{
+						"ID": "sectionName",
+						"label": "Yhdistyksen liikuntalaji/Nimi",
+						"value": "Nyrkkeily",
+						"valueType": "string"
+					},
+					{
+						"ID": "sectionOther",
+						"label": "Mikä? (Jos valittu laji jonka nimesä muu)",
+						"value": "Toinen laji",
+						"valueType": "string"
+					},
+					{
+						"ID": "junior",
+						"label": "Lapset ja nuoret (alle 20-vuotiaat)",
+						"value": "25",
+						"valueType": "int"
+					},
+					{
+						"ID": "juniorTargetGroup",
+						"label": "joista soveltavan liikunnan kohderyhmää",
+						"value": "5",
+						"valueType": "int"
+					},
+					{
+						"ID": "adult",
+						"label": "Aikuiset (20-63-vuotiaat)",
+						"value": "30",
+						"valueType": "int"
+					},
+					{
+						"ID": "adultTargetGroup",
+						"label": "joista soveltavan liikunnan kohderyhmää",
+						"value": "10",
+						"valueType": "int"
+					},
+					{
+						"ID": "senior",
+						"label": "Ikääntyneet (64 vuotta täyttäneet)",
+						"value": "35",
+						"valueType": "int"
+					},
+					{
+						"ID": "seniorTargetGroup",
+						"label": "joista soveltavan liikunnan kohderyhmää",
+						"value": "15",
+						"valueType": "int"
+					}
+				]
+			]
+		},
+		"activityBasisInfo": {
+			"activityBasisArray": [
+				{
+					"ID": "c",
+					"label": "Ryhmämuotoisessa toiminnassa on oltava vähintään neljä harrastajaa per ryhmä. Neljän harrastajan vaatimus ei koske soveltavaa liikuntaa.",
+					"value": "Ryhmämuotoisessa toiminnassa on oltava vähintään neljä harrastajaa per ryhmä. Neljän harrastajan vaatimus ei koske soveltavaa liikuntaa.",
+					"valueType": "string"
+				},
+				{
+					"ID": "d",
+					"label": "Jos kuukauden aikana on järjestetty yksikin harjoitus, voidaan kyseinen kuukausi laskea mukaan.",
+					"value": "Jos kuukauden aikana on järjestetty yksikin harjoitus, voidaan kyseinen kuukausi laskea mukaan.",
+					"valueType": "string"
+				}
+			]
+		},
+		"premisesInfo": {
+			"premisesArray": [
+				[
+					{
+						"ID": "premiseAddress",
+						"label": "Liikuntapaikka",
+						"value": "Liikuntapaikka 1",
+						"valueType": "string"
+					},
+					{
+						"ID": "premiseTarget",
+						"label": "Liikuntatila",
+						"value": "Liikuntatila 1",
+						"valueType": "string"
+					},
+					{
+						"ID": "rentType",
+						"label": "Tilanvuokraustyyppi",
+						"value": "Tuntiperusteisesti vuokrattava liikuntatila",
+						"valueType": "string"
+					},
+					{
+						"ID": "clubOwnsRenter",
+						"label": "Yhdistyksellämme on omistussuhde liikuntatilan vuokranantajaan",
+						"value": "true",
+						"valueType": "bool"
+					},
+					{
+						"ID": "rentMarketBased",
+						"label": "Vakuutamme, että vuokranantajan laskuttamat vuokrat ovat korkeintaan markkinaehtoisesti määräytyneitä",
+						"value": "true",
+						"valueType": "bool"
+					},
+					{
+						"ID": "hoursLastYear",
+						"label": "Tilankäyttötunnit edellisvuonna (1.1.-31.12.)",
+						"value": "500.00",
+						"valueType": "double"
+					},
+					{
+						"ID": "costsLastYear",
+						"label": "Tilankäytön kustannukset edellisvuonna (1.1.-31.12.)",
+						"value": "10000.00",
+						"valueType": "double"
+					}
+				]
+			],
+			"premiseSummaryArray": [
+				{
+					"ID": "changeOnUsageInfo",
+					"label": "Oleellinen muutos tilankäytössä avustusvuodelle. Ilmoita +/- tunnit ja vuokrat sekä syy muutokselle.",
+					"value": "Oleellinen muutos tilankäytössä avustusvuodelle. Ilmoita +/- tunnit ja vuokrat sekä syy muutokselle.",
+					"valueType": "string"
+				}
+			]
+		},
+		"customQuestionsInfo": {
+			"customQuestionsArray": [
+				{
+					"ID": "a",
+					"label": "Vastuullisuuden ja saavutettavuuden vähimmäiskriteerit ",
+					"value": "Vastuullisuuden ja saavutettavuuden vähimmäiskriteerit ",
+					"valueType": "string"
+				},
+				{
+					"ID": "b",
+					"label": "Vastuullisuuden ja saavutettavuuden pisteytettävät kriteerit",
+					"value": "Vastuullisuuden ja saavutettavuuden pisteytettävät kriteerit",
+					"valueType": "string"
+				}
+			]
+		},
+		"additionalInformation": "Tällä kertaa ei ole muuta ilmoitettavaa tähän hakemukseen",
+		"senderInfoArray": [{
+				"ID": "firstname",
+				"label": "Etunimi",
+				"value": "Testaaja",
+				"valueType": "string"
+			},
+			{
+				"ID": "lastname",
+				"label": "Sukunimi",
+				"value": "Tiina",
+				"valueType": "string"
+			},
+			{
+				"ID": "personID",
+				"label": "Henkilötunnus",
+				"value": "171756-1234",
+				"valueType": "string"
+			},
+			{
+				"ID": "userID",
+				"label": "Käyttäjätunnus",
+				"value": "testatii",
+				"valueType": "string"
+			},
+			{
+				"ID": "email",
+				"label": "Sähköposti",
+				"value": "tiina.testaaja@testiyhdistys.fi",
+				"valueType": "string"
+			}
+		]
+	},
+	"attachmentsInfo": {
+		"attachmentsArray": [
+			[{
+					"ID": "description",
+					"value": "Muu liite",
+					"valueType": "string"
+				},
+				{
+					"ID": "fileType",
+					"value": "1",
+					"valueType": "int"
+				},
+				{
+					"ID": "isDeliveredLater",
+					"value": "true",
+					"valueType": "bool"
+				},
+				{
+					"ID": "isIncludedInOtherFile",
+					"value": "false",
+					"valueType": "bool"
+				}
+			]
+		],
+		"generalInfoArray": [{
+			"ID": "extraInfo",
+			"label": "Lisäselvitys liitteistä",
+			"value": "Tässä voi olla joku kaikkia liitteitä yhteisesti koskeva selvitys",
+			"valueType": "string"
+		}]
+	},
+	"formUpdate": false
+}
