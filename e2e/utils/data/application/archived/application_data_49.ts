@@ -1,8 +1,8 @@
-import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
+import {FormData, FormDataWithRemoveOptionalProps} from "../../test_data";
 import {fakerFI as faker} from "@faker-js/faker";
-import {ATTACHMENTS} from "../attachment_data";
-import {PROFILE_INPUT_DATA} from "../profile_input_data";
-import {createFormData} from "../../form_data_helpers";
+import {ATTACHMENTS} from "../../attachment_data";
+import {PROFILE_INPUT_DATA} from "../../profile_input_data";
+import {createFormData} from "../../../form_data_helpers";
 import {
   viewPageFormatCurrency,
   viewPageFormatBoolean,
@@ -11,8 +11,8 @@ import {
   viewPageFormatAddress,
   viewPageFormatLowerCase,
   viewPageFormatNumber
-} from "../../view_page_formatters";
-import {getFakeEmailAddress} from "../../field_helpers";
+} from "../../../view_page_formatters";
+import {getFakeEmailAddress} from "../../../field_helpers";
 
 
 const baseForm_49: FormData = {

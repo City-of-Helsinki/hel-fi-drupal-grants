@@ -12,6 +12,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
@@ -69,6 +70,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             ['context' => 'grants_oma_asiointi']
           )
         );
+    }
+    catch (\Exception $e) {
+      Error::logException($this->logger, $e);
+      return [];
     }
 
     if ($grantsProfile == NULL) {

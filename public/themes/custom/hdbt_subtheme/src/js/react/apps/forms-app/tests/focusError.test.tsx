@@ -154,7 +154,7 @@ const renderAndValidate = async ({ name, property, ui, data, custom }: Case) => 
     <TestProvider
       initialValues={[
         [formConfigAtom, { submitState: 'DRAFT', token: 't', grantsProfile: {}, applicationNumber: 'X' }],
-        [formStateAtom, { currentStep: [0, step], reachedStep: 0 }],
+        [formStateAtom, { currentStep: [0, step], validationCutoff: 0 }],
         [formStepsAtom, steps],
         [formDataAtomRef, dataAtom],
       ]}
