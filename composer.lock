@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e1ed2b2a5acce6995b8d6c3d803f268",
+    "content-hash": "7b5fce7ce9ad1688727db6ff527956ef",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2511,27 +2511,27 @@
         },
         {
             "name": "drupal/autologout",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/autologout.git",
-                "reference": "2.0.3"
+                "reference": "2.0.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/autologout-2.0.3.zip",
-                "reference": "2.0.3",
-                "shasum": "1efd2020abe4025aee350e56189737ba11ab30cf"
+                "url": "https://ftp.drupal.org/files/projects/autologout-2.0.4.zip",
+                "reference": "2.0.4",
+                "shasum": "3b44ab2e9ce0b24620583ffa4c979df3b7beb452"
             },
             "require": {
-                "drupal/core": "^9.2 || ^10 || ^11",
+                "drupal/core": "^10.3 || ^11 || ^12",
                 "drupal/js_cookie": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.3",
-                    "datestamp": "1778985845",
+                    "version": "2.0.4",
+                    "datestamp": "1795132391",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -2598,11 +2598,15 @@
             ],
             "description": "Adds automated timed logout.",
             "homepage": "http://drupal.org/project/autologout",
+            "keywords": [
+                "Minimally maintained",
+                "Security"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/autologout",
                 "issues": "https://www.drupal.org/project/issues/autologout"
             },
-            "published-time": "2026-05-17T02:43:44+00:00"
+            "published-time": "2026-11-19T23:52:49+00:00"
         },
         {
             "name": "drupal/better_exposed_filters",
