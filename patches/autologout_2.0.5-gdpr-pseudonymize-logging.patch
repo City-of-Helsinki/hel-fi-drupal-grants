@@ -1,5 +1,5 @@
 diff --git a/src/AutologoutManager.php b/src/AutologoutManager.php
-index bd17385..b23220d 100644
+index bd17385..124101d 100644
 --- a/src/AutologoutManager.php
 +++ b/src/AutologoutManager.php
 @@ -190,10 +190,9 @@ class AutologoutManager implements AutologoutManagerInterface {
@@ -11,7 +11,7 @@ index bd17385..b23220d 100644
 -        ['%name' => $user->getAccountName()]
 -      );
 +      $this->logger->info('Session automatically closed for UUID %drupal_uuid by autologout.', [
-+        '%drupal_uuid' => \Drupal\user\Entity\User::load($user->id())->get('uuid')->getString(),
++        '%drupal_uuid' => $this->entityTypeManager->getStorage('user')->load($user->id())->uuid(),
 +      ]);
      }
  
