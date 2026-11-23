@@ -23,7 +23,7 @@ const formatSchemaErrors = (errors: string) => (
   </div>
 );
 
-const rootSelector: string = 'grants-react-form';
+const rootSelector: string = 'grants-form';
 const rootElement: HTMLElement | null = document.getElementById(rootSelector);
 const { application_number: applicationTypeId, form_identifier: formIdentifier } = drupalSettings.grants_react_form;
 
@@ -36,7 +36,7 @@ const handleErrorFallback: FallbackRender = ({ error }) => {
   }
 
   if (error instanceof RedirectError) {
-    return <LoadingSpinner className='hdbt-react-form__loading-spinner' />;
+    return <LoadingSpinner className='hdbt-form__loading-spinner' />;
   }
 
   if (error instanceof BackendError) {
