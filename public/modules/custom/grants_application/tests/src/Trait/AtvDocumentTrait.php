@@ -46,6 +46,7 @@ trait AtvDocumentTrait {
       'delete_after' => '2075-01-01',
       'document_language' => 'fi',
       'content_schema_url' => 'schemaURL',
+      'attachments' => [],
     ]);
     $document->setContent([
       'compensation' => [],

@@ -174,3 +174,6 @@ msgstr "Ansökan kan inte längre skickas"
 
 msgid "The application can no longer be changed"
 msgstr "Ansökan kan inte längre ändras"
+
+msgid "You are not allowed to add attachments to this application any more."
+msgstr "Det går inte längre att lägga till bilagor till ansökan."

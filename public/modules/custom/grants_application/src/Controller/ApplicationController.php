@@ -16,14 +16,17 @@ use Drupal\Core\Render\Renderer;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
+use Drupal\file\Validation\FileValidatorInterface;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2DataParser;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
+use Drupal\grants_attachments\Element\GrantsAttachments;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
@@ -66,6 +69,7 @@ final class ApplicationController extends ControllerBase {
     private readonly Avus2DataParser $avus2DataParser,
     #[Autowire(service: 'Drupal\Core\Render\RendererInterface')]
     private readonly Renderer $renderer,
+    private readonly FileValidatorInterface $fileValidator,
   ) {
   }
 
@@ -165,17 +169,7 @@ final class ApplicationController extends ControllerBase {
         $document = $this->helfiAtvService->getDocument($application_number);
 
         // If document is submitted and has Avus2-error, open it up.
-        $events = $document->getContent()['events'];
-        $status = $document->getStatus();
-        $avus2Error = FALSE;
-        foreach ($events as $event) {
-          if (isset($event['eventType']) && $event['eventType'] === 'INTEGRATION_ERROR_AVUS2') {
-            $avus2Error = TRUE;
-            break;
-          }
-        }
-
-        if ($status === 'SUBMITTED' && $avus2Error) {
+        if ($this->isStuckInAvus2($document)) {
           // No need to do anything here.
           // This happens when Avus2-json has bad data in it.
           $this->getLogger('grants_application')
@@ -433,16 +427,21 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
     }
 
+    if (!$this->isAttachmentUploadAllowed($document)) {
+      $this->getLogger('grants_application')
+        ->warning("Rejected file upload to a non-editable application: $application_number");
+      return new JsonResponse(['error' => $this->t('You are not allowed to add attachments to this application any more.')], 403);
+    }
+
     $filenames = $this->avus2DataParser->getUploadedAttachmentsFilenames($document);
 
-    /** @var \Symfony\Component\HttpFoundation\File\File $file */
+    /** @var \Symfony\Component\HttpFoundation\File\UploadedFile|null $file */
     $file = $request->files->get('file');
-    if (!$file || !$application_number) {
+    if (!$file || !$application_number || !$file->isValid()) {
       $this->getLogger('grants_application')->error("Failed to upload file, application number: $application_number");
       return new JsonResponse(['error' => $this->t('Something went wrong')], 400);
     }
 
-    // @phpstan-ignore-next-line
     $file_original_name = $file->getClientOriginalName();
     $file_original_name = $this->transliteration->transliterate($file_original_name);
     $file_original_name = str_replace(' ', '_', $file_original_name);
@@ -468,12 +467,32 @@ final class ApplicationController extends ControllerBase {
     }
 
     $file_entity = File::create([
-      'filename' => basename($file->getFilename()),
+      'filename' => $file_original_name,
+      'filesize' => $file->getSize(),
       'status' => 0,
       'uid' => $this->currentUser()->id(),
     ]);
-
     $file_entity->setFileUri($file->getRealPath());
+
+    // Enforce the same rules as the webform attachment element.
+    $violations = $this->fileValidator->validate($file_entity, [
+      'FileExtension' => [
+        'extensions' => str_replace(',', ' ', GrantsAttachments::DEFAULT_ALLOWED_FILE_TYPES),
+      ],
+      'FileSizeLimit' => [
+        'fileLimit' => GrantsAttachments::MAX_FILE_SIZE_IN_BYTES,
+      ],
+    ]);
+
+    if ($violations->count() > 0) {
+      try {
+        $file_entity->delete();
+      }
+      catch (\Exception $e) {
+        $this->getLogger('grants_application')->error('File upload failed to delete: ' . $e->getMessage());
+      }
+      return new JsonResponse(['error' => strip_tags((string) $violations->get(0)->getMessage())], 400);
+    }
 
     try {
       $result = $this->helfiAtvService->addAttachment(
@@ -517,6 +536,44 @@ final class ApplicationController extends ControllerBase {
     }
 
     return new JsonResponse($response);
+  }
+
+  /**
+   * Check if the application is stuck in SUBMITTED due to an Avus2 error.
+   *
+   * Such applications are opened up for editing so the applicant can fix
+   * the data and resubmit.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   The ATV document.
+   *
+   * @return bool
+   *   TRUE if the application has an Avus2 integration error.
+   */
+  private function isStuckInAvus2(AtvDocument $document): bool {
+    if ($document->getStatus() !== 'SUBMITTED') {
+      return FALSE;
+    }
+    foreach ($document->getContent()['events'] ?? [] as $event) {
+      if (isset($event['eventType']) && $event['eventType'] === 'INTEGRATION_ERROR_AVUS2') {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * Check if attachments can still be added to the application.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   The ATV document.
+   *
+   * @return bool
+   *   TRUE if the application is still editable.
+   */
+  private function isAttachmentUploadAllowed(AtvDocument $document): bool {
+    return $this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())
+      || $this->isStuckInAvus2($document);
   }
 
   /**

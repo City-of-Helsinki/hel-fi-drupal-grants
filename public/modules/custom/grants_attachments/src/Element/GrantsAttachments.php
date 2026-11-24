@@ -35,6 +35,11 @@ class GrantsAttachments extends WebformCompositeBase {
   const DEFAULT_ALLOWED_FILE_TYPES = 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip';
 
   /**
+   * Maximum size of a single attachment in bytes (20 MB).
+   */
+  const MAX_FILE_SIZE_IN_BYTES = 20 * 1024 * 1024;
+
+  /**
    * {@inheritdoc}
    */
   public function getInfo(): array {
@@ -245,7 +250,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     $sessionHash = Crypt::hashBase64(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_attachments/' . $sessionHash;
-    $maxFileSizeInBytes = (1024 * 1024) * 20;
+    $maxFileSizeInBytes = self::MAX_FILE_SIZE_IN_BYTES;
 
     $elements = [];
 

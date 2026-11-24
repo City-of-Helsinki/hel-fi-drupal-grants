@@ -183,3 +183,6 @@ msgstr "Hakemusta ei voi enää lähettää"
 
 msgid "The application can no longer be changed"
 msgstr "Hakemusta ei voi enää muokata"
+
+msgid "You are not allowed to add attachments to this application any more."
+msgstr "Hakemukseen ei voi enää lisätä liitteitä."
