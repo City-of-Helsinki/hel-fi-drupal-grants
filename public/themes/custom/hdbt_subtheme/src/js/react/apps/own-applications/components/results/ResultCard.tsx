@@ -38,7 +38,7 @@ const getTags = ({ errorType, status, statusLabel, unreadMessages }: Application
           ? Drupal.t('Application form expired', {}, { context: 'grants_handler' })
           : Drupal.t('Application period ended', {}, { context: 'grants_handler' }),
       color: 'alert',
-      iconStart: errorType === 'ARCHIVED' ? <IconInfoCircle /> : undefined,
+      iconStart: <IconInfoCircle />,
     });
   }
 
