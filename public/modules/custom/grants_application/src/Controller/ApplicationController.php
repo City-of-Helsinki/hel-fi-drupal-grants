@@ -6,6 +6,7 @@ namespace Drupal\grants_application\Controller;
 
 use Drupal\Component\Transliteration\TransliterationInterface;
 use Drupal\content_lock\ContentLock\ContentLockInterface;
+use Drupal\Core\Access\CsrfRequestHeaderAccessCheck;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\PrependCommand;
@@ -228,7 +229,7 @@ final class ApplicationController extends ControllerBase {
           'grants_react_form' => [
             'application_number' => $settings->getFormId(),
             'form_identifier' => $form_identifier,
-            'token' => $this->csrfTokenGenerator->get('rest'),
+            'token' => $this->csrfTokenGenerator->get(CsrfRequestHeaderAccessCheck::TOKEN_KEY),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
             'terms' => [
               'body' => $terms_block->get('body')->value ?? '',
@@ -380,7 +381,7 @@ final class ApplicationController extends ControllerBase {
             'application_number' => $settings->getFormId(),
             'real_application_number' => $submission->get('application_number')->value,
             'form_identifier' => $form_identifier,
-            'token' => $this->csrfTokenGenerator->get('rest'),
+            'token' => $this->csrfTokenGenerator->get(CsrfRequestHeaderAccessCheck::TOKEN_KEY),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
             'terms' => [
               'body' => '',
@@ -736,7 +737,7 @@ final class ApplicationController extends ControllerBase {
             'application_number' => $settings->getFormId(),
             'real_application_number' => $submission->get('application_number')->value,
             'form_identifier' => $form_identifier,
-            'token' => $this->csrfTokenGenerator->get('rest'),
+            'token' => $this->csrfTokenGenerator->get(CsrfRequestHeaderAccessCheck::TOKEN_KEY),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
             'terms' => [
               'body' => '',
@@ -774,7 +775,7 @@ final class ApplicationController extends ControllerBase {
       'grants_profile' => [],
       'user_data' => [],
       'status' => 'draft',
-      'token' => $this->csrfTokenGenerator->get('rest'),
+      'token' => $this->csrfTokenGenerator->get(CsrfRequestHeaderAccessCheck::TOKEN_KEY),
       'last_changed' => NULL,
     ] + $settings->toArray();
 

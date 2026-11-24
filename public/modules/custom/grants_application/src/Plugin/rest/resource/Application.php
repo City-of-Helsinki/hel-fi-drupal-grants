@@ -6,6 +6,7 @@ namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\content_lock\ContentLock\ContentLockInterface;
+use Drupal\Core\Access\CsrfRequestHeaderAccessCheck;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -257,7 +258,7 @@ final class Application extends HelfiResourceBase {
       'grants_profile' => $grantsProfile,
       'last_changed' => $changeTime->getTimestamp(),
       'status' => $document->getStatus(),
-      'token' => $this->csrfTokenGenerator->get('rest'),
+      'token' => $this->csrfTokenGenerator->get(CsrfRequestHeaderAccessCheck::TOKEN_KEY),
       'user_data' => $user_information,
     ];
     $response = array_merge($response, $settings->toArray());

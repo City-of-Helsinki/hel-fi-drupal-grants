@@ -1676,11 +1676,13 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
       'webformTitle' => $webform->label(),
     ]);
 
-    // Define the settings you want to pass.
+    // Define the settings you want to pass. The copy URL carries a CSRF
+    // token, which is tied to the session.
     $variables['#attached']['drupalSettings']['grants_handler'] = [
       'copyUrl' => $copyApplicationUrl->toString(),
       'htmlContent' => $html_content,
     ];
+    $variables['#cache']['contexts'][] = 'session';
     $variables['copyText'] = t('Copy application', [], $tOpts);
   }
 

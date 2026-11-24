@@ -76,6 +76,7 @@ helfi_grants.forms_app_upload:
   methods: [POST]
   requirements:
     _role: helsinkiprofiili
+    _csrf_request_header_token: 'TRUE'
 
 helfi_grants.forms_app_delete_file:
   path: '/application/{application_number}/delete/{attachmentId}'
@@ -84,14 +85,16 @@ helfi_grants.forms_app_delete_file:
   methods: [POST]
   requirements:
     _role: helsinkiprofiili
+    _csrf_request_header_token: 'TRUE'
 
 helfi_grants.forms_app_remove:
   path: '/application/{id}/remove'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::removeApplication'
-  methods: [GET, POST]
+  methods: [POST]
   requirements:
     _role: helsinkiprofiili
+    _csrf_request_header_token: 'TRUE'
 
 helfi_grants.completion:
   path: '/application/{application_number}/completion'
@@ -163,3 +166,4 @@ helfi_grants.message_read:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::markMessageRead'
   requirements:
     _role: helsinkiprofiili
+    _csrf_token: 'TRUE'
