@@ -25,7 +25,7 @@ const drupalSettings = {
 vi.stubGlobal('drupalSettings', drupalSettings);
 
 // Initialize translations for components using useTranslation.
-await i18next.use(initReactI18next).init({ lng: 'en', resources: {}, returnNull: true });
+i18next.use(initReactI18next).init({ lng: 'en', resources: {}, returnNull: true, initAsync: false });
 
 // HDS produces css parsing errors with jsdom. We don't really care about these.
 console.error = (_message, ..._optionalParams) => {};
