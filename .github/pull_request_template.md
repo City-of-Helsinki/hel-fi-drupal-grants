@@ -18,7 +18,7 @@
 ## How to test
 <!-- Describe steps how to test the features. Add as many steps as you want to be tested -->
 * [ ] 
-* [ ] Run `make e2e` and check that the test passes
+* [ ] Run `make e2e` and check that the tests pass
 * [ ] Check that the code follows our standards
 
 <!--
