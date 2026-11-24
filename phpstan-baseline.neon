@@ -1723,12 +1723,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
 
 		-
-			message: '#^Parameter \#1 \$formTypeId of method Drupal\\grants_application\\Mapper\\JsonMapperService\:\:handleMappingForPatchRequest\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
 			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 2

@@ -276,7 +276,7 @@ final class DraftApplication extends HelfiResourceBase {
       return $this->applicantTypeDeniedResponse();
     }
 
-    if ($redirect = $this->profileIncompleteRedirect($grants_profile_data->toArray())) {
+    if ($redirect = $this->profileIncompleteRedirectResponse($grants_profile_data->toArray())) {
       return $redirect;
     }
 
