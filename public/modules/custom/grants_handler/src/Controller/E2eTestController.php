@@ -27,8 +27,9 @@ class E2eTestController extends ControllerBase {
    *   The response.
    */
   public function fetchLatestProfileByType(string $id, string $profileType): JsonResponse {
-    if (getenv('APP_ENV') === 'production') {
-      $this->logger->error('Test data removal should not be done in production environment.');
+    $env = strtolower(getenv('APP_ENV') ?: 'production');
+    if (in_array($env, ['production', 'stage', 'staging', 'test', 'testing'])) {
+      $this->logger->error('Profile fetching should only be done in dev/local.');
       return new JsonResponse('', 403);
     }
 
