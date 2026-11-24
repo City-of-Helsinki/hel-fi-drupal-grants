@@ -63,7 +63,7 @@ class RedirectService {
    *   Redirect response.
    */
   public function getLogoutRedirectUrl() {
-    $dest = $this->requestStack->getCurrentRequest()->get('dest');
+    $dest = $this->requestStack->getCurrentRequest()->query->get('dest');
 
     $this->moduleHandler->invokeAll('openid_logout_redirect_alter_url', [&$dest]);
 

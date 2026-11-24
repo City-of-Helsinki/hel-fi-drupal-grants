@@ -73,7 +73,6 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $grantsProfile = NULL;
 
     try {
       $grantsProfile = $this->getGrantsProfileDocument();
@@ -87,13 +86,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             ['context' => 'grants_oma_asiointi']
           )
         );
+      return [];
     }
     catch (\Exception $e) {
       Error::logException($this->logger, $e);
-      return [];
-    }
-
-    if ($grantsProfile == NULL) {
       return [];
     }
 
