@@ -98,22 +98,15 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 
 ### Prerequisites
 
-- [Node.js 16+](https://nodejs.org/) or Docker
+- [Node.js 24+](https://nodejs.org/) or Docker
 - Create `e2e/.env` file based on `e2e/.env.example`
 
 
 ### Running E2E tests in Docker
 
-Start project using testing Docker compose profile: `COMPOSE_PROFILES=testing make up`.
+Start the project with `make up`.
 
-You can run E2E tests in a Docker container. To do this:
-
-    make test-pw
-
-To run a specific test file in the container, use:
-
-    make test-pw path/to/test/file
-
+Run `make e2e` and choose a form test from the list. See [e2e/README.md](e2e/README.md#running-e2e-tests) for details.
 
 ### Running E2E tests locally
 

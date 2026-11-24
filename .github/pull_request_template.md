@@ -18,6 +18,7 @@
 ## How to test
 <!-- Describe steps how to test the features. Add as many steps as you want to be tested -->
 * [ ] 
+* [ ] Run `make e2e` and check that the test passes
 * [ ] Check that the code follows our standards
 
 <!--
@@ -33,7 +34,7 @@ Translations
 - Make sure all necessary translations have been added.
 
 E2E tests
-- Make sure the tests pass when you run `make test-pw` on your local.
+- Make sure the tests pass when you run `make e2e` on your local.
 - Detailed instructions can be found here: https://github.com/City-of-Helsinki/hel-fi-drupal-grants/blob/dev/e2e/README.md#environment-setup
 
 Application that are no longer used
