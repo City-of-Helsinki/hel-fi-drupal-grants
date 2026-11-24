@@ -101,15 +101,11 @@ describe('ResultCard', () => {
     expect(container.querySelector('.card__category li svg')).toBeNull();
   });
 
-  test('adds an info icon to the archived form tag only', () => {
-    const archived = renderCard({ status: 'DRAFT', statusLabel: 'Draft', errorType: 'ARCHIVED' });
-    expect(archived.container.querySelector('.content-tags__tags__tag--alert svg')?.getAttribute('aria-label')).toBe(
+  test.each(['ARCHIVED', 'NOT_OPEN'])('adds an info icon to the %s form error tag', (errorType) => {
+    const { container } = renderCard({ status: 'DRAFT', statusLabel: 'Draft', errorType });
+    expect(container.querySelector('.content-tags__tags__tag--alert svg')?.getAttribute('aria-label')).toBe(
       'info-circle',
     );
-    archived.unmount();
-
-    const notOpen = renderCard({ status: 'DRAFT', statusLabel: 'Draft', errorType: 'NOT_OPEN' });
-    expect(notOpen.container.querySelector('.content-tags__tags__tag--alert svg')).toBeNull();
   });
 
   test('colors the status tag by status', () => {
