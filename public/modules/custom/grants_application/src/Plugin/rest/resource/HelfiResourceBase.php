@@ -29,6 +29,8 @@ class HelfiResourceBase extends ResourceBase {
   /**
    * Redirect on incomplete profile.
    *
+   * Used in Application -rest resource.
+   *
    * Build a redirect to the grants profile edit page if the profile is
    * incomplete. Mirrors the old webform behavior in
    * GrantsHandler::prepareForm. Applies uniformly to all applicant types.
@@ -39,7 +41,7 @@ class HelfiResourceBase extends ResourceBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse|null
    *   Redirect response when the profile is incomplete, NULL otherwise.
    */
-  protected function profileIncompleteRedirect(array $profileContent): ?JsonResponse {
+  protected function profileIncompleteJsonResponse(array $profileContent): ?JsonResponse {
     $tOpts = ['context' => 'grants_handler'];
 
     if (empty($profileContent)) {
@@ -71,7 +73,9 @@ class HelfiResourceBase extends ResourceBase {
   }
 
   /**
-   * The profile incomplete redirect.
+   * The profile incomplete redirect response.
+   *
+   * Used in DraftApplication -rest resource.
    *
    * Build a redirect to the grants profile edit page if the profile is
    * incomplete (no profile, or missing addresses / bank accounts).
@@ -85,7 +89,7 @@ class HelfiResourceBase extends ResourceBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse|null
    *   Redirect response when the profile is incomplete, NULL otherwise.
    */
-  protected function profileIncompleteResponse(array $profileContent): ?JsonResponse {
+  protected function profileIncompleteRedirectResponse(array $profileContent): ?JsonResponse {
     $tOpts = ['context' => 'grants_handler'];
 
     if (empty($profileContent)) {

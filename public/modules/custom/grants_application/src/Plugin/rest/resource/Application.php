@@ -157,7 +157,7 @@ final class Application extends HelfiResourceBase {
       ], 403);
     }
 
-    if ($redirect = $this->profileIncompleteRedirect($grants_profile_data->toArray())) {
+    if ($redirect = $this->profileIncompleteJsonResponse($grants_profile_data->toArray())) {
       return $redirect;
     }
 
