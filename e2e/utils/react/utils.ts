@@ -157,7 +157,7 @@ export function createTranslator(data: FormPreviewResponse, language: string = '
  */
 export async function waitForFormLoad(page: Page, attempts = 3) {
   await test.step('Wait for React form to load', async () => {
-    const form = page.locator('#grants-react-form .grants-form');
+    const form = page.locator('#grants-form .grants-form');
     for (let attempt = 1; attempt <= attempts; attempt++) {
       try {
         await form.waitFor({ state: 'visible', timeout: 15_000 });
