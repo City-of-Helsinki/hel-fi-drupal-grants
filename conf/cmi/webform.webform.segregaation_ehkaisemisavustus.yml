@@ -14,15 +14,15 @@ third_party_settings:
       unregistered_community: unregistered_community
     applicationTypeTerms:
       83: '83'
-    applicationOpen: '2026-01-07T00:00:01'
-    applicationClose: '2026-01-30T23:59:59'
+    applicationOpen: '2027-01-07T08:00:01'
+    applicationClose: '2027-01-29T23:59:59'
     applicationContinuous: 0
     applicationTargetGroup: '27'
     disableCopying: 0
     applicationTypeSelect: '70'
     applicationIndustry: KUVA
     applicationActingYears:
-      2026: '2026'
+      2027: '2027'
     applicationActingYearsType: fixed
     applicationActingYearsNextCount: ''
     status: released
