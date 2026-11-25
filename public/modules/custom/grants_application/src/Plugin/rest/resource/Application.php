@@ -519,7 +519,7 @@ final class Application extends HelfiResourceBase {
       $this->contentLock->release(
         $submission,
         '*',
-        $this->accountProxy->id()
+        (int) $this->accountProxy->id()
       );
     }
 
@@ -692,7 +692,7 @@ final class Application extends HelfiResourceBase {
       $this->contentLock->release(
         $submission,
         '*',
-        $this->accountProxy->id()
+        (int) $this->accountProxy->id()
       );
     }
 

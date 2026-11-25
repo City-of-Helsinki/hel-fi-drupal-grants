@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Drupal\grants_application;
-
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;

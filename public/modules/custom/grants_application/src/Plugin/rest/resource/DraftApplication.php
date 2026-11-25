@@ -382,7 +382,7 @@ final class DraftApplication extends HelfiResourceBase {
     ]);
     $submission->save();
 
-    $this->contentLock->locking($submission, '*', $this->accountProxy->id());
+    $this->contentLock->locking($submission, '*', (int) $this->accountProxy->id());
 
     return new JsonResponse([
       'application_number' => $application_number,
@@ -512,7 +512,7 @@ final class DraftApplication extends HelfiResourceBase {
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
 
     if ($this->contentLock->isLockable($submission)) {
-      $this->contentLock->release($submission, $application_number, $this->accountProxy->id());
+      $this->contentLock->release($submission, $application_number, (int) $this->accountProxy->id());
     }
 
     return new JsonResponse($sideDocument->toArray(), 200);
