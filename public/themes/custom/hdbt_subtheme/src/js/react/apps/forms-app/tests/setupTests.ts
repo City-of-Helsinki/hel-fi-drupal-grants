@@ -1,5 +1,3 @@
-import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next';
 import { vi } from 'vitest';
 
 const interpolate = (template: string, args?: Record<string, string | number>) => {
@@ -23,9 +21,6 @@ const drupalSettings = {
   },
 };
 vi.stubGlobal('drupalSettings', drupalSettings);
-
-// Initialize translations for components using useTranslation.
-i18next.use(initReactI18next).init({ lng: 'en', resources: {}, returnNull: true, initAsync: false });
 
 // HDS produces css parsing errors with jsdom. We don't really care about these.
 console.error = (_message, ..._optionalParams) => {};

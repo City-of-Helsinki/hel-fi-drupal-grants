@@ -30,6 +30,7 @@ grants_handler.copy_application:
     _controller: '\Drupal\grants_handler\Controller\CopyApplicationAjaxController'
   requirements:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+    _csrf_token: 'TRUE'
 
 grants_handler.edit_application:
   path: '/hakemus/{webform}/{webform_submission}/muokkaa'
@@ -53,6 +54,7 @@ grants_handler.message_read:
     _controller: '\Drupal\grants_handler\Controller\MessageController::markMessageRead'
   requirements:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+    _csrf_token: 'TRUE'
 
 grants_handler.atv_print_view:
   path: '/hakemus/{submission_id}/tulosta'

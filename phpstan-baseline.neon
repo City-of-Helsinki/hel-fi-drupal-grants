@@ -1705,12 +1705,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
 
 		-
-			message: '#^Method Drupal\\grants_application\\Plugin\\rest\\resource\\Application\:\:create\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
 			message: '#^Method Drupal\\grants_application\\Plugin\\rest\\resource\\Application\:\:validate\(\) has parameter \$formData with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1729,18 +1723,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
 
 		-
-			message: '#^Parameter \#1 \$formTypeId of method Drupal\\grants_application\\Mapper\\JsonMapperService\:\:handleMapping\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
-			message: '#^Parameter \#1 \$formTypeId of method Drupal\\grants_application\\Mapper\\JsonMapperService\:\:handleMappingForPatchRequest\(\) expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
 			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 2
@@ -1748,12 +1730,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#3 \$file of method Drupal\\grants_application\\Atv\\HelfiAtvService\:\:addAttachment\(\) expects Drupal\\file\\Entity\\File, Drupal\\file\\FileInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
-
-		-
-			message: '#^Parameter \#4 \$serializer_formats of class Drupal\\grants_application\\Plugin\\rest\\resource\\Application constructor expects array, array\|bool\|float\|int\|string\|UnitEnum\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/Application.php
@@ -1801,20 +1777,8 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
 
 		-
-			message: '#^Method Drupal\\grants_application\\Plugin\\rest\\resource\\DraftApplication\:\:create\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
-
-		-
 			message: '#^Method Drupal\\grants_application\\Plugin\\rest\\resource\\DraftApplication\:\:get\(\) never returns Symfony\\Component\\HttpFoundation\\RedirectResponse so it can be removed from the return type\.$#'
 			identifier: return.unusedType
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
-
-		-
-			message: '#^Parameter \#4 \$serializer_formats of class Drupal\\grants_application\\Plugin\\rest\\resource\\DraftApplication constructor expects array, array\|bool\|float\|int\|string\|UnitEnum\|null given\.$#'
-			identifier: argument.type
 			count: 1
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
 
@@ -13835,6 +13799,15 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: public/modules/custom/helfi_yjdh/tests/src/Unit/Plugin/DebugDataItem/ApiAvailabilityTest.php
+
+		-
+			message: '''
+				#^Call to deprecated method get\(\) of class Symfony\\Component\\HttpFoundation\\Request\:
+				since Symfony 7\.4, use properties `\-\>attributes`, `query` or `request` directly instead$#
+			'''
+			identifier: method.deprecated
+			count: 1
+			path: public/modules/custom/openid_connect_logout_redirect/src/Service/RedirectService.php
 
 		-
 			message: '#^Argument of an invalid type array\|string supplied for foreach, only iterables are supported\.$#'

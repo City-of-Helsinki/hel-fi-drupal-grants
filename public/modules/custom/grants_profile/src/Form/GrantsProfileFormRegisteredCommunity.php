@@ -73,6 +73,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
+    $grantsProfile = NULL;
 
     try {
       $grantsProfile = $this->getGrantsProfileDocument();
@@ -86,7 +87,6 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             ['context' => 'grants_oma_asiointi']
           )
         );
-      return [];
     }
     catch (\Exception $e) {
       Error::logException($this->logger, $e);
@@ -273,28 +273,28 @@ later when completing the grant application.',
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $formState) {
+  public function validateForm(array &$form, FormStateInterface $form_state) {
 
-    $triggeringElement = $formState->getTriggeringElement();
+    $triggeringElement = $form_state->getTriggeringElement();
 
-    if ($this->validateFormActions($triggeringElement, $formState)) {
+    if ($this->validateFormActions($triggeringElement, $form_state)) {
       return;
     }
 
-    $storage = $formState->getStorage();
+    $storage = $form_state->getStorage();
     /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
     $grantsProfileDocument = $storage['profileDocument'];
 
     if (!$grantsProfileDocument) {
       $this->messenger()->addError($this->t('grantsProfileContent not found!', [], $this->tOpts));
-      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!', [], $this->tOpts));
+      $form_state->setErrorByName(NULL, $this->t('grantsProfileContent not found!', [], $this->tOpts));
       return;
     }
 
     $grantsProfileContent = $grantsProfileDocument->getContent();
 
-    $values = $formState->getValues();
-    $input = $formState->getUserInput();
+    $values = $form_state->getValues();
+    $input = $form_state->getUserInput();
 
     $addressArrayKeys = [];
     $officialArrayKeys = [];
@@ -328,21 +328,21 @@ later when completing the grant application.',
     $values = $this->cleanUpFormValues($values, $input, $storage);
 
     // Set clean values to form state.
-    $formState->setValues($values);
+    $form_state->setValues($values);
 
     $this->profileContentFromWrappers($values, $grantsProfileContent);
 
-    $this->validateBankAccounts($values, $formState);
-    $this->validateOfficials($values, $formState);
+    $this->validateBankAccounts($values, $form_state);
+    $this->validateOfficials($values, $form_state);
 
-    parent::validateForm($form, $formState);
+    parent::validateForm($form, $form_state);
 
     $grantsProfileDefinition = GrantsProfileRegisteredCommunityDefinition::create(
       'grants_profile_registered_community');
     $this->handleViolations(
       $grantsProfileDefinition,
       $grantsProfileContent,
-      $formState,
+      $form_state,
       $form,
       $addressArrayKeys,
       $officialArrayKeys,

@@ -15,6 +15,7 @@ use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\grants_attachments\Element\GrantsAttachments;
 use Drupal\helfi_helsinki_profiili\DTO\AuthenticationLevel;
 use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\grants_events\EventsService;
@@ -93,6 +94,7 @@ final class ApplicationControllerTest extends KernelTestBase implements ServiceM
   protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('application_submission');
+    $this->installConfig(['grants_metadata']);
 
     $config = $this->config('content_lock.settings')
       ->set('types.application_submission', ['*' => '*'])
@@ -144,6 +146,7 @@ final class ApplicationControllerTest extends KernelTestBase implements ServiceM
     ]);
 
     $atvService = $this->createMock(AtvService::class);
+    $atvService->expects($this->any())->method('getDocument')->willReturn($this->atvDocument);
     $atvService->expects($this->any())->method('deleteAttachment')->willReturn(TRUE);
     $atvService->expects($this->any())->method('deleteDocument')->willReturn(TRUE);
 
@@ -179,6 +182,94 @@ final class ApplicationControllerTest extends KernelTestBase implements ServiceM
     $this->assertArrayNotHasKey('error', $responseData);
     $this->assertArrayHasKey('href', $responseData);
     $this->assertEquals('testhref.example.com/file/9595', $responseData['href']);
+  }
+
+  /**
+   * Builds a request with an uploaded file.
+   *
+   * @param string $originalName
+   *   The client-side file name.
+   * @param string $contents
+   *   The file contents.
+   *
+   * @return \Symfony\Component\HttpFoundation\Request
+   *   The request.
+   */
+  private function createUploadRequest(string $originalName, string $contents = 'test'): Request {
+    $path = (string) tempnam(sys_get_temp_dir(), 'upload');
+    file_put_contents($path, $contents);
+
+    $request = new Request();
+    $request->files->set('file', new UploadedFile(
+      path: $path,
+      originalName: $originalName,
+      error: \UPLOAD_ERR_OK,
+      test: TRUE,
+    ));
+    return $request;
+  }
+
+  /**
+   * Gets a controller where the user owns the test application.
+   *
+   * @return \Drupal\grants_application\Controller\ApplicationController
+   *   The controller.
+   */
+  private function getUploadController(): ApplicationController {
+    $applicationService = $this->createMock(ApplicationService::class);
+    $applicationService->method('getSubmissionEntity')->willReturn($this->applicationSubmission);
+    $this->container->set(ApplicationService::class, $applicationService);
+    return ApplicationController::create($this->container);
+  }
+
+  /**
+   * Fails the test if a file is sent to ATV.
+   */
+  private function expectNoAttachmentUpload(): void {
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->never())->method('addAttachment');
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+  }
+
+  /**
+   * Test that disallowed file types are rejected.
+   */
+  public function testFileUploadRejectsDisallowedExtension(): void {
+    $this->expectNoAttachmentUpload();
+
+    $response = $this->getUploadController()
+      ->uploadFile($this->applicationNumber, $this->createUploadRequest('evil.html'));
+
+    $this->assertEquals(400, $response->getStatusCode());
+    $this->assertArrayHasKey('error', json_decode((string) $response->getContent(), TRUE));
+  }
+
+  /**
+   * Test that files over the size limit are rejected.
+   */
+  public function testFileUploadRejectsTooLargeFile(): void {
+    $this->expectNoAttachmentUpload();
+
+    $contents = str_repeat('a', GrantsAttachments::MAX_FILE_SIZE_IN_BYTES + 1);
+    $response = $this->getUploadController()
+      ->uploadFile($this->applicationNumber, $this->createUploadRequest('large.pdf', $contents));
+
+    $this->assertEquals(400, $response->getStatusCode());
+    $this->assertArrayHasKey('error', json_decode((string) $response->getContent(), TRUE));
+  }
+
+  /**
+   * Test that files cannot be added to applications under processing.
+   */
+  public function testFileUploadRejectsNonEditableApplication(): void {
+    $this->atvDocument->setStatus('PROCESSING');
+
+    $this->expectNoAttachmentUpload();
+
+    $response = $this->getUploadController()
+      ->uploadFile($this->applicationNumber, $this->createUploadRequest('test-file.txt'));
+
+    $this->assertEquals(403, $response->getStatusCode());
   }
 
   /**
