@@ -270,6 +270,7 @@ export const SelectWidget = ({
       id={id}
       invalid={Boolean(rawErrors?.length)}
       multiSelect={multiple}
+      noTags
       onBlur={() => null}
       onChange={(newValue: Option[]) => {
         if (!newValue.length) {

@@ -432,7 +432,9 @@ export const FieldTemplate = (props: FieldTemplateProps) => {
     ? `${props.classNames ?? ''} hdbt-form--field hdbt-form--field--${fieldType}`.trim()
     : props.classNames;
 
-  return <DefaultFieldTemplate {...props} classNames={classNames} />;
+  const displayLabel = schema.type === 'array' ? false : props.displayLabel;
+
+  return <DefaultFieldTemplate {...props} classNames={classNames} displayLabel={displayLabel} />;
 };
 
 export const ButtonTemplate = ({ icon, children, registry, uiSchema, ...props }: IconButtonProps) => (
