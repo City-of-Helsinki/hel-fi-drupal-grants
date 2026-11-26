@@ -132,65 +132,38 @@ TEST_USER_UUID="13cb60ae-269a-46da-9a43-da94b980c067"
 
 ### TL;DR
 
-Start the project with the `testing` compose profile, so the `e2e` container is running:
+Start the project:
 ```
-COMPOSE_PROFILES=testing make up
-```
-
-Run a single React form:
-```
-make test-pw-p PROJECT=forms-70-iakkaiden
+make up
 ```
 
-Run all React forms:
+`make e2e` starts the `e2e` container when needed. The container image uses the Playwright version from `package-lock.json`.
+
+Choose a form test from the list, or `a` to run all React forms:
 ```
-make test-pw-p PROJECT=forms-react
+make e2e
 ```
 
-Run everything in the `forms` directory, legacy and React forms, with profile tests as dependencies. This takes hours:
+Run a form test directly by its project name or form number:
 ```
-make test-pw
+make e2e forms-70-iakkaiden
+make e2e 50
+```
+
+Run in headed mode:
+```
+make e2e 50 HEADED=1
+```
+
+Headed mode needs an X server on the host, since the container uses the host `DISPLAY`.
+
+Open the last HTML report:
+```
+make e2e-report
 ```
 
 All projects are listed under the `projects` key in `playwright.config.ts`.
 Every project runs its `dependencies` first, so running a form also runs the profile tests for the roles it uses.
-
-### Running E2E tests in Docker (the recommended way)
-
-The `e2e` container only exists when the project is started with `COMPOSE_PROFILES=testing make up`.
-
-To run the `forms-all` project:
-```
-make test-pw
-```
-
-To run the `forms-all` project in headed mode (displays a browser):
-```
-make test-pw-headed
-```
-
-To run a specific project:
-```
-make test-pw-p PROJECT={NAME_OF_PROJECT}
-
-Example 1: make test-pw-p PROJECT=forms-48-kuva-projekti
-
-Example 2: make test-pw-p PROJECT=forms-48-registered
-```
-
-To run a specific project in headed mode:
-```
-make test-pw-ph PROJECT={NAME_OF_PROJECT}
-
-Example: make test-pw-ph PROJECT=forms-48-kuva-projekti
-```
-
-To run all profile tests:
-```
-make test-pw-profiles
-```
-
-Headed mode needs an X server on the host, since the container uses the host `DISPLAY`.
 
 ### Running tests on your local machine (in the /e2e directory)
 Running tests on your local machine is discouraged and should only be done if
