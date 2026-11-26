@@ -361,15 +361,10 @@ final class DraftApplication extends HelfiResourceBase {
       return new JsonResponse([], 500);
     }
 
-    $business_id = '';
-    if ($this->userInformationService->getApplicantType() !== 'private_person') {
-      $business_id = $grants_profile_data->getBusinessId();
-    }
-
     $now = time();
     $submission = ApplicationSubmission::create([
       'document_id' => $document->getId(),
-      'business_id' => $business_id,
+      'business_id' => $grants_profile_data->getBusinessId(),
       'sub' => $user_data->sub,
       'langcode' => $langcode,
       'draft' => TRUE,
