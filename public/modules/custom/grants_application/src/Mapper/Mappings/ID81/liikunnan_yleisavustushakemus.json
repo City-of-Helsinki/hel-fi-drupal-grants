@@ -160,6 +160,29 @@
       "valueType": "int"
     }
   },
+  "compensation.membersInfo.clubSectionsArray.0.0": {
+    "#tip": "Main sport for 'Liikuntaa yhdessä lajissa' (club_main_activity 1). Must come before clubSectionsArray.0.n so it forms its own row.",
+    "datasource": "form_data",
+    "source": "grant_info_step.sports_section.club_sport",
+    "mapping_type": "default",
+    "data": {
+      "ID": "sectionName",
+      "label": "Yhdistyksen liikuntalaji/Nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.membersInfo.clubSectionsArray.0.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.sports_section.club_sport_other",
+    "mapping_type": "default",
+    "data": {
+      "ID": "sectionOther",
+      "label": "Mikä? (Jos valittu laji jonka nimesä muu)",
+      "value": "",
+      "valueType": "string"
+    }
+  },
   "compensation.membersInfo.clubSectionsArray.0.n": {
     "datasource": "form_data",
     "source": "grant_info_step.sports_section.sport_details.club_sections",
@@ -276,28 +299,6 @@
     "data": {
       "ID": "changeOnUsageInfo",
       "label": "Oleellinen muutos tilankäytössä avustusvuodelle. Ilmoita tuntien ja kustannusten nousu (+) tai lasku (-) sekä syy muutokselle.",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.customQuestionsInfo.customQuestionsArray.0": {
-    "datasource": "form_data",
-    "source": "grant_info_step.sports_section.club_sport",
-    "mapping_type": "default",
-    "data": {
-      "ID": "clubMainSport",
-      "label": "Yhdistyksen liikuntalaji",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.customQuestionsInfo.customQuestionsArray.1": {
-    "datasource": "form_data",
-    "source": "grant_info_step.sports_section.club_sport_other",
-    "mapping_type": "default",
-    "data": {
-      "ID": "clubMainSportOther",
-      "label": "Mikä?",
       "value": "",
       "valueType": "string"
     }
