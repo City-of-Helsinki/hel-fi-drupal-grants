@@ -11,8 +11,6 @@ dependencies:
     - media.type.image
     - media.type.remote_video
     - node.type.announcement
-    - node.type.faq
-    - node.type.form_page
     - node.type.landing_page
     - node.type.page
     - node.type.service
@@ -22,7 +20,6 @@ dependencies:
     - taxonomy.vocabulary.news_neighbourhoods
     - taxonomy.vocabulary.news_tags
     - taxonomy.vocabulary.target_group
-    - taxonomy.vocabulary.ukk_kategoriat
     - taxonomy.vocabulary.unit_type
   module:
     - block
@@ -213,7 +210,6 @@ permissions:
   - 'delete any webform'
   - 'delete any webform submission'
   - 'delete content translations'
-  - 'delete faq revisions'
   - 'delete landing_page revisions'
   - 'delete media'
   - 'delete own announcement content'
@@ -241,7 +237,6 @@ permissions:
   - 'delete terms in news_neighbourhoods'
   - 'delete terms in news_tags'
   - 'delete terms in target_group'
-  - 'delete terms in ukk_kategoriat'
   - 'delete terms in unit_type'
   - 'edit any announcement content'
   - 'edit any faq content'

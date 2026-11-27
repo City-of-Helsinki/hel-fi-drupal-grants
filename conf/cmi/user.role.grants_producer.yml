@@ -13,7 +13,6 @@ dependencies:
     - taxonomy.vocabulary.keywords
     - taxonomy.vocabulary.news_tags
     - taxonomy.vocabulary.target_group
-    - taxonomy.vocabulary.ukk_kategoriat
     - taxonomy.vocabulary.unit_type
   module:
     - block_content
@@ -59,7 +58,6 @@ permissions:
   - 'translate remote_video media'
   - 'translate service node'
   - 'translate target_group taxonomy_term'
-  - 'translate ukk_kategoriat taxonomy_term'
   - 'translate unit_type taxonomy_term'
   - 'update content translations'
   - 'view any unpublished landing_page content'

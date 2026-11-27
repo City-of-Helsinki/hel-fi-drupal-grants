@@ -10,8 +10,6 @@ dependencies:
     - media.type.image
     - media.type.remote_video
     - node.type.announcement
-    - node.type.faq
-    - node.type.form_page
     - node.type.landing_page
     - node.type.news_item
     - node.type.page
@@ -20,7 +18,6 @@ dependencies:
     - taxonomy.vocabulary.keywords
     - taxonomy.vocabulary.news_tags
     - taxonomy.vocabulary.target_group
-    - taxonomy.vocabulary.ukk_kategoriat
     - taxonomy.vocabulary.unit_type
   module:
     - block_content
@@ -101,7 +98,6 @@ permissions:
   - 'create announcement content'
   - 'create application_metadata'
   - 'create content translations'
-  - 'create faq content'
   - 'create file media'
   - 'create hel_map media'
   - 'create helfi_chart media'
@@ -118,7 +114,6 @@ permissions:
   - 'create terms in keywords'
   - 'create terms in news_tags'
   - 'create terms in target_group'
-  - 'create terms in ukk_kategoriat'
   - 'create terms in unit_type'
   - 'create url aliases'
   - 'create webform'
@@ -127,7 +122,6 @@ permissions:
   - 'delete announcement revisions'
   - 'delete any address content'
   - 'delete any announcement content'
-  - 'delete any faq content'
   - 'delete any file media'
   - 'delete any form_page content'
   - 'delete any helfi_chart media'
@@ -140,14 +134,11 @@ permissions:
   - 'delete any webform'
   - 'delete any webform submission'
   - 'delete content translations'
-  - 'delete faq revisions'
-  - 'delete form_page revisions'
   - 'delete landing_page revisions'
   - 'delete media'
   - 'delete news_item revisions'
   - 'delete own announcement content'
   - 'delete own application_metadata'
-  - 'delete own faq content'
   - 'delete own file media'
   - 'delete own files'
   - 'delete own form_page content'
@@ -165,11 +156,9 @@ permissions:
   - 'delete terms in keywords'
   - 'delete terms in news_tags'
   - 'delete terms in target_group'
-  - 'delete terms in ukk_kategoriat'
   - 'delete terms in unit_type'
   - 'edit any address content'
   - 'edit any announcement content'
-  - 'edit any faq content'
   - 'edit any file media'
   - 'edit any form_page content'
   - 'edit any hel_map media'
@@ -200,7 +189,6 @@ permissions:
   - 'edit terms in keywords'
   - 'edit terms in news_tags'
   - 'edit terms in target_group'
-  - 'edit terms in ukk_kategoriat'
   - 'edit terms in unit_type'
   - 'edit webform assets'
   - 'edit webform source'
@@ -216,8 +204,6 @@ permissions:
   - 'revert all revisions'
   - 'revert announcement revisions'
   - 'revert any terms_block block content revisions'
-  - 'revert faq revisions'
-  - 'revert form_page revisions'
   - 'revert landing_page revisions'
   - 'revert news_item revisions'
   - 'revert page revisions'
@@ -252,7 +238,6 @@ permissions:
   - 'translate tpr_service'
   - 'translate tpr_service_channel'
   - 'translate tpr_unit'
-  - 'translate ukk_kategoriat taxonomy_term'
   - 'translate unit_type taxonomy_term'
   - 'update any application_metadata'
   - 'update any media'
@@ -270,7 +255,6 @@ permissions:
   - 'view any unpublished service content'
   - 'view any webform submission'
   - 'view application_metadata'
-  - 'view faq revisions'
   - 'view landing_page revisions'
   - 'view news_item revisions'
   - 'view own unpublished application_metadata'

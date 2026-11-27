@@ -126,8 +126,6 @@ display:
                 display_method: label
               target_group:
                 display_method: label
-              ukk_kategoriat:
-                display_method: label
               unit_type:
                 display_method: label
         title:
@@ -644,8 +642,6 @@ display:
               news_tags:
                 display_method: label
               target_group:
-                display_method: label
-              ukk_kategoriat:
                 display_method: label
               unit_type:
                 display_method: label
