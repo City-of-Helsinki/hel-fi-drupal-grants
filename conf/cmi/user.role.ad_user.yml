@@ -2,17 +2,13 @@ uuid: 1f441509-6d93-416d-98fb-0e6f812bcf64
 langcode: en
 status: true
 dependencies:
-  config:
-    - taxonomy.vocabulary.news_tags
   module:
     - file
     - raven
-    - taxonomy
 id: ad_user
 label: 'AD User'
 weight: -1
 is_admin: null
 permissions:
   - 'delete own files'
-  - 'edit terms in news_tags'
   - 'send performance traces to sentry'

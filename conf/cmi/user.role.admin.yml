@@ -16,9 +16,6 @@ dependencies:
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
     - taxonomy.vocabulary.keywords
-    - taxonomy.vocabulary.news_group
-    - taxonomy.vocabulary.news_neighbourhoods
-    - taxonomy.vocabulary.news_tags
     - taxonomy.vocabulary.target_group
     - taxonomy.vocabulary.unit_type
   module:
@@ -187,9 +184,7 @@ permissions:
   - 'create remote_video media'
   - 'create terms in avustuslaji'
   - 'create terms in keywords'
-  - 'create terms in news_tags'
   - 'create terms in target_group'
-  - 'create terms in ukk_kategoriat'
   - 'create terms in unit_type'
   - 'create url aliases'
   - 'create webform'
@@ -232,13 +227,9 @@ permissions:
   - 'delete service revisions'
   - 'delete terms in avustuslaji'
   - 'delete terms in keywords'
-  - 'delete terms in news_group'
-  - 'delete terms in news_neighbourhoods'
-  - 'delete terms in news_tags'
   - 'delete terms in target_group'
   - 'delete terms in unit_type'
   - 'edit any announcement content'
-  - 'edit any faq content'
   - 'edit any file media'
   - 'edit any hel_map media'
   - 'edit any helfi_chart media'
@@ -262,7 +253,6 @@ permissions:
   - 'edit paragraph library item'
   - 'edit remote entities'
   - 'edit terms in keywords'
-  - 'edit terms in news_tags'
   - 'edit webform assets'
   - 'edit webform source'
   - 'edit webform twig'
@@ -323,7 +313,6 @@ permissions:
   - 'view any unpublished content'
   - 'view any unpublished content'
   - 'view any webform submission'
-  - 'view faq revisions'
   - 'view helfi_multisite_content external entity'
   - 'view landing_page revisions'
   - 'view linkedevents_event external entity'

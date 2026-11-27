@@ -11,7 +11,6 @@ dependencies:
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
     - taxonomy.vocabulary.keywords
-    - taxonomy.vocabulary.news_tags
     - taxonomy.vocabulary.target_group
     - taxonomy.vocabulary.unit_type
   module:
@@ -40,7 +39,6 @@ permissions:
   - 'create url aliases'
   - 'delete own files'
   - 'edit any webform'
-  - 'edit terms in news_tags'
   - 'send performance traces to sentry'
   - 'translate any webform'
   - 'translate avustuslaji taxonomy_term'

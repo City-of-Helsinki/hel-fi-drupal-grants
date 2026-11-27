@@ -118,12 +118,6 @@ display:
                 view_mode: default
               keywords:
                 display_method: label
-              news_group:
-                display_method: label
-              news_neighbourhoods:
-                display_method: label
-              news_tags:
-                display_method: label
               target_group:
                 display_method: label
               unit_type:
@@ -634,12 +628,6 @@ display:
                 display_method: label
                 view_mode: default
               keywords:
-                display_method: label
-              news_group:
-                display_method: label
-              news_neighbourhoods:
-                display_method: label
-              news_tags:
                 display_method: label
               target_group:
                 display_method: label
