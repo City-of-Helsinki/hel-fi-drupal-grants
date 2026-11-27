@@ -9,7 +9,6 @@ dependencies:
     - media.type.helfi_chart
     - media.type.image
     - media.type.remote_video
-    - node.type.address
     - node.type.announcement
     - node.type.faq
     - node.type.form_page
@@ -99,7 +98,6 @@ permissions:
   - 'bypass node access'
   - 'cancel account'
   - 'change own username'
-  - 'create address content'
   - 'create announcement content'
   - 'create application_metadata'
   - 'create content translations'

@@ -10,7 +10,6 @@ dependencies:
     - media.type.helfi_chart
     - media.type.image
     - media.type.remote_video
-    - node.type.address
     - node.type.announcement
     - node.type.faq
     - node.type.form_page
@@ -217,7 +216,6 @@ permissions:
   - 'delete faq revisions'
   - 'delete landing_page revisions'
   - 'delete media'
-  - 'delete own address content'
   - 'delete own announcement content'
   - 'delete own file media'
   - 'delete own files'
@@ -245,7 +243,6 @@ permissions:
   - 'delete terms in target_group'
   - 'delete terms in ukk_kategoriat'
   - 'delete terms in unit_type'
-  - 'edit any address content'
   - 'edit any announcement content'
   - 'edit any faq content'
   - 'edit any file media'
@@ -259,7 +256,6 @@ permissions:
   - 'edit any service content'
   - 'edit any webform'
   - 'edit any webform submission'
-  - 'edit own address content'
   - 'edit own announcement content'
   - 'edit own file media'
   - 'edit own hel_map media'
@@ -282,7 +278,6 @@ permissions:
   - 'notify of path changes'
   - 'openid connect set own password'
   - 'rebuild node access permissions'
-  - 'revert address revisions'
   - 'revert all revisions'
   - 'revert all tpr_service revisions'
   - 'revert all tpr_unit revisions'
@@ -329,7 +324,6 @@ permissions:
   - 'use text format full_html'
   - 'use text format minimal'
   - 'use views bulk edit'
-  - 'view address revisions'
   - 'view all media revisions'
   - 'view all revisions'
   - 'view all tpr_service revisions'

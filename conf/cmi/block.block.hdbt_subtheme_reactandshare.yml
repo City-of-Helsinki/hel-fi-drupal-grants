@@ -25,7 +25,6 @@ visibility:
     context_mapping:
       node: '@node.node_route_context:node'
     bundles:
-      address: address
       announcement: announcement
       faq: faq
       form_page: form_page

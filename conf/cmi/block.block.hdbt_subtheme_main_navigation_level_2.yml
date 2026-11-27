@@ -36,6 +36,4 @@ visibility:
     context_mapping:
       node: '@node.node_route_context:node'
     bundles:
-      address: address
-      faq: faq
       landing_page: landing_page
