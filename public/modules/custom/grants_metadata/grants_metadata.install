@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Field\FieldPurger;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
@@ -187,4 +189,43 @@ function grants_metadata_update_9001(): void {
       }
     }
   }
+}
+
+/**
+ * Delete content of the obsolete content and paragraph types.
+ */
+function grants_metadata_update_11001(): void {
+  $entity_type_manager = \Drupal::entityTypeManager();
+
+  // Delete nodes of the removed content types.
+  $node_storage = $entity_type_manager->getStorage('node');
+  $nids = $node_storage->getQuery()
+    ->condition('type', ['address', 'faq', 'form_page', 'news_item'], 'IN')
+    ->accessCheck(FALSE)
+    ->execute();
+  $node_storage->delete($node_storage->loadMultiple($nids));
+
+  // Delete paragraphs of the removed paragraph types.
+  // Note! The "webform" paragraph type was only used in one form_page node.
+  // The node was 15, which also had a separate access hook - no idea why,
+  // the hook was grants_handler_node_access().
+  $paragraph_storage = $entity_type_manager->getStorage('paragraph');
+  $ids = $paragraph_storage->getQuery()
+    ->condition('type', ['webform', 'paragraph_verkkolomake', 'asiointipalvelu'], 'IN')
+    ->accessCheck(FALSE)
+    ->execute();
+  $paragraph_storage->delete($paragraph_storage->loadMultiple($ids));
+
+  // Delete terms of the removed vocabularies.
+  $term_storage = $entity_type_manager->getStorage('taxonomy_term');
+  $tids = $term_storage->getQuery()
+    ->condition('vid', ['ukk_kategoriat', 'news_tags', 'news_group', 'news_neighbourhoods'], 'IN')
+    ->accessCheck(FALSE)
+    ->execute();
+  $term_storage->delete($term_storage->loadMultiple($tids));
+
+  // Remove the radioactivity field and uninstall the module.
+  FieldStorageConfig::loadByName('node', 'field_radioactivity')?->delete();
+  \Drupal::service(FieldPurger::class)->purgeBatch(100);
+  \Drupal::service('module_installer')->uninstall(['radioactivity']);
 }
