@@ -4357,18 +4357,6 @@ parameters:
 			path: public/modules/custom/grants_handler/grants_handler.module
 
 		-
-			message: '#^Function grants_handler_node_access\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
-			message: '#^Function grants_handler_node_access\(\) has parameter \$operation with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: public/modules/custom/grants_handler/grants_handler.module
-
-		-
 			message: '#^Function grants_handler_page_attachments\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -11065,12 +11053,6 @@ parameters:
 			path: public/modules/custom/grants_profile/grants_profile.install
 
 		-
-			message: '#^Access to an undefined property object\:\:\$tid\.$#'
-			identifier: property.notFound
-			count: 1
-			path: public/modules/custom/grants_profile/grants_profile.module
-
-		-
 			message: '#^Function grants_profile_block_view_profile_block_alter\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -11277,18 +11259,6 @@ parameters:
 		-
 			message: '#^Function grants_profile_user_predelete\(\) has no return type specified\.$#'
 			identifier: missingType.return
-			count: 1
-			path: public/modules/custom/grants_profile/grants_profile.module
-
-		-
-			message: '#^Function grants_profile_views_pre_build\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: public/modules/custom/grants_profile/grants_profile.module
-
-		-
-			message: '#^Parameter \#1 \$filters of method Drupal\\views\\ViewExecutable\:\:setExposedInput\(\) expects array\<string\>, array\<string, int\<min, \-1\>\|int\<1, max\>\> given\.$#'
-			identifier: argument.type
 			count: 1
 			path: public/modules/custom/grants_profile/grants_profile.module
 

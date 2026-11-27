@@ -118,15 +118,7 @@ display:
                 view_mode: default
               keywords:
                 display_method: label
-              news_group:
-                display_method: label
-              news_neighbourhoods:
-                display_method: label
-              news_tags:
-                display_method: label
               target_group:
-                display_method: label
-              ukk_kategoriat:
                 display_method: label
               unit_type:
                 display_method: label
@@ -637,15 +629,7 @@ display:
                 view_mode: default
               keywords:
                 display_method: label
-              news_group:
-                display_method: label
-              news_neighbourhoods:
-                display_method: label
-              news_tags:
-                display_method: label
               target_group:
-                display_method: label
-              ukk_kategoriat:
                 display_method: label
               unit_type:
                 display_method: label

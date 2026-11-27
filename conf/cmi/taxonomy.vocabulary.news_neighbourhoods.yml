@@ -1,9 +1,0 @@
-uuid: 6eca1aa2-bc17-42d4-ab62-a21027151198
-langcode: en
-status: true
-dependencies: {  }
-name: 'News neighbourhoods'
-vid: news_neighbourhoods
-description: null
-weight: 0
-new_revision: false

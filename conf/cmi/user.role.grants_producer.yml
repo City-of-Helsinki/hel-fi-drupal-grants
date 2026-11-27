@@ -11,9 +11,7 @@ dependencies:
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
     - taxonomy.vocabulary.keywords
-    - taxonomy.vocabulary.news_tags
     - taxonomy.vocabulary.target_group
-    - taxonomy.vocabulary.ukk_kategoriat
     - taxonomy.vocabulary.unit_type
   module:
     - block_content
@@ -41,7 +39,6 @@ permissions:
   - 'create url aliases'
   - 'delete own files'
   - 'edit any webform'
-  - 'edit terms in news_tags'
   - 'send performance traces to sentry'
   - 'translate any webform'
   - 'translate avustuslaji taxonomy_term'
@@ -59,7 +56,6 @@ permissions:
   - 'translate remote_video media'
   - 'translate service node'
   - 'translate target_group taxonomy_term'
-  - 'translate ukk_kategoriat taxonomy_term'
   - 'translate unit_type taxonomy_term'
   - 'update content translations'
   - 'view any unpublished landing_page content'

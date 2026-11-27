@@ -19,7 +19,6 @@ dependencies:
     - paragraphs.paragraphs_type.text
     - paragraphs.paragraphs_type.unit_accessibility_information
     - paragraphs.paragraphs_type.unit_contact_card
-    - paragraphs.paragraphs_type.webform
   module:
     - entity_reference_revisions
     - helfi_tpr
@@ -39,7 +38,6 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      webform: webform
       text: text
       accordion: accordion
       banner: banner
@@ -101,8 +99,5 @@ settings:
         enabled: true
       unit_contact_card:
         weight: 14
-        enabled: true
-      webform:
-        weight: 0
         enabled: true
 field_type: entity_reference_revisions

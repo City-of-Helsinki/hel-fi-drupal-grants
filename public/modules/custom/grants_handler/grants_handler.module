@@ -8,10 +8,8 @@
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Asset\AttachedAssetsInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteObjectInterface;
@@ -1771,21 +1769,6 @@ function grants_handler_user_logout(AccountInterface $account): void {
   $userDataService = \Drupal::service(HelsinkiProfiiliUserData::class);
   $userData = $userDataService->getUserData();
   $lock->releaseApplicationLocksByUserUuid($userData->sub);
-}
-
-/**
- * Implements hook_ENTITY_TYPE_access().
- */
-function grants_handler_node_access(EntityInterface $entity, $operation, AccountInterface $account) {
-  $result = AccessResult::neutral();
-  $type = $entity->bundle();
-  if ($type == 'form_page') {
-    if ($account->isAnonymous()) {
-      $result = AccessResult::forbidden();
-    }
-  }
-
-  return $result;
 }
 
 /**
