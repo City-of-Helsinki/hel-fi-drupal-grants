@@ -616,6 +616,93 @@ final class JsonMapperTest extends UnitTestCase {
   }
 
   /**
+   * Get a multiselect mapping for the tests.
+   *
+   * The options are mapped among the custom questions, after a regular
+   * custom question.
+   *
+   * @return array<mixed>
+   *   The mapping.
+   */
+  private function getMultiselectMapping(): array {
+    $option = fn(string $id, string $label) => [
+      'ID' => $id,
+      'label' => $label,
+      'value' => '',
+      'valueType' => 'string',
+    ];
+
+    return [
+      'compensation.customQuestionsInfo.customQuestionsArray.0' => [
+        'datasource' => 'form_data',
+        'source' => 'activity_step.sports_section.description',
+        'mapping_type' => 'default',
+        'data' => [
+          'ID' => 'description',
+          'label' => 'Kuvaus',
+          'value' => '',
+          'valueType' => 'string',
+        ],
+      ],
+      'compensation.customQuestionsInfo.customQuestionsArray.1' => [
+        'datasource' => 'form_data',
+        'source' => 'activity_step.sports_section.sports',
+        'mapping_type' => 'multiselect',
+        'data' => [
+          'football' => $option('football', 'Jalkapallo'),
+          'swimming' => $option('swimming', 'Uinti'),
+          'diving' => $option('diving', 'Sukellus'),
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * Get form data for the multiselect tests.
+   *
+   * @param array<string> $sports
+   *   The selected options.
+   *
+   * @return array<mixed>
+   *   The data sources.
+   */
+  private function getMultiselectFormData(array $sports): array {
+    $section = ['description' => 'Kuvaus toiminnasta'];
+    if ($sports) {
+      $section['sports'] = $sports;
+    }
+
+    return ['form_data' => ['activity_step' => ['sports_section' => $section]]];
+  }
+
+  /**
+   * Test that each selected option is mapped as a separate custom question.
+   */
+  public function testMultiselectMapping(): void {
+    $mapper = new JsonMapper();
+    $mapper->setMappings($this->getMultiselectMapping());
+    // Selection order must not affect the order of the fields.
+    $mappedData = $mapper->map($this->getMultiselectFormData(['diving', 'football']));
+
+    $this->assertEquals([
+      ['ID' => 'description', 'label' => 'Kuvaus', 'value' => 'Kuvaus toiminnasta', 'valueType' => 'string'],
+      ['ID' => 'football', 'label' => 'Jalkapallo', 'value' => 'Kyllä', 'valueType' => 'string'],
+      ['ID' => 'diving', 'label' => 'Sukellus', 'value' => 'Kyllä', 'valueType' => 'string'],
+    ], $mappedData['compensation']['customQuestionsInfo']['customQuestionsArray']);
+  }
+
+  /**
+   * Test that nothing is mapped for an empty multiselect.
+   */
+  public function testMultiselectMappingEmpty(): void {
+    $mapper = new JsonMapper();
+    $mapper->setMappings($this->getMultiselectMapping());
+    $mappedData = $mapper->map($this->getMultiselectFormData([]));
+
+    $values = array_column($mappedData['compensation']['customQuestionsInfo']['customQuestionsArray'], 'value', 'ID');
+    $this->assertSame(['description' => 'Kuvaus toiminnasta'], $values);
+  }
+  /**
    * Combine the common data sources and the actual form into one.
    *
    * The end result contains data from react-form, user profile,...

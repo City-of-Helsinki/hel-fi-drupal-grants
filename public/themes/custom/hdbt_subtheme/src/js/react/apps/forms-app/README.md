@@ -46,6 +46,29 @@ We have introduced some custom ways to configure the forms.
 * **computedSum** renders (or, with `ui:options.hidden`, just computes) a sum derived from other fields and writes it back into form data so it can drive conditional rendering. `ui:options`: `sourceFields` `string[]` (root-relative dot paths), `sourceShape` `'scalar' | 'subvention'`, `subventionType` `string` (with `sourceShape: 'subvention'`, sums only rows matching this subvention type code), `numericOutput` `boolean`, `hidden` `boolean`. Typically paired with `misc:exclude-from-submit`. Renders a read-only input by default, or the total as text with `misc:variant: summary` (see Variants). See `ComputedSum.tsx`.
 * **sumMatchStatus** shows the result of the `misc:sum-match` rule declared on the same field: a success or error notification inside a `role="status"` live region. The rule's errors are attached to this field, and it receives the focus when moving to the next step fails. Use `"type": "null"` in `schema.json` and `misc:exclude-from-submit`. See `SumMatchStatus.tsx`.
 
+### Multiselect
+
+A field where the user can pick several options renders as a HDS multiselect. Declare it as an array of unique enum values in `schema.json`, and give the option labels as translation keys in `ui:enumNames` in `uiSchema.json`. When the field is required, add `minItems: 1` too, so that an empty array doesn't pass validation.
+```
+// schema.json
+"sports": {
+  "type": "array",
+  "title": "activity.sports.title",
+  "uniqueItems": true,
+  "minItems": 1,
+  "items": {
+    "type": "string",
+    "enum": ["football", "swimming", "diving"]
+  }
+}
+
+// uiSchema.json
+"sports": {
+  "ui:enumNames": ["activity.sports.football", "activity.sports.swimming", "activity.sports.diving"]
+}
+```
+The form data is the array of selected enum values, e.g. `["football", "diving"]`. Map it to Avus2 with the `multiselect` mapping type, which sends each selected option as a separate `"Kyllä"` field among the custom questions. See `grants_application/documentation/Mapping.md`.
+
 ### UiSchema
 
 * **misc:file-type** `number` This is a value necessary for Avus2. It's passed during form submit and does nothing else. See `FileInput.tsx`.

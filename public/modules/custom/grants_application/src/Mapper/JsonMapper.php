@@ -93,6 +93,7 @@ class JsonMapper {
       match($definition['mapping_type']) {
         'default' => $this->handleDefault($data, $definition, $target, $allDataSources),
         'multiple_values' => $this->handleMultipleValues($data, $definition, $target, $allDataSources),
+        'multiselect' => $this->handleMultiselect($data, $definition, $target, $allDataSources),
         'custom' => $this->handleCustom($data, $definition, $target, $allDataSources),
         'simple' => $this->handleSimple($data, $definition, $target, $allDataSources),
         'hardcoded' => $this->handleHardcoded($data, $definition, $target),
@@ -234,6 +235,36 @@ class JsonMapper {
       }
 
       $this->setTargetValue($data, $targetPath, $values, $definition);
+    }
+  }
+
+  /**
+   * Map a multiselect field into separate yes fields.
+   *
+   * Frontend sends values as an array. Each selected option is sent as its
+   * own field with the "Kyllä" string that Avus2 uses for custom questions.
+   * Unselected options are left out.
+   *
+   * @param array<mixed> $data
+   *   The target data.
+   * @param array<mixed> $definition
+   *   The mapping definition.
+   * @param string $targetPath
+   *   The target data path.
+   * @param array<mixed> $dataSources
+   *   The data sources.
+   */
+  private function handleMultiselect(array &$data, array $definition, string $targetPath, array $dataSources): void {
+    $sourceValue = $this->getValue($dataSources[$definition['datasource']], $definition['source']);
+    $selected = is_array($sourceValue) ? array_map('strval', $sourceValue) : [];
+
+    foreach ($definition['data'] as $option => $field) {
+      if (!in_array((string) $option, $selected, TRUE)) {
+        continue;
+      }
+
+      $field['value'] = 'Kyllä';
+      $this->setTargetValue($data, $targetPath, $field, $definition);
     }
   }
 
@@ -483,6 +514,7 @@ class JsonMapper {
     match($definition['mapping_type']) {
       'default' => $targetValue['value'] = $sourceValue,
       'multiple_values',
+      'multiselect',
       'custom',
       'simple' => $targetValue = $sourceValue,
       'empty' => $targetValue = [],
