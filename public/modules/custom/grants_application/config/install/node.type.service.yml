@@ -8,7 +8,7 @@ dependencies:
 third_party_settings: {  }
 name: 'Service page'
 type: service
-description: 'Content type for showing TPR services in customised way.'
+description: 'Content type for grant service pages with application details and a link to the application form.'
 help: null
 new_revision: true
 preview_mode: 1
