@@ -6,7 +6,6 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
-use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -111,19 +110,11 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
     $urlObject = Url::fromUserInput(trim(rawurldecode($requestUri)));
     $routeName = $urlObject->getRouteName();
 
-    $nodeType = '';
-    if ($routeName == 'entity.node.canonical') {
-      $node = Node::load($urlObject->getRouteParameters()['node']);
-      $nodeType = $node->getType();
-    }
-    // & we are on form page.
-    $isFormPage = ($nodeType == 'form_page');
-    // If not on form_page, we want to allow mandate routes.
+    // Allow mandate routes.
     $isMandateRoute = str_contains($routeName, 'grants_mandate');
     // But require mandate in all other grants routes.
     $isGrantsRoute = str_contains($routeName, 'grants_');
-    $redirectToMandatePage = ($isFormPage || (!$isMandateRoute && $isGrantsRoute));
-    return $redirectToMandatePage;
+    return !$isMandateRoute && $isGrantsRoute;
   }
 
   /**
