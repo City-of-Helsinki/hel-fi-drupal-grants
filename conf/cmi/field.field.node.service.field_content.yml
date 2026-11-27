@@ -45,9 +45,6 @@ settings:
       accordion_item:
         weight: -20
         enabled: false
-      asiointipalvelu:
-        weight: 28
-        enabled: false
       banner:
         weight: -16
         enabled: false
@@ -80,9 +77,6 @@ settings:
         enabled: true
       list_of_links_item:
         weight: -17
-        enabled: false
-      paragraph_verkkolomake:
-        weight: 42
         enabled: false
       phasing:
         weight: 43

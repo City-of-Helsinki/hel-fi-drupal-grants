@@ -37,9 +37,6 @@ settings:
       accordion_item:
         weight: 38
         enabled: false
-      asiointipalvelu:
-        weight: 39
-        enabled: false
       banner:
         weight: 40
         enabled: true
@@ -91,9 +88,6 @@ settings:
       oma_asiointi:
         weight: 63
         enabled: false
-      paragraph_verkkolomake:
-        weight: 59
-        enabled: false
       phasing:
         weight: 60
         enabled: false
@@ -132,8 +126,5 @@ settings:
         enabled: false
       unit_search:
         weight: 71
-        enabled: false
-      webform:
-        weight: 72
         enabled: false
 field_type: entity_reference_revisions

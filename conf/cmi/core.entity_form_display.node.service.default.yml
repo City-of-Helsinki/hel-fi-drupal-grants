@@ -131,16 +131,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_asiointipalvelut:
-    type: entity_reference_autocomplete
-    weight: 12
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   field_avustuslaji:
     type: select2_entity_reference
     weight: 34
