@@ -55,9 +55,9 @@ languages, and the "sent" application view.
 
 See [Running E2E tests](../../README.md#running-e2e-tests) for the setup and the `.env` file.
 
-* Run one form in Docker: `make test-pw-p PROJECT=forms-70-iakkaiden`.
+* Run one form in Docker: `make e2e forms-70-iakkaiden`.
 * Run one form locally: `npx playwright test --project forms-70-iakkaiden`.
-* Run all React forms: `make test-pw-p PROJECT=forms-react`.
+* Run all React forms: `make e2e` and choose `a`.
 * Add `--no-deps` to a local run to skip the profile tests when the profiles already exist.
 * `APP_DEBUG=TRUE` prints progress lines per language, step, and field.
 * The local reporter is `list`, so the running test and its timer are shown live.
